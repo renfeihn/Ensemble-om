@@ -1,17 +1,12 @@
 <template>
-    <div>
-        <v-toolbar flat color="white">
-            <v-toolbar-title>{{title}}</v-toolbar-title>
-            <v-divider class="mx-2" inset vertical></v-divider>
+    <div class="elevation-4">
+        <v-toolbar color="primary lighten-2" dark>
+            <v-toolbar-title>角色菜单授权</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn round color="blue" dark @click="saveClick">
-                <v-icon>save</v-icon>
-                <td>保存</td>
-            </v-btn>
+
             <v-dialog v-model="dialog" max-width="500px">
-                <v-btn round slot="activator" color="blue" dark>
-                    <v-icon>add</v-icon>
-                    <td>添加</td>
+                <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
+                    <td style="color: white;margin-left: 100px">添加</td>
                 </v-btn>
                 <v-card>
                     <v-card-title>
@@ -42,7 +37,12 @@
                 <td>{{ props.item.roleId }}</td>
                 <td>{{ props.item.menuId }}</td>
                 <td>
-                    <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
+                    <v-tooltip right color="red" style="margin-left: -20px">
+                        <v-btn flat icon="delete" slot="activator">
+                            <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
+                        </v-btn>
+                        <span>删除</span>
+                    </v-tooltip>
                 </td>
             </template>
         </v-data-table>
@@ -158,6 +158,16 @@
                 } else {
                     this.desserts.push(this.editedItem)
                 }
+                //保存数据落库
+                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                this.backValue.userName = sessionStorage.getItem("userId")
+                this.backValue.tableName = "OM_MENU_ROLE"
+                this.backValue.keySet = "ROLE_ID,MENU_ID"
+                saveSysTable(this.backValue).then(response => {
+                    if(response.status === 200){
+                        toast.success("提交成功！");
+                    }
+                })
                 this.close()
             },
             //对象浅复制

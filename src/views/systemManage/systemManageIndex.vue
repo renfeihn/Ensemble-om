@@ -1,30 +1,37 @@
 <template>
-    <v-layout align-center>
-        <v-flex xs12 md2 lg2>
-        <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
-            <v-item v-for="n in userManagement" :key="n.index">
-                <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5" style="width: 100%">{{n.text}}</span>
-                </div>
-            </v-item>
-        </v-item-group>
-        </v-flex>
-        <v-flex xs12 md10 lg10>
-            <v-window v-model="window" class="elevation-1" vertical style="height: 700px">
-                <v-window-item v-for="n in userManagement" :key="n.index">
-                    <v-card flat>
-                        <v-card-text>
-                            <menu-tables v-bind:title="n.text" v-if="n.index == 'menu'"></menu-tables>
-                            <role-tables v-bind:title="n.text" v-if="n.index == 'role'"></role-tables>
-                            <user-tables v-bind:title="n.text" v-if="n.index == 'user'"></user-tables>
-                            <role-menu v-bind:title="n.text" v-if="n.index == 'roleMenu'"></role-menu>
-                            <user-role v-bind:title="n.text" v-if="n.index == 'userRole'"></user-role>
-                        </v-card-text>
+    <div class="pt-5 pl-4">
+        <v-layout>
+            <v-flex md3 lg3 class="pl-4">
+                <v-flex xs12>
+                    <v-card class="pt-4 elevation-4">
+                        <v-card-media src="/static/avatar/sys1.jpg">
+                        </v-card-media>
                     </v-card>
-                </v-window-item>
-            </v-window>
-        </v-flex>
-    </v-layout>
+                </v-flex>
+                <v-flex xs12 class="mt-2 pb-4">
+                    <v-card style="height: 200%" class="elevation-4">
+                        <v-list>
+                            <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
+                                <v-list-tile-action>
+                                    <v-icon :color="item.color">{{ item.icon }}</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title style="font-size: medium">{{ item.title }}</v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-flex>
+            </v-flex>
+            <v-flex md10 lg10 class="pl-4 pb-4 pr-1">
+                <menu-tables v-if="action=='menu'"></menu-tables>
+                <role-tables v-if="action=='role'"></role-tables>
+                <user-tables v-if="action=='user'"></user-tables>
+                <role-menu v-if="action=='roleMenu'"></role-menu>
+                <user-role v-if="action=='userRole'"></user-role>
+            </v-flex>
+        </v-layout>
+    </div>
 </template>
 <script>
     import MenuTables from './tables/menuTables'
@@ -41,19 +48,31 @@
             RoleMenu,
             UserRole
         },
-        data: () => ({
-            userManagement: [
-                {text: '菜单管理',index: 'menu', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '角色管理',index: 'role', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '角色菜单授权',index: 'roleMenu', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '用户管理',index: 'user', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '用户角色管理',index: 'userRole', class: 'windowItem', classSpan: 'spanItem'}
-            ],
-            window: 0,
-            windowItem: 'windowItem',
-            windowTitle: 'windowTitle',
-        }),
+        data() {
+            return {
+                action: 'menu',
+                items: [
+                    {title: '菜单管理',name: 'menu', class: '',icon: 'menu',color: "blue"},
+                    {title: '角色管理',name: 'role', class: '', icon: 'event',color: "blue"},
+                    {title: '角色菜单授权',name: 'roleMenu', class: '', icon: 'widgets',color: "blue"},
+                    {title: '用户管理',name: 'user', class: '', icon: 'person',color: "blue"},
+                    {title: '用户角色管理',name: 'userRole', class: '',icon: 'widgets',color: "blue"}
+                ],
+                window: 0,
+                windowItem: 'windowItem',
+                windowTitle: 'windowTitle',
+            }
+        },
         methods: {
+            actionTag(item) {
+                this.action = item.name;
+                item.class="selected";
+                for(const index in this.items){
+                    if(this.items[index].name != item.name) {
+                        this.items[index].class="";
+                    }
+                }
+            },
             clickItem(index) {
                 let userManagement=this.userManagement;
                 for(const key in userManagement){

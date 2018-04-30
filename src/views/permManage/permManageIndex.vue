@@ -1,27 +1,34 @@
 <template>
-    <v-layout align-center pt-4>
-        <v-flex xs12 md2 lg2>
-        <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
-            <v-item v-for="n in userManagement" :key="n.index">
-                <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5 elevation-2">{{n.text}}</span>
-                </div>
-            </v-item>
-        </v-item-group>
-        </v-flex>
-        <v-flex xs12 md10 lg10>
-            <v-window v-model="window" class="elevation-2" vertical style="height: 700px">
-                <v-window-item v-for="n in userManagement" :key="n.index">
-                    <v-card flat>
-                        <v-card-text>
-                            <prod-perm v-bind:title="n.text" v-if="n.index == 'prod'"></prod-perm>
-                            <param-perm v-bind:title="n.text" v-if="n.index == 'param'"></param-perm>
-                        </v-card-text>
+    <div class="pt-5 pl-4">
+        <v-layout>
+            <v-flex md3 lg3 class="pl-4">
+                <v-flex xs12>
+                    <v-card class="pt-4 elevation-4">
+                        <v-card-media src="/static/avatar/perm.jpg" style="margin-top: -10%">
+                        </v-card-media>
                     </v-card>
-                </v-window-item>
-            </v-window>
-        </v-flex>
-    </v-layout>
+                </v-flex>
+                <v-flex xs12 class="mt-2 pb-4">
+                    <v-card style="height: 200%" class="elevation-4">
+                        <v-list>
+                            <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
+                                <v-list-tile-action>
+                                    <v-icon :color="item.color">{{ item.icon }}</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title style="font-size: medium">{{ item.title }}</v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-flex>
+            </v-flex>
+            <v-flex md10 lg10 class="pl-4 pb-4 pr-1">
+                <prod-perm v-if="action == 'prod'"></prod-perm>
+                <param-perm v-if="action == 'param'"></param-perm>
+            </v-flex>
+        </v-layout>
+    </div>
 </template>
 <script>
     import ParamPerm from './tables/paramPermTables'
@@ -32,16 +39,30 @@
             ParamPerm,
             ProdPerm
         },
-        data: () => ({
-            userManagement: [
-                {text: '产品工厂权限管理',index: 'prod', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '参数配置权限权利',index: 'param', class: 'windowItem', classSpan: 'spanItem'},
-            ],
-            window: 0,
-            windowItem: 'windowItem',
-            windowTitle: 'windowTitle',
-        }),
+        data() {
+            return {
+                action: 'prod',
+                items: [
+                    {title: '产品工厂权限管理',name: 'prod', class: '',icon: 'gavel',color: "blue"},
+                    {title: '参数系统权限管理',name: 'param', class: '', icon: 'settings',color: "blue"},
+                    {title: '网贷端权限管理',name: 'inter', class: '', icon: 'widgets',color: "blue"},
+
+                ],
+                window: 0,
+                windowItem: 'windowItem',
+                windowTitle: 'windowTitle',
+            }
+        },
         methods: {
+            actionTag(item) {
+                this.action = item.name;
+                item.class="selected";
+                for(const index in this.items){
+                    if(this.items[index].name != item.name) {
+                        this.items[index].class="";
+                    }
+                }
+            },
             clickItem(index) {
                 let userManagement=this.userManagement;
                 for(const key in userManagement){

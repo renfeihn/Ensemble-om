@@ -1,23 +1,22 @@
 <template>
-    <div class="pt-3">
+    <div class="pt-4">
         <v-layout>
-            <v-flex md2 lg2>
-                <v-flex xs12>
-                    <v-card class="pt-3">
+            <v-flex md3 lg3 class="pl-5">
+                <v-flex xs12 class="pt-3">
+                    <v-card class="elevation-4">
                         <v-card-media src="/static/avatar/per1.jpg" class="class1">
                         </v-card-media>
                         <v-list style="margin-right: 10%;margin-left: 10%">
                             <v-list-tile>
                                 <v-list-tile-content>
-                                        <v-list-tile-title style="font-size: x-large;margin-left: 10%; margin-right: 50%;color: #42A5F5">系统管理员</v-list-tile-title>
+                                        <v-list-tile-title style="font-size: x-large;margin-left: 4%; margin-right: 50%;color: #42A5F5">Admin|系统管理员</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
-                        <h4 style="margin-left: 33%;margin-right: 50%;margin-top: -5%;color: #42A5F5">Admin</h4>
                     </v-card>
                 </v-flex>
-                <v-flex xs12>
-                    <v-card class="mt-2 pb-2" style="height: 200%">
+                <v-flex xs12 class="mt-2 pb-2">
+                    <v-card style="height: 200%" class="elevation-4">
                         <v-list>
                             <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
                                 <v-list-tile-action>
@@ -31,7 +30,7 @@
                     </v-card>
                 </v-flex>
             </v-flex>
-            <v-flex md10 lg10 class="pl-2 pb-2">
+            <v-flex md10 lg10 class="pl-4 pb-4">
                     <user-info v-if="action=='userInfo'"></user-info>
                     <user-password v-else></user-password>
             </v-flex>
@@ -52,8 +51,9 @@
                 drawer: true,
                 items: [
                     {title: '个人信息管理', name: 'userInfo', icon: 'person', class: '',color: "blue"},
-                    {title: '密码管理', name: 'userPassword', icon: 'lock', class: '', color: "red"}
-                ],
+                    {title: '密码管理', name: 'userPassword', icon: 'lock', class: '', color: "red"},
+                    {title: '扩展页签1', name: 'test1', icon: 'settings', class: '',color: "blue"}
+                    ],
                 right: null,
                 action: 'userInfo'
             }
