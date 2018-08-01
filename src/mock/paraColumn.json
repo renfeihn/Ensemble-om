@@ -1,0 +1,51 @@
+{
+  "paraColumn":[
+    {
+      "columnName": "glMergeType",
+      "columnDesc": "是否计息标志",
+      "columnType": "VOUCHER2",
+      "dataLength": "1",
+      "valueMethod": "VL",
+      "valueScore": "Y-是，N-否"
+    }, {
+      "columnName": "holidayType",
+      "columnDesc": "节假日类型",
+      "columnType": "VOUCHER2",
+      "dataLength": "1",
+      "valueMethod": "VL",
+      "valueScore": "S-标准节假日，N-非标准节假日"
+    }, {
+      "columnName": "inlandInd",
+      "columnDesc": "客户境内外标志",
+      "columnType": "VOUCHER2",
+      "dataLength": "1",
+      "valueMethod": "VL",
+      "valueScore": "B-境内或者境外，I-境内，O-境外"
+    }, {
+      "columnName": "branch",
+      "columnDesc": "机构",
+      "columnType": "VOUCHER2",
+      "dataLength": "10",
+      "valueMethod": "RF",
+      "refTable": "fm_Branch",
+      "refCol": "branch_code,branch_desc"
+    }, {
+      "columnName": "prodType",
+      "columnDesc": "产品类型",
+      "columnType": "VOUCHER2",
+      "dataLength": "10",
+      "valueMethod": "RF",
+      "refTable": "mb_prod_type",
+      "refCol": "prod_code,prod_desc"
+    }, {
+      "columnName": "indexNo",
+      "columnDesc": "序号",
+      "columnType": "VOUCHER2",
+      "dataLength": "20",
+      "valueMethod": "FD",
+      "refTable": "",
+      "refCol": "",
+      "valueScore": ""
+    }]
+
+}

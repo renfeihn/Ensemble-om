@@ -1,0 +1,98 @@
+{
+  "acctAttrs":[
+    {
+      "prodCode": "1",
+      "prodDesc": "个人结算户"
+    }, {
+      "prodCode": "2",
+      "prodDesc": "个人储蓄户"
+    }],
+  "branch":[
+    {
+      "prodCode": "9999",
+      "prodDesc": "神州总行"
+    }, {
+      "prodCode": "2000",
+      "prodDesc": "西安分行"
+    }],
+  "prodType":[
+    {
+      "prodCode": "10001",
+      "prodDesc": "个人定期存款"
+    }, {
+      "prodCode": "10002",
+      "prodDesc": "个人活期存款"
+    }],
+  "prodclass":[
+    {
+      "prodCode": "RB100",
+      "prodDesc": "个人存款组"
+    }, {
+      "prodCode": "RB200",
+      "prodDesc": "对公存款组"
+    }, {
+      "prodCode": "RB300",
+      "prodDesc": "同业存款组"
+    }],
+  "baseprod":[
+    {
+      "prodCode": "100001",
+      "prodDesc": "测试基础产品1"
+    }, {
+      "prodCode": "100002",
+      "prodDesc": "测试基础产品2"
+    }],
+  "acctsontype":[
+    {
+      "prodCode": "1",
+      "prodDesc": "测试1"
+    }, {
+      "prodCode": "2",
+      "prodDesc": "测试2"
+    }],
+  "acctstruct":[
+    {
+      "prodCode": "1",
+      "prodDesc": "一层账户"
+    }, {
+      "prodCode": "2",
+      "prodDesc": "二层账户"
+    }],
+  "profitcenter":[
+    {
+      "prodCode": "99",
+      "prodDesc": "神州利润中心"
+    }],
+  "ccytype":[
+    {
+      "prodCode": "CNY",
+      "prodDesc": "人民币"
+    }, {
+      "prodCode": "USD",
+      "prodDesc": "美元"
+    }],
+  "reducedccy":[
+    {
+      "prodCode": "CNY",
+      "prodDesc": "人民币"
+    }, {
+      "prodCode": "USD",
+      "prodDesc": "美元"
+    }],
+  "acctusefor":[
+    {
+      "prodCode": "100",
+      "prodDesc": "测试1"
+    }, {
+      "prodCode": "200",
+      "prodDesc": "测试2"
+    }],
+  "mediumtype":[
+    {
+      "prodCode": "A",
+      "prodDesc": "测试1"
+    }, {
+      "prodCode": "B",
+      "prodDesc": "测试2"
+    }]
+}
