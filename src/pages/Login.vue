@@ -7,8 +7,10 @@
             <v-card class="elevation-1 pa-3">
               <v-card-text>
                 <div class="layout column align-center">
-                  <img src="/static/prod/dcLog1.png" alt="Vue Material Admin" width="120" height="120">
-                  <h1 class="flex my-4 primary--text">SmartEnsemble-om</h1>
+                  <img src="/static/logo.png" alt="SmartEnsemble-om<" width="120" height="120">
+                  <h1 class="flex my-4 primary--text">神州数码-产品工厂</h1>
+                  <h2 class="flex my-4 primary--text">SmartEnsemble-om</h2>
+                  
                 </div>
                 <v-form>
                   <v-text-field append-icon="person" name="login" label="用户名" type="text" v-model="model.username"></v-text-field>
