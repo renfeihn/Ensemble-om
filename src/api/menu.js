@@ -7,7 +7,7 @@ const Menu =  [
     name: 'Dashboard',
   },
   {
-    title: '产品展现',
+    title: '产品目录',
     group: 'apps',
     icon: 'widgets',
     name: 'prodCmb',
@@ -16,14 +16,12 @@ const Menu =  [
     title: '我的工作台',
     group: 'apps',
     name: 'MyWork',
-    target: '_blank',
     icon: 'assistant'
   },
   {
     title: '我收藏的产品',
     group: 'apps',
     name: 'MyProd',
-    target: '_blank',
     icon: 'favorite_border'
   },
   { header: '产品工厂' },

@@ -609,17 +609,7 @@ export default [
     )
   },
   {
-    path: '/prod/cardPatenProd',
-    meta: { breadcrumb: true, title: '产品流程' },
-    name: 'prod/cardPatenProd',
-    component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-      `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
-    )
-  },
-  {
-    path: '/prod/cardPatenProd',
+    path: '/prod/myWork',
     meta: { breadcrumb: true, title: '我的工作台' },
     name: 'MyWork',
     component: () => import(
@@ -629,7 +619,7 @@ export default [
     )
   },
   {
-    path: '/prod/cardPatenProd',
+    path: '/prod/myfavorite',
     meta: { breadcrumb: true, title: '我收藏的产品' },
     name: 'MyProd',
     component: () => import(
@@ -668,7 +658,7 @@ export default [
   },
   {
     path: '/cmbchina/prodCmb',
-    meta: { breadcrumb: true, title: '产品流程3' },
+    meta: { breadcrumb: true, title: '产品目录' },
     name: 'prodCmb',
     component: () => import(
     /* webpackChunkName: "routes" */
