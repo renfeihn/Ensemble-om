@@ -1,692 +1,681 @@
 export default [
 
-    {
-        path: '*',
-        meta: {
-            public: true,
-        },
-        redirect: {
-            path: '/404'
-        }
+  {
+    path: '*',
+    meta: {
+      public: true,
     },
-    {
-        path: '/404',
-        meta: {
-            public: true,
-        },
-        name: 'NotFound',
-        component: () => import(
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        `@/pages/NotFound.vue`
-)
-},
-{
+    redirect: {
+      path: '/404'
+    }
+  },
+  {
+    path: '/404',
+    meta: {
+      public: true,
+    },
+    name: 'NotFound',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/NotFound.vue`
+    )
+  },
+  {
     path: '/403',
-        meta: {
-    public: true,
-},
+    meta: {
+      public: true,
+    },
     name: 'AccessDenied',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/pages/Deny.vue`
-)
-},
-{
-    path: '/500',
-        meta: {
-    public: true,
-},
-    name: 'ServerError',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/pages/Error.vue`
-)
-},
-{
-    path: '/login',
-        meta: {
-    public: true,
-        },
-    name: 'Login',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/pages/Login.vue`
-)
-},
-{
-    path: '/',
-        meta: {},
-    name: 'Root',
-        meta: {
-    public: true,
-},
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/pages/Login.vue`
-)
-},
-{
-    path: '/dashboard',
-        meta: { breadcrumb: true , title: '首页'},
-    name: 'Dashboard',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/pages/Dashboard.vue`
-)
-},
-
-// {
-//   path: '/calendar',
-//   meta: { breadcrumb: true },
-//   name: 'Calendar',
-//   component: (a) => import(
-//     /* webpackChunkName: "routes" */
-//     /* webpackMode: "lazy-once" */
-//     `@/pages/Calendar.vue`
-//   )
-// },
-{
-    path: '/media',
-        meta: { },
-    name: 'Media',
-        props: (route) => ({ type: route.query.type }),
     component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/Media.vue`
-)
-},
-{
-    path: '/chat',
-        meta: {
-    public: true,
-},
-    name: 'Chat',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    `@/components/chat/ChatLayout.vue`
-),
-    redirect: {
-    path: '/chat/messaging'
-},
-    children: [
-        {
-            path: '/chat/messaging/:uuid?',
-            meta: {
-                public: true,
-            },
-            name: 'ChatMessaging',
-            props: true,
-            components: {
-                default: () => import(
-                /* webpackChunkName: "routes" */
-                /* webpackMode: "lazy-once" */
-                `@/components/chat/ChatMessaging.vue`
-),
-}
-},
-    {
-        path: '/chat/contact/:uuid?',
-            meta: {
-        public: true,
+      `@/pages/Deny.vue`
+    )
+  },
+  {
+    path: '/500',
+    meta: {
+      public: true,
     },
+    name: 'ServerError',
+    component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+      `@/pages/Error.vue`
+    )
+  },
+  {
+    path: '/login',
+    meta: {
+      public: true,
+    },
+    name: 'Login',
+    component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+      `@/pages/Login.vue`
+    )
+  },
+  {
+    path: '/',
+    name: 'Root',
+    meta: {
+      public: true,
+    },
+    component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+      `@/pages/Login.vue`
+    )
+  },
+  {
+    path: '/dashboard',
+    meta: { breadcrumb: true, title: '首页' },
+    name: 'Dashboard',
+    component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+      `@/pages/Dashboard.vue`
+    )
+  },
+
+  // {
+  //   path: '/calendar',
+  //   meta: { breadcrumb: true },
+  //   name: 'Calendar',
+  //   component: (a) => import(
+  //     /* webpackChunkName: "routes" */
+  //     /* webpackMode: "lazy-once" */
+  //     `@/pages/Calendar.vue`
+  //   )
+  // },
+  {
+    path: '/media',
+    meta: { },
+    name: 'Media',
+    props: (route) => ({ type: route.query.type }),
+    component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+      `@/pages/Media.vue`
+    )
+  },
+  {
+    path: '/chat',
+    meta: {
+      public: true,
+    },
+    name: 'Chat',
+    component: () => import(
+    /* webpackChunkName: "routes" */
+      `@/components/chat/ChatLayout.vue`
+    ),
+    redirect: {
+      path: '/chat/messaging'
+    },
+    children: [
+      {
+        path: '/chat/messaging/:uuid?',
+        meta: {
+          public: true,
+        },
+        name: 'ChatMessaging',
+        props: true,
+        components: {
+          default: () => import(
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            `@/components/chat/ChatMessaging.vue`
+          ),
+        }
+      },
+      {
+        path: '/chat/contact/:uuid?',
+        meta: {
+          public: true,
+        },
         name: 'ChatContact',
-            components: {
-    default: () => import(
+        components: {
+          default: () => import(
           /* webpackChunkName: "routes" */
           /* webpackMode: "lazy-once" */
             `@/components/chat/ChatContact.vue`
-        ),
+          ),
 
-    }
-    }
-]
-},
-{
+        }
+      }
+    ]
+  },
+  {
     path: '/mail',
-        meta: {
-    public: true,
-},
+    meta: {
+      public: true,
+    },
     name: 'Mail',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/components/email/Layout.vue`
-),
+      `@/components/email/Layout.vue`
+    ),
     redirect: {
-    path: '/mail/all'
-},
-    children: [
-        {
-            path: '/mail/:mailType',
-            meta: {
-                public: true,
-            },
-            name: 'MailIndex',
-            component: () => import(
-            /* webpackChunkName: "routes" */
-            /* webpackMode: "lazy-once" */
-            `@/components/email/List.vue`
-),
-},
-    {
-        path: '/mail/0/:uuid',
-            meta: {
-        public: true,
+      path: '/mail/all'
     },
+    children: [
+      {
+        path: '/mail/:mailType',
+        meta: {
+          public: true,
+        },
+        name: 'MailIndex',
+        component: () => import(
+          /* webpackChunkName: "routes" */
+          /* webpackMode: "lazy-once" */
+          `@/components/email/List.vue`
+        ),
+      },
+      {
+        path: '/mail/0/:uuid',
+        meta: {
+          public: true,
+        },
         name: 'MailDetail',
-            component: () => import(
+        component: () => import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/components/email/Reply.vue`
-    ),
-    }
-]
-},
-{
+          `@/components/email/Reply.vue`
+        ),
+      }
+    ]
+  },
+  {
     path: '/components/alert',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/alerts',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Alert.vue`
-)
-},
-{
+      `@/pages/ui/Alert.vue`
+    )
+  },
+  {
     path: '/components/avatar',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/avatars',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Avatar.vue`
-)
-},
-{
+      `@/pages/ui/Avatar.vue`
+    )
+  },
+  {
     path: '/components/badge',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/badges',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Badge.vue`
-)
-},
-{
+      `@/pages/ui/Badge.vue`
+    )
+  },
+  {
     path: '/components/button',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/buttons',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Button.vue`
-)
-},
-{
+      `@/pages/ui/Button.vue`
+    )
+  },
+  {
     path: '/components/parallax',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/parallax',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Parallax.vue`
-)
-},
-{
+      `@/pages/ui/Parallax.vue`
+    )
+  },
+  {
     path: '/components/snackbar',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/snackbar',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Snackbar.vue`
-)
-},
-{
+      `@/pages/ui/Snackbar.vue`
+    )
+  },
+  {
     path: '/components/chip',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/chips',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Chip.vue`
-)
-},
-{
+      `@/pages/ui/Chip.vue`
+    )
+  },
+  {
     path: '/components/card',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/cards',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Cards.vue`
-)
-},
-{
+      `@/pages/ui/Cards.vue`
+    )
+  },
+  {
     path: '/components/table',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/tables',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Tables.vue`
-)
-},
-{
+      `@/pages/ui/Tables.vue`
+    )
+  },
+  {
     path: '/components/carousel',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/carousels',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Carousels.vue`
-)
-},
-{
+      `@/pages/ui/Carousels.vue`
+    )
+  },
+  {
     path: '/components/dialog',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/dialogs',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Dialogs.vue`
-)
-},
-{
+      `@/pages/ui/Dialogs.vue`
+    )
+  },
+  {
     path: '/components/icon',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/icons',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Icon.vue`
-)
-},
-{
+      `@/pages/ui/Icon.vue`
+    )
+  },
+  {
     path: '/components/progress',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/progress',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Progress.vue`
-)
-},
-{
+      `@/pages/ui/Progress.vue`
+    )
+  },
+  {
     path: '/components/slider',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/sliders',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Slider.vue`
-)
-},
-{
+      `@/pages/ui/Slider.vue`
+    )
+  },
+  {
     path: '/components/tooltip',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/tooltips',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Tooltip.vue`
-)
-},
-{
+      `@/pages/ui/Tooltip.vue`
+    )
+  },
+  {
     path: '/components/pagination',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/paginations',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Pagination.vue`
-)
-},
-{
+      `@/pages/ui/Pagination.vue`
+    )
+  },
+  {
     path: '/pickers/datepicker',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'pickers/datepicker',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Datepicker.vue`
-)
-},
-{
+      `@/pages/ui/Datepicker.vue`
+    )
+  },
+  {
     path: '/components/typography',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/typography',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Typography.vue`
-)
-},
-{
+      `@/pages/ui/Typography.vue`
+    )
+  },
+  {
     path: '/components/color',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/color',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Colors.vue`
-)
-},
-{
+      `@/pages/ui/Colors.vue`
+    )
+  },
+  {
     path: '/pickers/timepicker',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'pickers/timepicker',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/ui/Timepicker.vue`
-)
-},
-{
+      `@/pages/ui/Timepicker.vue`
+    )
+  },
+  {
     path: '/layout/bottomsheets',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/bottom-sheets',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/BottomSheets.vue`
-)
-},
-{
+      `@/pages/layout/BottomSheets.vue`
+    )
+  },
+  {
     path: '/layout/expansion-panel',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/expansion-panels',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/ExpansionPanels.vue`
-)
-},
-{
+      `@/pages/layout/ExpansionPanels.vue`
+    )
+  },
+  {
     path: '/layout/footer',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/footer',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Footers.vue`
-)
-},
-{
+      `@/pages/layout/Footers.vue`
+    )
+  },
+  {
     path: '/layout/timeline',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/timeline',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Timeline.vue`
-)
-},
-{
+      `@/pages/layout/Timeline.vue`
+    )
+  },
+  {
     path: '/layout/list',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/lists',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Lists.vue`
-)
-},
-{
+      `@/pages/layout/Lists.vue`
+    )
+  },
+  {
     path: '/layout/toolbar',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/toolbar',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Toolbar.vue`
-)
-},
-{
+      `@/pages/layout/Toolbar.vue`
+    )
+  },
+  {
     path: '/layout/jumbotron',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/jumbotrons',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Jumbotrons.vue`
-)
-},
-{
+      `@/pages/layout/Jumbotrons.vue`
+    )
+  },
+  {
     path: '/layout/menu',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/menus',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Menus.vue`
-)
-},
-{
+      `@/pages/layout/Menus.vue`
+    )
+  },
+  {
     path: '/layout/navigation-drawer',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/navigation-drawers',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/NavigationDrawers.vue`
-)
-},
-{
+      `@/pages/layout/NavigationDrawers.vue`
+    )
+  },
+  {
     path: '/layout/tabs',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/tabs',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/layout/Tabs.vue`
-)
-},
-{
+      `@/pages/layout/Tabs.vue`
+    )
+  },
+  {
     path: '/forms/basic',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/basic-forms',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/form/BasicForms.vue`
-)
-},
-{
+      `@/pages/form/BasicForms.vue`
+    )
+  },
+  {
     path: '/forms/selects',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/selects',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/form/Selects.vue`
-)
-},
-{
+      `@/pages/form/Selects.vue`
+    )
+  },
+  {
     path: '/forms/editor',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/editors',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/form/Editors.vue`
-)
-},
-{
+      `@/pages/form/Editors.vue`
+    )
+  },
+  {
     path: '/forms/selection-controls',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/selection-controls',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/form/SelectionControls.vue`
-)
-},
-{
+      `@/pages/form/SelectionControls.vue`
+    )
+  },
+  {
     path: '/forms/text-fields',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/text-fields',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/form/TextFields.vue`
-)
-},
-{
+      `@/pages/form/TextFields.vue`
+    )
+  },
+  {
     path: '/forms/steppers',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/steppers',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/form/Steppers.vue`
-)
-},
-{
+      `@/pages/form/Steppers.vue`
+    )
+  },
+  {
     path: '/widgets/social',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/social',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/widgets/Social.vue`
-)
-},
-{
+      `@/pages/widgets/Social.vue`
+    )
+  },
+  {
     path: '/widgets/post',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/widget-post',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/widgets/Post.vue`
-)
-},
-{
+      `@/pages/widgets/Post.vue`
+    )
+  },
+  {
     path: '/widgets/statistic',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/statistic',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/widgets/Statistic.vue`
-)
-},
-{
+      `@/pages/widgets/Statistic.vue`
+    )
+  },
+  {
     path: '/widgets/chart',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/chart',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/widgets/Chart.vue`
-)
-},
-{
+      `@/pages/widgets/Chart.vue`
+    )
+  },
+  {
     path: '/widgets/list',
-        meta: { breadcrumb: true },
+    meta: { breadcrumb: true },
     name: 'components/widget-list',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/pages/widgets/List.vue`
-)
-},
-{
+      `@/pages/widgets/List.vue`
+    )
+  },
+  {
     path: '/prod/SerchList',
-        meta: { breadcrumb: true, title: '产品流程4'},
+    meta: { breadcrumb: true, title: '产品流程4' },
     name: 'prod/SerchList',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodFlow/searchFlow/SearchList.vue`
-)
-},
-{
-    path: '/prod/cardPatenProd',
-        meta: { breadcrumb: true,title: '产品流程' },
-    name: 'prod/cardPatenProd',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
-)
-},
-{
-    path: '/prod/cardPatenProd',
-        meta: { breadcrumb: true,title: '我的工作台' },
+      `@/views/prodFactory/prodFlow/searchFlow/SearchList.vue`
+    )
+  },
+  {
+    path: '/prod/myWork',
+    meta: { breadcrumb: true, title: '我的工作台' },
     name: 'MyWork',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
-)
-},
-{
-    path: '/prod/cardPatenProd',
-        meta: { breadcrumb: true,title: '我收藏的产品' },
+      `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
+    )
+  },
+  {
+    path: '/prod/myfavorite',
+    meta: { breadcrumb: true, title: '我收藏的产品' },
     name: 'MyProd',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
-)
-},
-{
+      `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
+    )
+  },
+  {
     path: '/prod/cardPatenProd3',
-        meta: { breadcrumb: true ,title: '产品流程2'},
+    meta: { breadcrumb: true, title: '产品流程2' },
     name: 'prod/cardPatenProd3',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
-)
-},
-{
+      `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
+    )
+  },
+  {
     path: '/prod/deposit2',
-        meta: { breadcrumb: true,title: '产品展现2' },
+    meta: { breadcrumb: true, title: '产品展现2' },
     name: 'prod/deposit2',
-        component: () => import(
-    `@/views/prodFactory/prodInfo/deposit2.vue`
-)
-},
-{
+    component: () => import(
+      `@/views/prodFactory/prodInfo/deposit2.vue`
+    )
+  },
+  {
     path: '/diff/prodDiff',
-        meta: { breadcrumb: true,title: '差异对比' },
+    meta: { breadcrumb: true, title: '差异对比' },
     name: 'diff/prodDiff',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodDiff/prodDiff.vue`
-)
-},
-{
+      `@/views/prodFactory/prodDiff/prodDiff.vue`
+    )
+  },
+  {
     path: '/cmbchina/prodCmb',
-        meta: { breadcrumb: true,title: '产品流程3' },
+    meta: { breadcrumb: true, title: '产品目录' },
     name: 'prodCmb',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue`
-)
-},
+      `@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue`
+    )
+  },
 
-{
+  {
     path: '/prod/deposit',
-        meta: { breadcrumb: true ,title: '产品信息'},
+    meta: { breadcrumb: true, title: '产品信息' },
     name: 'prod/deposit',
-        component: () => import(
+    component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prodFactory/prodInfo/deposit.vue`
-)
-},
+      `@/views/prodFactory/prodInfo/deposit.vue`
+    )
+  },
 
 ];
