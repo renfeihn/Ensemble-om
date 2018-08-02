@@ -606,7 +606,7 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/cmbchina/SerchList.vue`
+    `@/views/prodFactory/prodFlow/searchFlow/SearchList.vue`
 )
 },
 {
@@ -616,7 +616,7 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prod/cardProd/cardPatenProd.vue`
+    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
 )
 },
 {
@@ -626,7 +626,7 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prod/cardProd/cardPatenProd.vue`
+    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
 )
 },
 {
@@ -636,7 +636,7 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prod/cardProd/cardPatenProd.vue`
+    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
 )
 },
 {
@@ -646,7 +646,7 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prod/cardProd/cardPatenProd3.vue`
+    `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
 )
 },
 {
@@ -654,7 +654,7 @@ export default [
         meta: { breadcrumb: true,title: '产品展现2' },
     name: 'prod/deposit2',
         component: () => import(
-    `@/views/prod/deposit2.vue`
+    `@/views/prodFactory/prodInfo/deposit2.vue`
 )
 },
 {
@@ -664,7 +664,7 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prod/diff/prodDiff.vue`
+    `@/views/prodFactory/prodDiff/prodDiff.vue`
 )
 },
 {
@@ -674,37 +674,19 @@ export default [
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/cmbchina/prodCmb.vue`
+    `@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue`
 )
 },
-{
-    path: '/prod/cardPatenProdList',
-        meta: { breadcrumb: true },
-    name: 'prod/cardPatenProdList',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/views/prod/cardProd/cardPatenProdList.vue`
-)
-},
+
 {
     path: '/prod/deposit',
-        meta: { breadcrumb: true ,title: '产品流程'},
+        meta: { breadcrumb: true ,title: '产品信息'},
     name: 'prod/deposit',
         component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    `@/views/prod/deposit.vue`
+    `@/views/prodFactory/prodInfo/deposit.vue`
 )
 },
-{
-    path: '/prod/chart',
-        meta: { breadcrumb: true },
-    name: 'prod/chart',
-        component: () => import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/views/prod/prodChart/Chart.vue`
-)
-},
+
 ];
