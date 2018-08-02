@@ -17,4 +17,3 @@
 ## 参考案例
 > 打印功能
 - https://vue-app-demo.harryho.org/
-
