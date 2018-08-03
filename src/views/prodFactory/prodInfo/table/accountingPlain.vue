@@ -18,7 +18,6 @@
           class="elevation-0"
         >
           <template slot="items" slot-scope="props">
-
             <td>{{ props.item.prodType }}</td>
             <td class="text-xs-left">{{ props.item.accountingStatus }}</td>
             <td class="text-xs-left">{{ props.item.subjectCode }}</td>

@@ -46,15 +46,22 @@ export function getDiffProd(params) {
 
 export function getProdData(params) {
     var methods = 'null'
-    if (params === 'RB10201') {
+    if (params === '111001') {
         methods = 'get'
     }
-    if (params === 'RB10202') {
+    if (params === '111002') {
         methods = 'get1'
     }
     return request({
         url: '/data/info',
         method: methods,
+        params
+    })
+}
+export function getProdType(params) {
+    return request({
+        url: '/prod/getProdType',
+        method: 'get',
         params
     })
 }

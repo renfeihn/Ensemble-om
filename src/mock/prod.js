@@ -134,54 +134,93 @@ export default {
       prodDiff : [{
           diffType:'产品代码',
           prod1:'RB10001',
+          prod3:'RB10003',
+          prod4:'RB10004',
+          prod5:'RB10005',
           prod2:'RB10002'
       },{
           diffType:'产品名称',
           prod1:'个人活期存款产品',
+          prod3:'个人活期存款产品',
+          prod4:'个人活期存款产品',
+          prod5:'个人活期存款产品',
           prod2:'个人定期存款产品'
       },{
           diffType:'产品类别',
           prod1:'个人存款',
+          prod3:'个人存款',
+          prod4:'个人存款',
+          prod5:'个人存款',
           prod2:'个人存款'
       },{
           diffType:'产品结构',
           prod1:'一层账户',
+          prod3:'一层账户',
+          prod4:'一层账户',
+          prod5:'一层账户',
           prod2:'二层账户'
       },{
           diffType:'金额标志',
           prod1:'不记录余额',
+          prod3:'不记录余额',
+          prod4:'不记录余额',
+          prod5:'不记录余额',
           prod2:'主子都记录余额'
       },{
           diffType:'虚实标志',
           prod1:'虚账户',
+          prod3:'虚账户',
+          prod4:'虚账户',
+          prod5:'虚账户',
           prod2:'主实账户'
       },{
           diffType:'余额类型',
           prod1:'超余额汇余额',
+          prod3:'超余额汇余额',
+          prod4:'超余额汇余额',
+          prod5:'超余额汇余额',
           prod2:'RB10002'
       },{
           diffType:'产品状态',
           prod1:'有效',
+          prod3:'有效',
+          prod4:'有效',
+          prod5:'有效',
           prod2:'有效'
       },{
           diffType:'产品代码',
           prod1:'RB10001',
+          prod3:'RB10001',
+          prod4:'RB10001',
+          prod5:'RB10001',
           prod2:'RB10002'
       },{
           diffType:'账户计息标志',
           prod1:'主账户计息',
+          prod3:'主账户计息',
+          prod4:'主账户计息',
+          prod5:'主账户计息',
           prod2:'子账户计息'
       },{
           diffType:'利润中心',
           prod1:'神州利润中心',
+          prod3:'神州利润中心',
+          prod4:'神州利润中心',
+          prod5:'神州利润中心',
           prod2:'神州利润中心'
       },{
           diffType:'生效日期',
           prod1:'2018/01/23',
+          prod3:'2018/01/23',
+          prod4:'2018/01/23',
+          prod5:'2018/01/23',
           prod2:'2018/02/23'
       },{
           diffType:'失效日期',
           prod1:'2099/01/23',
+          prod5:'2099/01/23',
+          prod3:'2099/01/23',
+          prod4:'2099/01/23',
           prod2:'2099/01/23'
       }]
   }),

@@ -643,7 +643,7 @@ export default [
     meta: { breadcrumb: true, title: '产品展现2' },
     name: 'prod/deposit2',
     component: () => import(
-      `@/views/prodFactory/prodInfo/deposit2.vue`
+      `@/views/prodFactory/prodInfo/tags/deposit2.vue`
     )
   },
   {
@@ -674,8 +674,17 @@ export default [
     component: () => import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-      `@/views/prodFactory/prodInfo/deposit.vue`
+      `@/views/prodFactory/prodInfo/tags/deposit.vue`
     )
   },
-
+{
+    path: '/userWork/userWorkTags',
+        meta: { breadcrumb: true, title: '我的工作台' },
+    name: 'userWorkTags',
+        component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    `@/views/userFlow/userWork/userWorkTags.vue`
+)
+},
 ];

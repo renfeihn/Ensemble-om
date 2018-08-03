@@ -17,3 +17,14 @@
 ## 参考案例
 > 打印功能
 - https://vue-app-demo.harryho.org/
+
+##技术支撑
+> **技术语言：vue.js**
+> 选择原因：轻巧、高性能、可组件化的MVVM库，同时拥有非常容易上手的API；是一个构建数据驱动的 web 界面的渐进式框架。Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。核心是一个响应的数据绑定系统。
+> **UI：Vuetify.js 基于 Google’s Material Design**
+> 选择原因：Material Design 是Google在2014年开发者大会上首次提出的设计语言（风格）。UI拥有强大的后台支撑，清楚详细的API
+> Material Design包含以下几个元素：
+> > 鲜活的色彩
+> > 空间的层级
+> > 流畅的动画
+> > 多样的组件
