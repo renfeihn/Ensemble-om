@@ -687,4 +687,14 @@ export default [
     `@/views/userFlow/userWork/userWorkTags.vue`
 )
 },
+{
+    path: '/userWork/userWorkNavigation',
+        meta: { breadcrumb: true, title: '我的工作台2' },
+    name: 'userWorkNavigation',
+        component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    `@/views/userFlow/userWork/userWorkNavigation.vue`
+)
+},
 ];

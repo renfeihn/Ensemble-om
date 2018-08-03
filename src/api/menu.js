@@ -15,7 +15,7 @@ const Menu =  [
   {
     title: '我的工作台',
     group: 'apps',
-    name: 'userWorkTags',
+    name: 'userWorkNavigation',
     icon: 'assistant'
   },
   {
@@ -74,7 +74,7 @@ const Menu =  [
     component: 'components',
     icon: 'view_list',
     items: [
-      { name: 'deposit2', title: '参数管理入口', component: 'prod/deposit2' },
+      { name: '404', title: '参数管理入口', component: 'NotFound' },
 
     ]
   },

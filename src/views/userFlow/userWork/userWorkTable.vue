@@ -2,6 +2,7 @@
   <v-card>
     <v-toolbar card dense color="transparent">
         <v-btn depressed small color="primary">批量</v-btn>
+        <v-btn depressed small @click="prodAction" color="primary">跳转风格</v-btn>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>more_vert</v-icon>
@@ -105,6 +106,9 @@
             };
         },
         methods: {
+            prodAction () {
+                this.$router.push({ name: 'userWorkTags'})
+            },
             queryDespositProdData() {
                 getList().then(response => {
                     this.projects = response.data.irlAccounting
