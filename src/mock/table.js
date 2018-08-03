@@ -33,24 +33,28 @@ for (let i = 0; i < count; i++) {
 export default {
   getList: () => ({
     irlAccounting: [{
+        value: false,
       prodType: 'GL3001',
       accountingStatus: 'Y',
       subjectCode: '1111',
       rateCode: '22',
       DSubjectCode: '1111'
     }, {
+        value: false,
       prodType: 'GL3004',
       accountingStatus: 'Y',
       subjectCode: '1111',
       rateCode: '22',
       DSubjectCode: '1111'
     }, {
+        value: false,
       prodType: 'GL3005',
       accountingStatus: 'Y',
       subjectCode: '1111',
       rateCode: '22',
       DSubjectCode: '1111'
     }, {
+        value: false,
       prodType: 'GL3006',
       accountingStatus: 'Y',
       subjectCode: '1111',

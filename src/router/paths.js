@@ -677,5 +677,14 @@ export default [
       `@/views/prodFactory/prodInfo/tags/deposit.vue`
     )
   },
-
+{
+    path: '/userWork/userWorkTags',
+        meta: { breadcrumb: true, title: '我的工作台' },
+    name: 'userWorkTags',
+        component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    `@/views/userFlow/userWork/userWorkTags.vue`
+)
+},
 ];

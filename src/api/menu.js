@@ -15,7 +15,7 @@ const Menu =  [
   {
     title: '我的工作台',
     group: 'apps',
-    name: 'MyWork',
+    name: 'userWorkTags',
     icon: 'assistant'
   },
   {
