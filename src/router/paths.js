@@ -646,6 +646,126 @@ export default [
       `@/views/prodFactory/prodInfo/tags/deposit2.vue`
     )
   },
+{
+    path: '/prod/rbPrivateProd',
+        meta: { breadcrumb: true, title: '个人存款组' },
+    name: 'prod/rbPrivateProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue`
+)
+},
+  {
+      path: '/prod/rbPublicProd',
+          meta: { breadcrumb: true, title: '对公存款组' },
+      name: 'prod/rbPublicProd',
+          component: () => import(
+      `@/views/prodFactory/prodInfo/tags/rbPublicProd.vue`
+  )
+  },
+{
+    path: '/prod/rbHorizontalProd',
+        meta: { breadcrumb: true, title: '同业存款组' },
+    name: 'prod/rbHorizontalProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue`
+)
+},
+{
+    path: '/prod/rbBaseProd',
+        meta: { breadcrumb: true, title: '存款基础产品组' },
+    name: 'prod/rbBaseProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/rbBaseProd.vue`
+)
+},
+{
+    path: '/prod/clPrivateProd',
+        meta: { breadcrumb: true, title: '对私贷款组' },
+    name: 'prod/clPrivateProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clPrivateProd.vue`
+)
+},
+{
+    path: '/prod/clPublicProd',
+        meta: { breadcrumb: true, title: '对公贷款组' },
+    name: 'prod/clPublicProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clPublicProd.vue`
+)
+},
+{
+    path: '/prod/clDiscountProd',
+        meta: { breadcrumb: true, title: '贴现组' },
+    name: 'prod/clDiscountProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clDiscountProd.vue`
+)
+},
+{
+    path: '/prod/clAdvancesProd',
+        meta: { breadcrumb: true, title: '垫款组' },
+    name: 'prod/clAdvancesProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clAdvancesProd.vue`
+)
+},
+{
+    path: '/prod/clEntrustedProd',
+        meta: { breadcrumb: true, title: '委托贷款组' },
+    name: 'prod/clEntrustedProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clEntrustedProd.vue`
+)
+},
+{
+    path: '/prod/clSyndicatedProd',
+        meta: { breadcrumb: true, title: '银团贷款组' },
+    name: 'prod/clSyndicatedProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clSyndicatedProd.vue`
+)
+},
+{
+    path: '/prod/clBaseProd',
+        meta: { breadcrumb: true, title: '贷款基础产品组' },
+    name: 'prod/clBaseProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/clBaseProd.vue`
+)
+},
+{
+    path: '/prod/glInternalProd',
+        meta: { breadcrumb: true, title: '内部账组' },
+    name: 'prod/glInternalProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/glInternalProd.vue`
+)
+},
+{
+    path: '/prod/glToHorizontalProd',
+        meta: { breadcrumb: true, title: '存放同业组' },
+    name: 'prod/glToHorizontalProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/glToHorizontalProd.vue`
+)
+},
+{
+    path: '/prod/glPromHorizontalProd',
+        meta: { breadcrumb: true, title: '同业存放组' },
+    name: 'prod/glPromHorizontalProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/glPromHorizontalProd.vue`
+)
+},
+{
+    path: '/prod/glBaseProd',
+        meta: { breadcrumb: true, title: '内部账基础产品组' },
+    name: 'prod/glBaseProd',
+        component: () => import(
+    `@/views/prodFactory/prodInfo/tags/glBaseProd.vue`
+)
+},
   {
     path: '/diff/prodDiff',
     meta: { breadcrumb: true, title: '差异对比' },

@@ -31,12 +31,10 @@ const Menu =  [
     component: 'components',
     icon: 'account_balance',
     items: [
-        { name: 'RB100', title: '个人存款组', component: 'prod/deposit2'},
-        { name: 'RB200', title: '对公存款组', component: 'prod/AcctFormPord' },
-        { name: 'RB300', title: '同业存款组', component: 'prod/deposit2' },
-        { name: 'RBBASE', title: '存款基础产品组', component: 'prod/deposit2' },
-
-
+        { name: 'RB100', title: '个人存款组', component: 'prod/rbPrivateProd'},
+        { name: 'RB200', title: '对公存款组', component: 'prod/rbPublicProd' },
+        { name: 'RB300', title: '同业存款组', component: 'prod/rbHorizontalProd' },
+        { name: 'RBBASE', title: '存款基础产品组', component: 'prod/rbBaseProd' },
     ]
   },
   {
@@ -45,26 +43,25 @@ const Menu =  [
     component: 'components',
     icon: 'filter_vintage',
     items: [
-        { name: 'CL100', title: '对私贷款组', component: 'prod/deposit2' },
-        { name: 'CL200', title: '对公贷款组', component: 'prod/deposit2' },
-        { name: 'CL300', title: '贴现组', component: 'prod/deposit2' },
-        { name: 'CL400', title: '垫款组', component: 'prod/deposit2' },
-        { name: 'CL500', title: '委托贷款组', component: 'prod/deposit2' },
-        { name: 'CL600', title: '银团贷款组', component: 'prod/deposit2' },
-        { name: 'CLBASE', title: '贷款基础产品组', component: 'prod/deposit2' },
-
+        { name: 'CL100', title: '对私贷款组', component: 'prod/clPrivateProd' },
+        { name: 'CL200', title: '对公贷款组', component: 'prod/clPublicProd' },
+        { name: 'CL300', title: '贴现组', component: 'prod/clDiscountProd' },
+        { name: 'CL400', title: '垫款组', component: 'prod/clAdvancesProd' },
+        { name: 'CL500', title: '委托贷款组', component: 'prod/clEntrustedProd' },
+        { name: 'CL600', title: '银团贷款组', component: 'prod/clSyndicatedProd' },
+        { name: 'CLBASE', title: '贷款基础产品组', component: 'prod/clBaseProd' },
     ]
   },
   {
-    title: '内部帐产品产品',
+    title: '内部帐产品',
     group: 'components',
     component: 'components',
     icon: 'work',
     items: [
-        { name: 'GL100', title: '内部账组', component: 'prod/deposit2' },
-        { name: 'GL200', title: '存放同业组', component: 'prod/deposit2' },
-        { name: 'GL300', title: '同业存放组', component: 'prod/deposit2' },
-        { name: 'GLBASE', title: '内部账基础产品组', component: 'prod/deposit2' },
+        { name: 'GL100', title: '内部账组', component: 'prod/glInternalProd' },
+        { name: 'GL200', title: '存放同业组', component: 'prod/glToHorizontalProd' },
+        { name: 'GL300', title: '同业存放组', component: 'prod/glPromHorizontalProd' },
+        { name: 'GLBASE', title: '内部账基础产品组', component: 'prod/glBaseProd' },
     ]
   },
   { header: '参数工厂' },

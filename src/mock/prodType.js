@@ -5,7 +5,7 @@ const image_uri = 'https://wpimg.wallstcn.com/e4558086-631c-425c-9430-56ffb46e70
 
 export default {
     getProdType: () => ({
-        rbProdTypeForm: [{
+        prodTypeForm: [{
             value: '111001',
             label: '个人活期存款',
             prodClass: 'RB100',
@@ -390,8 +390,7 @@ export default {
             company: 'DCITS',
             tranTimestamp: '',
             tranTime: ''
-        }],
-        clProdTypeForm: [{
+        }, {
             value: '210001',
             label: '个人汽车贷款',
             prodClass: 'CL100',
@@ -919,8 +918,7 @@ export default {
             company: 'DCITS',
             tranTimestamp: '',
             tranTime: ''
-        }],
-        glProdTypeForm: [{
+        }, {
             value: '330001',
             label: '人行再贷款',
             prodClass: 'GL100',
