@@ -85,9 +85,8 @@
 
 <script>
   // import queryheader from './components/queryheader'
-  getDepositProdInfo
   import {
-      getDepositProdInfo
+      getProdType
   } from '@/api/prod'
   import EventForm from './form/EventFormPord';
   import VWidget from '@/components/VWidget';
@@ -109,10 +108,11 @@
       return {
         listLoading: true,
         depositProd: {
-          prodcode: '100002',
-          version: '1.0'
+          prodcode: '',
+          version: ''
         },
           listValue: '',
+          prodCode: '',
         activeName: 'basic',
           eventForm: {
               ccy: []
@@ -157,16 +157,30 @@
                 type: 'warning'
             })
         },
-        queryDespositProdData() {
-            getDepositProdInfo().then(response => {
-                this.folders = response.data.depositProd
+        queryDespositProdData(prodCode) {
+            getProdType().then(response => {
+                let length = response.data.rbProdTypeForm.length
+                for (let i = 0; i < length; i++) {
+                    if (prodCode === response.data.rbProdTypeForm[i].prodClass){
+//                        response.data.rbProdTypeForm[i].selected = false
+                        this.folders.push(response.data.rbProdTypeForm[i])
+                    }
+                }
             })
-
         }
     },
+      watch: {
+          prodCode(val, oldval) {
+              if (val !== oldval) {
+//                  this.folders = []
+                  this.queryDespositProdData(val)
+              }
+          }
+      },
       mounted: function() {
           window.getApp.$emit('APP_DRAWER_TOGGLED');
-          this.queryDespositProdData()
+          this.prodCode = this.$route.hash
+          this.queryDespositProdData(this.prodCode)
 
       }
   }
