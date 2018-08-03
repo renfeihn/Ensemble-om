@@ -3,13 +3,14 @@
     <v-toolbar color="indigo lighten-1" dark tabs>
       <v-tabs
               color="indigo lighten-1"
-
               v-model="activeName"
               grow
+              icons-and-text
       >
         <v-tabs-slider color="yellow"></v-tabs-slider>
         <v-tab v-for="n in prodInfo" :key="n">
-          {{n}}
+          {{ n.text}}
+          <v-icon>{{n.icon}}</v-icon>
         </v-tab>
       </v-tabs>
     </v-toolbar>
@@ -56,7 +57,7 @@
           ccy: []
         },
         acctForm: {},
-        prodInfo: ['存款产品','贷款产品','内部帐产品']
+        prodInfo: [{icon:'account_balance',text:'存款产品'},{icon:'filter_vintage',text:'贷款产品'},{icon:'work',text:'内部帐产品'}]
       }
     },
     created() {
