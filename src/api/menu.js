@@ -56,7 +56,7 @@ const Menu =  [
     ]
   },
   {
-    title: '内部帐产品产品',
+    title: '内部帐产品',
     group: 'components',
     component: 'components',
     icon: 'work',
