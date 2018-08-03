@@ -24,7 +24,6 @@
 > **UI：Vuetify.js 基于 Google’s Material Design**
 > 选择原因：Material Design 是Google在2014年开发者大会上首次提出的设计语言（风格）。UI拥有强大的后台支撑，清楚详细的API
 > Material Design包含以下几个元素：
->
 > > 鲜活的色彩
 > > 空间的层级
 > > 流畅的动画
