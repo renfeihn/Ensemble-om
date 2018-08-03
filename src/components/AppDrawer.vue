@@ -39,7 +39,7 @@
                   </v-list-tile>
                 </v-list-group>
                 <!--child item-->
-                <v-list-tile v-else :key="i" :to="genChildTarget(item, subItem)" :href="subItem.href" :disabled="subItem.disabled" :target="subItem.target" ripple="ripple" @click="flushForm">
+                <v-list-tile v-else :key="i" :to="genChildTarget(item, subItem)" :href="subItem.href" :disabled="subItem.disabled" :target="subItem.target" ripple="ripple" >
                   <v-list-tile-content>
                     <v-list-tile-title><span>{{ subItem.title }}</span></v-list-tile-title>
                   </v-list-tile-content>
@@ -113,12 +113,6 @@ export default {
 
 
   methods: {
-      flushForm () {
-//          this.$router.push({path: './views/prod/deposit2.vue'})
-//          this.$router.go('../views/prod/deposit2.vue')
-//          this.$router.go(0)
-
-      },
     genChildTarget (item, subItem) {
         if (subItem.href) return;
         if (subItem.component) {

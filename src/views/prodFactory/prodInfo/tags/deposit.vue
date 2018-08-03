@@ -1,46 +1,7 @@
 <template>
   <div class="app-container">
     <v-layout row wrap>
-    <v-flex lg9 sm9 class="v-card">
-      <v-toolbar color="indigo lighten-1" dark tabs>
-        <v-tabs
-                color="indigo lighten-1"
-                slot="extension"
-                v-model="activeName"
-                grow
-        >
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-          <v-tab v-for="n in prodInfo" :key="n">
-            {{n}}
-          </v-tab>
-        </v-tabs>
-      </v-toolbar>
-      <v-tabs-items v-model="activeName" class="white elevation-1">
-        <v-tab-item
-                v-for="i in 3"
-                :key="i"
-                :id="'mobile-tabs-5-' + i"
-        >
-
-          <v-card>
-            <v-card-text>
-              <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
-              <accounting-plain v-if="i==3"></accounting-plain>
-              <acct-form v-if="i==2" v-bind:listValue="listValue"></acct-form>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs-items>
-
-
-    </v-flex>
-
     <v-flex lg3 sm3 class="v-card">
-      <v-card>
-        <v-card-text>
-        <down-action></down-action>
-        </v-card-text>
-      </v-card>
       <v-toolbar dense class="chat-history-toolbar prodLists">
         <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search"></v-text-field>
       </v-toolbar>
@@ -78,6 +39,39 @@
           </v-list-tile>
         </v-list>
       </vue-perfect-scrollbar>
+
+    </v-flex>
+
+    <v-flex lg9 sm9 class="v-card">
+      <v-toolbar color="indigo lighten-1" dark tabs>
+        <v-tabs
+                color="indigo lighten-1"
+                slot="extension"
+                v-model="activeName"
+                grow
+        >
+          <v-tabs-slider color="yellow"></v-tabs-slider>
+          <v-tab v-for="n in prodInfo" :key="n">
+            {{n}}
+          </v-tab>
+        </v-tabs>
+      </v-toolbar>
+      <v-tabs-items v-model="activeName" class="white elevation-1">
+        <v-tab-item
+                v-for="i in 3"
+                :key="i"
+                :id="'mobile-tabs-5-' + i"
+        >
+
+        <v-card>
+          <v-card-text>
+            <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
+            <accounting-plain v-if="i==3"></accounting-plain>
+            <acct-form v-if="i==2" v-bind:listValue="listValue"></acct-form>
+          </v-card-text>
+        </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-flex>
     </v-layout>
   </div>
@@ -85,39 +79,37 @@
 
 <script>
   // import queryheader from './components/queryheader'
+  getDepositProdInfo
   import {
-      getProdType
+      getDepositProdInfo
   } from '@/api/prod'
-  import EventForm from './form/EventFormPord';
+  import EventForm from '../form/EventFormPord';
+  import AcctForm from '../form/AcctFormPord';
   import VWidget from '@/components/VWidget';
   import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-  import accountingPlain from './table/accountingPlain'
-  import AcctForm from './form/AcctFormPord';
-  import downAction from './btn/downAction'
+  import accountingPlain from '../table/accountingPlain'
   export default {
     name: 'deposit',
     components: {
         accountingPlain,
         EventForm,
-        VWidget,
         AcctForm,
-        VuePerfectScrollbar,
-        downAction
+        VWidget,
+        VuePerfectScrollbar
     },
     data() {
       return {
         listLoading: true,
         depositProd: {
-          prodcode: '',
-          version: ''
+          prodcode: '100002',
+          version: '1.0'
         },
           listValue: '',
-          prodCode: '',
         activeName: 'basic',
           eventForm: {
-              ccy: []
-          },
-          acctForm: {},
+          ccy: []
+        },
+        acctForm: {},
         prodInfo: ['基本信息','账户信息','核算信息'],
         files: [
             { icon: 'assignment', iconClass: 'blue white--text', value: '', lable: '' }
@@ -157,31 +149,15 @@
                 type: 'warning'
             })
         },
-        queryDespositProdData(prodCode) {
-            getProdType().then(response => {
-                let length = response.data.rbProdTypeForm.length
-                for (let i = 0; i < length; i++) {
-                    if (prodCode === response.data.rbProdTypeForm[i].prodClass){
-//                        response.data.rbProdTypeForm[i].selected = false
-                        this.folders.push(response.data.rbProdTypeForm[i])
-                    }
-                }
+        queryDespositProdData() {
+            getDepositProdInfo().then(response => {
+                this.folders = response.data.depositProd
             })
+
         }
     },
-      watch: {
-          prodCode(val, oldval) {
-              if (val !== oldval) {
-//                  this.folders = []
-                  this.queryDespositProdData(val)
-              }
-          }
-      },
       mounted: function() {
-          window.getApp.$emit('APP_DRAWER_TOGGLED');
-          this.prodCode = this.$route.hash
-          this.queryDespositProdData(this.prodCode)
-
+          this.queryDespositProdData()
       }
   }
 </script>
@@ -191,7 +167,7 @@
     padding-top: 8px;
   }
   .depositTree {
-    height: calc(90vh - 48px);
+    height: calc(80vh - 48px);
     }
 /*  .prodList {
     border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
