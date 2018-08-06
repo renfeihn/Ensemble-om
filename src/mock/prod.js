@@ -132,17 +132,11 @@ export default {
   }),
     getDiffList :() =>({
         prodDiffData:[{
+            prodType: '',
             items: [
-                {
-                    title: '产品代码'
-                },
                 {divider: true, inset: true},
                 {
                     title: '产品名称'
-                },
-                {divider: true, inset: true},
-                {
-                    title: '产品状态'
                 },
                 {divider: true, inset: true},
                 {
@@ -154,115 +148,228 @@ export default {
                 },
                 {divider: true, inset: true},
                 {
+                    title: '金额标志'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '虚实标志'
+                },
+                {divider: true, inset: true},
+                {
                     title: '余额类型'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '产品状态'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '账户计息标志'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '利润中心'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '生效日期'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '失效日期'
                 }
             ]
         },
             {
+                prodType: 'RB1001',
                 items: [
+                    {divider: true, inset: true},
                     {
-                        title: 'RB10001'
+                        title: '个人活期存款产品'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品名称'
+                        title: '个人存款'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品状态'
+                        title: '一层账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品类别'
+                        title: '不记录余额'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品结构'
+                        title: '虚账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '余额类型'
+                        title: '超余额汇余额'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '有效'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '主账户计息'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '利润中心'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2018/01/23'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2099/01/23'
                     }
                 ]
             },
-            {
+            {prodType: 'RB1002',
                 items: [
+                    {divider: true, inset: true},
                     {
-                        title: 'RB1002'
+                        title: '个人活期存款产品'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品名称'
+                        title: '个人存款'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品状态'
+                        title: '一层账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品类别'
+                        title: '不记录余额'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品结构'
+                        title: '虚账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '余额类型'
+                        title: '超余额汇余额'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '有效'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '主账户计息'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '利润中心'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2018/01/23'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '-'
                     }
                 ]
             },
-            {
+            {prodType: 'RB1003',
                 items: [
+                    {divider: true, inset: true},
                     {
-                        title: 'RB1003'
+                        title: '个人活期存款产品'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品名称'
+                        title: '个人存款'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品状态'
+                        title: '一层账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品类别'
+                        title: '不记录余额'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品结构'
+                        title: '虚账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '余额类型'
+                        title: '超余额汇余额'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '有效'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '主账户计息'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '利润中心'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2018/01/23'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2099/01/23'
                     }
                 ]
             },
-            {
+            {prodType: 'RB1004',
                 items: [
+                    {divider: true, inset: true},
                     {
-                        title: 'RB1004'
+                        title: '个人活期存款产品'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品名称'
+                        title: '个人存款'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品状态'
+                        title: '一层账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品类别'
+                        title: '不记录余额'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '产品结构'
+                        title: '虚账户'
                     },
                     {divider: true, inset: true},
                     {
-                        title: '余额类型'
+                        title: '超余额汇余额'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '有效'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '主账户计息'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '-'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2018/01/23'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '2099/01/23'
                     }
                 ]
             },

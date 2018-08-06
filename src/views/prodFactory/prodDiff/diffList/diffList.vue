@@ -10,7 +10,7 @@
               hide-details
               class="prodDiffSwitch"
       ></v-switch>
-      <v-dialog v-model="dialog" class="prodDiffButton" persistent max-width="1000px">
+      <v-dialog v-model="dialog" class="prodDiffButton"  max-width="1000px">
       <v-btn fab dark small color="cyan" slot="activator"  @click="addTd">
         <v-icon dark>add</v-icon>
       </v-btn>
@@ -19,13 +19,8 @@
             <span class="headline">添加对比</span>
           </v-card-title>
           <v-card-text>
-            <search-list></search-list>
+            <search-list-smart ></search-list-smart>
           </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
-          </v-card-actions>
         </v-card>
       </v-dialog>
 
@@ -33,10 +28,10 @@
         <div v-for="(prodList, index1) in prodDiffData" class="diffList">
       <v-list dense>
       <template v-for="(item, index) in prodList.items"  >
-        <v-btn class="diffIdButton" fab color="red" v-if="index==0&&index1!=0"  dark @click="deleteTd(props)">
-          <v-icon dark >block</v-icon>
+        <v-btn class="diffIdButton"  color="red" v-if="index==0&&index1!=0"  dark @click="deleteTd(prodList.prodType)">
+          <v-icon dark >block</v-icon>{{prodList.prodType}}
         </v-btn>
-        <div class="diffEg" v-if="index==0&&index1==0"  dark @click="deleteTd(props)" >
+        <div class="diffEg" v-if="index==0&&index1==0"  dark >
 
         </div>
         <v-divider
@@ -68,12 +63,13 @@
 
 <script>
     import {getDiffList} from '@/api/prod';
-    import searchList from '@/views/prodFactory/prodFlow/searchFlow/SearchList';
+    import searchListSmart from '@/views/prodFactory/prodFlow/searchFlow/searchListSmart';
     export default {
-        components: {searchList},
+        components: {searchListSmart},
         data () {
             return {
                 prodDiffData:[{
+                    prodType:'',
                     items: [
                         {
                             title: '产品代码'
@@ -114,6 +110,15 @@
                 getDiffList().then(response => {
                     this.prodDiffData = response.data.prodDiffData
                 })
+            },
+            deleteTd (prodType) {
+                var newIndex=0
+                for (var i = 1; i < this.prodDiffData.length; i++) {
+                    if( this.prodDiffData[i].prodType==prodType){
+                        newIndex=i
+                    }
+                }
+                this.prodDiffData.splice(newIndex,1);
             }
         },
         mounted: function() {
@@ -144,6 +149,6 @@
     text-align: center;
   }
   .diffEg{
-    height:68px;
+    height:48px;
   }
   </style>

@@ -7,6 +7,7 @@ const Items =  [
         'jobTitle': 'Web Developer',
         'phone': '1-360-812-9380 x511',
         'avatar': '/static/prod/prod2.jpg',
+        'value':false,
         'address': {
             'street': '655 Archibald Groves',
             'suite': 'Apt. 818',
@@ -23,6 +24,7 @@ const Items =  [
     {
         'uuid': '28d9f265-74d7-4f85-83d4-6a21fca57dcf',
         'prodCode': 'RB10002',
+        'value':false,
         'prodType': '个人活期存款产品',
         'status': '启用',
         'username': 'Jakayla_Crooks86',
@@ -43,6 +45,7 @@ const Items =  [
     },
     {
         'uuid': '14ddae1e-986d-42f4-8d17-46a02d469b2b',
+        'value':false,
         'prodCode': 'RB10003',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -64,6 +67,7 @@ const Items =  [
     },
     {
         'uuid': '6a03248b-1752-4332-a3a9-7108528cc9d3',
+        'value':false,
         'prodCode': 'RB10004',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -85,6 +89,7 @@ const Items =  [
     },
     {
         'uuid': 'ee272550-36e8-4fe2-889d-c1ee701c5863',
+        'value':false,
         'prodCode': 'RB10005',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -106,6 +111,7 @@ const Items =  [
     },
     {
         'uuid': '77f4b102-9df5-43ba-966a-6f816806c5e2',
+        'value':false,
         'prodCode': 'RB10006',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -127,6 +133,7 @@ const Items =  [
     },
     {
         'uuid': '36a1ead7-57a0-4275-8a21-956194ab7cdf',
+        'value':false,
         'prodCode': 'RB10007',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -148,6 +155,7 @@ const Items =  [
     },
     {
         'uuid': 'b5899bef-d01e-42d8-af2d-edfb16b6b21e',
+        'value':false,
         'prodCode': 'RB10008',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -169,6 +177,7 @@ const Items =  [
     },
     {
         'uuid': '7d910620-84e1-49fc-951e-d375587b8189',
+        'value':false,
         'prodCode': 'RB10009',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -190,6 +199,7 @@ const Items =  [
     },
     {
         'uuid': 'afdb5033-5bcc-4cec-b932-353a83410b44',
+        'value':false,
         'prodCode': 'RB10010',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -211,6 +221,7 @@ const Items =  [
     },
     {
         'uuid': '60d07662-bfec-42c7-b044-c81bc4ff8c7a',
+        'value':false,
         'prodCode': 'RB10011',
         'prodType': '个人活期存款产品',
         'status': '启用',
@@ -233,6 +244,7 @@ const Items =  [
     {
         'uuid': '5c44b666-baca-4f18-a3cb-23068c6edc14',
         'prodCode': 'RB10012',
+        'value':false,
         'prodType': '个人活期存款产品',
         'status': '启用',
         'username': 'Gloria78',
@@ -255,6 +267,7 @@ const Items =  [
         'uuid': '46d6f992-5729-4588-b7f8-ce74f21157ba',
         'prodCode': 'RB10013',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'username': 'Olin.Robel49',
         'phone': '1-982-234-7756',
@@ -276,6 +289,7 @@ const Items =  [
         'uuid': 'bd30e201-cceb-410e-8497-a4072bc399f5',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'username': 'Rollin43',
         'phone': '477-651-5715 x502',
@@ -297,6 +311,7 @@ const Items =  [
         'uuid': 'da95e977-cd54-4077-a767-1b7f33ef6919',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'jobTitle': 'Web Developer',
         'phone': '107-733-1219 x0615',
@@ -318,6 +333,7 @@ const Items =  [
         'uuid': '6124d4e8-77ed-4b34-868d-d312bfab5de2',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'username': 'Breanna.Bartoletti',
         'phone': '645.045.0876 x35882',
@@ -339,6 +355,7 @@ const Items =  [
         'uuid': 'eef93cb1-7766-4413-a5cf-ecbf71fa3674',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'jobTitle': 'Web Developer',
         'phone': '199.260.3770 x2815',
@@ -360,6 +377,7 @@ const Items =  [
         'uuid': '899d0e31-b71e-4d95-a8a0-6a8bceb314bd',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'username': 'Santiago41',
         'phone': '1-489-921-2159 x8655',
@@ -381,6 +399,7 @@ const Items =  [
         'uuid': 'a41c6c4a-9cb1-45d1-8c6f-091044ba51ff',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+        'value':false,
         'status': '启用',
         'phone': '445-761-1519',
         'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/adobi/128.jpg',
@@ -401,6 +420,8 @@ const Items =  [
         'uuid': '3782c174-1f2c-4dc4-b75d-0bedf400e023',
         'prodCode': 'RB10001',
         'prodType': '个人活期存款产品',
+
+        'value':false,
         'status': '启用',
         'username': 'Lora_Kessler5',
         'phone': '315-215-2852 x69280',
