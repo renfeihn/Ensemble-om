@@ -130,6 +130,144 @@ export default {
   getDepositProd: () => ({
     depositProd: prodList
   }),
+    getDiffList :() =>({
+        prodDiffData:[{
+            items: [
+                {
+                    title: '产品代码'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '产品名称'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '产品状态'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '产品类别'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '产品结构'
+                },
+                {divider: true, inset: true},
+                {
+                    title: '余额类型'
+                }
+            ]
+        },
+            {
+                items: [
+                    {
+                        title: 'RB10001'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品名称'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品状态'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品类别'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品结构'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '余额类型'
+                    }
+                ]
+            },
+            {
+                items: [
+                    {
+                        title: 'RB1002'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品名称'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品状态'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品类别'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品结构'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '余额类型'
+                    }
+                ]
+            },
+            {
+                items: [
+                    {
+                        title: 'RB1003'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品名称'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品状态'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品类别'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品结构'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '余额类型'
+                    }
+                ]
+            },
+            {
+                items: [
+                    {
+                        title: 'RB1004'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品名称'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品状态'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品类别'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '产品结构'
+                    },
+                    {divider: true, inset: true},
+                    {
+                        title: '余额类型'
+                    }
+                ]
+            },
+        ]
+    }),
   getDiffProd: () => ({
       prodDiff : [{
           diffType:'产品代码',

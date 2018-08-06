@@ -43,6 +43,13 @@ export function getDiffProd(params) {
         params
     })
 }
+export function getDiffList(params) {
+    return request({
+        url: '/prod/getDiffList',
+        method: 'get',
+        params
+    })
+}
 
 export function getProdData(params) {
     var methods = 'null'
