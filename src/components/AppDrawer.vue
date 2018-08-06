@@ -9,9 +9,9 @@
     width="260"
     >
     <v-toolbar color="primary darken-1" dark>
-      <img v-bind:src="computeLogo" height="36" alt="Vue Material Admin Template">
-      <v-toolbar-title class="ml-0 pl-3">
-        <span class="hidden-sm-and-down">Ensemble-om</span>
+      <img v-bind:src="computeLogo" height="36" alt="产品工厂">
+      <v-toolbar-title class="ml-0 pl-1">
+        <span class="hidden-sm-and-down">XXX银行产品工厂</span>
       </v-toolbar-title>
     </v-toolbar>
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
