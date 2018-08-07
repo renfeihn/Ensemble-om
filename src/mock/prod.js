@@ -45,7 +45,8 @@ const prodDiffData=[{
         },
         {divider: true, inset: true},
         {
-            title: '利润中心'
+            title: '利润中心',
+            diff:true
         },
         {divider: true, inset: true},
         {
@@ -53,7 +54,8 @@ const prodDiffData=[{
         },
         {divider: true, inset: true},
         {
-            title: '失效日期'
+            title: '失效日期',
+            diff:true
         }
     ]
 },
@@ -94,7 +96,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '利润中心'
+                title: '神州信息',
+                diff:true
             },
             {divider: true, inset: true},
             {
@@ -102,7 +105,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '2099/01/23'
+                title: '2099/01/23',
+                diff:true
             }
         ]
     },
@@ -142,7 +146,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '利润中心'
+                title: '神州信息',
+                diff:true
             },
             {divider: true, inset: true},
             {
@@ -150,7 +155,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '-'
+                title: '-',
+                diff:true
             }
         ]
     },
@@ -190,7 +196,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '利润中心'
+                title: '神州信息',
+                diff:true
             },
             {divider: true, inset: true},
             {
@@ -198,7 +205,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '2099/01/23'
+                title: '2099/01/23',
+                diff:true
             }
         ]
     },
@@ -238,7 +246,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '-'
+                title: '-',
+                diff:true
             },
             {divider: true, inset: true},
             {
@@ -246,7 +255,8 @@ const prodDiffData=[{
             },
             {divider: true, inset: true},
             {
-                title: '2099/01/23'
+                title: '2099/01/23',
+                diff:true
             }
         ]
     },

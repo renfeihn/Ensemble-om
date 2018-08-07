@@ -6,7 +6,7 @@
               v-model="ex11"
               label="隐藏相同项"
               color="success"
-              value="success"
+              value="onlyDiff"
               hide-details
               class="prodDiffSwitch"
       ></v-switch>
@@ -32,7 +32,6 @@
           <v-icon dark >block</v-icon>{{prodList.prodType}}
         </v-btn>
         <div class="diffEg" v-if="index==0&&index1==0"  dark >
-
         </div>
         <v-divider
                 v-if="item.divider"
@@ -44,9 +43,9 @@
                 avatar
                 @click=""
                 v-else
-
+                :class="{'tbColor':item.diff}"
         >
-            <v-list-tile-content >
+            <v-list-tile-content  >
                <v-list-tile-title v-html="item.title"></v-list-tile-title>
              </v-list-tile-content>
           </v-list-tile>
@@ -68,8 +67,10 @@
         components: {searchListSmart},
         data () {
             return {
+                ex11:'',
                 dialog: false,
                 prodCodeList :[],
+                onlyDiff:false,
                 prodDiffData:[{
                     prodType:'',
                     items: [
@@ -114,13 +115,6 @@
                 })
             },
             showSearch (prodType){
-          /*      for(const item in this.prodCodeList){
-                    for(const itemCode in prodType){
-                    if(this.prodCodeList[item]==prodType[itemCode]){
-                        return
-                    }
-                    }
-                }*/
                 this.prodCodeList=this.concatArr(this.prodCodeList,prodType)
                 this.queryDespositProdData()
                 this.dialog=false
@@ -150,7 +144,33 @@
                 return arr;
             },
         },
+        watch: {
+            ex11(val){
+                if(val=='onlyDiff'){
 
+                      var prodList=this.prodDiffData;
+                    var newListSub=[]
+                      for(var item in prodList){
+                          var newList=[]
+                          for(var items in prodList[item].items){
+                              if(prodList[item].items[items].diff==true){
+                                  newList.push(prodList[item].items[items-1]);
+                                  newList.push(prodList[item].items[items]);
+                              }
+                          }
+                          if(newList.length>0){
+                              var data={'prodType':prodList[item].prodType}
+                              data.items=newList;
+                          newListSub.push(data)
+                          }
+                      }
+                      this.prodDiffData=newListSub
+                }
+                else{
+                    this.queryDespositProdData()
+                }
+            }
+        },
         mounted: function() {
           this.prodCodeList=  this.$route.params.prodCodeList;
           this.queryDespositProdData()
@@ -164,7 +184,9 @@
     border-right-style: solid;border-right-width: 1px;border-color: rgba(40, 24, 31, 0.21);
     text-align:center;
   }
-
+.tbColor{
+  background-color: #ffff0f;
+}
   .diffList .v-divider--inset:not(.v-divider--vertical){
     margin-left:0px;
     max-width:888px;
