@@ -10,7 +10,7 @@
               hide-details
               class="hidden-sm-and-down"
       ></v-text-field>
-      <v-btn color="info">加入对比</v-btn>
+      <v-btn color="info" @click="addCompare">加入对比</v-btn>
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
@@ -195,6 +195,15 @@
                 }
 
             };
+        },
+        methods: {
+            addCompare(){
+              var selected=[];
+              for(var item in this.complex.selected ){
+                  selected.push(this.complex.selected[item].prodCode)
+              }
+              this.$router.push({ name: 'diffList', params: {'prodCodeList':selected}})
+            }
         }
     };
 </script>

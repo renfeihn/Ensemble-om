@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container prodCmb">
     <v-toolbar color="indigo lighten-1" dark tabs>
       <v-tabs
               color="indigo lighten-1"

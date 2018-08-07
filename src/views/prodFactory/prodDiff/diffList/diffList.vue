@@ -19,7 +19,7 @@
             <span class="headline">添加对比</span>
           </v-card-title>
           <v-card-text>
-            <search-list-smart ></search-list-smart>
+            <search-list-smart v-on:listenToSearch="showSearch"></search-list-smart>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -62,12 +62,14 @@
 </template>
 
 <script>
-    import {getDiffList} from '@/api/prod';
+    import {getDiffProd} from '@/api/prod';
     import searchListSmart from '@/views/prodFactory/prodFlow/searchFlow/searchListSmart';
     export default {
         components: {searchListSmart},
         data () {
             return {
+                dialog: false,
+                prodCodeList :[],
                 prodDiffData:[{
                     prodType:'',
                     items: [
@@ -107,9 +109,21 @@
         },
         methods: {
             queryDespositProdData() {
-                getDiffList().then(response => {
-                    this.prodDiffData = response.data.prodDiffData
+                getDiffProd(this.prodCodeList).then(response => {
+                    this.prodDiffData = response.data.prodCompare
                 })
+            },
+            showSearch (prodType){
+          /*      for(const item in this.prodCodeList){
+                    for(const itemCode in prodType){
+                    if(this.prodCodeList[item]==prodType[itemCode]){
+                        return
+                    }
+                    }
+                }*/
+                this.prodCodeList=this.concatArr(this.prodCodeList,prodType)
+                this.queryDespositProdData()
+                this.dialog=false
             },
             deleteTd (prodType) {
                 var newIndex=0
@@ -119,10 +133,27 @@
                     }
                 }
                 this.prodDiffData.splice(newIndex,1);
-            }
+                this.prodCodeList.splice(newIndex-1,1);
+            },
+            unique1(arr){
+                var hash=[];
+                for (var i = 0; i < arr.length; i++) {
+                    if(hash.indexOf(arr[i])==-1){
+                        hash.push(arr[i]);
+                    }
+                }
+                return hash;
+            },
+            concatArr(arr1, arr2){
+                var arr = arr1.concat(arr2);
+                arr = this.unique1(arr);//再引用上面的任意一个去重方法
+                return arr;
+            },
         },
+
         mounted: function() {
-            this.queryDespositProdData()
+          this.prodCodeList=  this.$route.params.prodCodeList;
+          this.queryDespositProdData()
         }
     };
 </script>
