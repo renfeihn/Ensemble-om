@@ -1,120 +1,56 @@
 <template>
-  <dev class="app-container">
-  <v-card>
-    <v-card-text >
-      <v-form v-model="valid" ref="form" lazy-validation>
-        <v-layout row wrap>
-          <v-flex xs5>
-            <v-select
-                    :items="acctAttrs"
-                    v-model="attrData"
-                    label="账户属性"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-                    
-            ></v-select>
-          </v-flex>
-          <v-flex lg1 sm1>
-          </v-flex>
-          <v-flex xs5>
-            <v-select
-                    :items="acctClasses"
-                    v-model="classData"
-                    label="账户类别"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs5>
-            <v-select
-                    :items="muticcyflag"
-                    v-model="muticcyflagData"
-                    label="是否多币种"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-          <v-flex lg1 sm1>
-          </v-flex>
-          <v-flex xs5>
-            <v-select
-                    :items="ccytype"
-                    v-model="ccytypeData"
-                    label="币种"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs5>
-            <v-select
-                    :items="amttype"
-                    v-model="amttypeData"
-                    label="金额类型"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-          <v-flex lg1 sm1>
-          </v-flex>
-          <v-flex xs5>
-            <v-select
-                    :items="baltype"
-                    v-model="baltypeData"
-                    label="余额类型"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs5>
-            <v-select
-                    :items="reducedccy"
-                    v-model="reducedccyData"
-                    label="折算币种"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs5>
-            <v-select
-                    :items="acctusefor"
-                    v-model="acctuseforData"
-                    label="账户用途"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-          <v-flex lg1 sm1>
-          </v-flex>
-          <v-flex xs5>
-            <v-select
-                    :items="mediumtype"
-                    v-model="mediumtypeData"
-                    label="介质类型"
-                    item-text="prodDesc"
-                    item-value="prodCode"
-
-            ></v-select>
-          </v-flex>
-        </v-layout>
-      </v-form>
-    </v-card-text>
-  </v-card>
+    <dev class="app-container">
+        <v-card>
+            <v-card-text>
+                <v-form v-model="valid" ref="form" lazy-validation>
+                    <v-layout row wrap>
+                        <v-flex xs5>
+                            <v-select :items="acctAttrs" v-model="attrData" label="账户属性" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                        <v-flex lg1 sm1>
+                        </v-flex>
+                        <v-flex xs5>
+                            <v-select :items="acctClasses" v-model="classData" label="账户类别" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex xs5>
+                            <v-select :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                        <v-flex lg1 sm1>
+                        </v-flex>
+                        <v-flex xs5>
+                            <v-select :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex xs5>
+                            <v-select :items="amttype" v-model="amttypeData" label="金额类型" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                        <v-flex lg1 sm1>
+                        </v-flex>
+                        <v-flex xs5>
+                            <v-select :items="baltype" v-model="baltypeData" label="余额类型" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex xs5>
+                            <v-select :items="reducedccy" v-model="reducedccyData" label="折算币种" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex xs5>
+                            <v-select :items="acctusefor" v-model="acctuseforData" label="账户用途" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                        <v-flex lg1 sm1>
+                        </v-flex>
+                        <v-flex xs5>
+                            <v-select :items="mediumtype" v-model="mediumtypeData" label="介质类型" item-text="prodDesc" item-value="prodCode"></v-select>
+                        </v-flex>
+                    </v-layout>
+                </v-form>
+            </v-card-text>
+        </v-card>
     </dev>
 </template>
 
@@ -199,7 +135,7 @@
         },
         methods: {
             selectByProd() {
-                getProdData(this.listValue) .then(response => {
+                getProdData(this.listValue).then(response => {
                     this.attrData = response.data.acctFrom.attr
                     this.classData = response.data.acctFrom.class
                     this.muticcyflagData = response.data.acctFrom.muticcyflag
@@ -211,7 +147,7 @@
                     this.mediumtypeData = response.data.acctFrom.mediumtype
                 })
             },
-            closeDialog () {
+            closeDialog() {
                 this.$parent.isActive = false;
             },
             initRefDate() {
