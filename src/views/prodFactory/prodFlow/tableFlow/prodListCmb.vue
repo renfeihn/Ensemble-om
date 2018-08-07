@@ -10,9 +10,7 @@
               hide-details
               class="hidden-sm-and-down"
       ></v-text-field>
-      <v-btn icon>
-        <v-icon>filter_list</v-icon>
-      </v-btn>
+      <v-btn color="info">加入对比</v-btn>
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
@@ -22,7 +20,7 @@
               :items="complex.items"
               :rows-per-page-items="[10,25,50,{text:'All','value':-1}]"
               class="elevation-1"
-              item-key="name"
+              item-key="prodCode"
               select-all
               v-model="complex.selected"
       >
@@ -47,7 +45,7 @@
               <v-icon>edit</v-icon>
             </v-btn>
             <v-btn depressed outline icon fab dark color="pink" small>
-              <v-icon>delete</v-icon>
+              <v-icon>chrome_reader_mode</v-icon>
             </v-btn>
           </td>
         </template>

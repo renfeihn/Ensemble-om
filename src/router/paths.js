@@ -776,6 +776,16 @@ export default [
       `@/views/prodFactory/prodDiff/prodDiff.vue`
     )
   },
+{
+    path: '/diff/prodDiff',
+        meta: { breadcrumb: true, title: '差异对比2' },
+    name: 'diffList',
+        component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    `@/views/prodFactory/prodDiff/diffList/diffList.vue`
+)
+},
   {
     path: '/cmbchina/prodCmb',
     meta: { breadcrumb: true, title: '产品目录' },
@@ -815,6 +825,16 @@ export default [
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
     `@/views/userFlow/userWork/userWorkNavigation.vue`
+)
+},
+{
+    path: '/userWork/indexFlow',
+        meta: { breadcrumb: true, title: '我的工作台首页' },
+    name: 'userIndexFlow',
+        component: () => import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    `@/views/userFlow/indexFlow/indexFlow.vue`
 )
 },
 ];

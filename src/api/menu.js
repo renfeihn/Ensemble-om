@@ -15,7 +15,7 @@ const Menu =  [
   {
     title: '我的工作台',
     group: 'apps',
-    name: 'userWorkNavigation',
+    name: 'userIndexFlow',
     icon: 'assistant'
   },
   {
@@ -89,6 +89,7 @@ const Menu =  [
       { name: 'prodCmb', title: '产品流程3', component: 'prodCmb' },
       { name: 'SerchList', title: '产品流程4', component: 'prod/SerchList' },
       { name: 'prodDiff', title: '差异对比', component: 'diff/prodDiff' },
+      { name: 'diffList', title: '差异对比2', component: 'diffList' },
       { name: 'deposit', title: '产品展现', component: 'prod/deposit' },
     ]
   },
