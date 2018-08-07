@@ -35,6 +35,7 @@ export function getInitData(params) {
         method: 'get',
         params
     })
+
 }
 export function getDiffProd(params) {
     return request({

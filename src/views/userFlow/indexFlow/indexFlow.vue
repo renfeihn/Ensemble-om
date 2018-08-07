@@ -42,7 +42,7 @@
                 <v-flex xs4 sm4  class="userDiv3">
                   <v-card >
                     <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                            src="/static/prod/desert.jpg"
                             height="50px"
                     ></v-card-media>
                     <v-card-title primary-title>
@@ -58,7 +58,7 @@
                 <v-flex xs4 sm4 class="userDiv3">
                   <v-card >
                     <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                            src="/static/prod/desert.jpg"
                             height="50px"
                     ></v-card-media>
                     <v-card-title primary-title>
@@ -72,7 +72,7 @@
                 <v-flex xs4 sm4 class="userDiv3">
                   <v-card  >
                     <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+                            src="/static/prod/desert.jpg"
                             height="50px"
                     ></v-card-media>
                     <v-card-title primary-title>
