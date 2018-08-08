@@ -7,15 +7,15 @@
                       </v-toolbar>-->
         <vue-perfect-scrollbar class="depositTree">
           <v-list two-line subheader>
-            <v-subheader class="headline">
+            <v-subheader class="title">
               <v-icon left large color="red darken-1" class="pr-3">favorite</v-icon>我的产品</v-subheader>
             <v-list-tile class="prodList" v-for="item in files" :key="item.title" avatar @click="handleClick">
               <v-list-tile-avatar>
                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+                <v-list-tile-title class="subheading">{{ item.value }}</v-list-tile-title>
+                <v-list-tile-sub-title class="subheading">{{ item.label }}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-btn icon ripple>
@@ -24,15 +24,15 @@
               </v-list-tile-action>
             </v-list-tile>
             <v-divider></v-divider>
-            <v-subheader class="headline">
+            <v-subheader class="title">
               <v-icon left large color="green darken-2" class="pr-3">call_split</v-icon>存款产品</v-subheader>
             <v-list-tile class="chat-list prodList" avatar v-for="(item) in folders" :key="item.title" @click="handleClick(item)">
               <v-list-tile-avatar>
                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+                <v-list-tile-title class="subheading">{{ item.value }}</v-list-tile-title>
+                <v-list-tile-sub-title class="subheading">{{ item.label }}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-btn icon ripple>
