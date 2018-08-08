@@ -1,133 +1,152 @@
 <template>
   <div class="app-container">
     <v-layout row wrap>
-    <v-flex lg3 sm3 class="v-card">
-      <!--<v-toolbar dense class="chat-history-toolbar prodLists">
-        <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search"></v-text-field>
-      </v-toolbar>-->
-      <vue-perfect-scrollbar class="depositTree">
-        <v-list two-line subheader>
-          <v-subheader inset>我的理财产品</v-subheader>
-          <v-list-tile class="prodList"  v-for="item in files" :key="item.title" avatar @click="handleClick">
-            <v-list-tile-avatar>
-              <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-              <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
-              <v-btn icon ripple>
-                <v-icon color="grey lighten-1">info</v-icon>
-              </v-btn>
-            </v-list-tile-action>
-          </v-list-tile>
-          <v-subheader inset>个人活期产品</v-subheader>
-          <v-list-tile class="chat-list prodList" avatar v-for="(item, index) in folders" :key="item.title" @click="handleClick(item)">
-            <v-list-tile-avatar>
-              <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-              <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
-              <v-btn icon ripple>
-                <v-icon color="grey lighten-1">info</v-icon>
-              </v-btn>
-            </v-list-tile-action>
-          </v-list-tile>
-
-        </v-list>
-      </vue-perfect-scrollbar>
-    </v-flex>
-
-    <v-flex lg9 sm9 class="v-card">
-     <prod-list-cmb></prod-list-cmb>
-    </v-flex>
+      <v-flex lg3 sm3 class="v-card">
+        <!--<v-toolbar dense class="chat-history-toolbar prodLists">
+                    <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search"></v-text-field>
+                  </v-toolbar>-->
+        <vue-perfect-scrollbar class="depositTree">
+          <v-list two-line subheader>
+            <v-subheader inset>我的理财产品</v-subheader>
+            <v-list-tile class="prodList" v-for="item in files" :key="item.title" avatar @click="handleClick">
+              <v-list-tile-avatar>
+                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon ripple>
+                  <v-icon color="grey lighten-1">info</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-subheader inset>存款产品</v-subheader>
+            <v-list-tile class="chat-list prodList" avatar v-for="(item) in folders" :key="item.title" @click="handleClick(item)">
+              <v-list-tile-avatar>
+                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon ripple>
+                  <v-icon color="grey lighten-1">info</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+        </vue-perfect-scrollbar>
+      </v-flex>
+      <v-flex lg9 sm9 class="v-card">
+        <prod-list-cmb :items="prodListDtl"></prod-list-cmb>
+      </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-  // import queryheader from './components/queryheader'
   getDepositProdListTow
   import {
-      getDepositProdListTow
-  } from '@/api/prod'
+    getDepositProdListTow
+  } from '@/api/prod';
+  getDepositDtl
+  import {
+    getDepositDtl
+  } from '@/api/prod';
   import VWidget from '@/components/VWidget';
   import VuePerfectScrollbar from 'vue-perfect-scrollbar';
   import prodListCmb from './prodListCmb';
   export default {
     name: 'depositCmb',
     components: {
-        VWidget,
-        VuePerfectScrollbar,
-        prodListCmb
+      VWidget,
+      VuePerfectScrollbar,
+      prodListCmb
     },
     data() {
       return {
         listLoading: true,
+        prodListDtl: [],
         depositProd: {
           prodcode: '100002',
           version: '1.0'
         },
-          listValue: '',
+        listValue: '',
         activeName: 'basic',
-          eventForm: {
+        eventForm: {
           ccy: []
         },
         acctForm: {},
-        prodInfo: ['基本信息','账户信息','核算信息'],
-        files: [
-            { icon: 'assignment', iconClass: 'blue white--text', value: '我收藏的理财产品', lable: '我收藏的理财产品' },
-            { icon: 'assignment', iconClass: 'blue white--text', value: '我评论的理财产品', lable: '我评论的理财产品' }
+        prodInfo: ['基本信息', '账户信息', '核算信息'],
+        files: [{
+            icon: 'assignment',
+            iconClass: 'blue white--text',
+            value: '我收藏的理财产品',
+            lable: '我收藏的理财产品'
+          },
+          {
+            icon: 'assignment',
+            iconClass: 'blue white--text',
+            value: '我评论的理财产品',
+            lable: '我评论的理财产品'
+          }
         ],
-        folders: [
-            { icon: 'call_to_action', iconClass: 'amber white--text', value : '', label: '' }
-        ]
+        folders: [{
+          icon: 'call_to_action',
+          iconClass: 'amber white--text',
+          value: '',
+          label: ''
+        }]
       }
     },
     created() {
-      this.depositProd = { prodcode: this.$route.params.prodType, version: '1.0' }
+      this.depositProd = {
+        prodcode: this.$route.params.prodType,
+        version: '1.0'
+      }
     },
     methods: {
-        submitForm() {
-        },
-        draftForm() {
-        },
-        queryProdInfo() {
-            console.log('start query prod info')
-
-        },
-        selectByProd() {
-            // this.$bus.$emit('prodType', this.depositProd.prodtype)
-            // console.log(this.depositProd.prodtype)
-        },
-        handleClick(value) {
-            console.log(value)
-            var listValue = value.value
-            this.listValue = listValue
-        },
-        onSubmit() {
-            this.$message('submit!')
-        },
-        onCancel() {
-            this.$message({
-                message: 'cancel!',
-                type: 'warning'
-            })
-        },
-        queryDespositProdData() {
-            getDepositProdListTow().then(response => {
-                this.folders = response.data.prodListTwo
-            })
-
-        }
-    },
-      mounted: function() {
-          this.queryDespositProdData()
+      submitForm() {},
+      draftForm() {},
+      queryProdInfo() {},
+      selectByProd() {
+        // this.$bus.$emit('prodType', this.depositProd.prodtype)
+        // console.log(this.depositProd.prodtype)
+      },
+      handleClick(prodList) {
+        // console.log(prodList)
+        var prodCode = prodList.value
+        var prodType = prodList.label
+        this.listValue = prodCode
+        this.queryDespositDtl(prodCode,prodType)
+      },
+      onSubmit() {
+        this.$message('submit!')
+      },
+      onCancel() {
+        this.$message({
+          message: 'cancel!',
+          type: 'warning'
+        })
+      },
+      queryDespositProdData() {
+        getDepositProdListTow().then(response => {
+          this.folders = response.data.prodListTwo
+          this.queryDespositDtl(this.folders[0].value,this.folders[0].label)
+        })
+      },
+      queryDespositDtl(prodCode,prodType) {
+        getDepositDtl({'prodCode':prodCode,'prodType':prodType}).then(response => {
+          this.prodListDtl = response.data
+        })
       }
+    },
+    mounted: function() {
+      this.queryDespositProdData()
+    }
   }
 </script>
 
@@ -137,12 +156,12 @@
   }
   .depositTree {
     height: calc(100vh - 48px);
-    }
-/*  .prodList {
-    border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
   }
-  .prodLists {
-    border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
-  }*/
+  /*  .prodList {
+                border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
+              }
+              .prodLists {
+                border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
+              }*/
 </style>
 
