@@ -4,14 +4,14 @@ import Vue from 'vue';
 import App from './App';
 import Vuetify from 'vuetify';
 import router from './router';
-import i18n from './lang'
+import i18n from './lang';
 import 'font-awesome/css/font-awesome.css';  
 import './theme/default.styl';
 import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
 import Truncate from 'lodash.truncate';
-import store from './store'
-import './mock'
+import store from './store';
+import './mock';
 Vue.config.productionTip = false;
 // Helpers
 // Global filters
@@ -46,7 +46,7 @@ new Vue({
   el: '#app',
   router,
   store,
-    i18n,
+  i18n,
   components: { App },
   template: '<App/>'
 });

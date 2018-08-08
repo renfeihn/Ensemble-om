@@ -8,26 +8,26 @@
         <v-card-text class="pa-0">
             <v-data-table :headers="complex.headers" :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="prodCode" select-all v-model="complex.selected">
                 <template slot="items" slot-scope="props">
-                                                      <td>
-                                                        <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
-                                                      </td>
-                                                      <!-- <td>
-                                                        <v-avatar size="32">
-                                                          <img :src="props.item.avatar" alt="">
-                                                        </v-avatar>
-                                                      </td> -->
-                                                      <td>{{ props.item.prodCode }}</td>
-                                                      <td>{{ props.item.prodType }}</td>
-                                                      <td>{{ props.item.status }}</td>
-                                                      <td>
-                                                        <v-btn depressed outline icon fab dark color="primary" small>
-                                                          <v-icon>edit</v-icon>
-                                                        </v-btn>
-                                                        <v-btn depressed outline icon fab dark color="pink" small>
-                                                          <v-icon>chrome_reader_mode</v-icon>
-                                                        </v-btn>
-                                                      </td>
-</template>
+                                                          <td>
+                                                            <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
+                                                          </td>
+                                                          <!-- <td>
+                                                            <v-avatar size="32">
+                                                              <img :src="props.item.avatar" alt="">
+                                                            </v-avatar>
+                                                          </td> -->
+                                                          <td>{{ props.item.prodCode }}</td>
+                                                          <td>{{ props.item.prodType }}</td>
+                                                          <td>{{ props.item.status }}</td>
+                                                          <td>
+                                                            <v-btn depressed outline icon fab dark color="primary" small>
+                                                              <v-icon>edit</v-icon>
+                                                            </v-btn>
+                                                            <v-btn depressed outline icon fab dark color="pink" small>
+                                                              <v-icon>chrome_reader_mode</v-icon>
+                                                            </v-btn>
+                                                          </td> 
+                </template>
       </v-data-table>
     </v-card-text>
   </v-card>
@@ -46,7 +46,7 @@
         },
         data() {
             return {
-                items: [],
+                //items: [],
                 search: '',
                 complex: {
                     selected: [],

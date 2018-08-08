@@ -1,16 +1,16 @@
 <template>
   <div class="app-container prodCmb">
-    <v-toolbar color="indigo lighten-1" dark tabs>
-      <v-tabs color="indigo lighten-1" v-model="activeName" grow icons-and-text>
+    <v-toolbar color="primary lighten-1" dark tabs>
+      <v-tabs color="primary lighten-1" v-model="activeName" grow icons-and-text>
         <v-tabs-slider color="yellow"></v-tabs-slider>
-        <v-tab v-for="n in prodInfo" :key="n">
-          {{ n.text}}
-          <v-icon>{{n.icon}}</v-icon>
+        <v-tab v-for="item in prodInfo" :key="item.text">
+          {{ item.text}}
+          <v-icon>{{item.icon}}</v-icon>
         </v-tab>
       </v-tabs>
     </v-toolbar>
     <v-tabs-items v-model="activeName" class="white elevation-1">
-      <v-tab-item v-for="i in 3" :key="i" :id="'mobile-tabs-5-' + i">
+      <v-tab-item v-for="i in 3" :key=i :id="'mobile-tabs-5-' + i">
         <v-card>
           <v-card-text>
             <deposit-cmb></deposit-cmb>
@@ -34,16 +34,8 @@
     data() {
       return {
         listLoading: true,
-        depositProd: {
-          prodcode: '100002',
-          version: '1.0'
-        },
         listValue: '',
         activeName: 'depositCmb',
-        eventForm: {
-          ccy: []
-        },
-        acctForm: {},
         prodInfo: [{
           icon: 'account_balance',
           text: '存款产品'
@@ -57,10 +49,6 @@
       }
     },
     created() {
-      this.depositProd = {
-        prodcode: this.$route.params.prodType,
-        version: '1.0'
-      }
     },
     methods: {
       submitForm() {},

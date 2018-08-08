@@ -74,7 +74,7 @@ export default {
     AppFab,
     PageHeader,
     ThemeSettings,
-      TagsView
+    TagsView
   },
   data: () => ({
     expanded: true,
@@ -85,11 +85,8 @@ export default {
       color: '',
     }
   }),
-
   computed: {
-
   },
-
   created () {
     AppEvents.forEach(item => {
       this.$on(item.name, item.callback);
