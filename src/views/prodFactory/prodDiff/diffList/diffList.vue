@@ -21,7 +21,7 @@
           <v-card-text>
             <search-list-smart v-on:listenToSearch="showSearch"></search-list-smart>
           </v-card-text>
-        </v-card>
+        </v-card>l
       </v-dialog>
 
       <v-layout row wrap>
