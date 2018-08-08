@@ -37,6 +37,36 @@
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
+            <v-subheader inset>贷款产品</v-subheader>
+            <v-list-tile class="chat-list prodList" avatar v-for="(item) in clFolders" :key="item.title" @click="handleClick(item)">
+              <v-list-tile-avatar>
+                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon ripple>
+                  <v-icon color="grey lighten-1">info</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-subheader inset>内部账产品</v-subheader>
+            <v-list-tile class="chat-list prodList" avatar v-for="(item) in glFolders" :key="item.title" @click="handleClick(item)">
+              <v-list-tile-avatar>
+                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon ripple>
+                  <v-icon color="grey lighten-1">info</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
           </v-list>
         </vue-perfect-scrollbar>
       </v-flex>
@@ -56,6 +86,12 @@
   import {
     getDepositDtl
   } from '@/api/prod';
+  import {
+      getProdClass
+  } from '@/api/prod';
+  import {
+      getProdType
+  } from '@/api/prod';
   import VWidget from '@/components/VWidget';
   import VuePerfectScrollbar from 'vue-perfect-scrollbar';
   import prodListCmb from './prodListCmb';
@@ -69,6 +105,7 @@
     data() {
       return {
         listLoading: true,
+          prodClass: '',
         prodListDtl: [],
         depositProd: {
           prodcode: '100002',
@@ -94,12 +131,9 @@
             lable: '我评论的理财产品'
           }
         ],
-        folders: [{
-          icon: 'call_to_action',
-          iconClass: 'amber white--text',
-          value: '',
-          label: ''
-        }]
+        folders: [],
+        clFolders: [],
+        glFolders: []
       }
     },
     created() {
@@ -118,10 +152,14 @@
       },
       handleClick(prodList) {
         // console.log(prodList)
-        var prodCode = prodList.value
-        var prodType = prodList.label
-        this.listValue = prodCode
-        this.queryDespositDtl(prodCode,prodType)
+//        var prodCode = prodList.value
+//        var prodType = prodList.label
+//        this.listValue = prodCode
+//        this.queryDespositDtl(prodCode,prodType)
+          //渲染产品信息列表时，先清空原有产品信息
+          this.prodListDtl = []
+          this.prodclass =  prodList.value
+          this.getProdType(this.prodclass)
       },
       onSubmit() {
         this.$message('submit!')
@@ -142,10 +180,40 @@
         getDepositDtl({'prodCode':prodCode,'prodType':prodType}).then(response => {
           this.prodListDtl = response.data
         })
-      }
+      },
+        //初始化加载菜单列表
+        getProdClassData() {
+            getProdClass().then(response => {
+                for (let i=0; i<response.data.prodClassForm.length; i++)
+                {
+                    if('CL'=== response.data.prodClassForm[i].parentProdClass){
+                        this.clFolders.push(response.data.prodClassForm[i])
+                    }else if('RB'=== response.data.prodClassForm[i].parentProdClass){
+                        this.folders.push(response.data.prodClassForm[i])
+                    }else if('GL'=== response.data.prodClassForm[i].parentProdClass){
+                        this.glFolders.push(response.data.prodClassForm[i])
+                    }
+                }
+            })
+        },
+        //通过点击菜单目录，显示相关联的所有产品信息
+        getProdType(val) {
+            getProdType(val).then(response => {
+                let length = response.data.prodTypeForm.length
+                for (let i = 0; i < length; i++) {
+                    if (val === response.data.prodTypeForm[i].prodClass) {
+                        this.prodListDtl.push(response.data.prodTypeForm[i])
+                    }
+                }
+            })
+        }
     },
     mounted: function() {
-      this.queryDespositProdData()
+//      this.queryDespositProdData()
+        this.getProdClassData()
+        //界面初始加载，显示所有个人存款产品
+        this.prodclass = 'RB100'
+        this.getProdType(this.prodclass)
     }
   }
 </script>

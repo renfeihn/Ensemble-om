@@ -4,6 +4,7 @@ import tableAPI from './table';
 import initAPI from './init';
 import dataAPI from './data';
 import prodTypeAPI from './prodType';
+import prodClassAPI from './prodClass'
 // Mock.setup({
 //   timeout: '350-600'
 // })
@@ -22,6 +23,7 @@ Mock.mock(/\/data\/info\.*/, 'null', dataAPI.getProdDataNull);
 Mock.mock(/\/prod\/towDeposit\.*/, 'get', prodAPI.depositTwo);
 Mock.mock(/\/init\/initRefData\.*/, 'get', initAPI.getInitData);
 Mock.mock(/\/prod\/getProdType\.*/, 'get', prodTypeAPI.getProdType);
+Mock.mock(/\/prod\/prodClass\.*/, 'get', prodClassAPI.getProdClass);
 
 
 export default Mock;

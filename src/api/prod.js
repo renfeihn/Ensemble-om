@@ -78,3 +78,10 @@ export function getDepositDtl (data) {
     data: data
   });
 }
+export function getProdClass (data) {
+    return request({
+        url: '/prod/prodClass',
+        method: 'get',
+        data: data
+    });
+}
