@@ -55,7 +55,7 @@ export function getProdData (params) {
   if (params === '111001') {
     methods = 'get';
   }
-  if (params === '111002') {
+  if (params !== '111001') {
     methods = 'get1';
   }
   return request({
