@@ -3,11 +3,12 @@
     <v-layout row wrap>
       <v-flex lg3 sm3 class="v-card">
         <!--<v-toolbar dense class="chat-history-toolbar prodLists">
-                    <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search"></v-text-field>
-                  </v-toolbar>-->
+                        <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search"></v-text-field>
+                      </v-toolbar>-->
         <vue-perfect-scrollbar class="depositTree">
           <v-list two-line subheader>
-            <v-subheader inset>我的理财产品</v-subheader>
+            <v-subheader class="headline">
+              <v-icon left large color="red darken-1" class="pr-3">favorite</v-icon>我的产品</v-subheader>
             <v-list-tile class="prodList" v-for="item in files" :key="item.title" avatar @click="handleClick">
               <v-list-tile-avatar>
                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
@@ -22,7 +23,9 @@
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
-            <v-subheader inset>存款产品</v-subheader>
+            <v-divider></v-divider>
+            <v-subheader class="headline">
+              <v-icon left large color="green darken-2" class="pr-3">call_split</v-icon>存款产品</v-subheader>
             <v-list-tile class="chat-list prodList" avatar v-for="(item) in folders" :key="item.title" @click="handleClick(item)">
               <v-list-tile-avatar>
                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
@@ -84,15 +87,15 @@
         files: [{
             icon: 'assignment',
             iconClass: 'blue white--text',
-            value: '我收藏的理财产品',
-            lable: '我收藏的理财产品'
+            value: '我收藏的产品',
+            lable: '我收藏的产品'
           },
-          {
-            icon: 'assignment',
-            iconClass: 'blue white--text',
-            value: '我评论的理财产品',
-            lable: '我评论的理财产品'
-          }
+          // {
+          //   icon: 'assignment',
+          //   iconClass: 'blue white--text',
+          //   value: '我评论的理财产品',
+          //   lable: '我评论的理财产品'
+          // }
         ],
         folders: [{
           icon: 'call_to_action',
@@ -121,7 +124,7 @@
         var prodCode = prodList.value
         var prodType = prodList.label
         this.listValue = prodCode
-        this.queryDespositDtl(prodCode,prodType)
+        this.queryDespositDtl(prodCode, prodType)
       },
       onSubmit() {
         this.$message('submit!')
@@ -135,11 +138,14 @@
       queryDespositProdData() {
         getDepositProdListTow().then(response => {
           this.folders = response.data.prodListTwo
-          this.queryDespositDtl(this.folders[0].value,this.folders[0].label)
+          this.queryDespositDtl(this.folders[0].value, this.folders[0].label)
         })
       },
-      queryDespositDtl(prodCode,prodType) {
-        getDepositDtl({'prodCode':prodCode,'prodType':prodType}).then(response => {
+      queryDespositDtl(prodCode, prodType) {
+        getDepositDtl({
+          'prodCode': prodCode,
+          'prodType': prodType
+        }).then(response => {
           this.prodListDtl = response.data
         })
       }
@@ -158,10 +164,10 @@
     height: calc(100vh - 48px);
   }
   /*  .prodList {
-                border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
-              }
-              .prodLists {
-                border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
-              }*/
+                    border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
+                  }
+                  .prodLists {
+                    border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
+                  }*/
 </style>
 
