@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-toolbar card color="white">
-            <v-text-field flat solo prepend-icon="search" placeholder="Type something" v-model="search" hide-details class="hidden-sm-and-down"></v-text-field>
+            <v-text-field flat solo prepend-icon="search" placeholder="请输入产品名称或描述" v-model="search" clearable hide-details class="hidden-sm-and-down"></v-text-field>
             <v-btn color="info" @click="addCompare">加入对比</v-btn>
         </v-toolbar>
         <v-divider></v-divider>
