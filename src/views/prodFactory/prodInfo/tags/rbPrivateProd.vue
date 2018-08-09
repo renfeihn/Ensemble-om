@@ -18,7 +18,7 @@
                     <v-btn icon>
                         <v-icon>more_vert</v-icon>
                     </v-btn>
-                    <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow align-with-title>
+                    <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="n in prodInfo" :key="n">
                             {{ n.text}}
@@ -28,13 +28,13 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
-                        <v-card>
-                            <v-card-text>
+                        <!-- <v-card>
+                            <v-card-text> -->
                                 <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
                                 <accounting-plain v-if="i==3"></accounting-plain>
                                 <acct-form v-if="i!=1 && i!=3" v-bind:listValue="listValue"></acct-form>
-                            </v-card-text>
-                        </v-card>
+                            <!-- </v-card-text>
+                        </v-card> -->
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>

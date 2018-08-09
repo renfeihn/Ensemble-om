@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container fluid grid-list-md pt-2>
     <v-card ref="form">
       <v-card-text>
         <v-layout row wrap>
@@ -77,15 +77,15 @@
           <!-- <v-flex xs2/> -->
           <v-flex xs6 class="field-single-line">
             <span class="primary--text mx-3 pt-4 subheading">虚实标志</span>
-            <v-select class="primary--text mx-2 " :items="virtualflag" v-model="virtualflagData" label="虚实标志" item-text="prodDesc" item-value="prodCode" single-line></v-select>
+            <v-select class="primary--text mx-2" :items="virtualflag" v-model="virtualflagData" label="虚实标志" item-text="prodDesc" item-value="prodCode" single-line></v-select>
           </v-flex>
           <!-- <v-flex xs1/> -->
         </v-layout>
         <v-layout row wrap>
           <!-- <v-flex xs1/> -->
           <v-flex xs6 class="field-single-line">
-            <span class="primary--text  pt-4 subheading">账户计息标志</span>
-            <v-select class="primary--text mx-1":items="acctintflag" v-model="acctintflagData" label="账户计息标志" item-text="prodDesc" item-value="prodCode" single-line></v-select>
+            <span class="primary--text mx-3 pt-4 subheading">计息标志</span>
+            <v-select class="primary--text mx-2" :items="acctintflag" v-model="acctintflagData" label="计息标志" item-text="prodDesc" item-value="prodCode" single-line></v-select>
           </v-flex>
           <!-- <v-flex xs2/> -->
           <v-flex xs6 class="field-single-line">
@@ -104,29 +104,29 @@
         <v-layout row wrap>
           <!-- <v-flex xs1/> -->
           <v-flex xs1 class="field-single-line">
-            <span class="primary--text mx-2 pt-4 subheading">生效日期</span>
+            <span class="primary--text mx-2 pt-4 subheading">起始日期</span>
           </v-flex>
             <v-flex xs5>
-            <v-menu class="pr-1" ref="statDate" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" max-width="590px" :return-value.sync="startDate">
-              <v-text-field slot="activator" label="生效日期" v-model="startDate" append-icon="event" single-line></v-text-field>
-              <v-date-picker v-model="startDate" no-title scrollable>
-                <v-spacer></v-spacer>
+            <v-menu ref="statDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
+              <v-text-field slot="activator" label="起始日期" v-model="startDate" append-icon="event" single-line></v-text-field>
+              <v-date-picker v-model="startDate"  @input="$refs.statDateMenu.save(startDate)" no-title scrollable locale="zh-cn">
+                <!-- <v-spacer></v-spacer>
                 <v-btn flat color="primary" @click="startDateMenu = false">Cancel</v-btn>
-                <v-btn flat color="primary" @click="$refs.statDate.save(startDate)">OK</v-btn>
+                <v-btn flat color="primary" @click="$refs.statDate.save(startDate)">OK</v-btn> -->
               </v-date-picker>
             </v-menu>
           </v-flex>
           <!-- <v-flex xs2/> -->
             <v-flex xs1 class="field-single-line">
-              <span class="primary--text mx-2 pt-4 subheading">失效日期</span>
+              <span class="primary--text mx-2 pt-4 subheading">终止日期</span>
             </v-flex>
             <v-flex xs5>
-            <v-menu ref="endDate" lazy class="pr-1" :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-            <v-text-field slot="activator" label="失效日期" v-model="endDate" append-icon="event" single-line></v-text-field>
-              <v-date-picker v-model="endDate" no-title scrollable>
-                <v-spacer></v-spacer>
+            <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
+            <v-text-field slot="activator" label="终止日期" v-model="endDate" append-icon="event" single-line></v-text-field>
+              <v-date-picker v-model="endDate" @input="$refs.endDateMenu.save(endDate)" no-title scrollable locale="zh-cn">
+                <!-- <v-spacer></v-spacer>
                 <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
-                <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn>
+                <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn> -->
               </v-date-picker>
             </v-menu>
           </v-flex>

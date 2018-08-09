@@ -1074,7 +1074,7 @@ export default [
     path: '/userWork/indexFlow',
     meta: {
       breadcrumb: true,
-      title: '我的工作台首页'
+      title: '我的工作台'
     },
     name: 'userIndexFlow',
     component: () =>
