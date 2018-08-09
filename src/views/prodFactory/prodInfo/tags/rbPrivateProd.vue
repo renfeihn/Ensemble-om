@@ -27,12 +27,12 @@
                     </v-tabs>
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
-                    <v-tab-item v-for="i in 3" :key="i" :id="'mobile-tabs-5-' + i">
+                    <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <v-card>
                             <v-card-text>
                                 <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
                                 <accounting-plain v-if="i==3"></accounting-plain>
-                                <acct-form v-if="i==2" v-bind:listValue="listValue"></acct-form>
+                                <acct-form v-if="i!=1 && i!=3" v-bind:listValue="listValue"></acct-form>
                             </v-card-text>
                         </v-card>
                     </v-tab-item>
@@ -49,19 +49,20 @@
                 </v-toolbar>
                 <vue-perfect-scrollbar class="depositTree">
                     <v-list two-line subheader>
-                        <v-list-tile class="chat-list prodList" avatar v-for="(item, index) in folders" :key="item.title" @click="handleClick(item)">
+                        <!--<v-subheader inset>个人活期产品</v-subheader>-->
+                        <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
                             <v-list-tile-avatar>
                                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-                            </v-list-tile-avatar>
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
-                                <v-list-tile-sub-title>【产品代码:{{ item.value }}】</v-list-tile-sub-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <v-btn icon ripple>
-                                    <v-icon color="grey lighten-1">info</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.value }}</v-list-tile-title>
+                            <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-btn icon ripple>
+                                <v-icon color="grey lighten-1">info</v-icon>
+                            </v-btn>
+                        </v-list-tile-action>
                         </v-list-tile>
                     </v-list>
                 </vue-perfect-scrollbar>
@@ -114,7 +115,34 @@
                     text: '账户信息'
                 }, {
                     icon: 'work',
+                    text: '产品对象'
+                }, {
+                    icon: 'work',
+                    text: '利率信息'
+                }, {
+                    icon: 'work',
+                    text: '风险信息'
+                }, {
+                    icon: 'work',
+                    text: '开户定义'
+                }, {
+                    icon: 'work',
+                    text: '存入定义'
+                }, {
+                    icon: 'work',
+                    text: '支取定义'
+                }, {
+                    icon: 'work',
+                    text: '利率信息'
+                }, {
+                    icon: 'work',
                     text: '核算信息'
+                }, {
+                    icon: 'work',
+                    text: '销户定义'
+                }, {
+                    icon: 'work',
+                    text: '结息定义'
                 }],
                 files: [{
                     icon: 'assignment',
@@ -122,12 +150,7 @@
                     value: '',
                     lable: ''
                 }],
-                folders: [{
-                    icon: 'call_to_action',
-                    iconClass: 'amber white--text',
-                    value: 'RB100',
-                    label: '个人存款组产品'
-                }]
+                folders: []
             }
         },
         created() {
