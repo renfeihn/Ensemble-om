@@ -5,7 +5,7 @@
                 <!-- <v-form v-model="valid" ref="form" lazy-validation> -->
                 <v-layout row wrap>
                     <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">账户属性 *</span>
+                        <span class="primary--text mx-3 pt-4 subheading float: right" >账户属性 *</span>
                         <v-select :items="acctAttrs" v-model="attrData" label="账户属性" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
                     <v-flex xs6 class="field-single-line">
@@ -15,12 +15,12 @@
                 </v-layout>
                 <v-layout row wrap>
                     <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">多币种 *</span>
-                        <v-select :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
+                        <span class="primary--text mx-4 pt-4">多币种 *</span>
+                        <v-select  class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
                     <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">币种 *</span>
-                        <v-select :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
+                        <span class="primary--text mx-3 pt-4 subheading">产品币种*</span>
+                        <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
                 </v-layout>
                 <v-layout row wrap>
