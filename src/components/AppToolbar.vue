@@ -19,13 +19,13 @@
         <!--&gt;-->
       <!--</v-text-field>-->
     <v-autocomplete
-            ref="country"
-            :rules="[() => !!country || 'This field is required']"
+            :rules=null
             :items="prodList"
-            v-model="prodList"
+            v-model="prodList1"
             placeholder="请输入关键字"
             required
             class="primary--text mx-3 pt-4"
+            @change="prodListClick"
     ></v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn icon @click="handleFullScreen()">
@@ -72,6 +72,9 @@ export default {
   },
   data: () => ({
       prodList: [],
+      prodCode: '',
+      prodClass: '',
+      prodListSplit: [],
     items: [
       {
         icon: 'account_circle',
@@ -108,6 +111,21 @@ export default {
     handleDrawerToggle () {
       window.getApp.$emit('APP_DRAWER_TOGGLED');
     },
+      prodListClick (val) {
+          this.prodListSplit = val.split('-')
+          this.prodCode = this.prodListSplit[0]
+          getProdType(this.prodCode).then(response => {
+              let length = response.data.prodTypeForm.length
+              for (let i = 0; i < length; i++) {
+                  if(this.prodCode === response.data.prodTypeForm[i].value){
+                      this.prodClass = response.data.prodTypeForm[i].prodClass
+                  }
+              }
+              if('RB100' === this.prodClass){
+                  this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp':this.prodClass,'prodCodeCmp':this.prodCode}})
+              }
+          })
+      },
     handleFullScreen () {
       Util.toggleFullScreen();
     },
