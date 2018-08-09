@@ -31,8 +31,9 @@
                         <!-- <v-card>
                             <v-card-text> -->
                                 <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
-                                <accounting-plain v-if="i==3"></accounting-plain>
-                                <acct-form v-if="i!=1 && i!=3" v-bind:listValue="listValue"></acct-form>
+                                <accounting-plain v-if="i==2"></accounting-plain>
+                                <acct-form v-if="i > 2" v-bind:listValue="listValue"></acct-form>
+                                
                             <!-- </v-card-text>
                         </v-card> -->
                     </v-tab-item>

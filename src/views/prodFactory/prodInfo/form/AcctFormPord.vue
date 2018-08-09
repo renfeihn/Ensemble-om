@@ -1,55 +1,110 @@
 <template>
     <v-container fluid grid-list-md pt-2>
-        <v-card ref="form">
-            <v-card-text class="py-3">
-                <!-- <v-form v-model="valid" ref="form" lazy-validation> -->
-                <v-layout row wrap>
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading float: right" >账户属性 *</span>
-                        <v-select :items="acctAttrs" v-model="attrData" label="账户属性" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">账户类别 *</span>
-                        <v-select :items="acctClasses" v-model="classData" label="账户类别" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                <!-- </v-layout>
-                <v-layout row wrap> -->
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-4 pt-4 subheading">多币种 *</span>
-                        <v-select  class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">产品币种*</span>
-                        <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                <!-- </v-layout>
-                <v-layout row wrap> -->
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">金额类型 *</span>
-                        <v-select :items="amttype" v-model="amttypeData" label="金额类型" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">余额类型 *</span>
-                        <v-select :items="baltype" v-model="baltypeData" label="余额类型" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                <!-- </v-layout>
-                <v-layout row wrap> -->
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">账户用途 *</span>
-                        <v-select :items="acctusefor" v-model="acctuseforData" label="账户用途" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                    <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-3 pt-4 subheading">介质类型 *</span>
-                        <v-select :items="mediumtype" v-model="mediumtypeData" label="介质类型" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                    </v-flex>
-                </v-layout>
-                <!-- </v-form> -->
-            </v-card-text>
-        </v-card>
+        <v-layout row wrap>
+            <v-flex md12 lg22>
+                    <div slot="widget-content">
+                        <v-container fluid>
+                            <v-layout row wrap>
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">账户属性</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading float: right">账户属性 *</span> -->
+                                    <v-select :items="acctAttrs" v-model="attrData" label="账户属性" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">账户类别 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading">账户类别 *</span> -->
+                                    <v-select :items="acctClasses" v-model="classData" label="账户类别" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <!-- </v-layout>
+                                        <v-layout row wrap> -->
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">多币种 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-4 pt-4 subheading">多币种 *</span> -->
+                                    <v-select class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">产品币种 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading">产品币种*</span> -->
+                                    <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <!-- </v-layout>
+                                        <v-layout row wrap> -->
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">金额类型 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading">金额类型 *</span> -->
+                                    <v-select :items="amttype" v-model="amttypeData" label="金额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">余额类型 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading">余额类型 *</span> -->
+                                    <v-select :items="baltype" v-model="baltypeData" label="余额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <!-- </v-layout>
+                                        <v-layout row wrap> -->
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">账户用途 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading">账户用途 *</span> -->
+                                    <v-select :items="acctusefor" v-model="acctuseforData" label="账户用途" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">介质类型 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <!-- <span class="primary--text mx-3 pt-4 subheading">介质类型 *</span> -->
+                                    <v-select :items="mediumtype" v-model="mediumtypeData" label="介质类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                </v-flex>
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">起始日期 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <v-menu ref="statDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
+                                        <v-text-field slot="activator" label="起始日期" v-model="startDate" append-icon="event" single-line hide-details></v-text-field>
+                                        <v-date-picker v-model="startDate" @input="$refs.statDateMenu.save(startDate)" no-title scrollable locale="zh-cn">
+                                        </v-date-picker>
+                                    </v-menu>
+                                </v-flex>
+                                <!-- <v-flex lg2/> -->
+                                <v-flex md2 lg2>
+                                    <v-subheader class="primary--text pt-3 subheading">终止日期 *</v-subheader>
+                                </v-flex>
+                                <v-flex md4 lg4>
+                                    <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
+                                        <v-text-field slot="activator" label="终止日期" v-model="endDate" append-icon="event" single-line hide-details></v-text-field>
+                                        <v-date-picker v-model="endDate" @input="$refs.endDateMenu.save(endDate)" no-title scrollable locale="zh-cn">
+                                            <!-- <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn> -->
+                                        </v-date-picker>
+                                    </v-menu>
+                                </v-flex>
+                            </v-layout>
+                            <!-- </v-form> -->
+                            <!-- </v-card-text>
+                                </v-card> -->
+                        </v-container>
+                    </div>
+                <!-- </v-widget> -->
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
 <script>
+    import VWidget from '@/components/VWidget';
     import {
         getInitData
     } from '@/api/prod'
@@ -57,6 +112,9 @@
         getProdData
     } from '@/api/prod'
     export default {
+        components: {
+            VWidget
+        },
         props: ['listValue'],
         data: () => ({
             listValue: '',
