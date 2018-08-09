@@ -1,7 +1,7 @@
 <template>
-    <v-container fluid grid-list-md>
+    <v-container fluid grid-list-md pt-2>
         <v-card ref="form">
-            <v-card-text>
+            <v-card-text class="py-3">
                 <!-- <v-form v-model="valid" ref="form" lazy-validation> -->
                 <v-layout row wrap>
                     <v-flex xs6 class="field-single-line">
@@ -12,18 +12,18 @@
                         <span class="primary--text mx-3 pt-4 subheading">账户类别 *</span>
                         <v-select :items="acctClasses" v-model="classData" label="账户类别" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
-                </v-layout>
-                <v-layout row wrap>
+                <!-- </v-layout>
+                <v-layout row wrap> -->
                     <v-flex xs6 class="field-single-line">
-                        <span class="primary--text mx-4 pt-4">多币种 *</span>
+                        <span class="primary--text mx-4 pt-4 subheading">多币种 *</span>
                         <v-select  class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
                     <v-flex xs6 class="field-single-line">
                         <span class="primary--text mx-3 pt-4 subheading">产品币种*</span>
                         <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
-                </v-layout>
-                <v-layout row wrap>
+                <!-- </v-layout>
+                <v-layout row wrap> -->
                     <v-flex xs6 class="field-single-line">
                         <span class="primary--text mx-3 pt-4 subheading">金额类型 *</span>
                         <v-select :items="amttype" v-model="amttypeData" label="金额类型" item-text="prodDesc" item-value="prodCode" single-line></v-select>
@@ -32,14 +32,8 @@
                         <span class="primary--text mx-3 pt-4 subheading">余额类型 *</span>
                         <v-select :items="baltype" v-model="baltypeData" label="余额类型" item-text="prodDesc" item-value="prodCode" single-line></v-select>
                     </v-flex>
-                </v-layout>
-                <!-- <v-layout row wrap>
-                                <v-flex xs6 class="field-single-line">
-                                    <span class="primary--text mx-3 pt-4 subheading">折算币种 *</span>
-                                    <v-select :items="reducedccy" v-model="reducedccyData" label="折算币种" item-text="prodDesc" item-value="prodCode" single-line></v-select>
-                                </v-flex>
-                            </v-layout> -->
-                <v-layout row wrap>
+                <!-- </v-layout>
+                <v-layout row wrap> -->
                     <v-flex xs6 class="field-single-line">
                         <span class="primary--text mx-3 pt-4 subheading">账户用途 *</span>
                         <v-select :items="acctusefor" v-model="acctuseforData" label="账户用途" item-text="prodDesc" item-value="prodCode" single-line></v-select>
