@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-card-text class="pa-0">
+      <v-toolbar  scroll-off-screen scroll-target="#scrolling-techniques" flat>
         <v-switch
                 v-model="ex11"
                 label="隐藏相同项"
@@ -10,6 +10,9 @@
                 hide-details
                 class="prodDiffSwitch"
         ></v-switch>
+      </v-toolbar>
+      <v-card-text class="pa-0">
+
         <v-layout row wrap>
           <div v-for="(prodList, index1) in prodDiffData" class="diffList">
             <v-list dense>

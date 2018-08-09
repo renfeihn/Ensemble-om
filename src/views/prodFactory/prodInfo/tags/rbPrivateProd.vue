@@ -218,7 +218,7 @@
             if(this.$route.params.prodCodeCmp !=''){
                 this.initStage(this.$route.params.prodCodeCmp)
             }
-            this.queryDespositProdData(this.prodclass)
+            this.queryDespositProdData(this.prodClass)
         }
     }
 </script>
