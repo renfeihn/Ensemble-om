@@ -18,11 +18,11 @@
                     <v-btn icon>
                         <v-icon>more_vert</v-icon>
                     </v-btn>
-                    <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow centered icons-and-text>
+                    <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow align-with-title>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="n in prodInfo" :key="n">
                             {{ n.text}}
-                            <v-icon>{{n.icon}}</v-icon>
+                            <!-- <v-icon>{{n.icon}}</v-icon> -->
                         </v-tab>
                     </v-tabs>
                 </v-toolbar>
