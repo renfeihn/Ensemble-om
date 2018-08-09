@@ -140,7 +140,7 @@
     text-align:center;
   }
   .tbColor{
-    background-color: #03a9f4;
+    background-color: #E3F2FD;
   }
   .diffList .v-divider--inset:not(.v-divider--vertical){
     margin-left:0px;

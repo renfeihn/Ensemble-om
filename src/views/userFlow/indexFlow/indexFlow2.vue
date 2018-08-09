@@ -45,7 +45,7 @@
             <v-toolbar-title>正在进行中项目</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon>
-              <v-icon>search</v-icon>
+              <v-icon>more_vert</v-icon>
             </v-btn>
           </v-toolbar>
           <v-card-text class="py-0">
@@ -60,7 +60,7 @@
             <v-toolbar-title>快捷导航</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon>
-              <v-icon>search</v-icon>
+              <v-icon>more_vert</v-icon>
             </v-btn>
           </v-toolbar>
           <v-card-text style="text-align: center;">

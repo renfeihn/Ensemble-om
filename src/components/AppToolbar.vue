@@ -22,7 +22,8 @@
             :rules=null
             :items="prodList"
             v-model="prodList1"
-            placeholder="请输入关键字"
+            placeholder="请输入要查询的产品"
+
             required
             class="primary--text mx-3 pt-4"
             @change="prodListClick"
