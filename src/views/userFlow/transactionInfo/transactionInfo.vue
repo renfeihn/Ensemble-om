@@ -10,12 +10,12 @@
                     </v-flex>
                     <v-flex xs6 class="field-single-line">
                         <span class="primary--text mx-3 pt-4 subheading">交易发起时间</span>
-                        <v-menu ref="endDate" lazy class="pr-1" :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
+                        <v-menu ref="commitDate" lazy class="pr-1" :close-on-content-click="false" v-model="commitDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
                             <v-text-field slot="activator" label="交易发起时间" v-model="commitDate" append-icon="event" single-line></v-text-field>
-                            <v-date-picker v-model="endDate" no-title scrollable>
+                            <v-date-picker v-model="commitDate" no-title scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
-                                <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn>
+                                <v-btn flat color="primary" @click="$refs.endDate.save(commitDate)">OK</v-btn>
                             </v-date-picker>
                         </v-menu>
                     </v-flex>
@@ -27,12 +27,12 @@
                     </v-flex>
                     <v-flex xs6 class="field-single-line">
                         <span class="primary--text mx-3 pt-4 subheading">复核日期</span>
-                        <v-menu ref="endDate" lazy class="pr-1" :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
+                        <v-menu ref="checkDate" lazy class="pr-1" :close-on-content-click="false" v-model="checkDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
                             <v-text-field slot="activator" label="复核日期" v-model="checkDate" append-icon="event" single-line></v-text-field>
-                            <v-date-picker v-model="endDate" no-title scrollable>
+                            <v-date-picker v-model="checkDate" no-title scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
-                                <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn>
+                                <v-btn flat color="primary" @click="$refs.endDate.save(checkDate)">OK</v-btn>
                             </v-date-picker>
                         </v-menu>
                     </v-flex>
