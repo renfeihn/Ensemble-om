@@ -103,6 +103,7 @@
                 },
                 listValue: '',
                 prodCode: '',
+                prodClass: '',
                 activeName: 'basic',
                 eventForm: {
                     ccy: []
@@ -155,10 +156,7 @@
             }
         },
         created() {
-            this.depositProd = {
-                prodcode: this.$route.params.prodType,
-                version: '1.0'
-            }
+            this.prodClass = this.$route.params.prodClassCmp
         },
         methods: {
             submitForm() {},
@@ -171,9 +169,10 @@
                 // console.log(this.depositProd.prodtype)
             },
             handleClick(value) {
-                console.log(value)
-                var listValue = value.value
-                this.listValue = listValue
+                this.listValue = value.value
+            },
+            initStage(value){
+                this.listValue = value
             },
             onSubmit() {
                 this.$message('submit!')
@@ -184,11 +183,11 @@
                     type: 'warning'
                 })
             },
-            queryDespositProdData(prodCode) {
+            queryDespositProdData(prodClass) {
                 getProdType().then(response => {
                     let length = response.data.prodTypeForm.length
                     for (let i = 0; i < length; i++) {
-                        if (prodCode === response.data.prodTypeForm[i].prodClass) {
+                        if (prodClass === response.data.prodTypeForm[i].prodClass) {
                             this.folders.push(response.data.prodTypeForm[i])
                         }
                     }
@@ -199,11 +198,8 @@
                     let j = 1
                     for (let i = 1; i < this.folders.length; i++) {
                         if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
-                            //                            this.folders[j].add()
-                            //                            this.folders[i].selected = false
                         }
                     }
-                    //                    this.folders.push(this.folders)
                 }
             }
         },
@@ -216,8 +212,14 @@
         },
         mounted: function() {
             window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodCode = this.$route.hash
-            this.queryDespositProdData(this.prodCode)
+            this.prodClass = this.$route.hash
+            if(this.$route.params.prodClassCmp !=''){
+                this.prodclass = this.$route.params.prodClassCmp
+            }
+            if(this.$route.params.prodCodeCmp !=''){
+                this.initStage(this.$route.params.prodCodeCmp)
+            }
+            this.queryDespositProdData(this.prodclass)
         }
     }
 </script>

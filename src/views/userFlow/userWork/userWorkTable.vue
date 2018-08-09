@@ -14,7 +14,7 @@
                                         <td class="text-xs-left">{{ props.item.date }}</td>
                                         <td class="text-xs-left">{{ props.item.status }}</td>
                                         <td class="text-xs-left">{{ props.item.roleLast }}</td>
-                                        <td class="text-xs-left" @click="getDataInfo">详细信息</td>
+                                        <td class="text-xs-left" @click="getDataInfo(props.item.code)">详细信息</td>
                                     </tr>
 </template>
 <template slot="expand" slot-scope="props">
@@ -175,10 +175,9 @@
                     this.projects = response.data.irlAccounting
                 })
             },
-            getDataInfo() {
-                this.$router.push({
-                    name: 'tranDataIndex'
-                })
+
+            getDataInfo(code) {
+                this.$router.push({ name: 'tranDataIndex',params:{'code':code}})
             }
         },
         mounted: function() {
