@@ -28,3 +28,6 @@
 > > 空间的层级
 > > 流畅的动画
 > > 多样的组件
+
+## Mock
+- 样例：http://mockjs.com/examples.html
