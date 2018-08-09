@@ -5,6 +5,7 @@
         <v-icon large color="blue darken-2">chat</v-icon>
         <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
         <v-spacer></v-spacer>
+          <v-btn color="info" >导出</v-btn>
           <v-btn color="info" @click="addCompare">发布</v-btn>
       </v-toolbar>
     <v-layout row>
