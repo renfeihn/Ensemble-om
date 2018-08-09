@@ -55,7 +55,7 @@ export function getProdData (params) {
   if (params === '111001') {
     methods = 'get';
   }
-  if (params === '111002') {
+  if (params !== '111001') {
     methods = 'get1';
   }
   return request({
@@ -77,4 +77,11 @@ export function getDepositDtl (data) {
     method: 'get',
     data: data
   });
+}
+export function getProdClass (data) {
+    return request({
+        url: '/prod/prodClass',
+        method: 'get',
+        data: data
+    });
 }
