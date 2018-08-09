@@ -16,8 +16,8 @@
                                                               <img :src="props.item.avatar" alt="">
                                                             </v-avatar>
                                                           </td> -->
-                                                          <td>{{ props.item.prodCode }}</td>
-                                                          <td>{{ props.item.prodType }}</td>
+                                                          <td>{{ props.item.value }}</td>
+                                                          <td>{{ props.item.label }}</td>
                                                           <td>{{ props.item.status }}</td>
                                                           <td>
                                                             <v-btn depressed outline icon fab dark color="primary" small>
