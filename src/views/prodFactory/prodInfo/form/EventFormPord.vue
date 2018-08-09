@@ -98,7 +98,7 @@
           <!-- <v-flex xs1/> -->
           <v-flex xs6 class="field-single-line">
             <span class="primary--text mx-3 pt-4 subheading">利润中心</span>
-            <v-select class="primary--text mx-1 ":items="profitcenter" v-model="profitcenterData" label="利润中心" item-text="prodDesc" item-value="prodCode" single-line></v-select>
+            <v-select class="primary--text mx-1" :items="profitcenter" v-model="profitcenterData" label="利润中心" item-text="prodDesc" item-value="prodCode" single-line></v-select>
           </v-flex>
         </v-layout>
         <v-layout row wrap>
