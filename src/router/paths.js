@@ -1081,7 +1081,21 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/indexFlow/indexFlow.vue`
+        `@/views/userFlow/indexFlow/indexFlow2.vue`
       )
   },
+{
+    path: '/userFlow/tranDataIndex',
+        meta: {
+    breadcrumb: true,
+        title: '交易详细信息'
+},
+    name: 'tranDataIndex',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    `@/views/userFlow/transactionInfo/tranDataIndex.vue`
+)
+},
 ];

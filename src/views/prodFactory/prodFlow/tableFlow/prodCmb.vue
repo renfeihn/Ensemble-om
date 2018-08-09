@@ -13,7 +13,9 @@
       <v-tab-item v-for="i in 3" :key=i :id="'mobile-tabs-5-' + i">
         <v-card>
           <v-card-text>
-            <deposit-cmb></deposit-cmb>
+            <deposit-cmb v-if="i==1"></deposit-cmb>
+            <loan-cmb v-if="i==2"></loan-cmb>
+            <internal-cmb v-if="i==3"></internal-cmb>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -25,11 +27,15 @@
   // import queryheader from './components/queryheader'
   import VWidget from '@/components/VWidget';
   import depositCmb from './depositCmb';
+  import loanCmb from './loanCmb';
+  import internalCmb from './internalCmb'
   export default {
     name: 'prodCmb',
     components: {
       VWidget,
-      depositCmb
+      depositCmb,
+        loanCmb,
+        internalCmb
     },
     data() {
       return {

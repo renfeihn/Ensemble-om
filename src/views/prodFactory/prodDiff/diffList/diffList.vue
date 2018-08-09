@@ -29,7 +29,7 @@
       <v-list dense>
       <template v-for="(item, index) in prodList.items"  >
         <v-btn class="diffIdButton"  color="red" v-if="index==0&&index1!=0"  dark @click="deleteTd(prodList.prodType)">
-          <v-icon dark >block</v-icon>{{prodList.prodType}}
+          {{prodList.prodType}}<v-icon dark >block</v-icon>
         </v-btn>
         <div class="diffEg" v-if="index==0&&index1==0"  dark >
         </div>
@@ -115,7 +115,11 @@
                 })
             },
             showSearch (prodType){
+                if(this.prodCodeList==undefined||this.prodCodeList.length<=0) {
+                    his.prodCodeList=this.unique1(prodType)
+                }else{
                 this.prodCodeList=this.concatArr(this.prodCodeList,prodType)
+                }
                 this.queryDespositProdData()
                 this.dialog=false
             },
@@ -173,6 +177,9 @@
         },
         mounted: function() {
           this.prodCodeList=  this.$route.params.prodCodeList;
+          if(this.prodCodeList==undefined||this.prodCodeList.length<=0){
+              this.prodCodeList=['RB10001','RB10002']
+          }
           this.queryDespositProdData()
         }
     };
@@ -185,7 +192,7 @@
     text-align:center;
   }
 .tbColor{
-  background-color: #ffff0f;
+  background-color: #03a9f4;
 }
   .diffList .v-divider--inset:not(.v-divider--vertical){
     margin-left:0px;
