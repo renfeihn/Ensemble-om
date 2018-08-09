@@ -8,14 +8,25 @@
     <v-toolbar-title class="ml-0 pl-0">
       <v-toolbar-side-icon @click.stop="handleDrawerToggle"></v-toolbar-side-icon>
     </v-toolbar-title>
-    <!-- <v-text-field
-        flat
-        solo-inverted
-        prepend-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-        >
-      </v-text-field> -->
+     <!--<v-text-field-->
+        <!--flat-->
+        <!--solo-inverted-->
+        <!--prepend-icon="search"-->
+        <!--label="Search"-->
+        <!--class="hidden-sm-and-down"-->
+    <!--:items="prodList"-->
+    <!--v-model="country"-->
+        <!--&gt;-->
+      <!--</v-text-field>-->
+    <v-autocomplete
+            ref="country"
+            :rules="[() => !!country || 'This field is required']"
+            :items="prodList"
+            v-model="prodList"
+            placeholder="请输入关键字"
+            required
+            class="primary--text mx-3 pt-4"
+    ></v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn icon @click="handleFullScreen()">
         <v-icon>fullscreen</v-icon>
@@ -51,12 +62,16 @@
 <script>
 import NotificationList from '@/components/widgets/list/NotificationList';
 import Util from '@/util';
+import {
+    getProdType
+} from '@/api/prod'
 export default {
   name: 'app-toolbar',
   components: {
     NotificationList
   },
   data: () => ({
+      prodList: [],
     items: [
       {
         icon: 'account_circle',
@@ -95,7 +110,18 @@ export default {
     },
     handleFullScreen () {
       Util.toggleFullScreen();
+    },
+      getInitProdList() {
+          getProdType().then(response => {
+              for(let i=0;i< response.data.prodTypeForm.length ; i++){
+                  this.prodList.push( response.data.prodTypeForm[i].value + '-'+response.data.prodTypeForm[i].label)
+              }
+          })
+      }
+
+  },
+    mounted() {
+        this.getInitProdList()
     }
-  }
 };
 </script>
