@@ -21,7 +21,7 @@
           <v-card-text>
             <search-list-smart v-on:listenToSearch="showSearch"></search-list-smart>
           </v-card-text>
-        </v-card>l
+        </v-card>
       </v-dialog>
 
       <v-layout row wrap>
@@ -178,7 +178,7 @@
         mounted: function() {
           this.prodCodeList=  this.$route.params.prodCodeList;
           if(this.prodCodeList==undefined||this.prodCodeList.length<=0){
-              this.prodCodeList=['RB10001','RB10002']
+              this.prodCodeList=['111001','11100']
           }
           this.queryDespositProdData()
         }

@@ -84,7 +84,7 @@
             addCompare() {
                 var selected = [];
                 for (var item in this.complex.selected) {
-                    selected.push(this.complex.selected[item].prodCode)
+                    selected.push(this.complex.selected[item].value)
                 }
                 this.$router.push({
                     name: 'diffList',

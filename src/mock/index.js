@@ -16,7 +16,7 @@ Mock.mock(/\/table\/list/, 'get', tableAPI.getList);
 Mock.mock(/\/prod\/info\.*/, 'get', prodAPI.getProd);
 Mock.mock(/\/prod\/deposit\.*/, 'get', prodAPI.getDepositProd);
 Mock.mock(/\/prod\/dtlDeposit\.*/, 'get', prodAPI.getDepositDtl);
-Mock.mock(/\/prod\/getDiffProd\.*/, 'get', prodAPI.getDiffProd);
+Mock.mock(/\/prod\/getDiffProd\.*/, 'post', prodAPI.getDiffProd);
 Mock.mock(/\/prod\/getDiffList\.*/, 'get', prodAPI.getDiffList);
 Mock.mock(/\/prod\/prodList\.*/, 'get', prodAPI.getProdList);
 Mock.mock(/\/data\/info\.*/, 'get', dataAPI.getProdData);
