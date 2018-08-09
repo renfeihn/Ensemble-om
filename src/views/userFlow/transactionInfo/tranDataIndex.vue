@@ -1,38 +1,36 @@
 <template>
   <div>
     <v-card >
-      <v-layout row wrap>
-        <v-card-text>
-          操作单号：FB10002
-        </v-card-text>
-      </v-layout>
-    </v-card>
-    <v-card >
+      <v-toolbar color="white" >
+        <v-icon large color="blue darken-2">chat</v-icon>
+        <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+          <v-btn color="info" @click="addCompare">发布</v-btn>
+      </v-toolbar>
     <v-layout row>
       <v-card-text>
-         <diff-list></diff-list>
+         <prod-diff></prod-diff>
       </v-card-text>
     </v-layout>
     </v-card>
-    <v-card >
-      <v-card-title>
-        <span >流程信息：</span>
-      </v-card-title>
-      <v-layout row>
-        <v-card-text>
-          <transaction-info></transaction-info>
-        </v-card-text>
-      </v-layout>
-    </v-card>
+          <tran-flow-info></tran-flow-info>
   </div>
 </template>
 <script>
-  import diffList from '@/views/prodFactory/prodDiff/diffList/diffList'
-  import transactionInfo from './transactionInfo'
+  import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
+  import tranFlowInfo from './tranFlowInfo'
     export default {
+      data (){
+          return {
+              code:''
+          }
+      },
         components :{
-            diffList,
-            transactionInfo
+            prodDiff,
+            tranFlowInfo
+        },
+        created() {
+            this.code = this.$route.params.code;
         }
     }
 </script>

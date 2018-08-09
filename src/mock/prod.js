@@ -161,7 +161,7 @@ const prodDiffData = [{
     }
   ]
 },
-{ 
+{
   prodType: 'RB10003',
   items: [
     { divider: true, inset: true },
@@ -263,6 +263,160 @@ const prodDiffData = [{
     }
   ]
 },
+];
+const prodDiffTwo = [{
+    prodType: '',
+    items: [
+        { divider: true, inset: true },
+        {
+            title: '产品名称'
+        },
+        { divider: true, inset: true },
+        {
+            title: '产品类别'
+        },
+        { divider: true, inset: true },
+        {
+            title: '产品结构',
+            diff: true
+        },
+        { divider: true, inset: true },
+        {
+            title: '金额标志'
+        },
+        { divider: true, inset: true },
+        {
+            title: '虚实标志'
+        },
+        { divider: true, inset: true },
+        {
+            title: '余额类型'
+        },
+        { divider: true, inset: true },
+        {
+            title: '产品状态',
+            diff: true
+        },
+        { divider: true, inset: true },
+        {
+            title: '账户计息标志'
+        },
+        { divider: true, inset: true },
+        {
+            title: '利润中心'
+        },
+        { divider: true, inset: true },
+        {
+            title: '生效日期'
+        },
+        { divider: true, inset: true },
+        {
+            title: '失效日期'
+        }
+    ]
+},
+    {
+        prodType: 'RB10001修改前',
+        items: [
+            { divider: true, inset: true },
+            {
+                title: '个人活期存款产品'
+            },
+            { divider: true, inset: true },
+            {
+                title: '个人存款'
+            },
+            { divider: true, inset: true },
+            {
+                title: '一层账户',
+                diff: true
+            },
+            { divider: true, inset: true },
+            {
+                title: '不记录余额'
+            },
+            { divider: true, inset: true },
+            {
+                title: '虚账户'
+            },
+            { divider: true, inset: true },
+            {
+                title: '超余额汇余额'
+            },
+            { divider: true, inset: true },
+            {
+                title: '有效',
+                diff: true
+            },
+            { divider: true, inset: true },
+            {
+                title: '主账户计息'
+            },
+            { divider: true, inset: true },
+            {
+                title: '神州信息'
+            },
+            { divider: true, inset: true },
+            {
+                title: '2018/01/23'
+            },
+            { divider: true, inset: true },
+            {
+                title: '2099/01/23'
+            }
+        ]
+    },
+    {
+        prodType: 'RB10001修改后',
+        items: [
+            { divider: true, inset: true },
+            {
+                title: '个人活期存款产品'
+            },
+            { divider: true, inset: true },
+            {
+                title: '个人存款'
+            },
+            { divider: true, inset: true },
+            {
+                title: '二层账户',
+                diff: true
+            },
+            { divider: true, inset: true },
+            {
+                title: '不记录余额'
+            },
+            { divider: true, inset: true },
+            {
+                title: '虚账户'
+            },
+            { divider: true, inset: true },
+            {
+                title: '超余额汇余额'
+            },
+            { divider: true, inset: true },
+            {
+                title: '无效',
+                diff: true
+            },
+            { divider: true, inset: true },
+            {
+                title: '主账户计息'
+            },
+            { divider: true, inset: true },
+            {
+                title: '神州信息'
+            },
+            { divider: true, inset: true },
+            {
+                title: '2018/01/23'
+            },
+            { divider: true, inset: true },
+            {
+                title: '2099/01/23'
+            }
+        ]
+    },
 ];
 const baseContent = '<p>我是测试数据我是测试数据</p><p><img src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943"></p>';
 const image_uri = 'https://wpimg.wallstcn.com/e4558086-631c-425c-9430-56ffb46e70b3';
@@ -389,7 +543,8 @@ export default {
     depositProd: prodList
   }),
   getDiffList: () => ({
-    prodDiffData: prodDiffData
+    prodDiffData: prodDiffData,
+      prodDiffTwo:prodDiffTwo
   }),
 
   getDepositDtl: (data) => {
