@@ -242,7 +242,7 @@
     watch: {
       listValue(val, oldval) {
         if (val !== oldval) {
-          this.selectByProd()
+          this.selectByProd(val)
         }
       }
     },
