@@ -136,7 +136,7 @@ export default {
       background: #fff;
       padding: 0 10px;
       font-size: 14px;
-      margin-left: 5px;
+      margin-left: 1px;
       margin-top: 5px;
       padding-top: 5px;
       &:first-of-type {
