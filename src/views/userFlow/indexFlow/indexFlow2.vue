@@ -166,9 +166,6 @@
   .userDiv3 {
     padding: 10px;
   }
-  .userDiv2 {
-    /* padding-left: 40px; */
-  }
   .indexFlowTitle {
     padding: 10px;
   }
