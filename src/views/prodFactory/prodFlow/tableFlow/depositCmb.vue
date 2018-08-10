@@ -8,7 +8,7 @@
         <vue-perfect-scrollbar class="depositTree">
           <v-list two-line subheader>
             <v-subheader class="title">
-              <v-icon left large color="red darken-1" class="pr-3">favorite</v-icon>我的产品</v-subheader>
+              <v-icon left large color="red darken-1" class="pr-3 pt-2">favorite</v-icon>我的产品</v-subheader>
             <v-list-tile class="prodList" v-for="item in files" :key="item.title" avatar @click="handleClick">
               <v-list-tile-avatar>
                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
@@ -25,7 +25,7 @@
             </v-list-tile>
             <v-divider></v-divider>
             <v-subheader class="title">
-              <v-icon left large color="green darken-2" class="pr-3">call_split</v-icon>存款产品</v-subheader>
+              <v-icon left large color="green darken-2" class="pr-3 pt-2">call_split</v-icon>存款产品</v-subheader>
             <v-list-tile class="chat-list prodList" avatar v-for="(item) in folders" :key="item.title" @click="handleClick(item)">
               <v-list-tile-avatar>
                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
