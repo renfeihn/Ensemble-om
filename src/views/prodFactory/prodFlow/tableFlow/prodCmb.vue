@@ -4,7 +4,7 @@
     <v-tabs dark tabs color="primary lighten-1" v-model="activeName" grow icons-and-text>
       <v-tabs-slider color="yellow"></v-tabs-slider>
       <v-tab v-for="item in prodInfo" :key="item.text">
-        <span class="headline">{{ item.text}}</span>
+        <span class="title">{{ item.text}}</span>
         <v-icon medium>{{item.icon}}</v-icon>
       </v-tab>
     </v-tabs>
