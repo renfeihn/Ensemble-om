@@ -109,16 +109,16 @@
         version: '1.0'
       }
     },
-    methods: {
-      submitForm() {},
-      draftForm() {},
-      queryProdInfo() {},
-      selectByProd() {
+      mounted: function() {
+          this.getProdClassData()
+          this.prodclass = 'GL100'
+          this.getProdType(this.prodclass)
       },
+    methods: {
       handleClick(prodList) {
           //渲染产品信息列表时，先清空原有产品信息
           this.prodListDtl = []
-          this.prodclass =  prodList.value
+          this.prodclass = prodList.value
           this.getProdType(this.prodclass)
       },
       onSubmit() {
@@ -137,7 +137,7 @@
         })
       },
       queryDespositDtl(prodCode,prodType) {
-        getDepositDtl({'prodCode':prodCode,'prodType':prodType}).then(response => {
+        getDepositDtl({'prodCode': prodCode,'prodType': prodType}).then(response => {
           this.prodListDtl = response.data
         })
       },
@@ -146,7 +146,7 @@
             getProdClass().then(response => {
                 for (let i=0; i<response.data.prodClassForm.length; i++)
                 {
-                   if('GL'=== response.data.prodClassForm[i].parentProdClass){
+                   if('GL'== response.data.prodClassForm[i].parentProdClass){
                         this.glFolders.push(response.data.prodClassForm[i])
                     }
                 }
@@ -163,11 +163,6 @@
                 }
             })
         }
-    },
-    mounted: function() {
-        this.getProdClassData()
-        this.prodclass = 'GL100'
-        this.getProdType(this.prodclass)
     }
   }
 </script>

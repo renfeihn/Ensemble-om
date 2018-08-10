@@ -176,15 +176,15 @@
                 prodDesc: ''
             }]
         }),
-        mounted() {
-            this.initRefDate()
-        },
         watch: {
             listValue(val, oldval) {
                 if (val !== oldval) {
                     this.selectByProd()
                 }
             }
+        },
+        mounted() {
+            this.initRefDate()
         },
         methods: {
             selectByProd() {

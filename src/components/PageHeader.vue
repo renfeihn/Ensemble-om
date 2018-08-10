@@ -31,7 +31,7 @@ export default {
   computed: {
     breadcrumbs: function () {
       let breadcrumbs = [];
-      menu.forEach(item => {
+        Menu.forEach(item => {
         if (item.items) {
           let child =  item.items.find(i => {
             return i.component === this.$route.name;

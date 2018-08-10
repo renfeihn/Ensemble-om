@@ -21,15 +21,15 @@
   import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
   import tranFlowInfo from './tranFlowInfo'
     export default {
-      data (){
-          return {
-              code:''
-          }
-      },
         components :{
             prodDiff,
             tranFlowInfo
         },
+      data (){
+          return {
+              code: ''
+          }
+      },
         created() {
             this.code = this.$route.params.code;
         }

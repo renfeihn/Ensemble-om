@@ -251,15 +251,15 @@
         return Math.min(100, this.value.length * 10)
       },
     },
+    watch: {
+        listValue(val, oldval) {
+            if (val !== oldval) {
+                this.selectByProd(val)
+            }
+        }
+    },
     mounted() {
       this.initRefDate()
-    },
-    watch: {
-      listValue(val, oldval) {
-        if (val !== oldval) {
-          this.selectByProd(val)
-        }
-      }
     },
     methods: {
       selectByProd() {

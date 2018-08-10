@@ -108,6 +108,9 @@ export default {
       return this.$vuetify.options.extra.mainNav;
     }
   },
+    mounted() {
+        this.getInitProdList()
+    },
   methods: {
     handleDrawerToggle () {
       window.getApp.$emit('APP_DRAWER_TOGGLED');
@@ -122,8 +125,8 @@ export default {
                       this.prodClass = response.data.prodTypeForm[i].prodClass
                   }
               }
-              if('RB100' === this.prodClass){
-                  this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp':this.prodClass,'prodCodeCmp':this.prodCode}})
+              if('RB100' == this.prodClass){
+                  this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': this.prodClass,'prodCodeCmp': this.prodCode}})
               }
           })
       },
@@ -132,15 +135,12 @@ export default {
     },
       getInitProdList() {
           getProdType().then(response => {
-              for(let i=0;i< response.data.prodTypeForm.length ; i++){
-                  this.prodList.push( response.data.prodTypeForm[i].value + '-'+response.data.prodTypeForm[i].label)
+              for(let i=0; i< response.data.prodTypeForm.length; i++){
+                  this.prodList.push(response.data.prodTypeForm[i].value + '-'+response.data.prodTypeForm[i].label)
               }
           })
       }
 
-  },
-    mounted() {
-        this.getInitProdList()
-    }
+  }
 };
 </script>

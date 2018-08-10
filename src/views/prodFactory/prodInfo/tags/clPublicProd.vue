@@ -99,22 +99,30 @@
                     ccy: []
                 },
                 acctForm: {},
-                prodInfo: ['基本信息','账户信息','核算信息'],
+                prodInfo: ['基本信息', '账户信息', '核算信息'],
                 files: [
-                    { icon: 'assignment', iconClass: 'blue white--text', value: '', lable: '' }
+                    {icon: 'assignment', iconClass: 'blue white--text', value: '', lable: ''}
                 ],
-                folders: [
-                 ]
+                folders: []
             }
         },
         created() {
-            this.depositProd = { prodcode: this.$route.params.prodType, version: '1.0' }
+            this.depositProd = {prodcode: this.$route.params.prodType, version: '1.0'}
+        },
+        mounted: function () {
+            window.getApp.$emit('APP_DRAWER_TOGGLED');
+            this.prodCode = this.$route.hash
+            this.queryDespositProdData(this.prodCode)
+            if (this.$route.params.prodClassCmp != '') {
+                this.prodClass = this.$route.params.prodClassCmp
+            }
+            if (this.$route.params.prodCodeCmp != '') {
+                this.initStage(this.$route.params.prodCodeCmp)
+            }
+            this.queryDespositProdData(this.prodClass)
+
         },
         methods: {
-            submitForm() {
-            },
-            draftForm() {
-            },
             queryProdInfo() {
                 console.log('start query prod info')
 
@@ -142,24 +150,13 @@
                 getProdType().then(response => {
                     let length = response.data.prodTypeForm.length
                     for (let i = 0; i < length; i++) {
-                    if (prodCode === response.data.prodTypeForm[i].prodClass){
-                        this.folders.push(response.data.prodTypeForm[i])
+                        if (prodCode === response.data.prodTypeForm[i].prodClass) {
+                            this.folders.push(response.data.prodTypeForm[i])
+                        }
                     }
-                }
-            })
-            }
-        },
-        mounted: function() {
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodCode = this.$route.hash
-            this.queryDespositProdData(this.prodCode)
-            if(this.$route.params.prodClassCmp !=''){
-                this.prodClass = this.$route.params.prodClassCmp
-            }
-            if(this.$route.params.prodCodeCmp !=''){
-                this.initStage(this.$route.params.prodCodeCmp)
-            }
-            this.queryDespositProdData(this.prodClass)
+                })
+            },
+
         }
     }
 </script>

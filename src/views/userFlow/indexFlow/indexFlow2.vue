@@ -66,6 +66,7 @@
           <v-card-text style="text-align: center;">
             <v-list>
               <v-list-tile v-for="item in items" :key="item.title" avatar @click="keyboardClick(item)">
+
                 <v-list-tile-action>
                   <v-icon v-if="item.icon" color="red">star</v-icon>
                 </v-list-tile-action>
@@ -135,6 +136,7 @@
               if(key === 'prodList'){
                   this.$router.push({ name: 'prodCmb'})
               }
+
           }
       }
   }

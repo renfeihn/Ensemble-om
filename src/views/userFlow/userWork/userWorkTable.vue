@@ -164,6 +164,9 @@
                 }]
             };
         },
+        mounted: function() {
+            this.queryDespositProdData()
+        },
         methods: {
             prodAction() {
                 this.$router.push({
@@ -177,11 +180,8 @@
             },
 
             getDataInfo(code) {
-                this.$router.push({ name: 'tranDataIndex',params:{'code':code}})
+                this.$router.push({ name: 'tranDataIndex',params: {'code': code}})
             }
-        },
-        mounted: function() {
-            this.queryDespositProdData()
         }
     };
 </script>

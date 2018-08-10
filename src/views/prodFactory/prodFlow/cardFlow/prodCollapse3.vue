@@ -28,8 +28,12 @@
     getDepositProdList
   } from '@/api/prod'
   import PlainTableOrder3 from './PlainTableOrder3'
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+  import VuePerfectScrollbar from 'vue-perfect-scrollbar';
   export default {
+      components: {
+          VuePerfectScrollbar,
+          PlainTableOrder3
+      },
     data() {
       return {
         data: [{
@@ -47,10 +51,6 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar';
           label: 'label'
         }
       }
-    },
-    components: {
-        VuePerfectScrollbar,
-        PlainTableOrder3
     },
     methods: {
       handleNodeClick(data) {

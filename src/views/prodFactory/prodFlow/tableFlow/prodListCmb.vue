@@ -5,8 +5,8 @@
             <v-btn color="info" @click="addCompare">加入对比</v-btn>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-card-text class="pa-0">
-            <v-data-table :headers="complex.headers"  :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="value" select-all v-model="complex.selected">
+        <v-card-text class="pa-0"><!--  -->
+            <v-data-table :headers="complex.headers" :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="value" select-all v-model="complex.selected">
                 <template slot="items" slot-scope="props" >
                                                           <td>
                                                             <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
@@ -82,8 +82,8 @@
         },
         methods: {
             addCompare() {
-                var selected = [];
-                for (var item in this.complex.selected) {
+                let selected = [];
+                for (const item in this.complex.selected) {
                     selected.push(this.complex.selected[item].value)
                 }
                 this.$router.push({
@@ -101,8 +101,8 @@
                            this.prodclass = response.data.prodTypeForm[i].prodClass
                        }
                     }
-                    if('RB100' === this.prodclass){
-                        this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp':this.prodclass,'prodCodeCmp':prodCode}})
+                    if('RB100' == this.prodclass){
+                        this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': this.prodclass,'prodCodeCmp': prodCode}})
                     }
                 })
             }

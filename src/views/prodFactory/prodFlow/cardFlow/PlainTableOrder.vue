@@ -43,6 +43,9 @@
                 return this.colors[item];
             },
         },
+        mounted: function() {
+            this.queryDespositProdData()
+        },
         methods: {
             getColorByStatus (status) {
                 return this.colors['processing'];
@@ -53,11 +56,8 @@
                 })
             },
             prodAction (prodType) {
-                this.$router.push({ name: 'prod/deposit2', params: {'prodType':prodType}})
+                this.$router.push({ name: 'prod/deposit2', params: {'prodType': prodType}})
             }
-        },
-        mounted: function() {
-            this.queryDespositProdData()
         }
     };
 </script>

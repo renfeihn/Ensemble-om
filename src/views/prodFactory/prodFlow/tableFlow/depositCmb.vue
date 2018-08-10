@@ -115,10 +115,14 @@
         version: '1.0'
       }
     },
+    mounted: function() {
+//    this.queryDespositProdData()
+        this.getProdClassData()
+        //界面初始加载，显示所有个人存款产品
+        this.prodclass = 'RB100'
+        this.getProdType(this.prodclass)
+    },
     methods: {
-      submitForm() {},
-      draftForm() {},
-      queryProdInfo() {},
       selectByProd() {
         // this.$bus.$emit('prodType', this.depositProd.prodtype)
         // console.log(this.depositProd.prodtype)
@@ -131,7 +135,7 @@
 //        this.queryDespositDtl(prodCode,prodType)
           //渲染产品信息列表时，先清空原有产品信息
           this.prodListDtl = []
-          this.prodclass =  prodList.value
+          this.prodclass = prodList.value
           this.getProdType(this.prodclass)
       },
       onSubmit() {
@@ -179,13 +183,6 @@
                 }
             })
         }
-    },
-    mounted: function() {
-//      this.queryDespositProdData()
-        this.getProdClassData()
-        //界面初始加载，显示所有个人存款产品
-        this.prodclass = 'RB100'
-        this.getProdType(this.prodclass)
     }
   }
 </script>

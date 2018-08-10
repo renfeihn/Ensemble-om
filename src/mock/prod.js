@@ -544,7 +544,7 @@ export default {
   }),
   getDiffList: () => ({
     prodDiffData: prodDiffData,
-      prodDiffTwo:prodDiffTwo
+    prodDiffTwo: prodDiffTwo
   }),
 
   getDepositDtl: (data) => {

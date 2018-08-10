@@ -48,22 +48,26 @@ export default {
             {text: '应付利息科目代码', value: 'DSubjectCode'}
 
         ],
-      projects: [     { prodType: '',
-          accountingStatus: '',
-          subjectCode: '',
-          rateCode: '',
-          DSubjectCode: ''}]
+      projects: [
+          {
+              prodType: '',
+              accountingStatus: '',
+              subjectCode: '',
+              rateCode: '',
+              DSubjectCode: ''
+          }
+          ]
     };
   },
+    mounted: function() {
+        this.queryDespositProdData()
+    },
   methods: {
       queryDespositProdData() {
           getList().then(response => {
               this.projects = response.data.irlAccounting
           })
       }
-  },
-    mounted: function() {
-        this.queryDespositProdData()
-    }
+  }
 };
 </script>
