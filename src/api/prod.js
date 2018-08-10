@@ -36,10 +36,13 @@ export function getInitData (params) {
   });
 }
 export function getDiffProd (params) {
+    const data = {
+      params
+    }
   return request({
     url: '/prod/getDiffProd',
-    method: 'get',
-    params
+    method: 'post',
+      data
   });
 }
 export function getDiffList (params) {

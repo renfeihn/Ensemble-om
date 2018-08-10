@@ -22,6 +22,9 @@
 <script>
   import userWorkTable from './userWorkTable'
   export default {
+      components: {
+          userWorkTable
+      },
     data() {
       return {
         active: null,
@@ -29,9 +32,7 @@
         userWork: ['待复核', '待发布']
       }
     },
-    components: {
-      userWorkTable
-    },
+
     methods: {}
   }
 </script>

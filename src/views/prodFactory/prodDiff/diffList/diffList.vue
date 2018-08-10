@@ -10,8 +10,8 @@
               hide-details
               class="prodDiffSwitch"
       ></v-switch>
-      <v-dialog v-model="dialog" class="prodDiffButton"  max-width="1000px">
-      <v-btn fab dark small color="cyan" slot="activator"  @click="addTd">
+      <v-dialog v-model="dialog" class="prodDiffButton" max-width="1000px">
+      <v-btn fab dark small color="cyan" slot="activator" @click="addTd">
         <v-icon dark>add</v-icon>
       </v-btn>
         <v-card>
@@ -21,17 +21,17 @@
           <v-card-text>
             <search-list-smart v-on:listenToSearch="showSearch"></search-list-smart>
           </v-card-text>
-        </v-card>l
+        </v-card>
       </v-dialog>
 
       <v-layout row wrap>
         <div v-for="(prodList, index1) in prodDiffData" class="diffList">
       <v-list dense>
-      <template v-for="(item, index) in prodList.items"  >
-        <v-btn class="diffIdButton"  color="red" v-if="index==0&&index1!=0"  dark @click="deleteTd(prodList.prodType)">
+      <template v-for="(item, index) in prodList.items">
+        <v-btn class="diffIdButton" color="red" v-if="index==0&&index1!=0" dark @click="deleteTd(prodList.prodType)">
           {{prodList.prodType}}<v-icon dark >block</v-icon>
         </v-btn>
-        <div class="diffEg" v-if="index==0&&index1==0"  dark >
+        <div class="diffEg" v-if="index==0&&index1==0" dark>
         </div>
         <v-divider
                 v-if="item.divider"
@@ -41,11 +41,10 @@
         <v-list-tile
                 :key="item.title"
                 avatar
-                @click=""
                 v-else
                 :class="{'tbColor':item.diff}"
         >
-            <v-list-tile-content  >
+            <v-list-tile-content>
                <v-list-tile-title v-html="item.title"></v-list-tile-title>
              </v-list-tile-content>
           </v-list-tile>
@@ -67,12 +66,12 @@
         components: {searchListSmart},
         data () {
             return {
-                ex11:'',
+                ex11: '',
                 dialog: false,
-                prodCodeList :[],
-                onlyDiff:false,
-                prodDiffData:[{
-                    prodType:'',
+                prodCodeList: [],
+                onlyDiff: false,
+                prodDiffData: [{
+                    prodType: '',
                     items: [
                         {
                             title: '产品代码'
@@ -108,6 +107,39 @@
                 return this.colors[item];
             },
         },
+        watch: {
+            ex11(val){
+                if(val=='onlyDiff'){
+                    let prodList=this.prodDiffData;
+                    let newListSub=[]
+                    for(const item in prodList){
+                        let newList=[]
+                        for(const items in prodList[item].items){
+                            if(prodList[item].items[items].diff==true){
+                                newList.push(prodList[item].items[items-1]);
+                                newList.push(prodList[item].items[items]);
+                            }
+                        }
+                        if(newList.length>0){
+                            let data={'prodType': prodList[item].prodType}
+                            data.items=newList;
+                            newListSub.push(data)
+                        }
+                    }
+                    this.prodDiffData=newListSub
+                }
+                else{
+                    this.queryDespositProdData()
+                }
+            }
+        },
+        mounted: function() {
+            this.prodCodeList=this.$route.params.prodCodeList;
+            if(this.prodCodeList==undefined||this.prodCodeList.length<=0){
+                this.prodCodeList=['111001','11100']
+            }
+            this.queryDespositProdData()
+        },
         methods: {
             queryDespositProdData() {
                 getDiffProd(this.prodCodeList).then(response => {
@@ -116,7 +148,7 @@
             },
             showSearch (prodType){
                 if(this.prodCodeList==undefined||this.prodCodeList.length<=0) {
-                    his.prodCodeList=this.unique1(prodType)
+                    this.prodCodeList=this.unique1(prodType)
                 }else{
                 this.prodCodeList=this.concatArr(this.prodCodeList,prodType)
                 }
@@ -124,9 +156,9 @@
                 this.dialog=false
             },
             deleteTd (prodType) {
-                var newIndex=0
-                for (var i = 1; i < this.prodDiffData.length; i++) {
-                    if( this.prodDiffData[i].prodType==prodType){
+                let newIndex=0
+                for (let i = 1; i < this.prodDiffData.length; i++) {
+                    if(this.prodDiffData[i].prodType==prodType){
                         newIndex=i
                     }
                 }
@@ -134,8 +166,8 @@
                 this.prodCodeList.splice(newIndex-1,1);
             },
             unique1(arr){
-                var hash=[];
-                for (var i = 0; i < arr.length; i++) {
+                let hash=[];
+                for (let i = 0; i < arr.length; i++) {
                     if(hash.indexOf(arr[i])==-1){
                         hash.push(arr[i]);
                     }
@@ -143,44 +175,10 @@
                 return hash;
             },
             concatArr(arr1, arr2){
-                var arr = arr1.concat(arr2);
+                let arr = arr1.concat(arr2);
                 arr = this.unique1(arr);//再引用上面的任意一个去重方法
                 return arr;
             },
-        },
-        watch: {
-            ex11(val){
-                if(val=='onlyDiff'){
-
-                      var prodList=this.prodDiffData;
-                    var newListSub=[]
-                      for(var item in prodList){
-                          var newList=[]
-                          for(var items in prodList[item].items){
-                              if(prodList[item].items[items].diff==true){
-                                  newList.push(prodList[item].items[items-1]);
-                                  newList.push(prodList[item].items[items]);
-                              }
-                          }
-                          if(newList.length>0){
-                              var data={'prodType':prodList[item].prodType}
-                              data.items=newList;
-                          newListSub.push(data)
-                          }
-                      }
-                      this.prodDiffData=newListSub
-                }
-                else{
-                    this.queryDespositProdData()
-                }
-            }
-        },
-        mounted: function() {
-          this.prodCodeList=  this.$route.params.prodCodeList;
-          if(this.prodCodeList==undefined||this.prodCodeList.length<=0){
-              this.prodCodeList=['RB10001','RB10002']
-          }
-          this.queryDespositProdData()
         }
     };
 </script>
@@ -192,7 +190,7 @@
     text-align:center;
   }
 .tbColor{
-  background-color: #03a9f4;
+  background-color: #E3F2FD;
 }
   .diffList .v-divider--inset:not(.v-divider--vertical){
     margin-left:0px;

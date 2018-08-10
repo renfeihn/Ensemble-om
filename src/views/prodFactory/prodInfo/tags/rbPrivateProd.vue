@@ -213,13 +213,14 @@
         mounted: function() {
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
+            this.queryDespositProdData(this.prodClass)
             if(this.$route.params.prodClassCmp !=''){
-                this.prodclass = this.$route.params.prodClassCmp
+                this.prodClass = this.$route.params.prodClassCmp
             }
             if(this.$route.params.prodCodeCmp !=''){
                 this.initStage(this.$route.params.prodCodeCmp)
             }
-            this.queryDespositProdData(this.prodclass)
+            this.queryDespositProdData(this.prodClass)
         }
     }
 </script>

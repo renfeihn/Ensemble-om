@@ -119,9 +119,10 @@
         version: '1.0'
       }
     },
+      mounted: function() {
+          this.queryDespositProdData()
+      },
     methods: {
-      submitForm() {},
-      draftForm() {},
       queryProdInfo() {
         console.log('start query prod info')
       },
@@ -148,9 +149,6 @@
           this.folders = response.data.depositProd
         })
       }
-    },
-    mounted: function() {
-      this.queryDespositProdData()
     }
   }
 </script>

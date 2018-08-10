@@ -1,4 +1,4 @@
-const Menu =  [
+const Menu = [
   { header: 'Apps' },
   {
     title: '首页',
@@ -156,10 +156,9 @@ Menu.forEach((item) => {
     });
   }
 });
-
-export function getMenu(){
-  return  Menu.splice(5,10)
+export function getMenu() {
+  return Menu.splice(5, 10)
 }
 export {
-    Menu
-} ;
+  Menu
+};

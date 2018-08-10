@@ -1,6 +1,6 @@
 const Items = [{
   'uuid': '65a6eb21-67b5-45c3-9af7-faca2d9b60d4',
-  'prodCode': 'RB10001',
+  'prodCode': '111001',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'jobTitle': 'Web Developer',
@@ -22,7 +22,7 @@ const Items = [{
 },
 {
   'uuid': '28d9f265-74d7-4f85-83d4-6a21fca57dcf',
-  'prodCode': 'RB10002',
+  'prodCode': '111002',
   'value': false,
   'prodType': '个人活期存款产品',
   'status': '启用',
@@ -45,7 +45,7 @@ const Items = [{
 {
   'uuid': '14ddae1e-986d-42f4-8d17-46a02d469b2b',
   'value': false,
-  'prodCode': 'RB10003',
+  'prodCode': '111003',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Hobart_Mueller',
@@ -67,7 +67,7 @@ const Items = [{
 {
   'uuid': '6a03248b-1752-4332-a3a9-7108528cc9d3',
   'value': false,
-  'prodCode': 'RB10004',
+  'prodCode': '111004',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Celestine.Casper',
@@ -89,7 +89,7 @@ const Items = [{
 {
   'uuid': 'ee272550-36e8-4fe2-889d-c1ee701c5863',
   'value': false,
-  'prodCode': 'RB10005',
+  'prodCode': '111005',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Hortense99',
@@ -111,7 +111,7 @@ const Items = [{
 {
   'uuid': '77f4b102-9df5-43ba-966a-6f816806c5e2',
   'value': false,
-  'prodCode': 'RB10006',
+  'prodCode': '111006',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Pat_Zulauf81',
@@ -133,7 +133,7 @@ const Items = [{
 {
   'uuid': '36a1ead7-57a0-4275-8a21-956194ab7cdf',
   'value': false,
-  'prodCode': 'RB10007',
+  'prodCode': '111007',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Solon.Bauch4',
@@ -155,7 +155,7 @@ const Items = [{
 {
   'uuid': 'b5899bef-d01e-42d8-af2d-edfb16b6b21e',
   'value': false,
-  'prodCode': 'RB10008',
+  'prodCode': '111008',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Calista_Mertz17',
@@ -177,7 +177,7 @@ const Items = [{
 {
   'uuid': '7d910620-84e1-49fc-951e-d375587b8189',
   'value': false,
-  'prodCode': 'RB10009',
+  'prodCode': '111009',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Jackeline.Abshire',
@@ -199,7 +199,7 @@ const Items = [{
 {
   'uuid': 'afdb5033-5bcc-4cec-b932-353a83410b44',
   'value': false,
-  'prodCode': 'RB10010',
+  'prodCode': '111010',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Jamey_Grant',
@@ -221,7 +221,7 @@ const Items = [{
 {
   'uuid': '60d07662-bfec-42c7-b044-c81bc4ff8c7a',
   'value': false,
-  'prodCode': 'RB10011',
+  'prodCode': '111011',
   'prodType': '个人活期存款产品',
   'status': '启用',
   'username': 'Barton85',
@@ -242,7 +242,7 @@ const Items = [{
 },
 {
   'uuid': '5c44b666-baca-4f18-a3cb-23068c6edc14',
-  'prodCode': 'RB10012',
+  'prodCode': '111012',
   'value': false,
   'prodType': '个人活期存款产品',
   'status': '启用',
@@ -264,7 +264,7 @@ const Items = [{
 },
 {
   'uuid': '46d6f992-5729-4588-b7f8-ce74f21157ba',
-  'prodCode': 'RB10013',
+  'prodCode': '111013',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -286,7 +286,7 @@ const Items = [{
 },
 {
   'uuid': 'bd30e201-cceb-410e-8497-a4072bc399f5',
-  'prodCode': 'RB10001',
+  'prodCode': '111014',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -308,7 +308,7 @@ const Items = [{
 },
 {
   'uuid': 'da95e977-cd54-4077-a767-1b7f33ef6919',
-  'prodCode': 'RB10001',
+  'prodCode': '111015',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -330,7 +330,7 @@ const Items = [{
 },
 {
   'uuid': '6124d4e8-77ed-4b34-868d-d312bfab5de2',
-  'prodCode': 'RB10001',
+  'prodCode': '111016',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -352,7 +352,7 @@ const Items = [{
 },
 {
   'uuid': 'eef93cb1-7766-4413-a5cf-ecbf71fa3674',
-  'prodCode': 'RB10001',
+  'prodCode': '111017',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -374,7 +374,7 @@ const Items = [{
 },
 {
   'uuid': '899d0e31-b71e-4d95-a8a0-6a8bceb314bd',
-  'prodCode': 'RB10001',
+  'prodCode': '111018',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -396,7 +396,7 @@ const Items = [{
 },
 {
   'uuid': 'a41c6c4a-9cb1-45d1-8c6f-091044ba51ff',
-  'prodCode': 'RB10001',
+  'prodCode': '111019',
   'prodType': '个人活期存款产品',
   'value': false,
   'status': '启用',
@@ -417,7 +417,7 @@ const Items = [{
 },
 {
   'uuid': '3782c174-1f2c-4dc4-b75d-0bedf400e023',
-  'prodCode': 'RB10001',
+  'prodCode': '111020',
   'prodType': '个人活期存款产品',
 
   'value': false,

@@ -62,7 +62,7 @@
             </v-list-tile-action>
           </v-list-tile>
           <v-subheader inset>单位活期产品</v-subheader>
-          <v-list-tile class="prodList"  v-for="item in files" :key="item.title" avatar @click="handleClick">
+          <v-list-tile class="prodList" v-for="item in files" :key="item.title" avatar @click="handleClick">
             <v-list-tile-avatar>
               <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
             </v-list-tile-avatar>
@@ -123,18 +123,29 @@
             { icon: 'assignment', iconClass: 'blue white--text', value: '', lable: '' }
         ],
         folders: [
-            { icon: 'call_to_action', iconClass: 'amber white--text', value : '', label: '' }
+            { icon: 'call_to_action', iconClass: 'amber white--text', value: '', label: '' }
         ]
       }
+    },
+    watch: {
+        prodCode(val, oldval) {
+            if (val !== oldval) {
+//                this.folders = []
+                this.queryDespositProdData(val)
+            }
+        }
     },
     created() {
       this.depositProd = { prodcode: this.$route.params.prodType, version: '1.0' }
     },
+    mounted: function() {
+        window.getApp.$emit('APP_DRAWER_TOGGLED');
+        this.prodCode = this.$route.hash
+        this.queryDespositProdData(this.prodCode)
+
+    },
     methods: {
-        submitForm() {
-        },
-        draftForm() {
-        },
+
         queryProdInfo() {
             console.log('start query prod info')
 
@@ -169,20 +180,8 @@
             })
         }
     },
-      watch: {
-          prodCode(val, oldval) {
-              if (val !== oldval) {
-//                  this.folders = []
-                  this.queryDespositProdData(val)
-              }
-          }
-      },
-      mounted: function() {
-          window.getApp.$emit('APP_DRAWER_TOGGLED');
-          this.prodCode = this.$route.hash
-          this.queryDespositProdData(this.prodCode)
 
-      }
+
   }
 </script>
 

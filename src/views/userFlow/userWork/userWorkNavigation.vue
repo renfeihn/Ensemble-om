@@ -25,7 +25,7 @@
         <v-list-tile
                 v-for="item in items"
                 :key="item.title"
-                @click=""
+
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -54,13 +54,13 @@
             return {
                 drawer: true,
                 items: [
-                    { title: '待发布', icon: 'dashboard' },
-                    { title: '待复核', icon: 'question_answer' }
+                    {title: '待发布', icon: 'dashboard'},
+                    {title: '待复核', icon: 'dashboard'}
                 ],
                 right: null
             }
         }
-    }
+    };
 </script>
 <style scoped>
   .myNav{

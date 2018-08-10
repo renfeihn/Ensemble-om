@@ -15,7 +15,7 @@
       </v-btn>
     </v-toolbar>
     <v-divider></v-divider>
-    <v-card-text   class="pa-0">
+    <v-card-text class="pa-0">
       <v-container grid-list-xl fluid v-if="search==''">
       <v-layout row wrap>
       <v-flex sm12>
@@ -69,7 +69,6 @@
       </v-data-table>
     </v-card-text>
   </v-card>
-
 </template>
 <script>
     getDepositProdInfo
@@ -87,17 +86,17 @@
         data: () => ({
             items: [],
             search: '',
-            prodListMeta : [
-                {value:'RB10032',label:'大额存单'},
-                {value:'RB10036',label:'个人活期存款'},
-                {value:'RB10035',label:'个人外币活期存款'}
+            prodListMeta: [
+                {value: 'RB10032',label: '大额存单'},
+                {value: 'RB10036',label: '个人活期存款'},
+                {value: 'RB10035',label: '个人外币活期存款'}
             ],
-            prodListHot : [
-                {value:'RB10032',label:'单位活期存款'},
-                {value:'RB10036',label:'单位定期存款'},
-                {value:'RB10035',label:'个人多币种活期存款'},
-                {value:'RB10035',label:'个人定期存款'},
-                {value:'RB10035',label: '大额存单'}
+            prodListHot: [
+                {value: 'RB10032',label: '单位活期存款'},
+                {value: 'RB10036',label: '单位定期存款'},
+                {value: 'RB10035',label: '个人多币种活期存款'},
+                {value: 'RB10035',label: '个人定期存款'},
+                {value: 'RB10035',label: '大额存单'}
             ],
             users: [
                 {
@@ -274,6 +273,9 @@
                 ]
             }
         }),
+        mounted: function() {
+            this.queryDespositProdData()
+        },
         methods: {
             handleClick: (e) => {
                 console.log(e);
@@ -284,9 +286,6 @@
                 })
 
             }
-        },
-        mounted: function() {
-            this.queryDespositProdData()
         }
     };
 </script>

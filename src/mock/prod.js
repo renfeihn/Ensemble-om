@@ -60,7 +60,7 @@ const prodDiffData = [{
   ]
 },
 {
-  prodType: 'RB10001',
+  prodType: '111001',
   items: [
     { divider: true, inset: true },
     {
@@ -111,7 +111,7 @@ const prodDiffData = [{
   ]
 },
 {
-  prodType: 'RB10002',
+  prodType: '111002',
   items: [
     { divider: true, inset: true },
     {
@@ -162,7 +162,7 @@ const prodDiffData = [{
   ]
 },
 {
-  prodType: 'RB10003',
+  prodType: '111003',
   items: [
     { divider: true, inset: true },
     {
@@ -213,7 +213,7 @@ const prodDiffData = [{
   ]
 },
 {
-  prodType: 'RB10004',
+  prodType: '111004',
   items: [
     { divider: true, inset: true },
     {
@@ -544,7 +544,7 @@ export default {
   }),
   getDiffList: () => ({
     prodDiffData: prodDiffData,
-      prodDiffTwo:prodDiffTwo
+    prodDiffTwo: prodDiffTwo
   }),
 
   getDepositDtl: (data) => {
@@ -563,37 +563,8 @@ export default {
     return depositDtl;
   },
   getDiffProd: (params) => {
-    const url = params.url;
+    const prodTypes = JSON.parse(params.body).params
     const prodCompare = [];
-    const prodTypes = [];
-    const end0 = (url.indexOf('1='));
-    if (end0 > 0) {
-      prodTypes.push(url.substring(url.indexOf('0=') + 2, url.indexOf('1=') - 1));
-    } else {
-      prodTypes.push(url.substring(url.indexOf('0=') + 2));
-    }
-    const begin1 = (url.indexOf('1='));
-    const end1 = (url.indexOf('2='));
-    if (begin1 > 0) {
-      if (end1 > 0) {
-        prodTypes.push(url.substring(begin1 + 2, end1 - 1));
-      } else {
-        prodTypes.push(url.substring(begin1 + 2));
-      }
-    }
-    const begin2 = (url.indexOf('2='));
-    const end2 = (url.indexOf('3='));
-    if (begin2 > 0) {
-      if (end2 > 0) {
-        prodTypes.push(url.substring(begin2 + 2, end2 - 1));
-      } else {
-        prodTypes.push(url.substring(begin2 + 2));
-      }
-    }
-    const begin3 = (url.indexOf('3='));
-    if (begin3 > 0) {
-      prodTypes.push(url.substring(begin3 + 2));
-    }
     prodCompare.push(prodDiffData[0]);
     for (let i = 0; i < prodDiffData.length; i++) {
       for (let j = 0; j < prodTypes.length; j++) {
