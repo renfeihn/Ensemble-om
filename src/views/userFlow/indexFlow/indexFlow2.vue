@@ -65,7 +65,7 @@
           </v-toolbar>
           <v-card-text style="text-align: center;">
             <v-list>
-              <v-list-tile v-for="item in items" :key="item.title" avatar @click="">
+              <v-list-tile v-for="item in items" :key="item.title" avatar @click="keyboardClick(item)">
                 <v-list-tile-action>
                   <v-icon v-if="item.icon" color="red">star</v-icon>
                 </v-list-tile-action>
@@ -88,34 +88,55 @@
 <script>
   import userWorkTags from '@/views/userFlow/userWork/userWorkTags'
   export default {
-    components: {
-      userWorkTags
-    },
-    data() {
-      return {
-        items: [{
-            icon: true,
-            title: '个人活期存款',
-            avatar: '/static/prod/prod2.jpg'
-          },
-          {
-            icon: true,
-            title: '产品目录',
-            avatar: '/static/prod/prod2.jpg'
-          },
-          {
-            icon: true,
-            title: '个人特色产品',
-            avatar: '/static/prod/prod2.jpg'
-          },
-          {
-            icon: true,
-            title: '参数管理入口',
-            avatar: '/static/prod/prod2.jpg'
+      components: {
+          userWorkTags
+      },
+      data() {
+          return {
+              items: [{
+                  icon: true,
+                  title: '对私存款产品',
+                  value: 'rbPrivate',
+                  avatar: '/static/prod/prod2.jpg'
+              },
+                  {
+                      icon: true,
+                      title: '对公贷款产品',
+                      value: 'clPublic',
+                      avatar: '/static/prod/prod2.jpg'
+                  },
+                  {
+                      icon: true,
+                      title: '参数管理入口',
+                      value: 'paramMag',
+                      avatar: '/static/prod/prod2.jpg'
+                  },
+                  {
+                      icon: true,
+                      title: '产品目录',
+                      value: 'prodList',
+                      avatar: '/static/prod/prod2.jpg'
+                  }
+              ]
           }
-        ]
+      },
+      methods: {
+          keyboardClick (item) {
+              var key = item.value
+              if(key === 'rbPrivate'){
+                  this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp':'RB100','prodCodeCmp':'111001'}})
+              }
+              if(key === 'clPublic'){
+                  this.$router.push({ name: 'prod/clPublicProd', params: {'prodClassCmp':'CL100','prodCodeCmp':'220001'}})
+              }
+//              if(key === 'paramMag'){
+//                  this.$router.push({ name: 'prod/rbPrivateProd'})
+//              }
+              if(key === 'prodList'){
+                  this.$router.push({ name: 'prodCmb'})
+              }
+          }
       }
-    }
   }
 </script>
 <style scoped>

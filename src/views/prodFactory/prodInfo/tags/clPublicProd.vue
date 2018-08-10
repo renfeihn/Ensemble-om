@@ -124,9 +124,10 @@
                 // console.log(this.depositProd.prodtype)
             },
             handleClick(value) {
-                console.log(value)
-                var listValue = value.value
-                this.listValue = listValue
+                this.listValue = value.value
+            },
+            initStage(value){
+                this.listValue = value
             },
             onSubmit() {
                 this.$message('submit!')
@@ -142,7 +143,6 @@
                     let length = response.data.prodTypeForm.length
                     for (let i = 0; i < length; i++) {
                     if (prodCode === response.data.prodTypeForm[i].prodClass){
-//                        response.data.rbProdTypeForm[i].selected = false
                         this.folders.push(response.data.prodTypeForm[i])
                     }
                 }
@@ -153,7 +153,13 @@
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodCode = this.$route.hash
             this.queryDespositProdData(this.prodCode)
-
+            if(this.$route.params.prodClassCmp !=''){
+                this.prodClass = this.$route.params.prodClassCmp
+            }
+            if(this.$route.params.prodCodeCmp !=''){
+                this.initStage(this.$route.params.prodCodeCmp)
+            }
+            this.queryDespositProdData(this.prodClass)
         }
     }
 </script>
