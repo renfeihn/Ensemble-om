@@ -158,9 +158,19 @@
         created() {
             this.prodClass = this.$route.params.prodClassCmp
         },
+        mounted: function() {
+            window.getApp.$emit('APP_DRAWER_TOGGLED');
+            this.prodClass = this.$route.hash
+            this.queryDespositProdData(this.prodClass)
+            if(this.$route.params.prodClassCmp !=''){
+                this.prodClass = this.$route.params.prodClassCmp
+            }
+            if(this.$route.params.prodCodeCmp !=''){
+                this.initStage(this.$route.params.prodCodeCmp)
+            }
+            this.queryDespositProdData(this.prodClass)
+        },
         methods: {
-            submitForm() {},
-            draftForm() {},
             queryProdInfo() {
                 console.log('start query prod info')
             },
@@ -194,34 +204,22 @@
                 })
             },
             getProdBySearchValue(val) {
-                if (val) {
-                    let j = 1
-                    for (let i = 1; i < this.folders.length; i++) {
-                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
-                        }
-                    }
-                }
+//                if (val) {
+//                    let j = 1
+//                    for (let i = 1; i < this.folders.length; i++) {
+//                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
+//                        }
+//                    }
+//                }
             }
-        },
-        watch: {
-            searchValue(val, oldval) {
-                if (val !== oldval) {
-                    this.getProdBySearchValue(val)
-                }
-            }
-        },
-        mounted: function() {
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodClass = this.$route.hash
-            this.queryDespositProdData(this.prodClass)
-            if(this.$route.params.prodClassCmp !=''){
-                this.prodClass = this.$route.params.prodClassCmp
-            }
-            if(this.$route.params.prodCodeCmp !=''){
-                this.initStage(this.$route.params.prodCodeCmp)
-            }
-            this.queryDespositProdData(this.prodClass)
         }
+//        watch: {
+//            searchValue(val, oldval) {
+//                if (val !== oldval) {
+//                    this.getProdBySearchValue(val)
+//                }
+//            }
+//        }
     }
 </script>
 

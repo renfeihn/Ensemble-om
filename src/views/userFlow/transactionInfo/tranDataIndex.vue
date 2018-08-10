@@ -21,7 +21,7 @@
   import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
   import tranFlowInfo from './tranFlowInfo'
     export default {
-        components :{
+        components: {
             prodDiff,
             tranFlowInfo
         },
