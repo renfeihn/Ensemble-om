@@ -21,7 +21,7 @@
           </v-card-title>
           </v-card-media>
           <v-card-text>
-            <prod-collapse3></prod-collapse3>
+            <prod-collapse2></prod-collapse2>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -33,7 +33,7 @@
           </v-card-title>
           </v-card-media>
           <v-card-text>
-          <prod-collapse3></prod-collapse3>
+          <prod-collapse1></prod-collapse1>
           </v-card-text>
         </v-card>
     </v-flex>
@@ -42,9 +42,13 @@
 </template>
 <script>
   import prodCollapse3 from './prodCollapse3'
+  import prodCollapse2 from './prodCollapse2'
+  import prodCollapse1 from './prodCollapse1'
   export default {
     components: {
-      prodCollapse3
+      prodCollapse3,
+      prodCollapse2,
+        prodCollapse1
     }
   }
 </script>

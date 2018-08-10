@@ -81,3 +81,10 @@ export function getProdClass (data) {
         data: data
     });
 }
+export function getUserCollectProds (data) {
+    return request({
+        url: '/prod/userCollect',
+        method: 'get',
+        data: data
+    });
+}

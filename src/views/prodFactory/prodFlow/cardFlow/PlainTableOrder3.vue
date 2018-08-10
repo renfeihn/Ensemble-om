@@ -6,25 +6,25 @@
             class="elevation-0 table-striped"
     >
         <template slot="items" slot-scope="props">
-            <td class="text-xs-left" @click="prodAction(props.item.value)">{{ props.item.value }}</td>
-            <td class="text-xs-left">{{ props.item.label }}</td>
+            <td class="text-xs-left" @click="prodAction(props.item.value)">{{ props.item.prodCode }}</td>
+            <td class="text-xs-left">{{ props.item.prodDesc }}</td>
         </template>
     </v-data-table>
 </template>
 
 <script>
-    getDepositProdListTow
     import {
-        getDepositProdListTow
+        getUserCollectProds
     } from '@/api/prod'
     export default {
+        props: ['prodClass'],
         data () {
             return {
+                prodClass: '',
                 headers: [
 
-                    { text: 'Product', value: 'deadline' },
-                    { text: 'Decs', value: 'progress' }
-
+                    { text: '产品代码', value: 'deadline' },
+                    { text: '产品名称', value: 'progress' }
                 ],
                 items: [{
                     value: 'RB100',
@@ -45,15 +45,16 @@
             },
         },
         mounted: function() {
-            this.queryDespositProdData()
+            this.getUserCollectProds()
+            console.log(this.prodClass)
         },
         methods: {
             getColorByStatus (status) {
                 return this.colors['processing'];
             },
-            queryDespositProdData() {
-                getDepositProdListTow().then(response => {
-                    this.items = response.data.prodListTwo
+            getUserCollectProds() {
+                getUserCollectProds().then(response => {
+                    this.items = response.data.collectProdsForm
                 })
             },
             prodAction (prodType) {
