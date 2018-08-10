@@ -14,7 +14,7 @@
       <v-card-text class="pa-0">
 
         <v-layout row wrap>
-          <div v-for="(prodList, index1) in prodDiffData" :key="year.num" class="diffList">
+          <div v-for="(prodList, index1) in prodDiffData" class="diffList">
             <v-list dense>
               <template v-for="(item, index) in prodList.items">
                 <v-btn class="diffIdButton" color="red" v-if="index==0&&index1!=0" dark @click="deleteTd(prodList.prodType)">

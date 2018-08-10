@@ -125,10 +125,10 @@
           keyboardClick (item) {
               var key = item.value
               if(key === 'rbPrivate'){
-                  this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp':'RB100','prodCodeCmp':'111001'}})
+                  this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': 'RB100', 'prodCodeCmp': '111001'}})
               }
               if(key === 'clPublic'){
-                  this.$router.push({ name: 'prod/clPublicProd', params: {'prodClassCmp':'CL100','prodCodeCmp':'220001'}})
+                  this.$router.push({ name: 'prod/clPublicProd', params: {'prodClassCmp': 'CL100', 'prodCodeCmp': '220001'}})
               }
 //              if(key === 'paramMag'){
 //                  this.$router.push({ name: 'prod/rbPrivateProd'})
@@ -165,9 +165,6 @@
   }
   .userDiv3 {
     padding: 10px;
-  }
-  .userDiv2 {
-    /* padding-left: 40px; */
   }
   .indexFlowTitle {
     padding: 10px;

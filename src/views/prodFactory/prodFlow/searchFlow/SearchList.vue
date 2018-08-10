@@ -77,7 +77,6 @@
     } from '@/api/prod';
     import prodListCmb from '../tableFlow/prodListCmb'
     import NameCard from '@/components/widgets/card/NameCard';
-    import { Items as prod } from '@/api/prodLoc';
     export default {
         components: {
             prodListCmb,
@@ -163,7 +162,6 @@
                         value: ''
                     },
                 ],
-                items: prod
             },
             basic: {
                 headers: [

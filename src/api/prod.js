@@ -1,12 +1,5 @@
 import request from '@/utils/request';
 
-export function getProdInfo (params) {
-  return request({
-    url: '/prod/info',
-    method: 'get',
-    params
-  });
-}
 export function getDepositProdInfo (params) {
   return request({
     url: '/prod/deposit',
@@ -84,6 +77,13 @@ export function getDepositDtl (data) {
 export function getProdClass (data) {
     return request({
         url: '/prod/prodClass',
+        method: 'get',
+        data: data
+    });
+}
+export function getUserCollectProds (data) {
+    return request({
+        url: '/prod/userCollect',
         method: 'get',
         data: data
     });

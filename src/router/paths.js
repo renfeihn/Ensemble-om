@@ -136,11 +136,11 @@ export default [
       props: true,
       components: {
         default: () =>
-            import(
-              /* webpackChunkName: "routes" */
-              /* webpackMode: "lazy-once" */
-              `@/components/chat/ChatMessaging.vue`
-            ),
+          import(
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            `@/components/chat/ChatMessaging.vue`
+          ),
       }
     },
     {
@@ -151,11 +151,11 @@ export default [
       name: 'ChatContact',
       components: {
         default: () =>
-            import(
-              /* webpackChunkName: "routes" */
-              /* webpackMode: "lazy-once" */
-              `@/components/chat/ChatContact.vue`
-            ),
+          import(
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            `@/components/chat/ChatContact.vue`
+          ),
 
       }
     }
@@ -183,11 +183,11 @@ export default [
       },
       name: 'MailIndex',
       component: () =>
-          import(
-            /* webpackChunkName: "routes" */
-            /* webpackMode: "lazy-once" */
-            `@/components/email/List.vue`
-          ),
+        import(
+          /* webpackChunkName: "routes" */
+          /* webpackMode: "lazy-once" */
+          `@/components/email/List.vue`
+        ),
     },
     {
       path: '/mail/0/:uuid',
@@ -196,11 +196,11 @@ export default [
       },
       name: 'MailDetail',
       component: () =>
-          import(
-            /* webpackChunkName: "routes" */
-            /* webpackMode: "lazy-once" */
-            `@/components/email/Reply.vue`
-          ),
+        import(
+          /* webpackChunkName: "routes" */
+          /* webpackMode: "lazy-once" */
+          `@/components/email/Reply.vue`
+        ),
     }
     ]
   },
@@ -1084,18 +1084,32 @@ export default [
         `@/views/userFlow/indexFlow/indexFlow2.vue`
       )
   },
-{
+  {
     path: '/userFlow/tranDataIndex',
-        meta: {
-    breadcrumb: true,
-        title: '交易详细信息'
-},
+    meta: {
+      breadcrumb: true,
+      title: '交易详细信息'
+    },
     name: 'tranDataIndex',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    `@/views/userFlow/transactionInfo/tranDataIndex.vue`
-)
-},
+    component: () =>
+      import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `@/views/userFlow/transactionInfo/tranDataIndex.vue`
+      )
+  },
+  {
+    path: '/publish/publishForm',
+    meta: {
+      breadcrumb: true,
+      title: '参数变动记录'
+    },
+    name: 'publishForm',
+    component: () =>
+      import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `@/views/userFlow/publish/publishDate.vue`
+      )
+  },
 ];

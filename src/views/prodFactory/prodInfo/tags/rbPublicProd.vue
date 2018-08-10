@@ -109,14 +109,14 @@
         created() {
             this.depositProd = { prodcode: this.$route.params.prodType, version: '1.0' }
         },
+        mounted: function() {
+            window.getApp.$emit('APP_DRAWER_TOGGLED');
+            this.prodCode = this.$route.hash
+            this.queryDespositProdData(this.prodCode)
+        },
         methods: {
-            submitForm() {
-            },
-            draftForm() {
-            },
             queryProdInfo() {
                 console.log('start query prod info')
-
             },
             selectByProd() {
                 // this.$bus.$emit('prodType', this.depositProd.prodtype)
@@ -141,18 +141,11 @@
                     let length = response.data.prodTypeForm.length
                     for (let i = 0; i < length; i++) {
                         if (prodCode === response.data.prodTypeForm[i].prodClass){
-//                        response.data.rbProdTypeForm[i].selected = false
                             this.folders.push(response.data.prodTypeForm[i])
                         }
                     }
                 })
             }
-        },
-        mounted: function() {
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodCode = this.$route.hash
-            this.queryDespositProdData(this.prodCode)
-
         }
     }
 </script>

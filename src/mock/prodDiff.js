@@ -64,7 +64,7 @@ const prodDiffData = [{
   items: [
     { divider: true, inset: true },
     {
-      title: '个人活期存款产品'
+      title: '个人活期存款'
     },
     { divider: true, inset: true },
     {
@@ -115,7 +115,7 @@ const prodDiffData = [{
   items: [
     { divider: true, inset: true },
     {
-      title: '个人活期存款产品'
+      title: '个人活期存款-多币种(钞)'
     },
     { divider: true, inset: true },
     {
@@ -166,7 +166,7 @@ const prodDiffData = [{
   items: [
     { divider: true, inset: true },
     {
-      title: '个人活期存款产品'
+      title: '个人活期存款-多币种(汇)'
     },
     { divider: true, inset: true },
     {
@@ -217,7 +217,7 @@ const prodDiffData = [{
   items: [
     { divider: true, inset: true },
     {
-      title: '个人活期存款产品'
+      title: '个人整存整取储蓄存款'
     },
     { divider: true, inset: true },
     {
@@ -468,32 +468,6 @@ for (let i = 0; i < 1; i++) {
   }));
 }
 export default {
-  getProd: () => ({
-    depositProd: {
-      prodtype: 'RB100',
-      version: '1.2'
-    },
-    prodFrom: {
-      desc: '活期产品',
-      prodtype: 'RB100',
-      prodstatus: true,
-      region: 'S',
-      date1: '2018-06-05',
-      date2: '2019-06-05',
-      base: 'RB001',
-      delivery: true,
-      ccy: ['CNY', 'HKD']
-    },
-    acctFrom: {
-      attr: '1',
-      class: '2',
-      date1: '2018-06-05',
-      date2: '2019-06-05',
-      base: 'RB001',
-      delivery: true,
-      ccy: ['CNY', 'HKD']
-    }
-  }),
   depositTwo: () => ({
     prodListTwo: [{
       value: 'RB1100',

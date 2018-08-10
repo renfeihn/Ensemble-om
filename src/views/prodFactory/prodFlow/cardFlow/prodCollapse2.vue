@@ -57,7 +57,7 @@
             getUserCollectProds().then(response => {
                 let length =  response.data.collectProdsForm.length
                 for(let i=0; i<length; i++){
-                    if (response.data.collectProdsForm[i].prodModel === 'RB'){
+                    if (response.data.collectProdsForm[i].prodModel === 'CL'){
                         let flag = 0
                         for(let j=0; j<i; j++){
                             if(response.data.collectProdsForm[j].prodClass === response.data.collectProdsForm[i].prodClass){
