@@ -6,9 +6,9 @@
           <img src="/static/user/MyUser.png" class="imgUserIndexFlow">
         </v-flex>
         <v-flex lg7 sm7>
-          <span class="userSpan1 text-xs-center">admin,欢迎进入SmartEnsemble-OM</span>
+          <span class="userSpan1 text-xs-center">admin,你好,欢迎进入</span>
           <br/>
-          <span class="userSpan2 text-xs-center">神州数码 | 神州信息 - OM系统管理员</span>
+          <span class="userSpan2 text-xs-center">XXX银行产品工厂 - 系统管理员</span>
         </v-flex>
         <v-flex lg3 sm3 offset-xs0 offset-lg2>
           <v-layout row wrap>
@@ -42,7 +42,7 @@
         <v-card>
           <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
-            <v-toolbar-title>正在进行中项目</v-toolbar-title>
+            <v-toolbar-title>我的任务</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon>
               <v-icon>search</v-icon>

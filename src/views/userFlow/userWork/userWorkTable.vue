@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[5,10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0" item-key="code" select-all light v-model="selected">
+    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0" item-key="code" select-all light v-model="selected">
         <template slot="items" slot-scope="props">
                                     <tr @click="props.expanded = !props.expanded">
                                   <td>
@@ -129,7 +129,7 @@
                     }
                 ],
                 headers: [{
-                        text: '操作单号',
+                        text: '任务单号',
                         align: 'left',
                         value: 'code'
                     },
@@ -147,11 +147,11 @@
                         value: 'status'
                     },
                     {
-                        text: '上一操作人 ',
+                        text: '操作人 ',
                         value: 'roleLast'
                     },
                     {
-                        text: '记录',
+                        text: '详细信息',
                         value: 'DSubjectCode'
                     }
                 ],
