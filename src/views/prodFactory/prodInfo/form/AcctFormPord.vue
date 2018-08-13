@@ -26,14 +26,15 @@
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-4 pt-4 subheading">多币种 *</span> -->
-                                    <v-select class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <!-- <v-select class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select> -->
+                                    <v-switch :label="`${muticcyflagData==='Y'?'是':'否'}`" v-model="muticcyflagData" value="Y" color="success" hide-details></v-switch>
                                 </v-flex>
                                 <v-flex md2 lg2>
                                     <v-subheader class="primary--text pt-3 subheading">产品币种 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">产品币种*</span> -->
-                                    <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" small-chips single-line hide-details multiple></v-select>
                                 </v-flex>
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
@@ -104,119 +105,133 @@
 </template>
 
 <script>
-    import VWidget from '@/components/VWidget';
-    import {
-        getInitData
-    } from '@/api/prod'
-    import {
-        getProdData
-    } from '@/api/prod'
-    export default {
-        components: {
-            VWidget
-        },
-        props: ['listValue'],
-        data: () => ({
-            listValue: '',
-            title: null,
-            valid: true,
-            date: null,
-            startDateMenu: false,
-            startDate: null,
-            startTimeMenu: false,
-            startTime: null,
-            endDateMenu: false,
-            endDate: null,
-            endTimeMenu: false,
-            endTime: null,
-            modal: false,
-            attrData: '',
-            classData: '',
-            muticcyflagData: '',
-            ccytypeData: '',
-            amttypeData: '',
-            baltypeData: '',
-            reducedccyData: '',
-            acctuseforData: '',
-            mediumtypeData: '',
-            acctAttrs: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            acctClasses: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            muticcyflag: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            ccytype: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            amttype: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            baltype: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            reducedccy: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            acctusefor: [{
-                prodCode: '',
-                prodDesc: ''
-            }],
-            mediumtype: [{
-                prodCode: '',
-                prodDesc: ''
-            }]
-        }),
-        watch: {
-            listValue(val, oldval) {
-                if (val !== oldval) {
-                    this.selectByProd()
-                }
-            }
-        },
-        mounted() {
-            this.initRefDate()
-        },
-        methods: {
-            selectByProd() {
-                getProdData(this.listValue).then(response => {
-                    this.attrData = response.data.acctFrom.attr
-                    this.classData = response.data.acctFrom.class
-                    this.muticcyflagData = response.data.acctFrom.muticcyflag
-                    this.ccytypeData = response.data.acctFrom.ccytype
-                    this.amttypeData = response.data.acctFrom.amttype
-                    this.baltypeData = response.data.acctFrom.baltype
-                    this.reducedccyData = response.data.acctFrom.reducedccy
-                    this.acctuseforData = response.data.acctFrom.acctusefor
-                    this.mediumtypeData = response.data.acctFrom.mediumtype
-                })
-            },
-            closeDialog() {
-                this.$parent.isActive = false;
-            },
-            initRefDate() {
-                getInitData().then(response => {
-                    console.log(response)
-                    this.acctAttrs = response.data.paraDataRf.acctAttrs
-                    this.acctClasses = response.data.paraDataVl.acctClasses
-                    this.muticcyflag = response.data.paraDataVl.muticcyflag
-                    this.ccytype = response.data.paraDataRf.ccytype
-                    this.amttype = response.data.paraDataVl.amttype
-                    this.baltype = response.data.paraDataVl.baltype
-                    this.reducedccy = response.data.paraDataRf.reducedccy
-                    this.acctusefor = response.data.paraDataRf.acctusefor
-                    this.mediumtype = response.data.paraDataRf.mediumtype
-                })
-            }
-        }
-    };
+import VWidget from "@/components/VWidget";
+import { getInitData } from "@/api/prod";
+import { getProdData } from "@/api/prod";
+export default {
+  components: {
+    VWidget
+  },
+  props: ["listValue"],
+  data: () => ({
+    listValue: "",
+    title: null,
+    valid: true,
+    date: null,
+    startDateMenu: false,
+    startDate: null,
+    startTimeMenu: false,
+    startTime: null,
+    endDateMenu: false,
+    endDate: null,
+    endTimeMenu: false,
+    endTime: null,
+    modal: false,
+    attrData: "",
+    classData: "",
+    muticcyflagData: "",
+    ccytypeData: [],
+    amttypeData: "",
+    baltypeData: "",
+    reducedccyData: "",
+    acctuseforData: "",
+    mediumtypeData: "",
+    acctAttrs: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    acctClasses: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    muticcyflag: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    ccytype: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    amttype: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    baltype: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    reducedccy: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    acctusefor: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ],
+    mediumtype: [
+      {
+        prodCode: "",
+        prodDesc: ""
+      }
+    ]
+  }),
+  watch: {
+    listValue(val, oldval) {
+      if (val !== oldval) {
+        this.selectByProd();
+      }
+    }
+  },
+  mounted() {
+    this.initRefDate();
+  },
+  methods: {
+    selectByProd() {
+      getProdData(this.listValue).then(response => {
+        this.attrData = response.data.acctFrom.attr;
+        this.classData = response.data.acctFrom.class;
+        this.muticcyflagData = response.data.acctFrom.muticcyflag;
+        this.ccytypeData = response.data.acctFrom.ccytype;
+        this.amttypeData = response.data.acctFrom.amttype;
+        this.baltypeData = response.data.acctFrom.baltype;
+        this.reducedccyData = response.data.acctFrom.reducedccy;
+        this.acctuseforData = response.data.acctFrom.acctusefor;
+        this.mediumtypeData = response.data.acctFrom.mediumtype;
+      });
+    },
+    closeDialog() {
+      this.$parent.isActive = false;
+    },
+    initRefDate() {
+      getInitData().then(response => {
+        console.log(response);
+        this.acctAttrs = response.data.paraDataRf.acctAttrs;
+        this.acctClasses = response.data.paraDataVl.acctClasses;
+        this.muticcyflag = response.data.paraDataVl.muticcyflag;
+        this.ccytype = response.data.paraDataRf.ccytype;
+        this.amttype = response.data.paraDataVl.amttype;
+        this.baltype = response.data.paraDataVl.baltype;
+        this.reducedccy = response.data.paraDataRf.reducedccy;
+        this.acctusefor = response.data.paraDataRf.acctusefor;
+        this.mediumtype = response.data.paraDataRf.mediumtype;
+      });
+    }
+  }
+};
 </script>
