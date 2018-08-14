@@ -1,19 +1,19 @@
 <template>
-    <v-container fluid grid-list-md pt-2>
+    <v-container fluid pt-2 pr-5>
         <v-layout row wrap>
             <v-flex md12 lg22>
                     <div slot="widget-content">
                         <v-container fluid>
                             <v-layout row wrap>
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">账户属性</v-subheader>
+                                    <v-subheader class="primary--text subheading">账户属性</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading float: right">账户属性 *</span> -->
                                     <v-select :items="acctAttrs" v-model="attrData" label="账户属性" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">账户类别 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">账户类别 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">账户类别 *</span> -->
@@ -22,7 +22,7 @@
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">多币种 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">多币种 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-4 pt-4 subheading">多币种 *</span> -->
@@ -30,7 +30,7 @@
                                     <v-switch :label="`${muticcyflagData==='Y'?'是':'否'}`" v-model="muticcyflagData" value="Y" color="success" hide-details></v-switch>
                                 </v-flex>
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">产品币种 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">产品币种 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">产品币种*</span> -->
@@ -39,14 +39,14 @@
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">金额类型 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">金额类型 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">金额类型 *</span> -->
                                     <v-select :items="amttype" v-model="amttypeData" label="金额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">余额类型 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">余额类型 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">余额类型 *</span> -->
@@ -55,21 +55,21 @@
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">账户用途 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">账户用途 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">账户用途 *</span> -->
                                     <v-select :items="acctusefor" v-model="acctuseforData" label="账户用途" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">介质类型 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">介质类型 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">介质类型 *</span> -->
                                     <v-select :items="mediumtype" v-model="mediumtypeData" label="介质类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">起始日期 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">起始日期 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <v-menu ref="statDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
@@ -80,7 +80,7 @@
                                 </v-flex>
                                 <!-- <v-flex lg2/> -->
                                 <v-flex md2 lg2>
-                                    <v-subheader class="primary--text pt-3 subheading">终止日期 *</v-subheader>
+                                    <v-subheader class="primary--text subheading">终止日期 *</v-subheader>
                                 </v-flex>
                                 <v-flex md4 lg4>
                                     <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
