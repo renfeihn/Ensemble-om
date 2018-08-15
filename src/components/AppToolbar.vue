@@ -13,7 +13,7 @@
     <!--v-model="country"-->
     <!--&gt;-->
     <!--</v-text-field>-->
-    <v-autocomplete :rules=null :items="prodList" v-model="prodList1" placeholder="请输入要查询的产品类型或描述" class="primary--text mx-3 pt-4" @change="prodListClick" flat solo-inverted></v-autocomplete>
+    <v-autocomplete :rules=null :items="prodList" v-model="prodList1" placeholder="请输入要查询的产品类型或描述" class="primary--text mx-3 pt-2" @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
     <v-spacer></v-spacer>
     <v-btn icon @click="handleFullScreen()">
       <v-icon>fullscreen</v-icon>
