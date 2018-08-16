@@ -1126,4 +1126,18 @@ export default [
         `@/views/getAction.vue`
       )
   },
+  {
+    path: '/publishDate2',
+    meta: {
+      breadcrumb: true,
+      title: '连通后台测试2'
+    },
+    name: 'publishDate2',
+    component: () =>
+      import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `@/views/userFlow/publish/publishDate2.vue`
+      )
+  },
 ];

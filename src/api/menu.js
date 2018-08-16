@@ -93,6 +93,7 @@ const Menu = [
       { name: 'deposit', title: '产品展现', component: 'prod/deposit' },
       { name: 'publishForm', title: '参数变动记录', component: 'publishForm' },
       { name: 'getAction', title: '连通后台测试', component: 'getAction' },
+      { name: 'publishDate2', title: '参数变动记录2', component: 'publishDate2' },
     ]
   },
   {
