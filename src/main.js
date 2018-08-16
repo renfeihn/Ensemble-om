@@ -5,18 +5,23 @@ import App from './App';
 import Vuetify from 'vuetify';
 import router from './router';
 import i18n from './lang';
-import 'font-awesome/css/font-awesome.css';  
+import 'font-awesome/css/font-awesome.css';
 import './theme/default.styl';
 import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
 import  VueResource  from 'vue-resource'
 import Truncate from 'lodash.truncate';
 import store from './store';
-import './mock';
+//import './mock';
+if (process.env.MOCK_SWITCH !== 'off') {
+  require('./mock')
+}
 Vue.config.productionTip = false;
+
 // Helpers
 // Global filters
 Vue.filter('truncate', Truncate);
+
 Vue.use(VueResource)
 Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
 Vue.use(Vuetify, {
@@ -31,8 +36,7 @@ Vue.use(Vuetify, {
       mainToolbar: {
         color: 'primary',
       },
-      sideToolbar: {
-      },
+      sideToolbar: {},
       sideNav: 'primary',
       mainNav: 'primary lighten-1',
       bodyBg: '',
@@ -49,6 +53,8 @@ new Vue({
   router,
   store,
   i18n,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 });
