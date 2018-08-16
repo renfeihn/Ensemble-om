@@ -92,6 +92,7 @@ const Menu = [
       { name: 'diffList', title: '差异对比2', component: 'diffList' },
       { name: 'deposit', title: '产品展现', component: 'prod/deposit' },
       { name: 'publishForm', title: '参数变动记录', component: 'publishForm' },
+      { name: 'getAction', title: '连通后台测试', component: 'getAction' },
     ]
   },
   {
