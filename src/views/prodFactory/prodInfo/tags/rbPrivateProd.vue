@@ -42,7 +42,7 @@
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
                     <v-card-text>
-                        <down-action></down-action>
+                        <down-action v-on:listenToCopy="showCopy"></down-action>
                     </v-card-text>
                 </v-card>
                 <v-toolbar dense class="chat-history-toolbar prodLists">
@@ -211,6 +211,9 @@
 //                        }
 //                    }
 //                }
+            },
+            showCopy(copyInfo) {
+                this.prodCode=copyInfo.prodType
             }
         }
 //        watch: {
