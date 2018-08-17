@@ -7,7 +7,7 @@
         append-icon="search"
         label="Search"
         single-line
-        class="mt-0"
+        class="mt-1"
         hide-details
       ></v-text-field>
   </v-flex>
