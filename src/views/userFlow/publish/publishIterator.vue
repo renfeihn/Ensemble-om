@@ -1,14 +1,27 @@
 <template>
   <v-container fluid grid-list-md pt-0>
-     <v-flex xs12 class="text-xs-right">
+<v-layout row wrap>  
+  <v-flex xs8>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        class="mt-0"
+        hide-details
+      ></v-text-field>
+  </v-flex>
+     <v-flex xs4 class="text-xs-right">
       <v-pagination v-model="pagination.page" :length="pages" :total-visible="5"></v-pagination>
      </v-flex>
+</v-layout>
     <v-data-iterator
       :items="desserts"
       :rows-per-page-items="rowsPerPageItems"
       :pagination.sync="pagination"
       content-tag="v-layout"
       hide-actions
+      :search="search"
       row
       wrap
     >
@@ -89,7 +102,7 @@ export default {
       let span = "";
       if (oldDataList != null) {
         if (data != oldDataList[index]) {
-          span = '原始值：'+ oldDataList[index];
+          span = "原始值：" + oldDataList[index];
         }
       }
       return span;
@@ -107,6 +120,7 @@ export default {
   },
   data: () => ({
     rowsPerPageItems: [],
+    search: "",
     pagination: {
       rowsPerPage: 3
     },
@@ -118,6 +132,7 @@ export default {
             FEE_TYPE: "L01"
           }
         ],
+        primaryKeyvalue: "L01",
         dataDui: {
           AMORTIZE_DAY: "",
           AMORTIZE_MONTH: "",
@@ -161,9 +176,10 @@ export default {
       },
       {
         OPERATE_TYPE: "I",
+        primaryKeyvalue: "L02",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -191,11 +207,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -223,11 +239,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -255,11 +271,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -287,11 +303,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -319,11 +335,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -351,11 +367,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -383,11 +399,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -415,11 +431,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -447,11 +463,11 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L02"
           }
         ],
         dataDui: {
@@ -479,11 +495,12 @@ export default {
           TRAN_BRANCH_PERCENT: ""
         }
       },
-            {
+      {
         OPERATE_TYPE: "I",
+        primaryKeyvalue: "L04",
         key: [
           {
-             FEE_TYPE: "L02"
+            FEE_TYPE: "L03"
           }
         ],
         dataDui: {
@@ -513,9 +530,10 @@ export default {
       },
       {
         OPERATE_TYPE: "D",
+        primaryKeyvalue: "L04",
         key: [
           {
-           FEE_TYPE: "L04"
+            FEE_TYPE: "L04"
           }
         ],
         dataDui: {
@@ -657,15 +675,19 @@ export default {
       }
     ]
   }),
-      computed: {
-      pages () {
-        if (this.pagination.rowsPerPage == null ||
-          this.pagination.totalItems == null
-        ) return 0
-
-        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+  computed: {
+    pages() {
+      if (
+        this.pagination.rowsPerPage == null ||
+        this.pagination.totalItems == null
+      ) {
+        return 0;
       }
+      return Math.ceil(
+        this.pagination.totalItems / this.pagination.rowsPerPage
+      );
     }
+  }
 };
 </script>
 <style scoped>
@@ -678,6 +700,6 @@ export default {
 .SpanFont {
   color: #b2ebf2;
   font-weight: bold;
-  font-size: 18px
+  font-size: 18px;
 }
 </style>
