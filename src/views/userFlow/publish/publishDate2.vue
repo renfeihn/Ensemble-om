@@ -1,15 +1,15 @@
 <template>
  <v-stepper v-model="e1">
     <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Name of step 1</v-stepper-step>
+      <v-stepper-step :complete="e1 == 1" step="1"><span @click="e1 = 1">2017年12月22日-pm7：00</span></v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 2" step="2">Name of step 2</v-stepper-step>
+      <v-stepper-step :complete="e1 == 2" step="2"><span @click="e1 = 2">2018年1月22日-pm7：00</span></v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step step="3">Name of step 3</v-stepper-step>
+      <v-stepper-step :complete="e1 == 3" step="3"><span @click="e1 = 3">2018年3月22日-pm7：00</span></v-stepper-step>
     </v-stepper-header>
 
     <v-stepper-items>
@@ -53,10 +53,13 @@
   </v-stepper>
 </template>
 <script>
-  import publishIterator from './publishIterator'
-  export default {
+import publishIterator from "./publishIterator";
+export default {
   components: {
-     publishIterator
+    publishIterator
+  },
+  data() {
+    return { e1: 1 };
   }
-  }
+};
 </script>

@@ -84,7 +84,7 @@ export default {
       let span = "";
       if (oldDataList != null) {
         if (data != oldDataList[index]) {
-          span = '原始值：'+ oldDataList[index];
+          span = '原始值：' + oldDataList[index];
         }
       }
       return span;
