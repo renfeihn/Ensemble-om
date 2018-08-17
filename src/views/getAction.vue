@@ -18,7 +18,7 @@ export default {
       alert("button click");
     },
     queryAction() {
-      this.$http.get('http://localhost:8004/getDiffInfo/PROD_MB_ATTR_TYPE')
+      this.$http.get('http://localhost:8004/getDiffInfo/UP_IRL_FEE_TYPE')
         .then(response => {
           this.text = response.bodyText;
         });
