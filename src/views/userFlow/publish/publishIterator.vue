@@ -1,10 +1,14 @@
 <template>
   <v-container fluid grid-list-md>
+     <v-flex xs12 class="text-xs-right">
+      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+     </v-flex>
     <v-data-iterator
       :items="desserts"
       :rows-per-page-items="rowsPerPageItems"
       :pagination.sync="pagination"
       content-tag="v-layout"
+      hide-actions
       row
       wrap
     >
@@ -54,6 +58,7 @@
       </v-flex>
     </v-data-iterator>
   </v-container>
+
 </template>
 <script>
 export default {
@@ -84,7 +89,7 @@ export default {
       let span = "";
       if (oldDataList != null) {
         if (data != oldDataList[index]) {
-          span = '原始值：' + oldDataList[index];
+          span = '原始值：'+ oldDataList[index];
         }
       }
       return span;
@@ -101,7 +106,7 @@ export default {
     }
   },
   data: () => ({
-    rowsPerPageItems: [3, 6, 9],
+    rowsPerPageItems: [],
     pagination: {
       rowsPerPage: 3
     },
@@ -155,6 +160,326 @@ export default {
         }
       },
       {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
+        OPERATE_TYPE: "I",
+        key: [
+          {
+             FEE_TYPE: "L02"
+          }
+        ],
+        dataDui: {
+          AMORTIZE_DAY: "",
+          AMORTIZE_MONTH: "",
+          AMORTIZE_PERIOD_FREQ: "",
+          AMORTIZE_TIME: "",
+          BOUNDARY_AMT_ID: "3",
+          BOUNDARY_DESC: "按承兑期限全额累进收费",
+          BO_IND: "O",
+          CCY_FLAG: "S",
+          COMPANY: "",
+          CONVERT_FLAG: "B",
+          DIS_TYPE: "01",
+          FEE_AMT_ID: "",
+          FEE_DESC: "承兑承诺费",
+          FEE_ITEM: "",
+          FEE_MODE: "T",
+          MB_CCY_TYPE: "CNY",
+          OPEN_BRANCH_PERCENT: "",
+          PROD_GRP: "ALL",
+          PROFIT_ALLOT_FLAG: "N",
+          PROFIT_AMORTIZE_FLAG: "N",
+          TAX_TYPE: "",
+          TRAN_BRANCH_PERCENT: ""
+        }
+      },
+            {
         OPERATE_TYPE: "I",
         key: [
           {
@@ -331,7 +656,16 @@ export default {
         iron: "6%"
       }
     ]
-  })
+  }),
+      computed: {
+      pages () {
+        if (this.pagination.rowsPerPage == null ||
+          this.pagination.totalItems == null
+        ) return 0
+
+        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      }
+    }
 };
 </script>
 <style scoped>
