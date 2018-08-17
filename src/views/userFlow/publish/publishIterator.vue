@@ -43,7 +43,7 @@
                      <span> {{columnData | columnDiff( index, props.item.olddataUpd)}}</span>
                 </v-tooltip>
                  <span slot="activator" v-else>
-                    {{columnData}}
+                  {{columnData}}
                  </span>
                 </v-list-tile-content>
                               </v-flex>
@@ -84,7 +84,7 @@ export default {
       let span = "";
       if (oldDataList != null) {
         if (data != oldDataList[index]) {
-          span = oldDataList[index];
+          span = '原始值：'+ oldDataList[index];
         }
       }
       return span;
