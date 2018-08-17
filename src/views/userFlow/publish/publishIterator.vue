@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container fluid grid-list-md pt-0>
      <v-flex xs12 class="text-xs-right">
-      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+      <v-pagination v-model="pagination.page" :length="pages" :total-visible="5"></v-pagination>
      </v-flex>
     <v-data-iterator
       :items="desserts"
@@ -20,7 +20,7 @@
         md4
         lg4
       >
-        <v-card>
+        <v-card class="elevation-3">
                     <v-toolbar height=100px card prominent>
                 <v-list dense>
                      <v-btn color="info" small >{{props.item.OPERATE_TYPE | operateType}}</v-btn>
