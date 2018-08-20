@@ -95,6 +95,7 @@
 </template>
 <script>
 import userWorkTags from "@/views/userFlow/userWork/userWorkTags";
+import {getPkList} from "@/server/pkList";
 export default {
   components: {
     userWorkTags
@@ -144,9 +145,11 @@ export default {
           params: { prodClassCmp: "CL100", prodCodeCmp: "220001" }
         });
       }
-      //              if(key === 'paramMag'){
-      //                  this.$router.push({ name: 'prod/rbPrivateProd'})
-      //              }
+        if(key === 'paramMag'){
+            getPkList(key).then(response => {
+                console.log(response);
+           });
+        }
       if (key === "prodList") {
         this.$router.push({ name: "prodCmb" });
       }
