@@ -72,9 +72,31 @@ const Menu = [
     icon: 'view_list',
     items: [
       { name: '404', title: '参数管理入口', component: 'NotFound' },
-
     ]
   },
+    { header: '权限管理' },
+    {
+        title: '角色菜单管理  ',
+        group: 'components',
+        component: 'components',
+        icon: 'view_list',
+        items: [
+            { name: '404', title: '角色管理', component: 'NotFound' },
+            { name: '404', title: '菜单管理', component: 'propertyManage/muneManage' },
+            { name: '404', title: '角色菜单授权', component: 'NotFound' },
+        ]
+    },
+    {
+        title: '用户管理  ',
+        group: 'components',
+        component: 'components',
+        icon: 'filter_vintage',
+        items: [
+            { name: '404', title: '用户管理', component: 'NotFound' },
+            { name: '404', title: '用户角色授权', component: 'NotFound' },
+
+        ]
+    },
   { divider: true },
   { header: 'Extras' },
   {

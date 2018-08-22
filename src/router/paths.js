@@ -841,6 +841,18 @@ export default [
         `@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue`
       )
   },
+{
+    path: '/propertyManage/muneManage',
+        meta: {
+    breadcrumb: true,
+        title: '菜单管理'
+},
+    name: 'propertyManage/muneManage',
+        component: () =>
+import(
+    `@/views/propertyManage/muneManage.vue`
+)
+},
   {
     path: '/prod/rbBaseProd',
     meta: {
