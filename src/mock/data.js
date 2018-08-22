@@ -27,7 +27,9 @@ export default {
       baltype: 'CA',
       reducedccy: 'USD',
       acctusefor: '100',
-      mediumtype: 'A'
+      mediumtype: 'A',
+        effectdate: '2018-06-05',
+        failuredate: '2018-06-08'
     }
   }),
   getProdData1: () => ({
@@ -58,7 +60,9 @@ export default {
       baltype: 'TT',
       reducedccy: 'CNY',
       acctusefor: '200',
-      mediumtype: 'B'
+      mediumtype: 'B',
+        effectdate: '2018-06-05',
+        failuredate: '2018-06-08'
     }
   }),
   getProdDataNull: () => ({

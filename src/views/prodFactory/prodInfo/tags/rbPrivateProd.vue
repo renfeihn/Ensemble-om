@@ -29,20 +29,27 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <!-- <v-card>
-                            <v-card-text> -->
-                                <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
-                                <accounting-plain v-if="i==2"></accounting-plain>
-                                <acct-form v-if="i > 2" v-bind:listValue="listValue"></acct-form>
-                                
-                            <!-- </v-card-text>
-                        </v-card> -->
+                            <v-card-text> v-on:prodDataSon="prodDataSon"-->
+                        <event-form v-if="i==1" v-bind:sourceData="{'eventForm':sourceData.eventForm}"></event-form>
+                        <accounting-plain v-if="i==2"></accounting-plain>
+                        <acct-form v-if="i > 2" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
+
+                        <!-- </v-card-text>
+                    </v-card> -->
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
+                <!--<v-card>-->
+                <!--<v-card-text>-->
+                <!--<down-action v-on:listenToCopy="showCopy"></down-action>-->
+                <!--</v-card-text>-->
+                <!--</v-card>-->
                 <v-card>
                     <v-card-text>
-                        <down-action v-on:listenToCopy="showCopy"></down-action>
+                        <v-btn color="success" depressed="" @click="tempClick"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+                        <v-btn color="success" depressed="" @click="copyClick"><v-icon >history</v-icon>复制</v-btn>
+                        <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
                     </v-card-text>
                 </v-card>
                 <v-toolbar dense class="chat-history-toolbar prodLists">
@@ -54,16 +61,16 @@
                         <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
                             <v-list-tile-avatar>
                                 <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                            <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-btn icon ripple>
-                                <v-icon color="grey lighten-1">info</v-icon>
-                            </v-btn>
-                        </v-list-tile-action>
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
+                                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <v-btn icon ripple>
+                                    <v-icon color="grey lighten-1">info</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
                         </v-list-tile>
                     </v-list>
                 </vue-perfect-scrollbar>
@@ -82,7 +89,9 @@
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
     import accountingPlain from '../table/accountingPlain'
     import AcctForm from '../form/AcctFormPord';
+    import { getProdData } from "@/api/prod";
     import downAction from '../btn/downAction'
+    import {getChangeData} from "@/server/getChangeData";
     export default {
         name: 'deposit',
         components: {
@@ -93,7 +102,7 @@
             VuePerfectScrollbar,
             downAction
         },
-        data() {
+        data () {
             return {
                 listLoading: true,
                 searchValue: '',
@@ -101,14 +110,44 @@
                     prodcode: '',
                     version: ''
                 },
-                listValue: '',
                 prodCode: '',
                 prodClass: '',
                 activeName: 'basic',
-                eventForm: {
-                    ccy: []
+                targetData: {},
+                sourceData: {
+                    eventForm: {
+                        prodcode: '',
+                        proddesc: '',
+                        busimodel: '',
+                        prodclass: '',
+                        prodprepice: '',
+                        prodmuti: '',
+                        prodstatus: '',
+                        baseprod: '',
+                        accttype: '',
+                        acctsontype: '',
+                        acctstruct: '',
+                        virtualflag: '',
+                        acctintflag: '',
+                        amtflag: '',
+                        profitcenter: '',
+                        effectdate: '',
+                        failuredate: ''
+                    },
+                    acctForm: {
+                        attr: '',
+                        class: '',
+                        muticcyflag: '',
+                        ccytype: '',
+                        amttype: '',
+                        baltype: '',
+                        reducedccy: '',
+                        acctusefor: '',
+                        mediumtype: '',
+                        effectdate: '',
+                        failuredate: ''
+                    }
                 },
-                acctForm: {},
                 prodInfo: [{
                     icon: 'account_balance',
                     text: '基本信息'
@@ -174,12 +213,21 @@
             queryProdInfo() {
                 console.log('start query prod info')
             },
-            selectByProd() {
-                // this.$bus.$emit('prodType', this.depositProd.prodtype)
-                // console.log(this.depositProd.prodtype)
+            saveClick() {
+                //this.prodData对象，通过子界面回传，导致对象数据为修改后的最新数据。需要根据产品代码重新查库获取原始数据，再筛选出修改过的数据
+                getProdData(this.prodCode).then(response => {
+                    getChangeData(response.data,this.sourceData,this.targetData).then(response => {
+                        console.log(this.targetData)
+                    });
+                });
             },
             handleClick(value) {
-                this.listValue = value.value
+                this.prodCode = value.value
+                getProdData(value.value).then(response => {
+                    this.sourceData.acctForm = response.data.acctFrom
+                    this.sourceData.eventForm = response.data.prodFrom
+                    this.sourceData.eventForm.prodcode = this.prodCode
+                });
             },
             initStage(value){
                 this.listValue = value
@@ -203,7 +251,7 @@
                     }
                 })
             },
-            getProdBySearchValue(val) {
+//            getProdBySearchValue(val) {
 //                if (val) {
 //                    let j = 1
 //                    for (let i = 1; i < this.folders.length; i++) {
@@ -211,7 +259,7 @@
 //                        }
 //                    }
 //                }
-            },
+//            },
             showCopy(copyInfo) {
                 this.prodCode=copyInfo.prodType
             }
