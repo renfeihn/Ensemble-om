@@ -151,7 +151,7 @@ export default {
         getChargeDefinesInfo(val) {
             //初始化产品对应的信息
             this.chargeDefinesInfo = val.mbProdCharge
-            this.prodType = val.mbProdCharge.prodType
+            this.prodType = val.prodType.prodType
         },
         editItem (item) {
             this.editedIndex = this.projects.indexOf(item)
@@ -176,6 +176,7 @@ export default {
                 Object.assign(this.projects[this.editedIndex], this.editedItem)
             } else {
                 //新增数据，产品类型默认
+                this.editedItem.prodType = this.prodType
                 this.chargeDefinesInfo.push(this.editedItem)
             }
             this.close()
