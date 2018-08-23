@@ -35,17 +35,17 @@
                         <close-acct v-if="i==6" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></close-acct>
                         <Deposit v-if="i==7" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></Deposit>
                         <draw-info v-if="i==8" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></draw-info>
-                        <charge-define v-if="i==9" v-bind:listValue="listValue"></charge-define>
-                        <rate-info v-if="i==10" v-bind:listValue="listValue"></rate-info>
-                        <form-shift v-if="i==11" v-bind:listValue="listValue"></form-shift>
-                        <accounting-info v-if="i==12" v-bind:listValue="listValue"></accounting-info>
+                        <charge-define v-if="i==9" v-bind:prodData="prodData"></charge-define>
+                        <rate-info v-if="i==10" v-bind:prodData="prodData"></rate-info>
+                        <form-shift v-if="i==11" v-bind:prodData="prodData"></form-shift>
+                        <accounting-info v-if="i==12" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
                 <v-card-text>
-                <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
+                <down-action v-if="pendFlag==0" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
                 <pending-form v-if="pendFlag==1"></pending-form>
                 </v-card-text>
                 </v-card>
@@ -294,6 +294,8 @@
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
 
                 this.prodData.mbEventInfos["CLOSE_"+val.eventForm.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
+                //mbProdCharge
+//                this.prodData.mbProdCharge
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;

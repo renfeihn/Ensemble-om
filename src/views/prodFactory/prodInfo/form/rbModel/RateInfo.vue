@@ -19,19 +19,19 @@
                     <template slot="items" slot-scope="props">
                         <td class="text-xs-center">{{ props.item.eventType }}</td>
                         <td class="text-xs-center">{{ props.item.intClass }}</td>
-                        <td class="text-xs-center">{{ props.item.rateCode }}</td>
-                        <td class="text-xs-center">{{ props.item.rateCodeDetail }}</td>
-                        <td class="text-xs-center">{{ props.item.intWay }}</td>
-                        <td class="text-xs-center">{{ props.item.rateAmtCode }}</td>
-                        <td class="text-xs-center">{{ props.item.intAmtCode }}</td>
-                        <td class="text-xs-center">{{ props.item.monthBasic }}</td>
+                        <td class="text-xs-center">{{ props.item.intType }}</td>
+                        <td class="text-xs-center">{{ props.item.intTypeDesc }}</td>
+                        <td class="text-xs-center">{{ props.item.intCalcBal }}</td>
+                        <td class="text-xs-center">{{ props.item.rateAmtId }}</td>
+                        <td class="text-xs-center">{{ props.item.intAmtId }}</td>
+                        <td class="text-xs-center">{{ props.item.monthBasis }}</td>
                         <td class="text-xs-center">{{ props.item.minRate }}</td>
                         <td class="text-xs-center">{{ props.item.maxRate }}</td>
-                        <td class="text-xs-center">{{ props.item.rateStartMethod }}</td>
-                        <td class="text-xs-center">{{ props.item.rateChangePeriod }}</td>
-                        <td class="text-xs-center">{{ props.item.nextRateDay }}</td>
-                        <td class="text-xs-center">{{ props.item.calDayFlag }}</td>
-                        <td class="text-xs-center">{{ props.item.calDayMethod }}</td>
+                        <td class="text-xs-center">{{ props.item.intApplType }}</td>
+                        <td class="text-xs-center">{{ props.item.rollFreq }}</td>
+                        <td class="text-xs-center">{{ props.item.rollDay }}</td>
+                        <td class="text-xs-center">{{ props.item.intRateInd }}</td>
+                        <td class="text-xs-center">{{ props.item.intDaysType }}</td>
                         <td class="text-xs-center">{{ props.item.taxType }}</td>
                     </template>
                     <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -45,46 +45,52 @@
 <script>
 import {getRateInfo} from '@/api/table';
 export default {
+    props: ["prodData"],
     data () {
         return {
             selected: [],
             headers: [
                 {text: '事件类型', value: 'eventType', align: 'center', width: 'xs1'},
                 {text: '利息分类', value: 'intClass', align: 'center', width: 'xs1'},
-                {text: '利率代码', value: 'rateCode', align: 'center', width: 'xs1'},
-                {text: '利率代码详细', value: 'rateCodeDetail', align: 'center', width: 'xs1'},
-                {text: '计息方式', value: 'intWay', align: 'center', width: 'xs1'},
-                {text: '利率计算金额编码', value: 'rateAmtCode', align: 'center', width: 'xs1'},
-                {text: '利息计算金额编码', value: 'intAmtCode', align: 'center', width: 'xs1'},
-                {text: '月基准', value: 'monthBasic', align: 'center', width: 'xs1'},
+                {text: '利率代码', value: 'intType', align: 'center', width: 'xs1'},
+                {text: '利率代码详细', value: 'intTypeDesc', align: 'center', width: 'xs1'},
+                {text: '计息方式', value: 'intCalcBal', align: 'center', width: 'xs1'},
+                {text: '利率计算金额编码', value: 'rateAmtId', align: 'center', width: 'xs1'},
+                {text: '利息计算金额编码', value: 'intAmtId', align: 'center', width: 'xs1'},
+                {text: '月基准', value: 'monthBasis', align: 'center', width: 'xs1'},
                 {text: '最小利率', value: 'minRate', align: 'center', width: 'xs1'},
                 {text: '最大利率', value: 'maxRate', align: 'center', width: 'xs1'},
-                {text: '利率启用方式', value: 'rateStartMethod', align: 'center', width: 'xs1'},
-                {text: '利率变更周期', value: 'rateChangePeriod', align: 'center', width: 'xs1'},
-                {text: '下一利率变更日', value: 'nextRateDay', align: 'center', width: 'xs1'},
-                {text: '靠档标志', value: 'calDayFlag', align: 'center', width: 'xs1'},
-                {text: '靠档天数计算方式', value: 'calDayMethod', align: 'center', width: 'xs1'},
+                {text: '利率启用方式', value: 'intApplType', align: 'center', width: 'xs1'},
+                {text: '利率变更周期', value: 'rollFreq', align: 'center', width: 'xs1'},
+                {text: '下一利率变更日', value: 'rollDay', align: 'center', width: 'xs1'},
+                {text: '靠档标志', value: 'intRateInd', align: 'center', width: 'xs1'},
+                {text: '靠档天数计算方式', value: 'intDaysType', align: 'center', width: 'xs1'},
                 {text: '税率类型', value: 'taxType', align: 'center', width: 'xs1'}
             ],
             projects: [{
                 eventType: '',
                 intClass: '',
-                rateCode: '',
-                rateCodeDetail: '',
-                intWay: '',
-                rateAmtCode: '',
-                intAmtCode: '',
-                monthBasic: '',
+                intType: '',
+                intTypeDesc: '',
+                intCalcBal: '',
+                rateAmtId: '',
+                intAmtId: '',
+                monthBasis: '',
                 minRate: '',
                 maxRate: '',
-                rateStartMethod: '',
-                rateChangePeriod: '',
-                nextRateDay: '',
-                calDayFlag: '',
-                calDayMethod: '',
+                intApplType: '',
+                rollFreq: '',
+                rollDay: '',
+                intRateInd: '',
+                intDaysType: '',
                 taxType: ''
             }]
         };
+    },
+    watch: {
+        prodData (val) {
+            this.getChargeDefinesInfo(val)
+        }
     },
     mounted: function() {
         this.queryDespositProdData()
@@ -94,7 +100,11 @@ export default {
             getRateInfo().then(response => {
                 this.projects = response.data.rateInfo
             })
-        }
+        },
+        getChargeDefinesInfo(val) {
+            //初始化产品对应的信息
+            this.projects = val.irlProdInt
+        },
     }
 };
 </script>

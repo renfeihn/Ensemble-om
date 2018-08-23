@@ -1,49 +1,5 @@
 /**
  * Created by jiajt on 2018/8/21.
- * 处理prodData对象改变的数据到targetData对象
- * 处理prodData.prodType对象数据：处理后targetData.prodType对象结构：
- *              prodType:{
- *                      newData:{
- *                          prodType:1110001
- *                          prodDesc:存款产品AA
- *                          ...}，
- *                      oldData:{
- *                          prodType:1110001
- *                          prodDesc:存款产品BB
- *                          ...}
- *                       }
- *               当不存在差异数据的时候，newData:{}  oldData:{}为全部信息
- * 处理prodData.prodDefines对象数据：处理后targetData.prodDefines对象结构同prodType.
- *             差异：newData{}对象只包含被修改对象的修改后值，oldData{}只包含被修改对象修改前数据，二者一对一
- * 处理prodData.mbEventInfos对象数据：处理后结构：
- *              mbEventInfos: {
- *                          事件A：{
- *                              mbEventAttrs:{
- *                                      ATTR1:{
- *                                          newData: {只包含被修改对象修改后值},
- *                                          oldData: {只包含被修改对象修改前值}
- *                                      },
- *                                      {...}
- *                                  }
- *                              mbEventPart: {
- *                                      PART1:{
- *                                          newData: {只包含被修改对象修改后值},
- *                                          oldData: {只包含被修改对象修改前值}
- *                                      },
- *                                      {...}
- *                                  }
- *                             mbEventType: {
- *
- *                                          newData: {只包含被修改对象修改后值},
- *                                          oldData: {只包含被修改对象修改前值}
- *
- *                                      {...}
- *                                  }
- *                            },
- *                           事件B：{}，
- *                           事件C：{}.
- *                           ...
- *                           }
  */
 export function filterChangeData (prodData,sourceProdData,optionType) {
     var backData = {}
@@ -144,7 +100,55 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
              delete backData.mbEventInfos[m]
          }
     }
+    //处理单表数据 mbProdCharge
+    var mbProdCharge = []
+    mbProdChargeDeal(prodData,sourceProdData,mbProdCharge)
+    backData.mbProdCharge = mbProdCharge
     return backData
+}
+export function mbProdChargeDeal(prodData,sourceProdData,mbProdCharge){
+    let index = 0
+    for (let s =0; s<prodData.mbProdCharge.length; s++){
+        let flags = 0
+        for(let j = 0; j<sourceProdData.mbProdCharge.length; j++){
+            let returnIndex = tableDeal(prodData,sourceProdData,s,j,mbProdCharge,index)
+            if(index !== returnIndex){
+                //检索到并匹配成功
+                index = returnIndex
+                flags = 1
+                break
+            }
+        }
+        if(flags === 0){
+            //原数据中不存在该条数据（新增）
+            let temp = {newData: {},oldData: {},optType: ''}
+            temp.newData = prodData.mbProdCharge[s]
+            temp.optType = 'I'
+            mbProdCharge.push(temp)
+            index++
+        }
+    }
+}
+export function tableDeal(prodData,sourceProdData,s,j,mbProdCharge,index) {
+    //新增数据，产品类型默认
+    prodData.mbProdCharge[s].prodType = sourceProdData.mbProdCharge[j].prodType
+    if(prodData.mbProdCharge[s].prodType === sourceProdData.mbProdCharge[j].prodType && prodData.mbProdCharge[s].feeType === sourceProdData.mbProdCharge[j].feeType){
+        //匹配到同一条数据
+        for(let k in prodData.mbProdCharge[s]){
+            //判断数据字段是否相同（修改）
+            if(prodData.mbProdCharge[s][k] !== sourceProdData.mbProdCharge[j][k]){
+                //修改数据
+                let temp = {newData: {},oldData: {},optType: ''}
+                temp.newData = prodData.mbProdCharge[s]
+                temp.oldData = sourceProdData.mbProdCharge[j]
+                temp.optType = 'U'
+                mbProdCharge.push(temp)
+                index++
+                break
+            }
+        }
+    }
+    return index
 }
 export function mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sourceProdData) {
         for(let z in prodData.mbEventInfos[m].mbEventParts[x]) {
