@@ -154,7 +154,7 @@ import { getProdData } from "@/api/prod";
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"controlInfo": this.controlInfo})
+                this.$emit("callBackControlInfo",{"controlInfo": this.controlInfo})
             },
             updateBaseInfo(val) {
                 this.controlInfo = {}

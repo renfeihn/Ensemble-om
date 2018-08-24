@@ -154,7 +154,7 @@
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"productObject": this.productObject})
+                this.$emit("callBackProdObject",{"productObject": this.productObject})
             },
             selectByProd(val) {
                 this.productObject = {}

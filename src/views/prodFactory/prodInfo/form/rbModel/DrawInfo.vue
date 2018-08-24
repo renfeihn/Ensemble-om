@@ -188,17 +188,17 @@ import DcSwitch from "@/components/widgets/DcSwitch";
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"drawInfo": this.drawInfo})
+                this.$emit("callBackDrawInfo",{"drawInfo": this.drawInfo})
             },
             selectByProd(val) {
                     this.drawInfo = {}
                     this.drawInfo.drawControlWay = val.drawInfo.drawControlWay;
-                    this.drawInfo.checkAgent = val.mbEventInfos.WTD_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                    this.drawInfo.checkAgent = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
                     this.drawInfo.cashResource = val.drawInfo.cashResource;
                     this.drawInfo.dealingWay = val.drawInfo.dealingWay;
                     this.drawInfo.daiBanFlag = val.drawInfo.daiBanFlag;
                     this.drawInfo.weiYueType = val.drawInfo.weiYueType;
-                    this.drawInfo.attrReatraintCheck = val.mbEventInfos.WTD_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
+                    this.drawInfo.attrReatraintCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                     this.drawInfo.withDrawlCheck = val.drawInfo.withDrawlCheck;
                     this.drawInfo.voucherTypeCheck = val.drawInfo.voucherTypeCheck;
                     this.drawInfo.zuiDaZhiQu = ""//最大支取金额

@@ -169,14 +169,14 @@
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"deposit": this.deposit})
+                this.$emit("callBackDeposit",{"deposit": this.deposit})
             },
             selectByProd(val) {
                 this.deposit = {}
                 this.depositControlApproach = ""//存入控制方式
-                this.deposit.checkAgent = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                this.deposit.checkAgent = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
                 this.cashResource = ""//资金来源方式
-                this.deposit.checkRestraint = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
+                this.deposit.checkRestraint = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                 this.deposit.weiYueType =""//存入违约类型
                 this.deposit.dealingWay =""//违约处理方式
                 this.deposit.startAmtCheck = ""//起存金额检查

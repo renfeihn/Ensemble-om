@@ -318,7 +318,7 @@ import { getProdData } from "@/api/prod";
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"acctBaseInfo": this.acctBaseInfo})
+                this.$emit("callBackAcctBaseInfo",{"acctBaseInfo": this.acctBaseInfo})
             },
             isSelectCcy(){
                 console.log(this.acctBaseInfo.isMultiCcy);
@@ -337,13 +337,14 @@ import { getProdData } from "@/api/prod";
                 this.acctBaseInfo.prodRange = val.prodType.prodRange
                 this.acctBaseInfo.status = val.prodType.status
                 this.acctBaseInfo.baseProdType = val.prodType.baseProdType
+
                 this.acctBaseInfo.sourceModule = val.prodDefines.SOURCE_MODULE.attrValue
-                var str = val.prodDefines.PROD_START_DATE.attrValue
-                this.acctBaseInfo.prodStartDate = str.substr(0,4)+"-"+str.substr(4,2)+"-"+str.substr(6,2)
+//                var str = val.prodDefines.PROD_START_DATE.attrValue
+                this.acctBaseInfo.prodStartDate = val.prodDefines.PROD_START_DATE.attrValue
                 this.acctBaseInfo.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
                 this.acctBaseInfo.multiCcy = val.prodDefines.MULTI_CCY.attrValue
-                var str1 = val.prodDefines.PROD_END_DATE.attrValue
-                this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
+//                var str1 = val.prodDefines.PROD_END_DATE.attrValue
+                this.acctBaseInfo.prodEndDate = val.prodDefines.PROD_END_DATE.attrValue
                 this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
                 this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue

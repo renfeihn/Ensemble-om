@@ -99,6 +99,7 @@
                 dialog: false,
                 addFlag: false,
                 modFlag: false,
+                prodType: '',
                 headers: [
                     {text: '产品类型', align: 'left', value: 'prodType'},
                     {text: '核算状态', value: 'accountingStatus'},
@@ -149,6 +150,7 @@
             getChargeDefinesInfo(val) {
                 //初始化产品对应的信息
                 this.prodAccountingInfo = val.glProdAccounting
+                this.prodType = val.prodType.prodType
             },
             editItem (item) {
                 this.editedIndex = this.projects.indexOf(item)
@@ -172,6 +174,7 @@
                 if (this.editedIndex > -1) {
                     Object.assign(this.projects[this.editedIndex], this.editedItem)
                 } else {
+                    this.editedItem.prodType = this.prodType
                     this.prodAccountingInfo.push(this.editedItem)
                 }
                 this.close()

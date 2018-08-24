@@ -150,7 +150,10 @@ export default {
     methods: {
         getChargeDefinesInfo(val) {
             //初始化产品对应的信息
-            this.chargeDefinesInfo = val.mbProdCharge
+            for(let i=0; i<val.mbProdCharge.length; i++){
+                this.chargeDefinesInfo.push(val.mbProdCharge[i])
+            }
+//            this.chargeDefinesInfo = val.mbProdCharge
             this.prodType = val.prodType.prodType
         },
         editItem (item) {

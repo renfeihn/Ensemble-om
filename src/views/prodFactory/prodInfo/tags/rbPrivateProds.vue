@@ -27,14 +27,14 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
-                        <acct-base-info v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></acct-base-info>
-                        <control-info v-if="i==2" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></control-info>
-                        <product-object v-if="i==3" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></product-object>
-                        <int-detail v-if="i == 4" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></int-detail>
-                        <open-acct v-if="i==5" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></open-acct>
-                        <close-acct v-if="i==6" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></close-acct>
-                        <Deposit v-if="i==7" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></Deposit>
-                        <draw-info v-if="i==8" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></draw-info>
+                        <acct-base-info v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:callBackAcctBaseInfo="callBackAcctBaseInfo"></acct-base-info>
+                        <control-info v-if="i==2" ref="callback" v-bind:prodData="prodData" v-on:callBackControlInfo="callBackControlInfo"></control-info>
+                        <product-object v-if="i==3" ref="callback" v-bind:prodData="prodData" v-on:callBackProdObject="callBackProdObject"></product-object>
+                        <int-detail v-if="i == 4" ref="callback" v-bind:prodData="prodData" v-on:callBackIntDetail="callBackIntDetail"></int-detail>
+                        <open-acct v-if="i==5" ref="callback" v-bind:prodData="prodData" v-on:callBackOpenAcct="callBackOpenAcct"></open-acct>
+                        <close-acct v-if="i==6" ref="callback" v-bind:prodData="prodData" v-on:callBackCloseAcct="callBackCloseAcct"></close-acct>
+                        <Deposit v-if="i==7" ref="callback" v-bind:prodData="prodData" v-on:callBackDeposit="callBackDeposit"></Deposit>
+                        <draw-info v-if="i==8" ref="callback" v-bind:prodData="prodData" v-on:callBackDrawInfo="callBackDrawInfo"></draw-info>
                         <charge-define v-if="i==9" v-bind:prodData="prodData"></charge-define>
                         <rate-info v-if="i==10" v-bind:prodData="prodData"></rate-info>
                         <form-shift v-if="i==11" v-bind:prodData="prodData"></form-shift>
@@ -276,26 +276,67 @@
                     type: 'warning'
                 })
             },
-            getNewProdData(val) {
+            callBackControlInfo(val) {
                 console.log(val)
-                this.prodData.prodType.prodType = val.eventForm.prodType
-                this.prodData.prodType.prodDesc = val.eventForm.prodDesc
-                this.prodData.prodType.prodRange = val.eventForm.prodRange
-                this.prodData.prodType.prodClass = val.eventForm.prodClass
-                this.prodData.prodType.prodGroup = val.eventForm.prodGroup
-                this.prodData.prodType.status = val.eventForm.status
-                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctStructFlag
-                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.acctRealFlag
-                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctIntFlag
-                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.acctBalFlag
-                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitCenter
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.prodStartDate
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.prodEndDate
-                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
-
-                this.prodData.mbEventInfos["CLOSE_"+val.eventForm.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
-                //mbProdCharge
-//                this.prodData.mbProdCharge
+            },
+            callBackProdObject(val) {
+                console.log(val)
+                this.prodData.prodDefines.CLIENT_TYPE.attrValue = val.productObject.clientType
+                this.prodData.prodDefines.INLAND_OFFSHORE.attrValue = val.productObject.inLandOffshore
+                this.prodData.prodDefines.PROD_BRANCH.attrValue = val.productObject.prodBranch
+                this.prodData.prodDefines.CLIENT_IND.attrValue = val.productObject.clientInd
+            },
+            callBackIntDetail(val) {
+                console.log(val)
+                this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue = val.intDetail.cycleFreq
+                this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.INT_DAY.attrValue = val.intDetail.intDay
+            },
+            callBackOpenAcct(val) {
+                console.log(val)
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE.attrValue = val.openAcct.structureType
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue = val.openAcct.checkWadrawnType
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.RESTRAINT_FLAG.attrValue = val.openAcct.restraintFlag
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.openAcct.checkAgent
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue = val.openAcct.numOfClient
+            },
+            callBackCloseAcct(val) {
+                console.log(val)
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.closeAcct.permitCommersionFlag
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.closeAcct.acctReatraintCheck
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue = val.closeAcct.resignCheck
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue = val.closeAcct.ownCheck
+            },
+            callBackDeposit(val) {
+                console.log(val)
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.deposit.checkAgent
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.deposit.checkRestraint
+            },
+            callBackDrawInfo(val) {
+                console.log(val)
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.drawInfo.checkAgent
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.drawInfo.attrReatraintCheck
+            },
+            callBackAcctBaseInfo(val) {
+                console.log(val)
+                this.prodData.prodType.prodType = val.acctBaseInfo.prodType
+                this.prodData.prodType.prodDesc = val.acctBaseInfo.prodDesc
+                this.prodData.prodType.prodRange = val.acctBaseInfo.prodRange
+                this.prodData.prodType.prodClass = val.acctBaseInfo.prodClass
+                this.prodData.prodType.prodGroup = val.acctBaseInfo.prodGroup
+                this.prodData.prodType.status = val.acctBaseInfo.status
+                this.prodData.prodType.baseProdType = val.acctBaseInfo.baseProdType
+                this.prodData.prodDefines.SOURCE_MODULE.attrValue = val.acctBaseInfo.sourceModule
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.acctBaseInfo.profitCenter
+                this.prodData.prodDefines.MULTI_CCY.attrValue = val.acctBaseInfo.multiCcy
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.acctBaseInfo.acctIntFlag
+                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.acctBaseInfo.acctType
+                this.prodData.prodDefines.ACCT_NATURE.attrValue = val.acctBaseInfo.acctNature
+                this.prodData.prodDefines.OWNERSHIP_TYPE.attrValue = val.acctBaseInfo.ownerShipType
+                this.prodData.prodDefines.ACCT_CLASS.attrValue = val.acctBaseInfo.acctClass
+                this.prodData.prodDefines.BAL_TYPE.attrValue = val.acctBaseInfo.balType
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;

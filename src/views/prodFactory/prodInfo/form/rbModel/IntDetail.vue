@@ -78,11 +78,11 @@
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"intDetail": this.intDetail})
+                this.$emit("callBackIntDetail",{"intDetail": this.intDetail})
             },
             selectByProd(val) {
-                this.intDetail.cycleFreq = val.mbEventInfos.CYCLE_RB101.mbEventAttrs.CYCLE_FREQ.attrValue
-                this.intDetail.intDay = val.mbEventInfos.CYCLE_RB101.mbEventAttrs.INT_DAY.attrValue
+                this.intDetail.cycleFreq = val.mbEventInfos["CYCLE_"+val.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue
+                this.intDetail.intDay = val.mbEventInfos["CYCLE_"+val.prodType.prodType].mbEventAttrs.INT_DAY.attrValue
                 this.intDetail.cycleSelfFlag = ""//是否结息到本帐户
             },
             initRefDate() {

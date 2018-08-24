@@ -133,7 +133,7 @@
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"closeAcct": this.closeAcct})
+                this.$emit("callBackCloseAcct",{"closeAcct": this.closeAcct})
             },
             selectByProd(val) {
                 this.closeAcct = {}
@@ -145,11 +145,11 @@
 //                this.closeAcct.ownCheck = val.closeAcct.ownCheck
 //                this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
                   this.closeAcct.systemControlApproach = ""//存入控制
-                  this.closeAcct.permitCommersionFlag = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                  this.closeAcct.permitCommersionFlag = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
                   this.closeAcct.cashResouce = ""//资金来源方式
-                  this.closeAcct.acctReatraintCheck = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
-                  this.closeAcct.resignCheck = val.mbEventAttrs.CLOSE_RB101.mbEventAttrs.CHECK_SIGN.attrValue
-                  this.closeAcct.ownCheck = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_CLOSE_FEE.attrValue
+                  this.closeAcct.acctReatraintCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
+                  this.closeAcct.resignCheck = val.mbEventAttrs["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue
+                  this.closeAcct.ownCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue
                   this.closeAcct.huiTuiFlag = ""//是否允许西销户回退
             },
             initRefDate() {

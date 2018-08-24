@@ -167,14 +167,14 @@
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"openAcct": this.openAcct})
+                this.$emit("callBackOpenAcct",{"openAcct": this.openAcct})
             },
             selectByProd(val) {
-                this.openAcct.structureType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.STRUCTURE_TYPE.attrValue;
-                this.openAcct.checkWadrawnType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
-                this.openAcct.restraintFlag = val.mbEventInfos.OPEN_RB101.mbEventAttrs.RESTRAINT_FLAG.attrValue
-                this.openAcct.checkAgent = val.mbEventInfos.OPEN_RB101.mbEventAttrs.CHECK_AGENT.attrValue
-                this.openAcct.numOfClient = val.mbEventInfos.OPEN_RB101.mbEventAttrs.NUM_OF_CLIENT.attrValue
+                this.openAcct.structureType = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE.attrValue;
+                this.openAcct.checkWadrawnType = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
+                this.openAcct.restraintFlag = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.RESTRAINT_FLAG.attrValue
+                this.openAcct.checkAgent = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
+                this.openAcct.numOfClient = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue
                 this.prefix = ""//账号前缀
                 this.withdrawTypeHandeling = ""//凭证类型处理
                 this.clientAmtCheckFlag = ""//同客户数量检查标识
