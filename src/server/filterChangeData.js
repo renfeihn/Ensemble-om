@@ -27,27 +27,25 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backData.prodType = prodType
     //处理prodDefines对象数据
     var prodDefines = {}
-
-        for (let i in prodData.prodDefines) {
-            if(copyFlag === "Y"){
-                //产品复制时，保留所有最新数据
-                let newMap = {newData: {},oldData: {}}
-                newMap.newData = prodData.prodDefines[i]
-                prodDefines[i] = newMap
-            }else if (prodData.prodDefines[i].attrValue !== sourceProdData.prodDefines[i].attrValue) {
-                let newMap = {newData: {},oldData: {}}
-                newMap.newData = prodData.prodDefines[i]
-                newMap.oldData = sourceProdData.prodDefines[i]
-                prodDefines[i] = newMap
-            }
-        }
+    for (let i in prodData.prodDefines) {
+         if(copyFlag === "Y"){
+             //产品复制时，保留所有最新数据
+             let newMap = {newData: {},oldData: {}}
+             newMap.newData = prodData.prodDefines[i]
+             prodDefines[i] = newMap
+         }else if (prodData.prodDefines[i].attrValue !== sourceProdData.prodDefines[i].attrValue) {
+             let newMap = {newData: {},oldData: {}}
+             newMap.newData = prodData.prodDefines[i]
+             newMap.oldData = sourceProdData.prodDefines[i]
+             prodDefines[i] = newMap
+         }
+     }
     backData.prodDefines = prodDefines
 
     //处理mbEventInfos对象数据
     for (let m in prodData.mbEventInfos){
         let mbEventAttrs = {}
         let mbEventParts = {}
-        // let mbEventType = {}
         let mbEventType = {newData: {}, oldData: {}}
         let temp= {mbEventAttrs: {},mbEventParts: {},mbEventType: {}}
         let flag = "false"
@@ -55,6 +53,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         let oldataType = {}
         let flagPart = "false"
         let flagType = "false"
+
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
             if(copyFlag === "Y"){
@@ -72,11 +71,11 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         }
         temp.mbEventAttrs = Object.assign(temp.mbEventAttrs,mbEventAttrs)
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
+
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
+            //降低复杂度
             mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sourceProdData);
-
-
          }
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
@@ -96,24 +95,54 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         mbEventType.oldData = Object.assign(mbEventType.oldData,oldataType)
         temp.mbEventType = Object.assign(temp.mbEventType,mbEventType)
         backData.mbEventInfos[m].mbEventType = temp.mbEventType
+
          if(flag === "false" && flagType === "false" && flagPart === "false"){
+            //事件均未改变时 返回给后台报文中删除该条信息
              delete backData.mbEventInfos[m]
          }
     }
     //处理单表数据 mbProdCharge
-    var mbProdCharge = []
-    mbProdChargeDeal(prodData,sourceProdData,mbProdCharge)
-    backData.mbProdCharge = mbProdCharge
+    //加工后数据集合
+    var backVal = []
+    //表名
+    var tables = "mbProdCharge"
+    // var primaryKey =  {prodType: 'prodType', feeType: 'feeType'}
+    //调用处理方法
+    tablesMainDeal(prodData,sourceProdData,backVal,tables)
+    //将加工后数据回填到待返回数据集合
+    backData.mbProdCharge = backVal
+
+    //glProdAccounting
+    backVal = []
+    tables = "glProdAccounting"
+    // var primaryKey =  {prodType: 'prodType', accountingStatus: 'accountingStatus'}
+    tablesMainDeal(prodData,sourceProdData,backVal,tables)
+    backData.glProdAccounting = backVal
+
+    //irl_prod_int
+    backVal = []
+    tables = "irlProdInt"
+    // var primaryKey =  {prodType: 'prodType', eventType: 'eventType', intClass: 'intClass'}
+    tablesMainDeal(prodData,sourceProdData,backVal,tables)
+    backData.irlProdInt = backVal
+
+    //mb_acct_stats
+    backVal = []
+    tables = "mbAcctStats"
+    // var primaryKey =  {internalKey: 'internalKey'}
+    tablesMainDeal(prodData,sourceProdData,backVal,tables)
+    backData.mbAcctStats = backVal
     return backData
 }
-export function mbProdChargeDeal(prodData,sourceProdData,mbProdCharge){
+//单表处理主流程
+export function tablesMainDeal(prodData,sourceProdData,backVal,tables){
     let index = 0
-    for (let s =0; s<prodData.mbProdCharge.length; s++){
+    for (let s =0; s<prodData[tables].length; s++){
         let flags = 0
-        for(let j = 0; j<sourceProdData.mbProdCharge.length; j++){
-            let returnIndex = tableDeal(prodData,sourceProdData,s,j,mbProdCharge,index)
+        for(let j = 0; j<sourceProdData[tables].length; j++){
+            let returnIndex = tablesModDeal(prodData,sourceProdData,s,j,backVal,index,tables)
             if(index !== returnIndex){
-                //检索到并匹配成功
+                //检索到并匹配成功,并且该条数据已被处理
                 index = returnIndex
                 flags = 1
                 break
@@ -122,34 +151,62 @@ export function mbProdChargeDeal(prodData,sourceProdData,mbProdCharge){
         if(flags === 0){
             //原数据中不存在该条数据（新增）
             let temp = {newData: {},oldData: {},optType: ''}
-            temp.newData = prodData.mbProdCharge[s]
+            temp.newData = prodData[tables][s]
             temp.optType = 'I'
-            mbProdCharge.push(temp)
+            backVal.push(temp)
             index++
         }
     }
 }
-export function tableDeal(prodData,sourceProdData,s,j,mbProdCharge,index) {
+//单表处理，获取修改的数据
+export function tablesModDeal(prodData,sourceProdData,s,j,backVal,index,tables) {
     //新增数据，产品类型默认
-    prodData.mbProdCharge[s].prodType = sourceProdData.mbProdCharge[j].prodType
-    if(prodData.mbProdCharge[s].prodType === sourceProdData.mbProdCharge[j].prodType && prodData.mbProdCharge[s].feeType === sourceProdData.mbProdCharge[j].feeType){
+    let modFlag = "false"
+    if(tables === "mbProdCharge"){
+        if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].feeType === sourceProdData[tables][j].feeType){
+            modFlag = "true"
+        }
+    }
+    else if(tables === "glProdAccounting"){
+        if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].accountingStatus === sourceProdData[tables][j].accountingStatus){
+            modFlag = "true"
+        }
+    }
+    else if(tables === "irlProdInt"){
+        if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].eventType === sourceProdData[tables][j].eventType && prodData[tables][s].intClass === sourceProdData[tables][j].intClass){
+            modFlag = "true"
+        }
+    }
+    else if(tables === "mbAcctStats"){
+        if(prodData[tables][s].internalKey === sourceProdData[tables][j].internalKey){
+            modFlag = "true"
+        }
+    }
+    if(modFlag === "true"){
         //匹配到同一条数据
-        for(let k in prodData.mbProdCharge[s]){
+        let flag = 0
+        for(let k in prodData[tables][s]){
             //判断数据字段是否相同（修改）
-            if(prodData.mbProdCharge[s][k] !== sourceProdData.mbProdCharge[j][k]){
+            if(prodData[tables][s][k] !== sourceProdData[tables][j][k]){
                 //修改数据
                 let temp = {newData: {},oldData: {},optType: ''}
-                temp.newData = prodData.mbProdCharge[s]
-                temp.oldData = sourceProdData.mbProdCharge[j]
+                temp.newData = prodData[tables][s]
+                temp.oldData = sourceProdData[tables][j]
                 temp.optType = 'U'
-                mbProdCharge.push(temp)
+                backVal.push(temp)
                 index++
+                flag = 1
                 break
             }
+        }
+        //一条数据遍历完成是  不存在相同数据时处理
+        if(flag === 0){
+            index--
         }
     }
     return index
 }
+//降低mbEventPart对象处理方法复杂度，分离主方法
 export function mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sourceProdData) {
         for(let z in prodData.mbEventInfos[m].mbEventParts[x]) {
                 if (copyFlag === "Y") {
@@ -168,13 +225,10 @@ export function mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sour
                     map[z] = newDataPart
                     mbEventParts[x] = map
                 }
-
         }
-        // temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
-    // backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 }
 
-
+//对象浅拷贝
 export function copy(obj1,obj2) {
     var obj = obj2||{};
     for(let name in obj1){
