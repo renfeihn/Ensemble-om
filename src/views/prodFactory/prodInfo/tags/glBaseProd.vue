@@ -33,9 +33,16 @@
       </v-flex>
 
       <v-flex lg3 sm3 class="v-card">
+        <!--<v-card>-->
+        <!--<v-card-text>-->
+        <!--<down-action></down-action>-->
+        <!--</v-card-text>-->
+        <!--</v-card>-->
         <v-card>
           <v-card-text>
-            <down-action></down-action>
+            <v-btn color="success" depressed=""><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+            <v-btn color="success" depressed=""><v-icon >history</v-icon>复制</v-btn>
+            <v-btn color="success" depressed=""><v-icon >history</v-icon>保存</v-btn>
           </v-card-text>
         </v-card>
         <v-toolbar dense class="chat-history-toolbar prodLists">

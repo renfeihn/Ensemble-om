@@ -6,7 +6,9 @@
     </v-stepper-step>
 
     <v-stepper-content step="1">
-      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+      <v-card color="grey lighten-1" class="mb-5">
+        <publish-table></publish-table>
+      </v-card>
       <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
       <v-btn flat>Cancel</v-btn>
     </v-stepper-content>
@@ -16,7 +18,9 @@
     </v-stepper-step>
 
     <v-stepper-content step="2">
-      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+      <v-card color="grey lighten-1" class="mb-5">
+
+      </v-card>
       <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
       <v-btn flat>Cancel</v-btn>
     </v-stepper-content>
@@ -41,7 +45,11 @@
   </v-stepper> 
 </template>
 <script>
+import publishTable from './publishTable'
 export default {
+  components: {
+    publishTable
+  },
   data() {
     return {
       e6: 1

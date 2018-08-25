@@ -10,14 +10,14 @@
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading float: right">账户属性 *</span> -->
-                                    <v-select :items="acctAttrs" v-model="attrData" label="账户属性" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select :items="acctAttrs" v-model="acctForm.attr" label="账户属性" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex xs12 md2 lg2>
                                     <v-subheader class="primary--text subheading">账户类别 *</v-subheader>
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">账户类别 *</span> -->
-                                    <v-select :items="acctClasses" v-model="classData" label="账户类别" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select :items="acctClasses" v-model="acctForm.class" label="账户类别" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
@@ -27,14 +27,14 @@
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-4 pt-4 subheading">多币种 *</span> -->
                                     <!-- <v-select class="primary--text mx-1" :items="muticcyflag" v-model="muticcyflagData" label="是否多币种" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select> -->
-                                    <v-switch :label="`${muticcyflagData==='Y'?'是':'否'}`" v-model="muticcyflagData" value="Y" color="success" hide-details></v-switch>
+                                    <v-switch :label="`${muticcyflagData==='Y'?'是':'否'}`" v-model="acctForm.muticcyflag" value="Y" color="success" hide-details></v-switch>
                                 </v-flex>
                                 <v-flex xs12 md2 lg2>
                                     <v-subheader class="primary--text subheading">产品币种 *</v-subheader>
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">产品币种*</span> -->
-                                    <v-select class="primary--text mx-1" :items="ccytype" v-model="ccytypeData" label="币种" item-text="prodDesc" item-value="prodCode" small-chips single-line hide-details multiple></v-select>
+                                    <v-select class="primary--text mx-1" :items="ccytype" v-model="acctForm.ccytype" label="币种" item-text="prodDesc" item-value="prodCode" small-chips single-line hide-details multiple></v-select>
                                 </v-flex>
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
@@ -43,14 +43,14 @@
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">金额类型 *</span> -->
-                                    <v-select :items="amttype" v-model="amttypeData" label="金额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select :items="amttype" v-model="acctForm.amttype" label="金额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex xs12 md2 lg2>
                                     <v-subheader class="primary--text subheading">余额类型 *</v-subheader>
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">余额类型 *</span> -->
-                                    <v-select :items="baltype" v-model="baltypeData" label="余额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select :items="baltype" v-model="acctForm.baltype" label="余额类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <!-- </v-layout>
                                         <v-layout row wrap> -->
@@ -59,22 +59,22 @@
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">账户用途 *</span> -->
-                                    <v-select :items="acctusefor" v-model="acctuseforData" label="账户用途" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select :items="acctusefor" v-model="acctForm.acctusefor" label="账户用途" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex xs12 md2 lg2>
                                     <v-subheader class="primary--text subheading">介质类型 *</v-subheader>
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <!-- <span class="primary--text mx-3 pt-4 subheading">介质类型 *</span> -->
-                                    <v-select :items="mediumtype" v-model="mediumtypeData" label="介质类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                                    <v-select :items="mediumtype" v-model="acctForm.mediumtype" label="介质类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
                                 </v-flex>
                                 <v-flex xs12 md2 lg2>
                                     <v-subheader class="primary--text subheading">起始日期 *</v-subheader>
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <v-menu ref="statDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
-                                        <v-text-field slot="activator" label="起始日期" v-model="startDate" append-icon="event" single-line hide-details></v-text-field>
-                                        <v-date-picker v-model="startDate" @input="$refs.statDateMenu.save(startDate)" no-title scrollable locale="zh-cn">
+                                        <v-text-field slot="activator" label="起始日期" v-model="acctForm.effectdate" append-icon="event" single-line hide-details></v-text-field>
+                                        <v-date-picker v-model="acctForm.effectdate" @input="$refs.statDateMenu.save(acctForm.effectdate)" no-title scrollable locale="zh-cn">
                                         </v-date-picker>
                                     </v-menu>
                                 </v-flex>
@@ -84,8 +84,8 @@
                                 </v-flex>
                                 <v-flex xs12 md4 lg4>
                                     <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-                                        <v-text-field slot="activator" label="终止日期" v-model="endDate" append-icon="event" single-line hide-details></v-text-field>
-                                        <v-date-picker v-model="endDate" @input="$refs.endDateMenu.save(endDate)" no-title scrollable locale="zh-cn">
+                                        <v-text-field slot="activator" label="终止日期" v-model="acctForm.failuredate" append-icon="event" single-line hide-details></v-text-field>
+                                        <v-date-picker v-model="acctForm.failuredate" @input="$refs.endDateMenu.save(acctForm.failuredate)" no-title scrollable locale="zh-cn">
                                             <!-- <v-spacer></v-spacer>
                     <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
                     <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn> -->
@@ -112,9 +112,8 @@ export default {
   components: {
     VWidget
   },
-  props: ["listValue"],
+  props: ["sourceData"],
   data: () => ({
-    listValue: "",
     title: null,
     valid: true,
     date: null,
@@ -127,15 +126,19 @@ export default {
     endTimeMenu: false,
     endTime: null,
     modal: false,
-    attrData: "",
-    classData: "",
-    muticcyflagData: "",
-    ccytypeData: [],
-    amttypeData: "",
-    baltypeData: "",
-    reducedccyData: "",
-    acctuseforData: "",
-    mediumtypeData: "",
+      acctForm: {
+          attr: '',
+          class: '',
+          muticcyflag: '',
+          ccytype: '',
+          amttype: '',
+          baltype: '',
+          reducedccy: '',
+          acctusefor: '',
+          mediumtype: '',
+          effectdate: '',
+          failuredate: ''
+      },
     acctAttrs: [
       {
         prodCode: "",
@@ -192,28 +195,16 @@ export default {
     ]
   }),
   watch: {
-    listValue(val, oldval) {
-      if (val !== oldval) {
-        this.selectByProd();
+      sourceData(val) {
+          this.initProdData(val)
       }
-    }
   },
   mounted() {
     this.initRefDate();
   },
   methods: {
-    selectByProd() {
-      getProdData(this.listValue).then(response => {
-        this.attrData = response.data.acctFrom.attr;
-        this.classData = response.data.acctFrom.class;
-        this.muticcyflagData = response.data.acctFrom.muticcyflag;
-        this.ccytypeData = response.data.acctFrom.ccytype;
-        this.amttypeData = response.data.acctFrom.amttype;
-        this.baltypeData = response.data.acctFrom.baltype;
-        this.reducedccyData = response.data.acctFrom.reducedccy;
-        this.acctuseforData = response.data.acctFrom.acctusefor;
-        this.mediumtypeData = response.data.acctFrom.mediumtype;
-      });
+    initProdData(val) {
+        this.acctForm = val.acctForm
     },
     closeDialog() {
       this.$parent.isActive = false;

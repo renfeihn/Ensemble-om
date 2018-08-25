@@ -841,6 +841,18 @@ export default [
         `@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue`
       )
   },
+{
+    path: '/propertyManage/muneManage',
+        meta: {
+    breadcrumb: true,
+        title: '菜单管理'
+},
+    name: 'propertyManage/muneManage',
+        component: () =>
+import(
+    `@/views/propertyManage/muneManage.vue`
+)
+},
   {
     path: '/prod/rbBaseProd',
     meta: {
@@ -1124,6 +1136,20 @@ export default [
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
         `@/views/getAction.vue`
+      )
+  },
+  {
+    path: '/publishDate2',
+    meta: {
+      breadcrumb: true,
+      title: '连通后台测试2'
+    },
+    name: 'publishDate2',
+    component: () =>
+      import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `@/views/userFlow/publish/publishDate2.vue`
       )
   },
 ];
