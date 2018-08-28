@@ -242,7 +242,7 @@
                 })
             },
             queryDespositProdData(prodClass) {
-                getProdType().then(response => {
+                getProdType(prodClass).then(response => {
                     let length = response.data.prodTypeForm.length
                     for (let i = 0; i < length; i++) {
                         if (prodClass === response.data.prodTypeForm[i].prodClass) {

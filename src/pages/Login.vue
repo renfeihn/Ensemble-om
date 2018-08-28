@@ -39,6 +39,7 @@
 
 <script>
   import {getMenu} from '@/api/menu'
+  import {getUserMsg} from '@/api/login'
     export default {
         data: () => ({
             loading: false,
@@ -49,18 +50,18 @@
         }),
 
         methods: {
-            login () {
+            login (){
                 this.loading = true
-                this.$store.dispatch('LoginByUsername', this.model).then(response => {
-
-                    this.loading = false;
-                    if(this.model.username=='para') {
-                        const menu = getMenu()
-                    }
-                    this.$router.push('/dashboard');
-                }).catch(() => {
-                    this.loading = false
-                })
+                getUserMsg(this.model.username,this.model.password).then(response => {
+                    console.log(response);
+                   this.loading = false;
+                   if (this.model.username=='para') {
+                       const menu = getMenu()
+                   }
+                   this.$router.push('/dashboard');
+               }).catch(() => {
+                   this.loading = false
+               })
             }
         }
     };

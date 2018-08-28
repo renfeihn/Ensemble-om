@@ -12,6 +12,9 @@ import colors from 'vuetify/es5/util/colors';
 import  VueResource  from 'vue-resource'
 import Truncate from 'lodash.truncate';
 import store from './store';
+import qs from 'qs';
+Vue.prototype.$qs=qs
+
 //import './mock';
 if (process.env.MOCK_SWITCH !== 'off') {
   require('./mock')
