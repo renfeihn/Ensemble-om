@@ -83,13 +83,13 @@
     // import queryheader from './components/queryheader'
     import {
         getProdType
-    } from '@/api/prod'
+    } from '@/api/url/prodInfo'
     import EventForm from '../form/EventFormPord';
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
     import accountingPlain from '../table/accountingPlain'
     import AcctForm from '../form/AcctFormPord';
-    import { getProdData } from "@/api/prod";
+    import { getProdData } from "@/api/url/prodInfo";
     import downAction from '../btn/downAction'
     import {getChangeData} from "@/server/getChangeData";
     export default {

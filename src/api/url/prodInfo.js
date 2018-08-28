@@ -56,13 +56,13 @@ export function getProdData (prodType) {
     data
   });
 }
-export function getProdType (prodType) {
+export function getProdType (prodClass) {
   const data={
-    prodType
+    "prodClass": prodClass
   }
   return request({
-    url: '/getProdInfo',
-    method: 'get',
+    url: '/getProdListByClass',
+    method: 'post',
     data
   });
 }
