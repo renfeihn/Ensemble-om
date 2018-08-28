@@ -60,11 +60,14 @@ export function getProdData (params) {
     params
   });
 }
-export function getProdType (params) {
+export function getProdType (prodClass) {
+    const data = {
+        prodClass
+    }
   return request({
-    url: '/prod/getProdType',
-    method: 'get',
-    params
+    url: '/getProdListByClass',
+    method: 'post',
+    data
   });
 }
 export function getDepositDtl (data) {
