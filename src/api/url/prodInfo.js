@@ -57,8 +57,10 @@ export function getProdData (prodType) {
   });
 }
 export function getProdType (prodClass) {
+  
   const data={
-    "prodClass": prodClass
+    "prodClass": prodClass,
+    "userName": sessionStorage.getItem("userName")
   }
   return request({
     url: '/getProdListByClass',
