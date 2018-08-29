@@ -52,7 +52,7 @@ export function getProdData (prodType) {
   }
   return request({
     url: '/getProdInfo',
-    method: 'get',
+    method: 'post',
     data
   });
 }
