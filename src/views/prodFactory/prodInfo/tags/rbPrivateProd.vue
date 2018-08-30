@@ -32,7 +32,8 @@
                             <v-card-text> v-on:prodDataSon="prodDataSon"-->
                         <event-form v-if="i==1" v-bind:sourceData="{'eventForm':sourceData.eventForm}"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
-                        <acct-form v-if="i > 2" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
+                        <branch-form v-if="i==3"></branch-form>
+                        <acct-form v-if="i > 3" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
 
                         <!-- </v-card-text>
                     </v-card> -->
@@ -80,246 +81,277 @@
 </template>
 
 <script>
-    // import queryheader from './components/queryheader'
-    import {
-        getProdType
-    } from '@/api/url/prodInfo'
-    import EventForm from '../form/EventFormPord';
-    import VWidget from '@/components/VWidget';
-    import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-    import accountingPlain from '../table/accountingPlain'
-    import AcctForm from '../form/AcctFormPord';
-    import { getProdData } from "@/api/url/prodInfo";
-    import downAction from '../btn/downAction'
-    import {getChangeData} from "@/server/getChangeData";
-    export default {
-        name: 'deposit',
-        components: {
-            accountingPlain,
-            EventForm,
-            VWidget,
-            AcctForm,
-            VuePerfectScrollbar,
-            downAction
+// import queryheader from './components/queryheader'
+import { getProdType } from "@/api/url/prodInfo";
+import BranchForm from "../form/BranchFormProd";
+import EventForm from "../form/EventFormPord";
+import VWidget from "@/components/VWidget";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import accountingPlain from "../table/accountingPlain";
+import AcctForm from "../form/AcctFormPord";
+import { getProdData } from "@/api/url/prodInfo";
+import downAction from "../btn/downAction";
+import { getChangeData } from "@/server/getChangeData";
+export default {
+  name: "deposit",
+  components: {
+    accountingPlain,
+    BranchForm,
+    EventForm,
+    VWidget,
+    AcctForm,
+    VuePerfectScrollbar,
+    downAction
+  },
+  data() {
+    return {
+      listLoading: true,
+      searchValue: "",
+      depositProd: {
+        prodcode: "",
+        version: ""
+      },
+      prodCode: "",
+      prodClass: "",
+      activeName: "basic",
+      targetData: {},
+      sourceData: {
+        eventForm: {
+          prodcode: "",
+          proddesc: "",
+          busimodel: "",
+          prodclass: "",
+          prodprepice: "",
+          prodmuti: "",
+          prodstatus: "",
+          baseprod: "",
+          accttype: "",
+          acctsontype: "",
+          acctstruct: "",
+          virtualflag: "",
+          acctintflag: "",
+          amtflag: "",
+          profitcenter: "",
+          effectdate: "",
+          failuredate: ""
         },
-        data () {
-            return {
-                listLoading: true,
-                searchValue: '',
-                depositProd: {
-                    prodcode: '',
-                    version: ''
-                },
-                prodCode: '',
-                prodClass: '',
-                activeName: 'basic',
-                targetData: {},
-                sourceData: {
-                    eventForm: {
-                        prodcode: '',
-                        proddesc: '',
-                        busimodel: '',
-                        prodclass: '',
-                        prodprepice: '',
-                        prodmuti: '',
-                        prodstatus: '',
-                        baseprod: '',
-                        accttype: '',
-                        acctsontype: '',
-                        acctstruct: '',
-                        virtualflag: '',
-                        acctintflag: '',
-                        amtflag: '',
-                        profitcenter: '',
-                        effectdate: '',
-                        failuredate: ''
-                    },
-                    acctForm: {
-                        attr: '',
-                        class: '',
-                        muticcyflag: '',
-                        ccytype: '',
-                        amttype: '',
-                        baltype: '',
-                        reducedccy: '',
-                        acctusefor: '',
-                        mediumtype: '',
-                        effectdate: '',
-                        failuredate: ''
-                    }
-                },
-                prodInfo: [{
-                    icon: 'account_balance',
-                    text: '基本信息'
-                }, {
-                    icon: 'filter_vintage',
-                    text: '账户信息'
-                }, {
-                    icon: 'work',
-                    text: '产品对象'
-                }, {
-                    icon: 'work',
-                    text: '利率信息'
-                }, {
-                    icon: 'work',
-                    text: '风险信息'
-                }, {
-                    icon: 'work',
-                    text: '开户定义'
-                }, {
-                    icon: 'work',
-                    text: '存入定义'
-                }, {
-                    icon: 'work',
-                    text: '支取定义'
-                }, {
-                    icon: 'work',
-                    text: '利率信息'
-                }, {
-                    icon: 'work',
-                    text: '核算信息'
-                }, {
-                    icon: 'work',
-                    text: '销户定义'
-                }, {
-                    icon: 'work',
-                    text: '结息定义'
-                }],
-                files: [{
-                    icon: 'assignment',
-                    iconClass: 'blue white--text',
-                    value: '',
-                    lable: ''
-                }],
-                folders: []
-            }
-        },
-        created() {
-            this.prodClass = this.$route.params.prodClassCmp
-        },
-        mounted: function() {
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodClass = this.$route.hash
-            this.queryDespositProdData(this.prodClass)
-            if(this.$route.params.prodClassCmp !=''){
-                this.prodClass = this.$route.params.prodClassCmp
-            }
-            if(this.$route.params.prodCodeCmp !=''){
-                this.initStage(this.$route.params.prodCodeCmp)
-            }
-            this.queryDespositProdData(this.prodClass)
-        },
-        methods: {
-            queryProdInfo() {
-                console.log('start query prod info')
-            },
-            saveClick() {
-                //this.prodData对象，通过子界面回传，导致对象数据为修改后的最新数据。需要根据产品代码重新查库获取原始数据，再筛选出修改过的数据
-                getProdData(this.prodCode).then(response => {
-                    getChangeData(response.data,this.sourceData,this.targetData).then(response => {
-                        console.log(this.targetData)
-                    });
-                });
-            },
-            handleClick(value) {
-//                this.prodCode = value.prodType
-                getProdData(value.prodType).then(response => {
-                    //获取prodType产品基本属性
-                    this.sourceData.eventForm.prodcode = response.data.prodType.prodType
-                    this.sourceData.eventForm.proddesc = response.data.prodType.prodDesc
-                    this.sourceData.eventForm.prodprepice = response.data.prodType.prodRange
-                    this.sourceData.eventForm.busimodel = "RB"
-                    this.sourceData.eventForm.prodclass = response.data.prodType.prodClass
-                    this.sourceData.eventForm.prodmuti = response.data.prodType.prodGroup
-                    this.sourceData.eventForm.prodstatus = response.data.prodType.status
-                    //获取产品attr属性
-                    for (let i = 0; i<response.data.prodDefines.length; i++){
-                        //账户结构
-                        if(response.data.prodDefines[i].assembleId === "ACCT_STRUCT_FLAG"){
-                            this.sourceData.eventForm.acctstruct = response.data.prodDefines[i].attrValue
-                        }else
-                        //账户类型
-                        if(response.data.prodDefines[i].assembleId === "ACCT_TYPE"){
-                            this.sourceData.eventForm.accttype = response.data.prodDefines[i].attrValue
-                        }else
-                        //虚实标志
-                        if(response.data.prodDefines[i].assembleId === "ACCT_REAL_FLAG"){
-                            this.sourceData.eventForm.virtualflag = response.data.prodDefines[i].attrValue
-                        }else
-                        //计息标志
-                        if(response.data.prodDefines[i].assembleId === "ACCT_INT_FLAG"){
-                            this.sourceData.eventForm.acctintflag = response.data.prodDefines[i].attrValue
-                        }else
-                        //金额标志
-                        if(response.data.prodDefines[i].assembleId === "ACCT_BAL_FLAG"){
-                            this.sourceData.eventForm.amtflag = response.data.prodDefines[i].attrValue
-                        }else
-                        //利润中心
-                        if(response.data.prodDefines[i].assembleId === "PROFIT_CENTRE"){
-                            this.sourceData.eventForm.profitcenter = response.data.prodDefines[i].attrValue
-                        }else
-                        //起始日期
-                        if(response.data.prodDefines[i].assembleId === "PROD_START_DATE"){
-                            this.sourceData.eventForm.effectdate = response.data.prodDefines[i].attrValue
-                        }else
-                        //终止日期
-                        if(response.data.prodDefines[i].assembleId === "PROD_END_DATE"){
-                            this.sourceData.eventForm.failuredate = response.data.prodDefines[i].attrValue
-                        }
-                    }
-                });
-            },
-            initStage(value){
-                this.listValue = value
-            },
-            onSubmit() {
-                this.$message('submit!')
-            },
-            onCancel() {
-                this.$message({
-                    message: 'cancel!',
-                    type: 'warning'
-                })
-            },
-            queryDespositProdData(prodClass) {
-                getProdType(prodClass).then(response => {
-                    let length = response.data.length
-                    for(let j = 0; j<length; j++){
-                        this.folders.push(response.data[j])
-                    }
-                })
-            },
-//            getProdBySearchValue(val) {
-//                if (val) {
-//                    let j = 1
-//                    for (let i = 1; i < this.folders.length; i++) {
-//                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
-//                        }
-//                    }
-//                }
-//            },
-            showCopy(copyInfo) {
-                this.prodCode=copyInfo.prodType
-            }
+        acctForm: {
+          attr: "",
+          class: "",
+          muticcyflag: "",
+          ccytype: "",
+          amttype: "",
+          baltype: "",
+          reducedccy: "",
+          acctusefor: "",
+          mediumtype: "",
+          effectdate: "",
+          failuredate: ""
         }
-//        watch: {
-//            searchValue(val, oldval) {
-//                if (val !== oldval) {
-//                    this.getProdBySearchValue(val)
-//                }
-//            }
-//        }
+      },
+      prodInfo: [
+        {
+          icon: "account_balance",
+          text: "基本信息"
+        },
+        {
+          icon: "filter_vintage",
+          text: "账户信息"
+        },
+        {
+          icon: "work",
+          text: "机构范围"
+        },
+        {
+          icon: "work",
+          text: "利率信息"
+        },
+        {
+          icon: "work",
+          text: "风险信息"
+        },
+        {
+          icon: "work",
+          text: "开户定义"
+        },
+        {
+          icon: "work",
+          text: "存入定义"
+        },
+        {
+          icon: "work",
+          text: "支取定义"
+        },
+        {
+          icon: "work",
+          text: "利率信息"
+        },
+        {
+          icon: "work",
+          text: "核算信息"
+        },
+        {
+          icon: "work",
+          text: "销户定义"
+        },
+        {
+          icon: "work",
+          text: "结息定义"
+        }
+      ],
+      files: [
+        {
+          icon: "assignment",
+          iconClass: "blue white--text",
+          value: "",
+          lable: ""
+        }
+      ],
+      folders: []
+    };
+  },
+  created() {
+    this.prodClass = this.$route.params.prodClassCmp;
+  },
+  mounted: function() {
+    window.getApp.$emit("APP_DRAWER_TOGGLED");
+    this.prodClass = this.$route.hash;
+    this.queryDespositProdData(this.prodClass);
+    if (this.$route.params.prodClassCmp != "") {
+      this.prodClass = this.$route.params.prodClassCmp;
     }
+    if (this.$route.params.prodCodeCmp != "") {
+      this.initStage(this.$route.params.prodCodeCmp);
+    }
+    this.queryDespositProdData(this.prodClass);
+  },
+  methods: {
+    queryProdInfo() {
+      console.log("start query prod info");
+    },
+    saveClick() {
+      //this.prodData对象，通过子界面回传，导致对象数据为修改后的最新数据。需要根据产品代码重新查库获取原始数据，再筛选出修改过的数据
+      getProdData(this.prodCode).then(response => {
+        getChangeData(response.data, this.sourceData, this.targetData).then(
+          response => {
+            console.log(this.targetData);
+          }
+        );
+      });
+    },
+    handleClick(value) {
+      //                this.prodCode = value.prodType
+      getProdData(value.prodType).then(response => {
+        //获取prodType产品基本属性
+        this.sourceData.eventForm.prodcode = response.data.prodType.prodType;
+        this.sourceData.eventForm.proddesc = response.data.prodType.prodDesc;
+        this.sourceData.eventForm.prodprepice =
+          response.data.prodType.prodRange;
+        this.sourceData.eventForm.busimodel = "RB";
+        this.sourceData.eventForm.prodclass = response.data.prodType.prodClass;
+        this.sourceData.eventForm.prodmuti = response.data.prodType.prodGroup;
+        this.sourceData.eventForm.prodstatus = response.data.prodType.status;
+        //获取产品attr属性
+        for (let i = 0; i < response.data.prodDefines.length; i++) {
+          //账户结构
+          if (response.data.prodDefines[i].assembleId === "ACCT_STRUCT_FLAG") {
+            this.sourceData.eventForm.acctstruct =
+              response.data.prodDefines[i].attrValue;
+          } else if (response.data.prodDefines[i].assembleId === "ACCT_TYPE") {
+            //账户类型
+            this.sourceData.eventForm.accttype =
+              response.data.prodDefines[i].attrValue;
+          } else if (
+            response.data.prodDefines[i].assembleId === "ACCT_REAL_FLAG"
+          ) {
+            //虚实标志
+            this.sourceData.eventForm.virtualflag =
+              response.data.prodDefines[i].attrValue;
+          } else if (
+            response.data.prodDefines[i].assembleId === "ACCT_INT_FLAG"
+          ) {
+            //计息标志
+            this.sourceData.eventForm.acctintflag =
+              response.data.prodDefines[i].attrValue;
+          } else if (
+            response.data.prodDefines[i].assembleId === "ACCT_BAL_FLAG"
+          ) {
+            //金额标志
+            this.sourceData.eventForm.amtflag =
+              response.data.prodDefines[i].attrValue;
+          } else if (
+            response.data.prodDefines[i].assembleId === "PROFIT_CENTRE"
+          ) {
+            //利润中心
+            this.sourceData.eventForm.profitcenter =
+              response.data.prodDefines[i].attrValue;
+          } else if (
+            response.data.prodDefines[i].assembleId === "PROD_START_DATE"
+          ) {
+            //起始日期
+            this.sourceData.eventForm.effectdate =
+              response.data.prodDefines[i].attrValue;
+          } else if (
+            response.data.prodDefines[i].assembleId === "PROD_END_DATE"
+          ) {
+            //终止日期
+            this.sourceData.eventForm.failuredate =
+              response.data.prodDefines[i].attrValue;
+          }
+        }
+      });
+    },
+    initStage(value) {
+      this.listValue = value;
+    },
+    onSubmit() {
+      this.$message("submit!");
+    },
+    onCancel() {
+      this.$message({
+        message: "cancel!",
+        type: "warning"
+      });
+    },
+    queryDespositProdData(prodClass) {
+      getProdType(prodClass).then(response => {
+        let length = response.data.length;
+        for (let j = 0; j < length; j++) {
+          this.folders.push(response.data[j]);
+        }
+      });
+    },
+    //            getProdBySearchValue(val) {
+    //                if (val) {
+    //                    let j = 1
+    //                    for (let i = 1; i < this.folders.length; i++) {
+    //                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
+    //                        }
+    //                    }
+    //                }
+    //            },
+    showCopy(copyInfo) {
+      this.prodCode = copyInfo.prodType;
+    }
+  }
+  //        watch: {
+  //            searchValue(val, oldval) {
+  //                if (val !== oldval) {
+  //                    this.getProdBySearchValue(val)
+  //                }
+  //            }
+  //        }
+};
 </script>
 
 <style scoped>
-    .top {
-        padding-top: 8px;
-    }
-    .depositTree {
-        height: calc(90vh - 48px);
-    }
-    /*  .prodList {
+.top {
+  padding-top: 8px;
+}
+.depositTree {
+  height: calc(90vh - 48px);
+}
+/*  .prodList {
                   border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
                 }
                 .prodLists {
