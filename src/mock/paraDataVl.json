@@ -30,11 +30,11 @@
     }],
   "accttype":[
     {
-      "prodCode": "S",
-      "prodDesc": "S - 储蓄账户"
-    }, {
       "prodCode": "C",
-      "prodDesc": "C - 结算账户"
+      "prodDesc": "C - 储蓄账户"
+    }, {
+      "prodCode": "T",
+      "prodDesc": "T - 结算账户"
     }],
   "virtualflag":[
     {

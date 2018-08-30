@@ -58,6 +58,7 @@
                    if (this.model.username=='para') {
                        const menu = getMenu()
                    }
+                   sessionStorage.setItem("userName", this.model.username)
                    this.$router.push('/dashboard');
                }).catch(() => {
                    this.loading = false

@@ -60,11 +60,11 @@
                         <!--<v-subheader inset>个人活期产品</v-subheader>-->
                         <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
                             <v-list-tile-avatar>
-                                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+                                <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
                             </v-list-tile-avatar>
                             <v-list-tile-content>
-                                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+                                <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
+                                <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
                             </v-list-tile-content>
                             <v-list-tile-action>
                                 <v-btn icon ripple>
@@ -83,13 +83,13 @@
     // import queryheader from './components/queryheader'
     import {
         getProdType
-    } from '@/api/prod'
+    } from '@/api/url/prodInfo'
     import EventForm from '../form/EventFormPord';
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
     import accountingPlain from '../table/accountingPlain'
     import AcctForm from '../form/AcctFormPord';
-    import { getProdData } from "@/api/prod";
+    import { getProdData } from "@/api/url/prodInfo";
     import downAction from '../btn/downAction'
     import {getChangeData} from "@/server/getChangeData";
     export default {
@@ -222,11 +222,51 @@
                 });
             },
             handleClick(value) {
-                this.prodCode = value.value
-                getProdData(value.value).then(response => {
-                    this.sourceData.acctForm = response.data.acctFrom
-                    this.sourceData.eventForm = response.data.prodFrom
-                    this.sourceData.eventForm.prodcode = this.prodCode
+//                this.prodCode = value.prodType
+                getProdData(value.prodType).then(response => {
+                    //获取prodType产品基本属性
+                    this.sourceData.eventForm.prodcode = response.data.prodType.prodType
+                    this.sourceData.eventForm.proddesc = response.data.prodType.prodDesc
+                    this.sourceData.eventForm.prodprepice = response.data.prodType.prodRange
+                    this.sourceData.eventForm.busimodel = "RB"
+                    this.sourceData.eventForm.prodclass = response.data.prodType.prodClass
+                    this.sourceData.eventForm.prodmuti = response.data.prodType.prodGroup
+                    this.sourceData.eventForm.prodstatus = response.data.prodType.status
+                    //获取产品attr属性
+                    for (let i = 0; i<response.data.prodDefines.length; i++){
+                        //账户结构
+                        if(response.data.prodDefines[i].assembleId === "ACCT_STRUCT_FLAG"){
+                            this.sourceData.eventForm.acctstruct = response.data.prodDefines[i].attrValue
+                        }else
+                        //账户类型
+                        if(response.data.prodDefines[i].assembleId === "ACCT_TYPE"){
+                            this.sourceData.eventForm.accttype = response.data.prodDefines[i].attrValue
+                        }else
+                        //虚实标志
+                        if(response.data.prodDefines[i].assembleId === "ACCT_REAL_FLAG"){
+                            this.sourceData.eventForm.virtualflag = response.data.prodDefines[i].attrValue
+                        }else
+                        //计息标志
+                        if(response.data.prodDefines[i].assembleId === "ACCT_INT_FLAG"){
+                            this.sourceData.eventForm.acctintflag = response.data.prodDefines[i].attrValue
+                        }else
+                        //金额标志
+                        if(response.data.prodDefines[i].assembleId === "ACCT_BAL_FLAG"){
+                            this.sourceData.eventForm.amtflag = response.data.prodDefines[i].attrValue
+                        }else
+                        //利润中心
+                        if(response.data.prodDefines[i].assembleId === "PROFIT_CENTRE"){
+                            this.sourceData.eventForm.profitcenter = response.data.prodDefines[i].attrValue
+                        }else
+                        //起始日期
+                        if(response.data.prodDefines[i].assembleId === "PROD_START_DATE"){
+                            this.sourceData.eventForm.effectdate = response.data.prodDefines[i].attrValue
+                        }else
+                        //终止日期
+                        if(response.data.prodDefines[i].assembleId === "PROD_END_DATE"){
+                            this.sourceData.eventForm.failuredate = response.data.prodDefines[i].attrValue
+                        }
+                    }
                 });
             },
             initStage(value){
@@ -243,11 +283,9 @@
             },
             queryDespositProdData(prodClass) {
                 getProdType(prodClass).then(response => {
-                    let length = response.data.prodTypeForm.length
-                    for (let i = 0; i < length; i++) {
-                        if (prodClass === response.data.prodTypeForm[i].prodClass) {
-                            this.folders.push(response.data.prodTypeForm[i])
-                        }
+                    let length = response.data.length
+                    for(let j = 0; j<length; j++){
+                        this.folders.push(response.data[j])
                     }
                 })
             },
