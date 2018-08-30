@@ -40,8 +40,18 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
     var backData = targetData
     // 处理prodType对象数据
     var prodType = {newData: {},oldData: {}}
-    prodType.newData = prodData.prodType
-    prodType.oldData = sourceProdData.prodType
+    var newProdMap = {}
+    var oldProdMap = {}
+    for (let i in prodData.prodType) {
+        if (prodData.prodType[i] === sourceProdData.prodType[i]){
+            oldProdMap[i] = sourceProdData.prodType[i]
+        }else{
+            newProdMap[i] = prodData.prodType[i]
+            oldProdMap[i] = sourceProdData.prodType[i]
+        }
+    }
+    prodType.newData = Object.assign(prodType.newData,newProdMap)
+    prodType.oldData = Object.assign(prodType.oldData,oldProdMap)
     backData.prodType = prodType
     //处理prodDefines对象数据
     var prodDefines = {newData: {},oldData: {}}

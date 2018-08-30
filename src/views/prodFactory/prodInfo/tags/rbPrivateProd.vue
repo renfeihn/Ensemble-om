@@ -231,7 +231,7 @@
 //            },
             getNewProdData(val) {
                 console.log(val)
-                this.prodData.prodType.prodType = val.eventForm.prodtype
+                this.prodData.prodType.prodType = val.eventForm.prodcode
                 this.prodData.prodType.prodDesc = val.eventForm.proddesc
                 this.prodData.prodType.prodRange = val.eventForm.prodprepice
                 this.prodData.prodType.prodClass = val.eventForm.prodclass
