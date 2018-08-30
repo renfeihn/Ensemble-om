@@ -39,12 +39,12 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
 
     var backData = targetData
     // 处理prodType对象数据
-    var prodType = {newProdType: {},oldProdType: {}}
-    prodType.newProdType = prodData.prodType
-    prodType.oldProdType = sourceProdData.prodType
+    var prodType = {newData: {},oldData: {}}
+    prodType.newData = prodData.prodType
+    prodType.oldData = sourceProdData.prodType
     backData.prodType = prodType
     //处理prodDefines对象数据
-    var prodDefines = {newProdDefines: {},oldProdDefines: {}}
+    var prodDefines = {newData: {},oldData: {}}
     var newMap = {}
     var oldMap = {}
     for (let i in prodData.prodDefines){
@@ -53,7 +53,7 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
             oldMap[i] = sourceProdData.prodDefines[i]
         }
     }
-    prodDefines.newProdDefines = Object.assign(prodDefines.newProdDefines,newMap)
-    prodDefines.oldProdDefines = Object.assign(prodDefines.oldProdDefines,oldMap)
+    prodDefines.newData = Object.assign(prodDefines.newData,newMap)
+    prodDefines.oldData = Object.assign(prodDefines.oldData,oldMap)
     backData.prodDefines = prodDefines
 }
