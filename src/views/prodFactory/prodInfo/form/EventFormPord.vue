@@ -17,7 +17,7 @@
                 <v-subheader class="primary--text subheading">产品描述*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <!-- <span class="primary--text mx-3 pt-4 subheading">产品描述</span> -->
+                <!-- <span class="primary--text mx-3 pt-4 subheading datatest.prodType.prodDesc">产品描述</span> -->
                 <v-text-field class="primary--text mx-2" label="产品描述" name="title" v-model="eventForm.proddesc" single-line hide-details/>
               </v-flex>
               <v-flex xs12 md2 lg2>
@@ -155,160 +155,185 @@
 </template>
 
 <script>
-import { getInitData } from "@/api/prod";
-import { getProdData } from "@/api/prod";
+    import { getInitData } from "@/api/prod";
+    import { getProdData } from "@/api/prod";
 
-export default {
-  props: ["sourceData"],
-  data: () => ({
-    title: null,
-    failuredateData: "",
-    valid: true,
-    date: null,
-    startDate: "",
-    startTimeMenu: false,
-    startTime: null,
-    endDateMenu: false,
-    endDate: "",
-    endTimeMenu: false,
-    endTime: null,
-    modal: false,
-      eventForm: [{
-          prodcode: '',
-          proddesc: '',
-          busimodel: '',
-          prodclass: '',
-          prodprepice: '',
-          prodmuti: '',
-          prodstatus: '',
-          baseprod: '',
-          accttype: '',
-          acctsontype: '',
-          acctstruct: '',
-          virtualflag: '',
-          acctintflag: '',
-          amtflag: '',
-          profitcenter: '',
-          effectdate: '',
-          failuredate: ''
-      }],
-    busimodel: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    prodclass: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    acctstruct: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    virtualflag: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    acctintflag: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    amtflag: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    baseprod: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    prodstatus: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    prodmuti: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    prodprepice: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    acctsontype: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    accttype: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ],
-    profitcenter: [
-      {
-        prodCode: "",
-        prodDesc: ""
-      }
-    ]
-  }),
-  computed: {
-    progress() {
-      return Math.min(100, this.value.length * 10);
-    }
-  },
-  watch: {
-      sourceData(val) {
-          this.initProdData(val)
-      }
-  },
-  mounted() {
-    this.initRefDate();
-  },
-  methods: {
-    initProdData(val) {
-        this.eventForm = val.eventForm
-    },
-    initRefDate() {
-      getInitData().then(response => {
-        console.log(response);
-        this.busimodel = response.data.paraDataVl.busimodel;
-        this.virtualflag = response.data.paraDataVl.virtualflag;
-        this.acctintflag = response.data.paraDataVl.acctintflag;
-        this.amtflag = response.data.paraDataVl.amtflag;
-        this.prodmuti = response.data.paraDataVl.prodmuti;
-        this.prodprepice = response.data.paraDataVl.prodprepice;
-        this.accttype = response.data.paraDataVl.accttype;
-        this.profitcenter = response.data.paraDataRf.profitcenter;
-        this.acctsontype = response.data.paraDataRf.acctsontype;
-        this.baseprod = response.data.paraDataRf.baseprod;
-        this.acctstruct = response.data.paraDataRf.acctstruct;
-        this.prodstatus = response.data.paraDataVl.prodstatus;
-        this.prodclass = response.data.paraDataRf.prodclass;
-      });
-    },
-    closeDialog() {
-      this.$parent.isActive = false;
-    }
-  }
-};
+    export default {
+        props: ["prodData","options"],
+        data: () => ({
+            title: null,
+            failuredateData: "",
+            valid: true,
+            date: null,
+            startDate: "",
+            options: "",
+            startTimeMenu: false,
+            startTime: null,
+            endDateMenu: false,
+            endDate: "",
+            endTimeMenu: false,
+            endTime: null,
+            modal: false,
+            eventForm: {
+                prodcode: '',
+                proddesc: '',
+                busimodel: '',
+                prodclass: '',
+                prodprepice: '',
+                prodmuti: '',
+                prodstatus: '',
+                baseprod: '',
+                accttype: '',
+                acctsontype: '',
+                acctstruct: '',
+                virtualflag: '',
+                acctintflag: '',
+                amtflag: '',
+                profitcenter: '',
+                effectdate: '',
+                failuredate: ''
+            },
+            busimodel: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            prodclass: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            acctstruct: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            virtualflag: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            acctintflag: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            amtflag: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            baseprod: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            prodstatus: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            prodmuti: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            prodprepice: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            acctsontype: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            accttype: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ],
+            profitcenter: [
+                {
+                    prodCode: "",
+                    prodDesc: ""
+                }
+            ]
+        }),
+        computed: {
+            progress() {
+                return Math.min(100, this.value.length * 10);
+            }
+        },
+        watch: {
+            prodData(val) {
+                this.initProdData(val)
+            },
+            options(val) {
+                if(val === "save"){
+                    this.callbackProd(this.eventForm)
+                }
+            }
+        },
+        mounted() {
+            this.initRefDate();
+        },
+        methods: {
+            initProdData(val) {
+                this.eventForm.prodcode = val.prodType.prodType
+                this.eventForm.proddesc = val.prodType.prodDesc
+                this.eventForm.prodprepice = val.prodType.prodRange
+                this.eventForm.busimodel = "RB"
+                this.eventForm.prodclass = val.prodType.prodClass
+                this.eventForm.prodmuti = val.prodType.prodGroup
+                this.eventForm.prodstatus = val.prodType.status
+                this.eventForm.acctstruct = val.prodDefines.ACCT_STRUCT_FLAG.attrValue
+                this.eventForm.accttype = val.prodDefines.ACCT_TYPE.attrValue
+                this.eventForm.virtualflag = val.prodDefines.ACCT_REAL_FLAG.attrValue
+                this.eventForm.acctintflag = val.prodDefines.ACCT_INT_FLAG.attrValue
+                this.eventForm.amtflag = val.prodDefines.ACCT_BAL_FLAG.attrValue
+                this.eventForm.profitcenter = val.prodDefines.PROFIT_CENTRE.attrValue
+                this.eventForm.effectdate = val.prodDefines.PROD_START_DATE.attrValue
+                this.eventForm.failuredate = val.prodDefines.PROD_END_DATE.attrValue
+            },
+            callbackProd() {
+              console.log()
+//                this.prodData.prodType.prodDesc = this.eventForm.proddesc
+                this.$emit("getNewProdData",{"eventForm": this.eventForm})
+            },
+            initRefDate() {
+                getInitData().then(response => {
+                    console.log(response);
+                    this.busimodel = response.data.paraDataVl.busimodel;
+                    this.virtualflag = response.data.paraDataVl.virtualflag;
+                    this.acctintflag = response.data.paraDataVl.acctintflag;
+                    this.amtflag = response.data.paraDataVl.amtflag;
+                    this.prodmuti = response.data.paraDataVl.prodmuti;
+                    this.prodprepice = response.data.paraDataVl.prodprepice;
+                    this.accttype = response.data.paraDataVl.accttype;
+                    this.profitcenter = response.data.paraDataRf.profitcenter;
+                    this.acctsontype = response.data.paraDataRf.acctsontype;
+                    this.baseprod = response.data.paraDataRf.baseprod;
+                    this.acctstruct = response.data.paraDataRf.acctstruct;
+                    this.prodstatus = response.data.paraDataVl.prodstatus;
+                    this.prodclass = response.data.paraDataRf.prodclass;
+                });
+            },
+            closeDialog() {
+                this.$parent.isActive = false;
+            }
+        }
+    };
 </script>
