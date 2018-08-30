@@ -190,7 +190,7 @@
                 getProdData(this.prodCode).then(response => {
                     this.sourceProdData = response.data
                     filterChangeData(this.prodData,this.sourceProdData,this.targetData);
-                    savaProdInfo(this.targetData);
+                        savaProdInfo(this.targetData);
                 });
 
             },
@@ -238,13 +238,13 @@
                 this.prodData.prodType.prodGroup = val.eventForm.prodmuti
                 this.prodData.prodType.status = val.eventForm.prodstatus
                 this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctstruct
-                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.accttype
-                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.virtualflag
-                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.acctintflag
-                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.amtflag
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.profitcenter
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.effectdate
-                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.failuredate
+                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.virtualflag
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctintflag
+                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.amtflag
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitcenter
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.effectdate
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
             }
 
         }
