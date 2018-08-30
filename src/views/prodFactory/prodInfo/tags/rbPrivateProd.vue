@@ -30,9 +30,9 @@
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <!-- <v-card>
                             <v-card-text> v-on:prodDataSon="prodDataSon"-->
-                        <event-form v-if="i==1" v-bind:sourceData="{'eventForm':sourceData.eventForm}"></event-form>
+                        <event-form v-if="i==1" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
-                        <acct-form v-if="i > 2" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
+                        <acct-form v-if="i > 2" v-bind:prodData="prodData"></acct-form>
 
                         <!-- </v-card-text>
                     </v-card> -->
@@ -47,8 +47,8 @@
                 <!--</v-card>-->
                 <v-card>
                     <v-card-text>
-                        <v-btn color="success" depressed="" @click="tempClick"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
-                        <v-btn color="success" depressed="" @click="copyClick"><v-icon >history</v-icon>复制</v-btn>
+                        <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+                        <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
                         <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
                     </v-card-text>
                 </v-card>
@@ -91,7 +91,7 @@
     import AcctForm from '../form/AcctFormPord';
     import { getProdData } from "@/api/url/prodInfo";
     import downAction from '../btn/downAction'
-    import {getChangeData} from "@/server/getChangeData";
+    import {filterChangeData} from "@/server/filterChangeData";
     export default {
         name: 'deposit',
         components: {
@@ -112,42 +112,8 @@
                 },
                 prodCode: '',
                 prodClass: '',
+                options: '',
                 activeName: 'basic',
-                targetData: {},
-                sourceData: {
-                    eventForm: {
-                        prodcode: '',
-                        proddesc: '',
-                        busimodel: '',
-                        prodclass: '',
-                        prodprepice: '',
-                        prodmuti: '',
-                        prodstatus: '',
-                        baseprod: '',
-                        accttype: '',
-                        acctsontype: '',
-                        acctstruct: '',
-                        virtualflag: '',
-                        acctintflag: '',
-                        amtflag: '',
-                        profitcenter: '',
-                        effectdate: '',
-                        failuredate: ''
-                    },
-                    acctForm: {
-                        attr: '',
-                        class: '',
-                        muticcyflag: '',
-                        ccytype: '',
-                        amttype: '',
-                        baltype: '',
-                        reducedccy: '',
-                        acctusefor: '',
-                        mediumtype: '',
-                        effectdate: '',
-                        failuredate: ''
-                    }
-                },
                 prodInfo: [{
                     icon: 'account_balance',
                     text: '基本信息'
@@ -191,7 +157,10 @@
                     value: '',
                     lable: ''
                 }],
-                folders: []
+                folders: [],
+                prodData: {},
+                sourceProdData: {},
+                targetData: {}
             }
         },
         created() {
@@ -214,59 +183,19 @@
                 console.log('start query prod info')
             },
             saveClick() {
-                //this.prodData对象，通过子界面回传，导致对象数据为修改后的最新数据。需要根据产品代码重新查库获取原始数据，再筛选出修改过的数据
+                this.options = "save"
                 getProdData(this.prodCode).then(response => {
-                    getChangeData(response.data,this.sourceData,this.targetData).then(response => {
+                    this.sourceProdData = response.data
+                    filterChangeData(this.prodData,this.sourceProdData,this.targetData).then(response => {
                         console.log(this.targetData)
                     });
                 });
+
             },
             handleClick(value) {
-//                this.prodCode = value.prodType
-                getProdData(value.prodType).then(response => {
-                    //获取prodType产品基本属性
-                    this.sourceData.eventForm.prodcode = response.data.prodType.prodType
-                    this.sourceData.eventForm.proddesc = response.data.prodType.prodDesc
-                    this.sourceData.eventForm.prodprepice = response.data.prodType.prodRange
-                    this.sourceData.eventForm.busimodel = "RB"
-                    this.sourceData.eventForm.prodclass = response.data.prodType.prodClass
-                    this.sourceData.eventForm.prodmuti = response.data.prodType.prodGroup
-                    this.sourceData.eventForm.prodstatus = response.data.prodType.status
-                    //获取产品attr属性
-                    for (let i = 0; i<response.data.prodDefines.length; i++){
-                        //账户结构
-                        if(response.data.prodDefines[i].assembleId === "ACCT_STRUCT_FLAG"){
-                            this.sourceData.eventForm.acctstruct = response.data.prodDefines[i].attrValue
-                        }else
-                        //账户类型
-                        if(response.data.prodDefines[i].assembleId === "ACCT_TYPE"){
-                            this.sourceData.eventForm.accttype = response.data.prodDefines[i].attrValue
-                        }else
-                        //虚实标志
-                        if(response.data.prodDefines[i].assembleId === "ACCT_REAL_FLAG"){
-                            this.sourceData.eventForm.virtualflag = response.data.prodDefines[i].attrValue
-                        }else
-                        //计息标志
-                        if(response.data.prodDefines[i].assembleId === "ACCT_INT_FLAG"){
-                            this.sourceData.eventForm.acctintflag = response.data.prodDefines[i].attrValue
-                        }else
-                        //金额标志
-                        if(response.data.prodDefines[i].assembleId === "ACCT_BAL_FLAG"){
-                            this.sourceData.eventForm.amtflag = response.data.prodDefines[i].attrValue
-                        }else
-                        //利润中心
-                        if(response.data.prodDefines[i].assembleId === "PROFIT_CENTRE"){
-                            this.sourceData.eventForm.profitcenter = response.data.prodDefines[i].attrValue
-                        }else
-                        //起始日期
-                        if(response.data.prodDefines[i].assembleId === "PROD_START_DATE"){
-                            this.sourceData.eventForm.effectdate = response.data.prodDefines[i].attrValue
-                        }else
-                        //终止日期
-                        if(response.data.prodDefines[i].assembleId === "PROD_END_DATE"){
-                            this.sourceData.eventForm.failuredate = response.data.prodDefines[i].attrValue
-                        }
-                    }
+                this.prodCode = value.prodType
+                getProdData(this.prodCode).then(response => {
+                    this.prodData = response.data
                 });
             },
             initStage(value){
@@ -298,9 +227,24 @@
 //                    }
 //                }
 //            },
-            showCopy(copyInfo) {
-                this.prodCode=copyInfo.prodType
+            getNewProdData(val) {
+                console.log(val)
+                this.prodData.prodType.prodType = val.eventForm.prodtype
+                this.prodData.prodType.prodDesc = val.eventForm.proddesc
+                this.prodData.prodType.prodRange = val.eventForm.prodprepice
+                this.prodData.prodType.prodClass = val.eventForm.prodclass
+                this.prodData.prodType.prodGroup = val.eventForm.prodmuti
+                this.prodData.prodType.status = val.eventForm.prodstatus
+                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctstruct
+                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.accttype
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.virtualflag
+                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.acctintflag
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.amtflag
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.profitcenter
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.effectdate
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.failuredate
             }
+
         }
 //        watch: {
 //            searchValue(val, oldval) {
