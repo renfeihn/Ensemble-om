@@ -82,6 +82,14 @@ export function getProdClass (data) {
         data: data
     });
 }
+export function savaProdInfo (params) {
+ 
+  return request({
+    url: '/saveProdInfo',
+    method: 'post',
+    data: params
+});
+}
 export function getUserCollectProds (data) {
     return request({
         url: '/prod/userCollect',

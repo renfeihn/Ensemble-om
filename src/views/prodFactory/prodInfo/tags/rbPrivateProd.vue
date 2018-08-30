@@ -84,6 +84,9 @@
     import {
         getProdType
     } from '@/api/url/prodInfo'
+    import {
+        savaProdInfo
+    } from '@/api/url/prodInfo';
     import EventForm from '../form/EventFormPord';
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
@@ -186,9 +189,8 @@
                 this.options = "save"
                 getProdData(this.prodCode).then(response => {
                     this.sourceProdData = response.data
-                    filterChangeData(this.prodData,this.sourceProdData,this.targetData).then(response => {
-                        console.log(this.targetData)
-                    });
+                    filterChangeData(this.prodData,this.sourceProdData,this.targetData);
+                    savaProdInfo(this.targetData);
                 });
 
             },

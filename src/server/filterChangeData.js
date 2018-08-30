@@ -56,4 +56,5 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
     prodDefines.newData = Object.assign(prodDefines.newData,newMap)
     prodDefines.oldData = Object.assign(prodDefines.oldData,oldMap)
     backData.prodDefines = prodDefines
+    backData.userName='admin'
 }
