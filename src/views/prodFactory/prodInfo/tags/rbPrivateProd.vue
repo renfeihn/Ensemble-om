@@ -189,17 +189,29 @@
             },
             saveClick() {
                 this.options = "save"
-                getProdData(this.prodCode).then(response => {
-                    this.sourceProdData = response.data
-                    filterChangeData(this.prodData,this.sourceProdData,this.targetData);
-                        savaProdInfo(this.targetData);
-                });
+
+                filterChangeData(this.prodData,this.sourceProdData,this.targetData);
+                savaProdInfo(this.targetData);
             },
             handleClick(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
                     this.prodData = response.data
+                    this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
+            },
+            //对象浅复制
+            copy(obj1,obj2) {
+                var obj = obj2||{};
+                for(let name in obj1){
+                    if(typeof obj1[name] === "object"){
+                        obj[name]= (obj1[name].constructor===Array)?[]:{};
+                        this.copy(obj1[name],obj[name]);
+                    }else{
+                        obj[name]=obj1[name];
+                    }
+                }
+                return obj;
             },
             initStage(value){
                 this.listValue = value
