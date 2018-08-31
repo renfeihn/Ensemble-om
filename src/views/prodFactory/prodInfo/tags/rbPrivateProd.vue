@@ -32,8 +32,8 @@
                             <v-card-text> v-on:prodDataSon="prodDataSon"-->
                         <event-form v-if="i==1" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
-                        <acct-form v-if="i > 2" v-bind:prodData="prodData"></acct-form>
-
+                        <branch-form v-if="i==3"></branch-form>
+                        <acct-form v-if="i > 3" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
                         <!-- </v-card-text>
                     </v-card> -->
                     </v-tab-item>
@@ -87,6 +87,7 @@
     import {
         savaProdInfo
     } from '@/api/url/prodInfo';
+    import BranchForm from "../form/BranchFormProd";
     import EventForm from '../form/EventFormPord';
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
@@ -99,6 +100,7 @@
         name: 'deposit',
         components: {
             accountingPlain,
+            BranchForm,
             EventForm,
             VWidget,
             AcctForm,
@@ -187,6 +189,7 @@
             },
             saveClick() {
                 this.options = "save"
+
                 filterChangeData(this.prodData,this.sourceProdData,this.targetData);
                 savaProdInfo(this.targetData);
             },
@@ -256,7 +259,6 @@
                 this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
             }
-
         }
 //        watch: {
 //            searchValue(val, oldval) {
@@ -282,4 +284,3 @@
                   border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
                 }*/
 </style>
-
