@@ -10,7 +10,7 @@
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">产品类型*</span> -->
-                <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="eventForm.prodcode" @change="callbackProd" single-line hide-details>
+                <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="eventForm.prodcode" single-line hide-details>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
@@ -159,14 +159,13 @@
     import { getProdData } from "@/api/prod";
 
     export default {
-        props: ["prodData","options"],
+        props: ["prodData"],
         data: () => ({
             title: null,
             failuredateData: "",
             valid: true,
             date: null,
             startDate: "",
-            options: "",
             startTimeMenu: false,
             startTime: null,
             endDateMenu: false,
@@ -280,11 +279,6 @@
         watch: {
             prodData(val) {
                 this.initProdData(val)
-            },
-            options(val) {
-                if(val !== ""){
-                    this.callbackprod(this.eventForm)
-                }
             }
         },
         mounted() {

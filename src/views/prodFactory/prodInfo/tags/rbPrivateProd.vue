@@ -30,7 +30,7 @@
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <!-- <v-card>
                             <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
-                        <event-form v-if="i==1" ref="callback" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
+                        <event-form v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
                         <branch-form v-if="i==3"></branch-form>
                         <acct-form v-if="i > 3"></acct-form>
@@ -117,7 +117,6 @@
                 },
                 prodCode: '',
                 prodClass: '',
-                options: '',
                 activeName: 'basic',
                 prodInfo: [{
                     icon: 'account_balance',
@@ -165,7 +164,8 @@
                 folders: [],
                 prodData: {},
                 sourceProdData: {},
-                targetData: {}
+                targetData: {},
+                ttt: {}
             }
         },
         created() {
@@ -188,10 +188,8 @@
                 console.log('start query prod info')
             },
             saveClick() {
-                this.options = "save"
                 this.$refs.callback[0].callbackprod()
-                this.targetData = this.copy(this.prodData,this.targetData)
-                filterChangeData(this.prodData,this.sourceProdData,this.targetData);
+                this.targetData = filterChangeData(this.prodData,this.sourceProdData)
                 this.targetData.option="save";
                 savaProdInfo(this.targetData);
             },

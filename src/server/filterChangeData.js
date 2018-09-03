@@ -1,33 +1,34 @@
 /**
  * Created by jiajt on 2018/8/21.
- * 处理prodData对象改变的数据到targetProdData对象
- * 处理prodData.prodType对象数据：处理后targetProdData.prodType对象结构：
+ * 处理prodData对象改变的数据到targetData对象
+ * 处理prodData.prodType对象数据：处理后targetData.prodType对象结构：
  *              prodType:{
- *                      newProdType:{
+ *                      newData:{
  *                          prodType:1110001
  *                          prodDesc:存款产品AA
  *                          ...}，
- *                      oldProdType:{
+ *                      oldData:{
  *                          prodType:1110001
  *                          prodDesc:存款产品BB
  *                          ...}
  *                       }
- * 处理prodData.prodDefines对象数据：处理后targetProdData.prodDefines对象结构同prodType.
- *             差异：newProdDefines{}对象只包含被修改对象的修改后值，oldProdDefines{}只包含被修改对象修改前数据，二者一对一
+ *               当不存在差异数据的时候，newData:{}  oldData:{}为全部信息
+ * 处理prodData.prodDefines对象数据：处理后targetData.prodDefines对象结构同prodType.
+ *             差异：newData{}对象只包含被修改对象的修改后值，oldData{}只包含被修改对象修改前数据，二者一对一
  * 处理prodData.mbEventInfos对象数据：处理后结构：
  *              mbEventInfos: {
  *                          事件A：{
  *                              mbEventAttrs:{
- *                                  newMbEventAttrs: {只包含被修改对象修改后值},
- *                                  oldMbEventAttrs: {只包含被修改对象修改前值}
+ *                                  newData: {只包含被修改对象修改后值},
+ *                                  oldData: {只包含被修改对象修改前值}
  *                                  },
  *                              mbEventPart: {
- *                                  newMbEventPart: {只包含被修改对象修改后值},
- *                                  oldMbEventPart: {只包含被修改对象修改前值}
+ *                                  newData: {只包含被修改对象修改后值},
+ *                                  oldData: {只包含被修改对象修改前值}
  *                                  },
  *                             mbEventType: {
- *                                  newMbEventType: {只包含被修改对象修改后值},
- *                                  oldMbEventType: {只包含被修改对象修改前值}
+ *                                  newData: {只包含被修改对象修改后值},
+ *                                  oldData: {只包含被修改对象修改前值}
  *                                  },
  *                               }，
  *                           事件B：{}，
@@ -35,9 +36,9 @@
  *                           ...
  *                           }
  */
-export function filterChangeData (prodData,sourceProdData,targetData) {
-
-    var backData = targetData
+export function filterChangeData (prodData,sourceProdData) {
+    var backData = {}
+    backData = copy(sourceProdData,backData)
     // 处理prodType对象数据
     var prodType = {newData: {},oldData: {}}
     var newProdMap = {}
@@ -93,7 +94,7 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
         mbEventAttrs.newData = Object.assign(mbEventAttrs.newData,newData)//深拷贝
         mbEventAttrs.oldData = Object.assign(mbEventAttrs.oldData,oldData)
         temp.mbEventAttrs = Object.assign(temp.mbEventAttrs,mbEventAttrs)
-        targetData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
+        backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
              if (prodData.mbEventInfos[m].mbEventParts[x].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x].attrValue){
@@ -105,7 +106,7 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
         mbEventParts.newData = Object.assign(mbEventParts.newData,newDataPart)
         mbEventParts.oldData = Object.assign(mbEventParts.oldData,oldataPart)
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
-        targetData.mbEventInfos[m].mbEventParts = temp.mbEventParts
+        backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
         //mbProdType
          for (let y in prodData.mbEventInfos[m].mbEventType){
@@ -118,12 +119,12 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
          mbEventType.newData = Object.assign(mbEventType.newData,newDataType)
          mbEventType.oldData = Object.assign(mbEventType.oldData,oldataType)
          temp.mbEventType = Object.assign(temp.mbEventType,mbEventType)
-        targetData.mbEventInfos[m].mbEventType = temp.mbEventType
+        backData.mbEventInfos[m].mbEventType = temp.mbEventType
          if(flag === "false" && flagType === "false" && flagPart === "false"){
-             delete targetData.mbEventInfos[m]
+             delete backData.mbEventInfos[m]
          }
     }
-    backData.mbEventInfos = targetData.mbEventInfos
+    return backData
 }
 
 export function copy(obj1,obj2) {
@@ -131,7 +132,7 @@ export function copy(obj1,obj2) {
     for(let name in obj1){
         if(typeof obj1[name] === "object"){
             obj[name]= (obj1[name].constructor===Array)?[]:{};
-            this.copy(obj1[name],obj[name]);
+            copy(obj1[name],obj[name]);
         }else{
             obj[name]=obj1[name];
         }
