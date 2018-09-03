@@ -283,7 +283,7 @@
             },
             options(val) {
                 if(val !== ""){
-                    this.callbackProd(this.eventForm)
+                    this.callbackprod(this.eventForm)
                 }
             }
         },
@@ -314,7 +314,7 @@
                 this.eventForm.baseprod = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue
 
             },
-            callbackProd() {
+            callbackprod() {
                 this.$emit("getNewProdData",{"eventForm": this.eventForm})
             },
             initRefDate() {
