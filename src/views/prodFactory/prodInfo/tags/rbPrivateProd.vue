@@ -191,6 +191,7 @@
                 this.options = "save"
                 this.$refs.test[0].callbackProd
                 filterChangeData(this.prodData,this.sourceProdData,this.targetData);
+                this.targetData.option="save";
                 savaProdInfo(this.targetData);
             },
             handleClick(value) {

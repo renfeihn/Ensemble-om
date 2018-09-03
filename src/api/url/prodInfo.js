@@ -97,3 +97,9 @@ export function getUserCollectProds (data) {
         data: data
     });
 }
+export function getFlowList () {
+  return request({
+    url: '/reviewList',
+    method: 'get'
+});
+}
