@@ -29,11 +29,11 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <!-- <v-card>
-                            <v-card-text> v-on:prodDataSon="prodDataSon"-->
+                            <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
                         <event-form v-if="i==1" ref="test" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
                         <branch-form v-if="i==3"></branch-form>
-                        <acct-form v-if="i > 3" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
+                        <acct-form v-if="i > 3"></acct-form>
                         <!-- </v-card-text>
                     </v-card> -->
                     </v-tab-item>
