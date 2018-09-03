@@ -93,7 +93,7 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
         mbEventAttrs.newData = Object.assign(mbEventAttrs.newData,newData)//深拷贝
         mbEventAttrs.oldData = Object.assign(mbEventAttrs.oldData,oldData)
         temp.mbEventAttrs = Object.assign(temp.mbEventAttrs,mbEventAttrs)
-        sourceProdData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
+        targetData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
              if (prodData.mbEventInfos[m].mbEventParts[x].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x].attrValue){
@@ -105,7 +105,7 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
         mbEventParts.newData = Object.assign(mbEventParts.newData,newDataPart)
         mbEventParts.oldData = Object.assign(mbEventParts.oldData,oldataPart)
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
-        sourceProdData.mbEventInfos[m].mbEventParts = temp.mbEventParts
+        targetData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
         //mbProdType
          for (let y in prodData.mbEventInfos[m].mbEventType){
@@ -118,12 +118,12 @@ export function filterChangeData (prodData,sourceProdData,targetData) {
          mbEventType.newData = Object.assign(mbEventType.newData,newDataType)
          mbEventType.oldData = Object.assign(mbEventType.oldData,oldataType)
          temp.mbEventType = Object.assign(temp.mbEventType,mbEventType)
-         sourceProdData.mbEventInfos[m].mbEventType = temp.mbEventType
+        targetData.mbEventInfos[m].mbEventType = temp.mbEventType
          if(flag === "false" && flagType === "false" && flagPart === "false"){
-             delete sourceProdData.mbEventInfos[m]
+             delete targetData.mbEventInfos[m]
          }
     }
-    backData.mbEventInfos = sourceProdData.mbEventInfos
+    backData.mbEventInfos = targetData.mbEventInfos
 }
 
 export function copy(obj1,obj2) {

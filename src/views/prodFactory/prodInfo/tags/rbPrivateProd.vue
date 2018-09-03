@@ -190,6 +190,7 @@
             saveClick() {
                 this.options = "save"
                 this.$refs.test[0].callbackProd
+                this.targetData = this.copy(this.prodData,this.targetData)
                 filterChangeData(this.prodData,this.sourceProdData,this.targetData);
                 this.targetData.option="save";
                 savaProdInfo(this.targetData);
