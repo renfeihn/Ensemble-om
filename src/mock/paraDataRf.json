@@ -36,11 +36,11 @@
     }],
   "baseprod":[
     {
-      "prodCode": "100001",
-      "prodDesc": "测试基础产品1"
+      "prodCode": "Y",
+      "prodDesc": "是"
     }, {
-      "prodCode": "100002",
-      "prodDesc": "测试基础产品2"
+      "prodCode": "N",
+      "prodDesc": "否"
     }],
   "acctsontype":[
     {

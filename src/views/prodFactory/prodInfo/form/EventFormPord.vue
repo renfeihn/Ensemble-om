@@ -10,7 +10,7 @@
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">产品类型*</span> -->
-                <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="eventForm.prodcode" single-line hide-details>
+                <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="eventForm.prodcode" @change="callbackProd" single-line hide-details>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
@@ -282,7 +282,7 @@
                 this.initProdData(val)
             },
             options(val) {
-                if(val === "save"){
+                if(val !== ""){
                     this.callbackProd(this.eventForm)
                 }
             }
@@ -292,6 +292,7 @@
         },
         methods: {
             initProdData(val) {
+                //prodType
                 this.eventForm.prodcode = val.prodType.prodType
                 this.eventForm.proddesc = val.prodType.prodDesc
                 this.eventForm.prodprepice = val.prodType.prodRange
@@ -299,6 +300,7 @@
                 this.eventForm.prodclass = val.prodType.prodClass
                 this.eventForm.prodmuti = val.prodType.prodGroup
                 this.eventForm.prodstatus = val.prodType.status
+                //prodDefines
                 this.eventForm.acctstruct = val.prodDefines.ACCT_STRUCT_FLAG.attrValue
                 this.eventForm.accttype = val.prodDefines.ACCT_TYPE.attrValue
                 this.eventForm.virtualflag = val.prodDefines.ACCT_REAL_FLAG.attrValue
@@ -307,10 +309,12 @@
                 this.eventForm.profitcenter = val.prodDefines.PROFIT_CENTRE.attrValue
                 this.eventForm.effectdate = val.prodDefines.PROD_START_DATE.attrValue
                 this.eventForm.failuredate = val.prodDefines.PROD_END_DATE.attrValue
+
+                //mbEventInfos
+                this.eventForm.baseprod = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+
             },
             callbackProd() {
-              console.log()
-//                this.prodData.prodType.prodDesc = this.eventForm.proddesc
                 this.$emit("getNewProdData",{"eventForm": this.eventForm})
             },
             initRefDate() {

@@ -30,7 +30,7 @@
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <!-- <v-card>
                             <v-card-text> v-on:prodDataSon="prodDataSon"-->
-                        <event-form v-if="i==1" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
+                        <event-form v-if="i==1" ref="test" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
                         <branch-form v-if="i==3"></branch-form>
                         <acct-form v-if="i > 3" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
@@ -189,7 +189,7 @@
             },
             saveClick() {
                 this.options = "save"
-
+                this.$refs.test[0].callbackProd
                 filterChangeData(this.prodData,this.sourceProdData,this.targetData);
                 savaProdInfo(this.targetData);
             },
@@ -258,6 +258,8 @@
                 this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.effectdate
                 this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
+
+                this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             }
         }
 //        watch: {
