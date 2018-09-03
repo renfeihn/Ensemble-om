@@ -355,7 +355,7 @@
                 let prodType = val.prodType
                 let prodClass= val.prodClass
                 let prodRange = val.prodRange
-                if(prodRange == '基础产品' && prodClass.indexOf('RB')>=0 ){
+                if(prodRange == '基础产品' && prodClass.indexOf('RB')>=0){
                     //跳转到基础产品界面
                     this.$router.push({ name: "RbBaseProds", params: { prodType: prodType} });
                 }
@@ -363,7 +363,7 @@
                     //跳转到可售产品界面
                     this.$router.push({ name: "RbSoldProds", params: { prodType: prodType} });
                 }
-                if(prodRange == '基础产品' && prodClass.indexOf('CL')>=0 ){
+                if(prodRange == '基础产品' && prodClass.indexOf('CL')>=0){
                     //跳转到基础产品界面
                     this.$router.push({ name: "ClBaseProds", params: { prodType: prodType} });
                 }

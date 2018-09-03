@@ -335,6 +335,7 @@
                     this.prodData = response.data.data
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                    this.initEventAttr(this.prodData)
                 });
             },
             //对象浅复制

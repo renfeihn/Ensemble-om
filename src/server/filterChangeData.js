@@ -215,6 +215,7 @@ export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
 export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRange,optionPermissions) {
     var prodDefines = {}
     var tempObject = {}
+    var prodType = prodData.prodType.prodType
     for (let j in prodData.prodDefines) {
         let newMap = {newData: {},oldData: {},optionType: ""}
         //前端返回数据 去除新增参数标识
@@ -224,15 +225,11 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
         if(copyFlag === "Y" && prodData.prodDefines[j].group === "SOLD" || copyFlag === "Y" && prodRange === "B"){
             //可售产品-可售产品 || 基础产品-基础产品
             prodData.prodDefines[j].group = null
-            newMap.newData = prodData.prodDefines[j];
-            newMap.optionType = "I"
-            prodDefines[j] = newMap
+            prodDefines[j] = changeProdType(prodData,prodType,j)
         }else if(copyFlag === "Y" && prodRange === "S" && prodData.prodDefines[j].optionPermissions === "E"){
             //基础产品-可售产品复制
             prodData.prodDefines[j].group = null
-            newMap.newData = prodData.prodDefines[j];
-            newMap.optionType = "I"
-            prodDefines[j] = newMap
+            prodDefines[j] = changeProdType(prodData,prodType,j)
         } else if (sourceProdData.prodDefines[j] === undefined) {
             //prodDefine 增加参数
             newMap.newData = prodData.prodDefines[j]
@@ -277,6 +274,18 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
         backData.optionPermissions = tempObject
     }
     backData.prodDefines = prodDefines
+}
+export function changeProdType(prodData,prodType,j){
+    let newMap = {newData: {},oldData: {},optionType: ""}
+    if(prodData.prodDefines[j].assembleType == "EVENT"){
+        prodData.prodDefines[j].prodType = prodType;
+        let assembleIds = prodData.prodDefines[j].assembleId;
+        let eventType = assembleIds.split("_")[0] + "_"+prodType;
+        prodData.prodDefines[j].assembleId = eventType
+    }
+    newMap.newData = prodData.prodDefines[j];
+    newMap.optionType = "I"
+    return newMap;
 }
 export function dealFalg(val1,val2){
     if(val1!== undefined && val2!== undefined)
