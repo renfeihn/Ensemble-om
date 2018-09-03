@@ -48,7 +48,9 @@ export function getDiffList (params) {
 
 export function getProdData (prodType) {
   const data={
-    prodType
+   'body': {
+     'prodType': prodType
+   }
   }
   return request({
     url: '/getProdInfo',
