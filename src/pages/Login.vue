@@ -54,10 +54,10 @@
                 userLoginCheck(this.model.username).then(response => {
                 if(response.data.length === 0) {
                     this.loading = false;
-                    alert("用户信息不存在！")
+                    confirm("用户信息不存在！")
                 }else if(response.data[0].password !== this.model.password) {
                     this.loading = false;
-                    alert("用户密码错误！")
+                    confirm("用户密码错误！")
                 }else{
                     this.loading = true
                     sessionStorage.setItem("userName", this.model.username)
