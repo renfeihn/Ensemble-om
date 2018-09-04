@@ -286,6 +286,7 @@
         },
         methods: {
             initProdData(val) {
+                this.eventForm = {}
                 //prodType
                 this.eventForm.prodcode = val.prodType.prodType
                 this.eventForm.proddesc = val.prodType.prodDesc
