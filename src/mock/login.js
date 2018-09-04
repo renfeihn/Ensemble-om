@@ -33,10 +33,12 @@ export default {
     userLoginCheck: config => {
         let username = ""
         let password = ""
-        var data = [
-            username = "admin",
-            password = "123456"
-        ]
+        var data = []
+        data[0] = {
+            username: "admin",
+            password: "123456"
+        }
+
         return data
     },
 }

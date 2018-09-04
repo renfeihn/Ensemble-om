@@ -31,7 +31,7 @@ Mock.mock(/\/prod\/userCollect\.*/, 'get', userCollectAPI.getUserCollectProds())
 
 // 登录相关
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login\/userLoginCheck/, 'get', loginAPI.userLoginCheck)
+Mock.mock(/\/userLoginCheck/, 'post', loginAPI.userLoginCheck)
 
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
