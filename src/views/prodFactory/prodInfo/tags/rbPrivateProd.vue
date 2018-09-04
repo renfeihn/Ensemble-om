@@ -164,8 +164,7 @@
                 folders: [],
                 prodData: {},
                 sourceProdData: {},
-                targetData: {},
-                ttt: {}
+                targetData: {}
             }
         },
         created() {
@@ -244,20 +243,20 @@
 //            },
             getNewProdData(val) {
                 console.log(val)
-                this.prodData.prodType.prodType = val.eventForm.prodcode
-                this.prodData.prodType.prodDesc = val.eventForm.proddesc
-                this.prodData.prodType.prodRange = val.eventForm.prodprepice
-                this.prodData.prodType.prodClass = val.eventForm.prodclass
-                this.prodData.prodType.prodGroup = val.eventForm.prodmuti
-                this.prodData.prodType.status = val.eventForm.prodstatus
-                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctstruct
-                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.virtualflag
-                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctintflag
-                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.amtflag
-                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitcenter
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.effectdate
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
-                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
+                this.prodData.prodType.prodType = val.eventForm.prodType
+                this.prodData.prodType.prodDesc = val.eventForm.prodDesc
+                this.prodData.prodType.prodRange = val.eventForm.prodRange
+                this.prodData.prodType.prodClass = val.eventForm.prodClass
+                this.prodData.prodType.prodGroup = val.eventForm.prodGroup
+                this.prodData.prodType.status = val.eventForm.status
+                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctStructFlag
+                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.acctRealFlag
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctIntFlag
+                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.acctBalFlag
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitCenter
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.prodStartDate
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.prodEndDate
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
 
                 this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             }
