@@ -70,6 +70,8 @@
     import {saveColumn} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import draggable from 'vuedraggable'
+    import {getParamTable} from "@/api/url/prodInfo";
+
     export default {
         components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable,DcTreeview},
         props: {
@@ -97,28 +99,14 @@
                 {
                     "key": "CL",
                     "value": "CL-贷款类"
-                }
-            ],
-            prodClassOption: [
-                {
-                    "key": "RB",
-                    "value": "RB-存款类"
                 },
                 {
-                    "key": "RB100",
-                    "value": "RB100-个人存款组"
+                    "key": "GL",
+                    "value": "GL-内部账类"
                 },
                 {
-                    "key": "RB200",
-                    "value": "RB200-对公存款组"
-                },
-                {
-                    "key": "RB300",
-                    "value": "RB300-同业存款组"
-                },
-                {
-                    "key": "RBBASE",
-                    "value": "RBBASE-存款基础产品组"
+                    "key": "MM",
+                    "value": "MM-货币市场类"
                 }
             ],
             prodRangeOption: [
@@ -141,28 +129,8 @@
                     "value": "C-废弃"
                 }
             ],
-            baseProdTypeOption: [
-                {
-                    "key": "RBA01",
-                    "value": "RBA01-AIO基础产品"
-                },
-                {
-                    "key": "RBDQ1",
-                    "value": "RBDQ1-普通定期基础产品"
-                },
-                {
-                    "key": "RBDQ2",
-                    "value": "RBDQ2-定期一本通产品"
-                },
-                {
-                    "key": "RBDQ3",
-                    "value": "RBDQ3-定期联名产品"
-                },
-                {
-                    "key": "RBHQ1",
-                    "value": "RBHQ1-普通活期基础产品"
-                }
-            ]
+            baseProdTypeOption: [],
+            prodClassOption: []
         }),
         watch: {
             prodDefines: {
@@ -171,7 +139,35 @@
                 },
             },
         },
+        mounted() {
+            this.initRefData();
+        },
         methods: {
+            initRefData() {
+                let that = this
+                getParamTable("MB_PROD_CLASS").then(function (response) {
+                    let prodClass = response.data.data.columnInfo;
+                    for(let i=0; i<prodClass.length; i++){
+                        if(prodClass[i].PROD_CLASS_LEVEL == '2'){
+                            let temp = {}
+                            temp["key"] = prodClass[i].PROD_CLASS;
+                            temp["value"] = prodClass[i].PROD_CLASS + '-' + prodClass[i].PROD_CLASS_DESC;
+                            that.prodClassOption.push(temp)
+                        }
+                    }
+                });
+                getParamTable("MB_PROD_TYPE").then(function (response) {
+                    let prodType = response.data.data.columnInfo;
+                    for(let i=0; i<prodType.length; i++){
+                        if(prodType[i].PROD_RANGE == 'B'){
+                            let temp = {}
+                            temp["key"] = prodType[i].PROD_TYPE;
+                            temp["value"] = prodType[i].PROD_TYPE + '-' + prodType[i].PROD_DESC;
+                            that.baseProdTypeOption.push(temp)
+                        }
+                    }
+                });
+            },
             getdata (evt) {
                 console.log(evt.draggedContext.element.id)
             },
