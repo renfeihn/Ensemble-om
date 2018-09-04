@@ -91,3 +91,10 @@ export function getUserCollectProds (data) {
         data: data
     });
 }
+export function userLoginCheck (data) {
+    return request({
+        url: '/login/userLoginCheck',
+        method: 'get',
+        data: data
+    });
+}
