@@ -1,7 +1,6 @@
 export default {
     getProdInfo: (val) => ({
         prodType: {
-            prodType: val,
             prodDesc: '活期存款',
             prodClass: 'RB100',
             prodRange: 'S',
@@ -33,6 +32,16 @@ export default {
             PROD_END_DATE: {
                 attrValue: '20190101'
             }
-        }
+        },
+        mbEventInfos: {
+             CLOSE_RB101: {
+                 mbEventAttrs: {
+                     CHECK_AGENT: {
+                         attrValue: 'Y'
+                     }
+                 }
+             }
+         }
+
   })
 }

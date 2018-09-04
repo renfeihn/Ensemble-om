@@ -10,7 +10,7 @@
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">产品类型*</span> -->
-                <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="eventForm.prodcode" single-line hide-details>
+                <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="eventForm.prodType" single-line hide-details>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
@@ -18,28 +18,28 @@
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading datatest.prodType.prodDesc">产品描述</span> -->
-                <v-text-field class="primary--text mx-2" label="产品描述" name="title" v-model="eventForm.proddesc" single-line hide-details/>
+                <v-text-field class="primary--text mx-2" label="产品描述" name="title" v-model="eventForm.prodDesc" single-line hide-details/>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">业务模块*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">业务模块</span> -->
-                <v-select class="primary--text mx-2" :items="busimodel" v-model="eventForm.busimodel" label="业务模块" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="busimodel" v-model="eventForm.busimodel" label="业务模块" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">产品分类*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">产品分类</span> -->
-                <v-select class="primary--text mx-2" :items="prodclass" v-model="eventForm.prodclass" label="产品分类" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="prodClass" v-model="eventForm.prodClass" label="产品分类" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">产品属性*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">产品属性</span> -->
-                <v-select class="primary--text mx-2" :items="prodprepice" v-model="eventForm.prodprepice" label="产品属性" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="prodRange" v-model="eventForm.prodRange" label="产品属性" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">组合产品*</v-subheader>
@@ -47,85 +47,85 @@
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">组合产品</span> -->
                 <!-- <v-select class="primary--text mx-2" :items="prodmuti" v-model="prodmutiData" label="组合产品" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select> -->
-                <v-switch :label="`${prodmutiData==='Y'?'是':'否'}`" v-model="eventForm.prodmuti" value="Y" color="success" hide-details></v-switch>
+                <v-switch :label="`${prodGroup==='Y'?'是':'否'}`" v-model="eventForm.prodGroup" value="Y" color="success" hide-details></v-switch>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">产品状态</span> -->
-                <v-select class="primary--text mx-2" :items="prodstatus" v-model="eventForm.prodstatus" label="产品状态" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="status" v-model="eventForm.status" label="产品状态" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">基础产品*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">基础产品*</span> -->
-                <v-select class="primary--text mx-1" :items="baseprod" v-model="eventForm.baseprod" label="基础产品" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-1" :items="baseprod" v-model="eventForm.baseprod" label="基础产品" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">账户类型</span> -->
-                <v-select class="primary--text mx-2" :items="accttype" v-model="eventForm.accttype" label="账户类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="acctType" v-model="eventForm.acctType" label="账户类型" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">账户子类型*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">账户子类型</span> -->
-                <v-select :items="acctsontype" v-model="eventForm.acctsontype" label="账户子类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select :items="acctsontype" v-model="eventForm.acctsontype" label="账户子类型" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">账户结构*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">账户结构</span> -->
-                <v-select class="primary--text mx-2" :items="acctstruct" v-model="eventForm.acctstruct" label="账户结构" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="acctStructFlag" v-model="eventForm.acctStructFlag" label="账户结构" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">虚实标志*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">虚实标志</span> -->
-                <v-select class="primary--text mx-2" :items="virtualflag" v-model="eventForm.virtualflag" label="虚实标志" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="acctRealFlag" v-model="eventForm.acctRealFlag" label="虚实标志" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">计息标志*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">计息标志</span> -->
-                <v-select class="primary--text mx-2" :items="acctintflag" v-model="eventForm.acctintflag" label="计息标志" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="acctIntFlag" v-model="eventForm.acctIntFlag" label="计息标志" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">金额标志*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">金额标志</span> -->
-                <v-select class="primary--text mx-2" :items="amtflag" v-model="eventForm.amtflag" label="金额标志" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="acctBalFlag" v-model="eventForm.acctBalFlag" label="金额标志" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">利润中心*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">利润中心</span> -->
-                <v-select class="primary--text mx-1" :items="profitcenter" v-model="eventForm.profitcenter" label="利润中心" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-1" :items="profitCenter" v-model="eventForm.profitCenter" label="利润中心" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">密码类型*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">利润中心</span> -->
-                <v-select class="primary--text mx-1" :items="profitcenter" v-model="eventForm.profitcenter" label="密码类型" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select>
+                <v-select class="primary--text mx-1" :items="profitcenter" v-model="eventForm.profitcenter" label="密码类型" item-text="label" item-value="value" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">起始日期*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
                 <v-menu ref="statDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
-                  <v-text-field slot="activator" label="起始日期" v-model="eventForm.effectdate" append-icon="event" single-line hide-details></v-text-field>
-                  <v-date-picker v-model="eventForm.effectdate" @input="$refs.statDateMenu.save(eventForm.effectdate)" no-title scrollable locale="zh-cn">
+                  <v-text-field slot="activator" label="起始日期" v-model="eventForm.prodStartDate" append-icon="event" single-line hide-details></v-text-field>
+                  <v-date-picker v-model="eventForm.prodStartDate" @input="$refs.statDateMenu.save(eventForm.effectdate)" no-title scrollable locale="zh-cn">
                     <!-- <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="startDateMenu = false">Cancel</v-btn>
                       <v-btn flat color="primary" @click="$refs.statDate.save(startDate)">OK</v-btn> -->
@@ -137,8 +137,8 @@
               </v-flex>
               <v-flex md4 lg4>
                 <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-                  <v-text-field slot="activator" label="终止日期" v-model="eventForm.failuredate" append-icon="event" single-line hide-details></v-text-field>
-                  <v-date-picker v-model="eventForm.failuredate" @input="$refs.endDateMenu.save(eventForm.failuredate)" no-title scrollable locale="zh-cn">
+                  <v-text-field slot="activator" label="终止日期" v-model="eventForm.prodEndDate" append-icon="event" single-line hide-details></v-text-field>
+                  <v-date-picker v-model="eventForm.prodEndDate" @input="$refs.endDateMenu.save(eventForm.failuredate)" no-title scrollable locale="zh-cn">
                     <!-- <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
                       <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn> -->
@@ -174,100 +174,100 @@
             endTime: null,
             modal: false,
             eventForm: {
-                prodcode: '',
-                proddesc: '',
-                busimodel: '',
-                prodclass: '',
-                prodprepice: '',
-                prodmuti: '',
-                prodstatus: '',
+                prodType: '',
+                prodDesc: '',
                 baseprod: '',
-                accttype: '',
+                busimodel: '',
+                prodClass: '',
+                prodRange: '',
+                profitCenter: '',
+                status: '',
+                prodGroup: '',
+                acctType: '',
                 acctsontype: '',
-                acctstruct: '',
-                virtualflag: '',
-                acctintflag: '',
-                amtflag: '',
-                profitcenter: '',
-                effectdate: '',
-                failuredate: ''
+                acctStructFlag: '',
+                acctRealFlag: '',
+                acctIntFlag: '',
+                acctBalFlag: '',
+                prodStartDate: '',
+                prodEndDate: ''
             },
             busimodel: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            prodclass: [
+            prodClass: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            acctstruct: [
+            acctStructFlag: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            virtualflag: [
+            acctRealFlag: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            acctintflag: [
+            acctIntFlag: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            amtflag: [
+            acctBalFlag: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
             baseprod: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            prodstatus: [
+            status: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            prodmuti: [
+            prodGroup: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            prodprepice: [
+            prodRange: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
             acctsontype: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            accttype: [
+            acctType: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ],
-            profitcenter: [
+            profitCenter: [
                 {
-                    prodCode: "",
-                    prodDesc: ""
+                    value: "",
+                    label: ""
                 }
             ]
         }),
@@ -288,22 +288,22 @@
             initProdData(val) {
                 this.eventForm = {}
                 //prodType
-                this.eventForm.prodcode = val.prodType.prodType
-                this.eventForm.proddesc = val.prodType.prodDesc
-                this.eventForm.prodprepice = val.prodType.prodRange
+                this.eventForm.prodType = val.prodType.prodType
+                this.eventForm.prodDesc = val.prodType.prodDesc
+                this.eventForm.prodRange = val.prodType.prodRange
                 this.eventForm.busimodel = "RB"
-                this.eventForm.prodclass = val.prodType.prodClass
-                this.eventForm.prodmuti = val.prodType.prodGroup
-                this.eventForm.prodstatus = val.prodType.status
+                this.eventForm.prodClass = val.prodType.prodClass
+                this.eventForm.prodGroup = val.prodType.prodGroup
+                this.eventForm.status = val.prodType.status
                 //prodDefines
-                this.eventForm.acctstruct = val.prodDefines.ACCT_STRUCT_FLAG.attrValue
-                this.eventForm.accttype = val.prodDefines.ACCT_TYPE.attrValue
-                this.eventForm.virtualflag = val.prodDefines.ACCT_REAL_FLAG.attrValue
-                this.eventForm.acctintflag = val.prodDefines.ACCT_INT_FLAG.attrValue
-                this.eventForm.amtflag = val.prodDefines.ACCT_BAL_FLAG.attrValue
-                this.eventForm.profitcenter = val.prodDefines.PROFIT_CENTRE.attrValue
-                this.eventForm.effectdate = val.prodDefines.PROD_START_DATE.attrValue
-                this.eventForm.failuredate = val.prodDefines.PROD_END_DATE.attrValue
+                this.eventForm.acctStructFlag = val.prodDefines.ACCT_STRUCT_FLAG.attrValue
+                this.eventForm.acctType = val.prodDefines.ACCT_TYPE.attrValue
+                this.eventForm.acctRealFlag = val.prodDefines.ACCT_REAL_FLAG.attrValue
+                this.eventForm.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
+                this.eventForm.acctBalFlag = val.prodDefines.ACCT_BAL_FLAG.attrValue
+                this.eventForm.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
+                this.eventForm.prodStartDate = val.prodDefines.PROD_START_DATE.attrValue
+                this.eventForm.prodEndDate = val.prodDefines.PROD_END_DATE.attrValue
 
                 //mbEventInfos
                 this.eventForm.baseprod = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue
@@ -316,18 +316,18 @@
                 getInitData().then(response => {
                     console.log(response);
                     this.busimodel = response.data.paraDataVl.busimodel;
-                    this.virtualflag = response.data.paraDataVl.virtualflag;
-                    this.acctintflag = response.data.paraDataVl.acctintflag;
-                    this.amtflag = response.data.paraDataVl.amtflag;
-                    this.prodmuti = response.data.paraDataVl.prodmuti;
-                    this.prodprepice = response.data.paraDataVl.prodprepice;
-                    this.accttype = response.data.paraDataVl.accttype;
-                    this.profitcenter = response.data.paraDataRf.profitcenter;
+                    this.acctRealFlag = response.data.paraDataVl.acctRealFlag;
+                    this.acctIntFlag = response.data.paraDataVl.acctIntFlag;
+                    this.acctBalFlag = response.data.paraDataVl.acctBalFlag;
+                    this.prodGroup = response.data.paraDataVl.prodGroup;
+                    this.prodRange = response.data.paraDataVl.prodRange;
+                    this.acctType = response.data.paraDataVl.acctType;
+                    this.profitCenter = response.data.paraDataRf.profitCenter;
                     this.acctsontype = response.data.paraDataRf.acctsontype;
                     this.baseprod = response.data.paraDataRf.baseprod;
-                    this.acctstruct = response.data.paraDataRf.acctstruct;
-                    this.prodstatus = response.data.paraDataVl.prodstatus;
-                    this.prodclass = response.data.paraDataRf.prodclass;
+                    this.acctStructFlag = response.data.paraDataRf.acctStructFlag;
+                    this.status = response.data.paraDataVl.status;
+                    this.prodClass = response.data.paraDataRf.prodClass;
                 });
             },
             closeDialog() {
