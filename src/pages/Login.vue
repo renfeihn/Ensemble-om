@@ -45,7 +45,7 @@
             loading: false,
             model: {
                 username: 'admin',
-                password: 'password'
+                password: '123456'
             }
         }),
 
