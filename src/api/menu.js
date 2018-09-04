@@ -24,6 +24,18 @@ const Menu = [
     name: 'MyProd',
     icon: 'favorite_border'
   },
+  { header: '网贷管理端' },
+  {
+      title: '合作方信息管理',
+      group: 'components',
+      component: 'components',
+      icon: 'account_balance',
+      items: [
+          { name: 'RB100', title: '合作方签约', component: 'prod/rbPrivateProd' },
+          { name: 'RB200', title: '合作方解约', component: 'prod/rbPublicProd' },
+          { name: 'RB300', title: '合作方信息维护', component: 'prod/rbHorizontalProd' },
+      ]
+  },
   { header: '产品工厂' },
   {
     title: '存款产品',
