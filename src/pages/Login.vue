@@ -39,27 +39,30 @@
 
 <script>
   import {getMenu} from '@/api/menu'
-  import {getUserMsg} from '@/api/login'
+  import {userLoginCheck} from '@/api/login'
     export default {
         data: () => ({
             loading: false,
             model: {
                 username: 'admin',
-                password: 'password'
+                password: '123456'
             }
         }),
 
         methods: {
             login (){
-                this.loading = true
-                getUserMsg(this.model.username,this.model.password).then(response => {
-                    console.log(response);
-                   this.loading = false;
-                   if (this.model.username=='para') {
-                       const menu = getMenu()
-                   }
-                   sessionStorage.setItem("userName", this.model.username)
-                   this.$router.push('/dashboard');
+                userLoginCheck(this.model.username).then(response => {
+                if(response.data.length === 0) {
+                    this.loading = false;
+                    confirm("用户信息不存在！")
+                }else if(response.data[0].password !== this.model.password) {
+                    this.loading = false;
+                    confirm("用户密码错误！")
+                }else{
+                    this.loading = true
+                    sessionStorage.setItem("userName", this.model.username)
+                    this.$router.push('/dashboard')
+                }
                }).catch(() => {
                    this.loading = false
                })

@@ -27,13 +27,14 @@ export function getUserInfo(token) {
   })
 }
 
-export function getUserMsg(username, password) {
+export function userLoginCheck(username) {
     const data = {
-        username,
-        password
+        'body': {
+            'username': username
+        }
     }
     return request({
-        url: '/getUserMsg',
+        url: '/userLoginCheck',
         method: 'post',
         data
     })

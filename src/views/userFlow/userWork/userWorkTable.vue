@@ -9,12 +9,12 @@
                                             v-model="props.selected"
                                     ></v-checkbox>
                                   </td>
-                                        <td class="text-xs-left">{{ props.item.code }}</td>
-                                        <td class="text-xs-left">{{ props.item.name }}</td>
-                                        <td class="text-xs-left">{{ props.item.date }}</td>
-                                        <td class="text-xs-left">{{ props.item.status }}</td>
-                                        <td class="text-xs-left">{{ props.item.roleLast }}</td>
-                                        <td class="text-xs-left" @click="getDataInfo(props.item.code)">详细信息</td>
+                                        <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowManage.tranId }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowManage.date }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowInfo.userId }}</td>
+                                        <td class="text-xs-left" @click="getDataInfo(props.item.reqNo)">详细信息</td>
                                     </tr>
       </template>
 <template slot="expand" slot-scope="props">
@@ -25,7 +25,7 @@
         </v-data-table>
 </template>
 <script>
-import { getList } from "@/api/table";
+import { getFlowList } from "@/api/url/prodInfo";
 export default {
   data() {
     let value = "accountingStatus";
@@ -33,103 +33,18 @@ export default {
       selected: [],
       desserts: [
         {
-          code: "pf3009",
-          name: "产品工厂",
+          flowManage: {
+          reqNo: "pf3009",
+          transactionId: "产品工厂",
           date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm2003",
-          name: "参数定义",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm281",
-          name: "参数分类",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm2211",
-          name: "币种信息",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pf3006",
-          name: "产品工厂",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm2002",
-          name: "参数定义",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm280",
-          name: "参数分类",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm2210",
-          name: "币种信息",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pf3008",
-          name: "产品工厂",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm2004",
-          name: "参数定义",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm282",
-          name: "参数分类",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
-        },
-        {
-          code: "pm2212",
-          name: "币种信息",
-          date: "2018/07/02",
-          status: "待复核",
-          roleLast: "admin",
-          DSubjectCode: 4.0
+          currentStatus: "待复核"
+          },
+          flowInfo: {
+          operatorId: "admin"
+          }
         }
       ],
-      headers: [
+            headers: [
         {
           text: "任务单号",
           align: "left",
@@ -178,8 +93,8 @@ export default {
       });
     },
     queryDespositProdData() {
-      getList().then(response => {
-        this.projects = response.data.irlAccounting;
+      getFlowList().then(response => {
+        this.desserts = response.data;
       });
     },
 

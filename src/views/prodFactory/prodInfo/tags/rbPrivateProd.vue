@@ -29,11 +29,11 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <!-- <v-card>
-                            <v-card-text> v-on:prodDataSon="prodDataSon"-->
-                        <event-form v-if="i==1" v-bind:prodData="prodData" :options="options" v-on:getNewProdData="getNewProdData"></event-form>
+                            <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
+                        <event-form v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
                         <branch-form v-if="i==3"></branch-form>
-                        <acct-form v-if="i > 3" v-bind:sourceData="{'acctForm':sourceData.acctForm}"></acct-form>
+                        <acct-form v-if="i > 3"></acct-form>
                         <!-- </v-card-text>
                     </v-card> -->
                     </v-tab-item>
@@ -117,7 +117,6 @@
                 },
                 prodCode: '',
                 prodClass: '',
-                options: '',
                 activeName: 'basic',
                 prodInfo: [{
                     icon: 'account_balance',
@@ -188,9 +187,9 @@
                 console.log('start query prod info')
             },
             saveClick() {
-                this.options = "save"
-
-                filterChangeData(this.prodData,this.sourceProdData,this.targetData);
+                this.$refs.callback[0].callbackprod()
+                this.targetData = filterChangeData(this.prodData,this.sourceProdData)
+                this.targetData.option="save";
                 savaProdInfo(this.targetData);
             },
             handleClick(value) {
@@ -244,20 +243,22 @@
 //            },
             getNewProdData(val) {
                 console.log(val)
-                this.prodData.prodType.prodType = val.eventForm.prodcode
-                this.prodData.prodType.prodDesc = val.eventForm.proddesc
-                this.prodData.prodType.prodRange = val.eventForm.prodprepice
-                this.prodData.prodType.prodClass = val.eventForm.prodclass
-                this.prodData.prodType.prodGroup = val.eventForm.prodmuti
-                this.prodData.prodType.status = val.eventForm.prodstatus
-                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctstruct
-                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.virtualflag
-                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctintflag
-                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.amtflag
-                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitcenter
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.effectdate
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
-                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
+                this.prodData.prodType.prodType = val.eventForm.prodType
+                this.prodData.prodType.prodDesc = val.eventForm.prodDesc
+                this.prodData.prodType.prodRange = val.eventForm.prodRange
+                this.prodData.prodType.prodClass = val.eventForm.prodClass
+                this.prodData.prodType.prodGroup = val.eventForm.prodGroup
+                this.prodData.prodType.status = val.eventForm.status
+                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctStructFlag
+                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.acctRealFlag
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctIntFlag
+                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.acctBalFlag
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitCenter
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.prodStartDate
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.prodEndDate
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
+
+                this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             }
         }
 //        watch: {

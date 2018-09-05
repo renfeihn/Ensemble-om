@@ -48,7 +48,9 @@ export function getDiffList (params) {
 
 export function getProdData (prodType) {
   const data={
-    prodType
+   'body': {
+     'prodType': prodType
+   }
   }
   return request({
     url: '/getProdInfo',
@@ -96,4 +98,10 @@ export function getUserCollectProds (data) {
         method: 'get',
         data: data
     });
+}
+export function getFlowList () {
+  return request({
+    url: '/reviewList',
+    method: 'get'
+});
 }
