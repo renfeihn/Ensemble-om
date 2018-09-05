@@ -9,11 +9,11 @@ import 'font-awesome/css/font-awesome.css';
 import './theme/default.styl';
 import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
-import  VueResource  from 'vue-resource'
+import VueResource from 'vue-resource'
 import Truncate from 'lodash.truncate';
 import store from './store';
 import qs from 'qs';
-Vue.prototype.$qs=qs
+Vue.prototype.$qs = qs
 
 //import './mock';
 if (process.env.MOCK_SWITCH !== 'off') {
@@ -26,7 +26,9 @@ Vue.config.productionTip = false;
 Vue.filter('truncate', Truncate);
 
 Vue.use(VueResource)
-Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
+Vue.use(VeeValidate, {
+  fieldsBagName: 'formFields'
+});
 Vue.use(Vuetify, {
   // theme: {
   //   primary: colors.indigo.base, // #E53935

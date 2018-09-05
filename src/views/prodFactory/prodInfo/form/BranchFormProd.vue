@@ -1,5 +1,6 @@
 <template>
-  <v-layout row>
+ <v-container grid-list-md fluid id="scroll-target" style="max-height: 800px" class="scroll-y">
+  <v-layout wrap v-scroll:#scroll-target="onScroll">
     <v-flex xs12 md6>
       <v-card>
         <div class="d-flex justify-between align-center mb-3">
@@ -26,12 +27,90 @@
         </v-expansion-panel>
       </v-card>
     </v-flex>
+    <v-flex xs12 md6>
+      <v-card>
+        <treeselect v-model="value" :multiple="true" :options="options" :always-open="true" :limit="5" :sort-value-by="INDEX"/>
+         <pre class="result">{{ value }}</pre>
+      </v-card>
+    </v-flex>
   </v-layout>
+ </v-container>
 </template>
 <script>
+// import the component
+import Treeselect from "@riophae/vue-treeselect";
+// import the styles
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+
 export default {
+  // register the component
+  components: { Treeselect },
   data() {
     return {
+      // define default value
+      value: ["9999", "0102"],
+      // define options
+      options: [
+        {
+          id: "9999",
+          label: "总行",
+          isDefaultExpanded: true,
+          children: [
+            {
+              id: "9996",
+              label: "会计结算部"
+            },
+            {
+              id: "9997",
+              label: "计财部"
+            }
+          ]
+        },
+        {
+          id: "0100",
+          label: "分行",
+          isDefaultExpanded: true,
+          children: [
+            {
+              label: "支行1",
+              id: "0101",
+              value: false
+            },
+            {
+              label: "支行2",
+              id: "0102",
+              value: true
+            },
+            {
+              label: "支行3",
+              id: "0103",
+              value: false
+            }
+          ]
+        },
+        {
+          id: "0200",
+          label: "分行",
+          isDefaultExpanded: true,
+          children: [
+            {
+              label: "支行1",
+              id: "0201",
+              value: false
+            },
+            {
+              label: "支行2",
+              id: "0202",
+              value: true
+            },
+            {
+              label: "支行3",
+              id: "0203",
+              value: false
+            }
+          ]
+        }
+      ],
       panel: [],
       items: [
         {
@@ -120,6 +199,9 @@ export default {
     none() {
       //this.items.map(x => (x.active = false));
       this.panel = [];
+    },
+    onScroll(e) {
+      this.offsetTop = e.target.scrollTop;
     }
   }
 };
