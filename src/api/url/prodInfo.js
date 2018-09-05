@@ -47,15 +47,15 @@ export function getDiffList (params) {
 }
 
 export function getProdData (prodType) {
-  const data={
-   'body': {
-     'prodType': prodType
-   }
-  }
+  // const data={
+  //  'body': {
+  //    'prodType': prodType
+  //  }
+  // }
   return request({
     url: '/getProdInfo',
     method: 'post',
-    data
+      params: { prodType: prodType}
   });
 }
 export function getProdType (prodClass) {
