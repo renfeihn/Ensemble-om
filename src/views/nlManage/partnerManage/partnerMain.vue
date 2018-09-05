@@ -31,6 +31,9 @@
             <!-- <v-card>
                 <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
             <partner-basic v-if="i==1"></partner-basic>
+            <partner-settle v-if="i==2"></partner-settle>
+            <partner-account v-if="i==3"></partner-account>
+            <partner-contributive v-if="i==4"></partner-contributive>
             <!-- </v-card-text>
         </v-card> -->
           </v-tab-item>
@@ -44,7 +47,7 @@
         <!--</v-card>-->
         <v-card>
           <v-card-text>
-            <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存123</v-btn>
+            <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
             <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
             <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
           </v-card-text>
@@ -85,10 +88,16 @@
         savaProdInfo
     } from '@/api/url/prodInfo';
     import PartnerBasic from '../partnerManage/partnerBasic';
+    import PartnerSettle from '../partnerManage/partnerSettle';
+    import PartnerAccount from '../partnerManage/partnerAccount';
+    import PartnerContributive from '../partnerManage/partnerContributive';
     export default {
         name: 'deposit',
         components: {
-            PartnerBasic
+            PartnerBasic,
+            PartnerSettle,
+            PartnerAccount,
+            PartnerContributive
         },
         data () {
             return {
