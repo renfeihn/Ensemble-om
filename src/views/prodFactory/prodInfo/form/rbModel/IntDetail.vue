@@ -15,7 +15,7 @@
                 <v-subheader class="primary--text subheading">结息日*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <v-text-field class="primary--text mx-1" label="结息日" name="settleDay" v-model="intDetail.settleDay" single-line hide-details></v-text-field>
+                <v-text-field class="primary--text mx-1" label="结息日" name="settleDay" v-model="intDetail.intDay" single-line hide-details></v-text-field>
               </v-flex>
 
               <v-flex xs12 md2 lg2>
