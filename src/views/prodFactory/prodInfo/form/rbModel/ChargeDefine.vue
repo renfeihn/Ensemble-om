@@ -25,13 +25,10 @@
                                      </v-layout>
                                      <v-layout row wrap>
                                          <v-flex xs12 md2 lg2>
-                                             <v-subheader class="primary--text subheading">收费日期*</v-subheader>
+                                             <v-subheader class="primary--text subheading">收费日*</v-subheader>
                                          </v-flex>
                                          <v-flex md4 lg4>
-                                             <v-menu ref="chargeDate" lazy :close-on-content-click="false" v-model="chargeDay" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="chargeDate">
-                                                 <v-text-field slot="activator" label="收费日期" v-model="editedItem.chargeDay" append-icon="event" single-line hide-details></v-text-field>
-                                                 <v-date-picker v-model="editedItem.chargeDay" @input="$refs.chargeDate.save(chargeDay)" no-title scrollable locale="zh-cn"></v-date-picker>
-                                             </v-menu>
+                                             <v-text-field class="primary--text mx-2" label="收费日" name="title" v-model="editedItem.chargeDay" single-line hide-details/>
                                          </v-flex>
                                          <v-flex xs12 md2 lg2>
                                              <v-subheader class="primary--text subheading">收费处理方式*</v-subheader>
