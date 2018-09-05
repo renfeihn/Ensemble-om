@@ -160,7 +160,7 @@
                                 <v-subheader class="primary--text subheading">支取方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="acctBaseInfo.withdrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="acctBaseInfo.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">折算币种*</v-subheader>
@@ -368,7 +368,7 @@
                 this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
                 this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
                 this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
-                this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
+                this.acctBaseInfo.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
                 this.acctBaseInfo.ccy = val.prodDefines.CCY.attrValue
                 this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
                 this.acctBaseInfo.discountCcy = val.prodDefines.CONVERT_CCY.attrValue
