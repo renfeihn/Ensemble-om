@@ -29,9 +29,15 @@ Mock.mock(/\/table\/list/, 'get', tableAPI.getList)
 Mock.mock(/\/prod\/info\.*/, 'get', prodAPI.getProd)
 Mock.mock(/\/prod\/userCollect\.*/, 'get', userCollectAPI.getUserCollectProds())
 
-// 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/userLoginCheck/, 'post', loginAPI.userLoginCheck)
+// Mock.mock(/\/getProdInfo/, 'post', dataAPI.getProdInfo);
+//
+//
+// // 登录相关
+// Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+// Mock.mock(/\/login/, 'get', loginAPI.userLoginCheck)
+//
+// Mock.mock(/\/getProdListByClass/, 'post', prodTypeAPI.getProdType)
+
 
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)

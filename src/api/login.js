@@ -27,15 +27,15 @@ export function getUserInfo(token) {
   })
 }
 
-export function userLoginCheck(username) {
-    const data = {
-        'body': {
-            'username': username
-        }
-    }
+export function userLoginCheck(userName) {
+    // const data = {
+    //
+    //         'userName': username
+    //
+    // }
     return request({
-        url: '/userLoginCheck',
-        method: 'post',
-        data
+        url: '/login',
+        method: 'get',
+        params: { userName }
     })
 }
