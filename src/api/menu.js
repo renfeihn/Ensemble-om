@@ -31,7 +31,7 @@ const Menu = [
       component: 'components',
       icon: 'account_balance',
       items: [
-          { name: 'RB100', title: '合作方签约', component: 'prod/rbPrivateProd' },
+          { name: 'partner', title: '合作方签约', component: 'partner/partnerMain' },
           { name: 'RB200', title: '合作方解约', component: 'prod/rbPublicProd' },
           { name: 'RB300', title: '合作方信息维护', component: 'prod/rbHorizontalProd' },
       ]

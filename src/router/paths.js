@@ -1125,6 +1125,18 @@ import(
       )
   },
   {
+      path: '/partner/partnerMain',
+      meta: {
+          breadcrumb: true,
+          title: '合作方签约'
+      },
+      name: 'partner/partnerMain',
+      component: () =>
+          import(
+              `@/views/nlManage/partnerManage/partnerMain.vue`
+              )
+  },
+  {
     path: '/getAction',
     meta: {
       breadcrumb: true,

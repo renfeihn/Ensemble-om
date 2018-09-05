@@ -2,61 +2,66 @@
   <div class="app-container">
     <v-layout row wrap>
       <v-flex lg9 sm9 class="v-card">
-        <v-toolbar color="indigo lighten-1" dark tabs>
-          <v-tabs
-                  color="indigo lighten-1"
-                  slot="extension"
-                  v-model="activeName"
-                  grow
-          >
+        <v-toolbar color="primary lighten-1" dark tabs>
+          <v-toolbar-side-icon></v-toolbar-side-icon>
+          <v-toolbar-title class="white--text">合作方签约</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>search</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>apps</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>refresh</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>more_vert</v-icon>
+          </v-btn>
+          <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
             <v-tabs-slider color="yellow"></v-tabs-slider>
             <v-tab v-for="n in prodInfo" :key="n">
-              {{n}}
+              {{ n.text}}
+              <!-- <v-icon>{{n.icon}}</v-icon> -->
             </v-tab>
           </v-tabs>
         </v-toolbar>
         <v-tabs-items v-model="activeName" class="white elevation-1">
-          <v-tab-item
-                  v-for="i in 3"
-                  :key="i"
-                  :id="'mobile-tabs-5-' + i"
-          >
-            <v-card>
-              <v-card-text>
-                <event-form v-if="i==1" v-bind:listValue="listValue"></event-form>
-                <accounting-plain v-if="i==3"></accounting-plain>
-                <acct-form v-if="i==2" v-bind:listValue="listValue"></acct-form>
-              </v-card-text>
-            </v-card>
+          <v-tab-item v-for="i in 4" :key="i" :id="'mobile-tabs-5-' + i">
+            <!-- <v-card>
+                <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
+            <partner-basic v-if="i==1"></partner-basic>
+            <!-- </v-card-text>
+        </v-card> -->
           </v-tab-item>
         </v-tabs-items>
       </v-flex>
-
       <v-flex lg3 sm3 class="v-card">
         <!--<v-card>-->
         <!--<v-card-text>-->
-        <!--<down-action></down-action>-->
+        <!--<down-action v-on:listenToCopy="showCopy"></down-action>-->
         <!--</v-card-text>-->
         <!--</v-card>-->
         <v-card>
           <v-card-text>
-            <v-btn color="success" depressed=""><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
-            <v-btn color="success" depressed=""><v-icon >history</v-icon>复制</v-btn>
-            <v-btn color="success" depressed=""><v-icon >history</v-icon>保存</v-btn>
+            <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存123</v-btn>
+            <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
+            <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
           </v-card-text>
         </v-card>
         <v-toolbar dense class="chat-history-toolbar prodLists">
-          <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search"></v-text-field>
+          <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search" v-model="searchValue"></v-text-field>
         </v-toolbar>
         <vue-perfect-scrollbar class="depositTree">
           <v-list two-line subheader>
-            <v-list-tile class="chat-list prodList" avatar v-for="(item, index) in folders" :key="item.title" @click="handleClick(item)">
+            <!--<v-subheader inset>个人活期产品</v-subheader>-->
+            <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
               <v-list-tile-avatar>
-                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+                <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
+                <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-btn icon ripple>
@@ -75,67 +80,100 @@
     // import queryheader from './components/queryheader'
     import {
         getProdType
-    } from '@/api/prod'
-    import EventForm from '../form/EventFormPord';
-    import VWidget from '@/components/VWidget';
-    import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-    import accountingPlain from '../table/accountingPlain'
-    import AcctForm from '../form/AcctFormPord';
-    import downAction from '../btn/downAction'
+    } from '@/api/url/prodInfo'
+    import {
+        savaProdInfo
+    } from '@/api/url/prodInfo';
+    import PartnerBasic from '../partnerManage/partnerBasic';
     export default {
         name: 'deposit',
         components: {
-            accountingPlain,
-            EventForm,
-            VWidget,
-            AcctForm,
-            VuePerfectScrollbar,
-            downAction
+            PartnerBasic
         },
-        data() {
+        data () {
             return {
                 listLoading: true,
+                searchValue: '',
                 depositProd: {
                     prodcode: '',
                     version: ''
                 },
-                listValue: '',
                 prodCode: '',
+                prodClass: '',
                 activeName: 'basic',
-                eventForm: {
-                    ccy: []
-                },
-                acctForm: {},
-                prodInfo: ['基本信息','账户信息','核算信息'],
-                files: [
-                    { icon: 'assignment', iconClass: 'blue white--text', value: '', lable: '' }
-                ],
-                folders: [
-                 ]
+                prodInfo: [{
+                    icon: 'account_balance',
+                    text: '基本信息'
+                }, {
+                    icon: 'filter_vintage',
+                    text: '结算信息'
+                }, {
+                    icon: 'work',
+                    text: '出资对象'
+                }, {
+                    icon: 'work',
+                    text: '对账对象'
+                }],
+                files: [{
+                    icon: 'assignment',
+                    iconClass: 'blue white--text',
+                    value: '',
+                    lable: ''
+                }],
+                folders: [],
+                prodData: {},
+                sourceProdData: {},
+                targetData: {},
+                ttt: {}
             }
         },
         created() {
-            this.depositProd = { prodcode: this.$route.params.prodType, version: '1.0' }
+            this.prodClass = this.$route.params.prodClassCmp
         },
         mounted: function() {
             window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodCode = this.$route.hash
-            this.queryDespositProdData(this.prodCode)
-
+            this.prodClass = this.$route.hash
+            this.queryDespositProdData(this.prodClass)
+            if(this.$route.params.prodClassCmp !=''){
+                this.prodClass = this.$route.params.prodClassCmp
+            }
+            if(this.$route.params.prodCodeCmp !=''){
+                this.initStage(this.$route.params.prodCodeCmp)
+            }
+            this.queryDespositProdData(this.prodClass)
         },
         methods: {
             queryProdInfo() {
                 console.log('start query prod info')
-
             },
-            selectByProd() {
-                // this.$bus.$emit('prodType', this.depositProd.prodtype)
-                // console.log(this.depositProd.prodtype)
+            saveClick() {
+                this.$refs.callback[0].callbackprod()
+                // this.targetData = filterChangeData(this.prodData,this.sourceProdData)
+                this.targetData.option="save";
+                savaProdInfo(this.targetData);
             },
             handleClick(value) {
-                console.log(value)
-                var listValue = value.value
-                this.listValue = listValue
+                this.prodCode = value.prodType
+                // getProdData(this.prodCode).then(response => {
+                //     this.prodData = response.data
+                //     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                // });
+            },
+            //对象浅复制
+            copy(obj1,obj2) {
+                var obj = obj2||{};
+                for(let name in obj1){
+                    if(typeof obj1[name] === "object"){
+                        obj[name]= (obj1[name].constructor===Array)?[]:{};
+                        this.copy(obj1[name],obj[name]);
+                    }else{
+                        obj[name]=obj1[name];
+                    }
+                }
+                return obj;
+            },
+            initStage(value){
+                this.listValue = value
             },
             onSubmit() {
                 this.$message('submit!')
@@ -146,18 +184,50 @@
                     type: 'warning'
                 })
             },
-            queryDespositProdData(prodCode) {
-                getProdType().then(response => {
-                    let length = response.data.prodTypeForm.length
-                    for (let i = 0; i < length; i++) {
-                    if (prodCode === response.data.prodTypeForm[i].prodClass){
-//                        response.data.rbProdTypeForm[i].selected = false
-                        this.folders.push(response.data.prodTypeForm[i])
+            queryDespositProdData(prodClass) {
+                getProdType(prodClass).then(response => {
+                    let length = response.data.length
+                    for(let j = 0; j<length; j++){
+                        this.folders.push(response.data[j])
                     }
-                }
-            })
+                })
+            },
+//            getProdBySearchValue(val) {
+//                if (val) {
+//                    let j = 1
+//                    for (let i = 1; i < this.folders.length; i++) {
+//                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
+//                        }
+//                    }
+//                }
+//            },
+            getNewProdData(val) {
+                console.log(val)
+                this.prodData.prodType.prodType = val.eventForm.prodcode
+                this.prodData.prodType.prodDesc = val.eventForm.proddesc
+                this.prodData.prodType.prodRange = val.eventForm.prodprepice
+                this.prodData.prodType.prodClass = val.eventForm.prodclass
+                this.prodData.prodType.prodGroup = val.eventForm.prodmuti
+                this.prodData.prodType.status = val.eventForm.prodstatus
+                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctstruct
+                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.virtualflag
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctintflag
+                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.amtflag
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitcenter
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.effectdate
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
+
+                this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             }
         }
+//        watch: {
+//            searchValue(val, oldval) {
+//                if (val !== oldval) {
+//                    this.getProdBySearchValue(val)
+//                }
+//            }
+//        }
     }
 </script>
 
@@ -169,10 +239,9 @@
     height: calc(90vh - 48px);
   }
   /*  .prodList {
-      border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
-    }
-    .prodLists {
-      border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
-    }*/
+                border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
+              }
+              .prodLists {
+                border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
+              }*/
 </style>
-
