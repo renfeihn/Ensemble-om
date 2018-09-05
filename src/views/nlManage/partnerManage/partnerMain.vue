@@ -5,46 +5,30 @@
         <v-toolbar color="primary lighten-1" dark tabs>
           <v-toolbar-side-icon></v-toolbar-side-icon>
           <v-toolbar-title class="white--text">合作方签约</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon>search</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>apps</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>refresh</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>more_vert</v-icon>
-          </v-btn>
+          <v-flex xs12 md2 lg2>
+            <v-subheader class="primary--text subheading">合作方编码*</v-subheader>
+          </v-flex>
+          <v-flex md4 lg4>
+          <v-text-field class="primary--text mx-1" label="合作方编码" name="title" single-line hide-details>
+          </v-text-field>
+          </v-flex>
           <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
             <v-tabs-slider color="yellow"></v-tabs-slider>
             <v-tab v-for="n in prodInfo" :key="n">
               {{ n.text}}
-              <!-- <v-icon>{{n.icon}}</v-icon> -->
             </v-tab>
           </v-tabs>
         </v-toolbar>
         <v-tabs-items v-model="activeName" class="white elevation-1">
           <v-tab-item v-for="i in 4" :key="i" :id="'mobile-tabs-5-' + i">
-            <!-- <v-card>
-                <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
             <partner-basic v-if="i==1"></partner-basic>
             <partner-settle v-if="i==2"></partner-settle>
-            <partner-account v-if="i==3"></partner-account>
-            <partner-contributive v-if="i==4"></partner-contributive>
-            <!-- </v-card-text>
-        </v-card> -->
+            <partner-contributive v-if="i==3"></partner-contributive>
+            <partner-account v-if="i==4"></partner-account>
           </v-tab-item>
         </v-tabs-items>
       </v-flex>
       <v-flex lg3 sm3 class="v-card">
-        <!--<v-card>-->
-        <!--<v-card-text>-->
-        <!--<down-action v-on:listenToCopy="showCopy"></down-action>-->
-        <!--</v-card-text>-->
-        <!--</v-card>-->
         <v-card>
           <v-card-text>
             <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
@@ -80,24 +64,17 @@
 </template>
 
 <script>
-    // import queryheader from './components/queryheader'
-    import {
-        getProdType
-    } from '@/api/url/prodInfo'
-    import {
-        savaProdInfo
-    } from '@/api/url/prodInfo';
     import PartnerBasic from '../partnerManage/partnerBasic';
     import PartnerSettle from '../partnerManage/partnerSettle';
-    import PartnerAccount from '../partnerManage/partnerAccount';
     import PartnerContributive from '../partnerManage/partnerContributive';
+    import PartnerAccount from '../partnerManage/partnerAccount';
     export default {
         name: 'deposit',
         components: {
             PartnerBasic,
             PartnerSettle,
-            PartnerAccount,
-            PartnerContributive
+            PartnerContributive,
+            PartnerAccount
         },
         data () {
             return {
@@ -118,22 +95,17 @@
                     text: '结算信息'
                 }, {
                     icon: 'work',
-                    text: '出资对象'
+                    text: '出资信息'
                 }, {
                     icon: 'work',
-                    text: '对账对象'
+                    text: '对账信息'
                 }],
                 files: [{
                     icon: 'assignment',
                     iconClass: 'blue white--text',
                     value: '',
                     lable: ''
-                }],
-                folders: [],
-                prodData: {},
-                sourceProdData: {},
-                targetData: {},
-                ttt: {}
+                }]
             }
         },
         created() {
@@ -142,32 +114,18 @@
         mounted: function() {
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
-            this.queryDespositProdData(this.prodClass)
             if(this.$route.params.prodClassCmp !=''){
                 this.prodClass = this.$route.params.prodClassCmp
             }
             if(this.$route.params.prodCodeCmp !=''){
                 this.initStage(this.$route.params.prodCodeCmp)
             }
-            this.queryDespositProdData(this.prodClass)
         },
         methods: {
             queryProdInfo() {
                 console.log('start query prod info')
             },
-            saveClick() {
-                this.$refs.callback[0].callbackprod()
-                // this.targetData = filterChangeData(this.prodData,this.sourceProdData)
-                this.targetData.option="save";
-                savaProdInfo(this.targetData);
-            },
-            handleClick(value) {
-                this.prodCode = value.prodType
-                // getProdData(this.prodCode).then(response => {
-                //     this.prodData = response.data
-                //     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
-                // });
-            },
+
             //对象浅复制
             copy(obj1,obj2) {
                 var obj = obj2||{};
@@ -193,23 +151,6 @@
                     type: 'warning'
                 })
             },
-            queryDespositProdData(prodClass) {
-                getProdType(prodClass).then(response => {
-                    let length = response.data.length
-                    for(let j = 0; j<length; j++){
-                        this.folders.push(response.data[j])
-                    }
-                })
-            },
-//            getProdBySearchValue(val) {
-//                if (val) {
-//                    let j = 1
-//                    for (let i = 1; i < this.folders.length; i++) {
-//                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
-//                        }
-//                    }
-//                }
-//            },
             getNewProdData(val) {
                 console.log(val)
                 this.prodData.prodType.prodType = val.eventForm.prodcode
@@ -230,13 +171,6 @@
                 this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             }
         }
-//        watch: {
-//            searchValue(val, oldval) {
-//                if (val !== oldval) {
-//                    this.getProdBySearchValue(val)
-//                }
-//            }
-//        }
     }
 </script>
 
@@ -247,10 +181,4 @@
   .depositTree {
     height: calc(90vh - 48px);
   }
-  /*  .prodList {
-                border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
-              }
-              .prodLists {
-                border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
-              }*/
 </style>
