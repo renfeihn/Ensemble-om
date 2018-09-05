@@ -23,19 +23,19 @@ export function getUserInfo(token) {
   return request({
     url: '/user/info',
     method: 'get',
-    params: { token }
+    params: {
+      token
+    }
   })
 }
 
-export function userLoginCheck(userName) {
-    // const data = {
-    //
-    //         'userName': username
-    //
-    // }
-    return request({
-        url: '/login',
-        method: 'get',
-        params: { userName }
-    })
+export function login(userId, password) {
+  return request({
+    url: '/user/login',
+    method: 'post',
+    params: {
+      userId,
+      password
+    }
+  })
 }
