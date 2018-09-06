@@ -15,7 +15,7 @@ import store from './store';
 import qs from 'qs';
 Vue.prototype.$qs = qs
 
-//import './mock';
+import './mock';
 if (process.env.MOCK_SWITCH !== 'off') {
   require('./mock')
 }
