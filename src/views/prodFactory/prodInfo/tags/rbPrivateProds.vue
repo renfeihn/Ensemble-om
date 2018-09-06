@@ -4,7 +4,7 @@
             <v-flex lg9 sm9 class="v-card">
                 <v-toolbar color="primary lighten-1" dark tabs>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
-                    <v-toolbar-title class="white--text">个人存款产品</v-toolbar-title>
+                    <v-toolbar-title class="white--text">活期产品</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn icon>
                         <v-icon>search</v-icon>

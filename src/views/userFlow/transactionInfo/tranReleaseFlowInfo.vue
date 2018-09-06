@@ -85,7 +85,7 @@
                 <v-subheader class="primary--text subheading">复核状态:</v-subheader>
               </v-flex>
               <v-flex md11 lg11>
-                <v-switch color="success" hide-details value=true disabled="false" v-model="flowInfo.flowCheckInfo.isApproved" :label="`${flowInfo.flowCheckInfo.isApproved==='Y'?'复核通过':'驳回'}`" ></v-switch>
+                <v-switch color="success" hide-details value=true disabled="false" v-model="flowInfo.flowCheckInfo.isApproved" :label="`${flowInfo.flowCheckInfo.isApproved==='Y'?'通过':'驳回'}`" ></v-switch>
               </v-flex>
             </v-layout>
             <v-divider></v-divider>
@@ -145,7 +145,7 @@
                 <v-subheader class="primary--text subheading">发布状态:</v-subheader>
               </v-flex>
               <v-flex md11 lg11>
-                <v-switch color="success" hide-details value="Y" :label="`${releaseInfo.isApproved==='Y'?'复核通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
+                <v-switch color="success" hide-details value="Y" :label="`${releaseInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
               </v-flex>
             </v-layout>
             <v-divider></v-divider>
