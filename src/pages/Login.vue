@@ -62,6 +62,7 @@ export default {
             this.loading = false;
             this.alert = true;
             this.alertMsg = response.data.msg;
+            this.model.password = null;
             //confirm(response.data.msg);
           } else {
             //                else if(response.data[0].password !== this.model.password) {

@@ -1,4 +1,3 @@
-
 import prodClassAPI from './prodClass'
 import Mock from 'mockjs'
 import prodAPI from './prodDiff'
@@ -40,7 +39,7 @@ Mock.mock(/\/init\/initLoanData\.*/, 'get', nLoanAPI.getInitData);
 
 // 登录相关
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login/, 'get', loginAPI.userLoginCheck)
+Mock.mock(/\/user\/login/, 'post', loginAPI.login)
 
 Mock.mock(/\/getProdListByClass/, 'post', prodTypeAPI.getProdType)
 
