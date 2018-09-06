@@ -498,12 +498,8 @@
   "numOfClient":[],
   "checkWdrawnType":[
     {
-      "key":"Y",
-      "value":"Y-是"
-    },
-    {
-      "key":"N",
-      "value":"N-否"
+      "key":"W",
+      "value":"W-测试1"
     }
   ],
   "mediumTypeFlag":[

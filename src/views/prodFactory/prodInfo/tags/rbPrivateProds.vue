@@ -328,8 +328,8 @@
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue = val.openAcct.numOfClient
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue = val.openAcct.maxBackDateDays
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.DOC_TYPE_DEAL.attrValue = val.openAcct.withdrawTypeHandeling
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG.attrValue = val.openAcct.clientAmtCheckFlag
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue = val.openAcct.startDepositAmt
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_CLIENT_NUM_FLAG.attrValue = val.openAcct.clientAmtCheckFlag
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG.attrValue = val.openAcct.startDepositAmt
             },
             callBackCloseAcct(val) {
                 console.log(val)
@@ -392,8 +392,8 @@
                 this.prodData.prodDefines.OWNERSHIP_TYPE.attrValue = val.acctBaseInfo.ownerShipType
                 this.prodData.prodDefines.ACCT_CLASS.attrValue = val.acctBaseInfo.acctClass
                 this.prodData.prodDefines.BAL_TYPE.attrValue = val.acctBaseInfo.balType
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate.substr(0, 4) + val.acctBaseInfo.prodStartDate.substr(5, 2) + val.acctBaseInfo.prodStartDate.substr(8, 2)
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate.substr(0, 4) + val.acctBaseInfo.prodEndDate.substr(5, 2) + val.acctBaseInfo.prodEndDate.substr(8, 2)
                 this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
                 this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withDrawalType
                 this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall

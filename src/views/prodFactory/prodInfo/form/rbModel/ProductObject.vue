@@ -70,7 +70,7 @@
                                 <v-subheader class="primary--text subheading">机构选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.branchChoice" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.prodBranch" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -170,7 +170,7 @@
                 this.productObject.channelChoose = ""//渠道选择
                 this.productObject.ageSection = val.prodDefines.AGE_PART.attrValue//年龄区间
                 this.productObject.occupation = val.prodDefines.PROFESSION.attrValue//职业
-                this.productObject.branchChoice = val.prodDefines.PROD_BRANCH.attrValue//机构选择
+                this.productObject.prodBranch = val.prodDefines.PROD_BRANCH.attrValue//机构选择
                 this.productObject.applyArea = val.prodDefines.ADUPTER_AREA.attrValue//适用区域
                 this.productObject.areaChoose = val.prodDefines.AREA_TYPE.attrValue//区域选择
             },

@@ -22,10 +22,9 @@
                                 <v-subheader class="primary--text subheading">支取方式处理*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                                <v-select class="primary&#45;&#45;text mx-2" :items="checkWdrawnType" v-model="openAcct.checkWadrawnType" label="支取方式处理" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="openAcct.checkWadrawnType"></dc-switch>
+                                 <v-select class="primary--text mx-2" :items="checkWdrawnType" v-model="openAcct.checkWadrawnType" label="支取方式处理" item-text="value" item-value="key" single-line hide-details></v-select>
+
+                                <!--<dc-switch v-model="openAcct.checkWadrawnType"></dc-switch>-->
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户限制处理*</v-subheader>
@@ -181,7 +180,7 @@
                 this.openAcct.clientAmtCheckFlag = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.CHECK_CLIENT_NUM_FLAG.attrValue//同客户数量检查标识
                 this.openAcct.startDepositAmt = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG.attrValue//起息日处理标识
                 this.openAcct.maxBackDateDays = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue//最大倒起息天数
-                this.openAcct.maxDay = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue//最大起息天数
+                this.openAcct.maxDay = ""//最大起息天数
             },
             initRefDate() {
                 this.structureType = this.refData[2].paraDataRb.structureType;
