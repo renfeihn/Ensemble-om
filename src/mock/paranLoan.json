@@ -1,0 +1,11 @@
+{
+  "ccy":[
+    {
+      "value": "CHN",
+      "label": "CHN - 人民币"
+    },
+    {
+      "value": "USA",
+      "label": "USA - 美元"
+    }]
+}

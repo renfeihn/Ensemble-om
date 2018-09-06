@@ -5,6 +5,9 @@ import prodAPI from './prodDiff'
 import tableAPI from './table'
 import initAPI from './init'
 import dataAPI from './data'
+//
+import nLoanAPI from './nLoan'
+
 import loginAPI from './login'
 import prodTypeAPI from './prodType'
 import userCollectAPI from './userCollect'
@@ -29,14 +32,17 @@ Mock.mock(/\/table\/list/, 'get', tableAPI.getList)
 Mock.mock(/\/prod\/info\.*/, 'get', prodAPI.getProd)
 Mock.mock(/\/prod\/userCollect\.*/, 'get', userCollectAPI.getUserCollectProds())
 
-// Mock.mock(/\/getProdInfo/, 'post', dataAPI.getProdInfo);
-//
-//
-// // 登录相关
-// Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-// Mock.mock(/\/login/, 'get', loginAPI.userLoginCheck)
-//
-// Mock.mock(/\/getProdListByClass/, 'post', prodTypeAPI.getProdType)
+Mock.mock(/\/getProdInfo/, 'post', dataAPI.getProdInfo);
+
+//网贷合作方信息管理
+Mock.mock(/\/init\/initLoanData\.*/, 'get', nLoanAPI.getInitData);
+
+
+// 登录相关
+Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+Mock.mock(/\/login/, 'get', loginAPI.userLoginCheck)
+
+Mock.mock(/\/getProdListByClass/, 'post', prodTypeAPI.getProdType)
 
 
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
