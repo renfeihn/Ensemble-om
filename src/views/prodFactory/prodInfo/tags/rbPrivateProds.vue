@@ -363,13 +363,15 @@
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue = val.drawInfo.cashResource
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.drawInfo.attrReatraintCheck
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue = val.drawInfo.withDrawlCheck
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.SG_MIN_AMT.attrValue = val.drawInfo.sgMinAmt
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT.attrValue = val.drawInfo.sgMinAmt
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL.attrValue = val.drawInfo.acctBalanceCheck
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.SG_MAX_AMT.attrValue = val.drawInfo.sgMaxAmt
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT.attrValue = val.drawInfo.sgMaxAmt
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL.attrValue = val.drawInfo.keepMinBal
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue = val.drawInfo.dealingWay
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue = val.drawInfo.breakType
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue = val.drawInfo.voucherTypeCheck
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_SG_AMT.attrValue = val.drawInfo.sgBalCheck
+
             },
             callBackAcctBaseInfo(val) {
                 console.log(val)

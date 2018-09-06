@@ -203,11 +203,11 @@
                 this.drawInfo.attrReatraintCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                 this.drawInfo.withDrawlCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
                 this.drawInfo.voucherTypeCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue//
-                this.drawInfo.sgMinAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.SG_MIN_AMT.attrValue
+                this.drawInfo.sgMinAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT.attrValue
                 this.drawInfo.acctBalanceCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL.attrValue
-                this.drawInfo.sgMaxAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.SG_MAX_AMT.attrValue
+                this.drawInfo.sgMaxAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT.attrValue
                 this.drawInfo.keepMinBal = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL.attrValue
-                this.drawInfo.sgBalCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_SG_AMT.attrValue
+                this.drawInfo.sgBalCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.CHECK_SG_AMT.attrValue
             },
             initRefDate() {
                 this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;
