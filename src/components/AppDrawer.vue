@@ -11,7 +11,7 @@
     <v-toolbar color="primary darken-1" dark>
       <img v-bind:src="computeLogo" height="36" alt="产品工厂">
       <v-toolbar-title class="ml-0 pl-1">
-        <span class="hidden-sm-and-down">XXX银行产品工厂</span>
+        <span class="hidden-sm-and-down">{{titleName}}</span>
       </v-toolbar-title>
     </v-toolbar>
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
@@ -72,56 +72,59 @@
   </v-navigation-drawer>
 </template>
 <script>
-import {Menu} from '@/api/menu';
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import { Menu } from "@/api/menu";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
 export default {
-  name: 'app-drawer',
+  name: "app-drawer",
   components: {
-    VuePerfectScrollbar,
+    VuePerfectScrollbar
   },
   props: {
     expanded: {
       type: Boolean,
       default: true
-    },
-  },
-  data: () => ({
-    mini: false,
-    drawer: true,
-    menus: Menu,
-    scrollSettings: {
-      maxScrollbarLength: 160
     }
-  }),
+  },
+  data() {
+    return {
+      titleName: this.globalConfig.name,
+      mini: false,
+      drawer: true,
+      menus: Menu,
+      scrollSettings: {
+        maxScrollbarLength: 160
+      }
+    };
+  },
   computed: {
-    computeGroupActive () {
+    computeGroupActive() {
       return true;
     },
-    computeLogo () {
-      return '/static/prod/dcLog1.png';
+    computeLogo() {
+      return "/static/prod/dcLog1.png";
     },
 
-    sideToolbarColor () {
+    sideToolbarColor() {
       return this.$vuetify.options.extra.sideNav;
     }
   },
-  created () {
-    window.getApp.$on('APP_DRAWER_TOGGLED', () => {
-      this.drawer = (!this.drawer);
+  created() {
+    window.getApp.$on("APP_DRAWER_TOGGLED", () => {
+      this.drawer = !this.drawer;
     });
   },
 
-
   methods: {
-    genChildTarget (item, subItem) {
-        if (subItem.href) return;
-        if (subItem.component) {
-            return {
-                name: subItem.component,hash: subItem.name
-            };
-        }
-        return { name: `${item.group}/${(subItem.name)}`};
-    },
+    genChildTarget(item, subItem) {
+      if (subItem.href) return;
+      if (subItem.component) {
+        return {
+          name: subItem.component,
+          hash: subItem.name
+        };
+      }
+      return { name: `${item.group}/${subItem.name}` };
+    }
   }
 };
 </script>
@@ -129,11 +132,12 @@ export default {
 
 <style lang="stylus">
 // @import '../../node_modules/vuetify/src/stylus/settings/_elevations.styl';
+#appDrawer {
+  overflow: hidden;
 
-#appDrawer
-  overflow: hidden
-  .drawer-menu--scroll
-    height: calc(100vh - 48px)
-    overflow: auto
-
+  .drawer-menu--scroll {
+    height: calc(100vh - 48px);
+    overflow: auto;
+  }
+}
 </style>

@@ -13,7 +13,10 @@ import VueResource from 'vue-resource'
 import Truncate from 'lodash.truncate';
 import store from './store';
 import qs from 'qs';
+import globalConfig from "./config.js";
+
 Vue.prototype.$qs = qs
+Vue.prototype.globalConfig = globalConfig
 
 import './mock';
 if (process.env.MOCK_SWITCH !== 'off') {
