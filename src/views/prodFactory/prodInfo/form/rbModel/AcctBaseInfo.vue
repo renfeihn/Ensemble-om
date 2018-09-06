@@ -60,7 +60,7 @@
                                 <v-subheader class="primary--text subheading">生效日期*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-menu ref="startDateMenu" lazy :close-on-content-click="false" v-model="prodStartDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
+                                <v-menu ref="startDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
                                     <v-text-field slot="activator" label="生效日期" v-model="acctBaseInfo.prodStartDate" append-icon="event" single-line hide-details></v-text-field>
                                     <v-date-picker v-model="acctBaseInfo.prodStartDate" @input="$refs.startDateMenu.save(prodStartDate)" no-title scrollable locale="zh-cn"></v-date-picker>
                                 </v-menu>
@@ -69,7 +69,7 @@
                                 <v-subheader class="primary--text subheading">失效日期*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="prodEndDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDateMenu">
+                                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
                                     <v-text-field slot="activator" label="失效日期" v-model="acctBaseInfo.prodEndDate" append-icon="event" single-line hide-details></v-text-field>
                                     <v-date-picker v-model="acctBaseInfo.prodEndDate" @input="$refs.endDateMenu.save(prodEndDate)" no-title scrollable locale="zh-cn"></v-date-picker>
                                 </v-menu>
@@ -188,6 +188,10 @@
         data: () => ({
             title: null,
             prodtypeData: "",
+            startDateMenu: false,
+            endDate: null,
+            endDateMenu: false,
+            startDate: null,
             proddescData: "",
             sourceModule: [{
                 key: "",
