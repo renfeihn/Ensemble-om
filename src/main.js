@@ -16,6 +16,8 @@ import qs from 'qs';
 import globalConfig from "./config.js";
 
 Vue.prototype.$qs = qs
+
+//Global Config
 Vue.prototype.globalConfig = globalConfig
 
 import './mock';
