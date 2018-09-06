@@ -9,43 +9,43 @@
                                 <v-subheader class="primary--text subheading">客户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientType" v-model="productObject.clientType" label="客户类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientType" v-bind:value="productObject.clientType | getValues" label="客户类型" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">境内外标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="inlandOffshore" v-model="productObject.inLandOffshore" label="境内外标识" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="inlandOffshore" v-bind:value="productObject.inLandOffshore | getValues" label="境内外标识" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientSubType" v-model="productObject.clientSubType" label="客户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientSubType" v-bind:value="productObject.clientSubType | getValues" label="客户子类型" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户等级*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientLevel" v-model="productObject.clientInd" label="客户等级" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="clientLevel" v-bind:value="productObject.clientInd | getValues" label="客户等级" item-text="value" item-value="key" multiple single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">年龄区间*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ageSection" v-model="productObject.ageSection" label="年龄区间" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="ageSection" v-bind:value="productObject.ageSection | getValues" label="年龄区间" item-text="value" item-value="key" multiple single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">职业*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="profession" v-model="productObject.occupation" label="职业" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="profession" v-bind:value="productObject.occupation | getValues" label="职业" item-text="value" item-value="key" multiple single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="channelChoose" v-model="productObject.channelChoose" label="渠道选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="channelChoose" v-bind:value="productObject.channelChoose | getValues" label="渠道选择" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用区域*</v-subheader>
@@ -57,7 +57,7 @@
                                 <v-subheader class="primary--text subheading">区域选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="areaChoose" v-model="productObject.areaChoose" label="区域选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="areaChoose" v-bind:value="productObject.areaChoose | getValues" label="区域选择" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
@@ -70,7 +70,8 @@
                                 <v-subheader class="primary--text subheading">机构选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.prodBranch" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
+
+                                <v-select class="primary--text mx-2" :items="branchChoice" v-bind:value="productObject.prodBranch | getValues" label="机构选择" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -85,6 +86,15 @@
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
+        filters: {
+            getValues: function (key) {
+                let value=[];
+                if(key!=undefined){
+                    value=key.split(',');
+                }
+                return value
+            }
+        },
         components: {DcSwitch},
         props: ["prodData"],
         data: () => ({

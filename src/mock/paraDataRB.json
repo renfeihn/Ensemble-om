@@ -363,6 +363,10 @@
     {
       "key":"AC",
       "value":"AC-自助渠道"
+    },
+    {
+      "key":"CP",
+      "value":"CP-手机银行"
     }
   ],
   "applyBranch":[
