@@ -333,7 +333,7 @@
         },
         methods: {
             callbackprod() {
-                this.$emit("getNewProdData",{"acctBaseInfo": this.acctBaseInfo})
+                this.$emit("callBackAcctBaseInfo",{"acctBaseInfo": this.acctBaseInfo})
             },
             isSelectCcy(){
                 console.log(this.acctBaseInfo.isMultiCcy);

@@ -212,6 +212,13 @@
             },
             saveProd() {
                 this.$refs.callback[0].callbackprod()
+                this.$refs.callback[1].callbackprod()
+                this.$refs.callback[2].callbackprod()
+                this.$refs.callback[3].callbackprod()
+                this.$refs.callback[4].callbackprod()
+                this.$refs.callback[5].callbackprod()
+                this.$refs.callback[6].callbackprod()
+                this.$refs.callback[7].callbackprod()
                 this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -230,6 +237,13 @@
             },
             tempProd() {
                 this.$refs.callback[0].callbackprod()
+                this.$refs.callback[1].callbackprod()
+                this.$refs.callback[2].callbackprod()
+                this.$refs.callback[3].callbackprod()
+                this.$refs.callback[4].callbackprod()
+                this.$refs.callback[5].callbackprod()
+                this.$refs.callback[6].callbackprod()
+                this.$refs.callback[7].callbackprod()
                 this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -278,15 +292,15 @@
             },
             callBackControlInfo(val) {
                 console.log(val)
-                this.prodData.prodDefines.AUTOMATIC_RANGE.attrValue = val.productObject.draRange
-                this.prodData.prodDefines.CIR_EXCHANGE_RANGE.attrValue = val.productObject.depRange
-                this.prodData.prodDefines.TRAN_CIR_EXCG_FLAG.attrValue = val.productObject.tDepFlag
-                this.prodData.prodDefines.CASH_CIR_EXCG_FLAG.attrValue = val.productObject.cashDepFlag
-                this.prodData.prodDefines.CLIENT_CONTRAL_FLAG.attrValue = val.productObject.clientFlag
-                this.prodData.prodDefines.CHANNEL_CONT_FLAG.attrValue = val.productObject.channelFlag
-                this.prodData.prodDefines.BRC_AREA_CONT_FLAG.attrValue = val.productObject.branchControlFlag
-                this.prodData.prodDefines.CHARGE_TYPE.attrValue = val.productObject.chargeFlag
-                this.prodData.prodDefines.STATUS_TRAN_FLAG.attrValue = val.productObject.moveFlag
+                this.prodData.prodDefines.AUTOMATIC_RANGE.attrValue = val.controlInfo.draRange
+                this.prodData.prodDefines.CIR_EXCHANGE_RANGE.attrValue = val.controlInfo.depRange
+                this.prodData.prodDefines.TRAN_CIR_EXCG_FLAG.attrValue = val.controlInfo.tDepFlag
+                this.prodData.prodDefines.CASH_CIR_EXCG_FLAG.attrValue = val.controlInfo.cashDepFlag
+                this.prodData.prodDefines.CLIENT_CONTRAL_FLAG.attrValue = val.controlInfo.clientFlag
+                this.prodData.prodDefines.CHANNEL_CONT_FLAG.attrValue = val.controlInfo.channelFlag
+                this.prodData.prodDefines.BRC_AREA_CONT_FLAG.attrValue = val.controlInfo.branchControlFlag
+                this.prodData.prodDefines.CHARGE_TYPE.attrValue = val.controlInfo.chargeFlag
+                this.prodData.prodDefines.STATUS_TRAN_FLAG.attrValue = val.controlInfo.moveFlag
             },
             callBackProdObject(val) {
                 console.log(val)
