@@ -14,24 +14,19 @@ import Truncate from 'lodash.truncate';
 import store from './store';
 import qs from 'qs';
 import globalConfig from "./config.js";
-//import Toast from "./components/toast";
+// import './mock';
+
 
 Vue.prototype.$qs = qs
-
 //Global Config
 Vue.prototype.globalConfig = globalConfig
 
-// import './mock';
-if (process.env.MOCK_SWITCH !== 'off') {
-  require('./mock')
-}
 Vue.config.productionTip = false;
 
 // Helpers
 // Global filters
 Vue.filter('truncate', Truncate);
 
-//Vue.use(Toast)
 Vue.use(VueResource)
 Vue.use(VeeValidate, {
   fieldsBagName: 'formFields'

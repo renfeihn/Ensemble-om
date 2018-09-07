@@ -27,7 +27,7 @@ service.interceptors.request.use(config => {
 
 // respone interceptor
 service.interceptors.response.use(
-  response => response,
+  // response => response,
   /**
    * 下面的注释为通过在response里，自定义code来标示请求状态
    * 当code返回如下情况则说明权限有问题，登出并返回到登录页
@@ -38,23 +38,15 @@ service.interceptors.response.use(
 
     const res = response.data
     if (!res) {
-      toast.error("服务已断开,请重新登录!");
+      toast.error("服务已断开,请检查网络!");
     }
-    if (res.code !== 20000) {
-      this.snackbar({
-        message: res.message,
-        type: 'error',
-        duration: 5 * 1000
-      })
+    if (!res.code) {
+      toast.error(res.msg || "错误信息未定义!");
       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // 请自行在引入 MessageBox
         // import { Message, MessageBox } from 'element-ui'
-        this.snackbar('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+        toast.warn("你已被登出，可以取消继续留在该页面，或者重新登录!").then(() => {
           store.dispatch('FedLogOut').then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
@@ -62,7 +54,7 @@ service.interceptors.response.use(
       }
       return Promise.reject('error')
     } else {
-      return response.data
+      return response
     }
   },
   error => {

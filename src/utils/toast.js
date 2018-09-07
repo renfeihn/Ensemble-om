@@ -6,14 +6,13 @@ const colors = ['success', 'info', 'error'];
 
 const defaultOptions = {
   text: '',
-  icon: '',
+  icon: 'info',
   color: 'info',
-  timeout: 3000,
+  timeout: 2000,
   dismissible: true,
 };
 
 let toastCmp = null;
-
 
 function createToastCmp() {
   const cmp = new Vue(Toast);
@@ -23,7 +22,6 @@ function createToastCmp() {
   return cmp;
 }
 
-
 function getToastCmp() {
   if (!toastCmp) {
     toastCmp = createToastCmp();
@@ -31,7 +29,6 @@ function getToastCmp() {
 
   return toastCmp;
 }
-
 
 function show(options = {}) {
   getToastCmp().show({
@@ -56,7 +53,6 @@ function createShorthands() {
 
   return shorthands;
 }
-
 
 export default {
   show,
