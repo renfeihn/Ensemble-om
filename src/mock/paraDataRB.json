@@ -1022,5 +1022,73 @@
       "key":"N",
       "value":"N-否"
     }
+  ],
+  "feeType": [
+    {
+      "key":"L01",
+      "value":"L01-承兑承诺费"
+    },
+    {
+      "key":"L10",
+      "value":"L10-提前还款费"
+    },
+    {
+      "key":"R01",
+      "value":"R01-小额账户管理费"
+    },
+    {
+      "key":"R02",
+      "value":"R02-账户验资开户费"
+    },
+    {
+      "key":"R03",
+      "value":"R03-对公账户管理费"
+    }
+  ],
+  "chargePeriodFreq": [
+    {
+      "key":"1D",
+      "value":"1D-一天"
+    },
+    {
+      "key":"3D",
+      "value":"3D-三天"
+    },
+    {
+      "key":"5D",
+      "value":"5D-五天"
+    },
+    {
+      "key":"1M",
+      "value":"1M-一个月"
+    },
+    {
+      "key":"2M",
+      "value":"2M-两个月"
+    },
+    {
+      "key":"6M",
+      "value":"6M-六个月"
+    }
+  ],
+  "chargeDealMethod": [
+    {
+      "key":"10",
+      "value":"10-实时生效"
+    },
+    {
+      "key":"11",
+      "value":"11-日终处理"
+    }
+  ],
+  "conDeductFlag": [
+    {
+      "key":"Y",
+      "value":"Y-持续扣款"
+    },
+    {
+      "key":"N",
+      "value":"N-非持续扣款"
+    }
   ]
 }

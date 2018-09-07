@@ -5,7 +5,6 @@
                 <v-btn slot="activator" color="success" dark class="mb-2" @click="addClick">新增</v-btn>
                 <v-btn slot="activator" color="success" dark class="mb-2" @click="modClick">修改</v-btn>
                 <v-card>
-                    <!--<v-card-title><span class="headline">收费定义</span></v-card-title>-->
                     <v-card-text>
                         <v-flex xs12 md12 lg12>
                              <div slot="widget-content">
@@ -14,15 +13,15 @@
                                          <v-flex>
                                              <v-subheader class="primary--text subheading">批量收费类型*</v-subheader>
                                          </v-flex>
+                                         <!--getDesc(editedItem.feeType)-->
                                          <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-1" label="批量收费类型" name="title" v-model="editedItem.feeType" single-line hide-details>
-                                             </v-text-field>
+                                             <v-select class="primary--text mx-2" :items="feeType" v-model="editedItem.feeType" label="批量收费类型" item-text="value" item-value="key" single-line hide-details></v-select>
                                          </v-flex>
                                          <v-flex xs12 md2 lg2>
                                              <v-subheader class="primary--text subheading">收费频率*</v-subheader>
                                          </v-flex>
                                          <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-2" label="收费频率" name="title" v-model="editedItem.chargePeriodFreq" single-line hide-details/>
+                                             <v-select class="primary--text mx-2" :items="chargePeriodFreq" v-model="editedItem.chargePeriodFreq" label="收费频率" item-text="value" item-value="key" single-line hide-details></v-select>
                                          </v-flex>
                                      </v-layout>
                                      <v-layout row wrap>
@@ -30,14 +29,16 @@
                                              <v-subheader class="primary--text subheading">收费日期*</v-subheader>
                                          </v-flex>
                                          <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-1" label="收费日期" name="title" v-model="editedItem.chargeDay" single-line hide-details>
-                                             </v-text-field>
+                                             <v-menu ref="chargeDate" lazy :close-on-content-click="false" v-model="chargeDay" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="chargeDate">
+                                                 <v-text-field slot="activator" label="收费日期" v-model="editedItem.chargeDay" append-icon="event" single-line hide-details></v-text-field>
+                                                 <v-date-picker v-model="editedItem.chargeDay" @input="$refs.chargeDate.save(chargeDay)" no-title scrollable locale="zh-cn"></v-date-picker>
+                                             </v-menu>
                                          </v-flex>
                                          <v-flex xs12 md2 lg2>
                                              <v-subheader class="primary--text subheading">收费处理方式*</v-subheader>
                                          </v-flex>
                                          <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-2" label="收费处理方式" name="title" v-model="editedItem.chargeDealMethod" single-line hide-details/>
+                                             <v-select class="primary--text mx-2" :items="chargeDealMethod" v-model="editedItem.chargeDealMethod" label="收费处理方式" item-text="value" item-value="key" single-line hide-details></v-select>
                                          </v-flex>
                                      </v-layout>
                                      <v-layout row wrap>
@@ -45,8 +46,7 @@
                                              <v-subheader class="primary--text subheading">持续扣款标识*</v-subheader>
                                          </v-flex>
                                          <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-1" label="持续扣款标识" name="title" v-model="editedItem.conDeductFlag" single-line hide-details>
-                                             </v-text-field>
+                                             <v-select class="primary--text mx-2" :items="conDeductFlag" v-model="editedItem.conDeductFlag" label="持续扣款标识" item-text="value" item-value="key" single-line hide-details></v-select>
                                          </v-flex>
                                          <v-flex xs12 md2 lg2>
                                              <v-subheader class="primary--text subheading">持续扣款次数*</v-subheader>
@@ -76,12 +76,12 @@
                 <v-data-table :headers="headers" :items="chargeDefinesInfo" hide-actions class="elevation-0">
                     <template slot="items" slot-scope="props">
                         <tr @click="getChargeDefine(props.item)" v-bind:class="{'chargeSelected': props.item==editedItem }" highlight-row>
-                        <td class="text-xs-left">{{ props.item.feeType }}</td>
-                        <td class="text-xs-left">{{ props.item.chargePeriodFreq }}</td>
-                        <td class="text-xs-left">{{ props.item.chargeDay }}</td>
-                        <td class="text-xs-left">{{ props.item.chargeDealMethod }}</td>
-                        <td class="text-xs-left">{{ props.item.conDeductFlag }}</td>
-                        <td class="text-xs-left">{{ props.item.conDeductTimes }}</td>
+                        <td class="text-xs-left">{{ props.item.feeType | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.chargePeriodFreq | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.chargeDay | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.chargeDealMethod | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.conDeductFlag | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.conDeductTimes | getDescByKey}}</td>
                         </tr>
                     </template>
                 </v-data-table>
@@ -92,7 +92,17 @@
 </template>
 <script>
 import {getChargeDefine} from '@/api/table';
+import toast from '@/utils/toast';
+import { getInitData } from "@/mock/init";
+import {getColumnDesc} from '@/utils/columnDesc'
+
+
 export default {
+    filters: {
+        getDescByKey: function (data) {
+            return getColumnDesc(data)
+        }
+    },
     props: ["prodData"],
     data () {
         return {
@@ -101,6 +111,24 @@ export default {
             modFlag: false,
             prodType: '',
             open: true,
+            feeType: [{
+                key: "",
+                value: ""
+            }],
+            chargePeriodFreq: [{
+                key: "",
+                value: ""
+            }],
+            chargeDealMethod: [{
+                key: "",
+                value: ""
+            }],
+            conDeductFlag: [{
+                key: "",
+                value: ""
+            }],
+
+            refData: getInitData,
             headers: [
                 {text: '批量收费类型', align: 'left', value: 'feeType'},
                 {text: '收费频率', value: 'chargePeriodFreq'},
@@ -137,6 +165,7 @@ export default {
             chargeDefinesInfo: []
         };
     },
+
     computed: {
 
     },
@@ -160,7 +189,12 @@ export default {
             this.editedItem = Object.assign({}, item)
             this.dialog = true
             this.close()
-
+        },
+        initRefDate() {
+            this.feeType = this.refData[2].paraDataRb.feeType;
+            this.chargePeriodFreq = this.refData[2].paraDataRb.chargePeriodFreq;
+            this.chargeDealMethod = this.refData[2].paraDataRb.chargeDealMethod;
+            this.conDeductFlag = this.refData[2].paraDataRb.conDeductFlag;
         },
         deleteItem (item) {
             const index = this.projects.indexOf(item)
@@ -179,20 +213,36 @@ export default {
             } else {
                 //新增数据，产品类型默认
                 this.editedItem.prodType = this.prodType
-                this.chargeDefinesInfo.push(this.editedItem)
+                let flag = 0
+                for(let i = 0; i<this.chargeDefinesInfo.length; i++){
+                    if(this.editedItem.feeType === "" || this.editedItem.feeType === undefined){
+                        toast.info("主键feeType[批量收费类型]不能为空!");
+                        flag = 1
+                        break
+                    }else if(this.chargeDefinesInfo[i].prodType === this.editedItem.prodType && this.chargeDefinesInfo[i].feeType === this.editedItem.feeType){
+                        toast.info("主键feeType[批量收费类型]不能重复!");
+                        flag = 1
+                        break
+                    }
+                }
+                if(flag === 0){
+                    this.chargeDefinesInfo.push(this.editedItem)
+                    this.close()
+                }
             }
-            this.close()
         },
         getChargeDefine(value){
             this.editedItem = []
             this.editedItem = value
         },
         addClick() {
+            this.initRefDate();
             this.editedItem = []
             this.modFlag = false
             this.addFlag = true
         },
         modClick() {
+            this.initRefDate();
             this.addFlag = false
             this.modFlag = true
         },
