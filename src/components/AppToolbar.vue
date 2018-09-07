@@ -56,6 +56,7 @@ export default {
     NotificationList
   },
   data: () => ({
+    prodList1: [],
     prodList: [],
     prodCode: "",
     prodClass: "",
@@ -103,20 +104,22 @@ export default {
       this.prodListSplit = val.split("-");
       this.prodCode = this.prodListSplit[0];
       getProdType(this.prodCode).then(response => {
-        let length = response.data.prodTypeForm.length;
-        for (let i = 0; i < length; i++) {
-          if (this.prodCode === response.data.prodTypeForm[i].value) {
-            this.prodClass = response.data.prodTypeForm[i].prodClass;
-          }
-        }
-        if ("RB100" == this.prodClass) {
-          this.$router.push({
-            name: "prod/rbPrivateProd",
-            params: {
-              prodClassCmp: this.prodClass,
-              prodCodeCmp: this.prodCode
+        if (response.data.prodTypeForm.length) {
+          let length = response.data.prodTypeForm.length;
+          for (let i = 0; i < length; i++) {
+            if (this.prodCode === response.data.prodTypeForm[i].value) {
+              this.prodClass = response.data.prodTypeForm[i].prodClass;
             }
-          });
+          }
+          if ("RB100" == this.prodClass) {
+            this.$router.push({
+              name: "prod/rbPrivateProd",
+              params: {
+                prodClassCmp: this.prodClass,
+                prodCodeCmp: this.prodCode
+              }
+            });
+          }
         }
       });
     },
@@ -125,12 +128,14 @@ export default {
     },
     getInitProdList() {
       getProdType().then(response => {
-        for (let i = 0; i < response.data.prodTypeForm.length; i++) {
-          this.prodList.push(
-            response.data.prodTypeForm[i].value +
-              "-" +
-              response.data.prodTypeForm[i].label
-          );
+        if (response.data.prodTypeForm.length) {
+          for (let i = 0; i < response.data.prodTypeForm.length; i++) {
+            this.prodList.push(
+              response.data.prodTypeForm[i].value +
+                "-" +
+                response.data.prodTypeForm[i].label
+            );
+          }
         }
       });
     }
