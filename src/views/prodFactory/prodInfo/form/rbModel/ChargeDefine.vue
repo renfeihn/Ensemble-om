@@ -220,7 +220,7 @@ export default {
                         flag = 1
                         break
                     }else if(this.chargeDefinesInfo[i].prodType === this.editedItem.prodType && this.chargeDefinesInfo[i].feeType === this.editedItem.feeType){
-                        toast.info("主键feeType[批量收费类型]不能重复!");
+                        toast.info("主键feeType[批量收费类型:"+this.editedItem.feeType+"]不能重复!");
                         flag = 1
                         break
                     }
