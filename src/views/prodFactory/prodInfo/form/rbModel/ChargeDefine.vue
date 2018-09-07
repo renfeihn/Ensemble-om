@@ -13,7 +13,6 @@
                                          <v-flex>
                                              <v-subheader class="primary--text subheading">批量收费类型*</v-subheader>
                                          </v-flex>
-                                         <!--getDesc(editedItem.feeType)-->
                                          <v-flex md4 lg4>
                                              <v-select class="primary--text mx-2" :items="feeType" v-model="editedItem.feeType" label="批量收费类型" item-text="value" item-value="key" single-line hide-details></v-select>
                                          </v-flex>
@@ -78,10 +77,10 @@
                         <tr @click="getChargeDefine(props.item)" v-bind:class="{'chargeSelected': props.item==editedItem }" highlight-row>
                         <td class="text-xs-left">{{ props.item.feeType | getDescByKey}}</td>
                         <td class="text-xs-left">{{ props.item.chargePeriodFreq | getDescByKey}}</td>
-                        <td class="text-xs-left">{{ props.item.chargeDay | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.chargeDay}}</td>
                         <td class="text-xs-left">{{ props.item.chargeDealMethod | getDescByKey}}</td>
                         <td class="text-xs-left">{{ props.item.conDeductFlag | getDescByKey}}</td>
-                        <td class="text-xs-left">{{ props.item.conDeductTimes | getDescByKey}}</td>
+                        <td class="text-xs-left">{{ props.item.conDeductTimes}}</td>
                         </tr>
                     </template>
                 </v-data-table>
@@ -99,8 +98,8 @@ import {getColumnDesc} from '@/utils/columnDesc'
 
 export default {
     filters: {
-        getDescByKey: function (data) {
-            return getColumnDesc(data)
+        getDescByKey: function (key) {
+            return getColumnDesc(key)
         }
     },
     props: ["prodData"],

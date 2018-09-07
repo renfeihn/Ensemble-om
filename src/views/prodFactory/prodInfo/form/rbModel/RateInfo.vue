@@ -17,22 +17,22 @@
                 hide-actions
                 >
                     <template slot="items" slot-scope="props">
-                        <td class="text-xs-center">{{ props.item.eventType }}</td>
-                        <td class="text-xs-center">{{ props.item.intClass }}</td>
-                        <td class="text-xs-center">{{ props.item.intType }}</td>
-                        <td class="text-xs-center">{{ props.item.intTypeDesc }}</td>
-                        <td class="text-xs-center">{{ props.item.intCalcBal }}</td>
-                        <td class="text-xs-center">{{ props.item.rateAmtId }}</td>
-                        <td class="text-xs-center">{{ props.item.intAmtId }}</td>
-                        <td class="text-xs-center">{{ props.item.monthBasis }}</td>
-                        <td class="text-xs-center">{{ props.item.minRate }}</td>
-                        <td class="text-xs-center">{{ props.item.maxRate }}</td>
-                        <td class="text-xs-center">{{ props.item.intApplType }}</td>
-                        <td class="text-xs-center">{{ props.item.rollFreq }}</td>
-                        <td class="text-xs-center">{{ props.item.rollDay }}</td>
-                        <td class="text-xs-center">{{ props.item.intRateInd }}</td>
-                        <td class="text-xs-center">{{ props.item.intDaysType }}</td>
-                        <td class="text-xs-center">{{ props.item.taxType }}</td>
+                        <td class="text-xs-center">{{ props.item.eventType | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intClass | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intType | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intTypeDesc | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intCalcBal | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.rateAmtId | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intAmtId | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.monthBasis | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.minRate}}</td>
+                        <td class="text-xs-center">{{ props.item.maxRate}}</td>
+                        <td class="text-xs-center">{{ props.item.intApplType | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.rollFreq | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.rollDay}}</td>
+                        <td class="text-xs-center">{{ props.item.intRateInd | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intDaysType | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.taxType | getColumnDesc}}</td>
                     </template>
                     <v-alert slot="no-results" :value="true" color="error" icon="warning">
                         Your search for "{{ search }}" found no results.
@@ -44,7 +44,14 @@
 </template>
 <script>
 import {getRateInfo} from '@/api/table';
+import {getColumnDesc} from '@/utils/columnDesc'
+
 export default {
+    filters: {
+        getDescByKey: function (key) {
+            return getColumnDesc(key)
+        }
+    },
     props: ["prodData"],
     data () {
         return {

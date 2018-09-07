@@ -5,7 +5,6 @@
                 <v-btn slot="activator" color="success" dark class="mb-2" @click="addClick">新增</v-btn>
                 <v-btn slot="activator" color="success" dark class="mb-2" @click="modClick">修改</v-btn>
                 <v-card>
-                    <!--<v-card-title><span class="headline">收费定义</span></v-card-title>-->
                     <v-card-text>
                         <v-flex xs12 md12 lg12>
                             <div slot="widget-content">
@@ -15,15 +14,15 @@
                                             <v-subheader class="primary--text subheading">产品类型*</v-subheader>
                                         </v-flex>
                                         <v-flex md3 lg3>
-                                            <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="editedItem.prodType" single-line hide-details>
+                                            <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="editedItem.prodType" single-line hide-details disabled>
                                             </v-text-field>
                                         </v-flex>
                                         <v-flex xs12 md3 lg3>
                                             <v-subheader class="primary--text subheading">核算状态*</v-subheader>
                                         </v-flex>
                                         <v-flex md3 lg3>
-                                            <v-text-field class="primary--text mx-2" label="核算状态" name="title" v-model="editedItem.accountingStatus" single-line hide-details/>
-                                        </v-flex>
+                                            <v-select class="primary--text mx-2" :items="accountingStatus" v-model="editedItem.accountingStatus" label="核算状态" item-text="value" item-value="key" single-line hide-details></v-select>
+                                       </v-flex>
                                     </v-layout>
                                     <v-layout row wrap>
                                         <v-flex xs12 md3 lg3>
@@ -37,7 +36,7 @@
                                             <v-subheader class="primary--text subheading">负债科目代码*</v-subheader>
                                         </v-flex>
                                         <v-flex md3 lg3>
-                                            <v-text-field class="primary--text mx-2" label="负债科目代码" name="title" v-model="editedItem.glCodeL" single-line hide-details/>
+                                            <v-select class="primary--text mx-2" :items="glCodeL" v-model="editedItem.glCodeL" label="负债科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
                                         </v-flex>
                                     </v-layout>
                                     <v-layout row wrap>
@@ -45,14 +44,13 @@
                                             <v-subheader class="primary--text subheading">利息支出科目代码*</v-subheader>
                                         </v-flex>
                                         <v-flex md3 lg3>
-                                            <v-text-field class="primary--text mx-1" label="利息支出科目代码" name="title" v-model="editedItem.glCodeIntE" single-line hide-details>
-                                            </v-text-field>
+                                            <v-select class="primary--text mx-2" :items="glCodeIntE" v-model="editedItem.glCodeIntE" label="利息支出科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
                                         </v-flex>
                                         <v-flex xs12 md3 lg3>
                                             <v-subheader class="primary--text subheading">应付利息科目代码*</v-subheader>
                                         </v-flex>
                                         <v-flex md3 lg3>
-                                            <v-text-field class="primary--text mx-2" label="应付利息科目代码" name="title" v-model="editedItem.glCodeIntPay" single-line hide-details/>
+                                            <v-select class="primary--text mx-2" :items="glCodeIntPay" v-model="editedItem.glCodeIntPay" label="应付利息科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
                                         </v-flex>
                                     </v-layout>
                                 </v-container>
@@ -75,13 +73,13 @@
             <template>
                 <v-data-table :headers="headers" :items="prodAccountingInfo" hide-actions class="elevation-0">
                     <template slot="items" slot-scope="props">
-                        <tr @click="getSelect(props.item)" highlight-row>
-                            <td class="text-xs-left">{{ props.item.prodType }}</td>
-                            <td class="text-xs-left">{{ props.item.accountingStatus }}</td>
-                            <td class="text-xs-left">{{ props.item.businessUnit }}</td>
-                            <td class="text-xs-left">{{ props.item.glCodeL }}</td>
-                            <td class="text-xs-left">{{ props.item.glCodeIntE }}</td>
-                            <td class="text-xs-left">{{ props.item.glCodeIntPay }}</td>
+                        <tr @click="getSelect(props.item)" v-bind:class="{'chargeSelected': props.item==editedItem }" highlight-row>
+                            <td class="text-xs-left">{{ props.item.prodType | getColumnDesc}}</td>
+                            <td class="text-xs-left">{{ props.item.accountingStatus | getColumnDesc}}</td>
+                            <td class="text-xs-left">{{ props.item.businessUnit | getColumnDesc}}</td>
+                            <td class="text-xs-left">{{ props.item.glCodeL | getColumnDesc}}</td>
+                            <td class="text-xs-left">{{ props.item.glCodeIntE | getColumnDesc}}</td>
+                            <td class="text-xs-left">{{ props.item.glCodeIntPay | getColumnDesc}}</td>
                         </tr>
                     </template>
                 </v-data-table>
@@ -92,14 +90,41 @@
 </template>
 <script>
     import {getChargeDefine} from '@/api/table';
+    import {getColumnDesc} from '@/utils/columnDesc'
+    import toast from '@/utils/toast';
+    import { getInitData } from "@/mock/init";
+
+
     export default {
+        filters: {
+            getDescByKey: function (key) {
+                return getColumnDesc(key)
+            }
+        },
         props: ["prodData"],
         data () {
             return {
                 dialog: false,
                 addFlag: false,
                 modFlag: false,
+                refData: getInitData,
                 prodType: '',
+                accountingStatus: [{
+                    key: "",
+                    value: ""
+                }],
+                glCodeL: [{
+                    key: "",
+                    value: ""
+                }],
+                glCodeIntE: [{
+                    key: "",
+                    value: ""
+                }],
+                glCodeIntPay: [{
+                    key: "",
+                    value: ""
+                }],
                 headers: [
                     {text: '产品类型', align: 'left', value: 'prodType'},
                     {text: '核算状态', value: 'accountingStatus'},
@@ -145,10 +170,12 @@
         },
         mounted: function() {
             this.queryDespositProdData(this.prodData)
+            this.initRefDate()
         },
         methods: {
             getChargeDefinesInfo(val) {
                 //初始化产品对应的信息
+                this.prodAccountingInfo = []
                 this.prodAccountingInfo = val.glProdAccounting
                 this.prodType = val.prodType.prodType
             },
@@ -157,6 +184,14 @@
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
                 this.close()
+
+            },
+            initRefDate() {
+                this.accountingStatus = this.refData[2].paraDataRb.accountingStatus;
+                //暂时不区分科目代码
+                this.glCodeL = this.refData[2].paraDataRb.glCode;
+                this.glCodeIntE = this.refData[2].paraDataRb.glCode;
+                this.glCodeIntPay = this.refData[2].paraDataRb.glCode;
 
             },
             deleteItem (item) {
@@ -174,20 +209,38 @@
                 if (this.editedIndex > -1) {
                     Object.assign(this.projects[this.editedIndex], this.editedItem)
                 } else {
-                    this.editedItem.prodType = this.prodType
-                    this.prodAccountingInfo.push(this.editedItem)
+                    let flag = 0
+                    for(let i = 0; i<this.prodAccountingInfo.length; i++){
+                        if(this.editedItem.accountingStatus === "" || this.editedItem.accountingStatus === undefined){
+                            toast.info("主键accountingStatus[核算状态]不能为空!");
+                            flag = 1
+                            break
+                        }else if(this.prodAccountingInfo[i].prodType === this.editedItem.prodType && this.prodAccountingInfo[i].accountingStatus === this.editedItem.accountingStatus){
+                            toast.info("主键accountingStatus[核算状态:"+this.editedItem.accountingStatus+"]不能重复!");
+                            flag = 1
+                            break
+                        }
+                    }
+                    if(flag === 0){
+                        this.prodAccountingInfo.push(this.editedItem)
+                        this.close()
+                    }
                 }
-                this.close()
             },
             getSelect(value){
                 this.editedItem = []
                 this.editedItem = value
             },
             addClick() {
+                this.initRefDate()
+                this.editedItem = []
+                //新增产品类型默认&&不允许修改
+                this.editedItem.prodType = this.prodType
                 this.modFlag = false
                 this.addFlag = true
             },
             modClick() {
+                this.initRefDate()
                 this.addFlag = false
                 this.modFlag = true
             },
@@ -201,3 +254,8 @@
         }
     };
 </script>
+<style>
+    .chargeSelected {
+        background-color: #e3f2fd;
+    }
+</style>
