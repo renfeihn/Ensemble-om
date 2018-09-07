@@ -58,7 +58,7 @@
                              </div>
                          </v-flex>
                         <v-layout row wrap>
-                            <v-flex xs12 md2 lg2>
+                            <v-flex xs12 md3 lg3>
                             </v-flex>
                             <v-btn color="success" depressed="" @click="close"><v-icon >assignment_turned_in</v-icon>取消</v-btn>
                             <v-flex xs12 md3 lg3>

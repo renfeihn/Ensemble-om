@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <v-dialog v-model="dialog" max-width="900px">
+            <v-dialog v-model="dialog" max-width="1100px">
                 <v-btn slot="activator" color="success" dark class="mb-2" @click="addClick">新增</v-btn>
                 <v-btn slot="activator" color="success" dark class="mb-2" @click="modClick">修改</v-btn>
                 <v-card>
@@ -10,46 +10,46 @@
                             <div slot="widget-content">
                                 <v-container fluid pt-1>
                                     <v-layout row wrap>
-                                        <v-flex>
+                                        <v-flex xs12 md2 lg2>
                                             <v-subheader class="primary--text subheading">产品类型*</v-subheader>
                                         </v-flex>
-                                        <v-flex md3 lg3>
+                                        <v-flex md4 lg4>
                                             <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="editedItem.prodType" single-line hide-details disabled>
                                             </v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 md3 lg3>
+                                        <v-flex xs12 md2 lg2>
                                             <v-subheader class="primary--text subheading">核算状态*</v-subheader>
                                         </v-flex>
-                                        <v-flex md3 lg3>
+                                        <v-flex md4 lg4>
                                             <v-select class="primary--text mx-2" :items="accountingStatus" v-model="editedItem.accountingStatus" label="核算状态" item-text="value" item-value="key" single-line hide-details></v-select>
                                        </v-flex>
                                     </v-layout>
                                     <v-layout row wrap>
-                                        <v-flex xs12 md3 lg3>
+                                        <v-flex xs12 md2 lg2>
                                             <v-subheader class="primary--text subheading">账套*</v-subheader>
                                         </v-flex>
-                                        <v-flex md3 lg3>
+                                        <v-flex md4 lg4>
                                             <v-text-field class="primary--text mx-1" label="账套" name="title" v-model="editedItem.businessUnit" single-line hide-details>
                                             </v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 md3 lg3>
+                                        <v-flex xs12 md2 lg2>
                                             <v-subheader class="primary--text subheading">负债科目代码*</v-subheader>
                                         </v-flex>
-                                        <v-flex md3 lg3>
+                                        <v-flex md4 lg4>
                                             <v-select class="primary--text mx-2" :items="glCodeL" v-model="editedItem.glCodeL" label="负债科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
                                         </v-flex>
                                     </v-layout>
                                     <v-layout row wrap>
-                                        <v-flex xs12 md3 lg3>
+                                        <v-flex xs12 md2 lg2>
                                             <v-subheader class="primary--text subheading">利息支出科目代码*</v-subheader>
                                         </v-flex>
-                                        <v-flex md3 lg3>
+                                        <v-flex md4 lg4>
                                             <v-select class="primary--text mx-2" :items="glCodeIntE" v-model="editedItem.glCodeIntE" label="利息支出科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
                                         </v-flex>
-                                        <v-flex xs12 md3 lg3>
+                                        <v-flex xs12 md2 lg2>
                                             <v-subheader class="primary--text subheading">应付利息科目代码*</v-subheader>
                                         </v-flex>
-                                        <v-flex md3 lg3>
+                                        <v-flex md4 lg4>
                                             <v-select class="primary--text mx-2" :items="glCodeIntPay" v-model="editedItem.glCodeIntPay" label="应付利息科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
                                         </v-flex>
                                     </v-layout>
@@ -57,10 +57,10 @@
                             </div>
                         </v-flex>
                         <v-layout row wrap>
-                            <v-flex xs12 md2 lg2>
+                            <v-flex xs12 md3 lg3>
                             </v-flex>
                             <v-btn color="success" depressed="" @click="close"><v-icon >assignment_turned_in</v-icon>取消</v-btn>
-                            <v-flex xs12 md3 lg3>
+                            <v-flex xs12 md4 lg4>
                             </v-flex>
                             <v-btn color="success" depressed="" @click="saveClick"><v-icon >assignment_turned_in</v-icon>保存</v-btn>
                         </v-layout>
