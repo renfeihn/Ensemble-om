@@ -161,7 +161,7 @@ export default {
                 conDeductFlag: '',
                 conDeductTimes: ''
             }],
-            chargeDefinesInfo: []
+            chargeDefinesInfo: {}
         };
     },
 

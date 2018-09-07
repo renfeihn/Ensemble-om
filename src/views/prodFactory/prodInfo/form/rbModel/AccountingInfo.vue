@@ -157,7 +157,7 @@
                     glCodeIntE: '',
                     glCodeIntPay: ''
                 }],
-                prodAccountingInfo: []
+                prodAccountingInfo: {}
             };
         },
         computed: {

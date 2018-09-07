@@ -140,6 +140,7 @@ export function tablesMainDeal(prodData,sourceProdData,backVal,tables){
     for (let s =0; s<prodData[tables].length; s++){
         let flags = 0
         for(let j = 0; j<sourceProdData[tables].length; j++){
+            flags = 0
             let returnIndex = tablesModDeal(prodData,sourceProdData,s,j,backVal,index,tables)
             if(index !== returnIndex){
                 //检索到并匹配成功,并且该条数据已被处理
