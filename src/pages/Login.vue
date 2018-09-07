@@ -41,8 +41,9 @@
 </template>
 
 <script>
-import { getMenu } from "@/api/menu";
+//import { getMenu } from "@/api/menu";
 import { login } from "@/api/login";
+import { setToken } from "@/utils/auth";
 export default {
   data: () => ({
     alert: false,
@@ -63,14 +64,10 @@ export default {
             this.alert = true;
             this.alertMsg = response.data.msg;
             this.model.password = null;
-            //confirm(response.data.msg);
           } else {
-            //                else if(response.data[0].password !== this.model.password) {
-            //                    this.loading = false;
-            //                    confirm("用户密码错误！")
-            //                }
             this.loading = true;
             sessionStorage.setItem("userId", this.model.userId);
+            setToken(this.model.userId);
             this.$router.push("/dashboard");
           }
         })
