@@ -44,7 +44,7 @@
     methods: {
         queryDespositProdData() {
             getFlowList().then(response => {
-               this.userWorkData = response.data
+               this.userWorkData = response.data.data
             });
         }
     }
