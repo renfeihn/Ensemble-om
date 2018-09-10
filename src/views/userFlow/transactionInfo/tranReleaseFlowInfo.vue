@@ -210,10 +210,15 @@
             },
             releaseConfirm() {
                 console.log(this.releaseInfo)
+                if(this.releaseInfo.isApproved !== "Y"){
+                    this.releaseInfo.isApproved = "N"
+                }
                 tranFlowInfo(this.releaseInfo).then(response => {
-                    if(response.status === 200) {
-                        //复核成功
+                    if(response.status === 200 && this.releaseInfo.isApproved === "Y") {
                         alert("发布成功！")
+                    }
+                    if(response.status === 200 && this.releaseInfo.isApproved === "N") {
+                        alert("驳回成功！")
                     }
                 })
             }

@@ -116,8 +116,9 @@
               }
           }
       },
-        created() {
+        mounted() {
             this.checkInfo.mainSeqNo = this.$route.params.code
+//            this.checkInfo.userId = sessionStorage.getItem("userName")
             this.getDate()
             this.initFlowInfo(this.$route.params.flowInfo)
         },
@@ -139,10 +140,16 @@
           },
             checkConfirm() {
                 console.log(this.checkInfo)
+                if(this.checkInfo.isApproved !== "Y"){
+                    this.checkInfo.isApproved = "N"
+                }
                 tranFlowInfo(this.checkInfo).then(response => {
-                    if(response.status === 200) {
-                        //复核成功
+                    if(response.status === 200 && this.checkInfo.isApproved === "Y") {
                         alert("复核成功！")
+//                        this.$router.push({name: "@/views/userFlow/indexFlow/indexFlow2.vue"});
+                    }
+                    if(response.status === 200 && this.checkInfo.isApproved === "N") {
+                        alert("驳回成功！")
                     }
                 })
             }
