@@ -11,7 +11,7 @@
                                   </td>
                                         <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.tranDesc }}</td>
-                                        <td class="text-xs-left">{{ props.item.flowManage.date }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowInfo.tranTime }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
                                         <td class="text-xs-left">{{ props.item.flowInfo.userId }}</td>
                                         <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
@@ -43,7 +43,8 @@ export default {
               tranId: ""
           },
             flowInfo: {
-              userId: ""
+                tranTime: "",
+                userId: ""
             }
         }
       ],
