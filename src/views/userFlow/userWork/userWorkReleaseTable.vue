@@ -14,7 +14,7 @@
                                         <td class="text-xs-left">{{ props.item.flowInfo.tranTime }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
                                         <td class="text-xs-left">{{ props.item.flowInfo.userId }}</td>
-                                        <td class="text-xs-left" @click="getDataInfo(props.item.reqNo)">详细信息</td>
+                                        <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
                                     </tr>
       </template>
 <template slot="expand" slot-scope="props">
