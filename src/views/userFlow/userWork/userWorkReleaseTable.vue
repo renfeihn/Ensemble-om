@@ -10,7 +10,7 @@
                                     ></v-checkbox>
                                   </td>
                                         <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
-                                        <td class="text-xs-left">{{ props.item.flowManage.tranId }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowManage.tranDesc }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.date }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
                                         <td class="text-xs-left">{{ props.item.flowInfo.userId }}</td>
@@ -27,21 +27,24 @@
 <script>
 import { getFlowList } from "@/api/url/prodInfo";
 export default {
-  data() {
+    props: ["userWorkData"],
+    data() {
     let value = "accountingStatus";
     return {
       selected: [],
       desserts: [
         {
           flowManage: {
-          reqNo: "pf3009",
-          transactionId: "产品工厂",
-          date: "2018/07/02",
-          currentStatus: "待复核"
+          detSeqNo: "pf3009",
+          isTranGroup: "产品工厂",
+          mainSeqNo: "",
+          status: "待复核",
+              tranDesc: "",
+              tranId: ""
           },
-          flowInfo: {
-          operatorId: "admin"
-          }
+            flowInfo: {
+              userId: ""
+            }
         }
       ],
             headers: [
@@ -83,23 +86,33 @@ export default {
       ]
     };
   },
-  mounted: function() {
-    this.queryDespositProdData();
-  },
+//  mounted: function() {
+//    this.queryDespositProdData();
+//  },
+    watch: {
+        userWorkData(val) {
+            this.queryDespositProdData(val)
+        }
+    },
   methods: {
     prodAction() {
       this.$router.push({
         name: "userWorkTags"
       });
     },
-    queryDespositProdData() {
-      getFlowList().then(response => {
-        this.desserts = response.data;
-      });
-    },
+      queryDespositProdData(val) {
+          this.desserts = []
+          let length = val.length
+          for(let j = 0; j<length; j++){
+              if(val[j].flowManage.status === "3"){
+                  val[j].flowManage.status = "已复核"
+                  this.desserts.push(val[j])
+              }
+          }
+      },
 
     getDataInfo(code) {
-      this.$router.push({ name: "tranDataIndex", params: { code: code } });
+      this.$router.push({ name: "tranDataIndex", params: { code: code ,optValue: "发布",flowInfo: this.desserts} });
     }
   }
 };

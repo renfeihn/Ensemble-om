@@ -47,7 +47,7 @@
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">组合产品</span> -->
                 <!-- <v-select class="primary--text mx-2" :items="prodmuti" v-model="prodmutiData" label="组合产品" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select> -->
-                <v-switch :label="`${prodGroup==='Y'?'是':'否'}`" v-model="eventForm.prodGroup" value="Y" color="success" hide-details></v-switch>
+                <v-switch :label="`${switchValues==='Y'?'是':'否'}`" v-model="eventForm.prodGroup" value="Y" @change="switchChange" color="success" hide-details></v-switch>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
@@ -138,7 +138,7 @@
               <v-flex md4 lg4>
                 <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
                   <v-text-field slot="activator" label="终止日期" v-model="eventForm.prodEndDate" append-icon="event" single-line hide-details></v-text-field>
-                  <v-date-picker v-model="eventForm.prodEndDate" @input="$refs.endDateMenu.save(eventForm.failuredate)" no-title scrollable locale="zh-cn">
+                  <v-date-picker v-model="eventForm.prodEndDate" @input="$refs.endDateMenu.save(eventForm.prodEndDate)" no-title scrollable locale="zh-cn">
                     <!-- <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
                       <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn> -->
@@ -169,7 +169,8 @@
             startTimeMenu: false,
             startTime: null,
             endDateMenu: false,
-            endDate: "",
+            endDate: null,
+            switchValues: "",
             endTimeMenu: false,
             endTime: null,
             modal: false,
@@ -294,6 +295,7 @@
                 this.eventForm.busimodel = "RB"
                 this.eventForm.prodClass = val.prodType.prodClass
                 this.eventForm.prodGroup = val.prodType.prodGroup
+                this.switchValues = val.prodType.prodGroup
                 this.eventForm.status = val.prodType.status
                 //prodDefines
                 this.eventForm.acctStructFlag = val.prodDefines.ACCT_STRUCT_FLAG.attrValue
@@ -311,6 +313,9 @@
             },
             callbackprod() {
                 this.$emit("getNewProdData",{"eventForm": this.eventForm})
+            },
+            switchChange() {
+               this.switchValues = this.eventForm.prodGroup
             },
             initRefDate() {
                 getInitData().then(response => {

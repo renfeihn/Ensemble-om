@@ -6,11 +6,12 @@
           <v-avatar text-color="red">5</v-avatar>{{n}}</v-chip>
       </v-tab>
       <v-tab-item v-for="n in 3" :key="n">
-        <user-work-table></user-work-table>
-        <!-- <v-card>
+        <user-work-check-table v-if="n==1" v-bind:userWorkData="userWorkData"></user-work-check-table>
+        <user-work-release-table v-if="n==2" v-bind:userWorkData="userWorkData"></user-work-release-table>
+        <!-- <v-card>release
           <v-container fluid py-0>
             <v-card-text>
-              
+
             </v-card-text>
           </v-container>
         </v-card> -->
@@ -20,19 +21,32 @@
 </template>
 
 <script>
-  import userWorkTable from './userWorkTable'
+  import userWorkCheckTable from './userWorkCheckTable'
+  import userWorkReleaseTable from './userWorkReleaseTable'
+  import { getFlowList } from "@/api/url/prodInfo";
   export default {
       components: {
-          userWorkTable
+          userWorkCheckTable,
+          userWorkReleaseTable
       },
     data() {
       return {
+          userWorkData: [],
         active: null,
         text: '.',
         userWork: ['待复核', '待发布']
       }
     },
 
-    methods: {}
+      mounted: function() {
+          this.queryDespositProdData();
+      },
+    methods: {
+        queryDespositProdData() {
+            getFlowList().then(response => {
+               this.userWorkData = response.data
+            });
+        }
+    }
   }
 </script>

@@ -84,13 +84,21 @@ export function getProdClass (data) {
         data: data
     });
 }
-export function savaProdInfo (params) {
+export function tranFlowInfo (params) {
  
   return request({
-    url: '/saveProdInfo',
+    url: '/tranFlowInfo',
     method: 'post',
     data: params
 });
+}
+export function savaProdInfo (params) {
+
+    return request({
+        url: '/saveProdInfo',
+        method: 'post',
+        data: params
+    });
 }
 export function getUserCollectProds (data) {
     return request({
@@ -102,6 +110,6 @@ export function getUserCollectProds (data) {
 export function getFlowList () {
   return request({
     url: '/reviewList',
-    method: 'get'
+    method: 'post'
 });
 }
