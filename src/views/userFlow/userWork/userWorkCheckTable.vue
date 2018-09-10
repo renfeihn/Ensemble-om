@@ -11,9 +11,9 @@
                                   </td>
                                         <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.tranDesc }}</td>
-                                        <td class="text-xs-left">{{ props.item.flowInfo.tranTime }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowCommitInfo.tranTime }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
-                                        <td class="text-xs-left">{{ props.item.flowInfo.userId }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowCommitInfo.userId }}</td>
                                         <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
                                     </tr>
       </template>
@@ -35,14 +35,15 @@ export default {
       desserts: [
         {
           flowManage: {
-          detSeqNo: "pf3009",
-          isTranGroup: "产品工厂",
+          dtlSeqNo: "",
+              recSeqNo: "",
+          isTranGroup: "",
           mainSeqNo: "",
-          status: "待复核",
+          status: "",
               tranDesc: "",
               tranId: ""
           },
-            flowInfo: {
+            flowCommitInfo: {
                 tranTime: "",
                 userId: ""
             }
@@ -105,8 +106,8 @@ export default {
           this.desserts = []
           let length = val.length
           for(let j = 0; j<length; j++){
-              if(val[j].flowManage.status === "1"){
-                  val[j].flowManage.status = "已申请"
+              if(val[j].flowManage.status === "2"){
+                  val[j].flowManage.status = "已提交"
                   this.desserts.push(val[j])
               }
           }

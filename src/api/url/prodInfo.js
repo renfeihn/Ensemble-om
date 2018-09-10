@@ -113,3 +113,10 @@ export function getFlowList () {
     method: 'post'
 });
 }
+
+export function getCheckFlowList () {
+    return request({
+        url: '/reviewCheckList',
+        method: 'post'
+    });
+}

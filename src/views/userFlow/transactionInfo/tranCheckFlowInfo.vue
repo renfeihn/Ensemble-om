@@ -17,7 +17,7 @@
                 <v-subheader class="primary--text subheading">提交人:</v-subheader>
               </v-flex>
               <v-flex md11 lg11>
-                <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="flowInfo[0].flowInfo.userId" single-line hide-details>
+                <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="flowInfo.flowCommitInfo.userId" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
@@ -27,7 +27,7 @@
                 <v-subheader class="primary--text subheading">提交时间:</v-subheader>
               </v-flex>
               <v-flex md11 lg11>
-                <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="flowInfo[0].flowInfo.tranTime" single-line hide-details>
+                <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="flowInfo.flowCommitInfo.tranTime" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
@@ -38,7 +38,7 @@
                 <v-subheader class="primary--text subheading">提交原因:</v-subheader>
               </v-flex>
               <v-flex md11 lg11>
-                <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="flowInfo[0].flowInfo.remark" single-line hide-details>
+                <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="flowInfo.flowCommitInfo.remark" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
@@ -92,7 +92,7 @@
           </v-form>
         </v-card>
         <v-btn color="primary" @click="e1 = 1">提交信息</v-btn>
-        <v-btn color="primary" @click="checkConfirm">确认复核</v-btn>
+        <v-btn color="primary" @click="checkConfirm">确    认</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -117,11 +117,19 @@
           }
       },
         created() {
-            this.checkInfo.mainSeqNo = this.$route.params.code;
-            this.flowInfo = this.$route.params.flowInfo
+            this.checkInfo.mainSeqNo = this.$route.params.code
             this.getDate()
+            this.initFlowInfo(this.$route.params.flowInfo)
         },
         methods: {
+            initFlowInfo(val) {
+                for(let i=0; i<val.length; i++) {
+                    if(val[i].flowManage.mainSeqNo === this.checkInfo.mainSeqNo){
+                        this.flowInfo = this.$route.params.flowInfo[i]
+                    }
+                }
+
+            },
           getDate() {
               var date = new Date();
               var year = date.getFullYear();

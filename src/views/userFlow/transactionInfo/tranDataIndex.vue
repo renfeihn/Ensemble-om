@@ -6,7 +6,7 @@
         <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
         <v-spacer></v-spacer>
           <v-btn color="info" @click="print()">导出</v-btn>
-          <v-btn color="info" @click="addCompare">{{optValue}}</v-btn>
+          <v-btn color="info">{{optValue}}</v-btn>
       </v-toolbar>
     <v-layout row>
       <v-card-text>

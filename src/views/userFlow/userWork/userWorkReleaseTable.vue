@@ -11,9 +11,9 @@
                                   </td>
                                         <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.tranDesc }}</td>
-                                        <td class="text-xs-left">{{ props.item.flowInfo.tranTime }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowCheckInfo.tranTime }}</td>
                                         <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
-                                        <td class="text-xs-left">{{ props.item.flowInfo.userId }}</td>
+                                        <td class="text-xs-left">{{ props.item.flowCheckInfo.userId }}</td>
                                         <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
                                     </tr>
       </template>
@@ -25,9 +25,9 @@
         </v-data-table>
 </template>
 <script>
-import { getFlowList } from "@/api/url/prodInfo";
+import { getCheckFlowList } from "@/api/url/prodInfo";
+
 export default {
-    props: ["userWorkData"],
     data() {
     let value = "accountingStatus";
     return {
@@ -35,17 +35,19 @@ export default {
       desserts: [
         {
           flowManage: {
-          detSeqNo: "pf3009",
-          isTranGroup: "产品工厂",
-          mainSeqNo: "",
-          status: "待复核",
+              dtlSeqNo: "",
+              recSeqNo: "",
+              isTranGroup: "",
+              mainSeqNo: "",
+              status: "",
               tranDesc: "",
               tranId: ""
           },
-            flowInfo: {
+            flowCheckInfo: {
                 tranTime: "",
                 userId: ""
-            }
+            },
+            flowCommitInfo: {}
         }
       ],
             headers: [
@@ -87,13 +89,9 @@ export default {
       ]
     };
   },
-//  mounted: function() {
-//    this.queryDespositProdData();
-//  },
-    watch: {
-        userWorkData(val) {
-            this.queryDespositProdData(val)
-        }
+    created() {
+        this.queryCheckedProdData()
+
     },
   methods: {
     prodAction() {
@@ -101,16 +99,28 @@ export default {
         name: "userWorkTags"
       });
     },
-      queryDespositProdData(val) {
-          this.desserts = []
-          let length = val.length
-          for(let j = 0; j<length; j++){
-              if(val[j].flowManage.status === "3"){
-                  val[j].flowManage.status = "已复核"
-                  this.desserts.push(val[j])
+      queryCheckedProdData(){
+          getCheckFlowList().then(response => {
+              this.desserts = []
+              let length = response.data.data.length
+              for(let j = 0; j<length; j++){
+              if(response.data.data[j].flowManage.status === "3"){
+                  response.data.data[j].flowManage.status = "已复核"
+                  this.desserts.push(response.data.data[j])
               }
           }
+          });
       },
+//      queryDespositProdData(val) {
+//          this.desserts = []
+//          let length = val.length
+//          for(let j = 0; j<length; j++){
+//              if(val[j].flowManage.status === "3"){
+//                  val[j].flowManage.status = "已复核"
+//                  this.desserts.push(val[j])
+//              }
+//          }
+//      },
 
     getDataInfo(code) {
       this.$router.push({ name: "tranDataIndex", params: { code: code ,optValue: "发布",flowInfo: this.desserts} });
