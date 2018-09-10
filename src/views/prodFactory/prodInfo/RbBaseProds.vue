@@ -7,10 +7,10 @@
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" persistent max-width="500px">
-                        <v-btn slot="activator" color="primary" dark @click="addClick"><v-icon>add</v-icon></v-btn>
+                        <v-btn slot="activator" color="primary lighten-1" @click="addClick" fab small><v-icon>add</v-icon></v-btn>
                         <v-card>
                             <v-card-title style="background-color: #5C6BC0">
-                                <span class="addClass">{{prodCode}}-{{prodDesc}}[{{addColumnPageCode}}]增加参数</span>
+                                <span class="addClass">{{prodCode}}-{{prodDesc}}[{{addColumnPageDesc}}]增加参数</span>
                             </v-card-title>
                             <v-card-text>
                                 <v-layout wrap>
@@ -20,8 +20,8 @@
                                 </v-layout>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn slot="activator" @click="resetAddClick" color="success" dark style="margin-left: 8px;margin-top: -10px;width: 160px">取消</v-btn>
-                                <v-btn slot="activator" @click="useAddClick(addColumnRef)" color="success" dark style="margin-left: 140px;margin-top: -10px;width: 160px">应用</v-btn>
+                                <v-btn slot="activator" dark class="addBtn" color="success" @click="resetAddClick" style="margin-left: 8px">取消</v-btn>
+                                <v-btn slot="activator" dark class="addBtn" color="success" @click="useAddClick(addColumnRef)" style="margin-left: 140px">应用</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -41,9 +41,18 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in columnArr" :key="i">
                         <v-card flat>
-                        <base-prod v-if="i==1" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
-                        <base-prod v-if="i==2" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
-                        <base-prod v-if="i==3" :prodTypeCode="prodData.prodType.prodType" :prodDefines="eventList"></base-prod>
+                            <base-prod v-if="i==1" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
+                            <base-prod v-if="i==2" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
+                            <base-prod v-if="i==3" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
+                            <base-prod v-if="i==4" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="RATE"></base-prod>
+                            <base-prod v-if="i==5" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
+                            <base-prod v-if="i==6" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
+                            <base-prod v-if="i==7" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEPOSIT"></base-prod>
+                            <base-prod v-if="i==8" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DRAW"></base-prod>
+                            <charge-define v-if="i==9" v-bind:prodData="prodData"></charge-define>
+                            <rate-info v-if="i==10" v-bind:prodData="prodData"></rate-info>
+                            <form-shift v-if="i==11" v-bind:prodData="prodData"></form-shift>
+                            <accounting-info v-if="i==12" v-bind:prodData="prodData"></accounting-info>
                         </v-card>
                     </v-tab-item>
                 </v-tabs-items>
@@ -80,6 +89,11 @@
     import columnInfo from './columnInfo'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
+    import ChargeDefine from './form/rbModel/ChargeDefine';
+    import RateInfo from './form/rbModel/RateInfo';
+    import FormShift from './form/rbModel/FormShift';
+    import AccountingInfo from './form/rbModel/AccountingInfo';
+
     export default {
         name: 'deposit',
         components: {
@@ -87,7 +101,11 @@
             BaseProd,
             downAction,
             PendingForm,
-            columnInfo
+            columnInfo,
+            ChargeDefine,
+            RateInfo,
+            FormShift,
+            AccountingInfo
         },
         data () {
             return {
@@ -97,28 +115,28 @@
                 prodCode: '',
                 prodDesc: '',
                 pendFlag: 0,
-                columnArr: [1,2,3],
+                columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
                 addColumnRef: [],
                 prodClass: '',
                 activeName: 'basic',
-                addColumnPageCode: '',
+                addColumnPageDesc: '',
                 eventList: {},
                 addColumnsRef: [],
                 addColumnInfos: [],
                 prodInfo: [
-                    {
-                    icon: 'account_balance',
-                    text: '基本信息',
-                        pageCode: 'BASE'
-                    }, {
-                    icon: 'filter_vintage',
-                    text: '控制信息',
-                        pageCode: 'CONTROL'
+                    {icon: 'account_balance', text: '基本信息', pageCode: 'BASE'},
+                    {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
+                    {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
+                    {icon: 'filter_vintage', text: '利息信息', pageCode: 'RATE'},
+                    {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPRN'},
+                    {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
+                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'DEPOSIT'},
+                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'DRAW'},
+                    {icon: 'filter_vintage', text: '收费定义'},
+                    {icon: 'filter_vintage', text: '利率信息'},
+                    {icon: 'filter_vintage', text: '形态转移'},
+                    {icon: 'filter_vintage', text: '核算信息'},
 
-                    }, {
-                        icon: 'filter_vintage',
-                        text: '开户定义'
-                    }
                 ],
                 tagList: [
                 ],
@@ -129,6 +147,11 @@
                     lable: ''
                 }],
                 folders: [],
+                rateList: {},
+                openList: {},
+                closeList: {},
+                depositList: {},
+                drawList: {},
                 prodData: {
                     prodType: ''
                 },
@@ -145,25 +168,18 @@
                 this.prodClass = this.$route.hash
                 //默认展示RB101产品信息
                 getProdData("RB101").then(response => {
-                    const reProd  = response.data.data
-                    this.prodData=reProd;
-                    const event=reProd.mbEventInfos.OPEN_RB101
-                    let events={}
-                    for(const index in event.mbEventAttrs){
-                        events[index]=event.mbEventAttrs[index]
-                    }
-                    for(const index in event.mbEventParts){
-                        const part=event.mbEventParts[index]
-                        for(const key in part){
-                            events[key]=part[key]
-                        }
-                    }
-                    this.eventList=events;
+                    //初始化产品基础参数
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
-                    this.sourceProdDataww = this.copy(this.prodData,this.sourceProdDataww)
-
+                    const reProd  = response.data.data
+                    this.prodData=reProd;
+                    //组织事件参数
+                    this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
+                    this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
+                    this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
+                    this.depositList = this.dealEventPart(reProd,"DEP",this.prodCode)
+                    this.drawList = this.dealEventPart(reProd,"WTD",this.prodCode)
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
@@ -279,7 +295,6 @@
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
-                    this.sourceProdDataww = this.copy(this.prodData,this.sourceProdDataww)
                 });
             },
             useAddClick(val) {
@@ -328,7 +343,7 @@
                 this.dialog = false
             },
             addClick() {
-                this.addColumnPageCode = this.prodInfo[this.activeName].text
+                this.addColumnPageDesc = this.prodInfo[this.activeName].text
                 //获取所有参数定义的json文件（columnInfo.json）增加到待选数据集合
                 for(let i in columnInfo){
                     this.addColumnsRef.push(i+'--'+columnInfo[i].columnDesc)
@@ -353,27 +368,35 @@
                     }
                 }
                 return maxSeqNo
+            },
+            //通过事件类型，产品类型 将该产品事件下的参数组织成{{key:"",value: ""},{key:"",value: ""},...}结构
+            dealEventPart(data,eventType,prodCode) {
+                let eventTypes = eventType+'_'+prodCode
+                const event=data.mbEventInfos[eventTypes]
+                let events={}
+                for(const index in event.mbEventAttrs){
+                    events[index]=event.mbEventAttrs[index]
+                }
+                for(const index in event.mbEventParts){
+                    const part=event.mbEventParts[index]
+                    for(const key in part){
+                        events[key]=part[key]
+                    }
+                }
+                return events
             }
         }
     }
 </script>
 
 <style scoped>
-    .top {
-        padding-top: 8px;
-    }
-    .depositTree {
-        height: calc(90vh - 48px);
-    }
     .addClass {
         color: white;
         margin-left: 20%;
         font-size: large;
     }
-    /*  .prodList {
-                  border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
-                }
-                .prodLists {
-                  border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
-                }*/
+    .addBtn {
+        margin-top: -10px;
+        width: 160px
+    }
 </style>
