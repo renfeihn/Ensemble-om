@@ -31,7 +31,7 @@ export function getUserInfo(token) {
 
 export function login(userId, password) {
   return request({
-    url: '/user/login',
+    url: '/login',
     method: 'post',
     params: {
       userId,
