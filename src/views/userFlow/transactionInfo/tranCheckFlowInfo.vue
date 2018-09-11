@@ -146,10 +146,11 @@
                 tranFlowInfo(this.checkInfo).then(response => {
                     if(response.status === 200 && this.checkInfo.isApproved === "Y") {
                         alert("复核成功！")
-//                        this.$router.push({name: "@/views/userFlow/indexFlow/indexFlow2.vue"});
+                        this.$router.push({ name: 'userIndexFlow'});
                     }
                     if(response.status === 200 && this.checkInfo.isApproved === "N") {
                         alert("驳回成功！")
+                        this.$router.push({ name: 'userIndexFlow'});
                     }
                 })
             }

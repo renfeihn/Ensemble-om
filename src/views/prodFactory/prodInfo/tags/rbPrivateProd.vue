@@ -100,7 +100,7 @@
             return {
                 listLoading: true,
                 searchValue: '',
-                optionType: '',
+                showCopy: '',
                 depositProd: {
                     prodcode: '',
                     version: ''
@@ -193,18 +193,35 @@
             saveProd() {
                 this.$refs.callback[0].callbackprod()
                 this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.optionType)
-                this.targetData.optionType = this.optionType
+                if(this.showCopy === "Y") {
+                    this.targetData.optionType = "I"
+                }else{
+                    this.targetData.optionType = "U"
+                }
                 this.targetData.option = "save";
                 this.targetData.userName = sessionStorage.getItem("userId")
-                savaProdInfo(this.targetData);
+                savaProdInfo(this.targetData).then(response => {
+                    if(response.status === 200) {
+                        //置灰提交按钮，防止为此提交
+                        alert("提交成功！")
+                    }
+                })
             },
             tempProd() {
                 this.$refs.callback[0].callbackprod()
                 this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.optionType)
-                this.targetData.optionType = this.optionType
+                if(this.showCopy === "Y") {
+                    this.targetData.optionType = "I"
+                }else{
+                    this.targetData.optionType = "U"
+                }
                 this.targetData.option="temp";
                 this.targetData.userName = sessionStorage.getItem("userId")
-                savaProdInfo(this.targetData);
+                savaProdInfo(this.targetData).then(response => {
+                    if(response.status === 200) {
+                        alert("暂存成功！")
+                    }
+                })
             },
             handleClick(value) {
                 this.prodCode = value.prodType
@@ -281,9 +298,9 @@
                 const newData=this.copy(this.prodData,[]);
                 this.prodData=newData;
                 if(data.showCopy){
-                    this.optionType = 'I';
+                    this.showCopy = 'Y';
                 }else{
-                    this.optionType = '';
+                    this.showCopy = '';
                 }
             }
         }

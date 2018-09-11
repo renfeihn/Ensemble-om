@@ -218,9 +218,11 @@
                 tranFlowInfo(this.releaseInfo).then(response => {
                     if(response.status === 200 && this.releaseInfo.isApproved === "Y") {
                         alert("发布成功！")
-                    }
+                      this.$router.push({ name: 'userIndexFlow'});
+                }
                     if(response.status === 200 && this.releaseInfo.isApproved === "N") {
                         alert("驳回成功！")
+                        this.$router.push({ name: 'userIndexFlow'});
                     }
                 })
             }
