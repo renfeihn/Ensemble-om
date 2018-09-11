@@ -40,18 +40,18 @@
                 </v-tabs-items>
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
-                <!--<v-card>-->
-                <!--<v-card-text>-->
-                <!--<down-action v-on:listenToCopy="showCopy"></down-action>-->
-                <!--</v-card-text>-->
-                <!--</v-card>-->
                 <v-card>
+                <v-card-text>
+                <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd"></down-action>
+                </v-card-text>
+                </v-card>
+ <!--               <v-card>
                     <v-card-text>
                         <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
                         <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
                         <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
                     </v-card-text>
-                </v-card>
+                </v-card>-->
                 <v-toolbar dense class="chat-history-toolbar prodLists">
                     <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search" v-model="searchValue"></v-text-field>
                 </v-toolbar>
@@ -192,6 +192,12 @@
                 this.targetData.option="save";
                 savaProdInfo(this.targetData);
             },
+            saveProd() {
+                this.$refs.callback[0].callbackprod()
+                this.targetData = filterChangeData(this.prodData,this.sourceProdData)
+                this.targetData.option="save";
+                savaProdInfo(this.targetData);
+            },
             handleClick(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
@@ -259,6 +265,13 @@
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
 
                 this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
+            },
+            listenToCopy(data) {
+                this.prodCode=data.prodType;
+                this.prodData.prodType.prodType=data.prodType;
+                this.prodData.prodType.prodDesc=data.prodDesc;
+                const newData=this.copy(this.prodData,[]);
+                this.prodData=newData;
             }
         }
 //        watch: {
