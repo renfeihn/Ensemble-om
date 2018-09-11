@@ -281,7 +281,7 @@
                 const newData=this.copy(this.prodData,[]);
                 this.prodData=newData;
                 if(data.showCopy){
-                    this.optionType = 'IN';
+                    this.optionType = 'I';
                 }else{
                     this.optionType = '';
                 }

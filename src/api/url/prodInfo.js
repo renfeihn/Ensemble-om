@@ -62,7 +62,7 @@ export function getProdType (prodClass) {
   
   const data={
     "prodClass": prodClass,
-    "userName": sessionStorage.getItem("userName")
+    "userName": sessionStorage.getItem("userId")
   }
   return request({
     url: '/getProdListByClass',
