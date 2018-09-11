@@ -1,9 +1,6 @@
 import paraDataVl from './paraDataVl.json'
 import paraDataRf from './paraDataRf.json'
-
-export default {
-  getInitData: () => ({
-    paraDataRf: paraDataRf,
-    paraDataVl: paraDataVl
-  })
-}
+const getInitData=[{paraDataRf: paraDataRf},{paraDataVl: paraDataVl}]
+export {
+    getInitData
+};

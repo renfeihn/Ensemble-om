@@ -155,7 +155,7 @@
 </template>
 
 <script>
-    import { getInitData } from "@/api/prod";
+    import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
 
     export default {
@@ -174,6 +174,7 @@
             endTimeMenu: false,
             endTime: null,
             modal: false,
+            refData: getInitData,
             eventForm: {
                 prodType: '',
                 prodDesc: '',
@@ -318,22 +319,19 @@
                this.switchValues = this.eventForm.prodGroup
             },
             initRefDate() {
-                getInitData().then(response => {
-                    console.log(response);
-                    this.busimodel = response.data.paraDataVl.busimodel;
-                    this.acctRealFlag = response.data.paraDataVl.acctRealFlag;
-                    this.acctIntFlag = response.data.paraDataVl.acctIntFlag;
-                    this.acctBalFlag = response.data.paraDataVl.acctBalFlag;
-                    this.prodGroup = response.data.paraDataVl.prodGroup;
-                    this.prodRange = response.data.paraDataVl.prodRange;
-                    this.acctType = response.data.paraDataVl.acctType;
-                    this.profitCenter = response.data.paraDataRf.profitCenter;
-                    this.acctsontype = response.data.paraDataRf.acctsontype;
-                    this.baseprod = response.data.paraDataRf.baseprod;
-                    this.acctStructFlag = response.data.paraDataRf.acctStructFlag;
-                    this.status = response.data.paraDataVl.status;
-                    this.prodClass = response.data.paraDataRf.prodClass;
-                });
+                    this.busimodel = this.refData[1].paraDataVl.busimodel;
+                    this.acctRealFlag = this.refData[1].paraDataVl.acctRealFlag;
+                    this.acctIntFlag = this.refData[1].paraDataVl.acctIntFlag;
+                    this.acctBalFlag = this.refData[1].paraDataVl.acctBalFlag;
+                    this.prodGroup = this.refData[1].paraDataVl.prodGroup;
+                    this.prodRange = this.refData[1].paraDataVl.prodRange;
+                    this.acctType = this.refData[1].paraDataVl.acctType;
+                    this.profitCenter = this.refData[0].paraDataRf.profitCenter;
+                    this.acctsontype = this.refData[0].paraDataRf.acctsontype;
+                    this.baseprod = this.refData[0].paraDataRf.baseprod;
+                    this.acctStructFlag = this.refData[0].paraDataRf.acctStructFlag;
+                    this.status = this.refData[1].paraDataVl.status;
+                    this.prodClass = this.refData[0].paraDataRf.prodClass;
             },
             closeDialog() {
                 this.$parent.isActive = false;

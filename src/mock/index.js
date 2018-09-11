@@ -24,7 +24,7 @@ Mock.mock(/\/data\/info\.*/, 'get', dataAPI.getProdData);
 Mock.mock(/\/data\/info\.*/, 'get1', dataAPI.getProdData1);
 Mock.mock(/\/data\/info\.*/, 'null', dataAPI.getProdDataNull);
 Mock.mock(/\/prod\/towDeposit\.*/, 'get', prodAPI.depositTwo);
-Mock.mock(/\/init\/initRefData\.*/, 'get', initAPI.getInitData);
+// Mock.mock(/\/init\/initRefData\.*/, 'get', initAPI.getInitData);
 Mock.mock(/\/prod\/getProdType\.*/, 'get', prodTypeAPI.getProdType);
 Mock.mock(/\/prod\/prodClass\.*/, 'get', prodClassAPI.getProdClass);
 Mock.mock(/\/table\/list/, 'get', tableAPI.getList)
