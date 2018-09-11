@@ -192,7 +192,7 @@
             },
             saveProd() {
                 this.$refs.callback[0].callbackprod()
-                this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.optionType)
+                this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
                 }else{
@@ -209,7 +209,7 @@
             },
             tempProd() {
                 this.$refs.callback[0].callbackprod()
-                this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.optionType)
+                this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
                 }else{
