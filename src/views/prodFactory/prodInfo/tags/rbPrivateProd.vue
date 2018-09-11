@@ -83,6 +83,8 @@
     import { getProdData } from "@/api/url/prodInfo";
     import downAction from '../btn/downAction'
     import {filterChangeData} from "@/server/filterChangeData";
+    import { getCheckFlowList } from "@/api/url/prodInfo";
+
     export default {
         name: 'deposit',
         components: {
@@ -159,6 +161,7 @@
             this.prodClass = this.$route.params.prodClassCmp
         },
         mounted: function() {
+            this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
             this.queryDespositProdData(this.prodClass)
@@ -171,6 +174,19 @@
             this.queryDespositProdData(this.prodClass)
         },
         methods: {
+            queryProdFlow(){
+                getCheckFlowList().then(response => {
+                    let length = response.data.data.length
+                    for(let j = 0; j<length; j++){
+                        if(response.data.data[j].flowManage.status === "2"){
+                            alert("存在已提交数据，等待复核！")
+                        }
+                        if(response.data.data[j].flowManage.status === "3"){
+                            alert("存在已复核数据，等待发布！")
+                        }
+                    }
+                });
+            },
             queryProdInfo() {
                 console.log('start query prod info')
             },

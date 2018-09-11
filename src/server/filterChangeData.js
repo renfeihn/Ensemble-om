@@ -79,11 +79,12 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     prodDefines.oldData = Object.assign(prodDefines.oldData,oldMap)
     backData.prodDefines = prodDefines
     //处理mbEventInfos对象数据
-    var mbEventAttrs = {newData: {}, oldData: {}}
-    var mbEventParts = {newData: {}, oldData: {}}
-    var mbEventType = {newData: {}, oldData: {}}
-    var temp= {mbEventAttrs: {},mbEventParts: {},mbEventType: {}}
+
     for (let m in prodData.mbEventInfos){
+        let mbEventAttrs = {newData: {}, oldData: {}}
+        let mbEventParts = {newData: {}, oldData: {}}
+        let mbEventType = {newData: {}, oldData: {}}
+        let temp= {mbEventAttrs: {},mbEventParts: {},mbEventType: {}}
         let newData= {}
         let oldData= {}
         let newDataPart = {}
@@ -124,7 +125,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
-        //mbProdType
+        //mbEventType
          for (let y in prodData.mbEventInfos[m].mbEventType){
             if(copyFlag === "IN") {
                 newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
