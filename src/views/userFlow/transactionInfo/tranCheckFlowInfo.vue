@@ -110,7 +110,7 @@
                   mainSeqNo: '',
                   date: '',
                   isApproved: '',
-                  userId: 'admin',
+                  userId: '',
                   remark: '',
                   optType: '3' //复核
               }
@@ -118,7 +118,7 @@
       },
         mounted() {
             this.checkInfo.mainSeqNo = this.$route.params.code
-//            this.checkInfo.userId = sessionStorage.getItem("userName")
+            this.checkInfo.userId = sessionStorage.getItem("userId")
             this.getDate()
             this.initFlowInfo(this.$route.params.flowInfo)
         },

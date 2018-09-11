@@ -180,7 +180,7 @@
                     mainSeqNo: '',
                     date: '',
                     isApproved: '',
-                    userId: 'admin',
+                    userId: '',
                     remark: '',
                     optType: '4'//发布
                 }
@@ -190,6 +190,8 @@
             this.code = this.$route.params.code;
             this.getDate()
             this.releaseInfo.mainSeqNo = this.$route.params.code;
+            this.releaseInfo.userId = sessionStorage.getItem("userId")
+
             this.initFlowInfo(this.$route.params.flowInfo)
 
         },

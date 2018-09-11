@@ -179,6 +179,7 @@
                 this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.optionType)
                 this.targetData.optionType = this.optionType
                 this.targetData.option = "save";
+                this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData);
             },
             tempProd() {
@@ -186,6 +187,7 @@
                 this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.optionType)
                 this.targetData.optionType = this.optionType
                 this.targetData.option="temp";
+                this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData);
             },
             handleClick(value) {

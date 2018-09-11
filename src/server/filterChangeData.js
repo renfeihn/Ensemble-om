@@ -78,7 +78,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     prodDefines.newData = Object.assign(prodDefines.newData,newMap)
     prodDefines.oldData = Object.assign(prodDefines.oldData,oldMap)
     backData.prodDefines = prodDefines
-    backData.userName='admin'
     //处理mbEventInfos对象数据
     var mbEventAttrs = {newData: {}, oldData: {}}
     var mbEventParts = {newData: {}, oldData: {}}
