@@ -2,7 +2,7 @@
   <div>
         <v-layout row wrap>
                 <v-flex md4 lg4>
-    <v-btn color="success" depressed=""><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+    <v-btn color="success" depressed="" @click="temp"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
                 </v-flex>
                         <v-flex md4 lg4>
     <v-btn color="success" depressed="" @click='showCopy=!showCopy'><v-icon >history</v-icon>复制</v-btn>
@@ -64,10 +64,13 @@ export default {
       alert("button click");
     },
       copyOn() {
-          this.$emit('listenToCopy',{'prodType': this.prodType,'prodDesc': this.prodDesc})
+          this.$emit('listenToCopy',{'prodType': this.prodType,'prodDesc': this.prodDesc,'showCopy': this.showCopy})
       },
       save(){
           this.$emit('saveProd')
+      },
+      temp(){
+          this.$emit('tempProd')
       }
   }
 };

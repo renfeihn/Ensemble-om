@@ -36,19 +36,25 @@
  *                           ...
  *                           }
  */
-export function filterChangeData (prodData,sourceProdData) {
+export function filterChangeData (prodData,sourceProdData,optionType) {
     var backData = {}
+    var copyFlag = optionType
     backData = copy(sourceProdData,backData)
     // 处理prodType对象数据
     var prodType = {newData: {},oldData: {}}
     var newProdMap = {}
     var oldProdMap = {}
-    for (let i in prodData.prodType) {
-        if (prodData.prodType[i] === sourceProdData.prodType[i]){
-            oldProdMap[i] = sourceProdData.prodType[i]
-        }else{
-            newProdMap[i] = prodData.prodType[i]
-            oldProdMap[i] = sourceProdData.prodType[i]
+    if(copyFlag === "C"){
+        //产品复制时，保留所有最新数据
+        newProdMap = prodData.prodType
+    }else {
+        for (let i in prodData.prodType) {
+            if (prodData.prodType[i] === sourceProdData.prodType[i]) {
+                oldProdMap[i] = sourceProdData.prodType[i]
+            } else {
+                newProdMap[i] = prodData.prodType[i]
+                oldProdMap[i] = sourceProdData.prodType[i]
+            }
         }
     }
     prodType.newData = Object.assign(prodType.newData,newProdMap)
@@ -58,10 +64,15 @@ export function filterChangeData (prodData,sourceProdData) {
     var prodDefines = {newData: {},oldData: {}}
     var newMap = {}
     var oldMap = {}
-    for (let i in prodData.prodDefines){
-        if (prodData.prodDefines[i].attrValue !== sourceProdData.prodDefines[i].attrValue){
-            newMap[i] = prodData.prodDefines[i]
-            oldMap[i] = sourceProdData.prodDefines[i]
+    if(copyFlag === "C"){
+        //产品复制时，保留所有最新数据
+        newMap = prodData.prodDefines
+    }else {
+        for (let i in prodData.prodDefines) {
+            if (prodData.prodDefines[i].attrValue !== sourceProdData.prodDefines[i].attrValue) {
+                newMap[i] = prodData.prodDefines[i]
+                oldMap[i] = sourceProdData.prodDefines[i]
+            }
         }
     }
     prodDefines.newData = Object.assign(prodDefines.newData,newMap)
@@ -85,11 +96,14 @@ export function filterChangeData (prodData,sourceProdData) {
         let flagType = "false"
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
-             if (prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue){
-                 newData[k] = prodData.mbEventInfos[m].mbEventAttrs[k]
-                 oldData[k] = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
-                 flag = "true"
-             }
+            if(copyFlag === "C"){
+                newData[k] = prodData.mbEventInfos[m].mbEventAttrs[k]
+                flag = "true"
+            }else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue) {
+                    newData[k] = prodData.mbEventInfos[m].mbEventAttrs[k]
+                    oldData[k] = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
+                    flag = "true"
+            }
          }
         mbEventAttrs.newData = Object.assign(mbEventAttrs.newData,newData)//深拷贝
         mbEventAttrs.oldData = Object.assign(mbEventAttrs.oldData,oldData)
@@ -97,7 +111,10 @@ export function filterChangeData (prodData,sourceProdData) {
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
-             if (prodData.mbEventInfos[m].mbEventParts[x].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x].attrValue){
+            if(copyFlag === "C"){
+                newDataPart[x] = prodData.mbEventInfos[m].mbEventParts[x]
+                flagPart = "true"
+            }else if (prodData.mbEventInfos[m].mbEventParts[x].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x].attrValue){
                  newDataPart[x] = prodData.mbEventInfos[m].mbEventParts[x]
                  oldataPart[x] = sourceProdData.mbEventInfos[m].mbEventParts[x]
                  flagPart = "true"
@@ -110,7 +127,10 @@ export function filterChangeData (prodData,sourceProdData) {
 
         //mbProdType
          for (let y in prodData.mbEventInfos[m].mbEventType){
-             if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){
+            if(copyFlag === "C") {
+                newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
+                flagType = "true"
+            }else if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){
                  newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
                  oldataType[y] = sourceProdData.mbEventInfos[m].mbEventType[y]
                  flagType = "true"

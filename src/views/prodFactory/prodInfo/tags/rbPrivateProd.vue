@@ -28,36 +28,24 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
-                        <!-- <v-card>
-                            <v-card-text> v-on:prodDataSon="prodDataSon"   v-bind:sourceData="{'acctForm':sourceData.acctForm}" -->
                         <event-form v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></event-form>
                         <accounting-plain v-if="i==2"></accounting-plain>
                         <branch-form v-if="i==3"></branch-form>
                         <acct-form v-if="i > 3"></acct-form>
-                        <!-- </v-card-text>
-                    </v-card> -->
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
                 <v-card-text>
-                <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd"></down-action>
+                <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
                 </v-card-text>
                 </v-card>
- <!--               <v-card>
-                    <v-card-text>
-                        <v-btn color="success" depressed="" @click="tempClick"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
-                        <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
-                        <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
-                    </v-card-text>
-                </v-card>-->
                 <v-toolbar dense class="chat-history-toolbar prodLists">
                     <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search" v-model="searchValue"></v-text-field>
                 </v-toolbar>
                 <vue-perfect-scrollbar class="depositTree">
                     <v-list two-line subheader>
-                        <!--<v-subheader inset>个人活期产品</v-subheader>-->
                         <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
                             <v-list-tile-avatar>
                                 <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
@@ -80,7 +68,6 @@
 </template>
 
 <script>
-    // import queryheader from './components/queryheader'
     import {
         getProdType
     } from '@/api/url/prodInfo'
@@ -111,6 +98,7 @@
             return {
                 listLoading: true,
                 searchValue: '',
+                optionType: '',
                 depositProd: {
                     prodcode: '',
                     version: ''
@@ -186,21 +174,17 @@
             queryProdInfo() {
                 console.log('start query prod info')
             },
-            saveClick() {
-                this.$refs.callback[0].callbackprod()
-                this.targetData = filterChangeData(this.prodData,this.sourceProdData)
-                this.targetData.option="save";
-                savaProdInfo(this.targetData);
-            },
             saveProd() {
                 this.$refs.callback[0].callbackprod()
-                this.targetData = filterChangeData(this.prodData, this.sourceProdData)
+                this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.optionType)
+                this.targetData.optionType = this.optionType
                 this.targetData.option = "save";
                 savaProdInfo(this.targetData);
             },
-            tempClick() {
+            tempProd() {
                 this.$refs.callback[0].callbackprod()
-                this.targetData = filterChangeData(this.prodData,this.sourceProdData)
+                this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.optionType)
+                this.targetData.optionType = this.optionType
                 this.targetData.option="temp";
                 savaProdInfo(this.targetData);
             },
@@ -278,6 +262,11 @@
                 this.prodData.prodType.prodDesc=data.prodDesc;
                 const newData=this.copy(this.prodData,[]);
                 this.prodData=newData;
+                if(data.showCopy){
+                    this.optionType = 'C';
+                }else{
+                    this.optionType = '';
+                }
             }
         }
 //        watch: {
