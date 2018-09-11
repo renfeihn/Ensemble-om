@@ -47,7 +47,7 @@
                 </v-card>
  <!--               <v-card>
                     <v-card-text>
-                        <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+                        <v-btn color="success" depressed="" @click="tempClick"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
                         <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
                         <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
                     </v-card-text>
@@ -194,8 +194,14 @@
             },
             saveProd() {
                 this.$refs.callback[0].callbackprod()
+                this.targetData = filterChangeData(this.prodData, this.sourceProdData)
+                this.targetData.option = "save";
+                savaProdInfo(this.targetData);
+            },
+            tempClick() {
+                this.$refs.callback[0].callbackprod()
                 this.targetData = filterChangeData(this.prodData,this.sourceProdData)
-                this.targetData.option="save";
+                this.targetData.option="temp";
                 savaProdInfo(this.targetData);
             },
             handleClick(value) {
