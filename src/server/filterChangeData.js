@@ -44,7 +44,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var prodType = {newData: {},oldData: {}}
     var newProdMap = {}
     var oldProdMap = {}
-    if(copyFlag === "C"){
+    if(copyFlag === "IN"){
         //产品复制时，保留所有最新数据
         newProdMap = prodData.prodType
     }else {
@@ -64,7 +64,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var prodDefines = {newData: {},oldData: {}}
     var newMap = {}
     var oldMap = {}
-    if(copyFlag === "C"){
+    if(copyFlag === "IN"){
         //产品复制时，保留所有最新数据
         newMap = prodData.prodDefines
     }else {
@@ -96,7 +96,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         let flagType = "false"
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
-            if(copyFlag === "C"){
+            if(copyFlag === "IN"){
                 newData[k] = prodData.mbEventInfos[m].mbEventAttrs[k]
                 flag = "true"
             }else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue) {
@@ -111,7 +111,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
-            if(copyFlag === "C"){
+            if(copyFlag === "IN"){
                 newDataPart[x] = prodData.mbEventInfos[m].mbEventParts[x]
                 flagPart = "true"
             }else if (prodData.mbEventInfos[m].mbEventParts[x].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x].attrValue){
@@ -127,7 +127,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
 
         //mbProdType
          for (let y in prodData.mbEventInfos[m].mbEventType){
-            if(copyFlag === "C") {
+            if(copyFlag === "IN") {
                 newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
                 flagType = "true"
             }else if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){

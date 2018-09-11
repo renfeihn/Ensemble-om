@@ -263,7 +263,7 @@
                 const newData=this.copy(this.prodData,[]);
                 this.prodData=newData;
                 if(data.showCopy){
-                    this.optionType = 'C';
+                    this.optionType = 'IN';
                 }else{
                     this.optionType = '';
                 }
