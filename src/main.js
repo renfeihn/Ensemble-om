@@ -14,7 +14,7 @@ import Truncate from 'lodash.truncate';
 import store from './store';
 import qs from 'qs';
 import globalConfig from "./config.js";
-import './mock';
+// import './mock';
 
 
 Vue.prototype.$qs = qs

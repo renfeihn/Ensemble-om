@@ -812,7 +812,7 @@ export default [
     name: 'prod/rbPrivateProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/rbPrivateProds.vue`
+        `@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue`
       )
   },
   {
