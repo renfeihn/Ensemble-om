@@ -412,9 +412,6 @@ export default {
       });
     },
     initRefDate() {
-      getInitData().then(response => {
-        console.log(response);
-
         this.sourceModule = this.refData[2].paraDataRb.sourceModule;
         this.prodClass = this.refData[2].paraDataRb.prodClass;
         this.prodAttr = this.refData[2].paraDataRb.prodAttr;
@@ -437,7 +434,6 @@ export default {
         this.withdrawalType = this.refData[2].paraDataRb.withdrawalType;
         this.discountCcy = this.refData[2].paraDataRb.discountCcy;
         this.acctClass = this.refData[2].paraDataRb.acctClass;
-      });
     },
     closeDialog() {
       this.$parent.isActive = false;

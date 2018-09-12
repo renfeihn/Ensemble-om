@@ -126,8 +126,6 @@
                 this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
             },
             initRefDate() {
-                getInitData().then(response => {
-                console.log(response);
                 this.systemControlApproach = this.refData[2].paraDataRb.systemControlApproach;
                 this.permitCommersionFlag = this.refData[2].paraDataRb.permitCommersionFlag;
                 this.cashResouce = this.refData[2].paraDataRb.cashResouce;
@@ -135,7 +133,6 @@
                 this.resignCheck = this.refData[2].paraDataRb.resignCheck;
                 this.ownCheck = this.refData[2].paraDataRb.ownCheck;
                 this.huiTuiFlag = this.refData[2].paraDataRb.huiTuiFlag;
-                });
             }
         }
     }
