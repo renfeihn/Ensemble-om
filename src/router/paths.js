@@ -3,7 +3,7 @@ export default [
   {
     path: '*',
     meta: {
-      public: true,
+      public: false,
     },
     redirect: {
       path: '/404'
@@ -12,40 +12,40 @@ export default [
   {
     path: '/404',
     meta: {
-      public: true,
+      public: false,
     },
     name: 'NotFound',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/NotFound.vue`
+        '@/pages/NotFound.vue'
       )
   },
   {
     path: '/403',
     meta: {
-      public: true,
+      public: false,
     },
     name: 'AccessDenied',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/Deny.vue`
+        '@/pages/Deny.vue'
       )
   },
   {
     path: '/500',
     meta: {
-      public: true,
+      public: false,
     },
     name: 'ServerError',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/Error.vue`
+        '@/pages/Error.vue'
       )
   },
   {
@@ -58,34 +58,32 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/Login.vue`
+        '@/pages/Login.vue'
       )
   },
   {
     path: '/',
-    name: 'Root',
     meta: {
-      public: true,
+      public: true
     },
-    component: () =>
-      import(
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        `@/pages/Login.vue`
-      )
+    name: 'Root',
+    redirect: {
+      name: 'Login'
+    }
   },
   {
     path: '/dashboard',
     meta: {
+      public: false,
       breadcrumb: true,
-      title: '首页'
+      title: '首页',
     },
     name: 'Dashboard',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/Dashboard.vue`
+        '@/pages/Dashboard.vue'
       )
   },
 
@@ -96,7 +94,7 @@ export default [
   //   component: (a) => import(
   //     /* webpackChunkName: "routes" */
   //     /* webpackMode: "lazy-once" */
-  //     `@/pages/Calendar.vue`
+  //     '@/pages/Calendar.vue'
   //   )
   // },
   {
@@ -110,98 +108,98 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/Media.vue`
+        '@/pages/Media.vue'
       )
   },
   {
     path: '/chat',
     meta: {
-      public: true,
+      public: false,
     },
     name: 'Chat',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
-        `@/components/chat/ChatLayout.vue`
+        '@/components/chat/ChatLayout.vue'
       ),
     redirect: {
       path: '/chat/messaging'
     },
     children: [{
-      path: '/chat/messaging/:uuid?',
-      meta: {
-        public: true,
+        path: '/chat/messaging/:uuid?',
+        meta: {
+          public: false,
+        },
+        name: 'ChatMessaging',
+        props: true,
+        components: {
+          default: () =>
+            import(
+              /* webpackChunkName: "routes" */
+              /* webpackMode: "lazy-once" */
+              '@/components/chat/ChatMessaging.vue'
+            ),
+        }
       },
-      name: 'ChatMessaging',
-      props: true,
-      components: {
-        default: () =>
-          import(
-            /* webpackChunkName: "routes" */
-            /* webpackMode: "lazy-once" */
-            `@/components/chat/ChatMessaging.vue`
-          ),
-      }
-    },
-    {
-      path: '/chat/contact/:uuid?',
-      meta: {
-        public: true,
-      },
-      name: 'ChatContact',
-      components: {
-        default: () =>
-          import(
-            /* webpackChunkName: "routes" */
-            /* webpackMode: "lazy-once" */
-            `@/components/chat/ChatContact.vue`
-          ),
+      {
+        path: '/chat/contact/:uuid?',
+        meta: {
+          public: false,
+        },
+        name: 'ChatContact',
+        components: {
+          default: () =>
+            import(
+              /* webpackChunkName: "routes" */
+              /* webpackMode: "lazy-once" */
+              '@/components/chat/ChatContact.vue'
+            ),
 
+        }
       }
-    }
     ]
   },
   {
     path: '/mail',
     meta: {
-      public: true,
+      public: false,
     },
     name: 'Mail',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/components/email/Layout.vue`
+        '@/components/email/Layout.vue'
       ),
     redirect: {
       path: '/mail/all'
     },
     children: [{
-      path: '/mail/:mailType',
-      meta: {
-        public: true,
+        path: '/mail/:mailType',
+        meta: {
+          public: false,
+        },
+        name: 'MailIndex',
+        component: () =>
+          import(
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            '@/components/email/List.vue'
+          ),
       },
-      name: 'MailIndex',
-      component: () =>
-        import(
-          /* webpackChunkName: "routes" */
-          /* webpackMode: "lazy-once" */
-          `@/components/email/List.vue`
-        ),
-    },
-    {
-      path: '/mail/0/:uuid',
-      meta: {
-        public: true,
-      },
-      name: 'MailDetail',
-      component: () =>
-        import(
-          /* webpackChunkName: "routes" */
-          /* webpackMode: "lazy-once" */
-          `@/components/email/Reply.vue`
-        ),
-    }
+      {
+        path: '/mail/0/:uuid',
+        meta: {
+          public: false,
+        },
+        name: 'MailDetail',
+        component: () =>
+          import(
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            '@/components/email/Reply.vue'
+          ),
+      }
     ]
   },
   {
@@ -214,7 +212,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Alert.vue`
+        '@/pages/ui/Alert.vue'
       )
   },
   {
@@ -227,7 +225,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Avatar.vue`
+        '@/pages/ui/Avatar.vue'
       )
   },
   {
@@ -240,7 +238,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Badge.vue`
+        '@/pages/ui/Badge.vue'
       )
   },
   {
@@ -253,7 +251,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Button.vue`
+        '@/pages/ui/Button.vue'
       )
   },
   {
@@ -266,7 +264,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Parallax.vue`
+        '@/pages/ui/Parallax.vue'
       )
   },
   {
@@ -279,7 +277,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Snackbar.vue`
+        '@/pages/ui/Snackbar.vue'
       )
   },
   {
@@ -292,7 +290,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Chip.vue`
+        '@/pages/ui/Chip.vue'
       )
   },
   {
@@ -305,7 +303,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Cards.vue`
+        '@/pages/ui/Cards.vue'
       )
   },
   {
@@ -318,7 +316,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Tables.vue`
+        '@/pages/ui/Tables.vue'
       )
   },
   {
@@ -331,7 +329,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Carousels.vue`
+        '@/pages/ui/Carousels.vue'
       )
   },
   {
@@ -344,7 +342,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Dialogs.vue`
+        '@/pages/ui/Dialogs.vue'
       )
   },
   {
@@ -357,7 +355,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Icon.vue`
+        '@/pages/ui/Icon.vue'
       )
   },
   {
@@ -370,7 +368,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Progress.vue`
+        '@/pages/ui/Progress.vue'
       )
   },
   {
@@ -383,7 +381,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Slider.vue`
+        '@/pages/ui/Slider.vue'
       )
   },
   {
@@ -396,7 +394,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Tooltip.vue`
+        '@/pages/ui/Tooltip.vue'
       )
   },
   {
@@ -409,7 +407,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Pagination.vue`
+        '@/pages/ui/Pagination.vue'
       )
   },
   {
@@ -422,7 +420,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Datepicker.vue`
+        '@/pages/ui/Datepicker.vue'
       )
   },
   {
@@ -435,7 +433,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Typography.vue`
+        '@/pages/ui/Typography.vue'
       )
   },
   {
@@ -448,7 +446,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Colors.vue`
+        '@/pages/ui/Colors.vue'
       )
   },
   {
@@ -461,7 +459,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/ui/Timepicker.vue`
+        '@/pages/ui/Timepicker.vue'
       )
   },
   {
@@ -474,7 +472,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/BottomSheets.vue`
+        '@/pages/layout/BottomSheets.vue'
       )
   },
   {
@@ -487,7 +485,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/ExpansionPanels.vue`
+        '@/pages/layout/ExpansionPanels.vue'
       )
   },
   {
@@ -500,7 +498,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Footers.vue`
+        '@/pages/layout/Footers.vue'
       )
   },
   {
@@ -513,7 +511,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Timeline.vue`
+        '@/pages/layout/Timeline.vue'
       )
   },
   {
@@ -526,7 +524,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Lists.vue`
+        '@/pages/layout/Lists.vue'
       )
   },
   {
@@ -539,7 +537,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Toolbar.vue`
+        '@/pages/layout/Toolbar.vue'
       )
   },
   {
@@ -552,7 +550,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Jumbotrons.vue`
+        '@/pages/layout/Jumbotrons.vue'
       )
   },
   {
@@ -565,7 +563,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Menus.vue`
+        '@/pages/layout/Menus.vue'
       )
   },
   {
@@ -578,7 +576,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/NavigationDrawers.vue`
+        '@/pages/layout/NavigationDrawers.vue'
       )
   },
   {
@@ -591,7 +589,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/layout/Tabs.vue`
+        '@/pages/layout/Tabs.vue'
       )
   },
   {
@@ -604,7 +602,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/form/BasicForms.vue`
+        '@/pages/form/BasicForms.vue'
       )
   },
   {
@@ -617,7 +615,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/form/Selects.vue`
+        '@/pages/form/Selects.vue'
       )
   },
   {
@@ -630,7 +628,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/form/Editors.vue`
+        '@/pages/form/Editors.vue'
       )
   },
   {
@@ -643,7 +641,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/form/SelectionControls.vue`
+        '@/pages/form/SelectionControls.vue'
       )
   },
   {
@@ -656,7 +654,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/form/TextFields.vue`
+        '@/pages/form/TextFields.vue'
       )
   },
   {
@@ -669,7 +667,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/form/Steppers.vue`
+        '@/pages/form/Steppers.vue'
       )
   },
   {
@@ -682,7 +680,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/widgets/Social.vue`
+        '@/pages/widgets/Social.vue'
       )
   },
   {
@@ -695,7 +693,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/widgets/Post.vue`
+        '@/pages/widgets/Post.vue'
       )
   },
   {
@@ -708,7 +706,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/widgets/Statistic.vue`
+        '@/pages/widgets/Statistic.vue'
       )
   },
   {
@@ -721,7 +719,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/widgets/Chart.vue`
+        '@/pages/widgets/Chart.vue'
       )
   },
   {
@@ -734,7 +732,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/pages/widgets/List.vue`
+        '@/pages/widgets/List.vue'
       )
   },
   {
@@ -748,7 +746,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodFlow/searchFlow/SearchList.vue`
+        '@/views/prodFactory/prodFlow/searchFlow/SearchList.vue'
       )
   },
   {
@@ -762,7 +760,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue`
+        '@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue'
       )
   },
   {
@@ -776,7 +774,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
+        '@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'
       )
   },
   {
@@ -790,7 +788,7 @@ export default [
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue`
+        '@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'
       )
   },
   {
@@ -802,7 +800,7 @@ export default [
     name: 'prod/deposit2',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/deposit2.vue`
+        '@/views/prodFactory/prodInfo/tags/deposit2.vue'
       )
   },
   {
@@ -814,7 +812,7 @@ export default [
     name: 'prod/rbPrivateProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue`
+        '@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue'
       )
   },
   {
@@ -826,7 +824,7 @@ export default [
     name: 'prod/rbPublicProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/rbPublicProd.vue`
+        '@/views/prodFactory/prodInfo/tags/rbPublicProd.vue'
       )
   },
   {
@@ -838,21 +836,21 @@ export default [
     name: 'prod/rbHorizontalProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue`
+        '@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue'
       )
   },
-{
+  {
     path: '/propertyManage/muneManage',
-        meta: {
-    breadcrumb: true,
-        title: '菜单管理'
-},
+    meta: {
+      breadcrumb: true,
+      title: '菜单管理'
+    },
     name: 'propertyManage/muneManage',
-        component: () =>
-import(
-    `@/views/propertyManage/muneManage.vue`
-)
-},
+    component: () =>
+      import(
+        '@/views/propertyManage/muneManage.vue'
+      )
+  },
   {
     path: '/prod/rbBaseProd',
     meta: {
@@ -862,7 +860,7 @@ import(
     name: 'prod/rbBaseProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/rbBaseProd.vue`
+        '@/views/prodFactory/prodInfo/tags/rbBaseProd.vue'
       )
   },
   {
@@ -874,7 +872,7 @@ import(
     name: 'prod/clPrivateProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clPrivateProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clPrivateProd.vue'
       )
   },
   {
@@ -886,7 +884,7 @@ import(
     name: 'prod/clPublicProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clPublicProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clPublicProd.vue'
       )
   },
   {
@@ -898,7 +896,7 @@ import(
     name: 'prod/clDiscountProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clDiscountProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clDiscountProd.vue'
       )
   },
   {
@@ -910,7 +908,7 @@ import(
     name: 'prod/clAdvancesProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clAdvancesProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clAdvancesProd.vue'
       )
   },
   {
@@ -922,7 +920,7 @@ import(
     name: 'prod/clEntrustedProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clEntrustedProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clEntrustedProd.vue'
       )
   },
   {
@@ -934,7 +932,7 @@ import(
     name: 'prod/clSyndicatedProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clSyndicatedProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clSyndicatedProd.vue'
       )
   },
   {
@@ -946,7 +944,7 @@ import(
     name: 'prod/clBaseProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/clBaseProd.vue`
+        '@/views/prodFactory/prodInfo/tags/clBaseProd.vue'
       )
   },
   {
@@ -958,7 +956,7 @@ import(
     name: 'prod/glInternalProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/glInternalProd.vue`
+        '@/views/prodFactory/prodInfo/tags/glInternalProd.vue'
       )
   },
   {
@@ -970,7 +968,7 @@ import(
     name: 'prod/glToHorizontalProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/glToHorizontalProd.vue`
+        '@/views/prodFactory/prodInfo/tags/glToHorizontalProd.vue'
       )
   },
   {
@@ -982,7 +980,7 @@ import(
     name: 'prod/glPromHorizontalProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/glPromHorizontalProd.vue`
+        '@/views/prodFactory/prodInfo/tags/glPromHorizontalProd.vue'
       )
   },
   {
@@ -994,7 +992,7 @@ import(
     name: 'prod/glBaseProd',
     component: () =>
       import(
-        `@/views/prodFactory/prodInfo/tags/glBaseProd.vue`
+        '@/views/prodFactory/prodInfo/tags/glBaseProd.vue'
       )
   },
   {
@@ -1008,7 +1006,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodDiff/prodDiff.vue`
+        '@/views/prodFactory/prodDiff/prodDiff.vue'
       )
   },
   {
@@ -1022,7 +1020,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodDiff/diffList/diffList.vue`
+        '@/views/prodFactory/prodDiff/diffList/diffList.vue'
       )
   },
   {
@@ -1036,7 +1034,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue`
+        '@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue'
       )
   },
 
@@ -1051,7 +1049,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/prodFactory/prodInfo/tags/deposit.vue`
+        '@/views/prodFactory/prodInfo/tags/deposit.vue'
       )
   },
   {
@@ -1065,7 +1063,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/userWork/userWorkTags.vue`
+        '@/views/userFlow/userWork/userWorkTags.vue'
       )
   },
   {
@@ -1079,7 +1077,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/userWork/userWorkNavigation.vue`
+        '@/views/userFlow/userWork/userWorkNavigation.vue'
       )
   },
   {
@@ -1093,7 +1091,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/indexFlow/indexFlow2.vue`
+        '@/views/userFlow/indexFlow/indexFlow2.vue'
       )
   },
   {
@@ -1107,7 +1105,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/transactionInfo/tranDataIndex.vue`
+        '@/views/userFlow/transactionInfo/tranDataIndex.vue'
       )
   },
   {
@@ -1121,20 +1119,20 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/publish/publishDate.vue`
+        '@/views/userFlow/publish/publishDate.vue'
       )
   },
   {
-      path: '/partner/partnerMain',
-      meta: {
-          breadcrumb: true,
-          title: '合作方签约'
-      },
-      name: 'partner/partnerMain',
-      component: () =>
-          import(
-              `@/views/nlManage/partnerManage/partnerMain.vue`
-              )
+    path: '/partner/partnerMain',
+    meta: {
+      breadcrumb: true,
+      title: '合作方签约'
+    },
+    name: 'partner/partnerMain',
+    component: () =>
+      import(
+        '@/views/nlManage/partnerManage/partnerMain.vue'
+      )
   },
   {
     path: '/getAction',
@@ -1147,7 +1145,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/getAction.vue`
+        '@/views/getAction.vue'
       )
   },
   {
@@ -1161,7 +1159,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        `@/views/userFlow/publish/publishDate2.vue`
+        '@/views/userFlow/publish/publishDate2.vue'
       )
   },
 ];

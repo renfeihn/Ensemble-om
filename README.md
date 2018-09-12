@@ -31,3 +31,6 @@
 
 ## Mock
 - 样例：http://mockjs.com/examples.html
+
+## URL 加密
+- https://my.oschina.net/Lady/blog/1814825

@@ -49,6 +49,7 @@
 <script>
 import NotificationList from "@/components/widgets/list/NotificationList";
 import Util from "@/util";
+import { getToken } from "@/utils/auth";
 import { getProdType } from "@/api/prod";
 export default {
   name: "app-toolbar",
@@ -94,7 +95,9 @@ export default {
     }
   },
   mounted() {
-    this.getInitProdList();
+    if (getToken()) {
+      this.getInitProdList();
+    }
   },
   methods: {
     handleDrawerToggle() {
