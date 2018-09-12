@@ -165,7 +165,6 @@ import { getProdData } from "@/api/prod";
                 });
             },
             initRefDate() {
-                getInitData().then(response => {
                     this.draRange = this.refData[2].paraDataRb.draRange;
                     this.depRange = this.refData[2].paraDataRb.depRange;
                     this.tDepFlag = this.refData[2].paraDataRb.tDepFlag;

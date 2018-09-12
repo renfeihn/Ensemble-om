@@ -179,8 +179,6 @@ export default {
       this.deposit.danciDepositCheck = val.deposit.danciDepositCheck
         },
         initRefDate() {
-            getInitData().then(response => {
-                console.log(response);
         this.depositControlApproach = this.refData[2].paraDataRb.depositControlApproach;
         this.permitCommersionFlag = this.refData[2].paraDataRb.permitCommersionFlag;
         this.cashResource = this.refData[2].paraDataRb.cashResource;
@@ -189,7 +187,6 @@ export default {
         this.dealingWay = this.refData[2].paraDataRb.dealingWay;
         this.startAmtCheck = this.refData[2].paraDataRb.startAmtCheck;
         this.danciDepositCheck = this.refData[2].paraDataRb.danciDepositCheck;
-            });
         }
     }
   }
