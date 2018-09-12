@@ -139,7 +139,7 @@
                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <v-select  class="primary--text mx-2" :items="ownershipType" v-model="acctBaseInfo.ownershipType" label="关系属性" item-text="value" item-value="key" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="ownershipType" v-model="acctBaseInfo.ownershipType" label="关系属性" item-text="value" item-value="key" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
@@ -174,7 +174,7 @@
 </template>
 
 <script>
-import { getInitData } from "@/api/prod";
+import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
 export default {
   props: ["prodData"],
@@ -190,7 +190,7 @@ export default {
     ],
     isJudge: [
         {
-            key:"Y",
+            key: "Y",
             value: "Y-是"
         },
         {
@@ -234,19 +234,19 @@ export default {
         value: ""
       }
     ],
-    subAcctType:[
+    subAcctType: [
       {
         key: "",
         value: ""
       }
     ],
-    isMultiCcy:[
+    isMultiCcy: [
       {
         key: "",
         value: ""
       }
     ],
-    ccy:[
+    ccy: [
       {
          key: "",
          value: ""
@@ -261,13 +261,13 @@ export default {
     profitCentre: [
         {
             key: "",
-            value:""
+            value: ""
         }
     ],
     voucherFlag: [
         {
-            key:"",
-            value:""
+            key: "",
+            value: ""
         }
     ],
     voucherType: [
@@ -306,6 +306,7 @@ export default {
             value: ""
         }
     ],
+    refData: getInitData,
     acctBaseInfo: {
         prodcode: '',
         proddesc: '',
@@ -414,28 +415,28 @@ export default {
       getInitData().then(response => {
         console.log(response);
 
-        this.sourceModule = response.data.paraDataRb.sourceModule;
-        this.prodClass = response.data.paraDataRb.prodClass;
-        this.prodAttr = response.data.paraDataRb.prodAttr;
-        this.isGroup = response.data.paraDataRb.isGroup;
-        this.prodStatus = response.data.paraDataRb.prodStatus;
-        this.baseprodtype = response.data.paraDataRb.baseprodtype;
-        this.acctType = response.data.paraDataRb.acctType;
-        this.subAcctType = response.data.paraDataRb.subAcctType;
-        this.isMultiCcy = response.data.paraDataRb.isMultiCcy;
-        this.ccy = response.data.paraDataRb.ccy;
-        this.acctIntFlag = response.data.paraDataRb.acctIntFlag;
-        this.profitCentre = response.data.paraDataRb.profitCentre;
-        this.voucherType = response.data.paraDataRb.voucherType;
-        this.acctType = response.data.paraDataRb.acctType;
-        this.acctSubType = response.data.paraDataRb.acctSubType;
-        this.acctNature = response.data.paraDataRb.acctNature;
-        this.ownershipType = response.data.paraDataRb.ownershipType;
-        this.acctClass = response.data.paraDataRb.acctClass;
-        this.balType = response.data.paraDataRb.balType;
-        this.withdrawalType = response.data.paraDataRb.withdrawalType;
-        this.discountCcy = response.data.paraDataRb.discountCcy;
-        this.acctClass = response.data.paraDataRb.acctClass;
+        this.sourceModule = this.refData[2].paraDataRb.sourceModule;
+        this.prodClass = this.refData[2].paraDataRb.prodClass;
+        this.prodAttr = this.refData[2].paraDataRb.prodAttr;
+        this.isGroup = this.refData[2].paraDataRb.isGroup;
+        this.prodStatus = this.refData[2].paraDataRb.prodStatus;
+        this.baseprodtype = this.refData[2].paraDataRb.baseprodtype;
+        this.acctType = this.refData[2].paraDataRb.acctType;
+        this.subAcctType = this.refData[2].paraDataRb.subAcctType;
+        this.isMultiCcy = this.refData[2].paraDataRb.isMultiCcy;
+        this.ccy = this.refData[2].paraDataRb.ccy;
+        this.acctIntFlag = this.refData[2].paraDataRb.acctIntFlag;
+        this.profitCentre = this.refData[2].paraDataRb.profitCentre;
+        this.voucherType = this.refData[2].paraDataRb.voucherType;
+        this.acctType = this.refData[2].paraDataRb.acctType;
+        this.acctSubType = this.refData[2].paraDataRb.acctSubType;
+        this.acctNature = this.refData[2].paraDataRb.acctNature;
+        this.ownershipType = this.refData[2].paraDataRb.ownershipType;
+        this.acctClass = this.refData[2].paraDataRb.acctClass;
+        this.balType = this.refData[2].paraDataRb.balType;
+        this.withdrawalType = this.refData[2].paraDataRb.withdrawalType;
+        this.discountCcy = this.refData[2].paraDataRb.discountCcy;
+        this.acctClass = this.refData[2].paraDataRb.acctClass;
       });
     },
     closeDialog() {

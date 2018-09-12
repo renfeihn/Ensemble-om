@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { getInitData } from "@/api/prod";
+import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
 export default {
   props: ["prodData"],
@@ -51,6 +51,7 @@ export default {
               value: ""
         }
         ],
+        refData: getInitData,
     intDetail: {
         cycleFreq: '',
         cycleSelfFlag: ''
@@ -77,8 +78,8 @@ export default {
     initRefDate() {
       getInitData().then(response => {
         console.log(response);
-        this.cycleFreq = response.data.paraDataRb.cycleFreq;
-        this.cycleSelfFlag = response.data.paraDataRb.cycleSelfFlag;
+        this.cycleFreq = this.refData[2].paraDataRb.cycleFreq;
+        this.cycleSelfFlag = this.refData[2].paraDataRb.cycleSelfFlag;
       });
     },
     closeDialog() {

@@ -111,7 +111,6 @@
             downAction,
             controlInfo,
             AcctBaseInfo,
-	    
             ProductObject,
             IntDetail,
             OpenAcct,
@@ -121,7 +120,7 @@
             ChargeDefine,
             RateInfo,
             FormShift,
-            AccountingInfo,
+            AccountingInfo
         },
         data () {
             return {

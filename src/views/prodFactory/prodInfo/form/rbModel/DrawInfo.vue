@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { getInitData } from "@/api/prod";
+import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
 export default {
   props: ["prodData"],
@@ -165,6 +165,7 @@ export default {
                  value: ""
              }
          ],
+         refData: getInitData,
          drawInfo: {
     drawControlWay: '',
     daiBanFlag: '',
@@ -209,16 +210,16 @@ export default {
     initRefDate() {
       getInitData().then(response => {
         console.log(response);
-        this.drawControlWay = response.data.paraDataRb.drawControlWay;
-        this.daiBanFlag = response.data.paraDataRb.daiBanFlag;
-        this.cashResource = response.data.paraDataRb.cashResource;
-        this.attrReatraintCheck = response.data.paraDataRb.attrReatraintCheck;
-        this.withDrawlCheck = response.data.paraDataRb.withDrawlCheck;
-        this.voucherTypeCheck = response.data.paraDataRb.voucherTypeCheck;
-        this.weiYueType = response.data.paraDataRb.weiYueType;
-        this.dealingWay = response.data.paraDataRb.dealingWay;
-        this.danciYueCheck = response.data.paraDataRb.danciYueCheck;
-        this.acctBalanceCheck = response.data.paraDataRb.acctBalanceCheck;
+        this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;
+        this.daiBanFlag = this.refData[2].paraDataRb.daiBanFlag;
+        this.cashResource = this.refData[2].paraDataRb.cashResource;
+        this.attrReatraintCheck = this.refData[2].paraDataRb.attrReatraintCheck;
+        this.withDrawlCheck = this.refData[2].paraDataRb.withDrawlCheck;
+        this.voucherTypeCheck = this.refData[2].paraDataRb.voucherTypeCheck;
+        this.weiYueType = this.refData[2].paraDataRb.weiYueType;
+        this.dealingWay = this.refData[2].paraDataRb.dealingWay;
+        this.danciYueCheck = this.refData[2].paraDataRb.danciYueCheck;
+        this.acctBalanceCheck = this.refData[2].paraDataRb.acctBalanceCheck;
       });
     },
     closeDialog() {

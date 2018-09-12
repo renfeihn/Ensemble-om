@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { getInitData } from "@/api/prod";
+import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
 export default {
       props: ["prodData"],
@@ -141,6 +141,7 @@ export default {
                                 value: "N-否"
                           }
                                      ],
+           refData: getInitData,
            deposit: {
                        depositControlApproach: '',
                        permitCommersionFlag: '',
@@ -180,14 +181,14 @@ export default {
         initRefDate() {
             getInitData().then(response => {
                 console.log(response);
-        this.depositControlApproach = response.data.paraDataRb.depositControlApproach;
-        this.permitCommersionFlag = response.data.paraDataRb.permitCommersionFlag;
-        this.cashResource = response.data.paraDataRb.cashResource;
-        this.acctReatraintCheck = response.data.paraDataRb.acctReatraintCheck;
-        this.weiYueType = response.data.paraDataRb.weiYueType;
-        this.dealingWay = response.data.paraDataRb.dealingWay;
-        this.startAmtCheck = response.data.paraDataRb.startAmtCheck;
-        this.danciDepositCheck = response.data.paraDataRb.danciDepositCheck;
+        this.depositControlApproach = this.refData[2].paraDataRb.depositControlApproach;
+        this.permitCommersionFlag = this.refData[2].paraDataRb.permitCommersionFlag;
+        this.cashResource = this.refData[2].paraDataRb.cashResource;
+        this.acctReatraintCheck = this.refData[2].paraDataRb.acctReatraintCheck;
+        this.weiYueType = this.refData[2].paraDataRb.weiYueType;
+        this.dealingWay = this.refData[2].paraDataRb.dealingWay;
+        this.startAmtCheck = this.refData[2].paraDataRb.startAmtCheck;
+        this.danciDepositCheck = this.refData[2].paraDataRb.danciDepositCheck;
             });
         }
     }

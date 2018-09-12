@@ -1,155 +1,142 @@
 <template>
-  <v-container fluid pr-5 pt-0>
-    <v-layout row wrap>
-      <v-flex xs12 md12 lg12>
-        <div slot="widget-content">
-          <v-container fluid pt-1>
-            <v-layout row wrap>
-                        <v-flex xs12 md2 lg2>
-                           <v-subheader class="primary--text subheading">存入控制方式*</v-subheader>
-                        </v-flex>
-                        <v-flex md4 lg4>
-                           <v-select class="primary--text mx-2" :items="systemControlApproach" v-model="closeAcct.systemControlApproach" label="存入控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
-                        </v-flex>
-                        <v-flex xs12 md2 lg2>
-                           <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
-                        </v-flex>
-                        <v-flex md4 lg4>
-                           <v-select class="primary--text mx-2" :items="permitCommersionFlag" v-model="closeAcct.permitCommersionFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
-                        </v-flex>
-                       <v-flex xs12 md2 lg2>
-                             <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
-                       </v-flex>
-                       <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="cashResouce" v-model="closeAcct.cashResouce" label="资金来源方式" item-text="value" item-value="key" single-line hide-details></v-select>
-                       </v-flex>
-                       <v-flex xs12 md2 lg2>
-                            <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
-                       </v-flex>
-                       <v-flex md4 lg4>
-                             <v-select class="primary--text mx-2" :items="acctReatraintCheck" v-model="closeAcct.acctReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                       </v-flex>
-                        <v-flex xs12 md2 lg2>
-                             <v-subheader class="primary--text subheading">签约检查*</v-subheader>
-                        </v-flex>
-                         <v-flex md4 lg4>
-                             <v-select class="primary--text mx-2" :items="resignCheck" v-model="closeAcct.resignCheck" label="签约检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                         </v-flex>
-                        <v-flex xs12 md2 lg2>
-                               <v-subheader class="primary--text subheading">欠费检查*</v-subheader>
-                        </v-flex>
-                        <v-flex md4 lg4>
-                               <v-select class="primary--text mx-2" :items="ownCheck" v-model="closeAcct.ownCheck" label="欠费检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                        </v-flex>
-                        <v-flex xs12 md2 lg2>
-                               <v-subheader class="primary--text subheading">是否允许销户回退*</v-subheader>
-                        </v-flex>
-                        <v-flex md4 lg4>
-                               <v-select class="primary--text mx-2" :items="huiTuiFlag" v-model="closeAcct.huiTuiFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
-                        </v-flex>
-            </v-layout>
-          </v-container>
-        </div>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-container fluid pr-5 pt-0>
+        <v-layout row wrap>
+            <v-flex xs12 md12 lg12>
+                <div slot="widget-content">
+                    <v-container fluid pt-1>
+                        <v-layout row wrap>
+                            <v-flex xs12 md2 lg2>
+                               <v-subheader class="primary--text subheading">存入控制方式*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                               <v-select class="primary--text mx-2" :items="systemControlApproach" v-model="closeAcct.systemControlApproach" label="存入控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                               <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                               <v-select class="primary--text mx-2" :items="permitCommersionFlag" v-model="closeAcct.permitCommersionFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                                <v-select class="primary--text mx-2" :items="cashResouce" v-model="closeAcct.cashResouce" label="资金来源方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                                 <v-select class="primary--text mx-2" :items="acctReatraintCheck" v-model="closeAcct.acctReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary--text subheading">签约检查*</v-subheader>
+                            </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-select class="primary--text mx-2" :items="resignCheck" v-model="closeAcct.resignCheck" label="签约检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                             </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                   <v-subheader class="primary--text subheading">欠费检查*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                                   <v-select class="primary--text mx-2" :items="ownCheck" v-model="closeAcct.ownCheck" label="欠费检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                   <v-subheader class="primary--text subheading">是否允许销户回退*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                                   <v-select class="primary--text mx-2" :items="huiTuiFlag" v-model="closeAcct.huiTuiFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
-import { getInitData } from "@/api/prod";
-import { getProdData } from "@/api/prod";
-export default {
-      props: ["prodData"],
-      data: () => ({
-        title: null,
-        systemControlApproach: [
-            {
+    import { getInitData } from "@/mock/init";
+    import { getProdData } from "@/api/prod";
+    export default {
+        props: ["prodData"],
+        data: () => ({
+            title: null,
+            systemControlApproach: [{
                 key: "",
                 value: ""
-            }
-        ],
-        permitCommersionFlag: [
-            {
+            }],
+            permitCommersionFlag: [{
                 key: "",
                 value: ""
-            }
-        ],
-        cashResouce: [
-            {
+            }],
+            cashResouce: [{
                 key: "",
                 value: ""
-            }
-        ],
-        acctReatraintCheck: [
-            {
+            }],
+            acctReatraintCheck: [{
                 key: "",
                 value: ""
+            }],
+            resignCheck: [{
+                key: "",
+                value: ""
+            }],
+            ownCheck: [{
+                key: "",
+                value: ""
+            }],
+            huiTuiFlag: [{
+                key: "",
+                value: ""
+            }],
+            refData: getInitData,
+            closeAcct: {
+                systemControlApproach: '',
+                permitCommersionFlag: '',
+                cashResouce: '',
+                acctReatraintCheck: '',
+                resignCheck: '',
+                ownCheck: '',
+                huiTuiFlag: ''
+            },
+        }),
+        computed: {
+            progress() {
+                return Math.min(100, this.value.length * 10);
             }
-        ],
-      resignCheck: [
-                  {
-                      key: "",
-                      value: ""
-                  }
-              ],
-      ownCheck: [
-                  {
-                      key: "",
-                      value: ""
-                  }
-              ],
-      huiTuiFlag: [
-                  {
-                      key: "",
-                      value: ""
-                  }
-              ],
-        closeAcct: {
-            systemControlApproach: '',
-            permitCommersionFlag: '',
-            cashResouce: '',
-            acctReatraintCheck: '',
-            resignCheck: '',
-            ownCheck: '',
-            huiTuiFlag: ''
         },
-      }),
-      computed: {
-        progress() {
-          return Math.min(100, this.value.length * 10);
-        }
-      },
-      watch: {
-        prodData(val) {
-          this.selectByProd(val)
-        }
-       },
-      mounted() {
-        this.initRefDate();
-      },
-      methods: {
-        selectByProd(val) {
-          this.eventForm = {}
-          this.closeAcct.systemControlApproach = val.closeAcct.systemControlApproach
-          this.closeAcct.permitCommersionFlag = val.closeAcct.permitCommersionFlag
-          this.closeAcct.cashResouce = val.closeAcct.cashResouce
-          this.closeAcct.acctReatraintCheck = val.closeAcct.acctReatraintCheck
-          this.closeAcct.resignCheck = val.closeAcct.resignCheck
-          this.closeAcct.ownCheck = val.closeAcct.ownCheck
-          this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
+        watch: {
+            prodData(val) {
+                this.selectByProd(val)
+            }
         },
-        initRefDate() {
-            getInitData().then(response => {
+        mounted() {
+            this.initRefDate();
+        },
+        methods: {
+            selectByProd(val) {
+                this.eventForm = {}
+                this.closeAcct.systemControlApproach = val.closeAcct.systemControlApproach
+                this.closeAcct.permitCommersionFlag = val.closeAcct.permitCommersionFlag
+                this.closeAcct.cashResouce = val.closeAcct.cashResouce
+                this.closeAcct.acctReatraintCheck = val.closeAcct.acctReatraintCheck
+                this.closeAcct.resignCheck = val.closeAcct.resignCheck
+                this.closeAcct.ownCheck = val.closeAcct.ownCheck
+                this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
+            },
+            initRefDate() {
+                getInitData().then(response => {
                 console.log(response);
-                this.systemControlApproach = response.data.paraDataRb.systemControlApproach;
-                this.permitCommersionFlag = response.data.paraDataRb.permitCommersionFlag;
-                this.cashResouce = response.data.paraDataRb.cashResouce;
-                this.acctReatraintCheck = response.data.paraDataRb.acctReatraintCheck;
-                this.resignCheck = response.data.paraDataRb.resignCheck;
-                this.ownCheck = response.data.paraDataRb.ownCheck;
-                this.huiTuiFlag = response.data.paraDataRb.huiTuiFlag;
-            });
+                this.systemControlApproach = this.refData[2].paraDataRb.systemControlApproach;
+                this.permitCommersionFlag = this.refData[2].paraDataRb.permitCommersionFlag;
+                this.cashResouce = this.refData[2].paraDataRb.cashResouce;
+                this.acctReatraintCheck = this.refData[2].paraDataRb.acctReatraintCheck;
+                this.resignCheck = this.refData[2].paraDataRb.resignCheck;
+                this.ownCheck = this.refData[2].paraDataRb.ownCheck;
+                this.huiTuiFlag = this.refData[2].paraDataRb.huiTuiFlag;
+                });
+            }
         }
     }
-  }
 </script>
