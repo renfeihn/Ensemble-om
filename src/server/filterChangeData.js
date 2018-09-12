@@ -150,7 +150,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
 export function copy(obj1,obj2) {
     var obj = obj2||{};
     for(let name in obj1){
-        if(typeof obj1[name] === "object"){
+        if(typeof obj1[name] === "object" && obj1[name]!== null){
             obj[name]= (obj1[name].constructor===Array)?[]:{};
             copy(obj1[name],obj[name]);
         }else{

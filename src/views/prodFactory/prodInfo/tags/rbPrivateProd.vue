@@ -151,7 +151,8 @@
                     value: '',
                     lable: ''
                 }],
-                folders: [],
+                folders: [
+                ],
                 prodData: {},
                 sourceProdData: {},
                 targetData: {}
@@ -165,13 +166,13 @@
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
             this.queryDespositProdData(this.prodClass)
-            if(this.$route.params.prodClassCmp !=''){
-                this.prodClass = this.$route.params.prodClassCmp
-            }
-            if(this.$route.params.prodCodeCmp !=''){
-                this.initStage(this.$route.params.prodCodeCmp)
-            }
-            this.queryDespositProdData(this.prodClass)
+//            if(this.$route.params.prodClassCmp !=''){
+//                this.prodClass = this.$route.params.prodClassCmp
+//            }
+//            if(this.$route.params.prodCodeCmp !=''){
+//                this.initStage(this.$route.params.prodCodeCmp)
+//            }
+//            this.queryDespositProdData(this.prodClass)
         },
         methods: {
             queryProdFlow(){
@@ -180,9 +181,11 @@
                     for(let j = 0; j<length; j++){
                         if(response.data.data[j].flowManage.status === "2"){
                             alert("存在已提交数据，等待复核！")
+                            break
                         }
                         if(response.data.data[j].flowManage.status === "3"){
                             alert("存在已复核数据，等待发布！")
+                            break
                         }
                     }
                 });
@@ -226,7 +229,7 @@
             handleClick(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
-                    this.prodData = response.data
+                    this.prodData = response.data.data
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
             },
@@ -234,7 +237,7 @@
             copy(obj1,obj2) {
                 var obj = obj2||{};
                 for(let name in obj1){
-                    if(typeof obj1[name] === "object"){
+                    if(typeof obj1[name] === "object" && obj1[name]!== null){
                         obj[name]= (obj1[name].constructor===Array)?[]:{};
                         this.copy(obj1[name],obj[name]);
                     }else{
@@ -257,11 +260,11 @@
             },
             queryDespositProdData(prodClass) {
                 getProdType(prodClass).then(response => {
-                    let length = response.data.length
+                    let length = response.data.data.length
                     for(let j = 0; j<length; j++){
-                        this.folders.push(response.data[j])
-                    }
-                })
+                        this.folders.push(response.data.data[j])
+                   }
+                });
             },
 //            getProdBySearchValue(val) {
 //                if (val) {

@@ -8,7 +8,7 @@ import {
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 1000 // request timeout
+  timeout: 8000 // request timeout
 });
 
 // request interceptor
@@ -40,8 +40,7 @@ service.interceptors.response.use(
     if (!res) {
       toast.error("服务已断开,请检查网络!");
     }
-    if (res.code) {
-        if (!res.code) {
+    if (!res.code) {
             toast.error(res.msg || "错误信息未定义!");
             // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
             if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
@@ -52,17 +51,12 @@ service.interceptors.response.use(
                         location.reload() // 为了重新实例化vue-router对象 避免bug
                     })
                 })
-
             }
             return Promise.reject('error')
         }
         else {
             return response
         }
-    }
-    else{
-        return response
-    }
   },
   error => {
     console.log('err' + error) // for debug
