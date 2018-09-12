@@ -63,7 +63,7 @@
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodBranch" v-model="productObject.prodBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodBranch" v-model="productObject.applyBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
 
                             <v-flex xs12 md2 lg2>
@@ -138,7 +138,7 @@
                 this.productObject = {}
                 this.productObject.clientType = val.prodDefines.CLIENT_TYPE.attrValue
                 this.productObject.inLandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
-                this.productObject.prodBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
+                this.productObject.applyBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
                 this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
                 this.productObject.clientSubType = val.prodDefines.CLIENT_GENERAL_TYPE.attrValue//客户子类型
                 this.productObject.channelChoose = ""//渠道选择
