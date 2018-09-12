@@ -815,6 +815,18 @@ export default [
         `@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue`
       )
   },
+{
+    path: '/prod/rbPrivateProds',
+        meta: {
+    breadcrumb: true,
+        title: '对私存款组'
+},
+    name: 'prod/rbPrivateProds',
+        component: () =>
+import(
+    `@/views/prodFactory/prodInfo/tags/rbPrivateProds.vue`
+)
+},
   {
     path: '/prod/rbPublicProd',
     meta: {

@@ -118,93 +118,83 @@ import { getProdData } from "@/api/prod";
                 key: "",
                 value: ""
             }],
-            voucherTypeCheck: [
-            {
-            key: "",
-            value: ""
-            }
-            ],
-            weiYueType: [
-            {
-            key: "",
-            value: ""
-            }
-            ],
-            dealingWay: [
-            {
-            key: "",
-            value: ""
-            }
-            ],
-            danciYueCheck: [
-            {
-            key: "",
-            value: ""
-            }
-            ],
-            acctBalanceCheck: [
-            {
-            key: "",
-            value: ""
-            }
-            ],
+            voucherTypeCheck: [{
+                key: "",
+                value: ""
+            }],
+            weiYueType: [{
+                key: "",
+                value: ""
+            }],
+            dealingWay: [{
+                key: "",
+                value: ""
+            }],
+            danciYueCheck: [{
+                key: "",
+                value: ""
+            }],
+            acctBalanceCheck: [{
+                key: "",
+                value: ""
+            }],
             refData: getInitData,
             drawInfo: {
-            drawControlWay: '',
-            daiBanFlag: '',
-            cashResource: '',
-            attrReatraintCheck: '',
-            withDrawlCheck: '',
-            voucherTypeCheck: '',
-            weiYueType: '',
-            dealingWay: '',
-            danciYueCheck: '',
-            acctBalanceCheck: ''
+                drawControlWay: '',
+                daiBanFlag: '',
+                cashResource: '',
+                attrReatraintCheck: '',
+                withDrawlCheck: '',
+                voucherTypeCheck: '',
+                weiYueType: '',
+                dealingWay: '',
+                danciYueCheck: '',
+                acctBalanceCheck: ''
             }
         }),
         computed: {
-        progress() {
-        return Math.min(100, this.value.length * 10);
-        }
+            progress() {
+                return Math.min(100, this.value.length * 10);
+            }
         },
         watch: {
-        prodData(val) {
-        this.selectByProd(val);
-        }
+            prodData(val) {
+                this.selectByProd(val);
+            }
         },
         mounted() {
-        this.initRefDate();
+            this.initRefDate();
         },
         methods: {
-        selectByProd(val) {
-        getProdData(this.listValue).then(response => {
-        this.drawInfo.drawControlWay = val.drawInfo.drawControlWay;
-        this.drawInfo.cashResource = val.drawInfo.cashResource;
-        this.drawInfo.dealingWay = val.drawInfo.dealingWay;
-        this.drawInfo.daiBanFlag = val.drawInfo.daiBanFlag;
-        this.drawInfo.weiYueType = val.drawInfo.weiYueType;
-        this.drawInfo.attrReatraintCheck = val.drawInfo.attrReatraintCheck;
-        this.drawInfo.withDrawlCheck = val.drawInfo.withDrawlCheck;
-        this.drawInfo.voucherTypeCheck = val.drawInfo.voucherTypeCheck;
-        this.drawInfo.danciYueCheck = val.drawInfo.danciYueCheck;
-        this.drawInfo.acctBalanceCheck = val.drawInfo.acctBalanceCheck
-        });
-        },
-        initRefDate() {
-        this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;
-        this.daiBanFlag = this.refData[2].paraDataRb.daiBanFlag;
-        this.cashResource = this.refData[2].paraDataRb.cashResource;
-        this.attrReatraintCheck = this.refData[2].paraDataRb.attrReatraintCheck;
-        this.withDrawlCheck = this.refData[2].paraDataRb.withDrawlCheck;
-        this.voucherTypeCheck = this.refData[2].paraDataRb.voucherTypeCheck;
-        this.weiYueType = this.refData[2].paraDataRb.weiYueType;
-        this.dealingWay = this.refData[2].paraDataRb.dealingWay;
-        this.danciYueCheck = this.refData[2].paraDataRb.danciYueCheck;
-        this.acctBalanceCheck = this.refData[2].paraDataRb.acctBalanceCheck;
-        },
-        closeDialog() {
-        this.$parent.isActive = false;
-        }
+            selectByProd(val) {
+                getProdData(this.listValue).then(response => {
+                    this.drawInfo.drawControlWay = val.drawInfo.drawControlWay;
+                    this.drawInfo.cashResource = val.drawInfo.cashResource;
+                    this.drawInfo.dealingWay = val.drawInfo.dealingWay;
+                    this.drawInfo.daiBanFlag = val.drawInfo.daiBanFlag;
+                    this.drawInfo.weiYueType = val.drawInfo.weiYueType;
+                    this.drawInfo.attrReatraintCheck = val.drawInfo.attrReatraintCheck;
+                    this.drawInfo.withDrawlCheck = val.drawInfo.withDrawlCheck;
+                    this.drawInfo.voucherTypeCheck = val.drawInfo.voucherTypeCheck;
+                    this.drawInfo.danciYueCheck = val.drawInfo.danciYueCheck;
+                    this.drawInfo.acctBalanceCheck = val.drawInfo.acctBalanceCheck
+                });
+            },
+            initRefDate() {
+                this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;
+                this.daiBanFlag = this.refData[2].paraDataRb.daiBanFlag;
+                this.cashResource = this.refData[2].paraDataRb.cashResource;
+                this.attrReatraintCheck = this.refData[2].paraDataRb.attrReatraintCheck;
+                this.withDrawlCheck = this.refData[2].paraDataRb.withDrawlCheck;
+                this.voucherTypeCheck = this.refData[2].paraDataRb.voucherTypeCheck;
+                this.weiYueType = this.refData[2].paraDataRb.weiYueType;
+                this.dealingWay = this.refData[2].paraDataRb.dealingWay;
+                this.danciYueCheck = this.refData[2].paraDataRb.danciYueCheck;
+                this.acctBalanceCheck = this.refData[2].paraDataRb.acctBalanceCheck;
+            },
+            closeDialog() {
+                this.$parent.isActive = false;
+            }
         }
     };
 </script>

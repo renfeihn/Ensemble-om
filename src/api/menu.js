@@ -44,6 +44,7 @@ const Menu = [
     icon: 'account_balance',
     items: [
       { name: 'RB100', title: '个人存款组', component: 'prod/rbPrivateProd' },
+        { name: 'RB101', title: '对私存款组', component: 'prod/rbPrivateProds' },
       { name: 'RB200', title: '对公存款组', component: 'prod/rbPublicProd' },
       { name: 'RB300', title: '同业存款组', component: 'prod/rbHorizontalProd' },
       { name: 'RBBASE', title: '存款基础产品组', component: 'prod/rbBaseProd' },
