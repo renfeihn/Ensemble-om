@@ -61,83 +61,82 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     prodType.oldData = Object.assign(prodType.oldData,oldProdMap)
     backData.prodType = prodType
     //处理prodDefines对象数据
-    var prodDefines = {newData: {},oldData: {}}
-    var newMap = {}
-    var oldMap = {}
-    if(copyFlag === "Y"){
-        //产品复制时，保留所有最新数据
-        newMap = prodData.prodDefines
-    }else {
+    var prodDefines = {}
+
         for (let i in prodData.prodDefines) {
-            if (prodData.prodDefines[i].attrValue !== sourceProdData.prodDefines[i].attrValue) {
-                newMap[i] = prodData.prodDefines[i]
-                oldMap[i] = sourceProdData.prodDefines[i]
+            if(copyFlag === "Y"){
+                //产品复制时，保留所有最新数据
+                let newMap = {newData: {},oldData: {}}
+                newMap.newData = prodData.prodDefines[i]
+                prodDefines[i] = newMap
+            }else if (prodData.prodDefines[i].attrValue !== sourceProdData.prodDefines[i].attrValue) {
+                let newMap = {newData: {},oldData: {}}
+                newMap.newData = prodData.prodDefines[i]
+                newMap.oldData = sourceProdData.prodDefines[i]
+                prodDefines[i] = newMap
             }
         }
-    }
-    prodDefines.newData = Object.assign(prodDefines.newData,newMap)
-    prodDefines.oldData = Object.assign(prodDefines.oldData,oldMap)
     backData.prodDefines = prodDefines
-    //处理mbEventInfos对象数据
 
+    //处理mbEventInfos对象数据
     for (let m in prodData.mbEventInfos){
-        let mbEventAttrs = {newData: {}, oldData: {}}
-        let mbEventParts = {newData: {}, oldData: {}}
-        let mbEventType = {newData: {}, oldData: {}}
+        let mbEventAttrs = {}
+        let mbEventParts = {}
+        let mbEventType = {}
         let temp= {mbEventAttrs: {},mbEventParts: {},mbEventType: {}}
-        let newData= {}
-        let oldData= {}
-        let newDataPart = {}
-        let oldataPart = {}
-        let newDataType = {}
-        let oldataType = {}
         let flag = "false"
         let flagPart = "false"
         let flagType = "false"
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
             if(copyFlag === "Y"){
-                newData[k] = prodData.mbEventInfos[m].mbEventAttrs[k]
+                let newDataMap= {newData: {}, oldData: {}}
+                newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
                 flag = "true"
+                mbEventAttrs[k] = newDataMap
             }else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue) {
-                    newData[k] = prodData.mbEventInfos[m].mbEventAttrs[k]
-                    oldData[k] = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
+                    let newDataMap= {newData: {}, oldData: {}}
+                    newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
+                    newDataMap.oldData = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
                     flag = "true"
-            }
-         }
-        mbEventAttrs.newData = Object.assign(mbEventAttrs.newData,newData)//深拷贝
-        mbEventAttrs.oldData = Object.assign(mbEventAttrs.oldData,oldData)
+                    mbEventAttrs[k] = newDataMap
+                }
+        }
         temp.mbEventAttrs = Object.assign(temp.mbEventAttrs,mbEventAttrs)
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
             if(copyFlag === "Y"){
-                newDataPart[x] = prodData.mbEventInfos[m].mbEventParts[x]
+                let newDataPart = {newData: {}, oldData: {}}
+                newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x]
                 flagPart = "true"
+                mbEventParts[x] = newDataPart
             }else if (prodData.mbEventInfos[m].mbEventParts[x].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x].attrValue){
-                 newDataPart[x] = prodData.mbEventInfos[m].mbEventParts[x]
-                 oldataPart[x] = sourceProdData.mbEventInfos[m].mbEventParts[x]
-                 flagPart = "true"
+                    let newDataPart = {newData: {}, oldData: {}}
+                    newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x]
+                    newDataPart.oldData = sourceProdData.mbEventInfos[m].mbEventParts[x]
+                    flagPart = "true"
+                    mbEventParts[x] = newDataPart
              }
          }
-        mbEventParts.newData = Object.assign(mbEventParts.newData,newDataPart)
-        mbEventParts.oldData = Object.assign(mbEventParts.oldData,oldataPart)
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
         //mbEventType
          for (let y in prodData.mbEventInfos[m].mbEventType){
             if(copyFlag === "Y") {
-                newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
+                let newDataType = {newData: {}, oldData: {}}
+                newDataType.newData = prodData.mbEventInfos[m].mbEventType[y]
                 flagType = "true"
+                mbEventType[y] = newDataType
             }else if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){
-                 newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
-                 oldataType[y] = sourceProdData.mbEventInfos[m].mbEventType[y]
-                 flagType = "true"
+                    let newDataType = {newData: {}, oldData: {}}
+                    newDataType.newData = prodData.mbEventInfos[m].mbEventType[y]
+                    newDataType.oldData = sourceProdData.mbEventInfos[m].mbEventType[y]
+                    flagType = "true"
+                    mbEventType[y] = newDataType
              }
          }
-         mbEventType.newData = Object.assign(mbEventType.newData,newDataType)
-         mbEventType.oldData = Object.assign(mbEventType.oldData,oldataType)
          temp.mbEventType = Object.assign(temp.mbEventType,mbEventType)
         backData.mbEventInfos[m].mbEventType = temp.mbEventType
          if(flag === "false" && flagType === "false" && flagPart === "false"){
