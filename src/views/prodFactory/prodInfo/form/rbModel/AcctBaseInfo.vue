@@ -111,7 +111,7 @@
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="voucherType" v-model="acctBaseInfo.docType" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <dc-multiselect v-model="acctBaseInfo.docType" :options="docType"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -129,13 +129,14 @@
                                 <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="acctNature" v-model="acctBaseInfo.acctNature" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <dc-multiselect v-model="acctBaseInfo.acctNature" :options="acctNature"></dc-multiselect>
+
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="ownershipType" v-model="acctBaseInfo.ownerShipType" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <dc-multiselect v-model="acctBaseInfo.ownerShipType" :options="ownerShipType"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
@@ -189,11 +190,24 @@
                 key: '',
                 value: ''
             }],
+            docType: [{
+                key: '',
+                value: ''
+            }],
+            acctNature: [{
+                key: '',
+                value: ''
+            }],
+            ownerShipType: [{
+                key: '',
+                value: ''
+            }],
             refData: getInitData,
             acctBaseInfo: {
                 prodType: '',
                 prodDesc: '',
                 prodClass: '',
+                ccy: '',
                 prodGroup: '',
                 prodRange: '',
                 baseProdType: '',
@@ -262,21 +276,16 @@
                 var str1 = val.prodDefines.PROD_END_DATE.attrValue
                 this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
                 this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
-                let docType=val.prodDefines.DOC_TYPE.attrValue;
-                if(docType!=undefined){
-                this.acctBaseInfo.docType =docType.split(',');
-                }
+
+                this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue;
+
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
-                //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
                 this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
-                let acctNature=val.prodDefines.ACCT_NATURE.attrValue
-                if(acctNature!=undefined) {
-                    this.acctBaseInfo.acctNature = acctNature.split(',');
-                }
-                let ownerShipType= val.prodDefines.OWNERSHIP_TYPE.attrValue
-                if(ownerShipType!=undefined) {
-                    this.acctBaseInfo.ownerShipType = ownerShipType.split(',')
-                }
+
+                this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
+
+                this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
+
                 this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
                 this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
                 this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
@@ -285,25 +294,6 @@
                 this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
 
                 this.acctBaseInfo.discountCcy = val.prodDefines.CONVERT_CCY.attrValue
-            },
-            selectByProd() {
-                getProdData(this.listValue).then(response => {
-                    this.prodtypeData = this.listValue;
-                    this.proddescData = response.data.prodFrom.proddesc;
-                    this.sourceModule = response.data.prodFrom.sourceModule;
-                    this.prodClass = response.data.prodFrom.prodClass;
-                    this.prodAttr = response.data.prodFrom.prodAttr;
-                    this.isGroup = response.data.prodFrom.isGroup;
-                    this.prodStatus = response.data.prodFrom.prodStatus;
-                    this.baseprodtype = response.data.prodFrom.baseprodtype;
-                    this.acctType = response.data.prodFrom.acctType;
-                    this.subAcctType = response.data.prodFrom.subAcctType;
-                    this.isMultiCcy = response.data.prodFrom.isMultiCcy;
-                    this.ccy = response.data.prodFrom.ccy;
-                    this.acctIntFlag = response.data.prodFrom.acctIntFlag;
-                    this.profitCentre = response.data.prodFrom.profitCentre;
-                    this.withdrawalType = response.data.prodFrom.withdrawalType;
-                });
             },
             initRefDate() {
                 this.sourceModule = this.refData[2].paraDataRb.sourceModule;
@@ -321,7 +311,7 @@
                 this.acctType = this.refData[2].paraDataRb.acctType;
                 this.acctSubType = this.refData[2].paraDataRb.acctSubType;
                 this.acctNature = this.refData[2].paraDataRb.acctNature;
-                this.ownershipType = this.refData[2].paraDataRb.ownershipType;
+                this.ownerShipType = this.refData[2].paraDataRb.ownershipType;
                 this.acctClass = this.refData[2].paraDataRb.acctClass;
                 this.balType = this.refData[2].paraDataRb.balType;
                 this.withdrawalType = this.refData[2].paraDataRb.withdrawalType;
@@ -330,6 +320,7 @@
                 this.fixedCall = this.refData[2].paraDataRb.fixedCall;
                 this.multiCcy = this.refData[2].paraDataRb.multiCcy;
                 this.docFlag = this.refData[2].paraDataRb.docFlag;
+                this.docType = this.refData[2].paraDataRb.docType;
             },
             closeDialog() {
                 this.$parent.isActive = false;
