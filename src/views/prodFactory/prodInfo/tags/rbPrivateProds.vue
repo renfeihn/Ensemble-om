@@ -44,34 +44,11 @@
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
-                    <v-card-text>
-                        <v-btn color="success" depressed="" ><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
-                        <v-btn color="success" depressed="" ><v-icon >history</v-icon>复制</v-btn>
-                        <v-btn color="success" depressed="" @click="saveClick"><v-icon >history</v-icon>保存</v-btn>
-                    </v-card-text>
+                <v-card-text>
+                <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
+                </v-card-text>
                 </v-card>
-                <v-toolbar dense class="chat-history-toolbar prodLists">
-                    <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search" v-model="searchValue"></v-text-field>
-                </v-toolbar>
-                <vue-perfect-scrollbar class="depositTree">
-                    <v-list two-line subheader>
-                        <!--<v-subheader inset>个人活期产品</v-subheader>-->
-                        <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
-                            <v-list-tile-avatar>
-                                <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
-                            </v-list-tile-avatar>
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <v-btn icon ripple>
-                                    <v-icon color="grey lighten-1">info</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                    </v-list>
-                </vue-perfect-scrollbar>
+                <prod-list-form v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
             </v-flex>
         </v-layout>
     </div>
@@ -88,8 +65,8 @@
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
     import { getProdData } from "@/api/url/prodInfo";
-    import downAction from '../btn/downAction'
     import {filterChangeData} from "@/server/filterChangeData";
+
     import AcctBaseInfo from '../form/rbModel/AcctBaseInfo';
     import controlInfo from '../form/rbModel/ControlInfo';
     import ProductObject from '../form/rbModel/ProductObject';
@@ -102,13 +79,16 @@
     import RateInfo from '../form/rbModel/RateInfo';
     import FormShift from '../form/rbModel/FormShift';
     import AccountingInfo from '../form/rbModel/AccountingInfo';
+
+    import downAction from '../btn/downAction';
+    import ProdListForm from '../form/ProdListForm';
+    import { getCheckFlowList } from "@/api/url/prodInfo";
     export default {
         name: 'deposit',
         components: {
             BranchForm,
             VWidget,
             VuePerfectScrollbar,
-            downAction,
             controlInfo,
             AcctBaseInfo,
             ProductObject,
@@ -120,12 +100,15 @@
             ChargeDefine,
             RateInfo,
             FormShift,
-            AccountingInfo
+            AccountingInfo,
+            downAction,
+            ProdListForm
         },
         data () {
             return {
                 listLoading: true,
                 searchValue: '',
+                showCopy: '',
                 depositProd: {
                     prodcode: '',
                     version: ''
@@ -179,8 +162,7 @@
                 folders: [],
                 prodData: {},
                 sourceProdData: {},
-                targetData: {},
-                ttt: {}
+                targetData: {}
             }
         },
         created() {
@@ -199,16 +181,58 @@
             this.queryDespositProdData(this.prodClass)
         },
         methods: {
+            queryProdFlow(){
+                getCheckFlowList().then(response => {
+                    let length = response.data.data.length
+                    for(let j = 0; j<length; j++){
+                        if(response.data.data[j].flowManage.status === "2"){
+                            alert("存在已提交数据，等待复核！")
+                            break
+                        }
+                        if(response.data.data[j].flowManage.status === "3"){
+                            alert("存在已复核数据，等待发布！")
+                            break
+                        }
+                    }
+                });
+            },
             queryProdInfo() {
                 console.log('start query prod info')
             },
-            saveClick() {
+            saveProd() {
                 this.$refs.callback[0].callbackprod()
-                this.targetData = filterChangeData(this.prodData,this.sourceProdData)
-                this.targetData.option="save";
-                savaProdInfo(this.targetData);
+                this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.showCopy)
+                if(this.showCopy === "Y") {
+                    this.targetData.optionType = "I"
+                }else{
+                    this.targetData.optionType = "U"
+                }
+                this.targetData.option = "save";
+                this.targetData.userName = sessionStorage.getItem("userId")
+                savaProdInfo(this.targetData).then(response => {
+                    if(response.status === 200) {
+                        //置灰提交按钮，防止为此提交
+                        alert("提交成功！")
+                    }
+                })
             },
-            handleClick(value) {
+            tempProd() {
+                this.$refs.callback[0].callbackprod()
+                this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.showCopy)
+                if(this.showCopy === "Y") {
+                    this.targetData.optionType = "I"
+                }else{
+                    this.targetData.optionType = "U"
+                }
+                this.targetData.option="temp";
+                this.targetData.userName = sessionStorage.getItem("userId")
+                savaProdInfo(this.targetData).then(response => {
+                    if(response.status === 200) {
+                        alert("暂存成功！")
+                    }
+                })
+            },
+            listenToProdList(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
                     this.prodData = response.data
@@ -219,7 +243,7 @@
             copy(obj1,obj2) {
                 var obj = obj2||{};
                 for(let name in obj1){
-                    if(typeof obj1[name] === "object"){
+                    if(typeof obj1[name] === "object" && obj1[name]!== null){
                         obj[name]= (obj1[name].constructor===Array)?[]:{};
                         this.copy(obj1[name],obj[name]);
                     }else{
@@ -240,32 +264,36 @@
                     type: 'warning'
                 })
             },
-            queryDespositProdData(prodClass) {
-                getProdType(prodClass).then(response => {
-                    let length = response.data.length
-                    for(let j = 0; j<length; j++){
-                        this.folders.push(response.data[j])
-                    }
-                })
-            },
             getNewProdData(val) {
                 console.log(val)
-                this.prodData.prodType.prodType = val.eventForm.prodcode
-                this.prodData.prodType.prodDesc = val.eventForm.proddesc
-                this.prodData.prodType.prodRange = val.eventForm.prodprepice
-                this.prodData.prodType.prodClass = val.eventForm.prodclass
-                this.prodData.prodType.prodGroup = val.eventForm.prodmuti
-                this.prodData.prodType.status = val.eventForm.prodstatus
-                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctstruct
-                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.virtualflag
-                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctintflag
-                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.amtflag
-                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitcenter
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.effectdate
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.failuredate
-                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.accttype
+                this.prodData.prodType.prodType = val.eventForm.prodType
+                this.prodData.prodType.prodDesc = val.eventForm.prodDesc
+                this.prodData.prodType.prodRange = val.eventForm.prodRange
+                this.prodData.prodType.prodClass = val.eventForm.prodClass
+                this.prodData.prodType.prodGroup = val.eventForm.prodGroup
+                this.prodData.prodType.status = val.eventForm.status
+                this.prodData.prodDefines.ACCT_STRUCT_FLAG.attrValue = val.eventForm.acctStructFlag
+                this.prodData.prodDefines.ACCT_REAL_FLAG.attrValue = val.eventForm.acctRealFlag
+                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.eventForm.acctIntFlag
+                this.prodData.prodDefines.ACCT_BAL_FLAG.attrValue = val.eventForm.acctBalFlag
+                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.eventForm.profitCenter
+                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.eventForm.prodStartDate
+                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.prodEndDate
+                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
 
                 this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
+            },
+            listenToCopy(data) {
+                this.prodCode=data.prodType;
+                this.prodData.prodType.prodType=data.prodType;
+                this.prodData.prodType.prodDesc=data.prodDesc;
+                const newData=this.copy(this.prodData,[]);
+                this.prodData=newData;
+                if(data.showCopy){
+                    this.showCopy = 'Y';
+                }else{
+                    this.showCopy = '';
+                }
             }
         }
     }
