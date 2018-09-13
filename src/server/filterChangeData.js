@@ -117,23 +117,11 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         temp.mbEventAttrs = Object.assign(temp.mbEventAttrs,mbEventAttrs)
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
         //mbEventParts
-        mbEventPartDeal(prodData,m,copyFlag,flagPart,mbEventParts,sourceProdData);
-        // for (let x in prodData.mbEventInfos[m].mbEventParts){
-        //     for(let z in prodData.mbEventInfos[m].mbEventParts[x]) {
-        //         if (copyFlag === "Y") {
-        //             let newDataPart = {newData: {}, oldData: {}}
-        //             newDataPart.newData = prodData.mbEventInfos[x].mbEventParts[z]
-        //             flagPart = "true"
-        //             mbEventParts[z] = newDataPart
-        //         } else if (prodData.mbEventInfos[x].mbEventParts[z].attrValue !== sourceProdData.mbEventInfos[x].mbEventParts[z].attrValue) {
-        //             let newDataPart = {newData: {}, oldData: {}}
-        //             newDataPart.newData = prodData.mbEventInfos[x].mbEventParts[z]
-        //             newDataPart.oldData = sourceProdData.mbEventInfos[x].mbEventParts[z]
-        //             flagPart = "true"
-        //             mbEventParts[z] = newDataPart
-        //         }
-        //     }
-        //  }
+        for (let x in prodData.mbEventInfos[m].mbEventParts){
+            mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sourceProdData);
+
+
+         }
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
@@ -158,24 +146,27 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     }
     return backData
 }
-export function mbEventPartDeal(prodData,m,copyFlag,flagPart,mbEventParts,sourceProdData) {
-    for (let x in prodData.mbEventInfos[m].mbEventParts){
+export function mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sourceProdData) {
         for(let z in prodData.mbEventInfos[m].mbEventParts[x]) {
-            if (copyFlag === "Y") {
-                let newDataPart = {newData: {}, oldData: {}}
-                newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x][z]
-                flagPart = "true"
-                mbEventParts[z] = newDataPart
-            } else if (prodData.mbEventInfos[x].mbEventParts[z].attrValue !== sourceProdData.mbEventInfos[x].mbEventParts[z].attrValue) {
-                let newDataPart = {newData: {}, oldData: {}}
-                newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x][z]
-                newDataPart.oldData = sourceProdData.mbEventInfos[m].mbEventParts[x][z]
-                flagPart = "true"
-                mbEventParts[z] = newDataPart
-            }
+                if (copyFlag === "Y") {
+                    let newDataPart = {newData: {}, oldData: {}}
+                    newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x][z]
+                    flagPart = "true"
+                    let map = {}
+                    map[z] = newDataPart
+                    mbEventParts[x] = map
+                } else if (prodData.mbEventInfos[m].mbEventParts[x][z].attrValue !== sourceProdData.mbEventInfos[m].mbEventParts[x][z].attrValue) {
+                    let newDataPart = {newData: {}, oldData: {}}
+                    newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x][z]
+                    newDataPart.oldData = sourceProdData.mbEventInfos[m].mbEventParts[x][z]
+                    flagPart = "true"
+                    let map = {}
+                    map[z] = newDataPart
+                    mbEventParts[x] = map
+                }
+
         }
-    }
-    // temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
+        // temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
     // backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 }
 
