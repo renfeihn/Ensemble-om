@@ -127,7 +127,7 @@
                    text: '适用范围'
                }, {
                    icon: 'work',
-                   text: '利率信息'
+                   text: '利息信息'
                }, {
                    icon: 'work',
                    text: '开户定义'
