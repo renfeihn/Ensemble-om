@@ -19,18 +19,27 @@
  *              mbEventInfos: {
  *                          事件A：{
  *                              mbEventAttrs:{
- *                                  newData: {只包含被修改对象修改后值},
- *                                  oldData: {只包含被修改对象修改前值}
- *                                  },
+ *                                      ATTR1:{
+ *                                          newData: {只包含被修改对象修改后值},
+ *                                          oldData: {只包含被修改对象修改前值}
+ *                                      },
+ *                                      {...}
+ *                                  }
  *                              mbEventPart: {
- *                                  newData: {只包含被修改对象修改后值},
- *                                  oldData: {只包含被修改对象修改前值}
- *                                  },
+ *                                      PART1:{
+ *                                          newData: {只包含被修改对象修改后值},
+ *                                          oldData: {只包含被修改对象修改前值}
+ *                                      },
+ *                                      {...}
+ *                                  }
  *                             mbEventType: {
- *                                  newData: {只包含被修改对象修改后值},
- *                                  oldData: {只包含被修改对象修改前值}
- *                                  },
- *                               }，
+ *                                      TYPE1{
+ *                                          newData: {只包含被修改对象修改后值},
+ *                                          oldData: {只包含被修改对象修改前值}
+ *                                      },
+ *                                      {...}
+ *                                  }
+ *                            },
  *                           事件B：{}，
  *                           事件C：{}.
  *                           ...

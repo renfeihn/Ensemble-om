@@ -41,27 +41,7 @@
                 <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
                 </v-card-text>
                 </v-card>
-                <v-toolbar dense class="chat-history-toolbar prodLists">
-                    <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="Search" v-model="searchValue"></v-text-field>
-                </v-toolbar>
-                <vue-perfect-scrollbar class="depositTree">
-                    <v-list two-line subheader>
-                        <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
-                            <v-list-tile-avatar>
-                                <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
-                            </v-list-tile-avatar>
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <v-btn icon ripple>
-                                    <v-icon color="grey lighten-1">info</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                    </v-list>
-                </vue-perfect-scrollbar>
+                <prod-list-form v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
             </v-flex>
         </v-layout>
     </div>
@@ -69,13 +49,12 @@
 
 <script>
     import {
-        getProdType
-    } from '@/api/url/prodInfo'
-    import {
         savaProdInfo
     } from '@/api/url/prodInfo';
     import BranchForm from "../form/BranchFormProd";
     import EventForm from '../form/EventFormPord';
+    import ProdListForm from '../form/ProdListForm';
+
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
     import accountingPlain from '../table/accountingPlain'
@@ -84,6 +63,7 @@
     import downAction from '../btn/downAction'
     import {filterChangeData} from "@/server/filterChangeData";
     import { getCheckFlowList } from "@/api/url/prodInfo";
+
 
     export default {
         name: 'deposit',
@@ -94,7 +74,8 @@
             VWidget,
             AcctForm,
             VuePerfectScrollbar,
-            downAction
+            downAction,
+            ProdListForm
         },
         data () {
             return {
@@ -151,8 +132,6 @@
                     value: '',
                     lable: ''
                 }],
-                folders: [
-                ],
                 prodData: {},
                 sourceProdData: {},
                 targetData: {}
@@ -165,14 +144,12 @@
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
-            this.queryDespositProdData(this.prodClass)
 //            if(this.$route.params.prodClassCmp !=''){
 //                this.prodClass = this.$route.params.prodClassCmp
 //            }
 //            if(this.$route.params.prodCodeCmp !=''){
 //                this.initStage(this.$route.params.prodCodeCmp)
 //            }
-//            this.queryDespositProdData(this.prodClass)
         },
         methods: {
             queryProdFlow(){
@@ -226,7 +203,7 @@
                     }
                 })
             },
-            handleClick(value) {
+            listenToProdList(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
                     this.prodData = response.data.data
@@ -257,14 +234,6 @@
                     message: 'cancel!',
                     type: 'warning'
                 })
-            },
-            queryDespositProdData(prodClass) {
-                getProdType(prodClass).then(response => {
-                    let length = response.data.data.length
-                    for(let j = 0; j<length; j++){
-                        this.folders.push(response.data.data[j])
-                   }
-                });
             },
 //            getProdBySearchValue(val) {
 //                if (val) {
