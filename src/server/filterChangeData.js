@@ -163,13 +163,13 @@ export function mbEventPartDeal(prodData,m,copyFlag,flagPart,mbEventParts,source
         for(let z in prodData.mbEventInfos[m].mbEventParts[x]) {
             if (copyFlag === "Y") {
                 let newDataPart = {newData: {}, oldData: {}}
-                newDataPart.newData = prodData.mbEventInfos[x].mbEventParts[z]
+                newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x][z]
                 flagPart = "true"
                 mbEventParts[z] = newDataPart
             } else if (prodData.mbEventInfos[x].mbEventParts[z].attrValue !== sourceProdData.mbEventInfos[x].mbEventParts[z].attrValue) {
                 let newDataPart = {newData: {}, oldData: {}}
-                newDataPart.newData = prodData.mbEventInfos[x].mbEventParts[z]
-                newDataPart.oldData = sourceProdData.mbEventInfos[x].mbEventParts[z]
+                newDataPart.newData = prodData.mbEventInfos[m].mbEventParts[x][z]
+                newDataPart.oldData = sourceProdData.mbEventInfos[m].mbEventParts[x][z]
                 flagPart = "true"
                 mbEventParts[z] = newDataPart
             }
