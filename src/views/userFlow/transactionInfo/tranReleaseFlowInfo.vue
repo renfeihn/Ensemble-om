@@ -177,6 +177,9 @@
     import {
         tranFlowInfo
     } from '@/api/url/prodInfo';
+    import {
+        tranFlowRelease
+    } from '@/api/url/prodInfo';
     import toast from '@/utils/toast';
 
     export default {
@@ -188,7 +191,7 @@
                 releaseInfo: {
                     mainSeqNo: '',
                     date: '',
-                    isApproved: '',
+                    isApproved: 'Y',
                     userId: '',
                     remark: '',
                     optType: '4'//发布
@@ -224,7 +227,7 @@
                 if(this.releaseInfo.isApproved !== "Y"){
                     this.releaseInfo.isApproved = "N"
                 }
-                tranFlowInfo(this.releaseInfo).then(response => {
+                tranFlowRelease(this.releaseInfo).then(response => {
                     if(response.status === 200 && this.releaseInfo.isApproved === "Y") {
                     toast.success("发布成功！");
                     this.$router.push({ name: 'userIndexFlow'});

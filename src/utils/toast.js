@@ -8,7 +8,7 @@ const defaultOptions = {
   text: '',
   icon: 'info',
   color: 'info',
-  timeout: 3000,
+  timeout: 6000,
   dismissible: true,
 };
 

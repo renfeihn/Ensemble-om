@@ -111,7 +111,7 @@
               checkInfo: {
                   mainSeqNo: '',
                   date: '',
-                  isApproved: '',
+                  isApproved: 'Y',
                   userId: '',
                   remark: '',
                   optType: '3' //复核

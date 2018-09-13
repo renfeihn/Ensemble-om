@@ -92,6 +92,15 @@ export function tranFlowInfo (params) {
     data: params
 });
 }
+export function tranFlowRelease (params) {
+
+    return request({
+        url: '/publish',
+        method: 'post',
+        data: params
+    });
+}
+
 export function savaProdInfo (params) {
 
     return request({
