@@ -91,7 +91,7 @@
         </v-layout>
           </v-form>
         </v-card>
-        <v-btn color="primary" @click="e1 = 1">提交信息</v-btn>
+        <v-btn color="grey lighten-2" @click="e1 = 1">提交信息</v-btn>
         <v-btn color="primary" @click="checkConfirm">确    认</v-btn>
       </v-stepper-content>
     </v-stepper-items>
@@ -101,10 +101,12 @@
     import {
         tranFlowInfo
     } from '@/api/url/prodInfo';
+    import toast from '@/utils/toast';
+
     export default {
         data (){
           return {
-              e1: 0,
+              e1: 2,
               flowInfo: [],
               checkInfo: {
                   mainSeqNo: '',
@@ -145,11 +147,11 @@
                 }
                 tranFlowInfo(this.checkInfo).then(response => {
                     if(response.status === 200 && this.checkInfo.isApproved === "Y") {
-                        alert("复核成功！")
+                        toast.success("复核成功！");
                         this.$router.push({ name: 'userIndexFlow'});
                     }
                     if(response.status === 200 && this.checkInfo.isApproved === "N") {
-                        alert("驳回成功！")
+                        toast.success("驳回成功！");
                         this.$router.push({ name: 'userIndexFlow'});
                     }
                 })

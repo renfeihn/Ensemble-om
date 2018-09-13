@@ -102,6 +102,13 @@
         </v-card>
 
         <v-btn
+                color="grey lighten-2"
+                @click="e1 = 1"
+        >
+          提交信息
+        </v-btn>
+
+        <v-btn
                 color="primary"
                 @click="e1 = 3"
         >
@@ -155,10 +162,10 @@
         </v-card>
 
         <v-btn
-                color="primary"
-                @click="e1 = 1"
+                color="grey lighten-2"
+                @click="e1 = 2"
         >
-          提交信息
+          复核信息
         </v-btn>
         <v-btn color="primary" @click="releaseConfirm">确   认</v-btn>
 
@@ -170,10 +177,12 @@
     import {
         tranFlowInfo
     } from '@/api/url/prodInfo';
+    import toast from '@/utils/toast';
+
     export default {
         data (){
             return {
-                e1: 0,
+                e1: 3,
                 flowInfo: [],
                 temp: [],
                 releaseInfo: {
@@ -217,11 +226,11 @@
                 }
                 tranFlowInfo(this.releaseInfo).then(response => {
                     if(response.status === 200 && this.releaseInfo.isApproved === "Y") {
-                        alert("发布成功！")
-                      this.$router.push({ name: 'userIndexFlow'});
+                    toast.success("发布成功！");
+                    this.$router.push({ name: 'userIndexFlow'});
                 }
                     if(response.status === 200 && this.releaseInfo.isApproved === "N") {
-                        alert("驳回成功！")
+                        toast.success("驳回成功！");
                         this.$router.push({ name: 'userIndexFlow'});
                     }
                 })

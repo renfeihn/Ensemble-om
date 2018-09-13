@@ -28,8 +28,6 @@
   </div>
 </template>
 <script>
-    import { getInitData } from "@/mock/init";
-    import { getProdData } from "@/api/prod";
     import {
         getProdType
     } from '@/api/url/prodInfo'

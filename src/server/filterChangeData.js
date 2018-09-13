@@ -33,10 +33,10 @@
  *                                      {...}
  *                                  }
  *                             mbEventType: {
- *                                      TYPE1{
+ *
  *                                          newData: {只包含被修改对象修改后值},
  *                                          oldData: {只包含被修改对象修改前值}
- *                                      },
+ *
  *                                      {...}
  *                                  }
  *                            },
@@ -91,9 +91,12 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     for (let m in prodData.mbEventInfos){
         let mbEventAttrs = {}
         let mbEventParts = {}
-        let mbEventType = {}
+        // let mbEventType = {}
+        let mbEventType = {newData: {}, oldData: {}}
         let temp= {mbEventAttrs: {},mbEventParts: {},mbEventType: {}}
         let flag = "false"
+        let newDataType = {}
+        let oldataType = {}
         let flagPart = "false"
         let flagType = "false"
         //mbEventAttrs
@@ -132,21 +135,19 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
         //mbEventType
-         for (let y in prodData.mbEventInfos[m].mbEventType){
+        for (let y in prodData.mbEventInfos[m].mbEventType){
             if(copyFlag === "Y") {
-                let newDataType = {newData: {}, oldData: {}}
-                newDataType.newData = prodData.mbEventInfos[m].mbEventType[y]
+                newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
                 flagType = "true"
-                mbEventType[y] = newDataType
             }else if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){
-                    let newDataType = {newData: {}, oldData: {}}
-                    newDataType.newData = prodData.mbEventInfos[m].mbEventType[y]
-                    newDataType.oldData = sourceProdData.mbEventInfos[m].mbEventType[y]
-                    flagType = "true"
-                    mbEventType[y] = newDataType
-             }
-         }
-         temp.mbEventType = Object.assign(temp.mbEventType,mbEventType)
+                newDataType[y] = prodData.mbEventInfos[m].mbEventType[y]
+                oldataType[y] = sourceProdData.mbEventInfos[m].mbEventType[y]
+                flagType = "true"
+            }
+        }
+        mbEventType.newData = Object.assign(mbEventType.newData,newDataType)
+        mbEventType.oldData = Object.assign(mbEventType.oldData,oldataType)
+        temp.mbEventType = Object.assign(temp.mbEventType,mbEventType)
         backData.mbEventInfos[m].mbEventType = temp.mbEventType
          if(flag === "false" && flagType === "false" && flagPart === "false"){
              delete backData.mbEventInfos[m]

@@ -63,6 +63,7 @@
     import downAction from '../btn/downAction'
     import {filterChangeData} from "@/server/filterChangeData";
     import { getCheckFlowList } from "@/api/url/prodInfo";
+    import toast from '@/utils/toast';
 
 
     export default {
@@ -157,11 +158,12 @@
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){
                         if(response.data.data[j].flowManage.status === "2"){
-                            alert("存在已提交数据，等待复核！")
+                            toast.info("存在已提交数据，等待复核!");
                             break
                         }
                         if(response.data.data[j].flowManage.status === "3"){
-                            alert("存在已复核数据，等待发布！")
+                            toast.info("存在已复核数据，等待发布！");
+
                             break
                         }
                     }
@@ -183,7 +185,8 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         //置灰提交按钮，防止为此提交
-                        alert("提交成功！")
+                        toast.success("提交成功！");
+
                     }
                 })
             },
@@ -199,7 +202,8 @@
                 this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
-                        alert("暂存成功！")
+                        toast.success("暂存成功！");
+
                     }
                 })
             },
