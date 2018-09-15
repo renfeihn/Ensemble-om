@@ -44,18 +44,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            cycleFreq: [
-                {
-                    key: "",
-                    value: ""
-                }
-            ],
-            cycleSelfFlag: [
-                {
-                    key: "",
-                    value: ""
-                }
-            ],
             refData: getInitData,
             intDetail: {
                 cycleFreq: '',

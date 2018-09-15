@@ -80,47 +80,38 @@
                             <v-flex md4 lg4>
                                 <v-select class="primary--text " :items="profitCentre" v-model="acctBaseInfo.profitCenter" label="利润中心" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
-                            <v-flex xs12>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <!-- <v-select class="primary--text " :items="isMultiCcy" @change="isSelectCcy" v-model="acctBaseInfo.multiCcy" item-text="value" item-value="key" single-line hide-details></v-select> -->
-                                <dc-switch v-model="acctBaseInfo.multiCcy"></dc-switch>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">币种*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
-                            </v-flex>
-                            <!--<v-flex xs12 md2 lg2>
-                                <v-subheader class="primary&#45;&#45;text subheading">默认币种*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary&#45;&#45;text " :items="defaultCcy" label="默认币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>-->
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">计息标志*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
                                 <v-select class="primary--text " :items="acctIntFlag" v-model="acctBaseInfo.acctIntFlag" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
+
+                            <!--<v-flex xs12>-->
+                            <!--</v-flex>-->
+                            <v-flex xs12 md2 lg2>
+                                <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                                <dc-switch v-model="acctBaseInfo.multiCcy"></dc-switch>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                <v-subheader class="primary--text subheading">币种*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                                <v-select class="primary--text " :items="ccy" v-model="acctBaseInfo.ccy" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                            </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!-- <v-select class="primary--text " :items="isJudge" v-model="acctBaseInfo.docFlag" item-text="value" item-value="key" single-line hide-details></v-select> -->
                                 <dc-switch v-model="acctBaseInfo.docFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-
-                                <v-select class="primary--text " :items="voucherType" v-model="acctBaseInfo.docType" label="凭证类型" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
-
+                                <v-select class="primary--text " :items="voucherType" v-model="acctBaseInfo.docType" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -138,13 +129,13 @@
                                 <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="acctNature" v-model="acctBaseInfo.acctNature" label="账户属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="acctNature" v-model="acctBaseInfo.acctNature" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="ownershipType" v-model="acctBaseInfo.ownerShipType" label="关系属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="ownershipType" v-model="acctBaseInfo.ownerShipType" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
@@ -193,106 +184,6 @@
             endDateMenu: false,
             startDate: null,
             proddescData: "",
-            sourceModule: [{
-                key: "",
-                value: ""
-            }],
-            isJudge: [{
-                key: "Y",
-                value: "Y-是"
-            },
-                {
-                    key: "N",
-                    value: 'N-否'
-                }],
-            prodClass: [{
-                key: "",
-                value: ""
-            }],
-            prodAttr: [{
-                key: "",
-                value: ""
-            }],
-            isGroup: [{
-                key: "",
-                value: ""
-            }],
-            prodStatus: [{
-                key: "",
-                value: ""
-            }],
-            baseprodtype: [{
-                key: "",
-                value: ""
-            }],
-            acctType: [{
-                key: "",
-                value: ""
-            }],
-            subAcctType: [{
-                key: "",
-                value: ""
-            }],
-            isMultiCcy: [{
-                key: "",
-                value: ""
-            }],
-            ccy: [{
-                key: "",
-                value: ""
-            }],
-            acctIntFlag: [{
-                key: "",
-                value: ""
-            }],
-            profitCentre: [{
-                key: "",
-                value: ""
-            }],
-            voucherFlag: [{
-                key: "",
-                value: ""
-            }],
-            voucherType: [{
-                key: "",
-                value: ""
-            }],
-            withdrawalType: [{
-                key: "",
-                value: ""
-            }],
-            balType: [{
-                key: "",
-                value: ""
-            }],
-            acctNature: [{
-                key: "",
-                value: ""
-            }],
-            ownershipType: [{
-                key: "",
-                value: ""
-            }],
-            acctClass: [{
-                key: "",
-                value: ""
-            }],
-            docType: [{
-                key: "",
-                value: ""
-            }],
-            discountCcy: [{
-                key: "",
-                value: ""
-            }],
-            multiCcy: [{
-                key: "",
-                value: ""
-            }],
-            docFlag: [{
-                key: "",
-                value: ""
-            }],
             refData: getInitData,
             acctBaseInfo: {
                 prodType: '',

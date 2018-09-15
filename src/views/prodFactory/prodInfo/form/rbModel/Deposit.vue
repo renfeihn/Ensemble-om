@@ -106,38 +106,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            depositControlApproach: [{
-                key: "",
-                value: ""
-            }],
-            permitCommersionFlag: [{
-                key: "",
-                value: ""
-            }],
-            cashResource: [{
-                key: "",
-                value: ""
-            }],
-            acctReatraintCheck: [{
-                key: "",
-                value: ""
-            }],
-            breakType: [{
-                key: "",
-                value: ""
-            }],
-            dealingWay: [{
-                key: "",
-                value: ""
-            }],
-            startAmtCheck: [{
-                key: "",
-                value: ""
-            }],
-            singleTimeDepositCheck: [{
-                key: "N",
-                value: "N-否"
-            }],
             refData: getInitData,
             deposit: {
                 depositControlApproach: '',

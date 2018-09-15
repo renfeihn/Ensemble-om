@@ -109,22 +109,6 @@
                 modFlag: false,
                 refData: getInitData,
                 prodType: '',
-                accountingStatus: [{
-                    key: "",
-                    value: ""
-                }],
-                glCodeL: [{
-                    key: "",
-                    value: ""
-                }],
-                glCodeIntE: [{
-                    key: "",
-                    value: ""
-                }],
-                glCodeIntPay: [{
-                    key: "",
-                    value: ""
-                }],
                 headers: [
                     {text: '产品类型', align: 'left', value: 'prodType'},
                     {text: '核算状态', value: 'accountingStatus'},

@@ -107,34 +107,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            structureType: [{
-                key: "",
-                value: ""
-            }],
-            checkWdrawnType: [{
-                key: "",
-                value: ""
-            }],
-            restraintFlag: [{
-                key: "",
-                value: ""
-            }],
-            withdrawTypeHandeling: [{
-                key: "",
-                value: ""
-            }],
-            checkAgent: [{
-                key: "",
-                value: ""
-            }],
-            clientAmtCheckFlag: [{
-                key: "",
-                value: ""
-            }],
-            startDepositAmt: [{
-                key: "",
-                value: ""
-            }],
             refData: getInitData,
             openAcct: {
                 structureType: '',

@@ -97,30 +97,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            isJudge: [{
-                key: "Y",
-                value: "Y-是"
-            },
-                {
-                    key: "N",
-                    value: 'N-否'
-                }],
-            draRange: [{
-                key: "",
-                value: ""
-            }],
-            depRange: [{
-                key: "",
-                value: ""
-            }],
-            tDepFlag: [{
-                key: "",
-                value: ""
-            }],
-            cashDepFlag: [{
-                key: "",
-                value: ""
-            }],
             refData: getInitData,
             controlInfo: {
                 draRange: '',

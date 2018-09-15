@@ -99,42 +99,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            clientType: [{
-                key: "",
-                value: ""
-            }],
-            inlandOffshore: [{
-                key: "",
-                value: ""
-            }],
-            clientSubType: [{
-                key: "",
-                value: ""
-            }],
-            clientLevel: [{
-                key: "",
-                value: ""
-            }],
-            ageSection: [{
-                key: "",
-                value: ""
-            }],
-            profession: [{
-                key: "",
-                value: ""
-            }],
-            applyArea: [{
-                key: "",
-                value: ""
-            }],
-            areaChoose: [{
-                key: "",
-                value: ""
-            }],
-            prodBranch: [{
-                key: "",
-                value: ""
-            }],
             refData: getInitData,
             productObject: {
                 clientType: '',

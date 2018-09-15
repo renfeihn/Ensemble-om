@@ -107,23 +107,6 @@ export default {
             modFlag: false,
             prodType: '',
             open: true,
-            feeType: [{
-                key: "",
-                value: ""
-            }],
-            chargePeriodFreq: [{
-                key: "",
-                value: ""
-            }],
-            chargeDealMethod: [{
-                key: "",
-                value: ""
-            }],
-            conDeductFlag: [{
-                key: "",
-                value: ""
-            }],
-
             refData: getInitData,
             headers: [
                 {text: '批量收费类型', align: 'left', value: 'feeType'},
