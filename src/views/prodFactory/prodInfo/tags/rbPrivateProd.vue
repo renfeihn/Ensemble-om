@@ -37,9 +37,10 @@
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
-                <v-card-text>
-                <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
-                </v-card-text>
+                    <v-card-text>
+                        <down-action v-if="pendFlag==0" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
+                        <pending-form v-if="pendFlag==1"></pending-form>
+                    </v-card-text>
                 </v-card>
                 <prod-list-form v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
             </v-flex>
@@ -54,6 +55,7 @@
     import BranchForm from "../form/BranchFormProd";
     import EventForm from '../form/EventFormPord';
     import ProdListForm from '../form/ProdListForm';
+    import PendingForm from '../btn/PendingForm';
 
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
@@ -76,7 +78,8 @@
             AcctForm,
             VuePerfectScrollbar,
             downAction,
-            ProdListForm
+            ProdListForm,
+            PendingForm
         },
         data () {
             return {
@@ -89,6 +92,7 @@
                 },
                 prodCode: '',
                 prodClass: '',
+                pendFlag: 0,
                 activeName: 'basic',
                 prodInfo: [{
                     icon: 'account_balance',
@@ -158,12 +162,13 @@
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){
                         if(response.data.data[j].flowManage.status === "2"){
+                            this.pendFlag = 1
                             toast.info("存在已提交数据，等待复核!");
                             break
                         }
                         if(response.data.data[j].flowManage.status === "3"){
+                            this.pendFlag = 1
                             toast.info("存在已复核数据，等待发布！");
-
                             break
                         }
                     }
@@ -185,8 +190,8 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         //置灰提交按钮，防止为此提交
+                        this.pendFlag = 1
                         toast.success("提交成功！");
-
                     }
                 })
             },
@@ -203,7 +208,6 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         toast.success("暂存成功！");
-
                     }
                 })
             },
@@ -265,7 +269,7 @@
                 this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.prodEndDate
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
 
-                this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
+                this.prodData.mbEventInfos["CLOSE_"+ val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;
