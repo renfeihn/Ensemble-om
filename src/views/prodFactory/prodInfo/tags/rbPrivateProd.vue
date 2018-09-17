@@ -277,7 +277,7 @@
                 this.prodData.prodType.prodDesc=data.prodDesc;
                 const newData=this.copy(this.prodData,[]);
                 this.prodData=newData;
-                if(data.showCopy){
+                if(!data.showCopy){
                     this.showCopy = 'Y';
                 }else{
                     this.showCopy = '';
