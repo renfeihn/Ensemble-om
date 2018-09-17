@@ -47,7 +47,7 @@
               <v-flex md4 lg4>
                 <!-- <span class="primary--text mx-3 pt-4 subheading">组合产品</span> -->
                 <!-- <v-select class="primary--text mx-2" :items="prodmuti" v-model="prodmutiData" label="组合产品" item-text="prodDesc" item-value="prodCode" single-line hide-details></v-select> -->
-                <v-switch :label="`${prodGroup==='Y'?'是':'否'}`" v-model="eventForm.prodGroup" value="Y" color="success" hide-details></v-switch>
+                <v-switch :label="`${switchValues==='Y'?'是':'否'}`" v-model="eventForm.prodGroup" value="Y" @change="switchChange" color="success" hide-details></v-switch>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
@@ -138,7 +138,7 @@
               <v-flex md4 lg4>
                 <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
                   <v-text-field slot="activator" label="终止日期" v-model="eventForm.prodEndDate" append-icon="event" single-line hide-details></v-text-field>
-                  <v-date-picker v-model="eventForm.prodEndDate" @input="$refs.endDateMenu.save(eventForm.failuredate)" no-title scrollable locale="zh-cn">
+                  <v-date-picker v-model="eventForm.prodEndDate" @input="$refs.endDateMenu.save(eventForm.prodEndDate)" no-title scrollable locale="zh-cn">
                     <!-- <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="endDateMenu = false">Cancel</v-btn>
                       <v-btn flat color="primary" @click="$refs.endDate.save(endDate)">OK</v-btn> -->
@@ -155,7 +155,7 @@
 </template>
 
 <script>
-    import { getInitData } from "@/api/prod";
+    import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
 
     export default {
@@ -169,10 +169,12 @@
             startTimeMenu: false,
             startTime: null,
             endDateMenu: false,
-            endDate: "",
+            endDate: null,
+            switchValues: "",
             endTimeMenu: false,
             endTime: null,
             modal: false,
+            refData: getInitData,
             eventForm: {
                 prodType: '',
                 prodDesc: '',
@@ -294,6 +296,7 @@
                 this.eventForm.busimodel = "RB"
                 this.eventForm.prodClass = val.prodType.prodClass
                 this.eventForm.prodGroup = val.prodType.prodGroup
+                this.switchValues = val.prodType.prodGroup
                 this.eventForm.status = val.prodType.status
                 //prodDefines
                 this.eventForm.acctStructFlag = val.prodDefines.ACCT_STRUCT_FLAG.attrValue
@@ -312,23 +315,23 @@
             callbackprod() {
                 this.$emit("getNewProdData",{"eventForm": this.eventForm})
             },
+            switchChange() {
+               this.switchValues = this.eventForm.prodGroup
+            },
             initRefDate() {
-                getInitData().then(response => {
-                    console.log(response);
-                    this.busimodel = response.data.paraDataVl.busimodel;
-                    this.acctRealFlag = response.data.paraDataVl.acctRealFlag;
-                    this.acctIntFlag = response.data.paraDataVl.acctIntFlag;
-                    this.acctBalFlag = response.data.paraDataVl.acctBalFlag;
-                    this.prodGroup = response.data.paraDataVl.prodGroup;
-                    this.prodRange = response.data.paraDataVl.prodRange;
-                    this.acctType = response.data.paraDataVl.acctType;
-                    this.profitCenter = response.data.paraDataRf.profitCenter;
-                    this.acctsontype = response.data.paraDataRf.acctsontype;
-                    this.baseprod = response.data.paraDataRf.baseprod;
-                    this.acctStructFlag = response.data.paraDataRf.acctStructFlag;
-                    this.status = response.data.paraDataVl.status;
-                    this.prodClass = response.data.paraDataRf.prodClass;
-                });
+                    this.busimodel = this.refData[1].paraDataVl.busimodel;
+                    this.acctRealFlag = this.refData[1].paraDataVl.acctRealFlag;
+                    this.acctIntFlag = this.refData[1].paraDataVl.acctIntFlag;
+                    this.acctBalFlag = this.refData[1].paraDataVl.acctBalFlag;
+                    this.prodGroup = this.refData[1].paraDataVl.prodGroup;
+                    this.prodRange = this.refData[1].paraDataVl.prodRange;
+                    this.acctType = this.refData[1].paraDataVl.acctType;
+                    this.profitCenter = this.refData[0].paraDataRf.profitCenter;
+                    this.acctsontype = this.refData[0].paraDataRf.acctsontype;
+                    this.baseprod = this.refData[0].paraDataRf.baseprod;
+                    this.acctStructFlag = this.refData[0].paraDataRf.acctStructFlag;
+                    this.status = this.refData[1].paraDataVl.status;
+                    this.prodClass = this.refData[0].paraDataRf.prodClass;
             },
             closeDialog() {
                 this.$parent.isActive = false;

@@ -106,7 +106,7 @@
 
 <script>
 import VWidget from "@/components/VWidget";
-import { getInitData } from "@/api/prod";
+import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
 export default {
   components: {
@@ -126,6 +126,7 @@ export default {
     endTimeMenu: false,
     endTime: null,
     modal: false,
+      refData: getInitData,
     acctForm: {
       attr: "",
       class: "",
@@ -211,18 +212,15 @@ export default {
       this.$parent.isActive = false;
     },
     initRefDate() {
-      getInitData().then(response => {
-        console.log(response);
-        this.acctAttrs = response.data.paraDataRf.acctAttrs;
-        this.acctClasses = response.data.paraDataVl.acctClasses;
-        this.muticcyflag = response.data.paraDataVl.muticcyflag;
-        this.ccytype = response.data.paraDataRf.ccytype;
-        this.amttype = response.data.paraDataVl.amttype;
-        this.baltype = response.data.paraDataVl.baltype;
-        this.reducedccy = response.data.paraDataRf.reducedccy;
-        this.acctusefor = response.data.paraDataRf.acctusefor;
-        this.mediumtype = response.data.paraDataRf.mediumtype;
-      });
+        this.acctAttrs = this.refData[0].paraDataRf.acctAttrs;
+        this.acctClasses = this.refData[1].paraDataVl.acctClasses;
+        this.muticcyflag = this.refData[1].paraDataVl.muticcyflag;
+        this.ccytype = this.refData[0].paraDataRf.ccytype;
+        this.amttype = this.refData[1].paraDataVl.amttype;
+        this.baltype = this.refData[1].paraDataVl.baltype;
+        this.reducedccy = this.refData[0].paraDataRf.reducedccy;
+        this.acctusefor = this.refData[0].paraDataRf.acctusefor;
+        this.mediumtype = this.refData[0].paraDataRf.mediumtype;
     }
   }
 };

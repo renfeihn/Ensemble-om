@@ -45,7 +45,7 @@
   </v-card>
 </template>
 <script>
-    import userWorkTable from './userWorkTable'
+    import userWorkTable from './userWorkCheckTable'
     export default {
         components: {
             userWorkTable

@@ -22,16 +22,23 @@
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="n in prodInfo" :key="n">
                             {{ n.text}}
-                            <!-- <v-icon>{{n.icon}}</v-icon> -->
                         </v-tab>
                     </v-tabs>
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
-                        <event-form v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></event-form>
-                        <accounting-plain v-if="i==2"></accounting-plain>
-                        <branch-form v-if="i==3"></branch-form>
-                        <acct-form v-if="i > 3"></acct-form>
+                        <acct-base-info v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></acct-base-info>
+                        <control-info v-if="i==2" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></control-info>
+                        <product-object v-if="i==3" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></product-object>
+                        <int-detail v-if="i == 4" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></int-detail>
+                        <open-acct v-if="i==5" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></open-acct>
+                        <close-acct v-if="i==6" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></close-acct>
+                        <Deposit v-if="i==7" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></Deposit>
+                        <draw-info v-if="i==8" ref="callback" v-bind:prodData="prodData" v-on:getNewProdData="getNewProdData"></draw-info>
+                        <charge-define v-if="i==9" v-bind:listValue="listValue"></charge-define>
+                        <rate-info v-if="i==10" v-bind:listValue="listValue"></rate-info>
+                        <form-shift v-if="i==11" v-bind:listValue="listValue"></form-shift>
+                        <accounting-info v-if="i==12" v-bind:listValue="listValue"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -49,32 +56,51 @@
 
 <script>
     import {
+        getProdType
+    } from '@/api/url/prodInfo'
+    import {
         savaProdInfo
     } from '@/api/url/prodInfo';
     import BranchForm from "../form/BranchFormProd";
-    import EventForm from '../form/EventFormPord';
-    import ProdListForm from '../form/ProdListForm';
-
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-    import accountingPlain from '../table/accountingPlain'
-    import AcctForm from '../form/AcctFormPord';
     import { getProdData } from "@/api/url/prodInfo";
-    import downAction from '../btn/downAction'
     import {filterChangeData} from "@/server/filterChangeData";
+
+    import AcctBaseInfo from '../form/rbModel/AcctBaseInfo';
+    import controlInfo from '../form/rbModel/ControlInfo';
+    import ProductObject from '../form/rbModel/ProductObject';
+    import IntDetail from '../form/rbModel/IntDetail';
+    import OpenAcct from '../form/rbModel/OpenAcct';
+    import CloseAcct from  '../form/rbModel/CloseAcct';
+    import DrawInfo from  '../form/rbModel/DrawInfo';
+    import Deposit from  '../form/rbModel/Deposit';
+    import ChargeDefine from '../form/rbModel/ChargeDefine';
+    import RateInfo from '../form/rbModel/RateInfo';
+    import FormShift from '../form/rbModel/FormShift';
+    import AccountingInfo from '../form/rbModel/AccountingInfo';
+
+    import downAction from '../btn/downAction';
+    import ProdListForm from '../form/ProdListForm';
     import { getCheckFlowList } from "@/api/url/prodInfo";
-    import toast from '@/utils/toast';
-
-
     export default {
         name: 'deposit',
         components: {
-            accountingPlain,
             BranchForm,
-            EventForm,
             VWidget,
-            AcctForm,
             VuePerfectScrollbar,
+            controlInfo,
+            AcctBaseInfo,
+            ProductObject,
+            IntDetail,
+            OpenAcct,
+            CloseAcct,
+            DrawInfo,
+            Deposit,
+            ChargeDefine,
+            RateInfo,
+            FormShift,
+            AccountingInfo,
             downAction,
             ProdListForm
         },
@@ -91,48 +117,49 @@
                 prodClass: '',
                 activeName: 'basic',
                 prodInfo: [{
-                    icon: 'account_balance',
-                    text: '基本信息'
-                }, {
-                    icon: 'filter_vintage',
-                    text: '账户信息'
-                }, {
-                    icon: 'work',
-                    text: '产品对象'
-                }, {
-                    icon: 'work',
-                    text: '利率信息'
-                }, {
-                    icon: 'work',
-                    text: '风险信息'
-                }, {
-                    icon: 'work',
-                    text: '开户定义'
-                }, {
-                    icon: 'work',
-                    text: '存入定义'
-                }, {
-                    icon: 'work',
-                    text: '支取定义'
-                }, {
-                    icon: 'work',
-                    text: '利率信息'
-                }, {
-                    icon: 'work',
-                    text: '核算信息'
-                }, {
-                    icon: 'work',
-                    text: '销户定义'
-                }, {
-                    icon: 'work',
-                    text: '结息定义'
-                }],
+                   icon: 'account_balance',
+                   text: '基本信息'
+               }, {
+                   icon: 'filter_vintage',
+                   text: '控制信息'
+               }, {
+                   icon: 'work',
+                   text: '适用范围'
+               }, {
+                   icon: 'work',
+                   text: '利息信息'
+               }, {
+                   icon: 'work',
+                   text: '开户定义'
+               }, {
+                   icon: 'work',
+                   text: '销户定义'
+               }, {
+                   icon: 'work',
+                   text: '存入定义'
+               }, {
+                   icon: 'work',
+                   text: '支取定义'
+               }, {
+                   icon: 'work',
+                   text: '收费定义'
+               }, {
+                   icon: 'work',
+                   text: '利率信息'
+               }, {
+                   icon: 'work',
+                   text: '形态转移'
+               }, {
+                   icon: 'work',
+                   text: '核算信息'
+               }],
                 files: [{
                     icon: 'assignment',
                     iconClass: 'blue white--text',
                     value: '',
                     lable: ''
                 }],
+                folders: [],
                 prodData: {},
                 sourceProdData: {},
                 targetData: {}
@@ -142,15 +169,16 @@
             this.prodClass = this.$route.params.prodClassCmp
         },
         mounted: function() {
-            this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
-//            if(this.$route.params.prodClassCmp !=''){
-//                this.prodClass = this.$route.params.prodClassCmp
-//            }
-//            if(this.$route.params.prodCodeCmp !=''){
-//                this.initStage(this.$route.params.prodCodeCmp)
-//            }
+            this.queryDespositProdData(this.prodClass)
+            if(this.$route.params.prodClassCmp !=''){
+                this.prodClass = this.$route.params.prodClassCmp
+            }
+            if(this.$route.params.prodCodeCmp !=''){
+                this.initStage(this.$route.params.prodCodeCmp)
+            }
+            this.queryDespositProdData(this.prodClass)
         },
         methods: {
             queryProdFlow(){
@@ -158,12 +186,11 @@
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){
                         if(response.data.data[j].flowManage.status === "2"){
-                            toast.info("存在已提交数据，等待复核!");
+                            alert("存在已提交数据，等待复核！")
                             break
                         }
                         if(response.data.data[j].flowManage.status === "3"){
-                            toast.info("存在已复核数据，等待发布！");
-
+                            alert("存在已复核数据，等待发布！")
                             break
                         }
                     }
@@ -185,8 +212,7 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         //置灰提交按钮，防止为此提交
-                        toast.success("提交成功！");
-
+                        alert("提交成功！")
                     }
                 })
             },
@@ -202,15 +228,14 @@
                 this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
-                        toast.success("暂存成功！");
-
+                        alert("暂存成功！")
                     }
                 })
             },
             listenToProdList(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
-                    this.prodData = response.data.data
+                    this.prodData = response.data
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
             },
@@ -239,15 +264,6 @@
                     type: 'warning'
                 })
             },
-//            getProdBySearchValue(val) {
-//                if (val) {
-//                    let j = 1
-//                    for (let i = 1; i < this.folders.length; i++) {
-//                        if (this.folders[i].value.indexOf(val) == -1 || this.folders[i].label.indexOf(val) == -1) {
-//                        }
-//                    }
-//                }
-//            },
             getNewProdData(val) {
                 console.log(val)
                 this.prodData.prodType.prodType = val.eventForm.prodType
@@ -280,13 +296,6 @@
                 }
             }
         }
-//        watch: {
-//            searchValue(val, oldval) {
-//                if (val !== oldval) {
-//                    this.getProdBySearchValue(val)
-//                }
-//            }
-//        }
     }
 </script>
 

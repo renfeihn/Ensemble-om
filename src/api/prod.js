@@ -21,13 +21,13 @@ export function getDepositProdList (params) {
     params
   });
 }
-export function getInitData (params) {
-  return request({
-    url: '/init/initRefData',
-    method: 'get',
-    params
-  });
-}
+// export function getInitData (params) {
+//   return request({
+//     url: 'initRefData',
+//     method: 'get',
+//     params
+//   });
+// }
 export function getDiffProd (params) {
     const data = {
       params

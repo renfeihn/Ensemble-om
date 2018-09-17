@@ -8,7 +8,7 @@ const defaultOptions = {
   text: '',
   icon: 'info',
   color: 'info',
-  timeout: 2000,
+  timeout: 6000,
   dismissible: true,
 };
 
@@ -32,9 +32,9 @@ function getToastCmp() {
 
 function show(options = {}) {
   getToastCmp().show({
-    ...defaultOptions,
-    ...options
-  });
+        ...defaultOptions,
+        ...options
+    });
 }
 
 function close() {
