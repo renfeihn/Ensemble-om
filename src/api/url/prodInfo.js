@@ -46,7 +46,7 @@ export function getProdData (prodType) {
   //  }
   // }
   return request({
-    url: '/getProdInfo',
+    url: '/getPrivateData',
     method: 'post',
       params: { prodType: prodType}
   });

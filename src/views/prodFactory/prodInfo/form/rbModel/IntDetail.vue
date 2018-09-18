@@ -9,7 +9,7 @@
                 <v-subheader class="primary--text subheading">结息周期*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <v-select class="primary--text mx-2" :items="cycleFreq" v-model="intDetail.cycleFreq" label="结息周期" item-text="value" item-value="key" single-line hide-details></v-select>
+                <v-select class="primary--text mx-2" :items="cycleFreq" v-model="mbEventAttrs.cycleFreq" label="结息周期" item-text="value" item-value="key" single-line hide-details></v-select>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">结息日*</v-subheader>
@@ -33,58 +33,57 @@
 </template>
 
 <script>
-import { getInitData } from "@/mock/init";
-import { getProdData } from "@/api/prod";
-export default {
-  props: ["prodData"],
-  data: () => ({
-    title: null,
-    cycleFreq: [
-        {
-              key: "",
-              value: ""
+    import { getInitData } from "@/mock/init";
+    import { getProdData } from "@/api/prod";
+    export default {
+        props: ["prodData"],
+        data: () => ({
+            title: null,
+            cycleFreq: [
+                {
+                    key: "",
+                    value: ""
+                }
+            ],
+            cycleSelfFlag: [
+                {
+                    key: "",
+                    value: ""
+                }
+            ],
+            refData: getInitData,
+            intDetail: {
+                cycleFreq: '',
+                cycleSelfFlag: ''
+            },
+            mbEventAttrs: {
+                cycleFreq: ''
+            }
+        }),
+        computed: {
+            progress() {
+                return Math.min(100, this.value.length * 10);
+            }
+        },
+        watch: {
+            prodData(val) {
+                this.selectByProd(val);
+            }
+        },
+        mounted() {
+            this.initRefDate();
+        },
+        methods: {
+            selectByProd(val) {
+                this.mbEventAttrs.cycleFreq = val.mbEventInfos.CYCLE_RB101.mbEventAttrs.CYCLE_FREQ.attrValue
+            },
+            initRefDate() {
+                this.cycleFreq = this.refData[2].paraDataRb.cycleFreq;
+                this.cycleSelfFlag = this.refData[2].paraDataRb.cycleSelfFlag;
+            },
+            closeDialog() {
+                this.$parent.isActive = false;
+            }
         }
-    ],
-    cycleSelfFlag: [
-        {
-              key: "",
-              value: ""
-        }
-        ],
-        refData: getInitData,
-    intDetail: {
-        cycleFreq: '',
-        cycleSelfFlag: ''
-    },
-  }),
-  computed: {
-    progress() {
-      return Math.min(100, this.value.length * 10);
-    }
-  },
-  watch: {
-     prodData(val) {
-        this.selectByProd(val);
-      }
-  },
-  mounted() {
-    this.initRefDate();
-  },
-  methods: {
-    selectByProd(val) {
-        this.intDetail.cycleFreq = val.intDetail.cycleFreq;
-        this.intDetail.cycleSelfFlag=val.intDetail.cycleSelfFlag
-    },
-    initRefDate() {
-      getInitData().then(response => {
-        console.log(response);
-        this.cycleFreq = this.refData[2].paraDataRb.cycleFreq;
-        this.cycleSelfFlag = this.refData[2].paraDataRb.cycleSelfFlag;
-      });
-    },
-    closeDialog() {
-      this.$parent.isActive = false;
-    }
-  }
-};
+    };
 </script>

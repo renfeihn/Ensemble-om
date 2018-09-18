@@ -6,6 +6,7 @@ export default {
             prodRange: 'S',
             prodGroup: 'Y',
             status: 'A',
+            prodType: '111001',
         },
         prodDefines: {
             ACCT_STRUCT_FLAG: {

@@ -9,25 +9,25 @@
                                 <v-subheader class="primary--text subheading">客户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientType" v-model="productObject.clientType" label="客户类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientType" v-model="prodDefines.clientType" label="客户类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">境内外标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="inlandOffshore" v-model="productObject.inlandOffshore" label="境内外标识" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="inlandOffshore" v-model="prodDefines.landOffShore" label="境内外标识" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientSubType" v-model="productObject.clientSubType" label="客户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientSubType" v-model="prodDefines.fixedCall" label="客户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户等级*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientLevel" v-model="productObject.clientLevel" label="客户等级" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="clientLevel" v-model="prodDefines.clientInd" label="客户等级" item-text="value" item-value="key" single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">年龄区间*</v-subheader>
@@ -63,14 +63,14 @@
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="applyBranch" v-model="productObject.applyBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="applyBranch" v-model="prodDefines.prodBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
 
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">机构选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.branchChoice" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="prodDefines.prodBranch" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -81,8 +81,8 @@
 </template>
 
 <script>
-import { getInitData } from "@/mock/init";
-import { getProdData } from "@/api/prod";
+    import { getInitData } from "@/mock/init";
+    import { getProdData } from "@/api/prod";
     export default {
         props: ["prodData"],
         data: () => ({
@@ -133,6 +133,13 @@ import { getProdData } from "@/api/prod";
                 applyArea: '',
                 areaChoose: ''
             },
+            prodDefines: {
+                clientType: '',
+                landOffShore: '',
+                fixedCall: '',
+                clientInd: '',
+                prodBranch: ''
+            }
         }),
         computed: {
             progress() {
@@ -150,17 +157,11 @@ import { getProdData } from "@/api/prod";
         methods: {
             selectByProd(val) {
                 this.eventForm = {}
-                this.productObject.clientType = val.productObject.clientType
-                this.productObject.inlandOffshore = val.productObject.inlandOffshore
-                this.productObject.clientSubType = val.productObject.clientSubType
-                this.productObject.clientLevel = val.productObject.clientLevel
-                this.productObject.ageBetween = val.productObject.ageBetween
-                this.productObject.occupation = val.productObject.occupation
-                this.productObject.channelChoose = val.productObject.channelChoose
-                this.productObject.applyBranch = val.productObject.applyBranch
-                this.productObject.branchChoice = val.productObject.branchChoice
-                this.productObject.applyArea = val.productObject.applyArea
-                this.productObject.areaChoose = val.productObject.areaChoose
+                this.prodDefines.clientType = val.prodDefines.CLIENT_TYPE.attrValue
+                this.prodDefines.landOffShore = val.prodDefines.INLAND_OFFSHORE.attrValue
+                this.prodDefines.fixedCall = val.prodDefines.FIXED_CALL.attrValue
+                this.prodDefines.clientInd = val.prodDefines.CLIENT_IND.attrValue
+                this.prodDefines.prodBranch = val.prodDefines.PROD_BRANCH.attrValue
             },
             initRefDate() {
                 this.clientType = this.refData[2].paraDataRb.clientType;
