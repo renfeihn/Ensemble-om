@@ -8,14 +8,14 @@
           <v-btn color="info" @click="print()">导出</v-btn>
           <v-btn color="info">{{optValue}}</v-btn>
       </v-toolbar>
-    <v-layout row>
+      <tran-check-flow-info v-if="optKey==3" ></tran-check-flow-info>
+      <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
       <v-card-text>
-         <prod-diff :mainSeqNo="code"></prod-diff>
+        <prod-diff :mainSeqNo="code"></prod-diff>
       </v-card-text>
-    </v-layout>
     </v-card>
-          <tran-check-flow-info v-if="optKey==3" ></tran-check-flow-info>
-    <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
+
+
   </div>
 </template>
 <script>

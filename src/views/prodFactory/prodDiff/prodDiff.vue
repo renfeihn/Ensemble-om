@@ -171,7 +171,7 @@ export default {
        }
        }else{
                 for(let index in prodDiff){
-                      var desc=index.substring(index.lastIndexOf('.')+1);
+                      let desc= index.substring(index.lastIndexOf('.')+1);
                       columnDesc.push({title: desc});
                       columnDesc.push({ divider: true, inset: true });
                       columnNew.push({title: prodDiff[index]});
