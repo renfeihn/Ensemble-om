@@ -55,7 +55,7 @@
                     selected: [],
                     items: [],
                     folders: [],
-                modelTitle: '啦啦啦啦',
+                modelTitle: '',
                 prodClass: '',
                 files: [{
                     icon: 'assignment',

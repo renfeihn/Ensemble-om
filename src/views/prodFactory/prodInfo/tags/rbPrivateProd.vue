@@ -142,19 +142,20 @@
                 targetData: {}
             }
         },
-        created() {
-            this.prodClass = this.$route.params.prodClassCmp
-        },
         mounted: function() {
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodClass = this.$route.hash
-//            if(this.$route.params.prodClassCmp !=''){
-//                this.prodClass = this.$route.params.prodClassCmp
-//            }
-//            if(this.$route.params.prodCodeCmp !=''){
-//                this.initStage(this.$route.params.prodCodeCmp)
-//            }
+            if(this.$route.hash !== "" && this.$route.hash !== null) {
+                //点击主菜单产品组时 获取产品组代码
+                this.prodClass = this.$route.hash
+            }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
+                //通过全局搜索/产品目录  获取目标产品产品组代码
+                this.prodClass = this.$route.params.prodClassCmp
+            }
+            //通过全局搜索/产品目录 获取目标产品代码
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
+                this.listenToProdList(this.$route.params)
+            }
         },
         methods: {
             queryProdFlow(){

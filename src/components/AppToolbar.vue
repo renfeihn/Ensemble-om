@@ -13,7 +13,7 @@
     <!--v-model="country"-->
     <!--&gt;-->
     <!--</v-text-field>-->
-    <v-autocomplete :rules=null :items="prodList" v-model="prodList1" placeholder="请输入要查询的产品类型或描述" class="primary--text mx-3 pt-2" @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
+    <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text mx-3 pt-2" @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
     <v-spacer></v-spacer>
     <v-btn icon @click="handleFullScreen()">
       <v-icon>fullscreen</v-icon>
@@ -51,13 +51,16 @@ import NotificationList from "@/components/widgets/list/NotificationList";
 import Util from "@/util";
 import { getToken } from "@/utils/auth";
 import { getProdType } from "@/api/prod";
+import {
+    getAllProdList
+} from '@/api/url/prodInfo'
 export default {
   name: "app-toolbar",
   components: {
     NotificationList
   },
   data: () => ({
-    prodList1: [],
+    sourceProdList: [],
     prodList: [],
     prodCode: "",
     prodClass: "",
@@ -106,40 +109,35 @@ export default {
     prodListClick(val) {
       this.prodListSplit = val.split("-");
       this.prodCode = this.prodListSplit[0];
-      getProdType(this.prodCode).then(response => {
-        if (response.data.prodTypeForm.length) {
-          let length = response.data.prodTypeForm.length;
-          for (let i = 0; i < length; i++) {
-            if (this.prodCode === response.data.prodTypeForm[i].value) {
-              this.prodClass = response.data.prodTypeForm[i].prodClass;
-            }
+      for(let i = 0; i<this.sourceProdList.length; i++){
+          if(this.prodCode === this.sourceProdList[i].prodType){
+              this.prodClass = this.sourceProdList[i].prodClass
+              break
           }
-          if ("RB100" == this.prodClass) {
-            this.$router.push({
+      }
+      if ("RB100" == this.prodClass) {
+          this.$router.push({
               name: "prod/rbPrivateProd",
               params: {
-                prodClassCmp: this.prodClass,
-                prodCodeCmp: this.prodCode
+                  prodClassCmp: this.prodClass,
+                  prodType: this.prodCode
               }
-            });
-          }
-        }
-      });
+          });
+      }
     },
     handleFullScreen() {
       Util.toggleFullScreen();
     },
     getInitProdList() {
-      getProdType().then(response => {
-        if (response.data.prodTypeForm.length) {
-          for (let i = 0; i < response.data.prodTypeForm.length; i++) {
+        getAllProdList().then(response => {
+          for (let i = 0; i < response.data.data.length; i++) {
+            this.sourceProdList.push(response.data.data[i])
             this.prodList.push(
-              response.data.prodTypeForm[i].value +
+              response.data.data[i].prodType +
                 "-" +
-                response.data.prodTypeForm[i].label
+                response.data.data[i].prodDesc
             );
           }
-        }
       });
     }
   }

@@ -79,6 +79,14 @@ export function getProdClassList () {
 }
 
 
+export function getAllProdList () {
+    return request({
+        url: '/getAllProdList',
+        method: 'post'
+    });
+}
+
+
 export function getDepositDtl (data) {
   return request({
     url: '/prod/dtlDeposit',

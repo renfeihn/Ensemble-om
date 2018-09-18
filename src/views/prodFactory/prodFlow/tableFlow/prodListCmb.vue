@@ -21,7 +21,7 @@
                                                             <td>{{ props.item.prodGroup }}</td>
                                                           <td>{{ props.item.status }}</td>
                                                           <td>
-                                                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item.value)">
+                                                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
                                                               <v-icon>edit</v-icon>
                                                             </v-btn>
                                                             <v-btn depressed outline icon fab dark color="pink" small>
@@ -98,18 +98,8 @@
                     }
                 })
             },
-            handleClick(prodCode) {
-                getProdType(prodCode).then(response => {
-                    let length = response.data.prodTypeForm.length
-                    for (let i = 0; i < length; i++) {
-                       if(prodCode === response.data.prodTypeForm[i].value){
-                           this.prodclass = response.data.prodTypeForm[i].prodClass
-                       }
-                    }
-                    if('RB100' == this.prodclass){
-                        this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': this.prodclass,'prodCodeCmp': prodCode}})
-                    }
-                })
+            handleClick(val) {
+                this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': val.prodClass,'prodType': val.prodType}})
             }
         }
     };
