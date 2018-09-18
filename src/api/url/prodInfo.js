@@ -70,6 +70,15 @@ export function getProdType (prodClass) {
     data
   });
 }
+
+export function getProdClassList () {
+    return request({
+        url: '/getProdClassList',
+        method: 'post'
+    });
+}
+
+
 export function getDepositDtl (data) {
   return request({
     url: '/prod/dtlDeposit',

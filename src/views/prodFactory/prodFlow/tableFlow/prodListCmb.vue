@@ -16,8 +16,9 @@
                                                               <img :src="props.item.avatar" alt="">
                                                             </v-avatar>
                                                           </td> -->
-                                                          <td>{{ props.item.value }}</td>
-                                                          <td>{{ props.item.label }}</td>
+                                                          <td>{{ props.item.prodType }}</td>
+                                                          <td>{{ props.item.prodDesc }}</td>
+                                                            <td>{{ props.item.prodGroup }}</td>
                                                           <td>{{ props.item.status }}</td>
                                                           <td>
                                                             <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item.value)">
@@ -62,11 +63,15 @@
                         // },
                         {
                             text: '产品代码',
-                            value: 'value'
+                            value: 'prodType'
                         },
                         {
-                            text: '产品类型',
-                            value: 'label'
+                            text: '产品描述',
+                            value: 'prodDesc'
+                        },
+                        {
+                            text: '产品属性',
+                            value: 'prodGroup'
                         },
                         {
                             text: '产品状态',
