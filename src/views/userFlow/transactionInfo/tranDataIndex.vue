@@ -10,7 +10,7 @@
       </v-toolbar>
     <v-layout row>
       <v-card-text>
-         <prod-diff></prod-diff>
+         <prod-diff :mainSeqNo="code"></prod-diff>
       </v-card-text>
     </v-layout>
     </v-card>

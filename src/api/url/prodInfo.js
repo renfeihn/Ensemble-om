@@ -38,13 +38,6 @@ export function getDiffProd (params) {
       data
   });
 }
-export function getDiffList (params) {
-  return request({
-    url: '/prod/getDiffList',
-    method: 'get',
-    params
-  });
-}
 
 export function getProdData (prodType) {
   // const data={
@@ -138,6 +131,13 @@ export function getFlowList () {
     url: '/reviewList',
     method: 'post'
 });
+}
+export function getDiffList (params) {
+    return request({
+        url: '/getProdDiff',
+        method: 'post',
+        data: params
+    });
 }
 
 export function getCheckFlowList () {

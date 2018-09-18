@@ -49,8 +49,9 @@
 </template>
 
 <script>
-import { getDiffList } from "@/api/prod";
+import { getDiffList } from "@/api/url/prodInfo";
 export default {
+    props: ['mainSeqNo'],
   data() {
     return {
       ex11: "",
@@ -81,6 +82,22 @@ export default {
             { divider: true, inset: true },
             {
               title: "余额类型"
+            },
+            { divider: true, inset: true },
+            {
+                title: "账户计息标志"
+            },
+            { divider: true, inset: true },
+            {
+                title: "利润中心"
+            },
+            { divider: true, inset: true },
+            {
+                title: "生效日期"
+            },
+            { divider: true, inset: true },
+            {
+                title: "失效日期"
             }
           ]
         }
@@ -123,9 +140,52 @@ export default {
   },
   methods: {
     queryDespositProdData() {
-      getDiffList().then(response => {
-        this.prodDiffData = response.data.prodDiffTwo;
+      var data={'mainSeqNo': this.$props.mainSeqNo};
+      getDiffList(data).then(response => {
+          this.assemblingDiff(response.data.data);
       });
+    },
+    assemblingDiff(prodService){
+        const prodInfo=prodService.prodInfo;
+        const prodDiff=prodService.diff;
+        const prodType=prodService.prodType;
+        let columnDesc=[];
+        let columnNew=[];
+        let columnOld=[];
+      //产品本身下参数固定组
+      //产品下属性组合
+       let prodDefines=prodInfo.prodDefines;
+       if(JSON.stringify(prodDefines)!="{}"){
+       for(let index in prodDefines){
+           let prodDefine=prodDefines[index];
+           columnDesc.push({title: prodDefine.attrKey});
+           columnDesc.push({ divider: true, inset: true });
+           columnOld.push({title: prodDefine.attrValue});
+           columnOld.push({ divider: true, inset: true });
+           columnNew.push({title: prodDiff['MB_PROD_DEFINE.'+prodDefine.attrKey]});
+           columnNew.push({ divider: true, inset: true });
+           if(prodDiff['MB_PROD_DEFINE.'+prodDefine.attrKey] != prodDefine.attrValue){
+                 columnOld.push({ diff: true });
+                  columnNew.push({ diff: true });
+           }
+       }
+       }else{
+                for(let index in prodDiff){
+                      var desc=index.substring(index.lastIndexOf('.')+1);
+                      columnDesc.push({title: desc});
+                      columnDesc.push({ divider: true, inset: true });
+                      columnNew.push({title: prodDiff[index]});
+                      columnNew.push({ divider: true, inset: true });
+                }
+       }
+       var diffList=[];
+       var columnDescList={prodType: '',items: columnDesc};
+       var columnNewList={prodType: prodType+'修改后',items: columnNew};
+       var columnOldList={prodType: prodType+'修改前' ,items: columnOld};
+       diffList.push(columnDescList);
+       diffList.push(columnNewList);
+       diffList.push(columnOldList);
+      this.prodDiffData = diffList;
     }
   }
 };
