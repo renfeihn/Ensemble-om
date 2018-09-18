@@ -21,7 +21,7 @@
                                 <v-subheader class="primary--text subheading">业务模块*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="sourceModule" v-model="acctBaseInfo.sourceModule" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" @change="isSelectCcy" :items="sourceModule" v-model="acctBaseInfo.sourceModule" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品分类*</v-subheader>
@@ -83,13 +83,14 @@
                                 <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isMultiCcy" @change="isSelectCcy" v-model="acctBaseInfo.isMultiCcy" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <!-- <v-select class="primary--text mx-2" :items="isMultiCcy" @change="isSelectCcy" v-model="acctBaseInfo.isMultiCcy" item-text="value" item-value="key" single-line hide-details></v-select> -->
+                                <dc-switch v-model="acctBaseInfo.isMultiCcy"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">默认币种*</v-subheader>
@@ -107,7 +108,8 @@
                                 <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isJudge" v-model="acctBaseInfo.isMutiVoucher" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <!-- <v-select class="primary--text mx-2" :items="isJudge" v-model="acctBaseInfo.isMutiVoucher" item-text="value" item-value="key" single-line hide-details></v-select> -->
+                                <dc-switch v-model="acctBaseInfo.isMutiVoucher"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
@@ -172,239 +174,280 @@
 </template>
 
 <script>
+import DcSwitch from "@/components/widgets/DcSwitch";
 import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
-    export default {
-        props: ["prodData"],
-        data: () => ({
-            title: null,
-            prodtypeData: "",
-            proddescData: "",
-            sourceModule: [{
-                key: "",
-                value: ""
-            }],
-            isJudge: [{
-                key: "Y",
-                value: "Y-是"
-            },
-            {
-                key: "N",
-                value: 'N-否'
-            }],
-            prodClass: [{
-                key: "",
-                value: ""
-            }],
-            prodAttr: [{
-                key: "",
-                value: ""
-            }],
-            isGroup: [{
-                key: "",
-                value: ""
-            }],
-            prodStatus: [{
-                key: "",
-                value: ""
-            }],
-            baseprodtype: [{
-                key: "",
-                value: ""
-            }],
-            acctType: [{
-                key: "",
-                value: ""
-            }],
-            subAcctType: [{
-                key: "",
-                value: ""
-            }],
-            isMultiCcy: [{
-                key: "",
-                value: ""
-            }],
-            ccy: [{
-                key: "",
-                value: ""
-            }],
-            acctIntFlag: [{
-                key: "",
-                value: ""
-            }],
-            profitCentre: [{
-                key: "",
-                value: ""
-            }],
-            voucherFlag: [{
-                key: "",
-                value: ""
-            }],
-            voucherType: [{
-            key: "",
-            value: ""
-            }],
-            withdrawalType: [{
-                key: "",
-                value: ""
-            }],
-            balType: [{
-                key: "",
-                value: ""
-            }],
-            acctNature: [{
-                key: "",
-                value: ""
-            }],
-            ownershipType: [{
-                key: "",
-                value: ""
-            }],
-            acctClass: [{
-                key: "",
-                value: ""
-            }],
-            refData: getInitData,
-            acctBaseInfo: {
-                prodcode: '',
-                proddesc: '',
-                sourceModule: '',
-                prodClass: '',
-                prodAttr: '',
-                isGroup: '',
-                prodStatus: '',
-                baseprodtype: '',
-                acctType: '',
-                subAcctType: '',
-                isMultiCcy: '',
-                ccy: '',
-                defaultCcy: 'CNY',
-                acctIntFlag: '',
-                profitCentre: '',
-                effectdate: '',
-                failuredate: '',
-                isMutiVoucher: '',
-                voucherType: '',
-                acctSubType: '',
-                acctNature: '',
-                ownershipType: '',
-                acctClass: '',
-                balType: '',
-                withdrawalType: '',
-                discountCcy: ''
-            },
-        }),
-        computed: {
-            progress() {
-                return Math.min(100, this.value.length * 10);
-            }
-        },
-        watch: {
-            prodData(val) {
-                this.updateBaseInfo(val)
-            }
-        },
-        mounted() {
-            this.initRefDate();
-        },
-        methods: {
-            isSelectCcy(){
-                console.log(this.acctBaseInfo.isMultiCcy);
-                if(this.acctBaseInfo.isMultiCcy === 'Y'){
-                    this.$refs.ccy.multiple='true'
-                }else{
-                    this.$refs.ccy.multiple='false'
-                }
-            },
-            updateBaseInfo(val) {
-                this.acctBaseInfo = {}
-                this.acctBaseInfo.prodcode = val.acctBaseInfo.prodcode
-                this.acctBaseInfo.proddesc = val.acctBaseInfo.proddesc
-                this.acctBaseInfo.sourceModule = val.acctBaseInfo.sourceModule
-                this.acctBaseInfo.prodClass = val.acctBaseInfo.prodClass
-                this.acctBaseInfo.prodAttr = val.acctBaseInfo.prodAttr
-                this.acctBaseInfo.isGroup = val.acctBaseInfo.isGroup
-                this.acctBaseInfo.prodStatus = val.acctBaseInfo.prodStatus
-                this.acctBaseInfo.baseprodtype = val.acctBaseInfo.baseprodtype
-                this.acctBaseInfo.acctType = val.acctBaseInfo.acctType
-                this.acctBaseInfo.subAcctType = val.acctBaseInfo.subAcctType
-                this.acctBaseInfo.isMultiCcy = val.acctBaseInfo.isMultiCcy
-                this.acctBaseInfo.ccy = val.acctBaseInfo.ccy
-                this.acctBaseInfo.acctIntFlag = val.acctBaseInfo.acctIntFlag
-                this.acctBaseInfo.profitCentre = val.acctBaseInfo.profitCentre
-                this.acctBaseInfo.effectdate = val.acctBaseInfo.effectdate
-                this.acctBaseInfo.failuredate = val.acctBaseInfo.failuredate
-                this.acctBaseInfo.voucherType = val.acctBaseInfo.voucherType;
-                this.acctBaseInfo.acctType = val.acctBaseInfo.acctType;
-                this.acctBaseInfo.acctSubType = val.acctBaseInfo.acctSubType;
-                this.acctBaseInfo.acctNature = val.acctBaseInfo.acctNature;
-                this.acctBaseInfo.ownershipType = val.acctBaseInfo.ownershipType;
-                this.acctBaseInfo.acctClass = val.acctBaseInfo.acctClass;
-                this.acctBaseInfo.balType = val.acctBaseInfo.balType;
-                this.acctBaseInfo.withdrawalType = val.acctBaseInfo.withdrawalType;
-                this.acctBaseInfo.discountCcy = val.acctBaseInfo.discountCcy;
-                this.acctBaseInfo.acctClass = val.acctBaseInfo.acctClass;
-                this.acctBaseInfo.isMutiVoucher = val.acctBaseInfo.isMutiVoucher;
-                this.acctBaseInfo.defaultCcy = val.acctBaseInfo.defaultCcy;
-            },
-            selectByProd() {
-                getProdData(this.listValue).then(response => {
-                    this.prodtypeData = this.listValue;
-                    this.proddescData = response.data.prodFrom.proddesc;
-                    this.sourceModule = response.data.prodFrom.sourceModule;
-                    this.prodClass = response.data.prodFrom.prodClass;
-                    this.prodAttr = response.data.prodFrom.prodAttr;
-                    this.isGroup = response.data.prodFrom.isGroup;
-                    this.prodStatus = response.data.prodFrom.prodStatus;
-                    this.baseprodtype = response.data.prodFrom.baseprodtype;
-                    this.acctType = response.data.prodFrom.acctType;
-                    this.subAcctType = response.data.prodFrom.subAcctType;
-                    this.isMultiCcy = response.data.prodFrom.isMultiCcy;
-                    this.ccy = response.data.prodFrom.ccy;
-                    this.acctIntFlag = response.data.prodFrom.acctIntFlag;
-                    this.profitCentre = response.data.prodFrom.profitCentre;
-                });
-            },
-            initRefDate() {
-                this.sourceModule = this.refData[2].paraDataRb.sourceModule;
-                this.prodClass = this.refData[2].paraDataRb.prodClass;
-                this.prodAttr = this.refData[2].paraDataRb.prodAttr;
-                this.isGroup = this.refData[2].paraDataRb.isGroup;
-                this.prodStatus = this.refData[2].paraDataRb.prodStatus;
-                this.baseprodtype = this.refData[2].paraDataRb.baseprodtype;
-                this.acctType = this.refData[2].paraDataRb.acctType;
-                this.subAcctType = this.refData[2].paraDataRb.subAcctType;
-                this.isMultiCcy = this.refData[2].paraDataRb.isMultiCcy;
-                this.ccy = this.refData[2].paraDataRb.ccy;
-                this.acctIntFlag = this.refData[2].paraDataRb.acctIntFlag;
-                this.profitCentre = this.refData[2].paraDataRb.profitCentre;
-                this.voucherType = this.refData[2].paraDataRb.voucherType;
-                this.acctType = this.refData[2].paraDataRb.acctType;
-                this.acctSubType = this.refData[2].paraDataRb.acctSubType;
-                this.acctNature = this.refData[2].paraDataRb.acctNature;
-                this.ownershipType = this.refData[2].paraDataRb.ownershipType;
-                this.acctClass = this.refData[2].paraDataRb.acctClass;
-                this.balType = this.refData[2].paraDataRb.balType;
-                this.withdrawalType = this.refData[2].paraDataRb.withdrawalType;
-                this.discountCcy = this.refData[2].paraDataRb.discountCcy;
-                this.acctClass = this.refData[2].paraDataRb.acctClass;
-            },
-            closeDialog() {
-                this.$parent.isActive = false;
-            }
-        }
-    };
+export default {
+  components: { DcSwitch },
+  props: ["prodData"],
+  data: () => ({
+    title: null,
+    prodtypeData: "",
+    proddescData: "",
+    sourceModule: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    isJudge: [
+      {
+        key: "Y",
+        value: "Y-是"
+      },
+      {
+        key: "N",
+        value: "N-否"
+      }
+    ],
+    prodClass: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    prodAttr: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    isGroup: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    prodStatus: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    baseprodtype: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    acctType: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    subAcctType: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    isMultiCcy: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    ccy: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    acctIntFlag: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    profitCentre: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    voucherFlag: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    voucherType: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    withdrawalType: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    balType: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    acctNature: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    ownershipType: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    acctClass: [
+      {
+        key: "",
+        value: ""
+      }
+    ],
+    refData: getInitData,
+    acctBaseInfo: {
+      prodcode: "",
+      proddesc: "",
+      sourceModule: "",
+      prodClass: "",
+      prodAttr: "",
+      isGroup: "",
+      prodStatus: "",
+      baseprodtype: "",
+      acctType: "",
+      subAcctType: "",
+      isMultiCcy: "Y",
+      ccy: "",
+      defaultCcy: "CNY",
+      acctIntFlag: "",
+      profitCentre: "",
+      effectdate: "",
+      failuredate: "",
+      isMutiVoucher: "N",
+      voucherType: "",
+      acctSubType: "",
+      acctNature: "",
+      ownershipType: "",
+      acctClass: "",
+      balType: "",
+      withdrawalType: "",
+      discountCcy: ""
+    }
+  }),
+  computed: {
+    progress() {
+      return Math.min(100, this.value.length * 10);
+    }
+  },
+  watch: {
+    prodData(val) {
+      this.updateBaseInfo(val);
+    }
+  },
+  mounted() {
+    this.initRefDate();
+  },
+  methods: {
+    isSelectCcy() {
+      if (this.acctBaseInfo.isMultiCcy === "Y") {
+        this.$refs.ccy.multiple = "true";
+      } else {
+        this.$refs.ccy.multiple = "false";
+      }
+    },
+    updateBaseInfo(val) {
+      this.acctBaseInfo = {};
+      this.acctBaseInfo.prodcode = val.acctBaseInfo.prodcode;
+      this.acctBaseInfo.proddesc = val.acctBaseInfo.proddesc;
+      this.acctBaseInfo.sourceModule = val.acctBaseInfo.sourceModule;
+      this.acctBaseInfo.prodClass = val.acctBaseInfo.prodClass;
+      this.acctBaseInfo.prodAttr = val.acctBaseInfo.prodAttr;
+      this.acctBaseInfo.isGroup = val.acctBaseInfo.isGroup;
+      this.acctBaseInfo.prodStatus = val.acctBaseInfo.prodStatus;
+      this.acctBaseInfo.baseprodtype = val.acctBaseInfo.baseprodtype;
+      this.acctBaseInfo.acctType = val.acctBaseInfo.acctType;
+      this.acctBaseInfo.subAcctType = val.acctBaseInfo.subAcctType;
+      this.acctBaseInfo.isMultiCcy = val.acctBaseInfo.isMultiCcy;
+      this.acctBaseInfo.ccy = val.acctBaseInfo.ccy;
+      this.acctBaseInfo.acctIntFlag = val.acctBaseInfo.acctIntFlag;
+      this.acctBaseInfo.profitCentre = val.acctBaseInfo.profitCentre;
+      this.acctBaseInfo.effectdate = val.acctBaseInfo.effectdate;
+      this.acctBaseInfo.failuredate = val.acctBaseInfo.failuredate;
+      this.acctBaseInfo.voucherType = val.acctBaseInfo.voucherType;
+      this.acctBaseInfo.acctType = val.acctBaseInfo.acctType;
+      this.acctBaseInfo.acctSubType = val.acctBaseInfo.acctSubType;
+      this.acctBaseInfo.acctNature = val.acctBaseInfo.acctNature;
+      this.acctBaseInfo.ownershipType = val.acctBaseInfo.ownershipType;
+      this.acctBaseInfo.acctClass = val.acctBaseInfo.acctClass;
+      this.acctBaseInfo.balType = val.acctBaseInfo.balType;
+      this.acctBaseInfo.withdrawalType = val.acctBaseInfo.withdrawalType;
+      this.acctBaseInfo.discountCcy = val.acctBaseInfo.discountCcy;
+      this.acctBaseInfo.acctClass = val.acctBaseInfo.acctClass;
+      this.acctBaseInfo.isMutiVoucher = val.acctBaseInfo.isMutiVoucher;
+      this.acctBaseInfo.defaultCcy = val.acctBaseInfo.defaultCcy;
+    },
+    selectByProd() {
+      getProdData(this.listValue).then(response => {
+        this.prodtypeData = this.listValue;
+        this.proddescData = response.data.prodFrom.proddesc;
+        this.sourceModule = response.data.prodFrom.sourceModule;
+        this.prodClass = response.data.prodFrom.prodClass;
+        this.prodAttr = response.data.prodFrom.prodAttr;
+        this.isGroup = response.data.prodFrom.isGroup;
+        this.prodStatus = response.data.prodFrom.prodStatus;
+        this.baseprodtype = response.data.prodFrom.baseprodtype;
+        this.acctType = response.data.prodFrom.acctType;
+        this.subAcctType = response.data.prodFrom.subAcctType;
+        this.isMultiCcy = response.data.prodFrom.isMultiCcy;
+        this.ccy = response.data.prodFrom.ccy;
+        this.acctIntFlag = response.data.prodFrom.acctIntFlag;
+        this.profitCentre = response.data.prodFrom.profitCentre;
+      });
+    },
+    initRefDate() {
+      this.sourceModule = this.refData[2].paraDataRb.sourceModule;
+      this.prodClass = this.refData[2].paraDataRb.prodClass;
+      this.prodAttr = this.refData[2].paraDataRb.prodAttr;
+      this.isGroup = this.refData[2].paraDataRb.isGroup;
+      this.prodStatus = this.refData[2].paraDataRb.prodStatus;
+      this.baseprodtype = this.refData[2].paraDataRb.baseprodtype;
+      this.acctType = this.refData[2].paraDataRb.acctType;
+      this.subAcctType = this.refData[2].paraDataRb.subAcctType;
+      this.isMultiCcy = this.refData[2].paraDataRb.isMultiCcy;
+      this.ccy = this.refData[2].paraDataRb.ccy;
+      this.acctIntFlag = this.refData[2].paraDataRb.acctIntFlag;
+      this.profitCentre = this.refData[2].paraDataRb.profitCentre;
+      this.voucherType = this.refData[2].paraDataRb.voucherType;
+      this.acctType = this.refData[2].paraDataRb.acctType;
+      this.acctSubType = this.refData[2].paraDataRb.acctSubType;
+      this.acctNature = this.refData[2].paraDataRb.acctNature;
+      this.ownershipType = this.refData[2].paraDataRb.ownershipType;
+      this.acctClass = this.refData[2].paraDataRb.acctClass;
+      this.balType = this.refData[2].paraDataRb.balType;
+      this.withdrawalType = this.refData[2].paraDataRb.withdrawalType;
+      this.discountCcy = this.refData[2].paraDataRb.discountCcy;
+      this.acctClass = this.refData[2].paraDataRb.acctClass;
+    },
+    closeDialog() {
+      this.$parent.isActive = false;
+    }
+  }
+};
 </script>
 <style scoped>
-    .top {
-        padding-top: 8px;
-    }
-    .depositTree {
-        height: calc(90vh - 48px);
-    }
-    .line_02{
-        height: 3px;
-        border-top: 2px solid #ddd;
-        text-align: center;
-    }
+.top {
+  padding-top: 8px;
+}
+.depositTree {
+  height: calc(90vh - 48px);
+}
+.line_02 {
+  height: 3px;
+  border-top: 2px solid #ddd;
+  text-align: center;
+}
 </style
