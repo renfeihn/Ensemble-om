@@ -46,6 +46,7 @@
                 <v-card>
                 <v-card-text>
                 <down-action v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
+                <pending-form v-if="pendFlag==1"></pending-form>
                 </v-card-text>
                 </v-card>
                 <prod-list-form v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
@@ -82,6 +83,7 @@
 
     import downAction from '../btn/downAction';
     import ProdListForm from '../form/ProdListForm';
+    import PendingForm from '../btn/PendingForm';
     import { getCheckFlowList } from "@/api/url/prodInfo";
     export default {
         name: 'deposit',
@@ -102,7 +104,8 @@
             FormShift,
             AccountingInfo,
             downAction,
-            ProdListForm
+            ProdListForm,
+            PendingForm
         },
         data () {
             return {
@@ -169,16 +172,19 @@
             this.prodClass = this.$route.params.prodClassCmp
         },
         mounted: function() {
+            this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
-            this.prodClass = this.$route.hash
-            this.queryDespositProdData(this.prodClass)
-            if(this.$route.params.prodClassCmp !=''){
+            if(this.$route.hash !== "" && this.$route.hash !== null) {
+                //点击主菜单产品组时 获取产品组代码
+                this.prodClass = this.$route.hash
+            }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
+                //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
             }
-            if(this.$route.params.prodCodeCmp !=''){
-                this.initStage(this.$route.params.prodCodeCmp)
+            //通过全局搜索/产品目录 获取目标产品代码
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
+                this.listenToProdList(this.$route.params)
             }
-            this.queryDespositProdData(this.prodClass)
         },
         methods: {
             queryProdFlow(){
@@ -212,7 +218,8 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         //置灰提交按钮，防止为此提交
-                        alert("提交成功！")
+                        this.pendFlag = 1
+                        toast.success("提交成功！");
                     }
                 })
             },
@@ -228,14 +235,14 @@
                 this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
-                        alert("暂存成功！")
+                        toast.success("暂存成功！");
                     }
                 })
             },
             listenToProdList(value) {
                 this.prodCode = value.prodType
                 getProdData(this.prodCode).then(response => {
-                    this.prodData = response.data
+                    this.prodData = response.data.data
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
             },
@@ -289,7 +296,7 @@
                 this.prodData.prodType.prodDesc=data.prodDesc;
                 const newData=this.copy(this.prodData,[]);
                 this.prodData=newData;
-                if(data.showCopy){
+                if(!data.showCopy){
                     this.showCopy = 'Y';
                 }else{
                     this.showCopy = '';
