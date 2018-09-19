@@ -819,7 +819,7 @@ export default [
     path: '/prod/rbPrivateProds',
         meta: {
     breadcrumb: true,
-        title: '对私存款组'
+        title: '活期存款组'
 },
     name: 'prod/rbPrivateProds',
         component: () =>

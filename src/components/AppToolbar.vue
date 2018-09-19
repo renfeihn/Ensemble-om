@@ -115,7 +115,15 @@ export default {
               break
           }
       }
-      if ("RB100" == this.prodClass) {
+      if ("RB100" === this.prodClass) {
+          this.$router.push({
+              name: "prod/rbPrivateProds",
+              params: {
+                  prodClassCmp: this.prodClass,
+                  prodType: this.prodCode
+              }
+          });
+      }else if ("RB400" === this.prodClass) {
           this.$router.push({
               name: "prod/rbPrivateProd",
               params: {

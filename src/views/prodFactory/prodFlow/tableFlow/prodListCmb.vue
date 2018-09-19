@@ -99,7 +99,17 @@
                 })
             },
             handleClick(val) {
-                this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': val.prodClass,'prodType': val.prodType}})
+                if(val.prodClass === "RB400") {
+                    this.$router.push({
+                        name: 'prod/rbPrivateProd',
+                        params: {'prodClassCmp': val.prodClass, 'prodType': val.prodType}
+                    })
+                }else if(val.prodClass === "RB100") {
+                    this.$router.push({
+                        name: 'prod/rbPrivateProds',
+                        params: {'prodClassCmp': val.prodClass, 'prodType': val.prodType}
+                    })
+                }
             }
         }
     };
