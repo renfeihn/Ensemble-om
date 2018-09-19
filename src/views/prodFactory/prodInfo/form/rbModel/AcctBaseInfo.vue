@@ -9,73 +9,73 @@
                                 <v-subheader class="primary--text subheading">产品代码*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="prodType.prodType" single-line hide-details disabled></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="acctBaseInfo.prodType" single-line hide-details disabled></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品描述*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-2" label="产品描述" name="title" v-model="prodType.prodDesc" single-line hide-details disabled/>
+                                <v-text-field class="primary--text mx-2" label="产品描述" name="title" v-model="acctBaseInfo.prodDesc" single-line hide-details disabled/>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">业务模块*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" @change="isSelectCcy" :items="sourceModule" v-model="prodDefines.sourceModule" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" @change="isSelectCcy" :items="sourceModule" v-model="acctBaseInfo.sourceModule" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品分类*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodClass" v-model="prodType.prodClass" label="产品分类" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodClass" v-model="acctBaseInfo.prodClass" label="产品分类" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodAttr" v-model="prodType.prodRange" label="产品属性" item-text="value" item-value="key" value="'S'" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodAttr" v-model="acctBaseInfo.prodRange" label="产品属性" item-text="value" item-value="key" value="'S'" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">组合产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isGroup" v-model="prodType.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodStatus" v-model="prodType.status" label="产品状态" item-text="value" item-value="key" value="A" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodStatus" v-model="acctBaseInfo.status" label="产品状态" item-text="value" item-value="key" value="A" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">基础产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-1" :items="baseprodtype" v-model="prodType.baseProdType" label="基础产品" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-1" :items="baseprodtype" v-model="acctBaseInfo.baseProdType" label="基础产品" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">生效日期*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-                                    <v-text-field slot="activator" label="失效日期" v-model="prodDefines.prodStartDate" append-icon="event" single-line hide-details></v-text-field>
-                                    <v-date-picker v-model="prodDefines.prodStartDate" @input="$refs.startDateMenu.save(prodDefines.prodStartDate)" no-title scrollable locale="zh-cn"></v-date-picker>
+                                <v-menu ref="startDateMenu" lazy :close-on-content-click="false" v-model="prodStartDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
+                                    <v-text-field slot="activator" label="失效日期" v-model="acctBaseInfo.prodStartDate" append-icon="event" single-line hide-details></v-text-field>
+                                    <v-date-picker v-model="acctBaseInfo.prodStartDate" @input="$refs.startDateMenu.save(prodStartDate)" no-title scrollable locale="zh-cn"></v-date-picker>
                                 </v-menu>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">失效日期*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDateMenu">
-                                    <v-text-field slot="activator" label="失效日期" v-model="prodDefines.prodEndDate" append-icon="event" single-line hide-details></v-text-field>
-                                    <v-date-picker v-model="prodDefines.prodEndDate" @input="$refs.endDateMenu.save(prodDefines.prodEndDate)" no-title scrollable locale="zh-cn"></v-date-picker>
+                                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="prodEndDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDateMenu">
+                                    <v-text-field slot="activator" label="失效日期" v-model="acctBaseInfo.prodEndDate" append-icon="event" single-line hide-details></v-text-field>
+                                    <v-date-picker v-model="acctBaseInfo.prodEndDate" @input="$refs.endDateMenu.save(prodEndDate)" no-title scrollable locale="zh-cn"></v-date-picker>
                                 </v-menu>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">利润中心*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-1" :items="profitCentre" v-model="prodDefines.profitCenter" label="利润中心" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-1" :items="profitCentre" v-model="acctBaseInfo.profitCenter" label="利润中心" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12>
                             </v-flex>
@@ -83,87 +83,87 @@
                                 <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!-- <v-select class="primary--text mx-2" :items="isMultiCcy" @change="isSelectCcy" v-model="prodDefines.multiCcy" item-text="value" item-value="key" single-line hide-details></v-select> -->
-                                <dc-switch v-model="prodDefines.multiCcy"></dc-switch>
+                                <!-- <v-select class="primary--text mx-2" :items="isMultiCcy" @change="isSelectCcy" v-model="acctBaseInfo.multiCcy" item-text="value" item-value="key" single-line hide-details></v-select> -->
+                                <dc-switch v-model="acctBaseInfo.multiCcy"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ccy" v-model="prodDefines.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">默认币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ccy" label="币种" v-model="prodDefines.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="ccy" label="币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">计息标志*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctIntFlag" v-model="prodDefines.acctIntFlag" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="acctIntFlag" v-model="acctBaseInfo.acctIntFlag" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!-- <v-select class="primary--text mx-2" :items="isJudge" v-model="prodDefines.docFlag" item-text="value" item-value="key" single-line hide-details></v-select> -->
-                                <dc-switch v-model="prodDefines.docFlag"></dc-switch>
+                                <!-- <v-select class="primary--text mx-2" :items="isJudge" v-model="acctBaseInfo.docFlag" item-text="value" item-value="key" single-line hide-details></v-select> -->
+                                <dc-switch v-model="acctBaseInfo.docFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="voucherType" label="凭证类型" v-model="prodDefines.docType" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="voucherType" label="凭证类型" v-model="acctBaseInfo.docType" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctType" v-model="prodDefines.acctType" label="账户类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="acctType" v-model="acctBaseInfo.acctType" label="账户类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="subAcctType" v-model="prodDefines.fixedCall" label="账户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="subAcctType" v-model="acctBaseInfo.fixedCall" label="账户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctNature" v-model="prodDefines.acctNature" label="账户属性" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="acctNature" v-model="acctBaseInfo.acctNature" label="账户属性" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ownershipType" v-model="this.prodDefines.ownerShipType" label="关系属性" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="ownershipType" v-model="acctBaseInfo.ownerShipType" label="关系属性" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctClass" v-model="prodDefines.acctClass" label="账户类别" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="acctClass" v-model="acctBaseInfo.acctClass" label="账户类别" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">余额类别*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select :items="balType" v-model="prodDefines.balType" label="余额类别" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select :items="balType" v-model="acctBaseInfo.balType" label="余额类别" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">支取方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="prodDefines.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="acctBaseInfo.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">折算币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select :items="discountCcy" v-model="prodDefines.discountCcy" label="折算币种" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select :items="discountCcy" v-model="acctBaseInfo.discountCcy" label="折算币种" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -273,16 +273,14 @@ import { getProdData } from "@/api/prod";
                 value: ""
             }],
             refData: getInitData,
-            prodType: {
+            acctBaseInfo: {
                 prodType: '',
                 prodDesc: '',
                 prodClass: '',
                 prodGroup: '',
                 prodRange: '',
                 baseProdType: '',
-                status: ''
-            },
-            prodDefines: {
+                status: '',
                 prodStartDate: '',
                 prodEndDate: '',
                 intDay: '',
@@ -315,6 +313,9 @@ import { getProdData } from "@/api/prod";
             this.initRefDate();
         },
         methods: {
+            callbackprod() {
+                this.$emit("getNewProdData",{"acctBaseInfo": this.acctBaseInfo})
+            },
             isSelectCcy(){
                 console.log(this.acctBaseInfo.isMultiCcy);
                 if(this.acctBaseInfo.isMultiCcy === 'Y'){
@@ -325,30 +326,31 @@ import { getProdData } from "@/api/prod";
             },
             updateBaseInfo(val) {
                 this.acctBaseInfo = {}
-                this.prodType = {}
-                this.prodType.prodType = val.prodType.prodType
-                this.prodType.prodDesc = val.prodType.prodDesc
-                this.prodType.prodClass = val.prodType.prodClass
-                this.prodType.prodGroup = val.prodType.prodGroup
-                this.prodType.prodRange = val.prodType.prodRange
-                this.prodType.status = val.prodType.status
-                this.prodType.baseProdType = val.prodType.baseProdType
-                this.prodDefines.sourceModule = val.prodDefines.SOURCE_MODULE.attrValue
-                this.prodDefines.prodStartDate = val.prodDefines.PROD_START_DATE.attrValue
-                this.prodDefines.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
-                this.prodDefines.multiCcy = val.prodDefines.MULTI_CCY.attrValue
-                this.prodDefines.prodEndDate = val.prodDefines.PROD_END_DATE.attrValue
-                this.prodDefines.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
-                this.prodDefines.docFlag = val.prodDefines.DOC_FLAG.attrValue
-                this.prodDefines.docType = val.prodDefines.DOC_TYPE.attrValue
-                this.prodDefines.acctType = val.prodDefines.ACCT_TYPE.attrValue
-                this.prodDefines.fixedCall = val.prodDefines.FIXED_CALL.attrValue
-                this.prodDefines.acctNature = val.prodDefines.ACCT_NATURE.attrValue
-                this.prodDefines.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
-                this.prodDefines.acctClass = val.prodDefines.ACCT_CLASS.attrValue
-                this.prodDefines.balType = val.prodDefines.BAL_TYPE.attrValue
-                this.prodDefines.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
-                this.prodDefines.acctNature = val.prodDefines.ACCT_NATURE.attrValue
+                this.acctBaseInfo.prodType = val.prodType.prodType
+                this.acctBaseInfo.prodDesc = val.prodType.prodDesc
+                this.acctBaseInfo.prodClass = val.prodType.prodClass
+                this.acctBaseInfo.prodGroup = val.prodType.prodGroup
+                this.acctBaseInfo.prodRange = val.prodType.prodRange
+                this.acctBaseInfo.status = val.prodType.status
+                this.acctBaseInfo.baseProdType = val.prodType.baseProdType
+                this.acctBaseInfo.sourceModule = val.prodDefines.SOURCE_MODULE.attrValue
+                var str = val.prodDefines.PROD_START_DATE.attrValue
+                this.acctBaseInfo.prodStartDate = str.substr(0,4)+"-"+str.substr(4,2)+"-"+str.substr(6,2)
+                this.acctBaseInfo.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
+                this.acctBaseInfo.multiCcy = val.prodDefines.MULTI_CCY.attrValue
+                var str1 = val.prodDefines.PROD_END_DATE.attrValue
+                this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
+                this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
+                this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
+                this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue
+                this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
+                this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
+                this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
+                this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
+                this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
+                this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
+                this.acctBaseInfo.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
+                this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
             },
             selectByProd() {
                 getProdData(this.listValue).then(response => {

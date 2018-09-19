@@ -130,6 +130,9 @@ import { getProdData } from "@/api/prod";
             this.initRefDate();
         },
         methods: {
+            callbackprod() {
+                this.$emit("getNewProdData",{"controlInfo": this.controlInfo})
+            },
             updateBaseInfo(val) {
                 this.controlInfo = {}
                 this.controlInfo.draRange = val.controlInfo.draRange

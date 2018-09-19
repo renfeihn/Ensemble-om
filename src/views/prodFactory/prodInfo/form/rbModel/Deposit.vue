@@ -15,7 +15,7 @@
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="permitCommersionFlag" v-model="mbEventAttrs.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="permitCommersionFlag" v-model="deposit.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
@@ -27,7 +27,7 @@
                                 <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctReatraintCheck" v-model="mbEventAttrs.checkRestraint" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="acctReatraintCheck" v-model="deposit.checkRestraint" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">存入违约类型*</v-subheader>
@@ -159,11 +159,13 @@
             this.initRefDate();
         },
         methods: {
+            callbackprod() {
+                this.$emit("getNewProdData",{"deposit": this.deposit})
+            },
             selectByProd(val) {
-                this.eventForm = {}
-                this.mbEventAttrs = {}
-                this.mbEventAttrs.checkAgent = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_AGENT.attrValue
-                this.mbEventAttrs.checkRestraint = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
+                this.deposit = {}
+                this.deposit.checkAgent = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                this.deposit.checkRestraint = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
             },
             initRefDate() {
                 this.depositControlApproach = this.refData[2].paraDataRb.depositControlApproach;

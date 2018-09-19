@@ -99,7 +99,7 @@
                 resignCheck: '',
                 ownCheck: '',
                 huiTuiFlag: ''
-            },
+            }
         }),
         computed: {
             progress() {
@@ -115,8 +115,11 @@
             this.initRefDate();
         },
         methods: {
+            callbackprod() {
+                this.$emit("getNewProdData",{"closeAcct": this.closeAcct})
+            },
             selectByProd(val) {
-                this.eventForm = {}
+                this.closeAcct = {}
                 this.closeAcct.systemControlApproach = val.closeAcct.systemControlApproach
                 this.closeAcct.permitCommersionFlag = val.closeAcct.permitCommersionFlag
                 this.closeAcct.cashResouce = val.closeAcct.cashResouce

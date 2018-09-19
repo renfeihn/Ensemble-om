@@ -9,7 +9,7 @@
                                 <v-subheader class="primary--text subheading">账号生成规则*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="structureType" v-model="mbEventAttrs.structureType" label="账号生成规则" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="structureType" v-model="openAcct.structureType" label="账号生成规则" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账号前缀*</v-subheader>
@@ -22,25 +22,25 @@
                                 <v-subheader class="primary--text subheading">支取方式处理*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="checkWdrawnType" v-model="mbEventAttrs.checkWadrawnType" label="支取方式处理" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="checkWdrawnType" v-model="openAcct.checkWadrawnType" label="支取方式处理" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户限制处理*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="restraintFlag" v-model="mbEventAttrs.restraintFlag" label="账户限制处理" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="restraintFlag" v-model="openAcct.restraintFlag" label="账户限制处理" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">凭证类型处理*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="withdrawTypeHandeling" v-model="mbEventAttrs.docType" label="凭证类型处理" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="withdrawTypeHandeling" v-model="openAcct.docType" label="凭证类型处理" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="daiBanFlag" v-model="mbEventAttrs.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="daiBanFlag" v-model="openAcct.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">同客户数量检查标识*</v-subheader>
@@ -52,7 +52,7 @@
                                 <v-subheader class="primary--text subheading">同客户允许最大数量*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="同客户允许最大数量" name="prefix" v-model="mbEventAttrs.numOfClient" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="同客户允许最大数量" name="prefix" v-model="openAcct.numOfClient" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">起息日处理标识*</v-subheader>
@@ -116,17 +116,6 @@
                 value: ""
             }],
             refData: getInitData,
-            mbEventType: {},
-            mbEventAttrs: {
-                structureType: '',
-                checkWadrawnType: '',
-                restraintFlag: '',
-                docType: '',
-                checkAgent: '',
-                numOfClient: ''
-            },
-            mbEventParts: {
-            },
             openAcct: {
                 structureType: '',
                 checkWdrawnType: '',
@@ -134,7 +123,10 @@
                 withdrawTypeHandeling: '',
                 daiBanFlag: '',
                 clientAmtCheckFlag: '',
-                startDepositAmt: ''
+                startDepositAmt: '',
+                docType: '',
+                checkAgent: '',
+                numOfClient: ''
             }
         }),
         computed: {
@@ -151,13 +143,16 @@
             this.initRefDate();
         },
         methods: {
+            callbackprod() {
+                this.$emit("getNewProdData",{"openAcct": this.openAcct})
+            },
             selectByProd(val) {
-                this.mbEventAttrs.structureType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.STRUCTURE_TYPE.attrValue;
-                this.mbEventAttrs.checkWadrawnType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
-                this.mbEventAttrs.restraintFlag = val.mbEventInfos.OPEN_RB101.mbEventAttrs.RESTRAINT_FLAG.attrValue
-                this.mbEventAttrs.docType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.DOC_TYPE.attrValue
-                this.mbEventAttrs.checkAgent = val.mbEventInfos.OPEN_RB101.mbEventAttrs.CHECK_AGENT.attrValue
-                this.mbEventAttrs.numOfClient = val.mbEventInfos.OPEN_RB101.mbEventAttrs.NUM_OF_CLIENT.attrValue
+                this.openAcct.structureType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.STRUCTURE_TYPE.attrValue;
+                this.openAcct.checkWadrawnType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
+                this.openAcct.restraintFlag = val.mbEventInfos.OPEN_RB101.mbEventAttrs.RESTRAINT_FLAG.attrValue
+                this.openAcct.docType = val.mbEventInfos.OPEN_RB101.mbEventAttrs.DOC_TYPE.attrValue
+                this.openAcct.checkAgent = val.mbEventInfos.OPEN_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                this.openAcct.numOfClient = val.mbEventInfos.OPEN_RB101.mbEventAttrs.NUM_OF_CLIENT.attrValue
             },
             initRefDate() {
                 this.structureType = this.refData[2].paraDataRb.structureType;
