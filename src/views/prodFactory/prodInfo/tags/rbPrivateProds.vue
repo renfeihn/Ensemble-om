@@ -85,6 +85,8 @@
     import ProdListForm from '../form/ProdListForm';
     import PendingForm from '../btn/PendingForm';
     import { getCheckFlowList } from "@/api/url/prodInfo";
+    import toast from '@/utils/toast';
+
     export default {
         name: 'deposit',
         components: {
@@ -288,7 +290,7 @@
                 this.prodData.prodDefines.PROD_END_DATE.attrValue = val.eventForm.prodEndDate
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.eventForm.acctType
 
-                this.prodData.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
+                this.prodData.mbEventInfos["CLOSE_"+val.eventForm.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.eventForm.baseprod
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;
