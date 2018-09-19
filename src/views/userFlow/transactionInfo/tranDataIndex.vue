@@ -208,14 +208,14 @@
                     this.assembleEvent();
                     //将收费定义的差异组装
                     this.assembleProdCharge();
-                    this.prodGroup = this.prodData.MbProdType.prodGroup
-                    this.prodClass = this.prodData.MbProdType.prodClass
-                    this.prodDesc = this.prodData.MbProdType.prodDesc
-                    this.prodType = this.prodData.MbProdType.prodGroup
-                    this.status = this.prodData.MbProdType.status
-                    this.baseProdType = this.prodData.MbProdType.baseProdType
-                    this.prodRange = this.prodData.MbProdType.prodRange
-                    this.prodType = this.prodData.MbProdType.prodType
+                    this.prodGroup = this.prodData.mbProdType.prodGroup
+                    this.prodClass = this.prodData.mbProdType.prodClass
+                    this.prodDesc = this.prodData.mbProdType.prodDesc
+                    this.prodType = this.prodData.mbProdType.prodGroup
+                    this.status = this.prodData.mbProdType.status
+                    this.baseProdType = this.prodData.mbProdType.baseProdType
+                    this.prodRange = this.prodData.mbProdType.prodRange
+                    this.prodType = this.prodData.mbProdType.prodType
                 });
             },
             assembleProdDefine() {
