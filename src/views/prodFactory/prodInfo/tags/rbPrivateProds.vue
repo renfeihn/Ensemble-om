@@ -119,6 +119,7 @@
                     version: ''
                 },
                 prodCode: '',
+                pendFlag: 0,
                 prodClass: '',
                 activeName: 'basic',
                 prodInfo: [{
@@ -194,11 +195,13 @@
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){
                         if(response.data.data[j].flowManage.status === "2"){
-                            alert("存在已提交数据，等待复核！")
+                            this.pendFlag = 1
+                            toast.info("存在已提交数据，等待复核!");
                             break
                         }
                         if(response.data.data[j].flowManage.status === "3"){
-                            alert("存在已复核数据，等待发布！")
+                            this.pendFlag = 1
+                            toast.info("存在已复核数据，等待发布！");
                             break
                         }
                     }
