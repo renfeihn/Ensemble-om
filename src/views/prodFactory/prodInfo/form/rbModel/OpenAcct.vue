@@ -7,67 +7,67 @@
                         <v-subheader class="primary--text subheading">账号生成规则*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE.attrValue" :options="structureType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE" :options="structureType" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账号前缀*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.ACCT_PREFIX.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.ACCT_PREFIX" :perShow="true"></dc-text-field>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">支取方式处理*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue" :options="checkWdrawnType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE" :options="checkWdrawnType" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户限制处理*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">凭证类型处理*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.DOC_TYPE_DEAL.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.DOC_TYPE_DEAL" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">同客户数量检查标识*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.CHECK_CLIENT_NUM_FLAG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.CHECK_CLIENT_NUM_FLAG" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">同客户允许最大数量*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT" :perShow="true"></dc-text-field>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">起息日处理标识*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">最大倒起息天数*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS" :perShow="true"></dc-text-field>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">最大起息天数*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.MAX_RATE_DAYS.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['OPEN_'+prodData.prodType.prodType].mbEventAttrs.MAX_RATE_DAYS" :perShow="true"></dc-text-field>
                     </v-flex>
                 </v-layout>
             </v-container></div>

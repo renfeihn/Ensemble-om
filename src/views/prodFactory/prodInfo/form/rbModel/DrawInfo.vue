@@ -7,79 +7,79 @@
                         <v-subheader class="primary--text subheading">支取控制方式*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue" :options="drawControlWay" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE" :perShow="true" :options="drawControlWay" :isMultiSelect="false"></dc-multiselect>
                     </v-flex>
                     <v-flex>
                         <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">资金去向方式*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue" :options="cashResource" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE" :perShow="true" :options="cashResource" :isMultiSelect="false"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">支取方式检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">凭证类型检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">支取违约类型*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue" :options="breakType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE" :perShow="true" :options="breakType" :isMultiSelect="false"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">违约处理方式*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue" :options="dealingWay" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY" :perShow="true" :options="dealingWay" :isMultiSelect="false"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">单次支取金额检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.CHECK_SG_AMT.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.CHECK_SG_AMT" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">最小支取金额*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT" :perShow="true"></dc-text-field>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">最大支取金额*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT" :perShow="true"></dc-text-field>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户留存余额检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">最小留存余额*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-text-field v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL.attrValue"></dc-text-field>
+                        <dc-text-field v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL" :perShow="true"></dc-text-field>
                     </v-flex>
                 </v-layout>
             </v-container></div>

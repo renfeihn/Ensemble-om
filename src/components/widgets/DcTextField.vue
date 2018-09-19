@@ -28,8 +28,7 @@
                 value: [],
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效",
-                personShow: 1
-
+                personShow: 0
             };
         },
         watch: {
@@ -50,24 +49,41 @@
         methods: {
             reback(newValue) {
                 let value = newValue;
-                if (value) {
-                    this.$emit("getVue", value);
+                if(typeof this._props.msg === "object") {
+                    this._props.msg.attrValue = value
+                }else{
+                    this._props.msg = value
                 }
+                this.$emit("getVue", this._props.msg);
             },
             peopleClick() {
+                //预留 未处理v-model为String类型时 分户生效标识处理 (如果传入为String时 分户生效标识不显示 )
                 if(this.peopleColor === "grey lighten-1") {
                     this.peopleColor = "red"
                     this.peopleDesc = "分户生效"
+                    this._props.msg.perEffect = "true"
                 }else if (this.peopleColor === "red"){
                     this.peopleColor = "grey lighten-1"
                     this.peopleDesc = "产品生效"
+                    this._props.msg.perEffect = "false"
                 }
             },
             init(msg) {
-                this.value = msg
+                //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
+                this.value = typeof msg === "object"?this._props.msg.attrValue:this._props.msg
                 //判断是否显示分户生效标识
-                if(this._props.perShow === false){
-                    this.personShow = 0
+                if(this._props.perShow === true){
+                    this.personShow = 1
+                }
+                //分户生效标识回显 如果传入msg为对象 则进入if判断  如果为String 则this._props.msg.perEffect === undefined 不执行以下操作
+                if(this._props.msg.perEffect !== undefined && this._props.msg.perEffect !== null){
+                    if(this._props.msg.perEffect === "true"){
+                        this.peopleColor = "red"
+                        this.peopleDesc = "分户生效"
+                    }else{
+                        this.peopleColor = "grey lighten-1"
+                        this.peopleDesc = "产品生效"
+                    }
                 }
             }
         }

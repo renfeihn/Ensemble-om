@@ -32,7 +32,7 @@
             return {
                 value: [],
                 options: [],
-                personShow: 1,
+                personShow: 0,
                 isMulti: true,
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效"
@@ -41,7 +41,9 @@
         watch: {
             msg: {
                 handler(msg) {
-                    this.init(msg);
+                    if(typeof msg !== "undefined") {
+                        this.init(typeof msg === "object" ? msg.attrValue : msg);
+                    }
                 }
             },
             value: {
@@ -51,30 +53,26 @@
             }
         },
         created() {
-            this.init(this._props.msg);
+            if(typeof this._props.msg !== "undefined") {
+                this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
+            }
+        },
+        mounted: function() {
+            this.initProperty();
         },
         methods: {
             peopleClick() {
                 if(this.peopleColor === "grey lighten-1") {
                     this.peopleColor = "red"
                     this.peopleDesc = "分户生效"
+                    this._props.msg.perEffect = "true"
                 }else if (this.peopleColor === "red"){
                     this.peopleColor = "grey lighten-1"
                     this.peopleDesc = "产品生效"
+                    this._props.msg.perEffect = "false"
                 }
             },
             init(msg) {
-                //判断是否多选
-                if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null){
-                    //是否多选标志未定义时，默认为多选
-                    this.isMulti = true
-                }else{
-                    this.isMulti = this._props.isMultiSelect;
-                }
-                //判断是否显示分户生效标识
-                if(this._props.perShow === false){
-                    this.personShow = 0
-                }
                 if(msg !== null && msg !== undefined) {
                     let data = msg.split(",");
                     let options = this._props.options;
@@ -92,10 +90,28 @@
                     }
                     this.value = values;
                 }
+                //根据产品配置信息，初始化分户生效标志
+                if(this._props.msg.perEffect === "true"){
+                    this.peopleColor = "red"
+                    this.peopleDesc = "分户生效"
+                }else{
+                    this.peopleColor = "grey lighten-1"
+                    this.peopleDesc = "产品生效"
+                }
             },
-//      multFlagDeal(val) {
-//          this.flag = val
-//      },
+            initProperty() {
+                //判断是否多选
+                if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null){
+                    //是否多选标志未定义时，默认为多选
+                    this.isMulti = true
+                }else{
+                    this.isMulti = this._props.isMultiSelect;
+                }
+                //判断是否显示分户生效标识
+                if(this._props.perShow === true){
+                    this.personShow = 1
+                }
+            },
             reback(newValue) {
                 let value = "";
                 if(this.isMulti === true) {
@@ -112,8 +128,14 @@
                     //单选数据组装
                     value = newValue.key
                 }
+                if(typeof this._props.msg === "object") {
+                    this._props.msg.attrValue = value
+                }
+                if(typeof this._props.msg === "string") {
+                    this._props.msg = value
+                }
                 if (value) {
-                    this.$emit("getVue", value);
+                    this.$emit("getVue", this._props.msg);
                 }
             },
             addTag(newTag) {

@@ -21,7 +21,7 @@
                         <v-subheader class="primary--text subheading">业务模块*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.SOURCE_MODULE.attrValue" :options="sourceModule" :isMultiSelect="false" :perShow="true"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.SOURCE_MODULE" :options="sourceModule" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">产品分类*</v-subheader>
@@ -57,97 +57,97 @@
                         <v-subheader class="primary--text subheading">生效日期*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-date v-model="prodData.prodDefines.PROD_START_DATE.attrValue" label="生效日期" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
+                        <dc-date v-model="prodData.prodDefines.PROD_START_DATE" label="生效日期" :perShow="true" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">失效日期*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-date v-model="prodData.prodDefines.PROD_END_DATE.attrValue" label="失效日期" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
+                        <dc-date v-model="prodData.prodDefines.PROD_END_DATE" label="失效日期" :perShow="true" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">利润中心*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.PROFIT_CENTRE.attrValue" :options="profitCentre" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.PROFIT_CENTRE" :options="profitCentre" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">计息标志*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.ACCT_INT_FLAG.attrValue" :options="acctIntFlag" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_INT_FLAG" :options="acctIntFlag" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.prodDefines.MULTI_CCY.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.prodDefines.MULTI_CCY" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">币种*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.CCY.attrValue" :options="ccy"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.CCY" :options="ccy" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.prodDefines.DOC_FLAG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.prodDefines.DOC_FLAG" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.DOC_TYPE.attrValue" :options="docType"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.DOC_TYPE" :options="docType" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户类型*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.ACCT_TYPE.attrValue" :options="acctType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_TYPE" :options="acctType" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户子类型*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.FIXED_CALL.attrValue" :options="subAcctType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.FIXED_CALL" :options="subAcctType" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.ACCT_NATURE.attrValue" :options="acctNature"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_NATURE" :options="acctNature" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.OWNERSHIP_TYPE.attrValue" :options="ownerShipType"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.OWNERSHIP_TYPE" :options="ownerShipType" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户类别*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.ACCT_CLASS.attrValue" :options="acctClass" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_CLASS" :options="acctClass" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">余额类别*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.BAL_TYPE.attrValue" :options="balType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.BAL_TYPE" :options="balType" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">支取方式*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.WITHDRAWAL_TYPE.attrValue" :options="withdrawalType" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.WITHDRAWAL_TYPE" :options="withdrawalType" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">折算币种*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.prodDefines.CONVERT_CCY.attrValue" :options="discountCcy" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodDefines.CONVERT_CCY" :options="discountCcy" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                 </v-layout>
             </v-container>

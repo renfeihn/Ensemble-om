@@ -25,12 +25,16 @@
 
 <script>
     export default {
+        model: {
+            prop: "value",
+            event: "getVue"
+        },
         props: {
             label: {
                 type: String,
                 default: "是,否"
             },
-            value: String,
+            value: {},
             perShow: String
         },
         data() {
@@ -40,56 +44,74 @@
                 currentValue: "",
                 desc: "",
                 dcSwitch: false,
-                personShow: 1
-
+                personShow: 0
             };
         },
         watch: {
             value: {
                 handler(val) {
-                    this.dcSwitch = val === "Y" ? true : false;
-                    this.switchChange()
+                    if(typeof val === "object"){
+                        this.dcSwitch = val.attrValue=== "Y" ? true : false
+                    }
+                    else if(typeof val === "string"){
+                        this.dcSwitch = val === "Y" ? true : false
+                    }
+//                    this.dcSwitch = typeof val === "object"?val.attrValue:val === "Y" ? true : false;
+                    if(typeof val !== "undefined") {
+                        this.switchChange()
+                        this.initPerson()
+                    }
                 },
                 // watch 的一个特点是，最初绑定的时候是不会执行的，要等到 value 改变时才执行监听计算
                 // 代表在wacth里声明了value这个方法之后立即先去执行handler方法
                 immediate: true
             }
-            // value(val) {
-            //   this.dcSwitch = val === "Y" ? true : false;
-            // },
-            // dcSwitch(val) {
-            //   this.$emit("input", this.currentValue);
-            // }
         },
         mounted() {
             this.switchChange();
         },
         methods: {
             peopleClick() {
+                //分户生效标识点击事件
                 if(this.peopleColor === "grey lighten-1") {
                     this.peopleColor = "red"
                     this.peopleDesc = "分户生效"
+                    //分户生效标识绑定
+                    this._props.value.perEffect = "true"
                 }else if (this.peopleColor === "red"){
+                    this.peopleColor = "grey lighten-1"
+                    this.peopleDesc = "产品生效"
+                    this._props.value.perEffect = "false"
+                }
+            },
+            initPerson() {
+                //通过组件配置的perShow参数，判断是否显示分户生效标识
+                if(this._props.perShow === true){
+                    this.personShow = 1
+                }
+                //通过产品配置的分户生效标识，初始化分户生效标志
+                if(this._props.value.perEffect === "true"){
+                    this.peopleColor = "red"
+                    this.peopleDesc = "分户生效"
+                }else{
                     this.peopleColor = "grey lighten-1"
                     this.peopleDesc = "产品生效"
                 }
             },
             switchChange() {
-                //判断是否显示分户生效标识
-                if(this._props.perShow === false){
-                    this.personShow = 0
-                }
                 if (this.dcSwitch) {
-                    this.currentValue = "Y";
-                    this.value = "Y";
+                    if(this._props.value.attrValue !== undefined) {
+                        this._props.value.attrValue = "Y";
+                    }
                     this.desc = this.label.split(",")[0];
                 } else {
-                    this.currentValue = "N";
-                    this.value = "N";
+                    if(this._props.value.attrValue !== undefined) {
+                        this._props.value.attrValue = "N";
+                    }
                     this.desc = this.label.split(",")[1];
                 }
-                //在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
-                this.$emit("input", this.currentValue);
+                //在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出（对象）
+                this.$emit("input", this._props.value);
             }
         }
     };

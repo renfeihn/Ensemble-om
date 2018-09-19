@@ -7,20 +7,19 @@
                 <v-subheader class="primary--text subheading">结息周期*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <dc-multiselect v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue" :options="cycleFreq" :isMultiSelect="false"></dc-multiselect>
+                <dc-multiselect v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ" :options="cycleFreq" :isMultiSelect="false" :perShow="true"></dc-multiselect>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">结息日*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <dc-text-field v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.INT_DAY.attrValue"></dc-text-field>
+                <dc-text-field v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.INT_DAY" :perShow="true"></dc-text-field>
               </v-flex>
-
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">是否结息到本账户*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <dc-switch v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.INT_CAP.attrValue"></dc-switch>
+                <dc-switch v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.INT_CAP" :perShow="true"></dc-switch>
               </v-flex>
             </v-layout>
           </v-container>

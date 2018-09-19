@@ -7,43 +7,43 @@
                         <v-subheader class="primary--text subheading">存入控制方式*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue" :options="systemControlApproach" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY" :options="systemControlApproach" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-multiselect v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue" :options="cashResouce" :isMultiSelect="false"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY" :options="cashResouce" :isMultiSelect="false" :perShow="true"></dc-multiselect>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">签约检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">欠费检查*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE" :perShow="true"></dc-switch>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">是否允许销户回退*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CLOSE_BACK_FLAG.attrValue"></dc-switch>
+                        <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CLOSE_BACK_FLAG" :perShow="true"></dc-switch>
                     </v-flex>
                 </v-layout>
             </v-container></div>
