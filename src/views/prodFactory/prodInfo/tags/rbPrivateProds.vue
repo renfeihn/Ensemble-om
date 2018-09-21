@@ -44,10 +44,10 @@
             </v-flex>
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
-                <v-card-text>
-                <down-action v-if="pendFlag==0" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
-                <pending-form v-if="pendFlag==1"></pending-form>
-                </v-card-text>
+                    <v-card-text>
+                        <down-action v-if="pendFlag==0" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
+                        <pending-form v-if="pendFlag==1"></pending-form>
+                    </v-card-text>
                 </v-card>
                 <prod-list-form v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
             </v-flex>
@@ -123,42 +123,42 @@
                 prodClass: '',
                 activeName: 'basic',
                 prodInfo: [{
-                   icon: 'account_balance',
-                   text: '基本信息'
-               }, {
-                   icon: 'filter_vintage',
-                   text: '控制信息'
-               }, {
-                   icon: 'work',
-                   text: '适用范围'
-               }, {
-                   icon: 'work',
-                   text: '利息信息'
-               }, {
-                   icon: 'work',
-                   text: '开户定义'
-               }, {
-                   icon: 'work',
-                   text: '销户定义'
-               }, {
-                   icon: 'work',
-                   text: '存入定义'
-               }, {
-                   icon: 'work',
-                   text: '支取定义'
-               }, {
-                   icon: 'work',
-                   text: '收费定义'
-               }, {
-                   icon: 'work',
-                   text: '利率信息'
-               }, {
-                   icon: 'work',
-                   text: '形态转移'
-               }, {
-                   icon: 'work',
-                   text: '核算信息'
-               }],
+                    icon: 'account_balance',
+                    text: '基本信息'
+                }, {
+                    icon: 'filter_vintage',
+                    text: '控制信息'
+                }, {
+                    icon: 'work',
+                    text: '适用范围'
+                }, {
+                    icon: 'work',
+                    text: '利息信息'
+                }, {
+                    icon: 'work',
+                    text: '开户定义'
+                }, {
+                    icon: 'work',
+                    text: '销户定义'
+                }, {
+                    icon: 'work',
+                    text: '存入定义'
+                }, {
+                    icon: 'work',
+                    text: '支取定义'
+                }, {
+                    icon: 'work',
+                    text: '收费定义'
+                }, {
+                    icon: 'work',
+                    text: '利率信息'
+                }, {
+                    icon: 'work',
+                    text: '形态转移'
+                }, {
+                    icon: 'work',
+                    text: '核算信息'
+                }],
                 files: [{
                     icon: 'assignment',
                     iconClass: 'blue white--text',
@@ -290,31 +290,47 @@
                 console.log(val)
                 this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue = val.intDetail.cycleFreq
                 this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.INT_DAY.attrValue = val.intDetail.intDay
+                this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.INT_CAP.attrValue = val.intDetail.cycleSelfFlag
             },
             callBackOpenAcct(val) {
                 console.log(val)
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE.attrValue = val.openAcct.structureType
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue = val.openAcct.checkWadrawnType
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.RESTRAINT_FLAG.attrValue = val.openAcct.restraintFlag
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.openAcct.checkAgent
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue = val.openAcct.checkWadrawnType
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.openAcct.restraintFlag
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.openAcct.checkAgent
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue = val.openAcct.numOfClient
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue = val.openAcct.maxBackDateDays
+
             },
             callBackCloseAcct(val) {
                 console.log(val)
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.closeAcct.permitCommersionFlag
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.closeAcct.permitCommersionFlag
                 this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.closeAcct.acctReatraintCheck
                 this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue = val.closeAcct.resignCheck
                 this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue = val.closeAcct.ownCheck
             },
             callBackDeposit(val) {
                 console.log(val)
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.deposit.checkAgent
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.deposit.checkRestraint
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.deposit.permitCommersionFlag
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.deposit.acctReatraintCheck
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_INIT_AMT.attrValue = val.deposit.startAmtCheck
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.SG_DEP_MIN_AMT.attrValue = val.deposit.sgDepMinAmt
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.SG_DEP_MAX_AMT.attrValue = val.deposit.sgDepMaxAmt
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_INIT_AMT.attrValue = val.deposit.checkInitAmt
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue = val.deposit.keepMinBal
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MAX_BAL.attrValue = val.deposit.keepMaxBal
             },
             callBackDrawInfo(val) {
                 console.log(val)
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue = val.drawInfo.checkAgent
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue = val.drawInfo.drawControlWay
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.drawInfo.checkAgent
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue = val.drawInfo.cashResource
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.drawInfo.attrReatraintCheck
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue = val.drawInfo.withDrawlCheck
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.SG_MIN_AMT.attrValue = val.drawInfo.sgMinAmt
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_KEEP_BAL.attrValue = val.drawInfo.acctBalanceCheck
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.SG_MAX_AMT.attrValue = val.drawInfo.sgMaxAmt
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue = val.drawInfo.keepMinBal
             },
             callBackAcctBaseInfo(val) {
                 console.log(val)

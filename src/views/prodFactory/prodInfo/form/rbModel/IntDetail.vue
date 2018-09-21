@@ -83,7 +83,7 @@
             selectByProd(val) {
                 this.intDetail.cycleFreq = val.mbEventInfos["CYCLE_"+val.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue
                 this.intDetail.intDay = val.mbEventInfos["CYCLE_"+val.prodType.prodType].mbEventAttrs.INT_DAY.attrValue
-                this.intDetail.cycleSelfFlag = ""//是否结息到本帐户
+                this.intDetail.cycleSelfFlag = val.mbEventInfos["CYCLE_"+val.prodType.prodType].mbEventAttrs.INT_CAP.attrValue
             },
             initRefDate() {
                 this.cycleFreq = this.refData[2].paraDataRb.cycleFreq;

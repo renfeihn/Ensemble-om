@@ -137,15 +137,8 @@
             },
             selectByProd(val) {
                 this.closeAcct = {}
-//                this.closeAcct.systemControlApproach = val.closeAcct.systemControlApproach
-//                this.closeAcct.permitCommersionFlag = val.closeAcct.permitCommersionFlag
-//                this.closeAcct.cashResouce = val.closeAcct.cashResouce
-//                this.closeAcct.acctReatraintCheck = val.closeAcct.acctReatraintCheck
-//                this.closeAcct.resignCheck = val.closeAcct.resignCheck
-//                this.closeAcct.ownCheck = val.closeAcct.ownCheck
-//                this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
                   this.closeAcct.systemControlApproach = ""//存入控制
-                  this.closeAcct.permitCommersionFlag = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
+                  this.closeAcct.permitCommersionFlag = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
                   this.closeAcct.cashResouce = ""//资金来源方式
                   this.closeAcct.acctReatraintCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                   this.closeAcct.resignCheck = val.mbEventAttrs["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue

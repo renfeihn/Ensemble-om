@@ -82,13 +82,13 @@
                                 <v-subheader class="primary--text subheading">最大倒起息天数*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大倒起息天数" name="prefix" v-model="prodtypeData" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大倒起息天数" name="prefix" v-model="openAcct.maxBackDateDays" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最大起息天数*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大起息天数" name="prefix" v-model="prodtypeData" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大起息天数" name="prefix" v-model="openAcct.maxDay" single-line hide-details></v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -148,7 +148,7 @@
                 numOfClient: '',
                 prefix: '',
                 docTypeFlag: '',
-                maxDayDao: '',
+                maxBackDateDays: '',
                 maxDay: ''
             }
         }),
@@ -171,15 +171,15 @@
             },
             selectByProd(val) {
                 this.openAcct.structureType = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE.attrValue;
-                this.openAcct.checkWadrawnType = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
-                this.openAcct.restraintFlag = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.RESTRAINT_FLAG.attrValue
-                this.openAcct.checkAgent = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
+                this.openAcct.checkWadrawnType = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue
+                this.openAcct.restraintFlag = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
+                this.openAcct.checkAgent = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
                 this.openAcct.numOfClient = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue
                 this.prefix = ""//账号前缀
                 this.withdrawTypeHandeling = ""//凭证类型处理
                 this.clientAmtCheckFlag = ""//同客户数量检查标识
                 this.startDepositAmt = ""//起息日处理标识
-                this.maxDay = ""//最大倒起息天数
+                this.maxBackDateDays = val.mbEventInfos["OPEN_"+val.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue
                 this.maxDay = ""//最大起息天数
             },
             initRefDate() {
