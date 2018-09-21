@@ -57,7 +57,7 @@
                                 <v-subheader class="primary--text subheading">支取违约类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="weiYueType" v-model="drawInfo.weiYueType" label="支取违约类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="breakType" v-model="drawInfo.breakType" label="支取违约类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">违约处理方式*</v-subheader>
@@ -70,9 +70,9 @@
                             </v-flex>
                             <v-flex md4 lg4>
                                 <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="danciYueCheck" v-model="drawInfo.danciYueCheck" label="单次支取金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                                                            <v-select class="primary&#45;&#45;text mx-2" :items="sgBalCheck" v-model="drawInfo.sgBalCheck" label="单次支取金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
                                 -->
-                                <dc-switch v-model="drawInfo.danciYueCheck"></dc-switch>
+                                <dc-switch v-model="drawInfo.sgBalCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最小支取金额*</v-subheader>
@@ -142,7 +142,7 @@
                 key: "",
                 value: ""
             }],
-            weiYueType: [{
+            breakType: [{
                 key: "",
                 value: ""
             }],
@@ -150,7 +150,7 @@
                 key: "",
                 value: ""
             }],
-            danciYueCheck: [{
+            singleTimeBalCheck: [{
                 key: "",
                 value: ""
             }],
@@ -162,14 +162,14 @@
             drawInfo: {
                 drawControlWay: '',
                 checkAgent: '',
-                daiBanFlag: '',
+               // daiBanFlag: '',
                 cashResource: '',
                 attrReatraintCheck: '',
                 withDrawlCheck: '',
                 voucherTypeCheck: '',
-                weiYueType: '',
+                breakType: '',
                 dealingWay: '',
-                danciYueCheck: '',
+                sgBalCheck: '',
                 acctBalanceCheck: '',
                 sgMinAmt: '',
                 sgMaxAmt: '',
@@ -199,13 +199,12 @@
                 this.drawInfo.checkAgent = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
                 this.drawInfo.cashResource = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue
                 this.drawInfo.dealingWay = val.drawInfo.dealingWay;
-                this.drawInfo.daiBanFlag = val.drawInfo.daiBanFlag;
-                this.drawInfo.weiYueType = val.drawInfo.weiYueType;
+                this.drawInfo.breakType = val.drawInfo.breakType;
                 this.drawInfo.attrReatraintCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                 this.drawInfo.withDrawlCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
                 this.drawInfo.voucherTypeCheck = val.drawInfo.voucherTypeCheck;
                 this.drawInfo.sgMinAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.SG_MIN_AMT.attrValue
-                this.drawInfo.danciYueCheck = val.drawInfo.danciYueCheck;
+                this.drawInfo.sgBalCheck = val.drawInfo.sgBalCheck;
                 this.drawInfo.acctBalanceCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_KEEP_BAL.attrValue
                 this.drawInfo.sgMaxAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.SG_MAX_AMT.attrValue
                 this.drawInfo.keepMinBal = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue
@@ -217,10 +216,11 @@
                 this.attrReatraintCheck = this.refData[2].paraDataRb.attrReatraintCheck;
                 this.withDrawlCheck = this.refData[2].paraDataRb.withDrawlCheck;
                 this.voucherTypeCheck = this.refData[2].paraDataRb.voucherTypeCheck;
-                this.weiYueType = this.refData[2].paraDataRb.weiYueType;
+                this.breakType = this.refData[2].paraDataRb.breakType;
                 this.dealingWay = this.refData[2].paraDataRb.dealingWay;
-                this.danciYueCheck = this.refData[2].paraDataRb.danciYueCheck;
+                this.singleTimeBalCheck = this.refData[2].paraDataRb.singleTimeBalCheck;
                 this.acctBalanceCheck = this.refData[2].paraDataRb.acctBalanceCheck;
+                this.sgBalCheck = this.refData[2].paraDataRb.sgBalCheck
             },
             closeDialog() {
                 this.$parent.isActive = false;

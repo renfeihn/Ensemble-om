@@ -285,16 +285,16 @@
   ],
   "clientType":[
     {
-      "key":"10",
-      "value":"10-个人"
+      "key":"100",
+      "value":"100-个人"
     },
     {
-      "key":"20",
-      "value":"20-公司"
+      "key":"200",
+      "value":"200-公司"
     },
     {
-      "key":"30",
-      "value":"30-同业"
+      "key":"300",
+      "value":"300-同业"
     }
   ],
   "inlandOffshore":[
@@ -369,6 +369,10 @@
     {
       "key":"0",
       "value":"0-全行"
+    },
+    {
+      "key":"ALL",
+      "value": "ALL-全行"
     }
   ],
   "branchChoice":[
@@ -703,7 +707,7 @@
       "value":"N-否"
     }
   ],
-  "daiBanFlag":[
+  "checkAgent":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -787,7 +791,7 @@
       "value":"Y-自定义"
     }
   ],
-  "daiBanFlag":[
+  "checkAgent":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -833,7 +837,7 @@
       "value":"N-否"
     }
   ],
-  "weiYueType":[
+  "breakType":[
     {
       "key":"D",
       "value":"D-单次支取金额违约"
@@ -849,7 +853,7 @@
       "value":"D-拒绝"
     }
   ],
-  "danciYueCheck":[
+  "singleTimeDepositCheck":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -889,7 +893,7 @@
       "value":"N-否"
     }
   ],
-  "huiTuiFlag":[
+  "closeAcctRollbackFlag":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -927,6 +931,16 @@
     {
       "key":"002",
       "value":"002-本外币对私定期存单"
+    }
+  ],
+  "sgBalCheck": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
     }
   ]
 }

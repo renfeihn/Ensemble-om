@@ -58,9 +58,9 @@
                             </v-flex>
                             <v-flex md4 lg4>
 <!--
-                                   <v-select class="primary&#45;&#45;text mx-2" :items="huiTuiFlag" v-model="closeAcct.huiTuiFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
+                                   <v-select class="primary&#45;&#45;text mx-2" :items="closeAcctRollbackFlag" v-model="closeAcct.closeAcctRollbackFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
 -->
-                                <dc-switch v-model="closeAcct.huiTuiFlag"></dc-switch>
+                                <dc-switch v-model="closeAcct.closeAcctRollbackFlag"></dc-switch>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -115,7 +115,7 @@
                 acctReatraintCheck: '',
                 resignCheck: '',
                 ownCheck: '',
-                huiTuiFlag: ''
+                closeAcctRollbackFlag: ''
             }
         }),
         computed: {
@@ -143,7 +143,7 @@
                   this.closeAcct.acctReatraintCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                   this.closeAcct.resignCheck = val.mbEventAttrs["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue
                   this.closeAcct.ownCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue
-                  this.closeAcct.huiTuiFlag = ""//是否允许西销户回退
+                  this.closeAcct.closeAcctRollbackFlag = ""//是否允许西销户回退
             },
             initRefDate() {
                 this.systemControlApproach = this.refData[2].paraDataRb.systemControlApproach;

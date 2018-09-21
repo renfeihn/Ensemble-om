@@ -13,7 +13,7 @@ export default {
 
                 SE_FLAG: {prodType: 'RB101',seqNo: '129',assembleType: 'ATTR',assembleId: 'SE_FLAG', eventDefault: '',attrKey: 'SE_FLAG',attrValue: 'Y',status: 'A'},
 
-                ACCT_NATURE: {prodType: 'RB101',seqNo: '113',assembleType: 'ATTR',assembleId: 'ACCT_NATURE',eventDefault: '', attrKey: 'ACCT_NATURE',attrValue: '1,2',status: 'A'},
+                ACCT_NATURE: {prodType: 'RB101',seqNo: '113',assembleType: 'ATTR',assembleId: 'ACCT_NATURE',eventDefault: '', attrKey: 'ACCT_NATURE',attrValue: '1，2',status: 'A'},
 
                 PROD_START_DATE: {prodType: 'RB101',seqNo: '106',assembleType: 'ATTR',assembleId: 'PROD_START_DATE', eventDefault: '',attrKey: 'PROD_START_DATE',attrValue: '2000-01-01',status: 'A'},
 
@@ -37,7 +37,7 @@ export default {
 
                 AMT_TYPE: {prodType: 'RB101',seqNo: '162',assembleType: 'ATTR',assembleId: 'AMT_TYPE',eventDefault: '', attrKey: 'AMT_TYPE',attrValue: 'BAL',status: 'A'},
 
-                ACCT_CLASS: {prodType: 'RB101',seqNo: '125',assembleType: 'ATTR',assembleId: 'ACCT_CLASS',eventDefault: '', attrKey: 'ACCT_CLASS',attrValue: '1',status: 'A'},
+                ACCT_CLASS: {prodType: 'RB101',seqNo: '125',assembleType: 'ATTR',assembleId: 'ACCT_CLASS',eventDefault: '', attrKey: 'ACCT_CLASS',attrValue: 'I',status: 'A'},
 
                 BAL_TYPE: {prodType: 'RB101',seqNo: '117',assembleType: 'ATTR',assembleId: 'BAL_TYPE',eventDefault: '',attrKey: 'BAL_TYPE', attrValue: 'CA',status: 'A'},
 

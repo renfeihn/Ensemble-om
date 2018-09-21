@@ -60,13 +60,13 @@
                                 <v-subheader class="primary--text subheading">最小起存金额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最小起存金额" name="zuiXiaoQiCun" v-model="deposit.sgDepMinAmt" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最小起存金额" name="sgDepMinAmt" v-model="deposit.sgDepMinAmt" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最大起存金额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大起存金额" name="zuiDaQiCun" v-model="deposit.sgDepMaxAmt" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大起存金额" name="sgDepMaxAmt" v-model="deposit.sgDepMaxAmt" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">单次存入金额检查*</v-subheader>
@@ -81,13 +81,13 @@
                                 <v-subheader class="primary--text subheading">最小存入余额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最小存入金额" name="zuiXiaoCunRu" v-model="deposit.keepMinBal" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最小存入金额" name="keepMinBal" v-model="deposit.keepMinBal" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最大存入余额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大存入金额" name="zuiDaCunRu" v-model="deposit.keepMaxBal" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大存入金额" name="keepMaxBal" v-model="deposit.keepMaxBal" single-line hide-details></v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -134,7 +134,7 @@
                 key: "",
                 value: ""
             }],
-            danciDepositCheck: [{
+            singleTimeDepositCheck: [{
                 key: "N",
                 value: "N-否"
             }],
