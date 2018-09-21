@@ -15,7 +15,10 @@
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="permitCommersionFlag" v-model="deposit.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="permitCommersionFlag" v-model="deposit.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="deposit.permitCommersionFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
@@ -27,7 +30,10 @@
                                 <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctReatraintCheck" v-model="deposit.checkRestraint" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="acctReatraintCheck" v-model="deposit.checkRestraint" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="deposit.acctReatraintCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">存入违约类型*</v-subheader>
@@ -45,37 +51,43 @@
                                 <v-subheader class="primary--text subheading">起存金额检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="startAmtCheck" v-model="deposit.startAmtCheck" label="起存金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="startAmtCheck" v-model="deposit.startAmtCheck" label="起存金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="deposit.startAmtCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最小起存金额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最小起存金额" name="zuiXiaoQiCun" v-model="zuiXiaoQiCun" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最小起存金额" name="zuiXiaoQiCun" v-model="deposit.zuiXiaoQiCun" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最大起存金额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大起存金额" name="zuiDaQiCun" v-model="zuiDaQiCun" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大起存金额" name="zuiDaQiCun" v-model="deposit.zuiDaQiCun" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">单次存入金额检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="danciDepositCheck" v-model="deposit.danciDepositCheck" label="单次存入金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="danciDepositCheck" v-model="deposit.danciDepositCheck" label="单次存入金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="deposit.danciDepositCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最小存入余额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最小存入金额" name="zuiXiaoCunRu" v-model="zuiXiaoCunRu" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最小存入金额" name="zuiXiaoCunRu" v-model="deposit.zuiXiaoCunRu" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最大存入余额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大存入金额" name="zuiDaCunRu" v-model="zuiDaCunRu" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大存入金额" name="zuiDaCunRu" v-model="deposit.zuiDaCunRu" single-line hide-details></v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -86,9 +98,11 @@
 </template>
 
 <script>
+    import DcSwitch from "@/components/widgets/DcSwitch";
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
+        components: { DcSwitch },
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -133,17 +147,12 @@
                 weiYueType: '',
                 dealingWay: '',
                 startAmtCheck: '',
-                danciDepositCheck: ''
-            },
-            mbEventType: {
-                checkAgent: '',
-                checkRestraint: ''
-            },
-            mbEventAttrs: {
-
-            },
-            mbEventParts: {
-            },
+                zuiXiaoQiCun: '',
+                zuiDaQiCun: '',
+                danciDepositCheck: '',
+                zuiXiaoCunRu: '',
+                zuiDaCunRu: ''
+            }
         }),
         computed: {
             progress() {
@@ -164,8 +173,18 @@
             },
             selectByProd(val) {
                 this.deposit = {}
+                this.depositControlApproach = ""//存入控制方式
                 this.deposit.checkAgent = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                this.cashResource = ""//资金来源方式
                 this.deposit.checkRestraint = val.mbEventInfos.DEP_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
+                this.deposit.weiYueType =""//存入违约类型
+                this.deposit.dealingWay =""//违约处理方式
+                this.deposit.startAmtCheck = ""//起存金额检查
+                this.deposit.zuiXiaoQiCun =""//最小起存金额
+                this.deposit.zuiDaQiCun =""//最大起存金额
+                this.deposit.danciDepositCheck =""//单次存入金额检查
+                this.deposit.zuiXiaoCunRu =""//最小存入余额
+                this.deposit.zuiDaCunRu =""//最大存入余额
             },
             initRefDate() {
                 this.depositControlApproach = this.refData[2].paraDataRb.depositControlApproach;

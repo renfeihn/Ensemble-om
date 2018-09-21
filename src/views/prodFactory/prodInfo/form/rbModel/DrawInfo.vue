@@ -15,7 +15,10 @@
                             <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                         </v-flex>
                         <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="daiBanFlag" v-model="drawInfo.daiBanFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                            <v-select class="primary&#45;&#45;text mx-2" :items="daiBanFlag" v-model="drawInfo.daiBanFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                            <dc-switch v-model="drawInfo.checkAgent"></dc-switch>
                         </v-flex>
                         <v-flex xs12 md2 lg2>
                             <v-subheader class="primary--text subheading">资金去向方式*</v-subheader>
@@ -27,19 +30,28 @@
                             <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                         </v-flex>
                         <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="attrReatraintCheck" v-model="drawInfo.attrReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                            <v-select class="primary&#45;&#45;text mx-2" :items="attrReatraintCheck" v-model="drawInfo.attrReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                            <dc-switch v-model="drawInfo.attrReatraintCheck"></dc-switch>
                         </v-flex>
                         <v-flex xs12 md2 lg2>
                             <v-subheader class="primary--text subheading">支取方式检查*</v-subheader>
                         </v-flex>
                         <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="withDrawlCheck" v-model="drawInfo.withDrawlCheck" label="支取方式检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                            <v-select class="primary&#45;&#45;text mx-2" :items="withDrawlCheck" v-model="drawInfo.withDrawlCheck" label="支取方式检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                            <dc-switch v-model="drawInfo.withDrawlCheck"></dc-switch>
                         </v-flex>
                         <v-flex xs12 md2 lg2>
                             <v-subheader class="primary--text subheading">凭证类型检查*</v-subheader>
                         </v-flex>
                         <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="voucherTypeCheck" v-model="drawInfo.voucherTypeCheck" label="凭证类型检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                            <v-select class="primary&#45;&#45;text mx-2" :items="voucherTypeCheck" v-model="drawInfo.voucherTypeCheck" label="凭证类型检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                            <dc-switch v-model="drawInfo.voucherTypeCheck"></dc-switch>
                         </v-flex>
                         <v-flex xs12 md2 lg2>
                             <v-subheader class="primary--text subheading">支取违约类型*</v-subheader>
@@ -57,7 +69,10 @@
                             <v-subheader class="primary--text subheading">单次支取金额检查*</v-subheader>
                         </v-flex>
                         <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="danciYueCheck" v-model="drawInfo.danciYueCheck" label="单次支取金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                            <v-select class="primary&#45;&#45;text mx-2" :items="danciYueCheck" v-model="drawInfo.danciYueCheck" label="单次支取金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                            <dc-switch v-model="drawInfo.danciYueCheck"></dc-switch>
                         </v-flex>
                         <v-flex xs12 md2 lg2>
                             <v-subheader class="primary--text subheading">最小支取金额*</v-subheader>
@@ -75,7 +90,10 @@
                             <v-subheader class="primary--text subheading">账户留存余额检查*</v-subheader>
                         </v-flex>
                         <v-flex md4 lg4>
-                            <v-select class="primary--text mx-2" :items="acctBalanceCheck" v-model="drawInfo.acctBalanceCheck" label="账户留存余额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                            <v-select class="primary&#45;&#45;text mx-2" :items="acctBalanceCheck" v-model="drawInfo.acctBalanceCheck" label="账户留存余额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                            <dc-switch v-model="drawInfo.acctBalanceCheck"></dc-switch>
                         </v-flex>
                         <v-flex xs12 md2 lg2>
                             <v-subheader class="primary--text subheading">最小留存余额*</v-subheader>
@@ -94,7 +112,9 @@
 <script>
 import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
+import DcSwitch from "@/components/widgets/DcSwitch";
     export default {
+        components: {DcSwitch},
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -141,6 +161,7 @@ import { getProdData } from "@/api/prod";
             refData: getInitData,
             drawInfo: {
                 drawControlWay: '',
+                checkAgent: '',
                 daiBanFlag: '',
                 cashResource: '',
                 attrReatraintCheck: '',
@@ -170,18 +191,20 @@ import { getProdData } from "@/api/prod";
                 this.$emit("getNewProdData",{"drawInfo": this.drawInfo})
             },
             selectByProd(val) {
-                getProdData(this.listValue).then(response => {
+                    this.drawInfo = {}
                     this.drawInfo.drawControlWay = val.drawInfo.drawControlWay;
+                    this.drawInfo.checkAgent = val.mbEventInfos.WTD_RB101.mbEventAttrs.CHECK_AGENT.attrValue
                     this.drawInfo.cashResource = val.drawInfo.cashResource;
                     this.drawInfo.dealingWay = val.drawInfo.dealingWay;
                     this.drawInfo.daiBanFlag = val.drawInfo.daiBanFlag;
                     this.drawInfo.weiYueType = val.drawInfo.weiYueType;
-                    this.drawInfo.attrReatraintCheck = val.drawInfo.attrReatraintCheck;
+                    this.drawInfo.attrReatraintCheck = val.mbEventInfos.WTD_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
                     this.drawInfo.withDrawlCheck = val.drawInfo.withDrawlCheck;
                     this.drawInfo.voucherTypeCheck = val.drawInfo.voucherTypeCheck;
+                    this.drawInfo.zuiDaZhiQu = ""//最大支取金额
                     this.drawInfo.danciYueCheck = val.drawInfo.danciYueCheck;
                     this.drawInfo.acctBalanceCheck = val.drawInfo.acctBalanceCheck
-                });
+                    this.drawInfo.zuiXiaoLiuCun = ""//最小留存与额
             },
             initRefDate() {
                 this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;

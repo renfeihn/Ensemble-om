@@ -21,43 +21,64 @@
                                 <v-subheader class="primary--text subheading">转账通兑标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="tDepFlag" v-model="controlInfo.tDepFlag" label="转账通兑标识" item-text="value" item-value="key" hide-details single-line return-object ></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="tDepFlag" v-model="controlInfo.tDepFlag" label="转账通兑标识" item-text="value" item-value="key" hide-details single-line return-object ></v-select>
+-->
+                                <dc-switch v-model="controlInfo.tDepFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">现金通兑标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="cashDepFlag" v-model="controlInfo.cashDepFlag" label="现金通兑标识" item-text="value" item-value="key" hide-details single-line return-object></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="cashDepFlag" v-model="controlInfo.cashDepFlag" label="现金通兑标识" item-text="value" item-value="key" hide-details single-line return-object></v-select>
+-->
+                                <dc-switch v-model="controlInfo.cashDepFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户控制标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isJudge" v-model="controlInfo.clientFlag" label="客户控制标识" item-text="value" item-value="key" single-line hide-details return-object></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="isJudge" v-model="controlInfo.clientFlag" label="客户控制标识" item-text="value" item-value="key" single-line hide-details return-object></v-select>
+-->
+                                <dc-switch v-model="clientFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">渠道控制标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isJudge" v-model="controlInfo.channelFlag" label="渠道控制标识" item-text="value" item-value="key" single-line hide-details return-object ></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="isJudge" v-model="controlInfo.channelFlag" label="渠道控制标识" item-text="value" item-value="key" single-line hide-details return-object ></v-select>
+-->
+                                <dc-switch v-model="controlInfo.channelFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">机构区域控制标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isJudge" v-model="controlInfo.branchControlFlag" label="机构区域控制标识" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="isJudge" v-model="controlInfo.branchControlFlag" label="机构区域控制标识" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="controlInfo.branchControlFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">收费标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isJudge" v-model="controlInfo.chargeFlag" label="收费标识" item-text="value" item-value="key" single-line hide-details return-object ></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="isJudge" v-model="controlInfo.chargeFlag" label="收费标识" item-text="value" item-value="key" single-line hide-details return-object ></v-select>
+-->
+                                <dc-switch v-model="controlInfo.chargeFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">状态转移标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isJudge" v-model="controlInfo.moveFlag" label="状态转移标识" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="isJudge" v-model="controlInfo.moveFlag" label="状态转移标识" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="controlInfo.moveFlag"></dc-switch>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -68,9 +89,11 @@
 </template>
 
 <script>
+import DcSwitch from "@/components/widgets/DcSwitch";
 import { getInitData } from "@/mock/init";
 import { getProdData } from "@/api/prod";
     export default {
+        components: { DcSwitch },
         props: ["prodData"],
         data: () => ({
             title: null,

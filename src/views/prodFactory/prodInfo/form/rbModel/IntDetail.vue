@@ -22,7 +22,10 @@
                 <v-subheader class="primary--text subheading">是否结息到本账户*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <v-select class="primary--text mx-2" :items="cycleSelfFlag" v-model="intDetail.cycleSelfFlag" label="是否结息到本账户" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                <v-select class="primary&#45;&#45;text mx-2" :items="cycleSelfFlag" v-model="intDetail.cycleSelfFlag" label="是否结息到本账户" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                <dc-switch v-model="intDetail.cycleSelfFlag"></dc-switch>
               </v-flex>
             </v-layout>
           </v-container>
@@ -33,9 +36,11 @@
 </template>
 
 <script>
+    import  DcSwitch from "@/components/widgets/DcSwitch";
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
+        components: { DcSwitch },
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -54,7 +59,8 @@
             refData: getInitData,
             intDetail: {
                 cycleFreq: '',
-                cycleSelfFlag: ''
+                cycleSelfFlag: '',
+                intDay: ''
             }
         }),
         computed: {
@@ -76,6 +82,8 @@
             },
             selectByProd(val) {
                 this.intDetail.cycleFreq = val.mbEventInfos.CYCLE_RB101.mbEventAttrs.CYCLE_FREQ.attrValue
+                this.intDetail.intDay = val.mbEventInfos.CYCLE_RB101.mbEventAttrs.INT_DAY.attrValue
+                this.intDetail.cycleSelfFlag = ""//是否结息到本帐户
             },
             initRefDate() {
                 this.cycleFreq = this.refData[2].paraDataRb.cycleFreq;

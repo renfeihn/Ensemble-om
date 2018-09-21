@@ -15,7 +15,10 @@
                                <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                               <v-select class="primary--text mx-2" :items="permitCommersionFlag" v-model="closeAcct.permitCommersionFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                               <v-select class="primary&#45;&#45;text mx-2" :items="permitCommersionFlag" v-model="closeAcct.permitCommersionFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="closeAcct.permitCommersionFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                  <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
@@ -27,25 +30,37 @@
                                 <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                 <v-select class="primary--text mx-2" :items="acctReatraintCheck" v-model="closeAcct.acctReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                 <v-select class="primary&#45;&#45;text mx-2" :items="acctReatraintCheck" v-model="closeAcct.acctReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="closeAcct.acctReatraintCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                  <v-subheader class="primary--text subheading">签约检查*</v-subheader>
                             </v-flex>
                              <v-flex md4 lg4>
-                                 <v-select class="primary--text mx-2" :items="resignCheck" v-model="closeAcct.resignCheck" label="签约检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                 <v-select class="primary&#45;&#45;text mx-2" :items="resignCheck" v-model="closeAcct.resignCheck" label="签约检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                 <dc-switch v-model="closeAcct.resignCheck"></dc-switch>
                              </v-flex>
                             <v-flex xs12 md2 lg2>
                                    <v-subheader class="primary--text subheading">欠费检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                   <v-select class="primary--text mx-2" :items="ownCheck" v-model="closeAcct.ownCheck" label="欠费检查" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                   <v-select class="primary&#45;&#45;text mx-2" :items="ownCheck" v-model="closeAcct.ownCheck" label="欠费检查" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="closeAcct.ownCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                    <v-subheader class="primary--text subheading">是否允许销户回退*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                   <v-select class="primary--text mx-2" :items="huiTuiFlag" v-model="closeAcct.huiTuiFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                   <v-select class="primary&#45;&#45;text mx-2" :items="huiTuiFlag" v-model="closeAcct.huiTuiFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="closeAcct.huiTuiFlag"></dc-switch>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -58,7 +73,9 @@
 <script>
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
+    import DcSwitch from "@/components/widgets/DcSwitch";
     export default {
+        components: { DcSwitch },
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -120,13 +137,20 @@
             },
             selectByProd(val) {
                 this.closeAcct = {}
-                this.closeAcct.systemControlApproach = val.closeAcct.systemControlApproach
-                this.closeAcct.permitCommersionFlag = val.closeAcct.permitCommersionFlag
-                this.closeAcct.cashResouce = val.closeAcct.cashResouce
-                this.closeAcct.acctReatraintCheck = val.closeAcct.acctReatraintCheck
-                this.closeAcct.resignCheck = val.closeAcct.resignCheck
-                this.closeAcct.ownCheck = val.closeAcct.ownCheck
-                this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
+//                this.closeAcct.systemControlApproach = val.closeAcct.systemControlApproach
+//                this.closeAcct.permitCommersionFlag = val.closeAcct.permitCommersionFlag
+//                this.closeAcct.cashResouce = val.closeAcct.cashResouce
+//                this.closeAcct.acctReatraintCheck = val.closeAcct.acctReatraintCheck
+//                this.closeAcct.resignCheck = val.closeAcct.resignCheck
+//                this.closeAcct.ownCheck = val.closeAcct.ownCheck
+//                this.closeAcct.huiTuiFlag = val.closeAcct.huiTuiFlag
+                  this.closeAcct.systemControlApproach = ""//存入控制
+                  this.closeAcct.permitCommersionFlag = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                  this.closeAcct.cashResouce = ""//资金来源方式
+                  this.closeAcct.acctReatraintCheck = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_RESTRAINT.attrValue
+                  this.closeAcct.resignCheck = val.mbEventAttrs.CLOSE_RB101.mbEventAttrs.CHECK_SIGN.attrValue
+                  this.closeAcct.ownCheck = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_CLOSE_FEE.attrValue
+                  this.closeAcct.huiTuiFlag = ""//是否允许西销户回退
             },
             initRefDate() {
                 this.systemControlApproach = this.refData[2].paraDataRb.systemControlApproach;

@@ -39,7 +39,10 @@
                                 <v-subheader class="primary--text subheading">组合产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
+<!--
+                                <v-select class="primary&#45;&#45;text mx-2" :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
+-->
+                                <dc-switch v-model="acctBaseInfo.prodGroup"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
@@ -115,7 +118,7 @@
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="voucherType" label="凭证类型" v-model="acctBaseInfo.docType" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="voucherType" label="凭证类型" v-model="acctBaseInfo.docType" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -296,7 +299,8 @@ import { getProdData } from "@/api/prod";
                 balType: '',
                 withDrawalType: '',
                 defaultCcy: '',
-                discountCcy: ''
+                discountCcy: '',
+                dodcFlag: ''
             }
         }),
         computed: {
@@ -341,16 +345,18 @@ import { getProdData } from "@/api/prod";
                 var str1 = val.prodDefines.PROD_END_DATE.attrValue
                 this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
                 this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
-                this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
                 this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
-                this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
+              //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
+                this.acctBaseInfo.fixedCall = ""
                 this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
                 this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
                 this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
                 this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
-                this.acctBaseInfo.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
-                this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
+              //  this.acctBaseInfo.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
+                this.acctBaseInfo.withDrawaType = ""
+                this.acctBaseInfo.discountCcy = ""
+                this.acctBaseInfo.defaultCcy = ""
             },
             selectByProd() {
                 getProdData(this.listValue).then(response => {
@@ -377,7 +383,6 @@ import { getProdData } from "@/api/prod";
                 this.isGroup = this.refData[2].paraDataRb.isGroup;
                 this.prodStatus = this.refData[2].paraDataRb.prodStatus;
                 this.baseprodtype = this.refData[2].paraDataRb.baseprodtype;
-                this.acctType = this.refData[2].paraDataRb.acctType;
                 this.subAcctType = this.refData[2].paraDataRb.subAcctType;
                 this.isMultiCcy = this.refData[2].paraDataRb.isMultiCcy;
                 this.ccy = this.refData[2].paraDataRb.ccy;
@@ -393,6 +398,7 @@ import { getProdData } from "@/api/prod";
                 this.withdrawalType = this.refData[2].paraDataRb.withdrawalType;
                 this.discountCcy = this.refData[2].paraDataRb.discountCcy;
                 this.acctClass = this.refData[2].paraDataRb.acctClass;
+                this.fixedCall = this.refData[2].paraDataRb.fixedCall;
             },
             closeDialog() {
                 this.$parent.isActive = false;

@@ -81,9 +81,11 @@
 </template>
 
 <script>
+    import DcSwitch from "@/components/widgets/DcSwitch";
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
+        components: {DcSwitch},
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -158,9 +160,15 @@
                 this.productObject = {}
                 this.productObject.clientType = val.prodDefines.CLIENT_TYPE.attrValue
                 this.productObject.inLandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
-                this.productObject.fixedCall = val.prodDefines.FIXED_CALL.attrValue
-                this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
                 this.productObject.prodBranch = val.prodDefines.PROD_BRANCH.attrValue
+                this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
+                this.productObject.clientSubType = ""//客户子类型
+                this.productObject.channelChoose = ""//渠道选择
+                this.productObject.ageBetween = ""//年龄区间
+                this.productObject.occupation = ""//职业
+                this.productObject.branchChoose = ""//机构选择
+                this.productObject.applyArea = ""//使用区域
+                this.productObject.areaChoose = ""//区域选择
             },
             initRefDate() {
                 this.clientType = this.refData[2].paraDataRb.clientType;
