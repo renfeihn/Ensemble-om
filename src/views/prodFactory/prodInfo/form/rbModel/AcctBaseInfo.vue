@@ -99,7 +99,7 @@
                                 <v-subheader class="primary--text subheading">默认币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ccy" label="币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="defaultCcy" label="默认币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">计息标志*</v-subheader>
@@ -160,7 +160,7 @@
                                 <v-subheader class="primary--text subheading">支取方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="acctBaseInfo.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="acctBaseInfo.withdrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">折算币种*</v-subheader>
@@ -300,7 +300,10 @@ import { getProdData } from "@/api/prod";
                 withDrawalType: '',
                 defaultCcy: '',
                 discountCcy: '',
-                dodcFlag: ''
+                dodcFlag: '',
+                withDrawaType: '',
+                acctIntFlag: '',
+                docFlag: ''
             }
         }),
         computed: {
@@ -318,7 +321,7 @@ import { getProdData } from "@/api/prod";
         },
         methods: {
             callbackprod() {
-                this.$emit("callBackAcctBaseInfo",{"acctBaseInfo": this.acctBaseInfo})
+                this.$emit("getNewProdData",{"acctBaseInfo": this.acctBaseInfo})
             },
             isSelectCcy(){
                 console.log(this.acctBaseInfo.isMultiCcy);
@@ -337,25 +340,25 @@ import { getProdData } from "@/api/prod";
                 this.acctBaseInfo.prodRange = val.prodType.prodRange
                 this.acctBaseInfo.status = val.prodType.status
                 this.acctBaseInfo.baseProdType = val.prodType.baseProdType
-
                 this.acctBaseInfo.sourceModule = val.prodDefines.SOURCE_MODULE.attrValue
-//                var str = val.prodDefines.PROD_START_DATE.attrValue
-                this.acctBaseInfo.prodStartDate = val.prodDefines.PROD_START_DATE.attrValue
+                var str = val.prodDefines.PROD_START_DATE.attrValue
+                this.acctBaseInfo.prodStartDate = str.substr(0,4)+"-"+str.substr(4,2)+"-"+str.substr(6,2)
                 this.acctBaseInfo.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
                 this.acctBaseInfo.multiCcy = val.prodDefines.MULTI_CCY.attrValue
-//                var str1 = val.prodDefines.PROD_END_DATE.attrValue
-                this.acctBaseInfo.prodEndDate = val.prodDefines.PROD_END_DATE.attrValue
+                var str1 = val.prodDefines.PROD_END_DATE.attrValue
+                this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
                 this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
                 this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
               //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
-                this.acctBaseInfo.fixedCall = ""
+                this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
                 this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
                 this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
                 this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
                 this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
-              //  this.acctBaseInfo.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
-                this.acctBaseInfo.withDrawaType = ""
+                this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
+                this.acctBaseInfo.ccy = val.prodDefines.CCY.attrValue
+                this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
                 this.acctBaseInfo.discountCcy = ""
                 this.acctBaseInfo.defaultCcy = ""
             },
@@ -375,6 +378,7 @@ import { getProdData } from "@/api/prod";
                     this.ccy = response.data.prodFrom.ccy;
                     this.acctIntFlag = response.data.prodFrom.acctIntFlag;
                     this.profitCentre = response.data.prodFrom.profitCentre;
+                    this.withdrawalType = response.data.prodForm.withdrawalType;
                 });
             },
             initRefDate() {

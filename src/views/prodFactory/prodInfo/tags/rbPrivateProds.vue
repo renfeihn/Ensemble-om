@@ -337,6 +337,10 @@
                 this.prodData.prodDefines.BAL_TYPE.attrValue = val.acctBaseInfo.balType
                 this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate
                 this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate
+                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
+                this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withDrawalType
+                this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
+                this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;
