@@ -158,16 +158,23 @@ export default {
        if(JSON.stringify(prodDefines)!="{}"){
        for(let index in prodDefines){
            let prodDefine=prodDefines[index];
-           columnDesc.push({title: prodDefine.attrKey});
-           columnDesc.push({ divider: true, inset: true });
-           columnOld.push({title: prodDefine.attrValue});
-           columnOld.push({ divider: true, inset: true });
-           columnNew.push({title: prodDiff['MB_PROD_DEFINE.'+prodDefine.attrKey]});
-           columnNew.push({ divider: true, inset: true });
-           if(prodDiff['MB_PROD_DEFINE.'+prodDefine.attrKey] != prodDefine.attrValue){
-                 columnOld.push({ diff: true });
-                  columnNew.push({ diff: true });
+           let diff=prodDiff['MB_PROD_DEFINE.'+prodDefine.attrKey];
+           if(diff==null||diff==undefined){
+            diff=prodDefine.attrValue;
            }
+           if(diff != prodDefine.attrValue){
+                 columnOld.push({title: prodDefine.attrValue,diff: true});
+                 columnNew.push({title: diff,diff: true});
+                 columnDesc.push({title: prodDefine.attrKey,diff: true});
+           }else{
+                 columnOld.push({title: prodDefine.attrValue});
+                 columnNew.push({title: diff});
+                 columnDesc.push({title: prodDefine.attrKey});
+           }
+
+           columnDesc.push({ divider: true, inset: true });
+           columnOld.push({ divider: true, inset: true });
+           columnNew.push({ divider: true, inset: true });
        }
        }else{
                 for(let index in prodDiff){
