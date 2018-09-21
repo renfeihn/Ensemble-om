@@ -50,6 +50,7 @@
 
 <script>
 import { getDiffList } from "@/api/url/prodInfo";
+import {getColumnDesc} from '@/utils/columnDesc'
 export default {
     props: ['mainSeqNo'],
   data() {
@@ -162,14 +163,15 @@ export default {
            if(diff==null||diff==undefined){
             diff=prodDefine.attrValue;
            }
+           const keyDesc=getColumnDesc(prodDefine.attrKey);
            if(diff != prodDefine.attrValue){
                  columnOld.push({title: prodDefine.attrValue,diff: true});
                  columnNew.push({title: diff,diff: true});
-                 columnDesc.push({title: prodDefine.attrKey,diff: true});
+                 columnDesc.push({title: keyDesc,diff: true});
            }else{
                  columnOld.push({title: prodDefine.attrValue});
                  columnNew.push({title: diff});
-                 columnDesc.push({title: prodDefine.attrKey});
+                 columnDesc.push({title: keyDesc});
            }
 
            columnDesc.push({ divider: true, inset: true });
