@@ -188,7 +188,7 @@
                 this.checkWdrawnType = this.refData[2].paraDataRb.checkWdrawnType;
                 this.restraintFlag = this.refData[2].paraDataRb.restraintFlag;
                 this.withdrawTypeHandeling = this.refData[2].paraDataRb.withdrawTypeHandeling;
-                this.checkAgent  = this.refData[2].paraDataRb.checkAgent ;
+                this.checkAgent = this.refData[2].paraDataRb.checkAgent;
                 this.clientAmtCheckFlag = this.refData[2].paraDataRb.clientAmtCheckFlag;
                 this.startDepositAmt = this.refData[2].paraDataRb.startDepositAmt;
             },
