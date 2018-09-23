@@ -63,14 +63,14 @@
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="applyBranch" v-model="productObject.prodBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodBranch" v-model="productObject.prodBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
 
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">机构选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.prodBranch" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.branchChoice" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -166,7 +166,7 @@
                 this.productObject.channelChoose = ""//渠道选择
                 this.productObject.ageBetween = ""//年龄区间
                 this.productObject.occupation = ""//职业
-                this.productObject.branchChoose = ""//机构选择
+                this.productObject.branchChoice = ""//机构选择
                 this.productObject.applyArea = ""//使用区域
                 this.productObject.areaChoose = ""//区域选择
             },
