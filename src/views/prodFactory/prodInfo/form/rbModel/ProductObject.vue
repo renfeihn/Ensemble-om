@@ -121,6 +121,10 @@
                 key: "",
                 value: ""
             }],
+            prodBranch: [{
+                key: "",
+                value: ""
+            }],
             refData: getInitData,
             productObject: {
                 clientType: '',
@@ -178,7 +182,7 @@
                 this.ageSection = this.refData[2].paraDataRb.ageBetween;
                 this.profession = this.refData[2].paraDataRb.occupation;
                 this.channelChoose = this.refData[2].paraDataRb.channelChoose;
-                this.applyBranch = this.refData[2].paraDataRb.applyBranch;
+                this.prodBranch = this.refData[2].paraDataRb.applyBranch;
                 this.branchChoice = this.refData[2].paraDataRb.branchChoice;
                 this.applyArea = this.refData[2].paraDataRb.applyArea;
                 this.areaChoose = this.refData[2].paraDataRb.areaChoose;
