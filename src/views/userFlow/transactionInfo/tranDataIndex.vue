@@ -11,7 +11,24 @@
       <tran-check-flow-info v-if="optKey==3" ></tran-check-flow-info>
       <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
       <v-card-text>
-        <prod-diff :mainSeqNo="code"></prod-diff>
+        <v-tabs fixed-tabs>
+          <v-tab v-for="n in diffList"
+                 :key="n"
+          >
+             {{n}}
+          </v-tab>
+          <v-tabs-items v-model="model">
+            <v-tab-item
+                    v-for="i in diffList"
+                    :id="`tab-${i}`"
+                    :key="i"
+            >
+
+              <prod-diff v-if="i=='产品属性'" :prodData="prodData"></prod-diff>
+              <base-table v-if="i=='收费定义'" :prodData="prodData"></base-table>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
       </v-card-text>
     </v-card>
 
@@ -20,12 +37,14 @@
 </template>
 <script>
   import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
+  import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
   import tranCheckFlowInfo from './tranCheckFlowInfo'
   import tranReleaseFlowInfo from './tranReleaseFlowInfo'
-
+  import { getDiffList } from "@/api/url/prodInfo";
   export default {
         components: {
             prodDiff,
+            baseTable,
             tranCheckFlowInfo,
             tranReleaseFlowInfo
         },
@@ -33,13 +52,18 @@
           return {
               code: '',
               optKey: 0,
-              optValue: ''
+              optValue: '',
+              prodData: {},
+              diffList: ["产品属性","收费定义"]
           }
       },
+
         created() {
             this.code = this.$route.params.code
             this.optValue = this.$route.params.optValue
             this.setOptKey(this.optValue)
+            this.getDiffProdData();
+
         },
         methods: {
             setOptKey(val) {
@@ -52,6 +76,12 @@
             },
             print () {
                 window.print()
+            },
+            getDiffProdData(){
+                var data={'mainSeqNo': this.code};
+                getDiffList(data).then(response => {
+                    this.prodData=response.data.data;
+                });
             }
 //            ,
 //            addCompare () {

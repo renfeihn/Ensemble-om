@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import { getDiffList } from "@/api/url/prodInfo";
+
 import {getColumnDesc} from '@/utils/columnDesc'
 export default {
-    props: ['mainSeqNo'],
+    props: ['prodData'],
   data() {
     return {
       ex11: "",
@@ -134,17 +134,18 @@ export default {
       } else {
         this.queryDespositProdData();
       }
-    }
+    },
+      prodData (val) {
+          this.queryDespositProdData(val)
+      }
   },
   mounted: function() {
-    this.queryDespositProdData();
+
   },
   methods: {
     queryDespositProdData() {
-      var data={'mainSeqNo': this.$props.mainSeqNo};
-      getDiffList(data).then(response => {
-          this.assemblingDiff(response.data.data);
-      });
+      var data= this.$props.prodData;
+          this.assemblingDiff(data);
     },
     assemblingDiff(prodService){
         const prodInfo=prodService.prodInfo;
