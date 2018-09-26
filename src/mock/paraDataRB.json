@@ -1,5 +1,5 @@
 {
-   "sourceModule":[
+  "sourceModule":[
     {
       "key":"RB",
       "value":"RB-存款"
@@ -101,38 +101,38 @@
   ],
   "acctType":[
     {
-	"key":"A",
-	"value":"A-AIO账户"
+      "key":"A",
+      "value":"A-AIO账户"
     },
     {
-	"key":"C",
-	"value":"C-结算账户"
+      "key":"C",
+      "value":"C-结算账户"
     },
     {
-	"key":"S",
-	"value":"S-储蓄账户"
+      "key":"S",
+      "value":"S-储蓄账户"
     },
     {
-	"key":"T",
-	"value":"T-定期账户"
+      "key":"T",
+      "value":"T-定期账户"
     }
   ],
   "subAcctType":[
-      {
-	"key":"A",
-	"value":"A-AIO账户"
+    {
+      "key":"A",
+      "value":"A-AIO账户"
     },
     {
-	"key":"C",
-	"value":"C-结算账户"
+      "key":"C",
+      "value":"C-结算账户"
     },
     {
-	"key":"S",
-	"value":"S-储蓄账户"
+      "key":"S",
+      "value":"S-储蓄账户"
     },
     {
-	"key":"T",
-	"value":"T-定期账户"
+      "key":"T",
+      "value":"T-定期账户"
     }
   ],
   "isMultiCcy":[
@@ -201,12 +201,12 @@
       "value":"2-个人储蓄户"
     }
   ],
- "balType":[
-   {
-     "key":"CA",
-     "value":"CA-钞余额"
-   }
- ],
+  "balType":[
+    {
+      "key":"CA",
+      "value":"CA-钞余额"
+    }
+  ],
   "ownershipType":[
     {
       "key":"SG",
@@ -258,7 +258,7 @@
     }
   ],
   "discountCcy":[
-   {
+    {
       "key":"CNY",
       "value":"CNY-人民币"
     },
@@ -327,7 +327,7 @@
       "value":"V-VIP客户"
     }
   ],
-  "ageBetween":[
+  "ageSection":[
     {
       "key":"down",
       "value":"down-18岁以下"
@@ -369,10 +369,6 @@
     {
       "key":"0",
       "value":"0-全行"
-    },
-    {
-      "key":"ALL",
-      "value": "ALL-全行"
     }
   ],
   "branchChoice":[
@@ -495,8 +491,8 @@
   ],
   "structureType":[
     {
-	"key": "CD2",
-	"value": "CD2-账号生成规则"
+      "key": "CD2",
+      "value": "CD2-账号生成规则"
     }
   ],
   "numOfClient":[],
@@ -552,8 +548,8 @@
   ],
   "checkRestraint":[
     {
-    "key":"Y",
-    "value":"Y-是"
+      "key":"Y",
+      "value":"Y-是"
     },
     {
       "key":"N",
@@ -847,12 +843,6 @@
       "value":"S-起存金额违约"
     }
   ],
-  "dealingWay":[
-    {
-      "key":"D",
-      "value":"D-拒绝"
-    }
-  ],
   "singleTimeDepositCheck":[
     {
       "key":"Y",
@@ -934,6 +924,96 @@
     }
   ],
   "sgBalCheck": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "closeAcctRollbackFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "docType": [
+    {
+      "key":"001",
+      "value": "001-本外币对私存折"
+    },
+    {
+      "key":"002",
+      "value": "002-本外币对私定期存单"
+    }
+  ],
+  "clientFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "channelFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "branchControlFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "chargeFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "moveFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "multiCcy": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "docFlag": [
     {
       "key":"Y",
       "value":"Y-是"

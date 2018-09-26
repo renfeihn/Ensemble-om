@@ -21,7 +21,7 @@
                                 <v-subheader class="primary--text subheading">客户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientSubType" v-model="productObject.fixedCall" label="客户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientSubType" v-model="productObject.clientSubType" label="客户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户等级*</v-subheader>
@@ -33,7 +33,7 @@
                                 <v-subheader class="primary--text subheading">年龄区间*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ageSection" v-model="productObject.ageBetween" label="年龄区间" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="ageSection" v-model="productObject.ageSection" label="年龄区间" item-text="value" item-value="key" single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">职业*</v-subheader>
@@ -131,7 +131,7 @@
                 inLandOffshore: '',
                 clientSubType: '',
                 clientLevel: '',
-                ageBetween: '',
+                ageSection: '',
                 occupation: '',
                 channelChoose: '',
                 applyBranch: '',
@@ -164,22 +164,22 @@
                 this.productObject = {}
                 this.productObject.clientType = val.prodDefines.CLIENT_TYPE.attrValue
                 this.productObject.inLandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
-                this.productObject.prodBranch = val.prodDefines.PROD_BRANCH.attrValue
+                this.productObject.prodBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
                 this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
-                this.productObject.clientSubType = ""//客户子类型
+                this.productObject.clientSubType = val.prodDefines.CLIENT_GENERAL_TYPE.attrValue//客户子类型
                 this.productObject.channelChoose = ""//渠道选择
-                this.productObject.ageBetween = ""//年龄区间
-                this.productObject.occupation = ""//职业
-                this.productObject.branchChoice = ""//机构选择
-                this.productObject.applyArea = ""//使用区域
-                this.productObject.areaChoose = ""//区域选择
+                this.productObject.ageSection = val.prodDefines.AGE_PART.attrValue//年龄区间
+                this.productObject.occupation = val.prodDefines.PROFESSION.attrValue//职业
+                this.productObject.branchChoice = val.prodDefines.PROD_BRANCH.attrValue//机构选择
+                this.productObject.applyArea = val.prodDefines.ADUPTER_AREA.attrValue//适用区域
+                this.productObject.areaChoose = val.prodDefines.AREA_TYPE.attrValue//区域选择
             },
             initRefDate() {
                 this.clientType = this.refData[2].paraDataRb.clientType;
                 this.inlandOffshore = this.refData[2].paraDataRb.inlandOffshore;
                 this.clientSubType = this.refData[2].paraDataRb.clientSubType;
                 this.clientLevel = this.refData[2].paraDataRb.clientLevel;
-                this.ageSection = this.refData[2].paraDataRb.ageBetween;
+                this.ageSection = this.refData[2].paraDataRb.ageSection;
                 this.profession = this.refData[2].paraDataRb.occupation;
                 this.channelChoose = this.refData[2].paraDataRb.channelChoose;
                 this.prodBranch = this.refData[2].paraDataRb.applyBranch;

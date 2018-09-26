@@ -278,6 +278,15 @@
             },
             callBackControlInfo(val) {
                 console.log(val)
+                this.prodData.prodDefines.AUTOMATIC_RANGE.attrValue = val.productObject.draRange
+                this.prodData.prodDefines.CIR_EXCHANGE_RANGE.attrValue = val.productObject.depRange
+                this.prodData.prodDefines.TRAN_CIR_EXCG_FLAG.attrValue = val.productObject.tDepFlag
+                this.prodData.prodDefines.CASH_CIR_EXCG_FLAG.attrValue = val.productObject.cashDepFlag
+                this.prodData.prodDefines.CLIENT_CONTRAL_FLAG.attrValue = val.productObject.clientFlag
+                this.prodData.prodDefines.CHANNEL_CONT_FLAG.attrValue = val.productObject.channelFlag
+                this.prodData.prodDefines.BRC_AREA_CONT_FLAG.attrValue = val.productObject.branchControlFlag
+                this.prodData.prodDefines.CHARGE_TYPE.attrValue = val.productObject.chargeFlag
+                this.prodData.prodDefines.STATUS_TRAN_FLAG.attrValue = val.productObject.moveFlag
             },
             callBackProdObject(val) {
                 console.log(val)
@@ -285,6 +294,10 @@
                 this.prodData.prodDefines.INLAND_OFFSHORE.attrValue = val.productObject.inLandOffshore
                 this.prodData.prodDefines.PROD_BRANCH.attrValue = val.productObject.prodBranch
                 this.prodData.prodDefines.CLIENT_IND.attrValue = val.productObject.clientInd
+                this.prodData.prodDefines.AGE_PART.attrValue = val.productObject.ageSection
+                this.prodData.prodDefines.PROFESSION.attrValue = val.productObject.occupation
+                this.prodData.prodDefines.ADUPTER_AREA.attrValue = val.productObject.applyArea
+                this.prodData.prodDefines.AREA_TYPE.attrValue = val.productObject.areaChoose
             },
             callBackIntDetail(val) {
                 console.log(val)
@@ -300,7 +313,9 @@
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.openAcct.checkAgent
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue = val.openAcct.numOfClient
                 this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue = val.openAcct.maxBackDateDays
-
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.DOC_TYPE_DEAL.attrValue = val.openAcct.withdrawTypeHandeling
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG.attrValue = val.openAcct.clientAmtCheckFlag
+                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue = val.openAcct.startDepositAmt
             },
             callBackCloseAcct(val) {
                 console.log(val)
@@ -308,6 +323,9 @@
                 this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.closeAcct.acctReatraintCheck
                 this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue = val.closeAcct.resignCheck
                 this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue = val.closeAcct.ownCheck
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue = val.closeAcct.systemControlApproach
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue = val.closeAcct.cashResouce
+                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CLOSE_BACK_FLAG.attrValue = val.closeAcct.closeAcctRollbackFlag
             },
             callBackDeposit(val) {
                 console.log(val)
@@ -319,6 +337,10 @@
                 this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_INIT_AMT.attrValue = val.deposit.checkInitAmt
                 this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue = val.deposit.keepMinBal
                 this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MAX_BAL.attrValue = val.deposit.keepMaxBal
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue = val.deposit.depositControlApproach
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue = val.deposit.cashResource
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.DEPOSIT_BREAK_TYPE.attrValue = val.deposit.breakType
+                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue = val.deposit.dealingWay
             },
             callBackDrawInfo(val) {
                 console.log(val)
@@ -331,6 +353,9 @@
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_KEEP_BAL.attrValue = val.drawInfo.acctBalanceCheck
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.SG_MAX_AMT.attrValue = val.drawInfo.sgMaxAmt
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue = val.drawInfo.keepMinBal
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue = val.drawInfo.dealingWay
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue = val.drawInfo.breakType
+                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue = val.drawInfo.voucherTypeCheck
             },
             callBackAcctBaseInfo(val) {
                 console.log(val)
@@ -357,6 +382,7 @@
                 this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withDrawalType
                 this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
                 this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
+                this.prodData.prodDefines.CONVERT_CCY = val.acctBaseInfo.discountCcy
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;

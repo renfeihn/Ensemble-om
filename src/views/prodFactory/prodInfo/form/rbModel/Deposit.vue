@@ -15,9 +15,9 @@
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-<!--
-                                <v-select class="primary&#45;&#45;text mx-2" :items="permitCommersionFlag" v-model="deposit.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
--->
+                                <!--
+                                                                <v-select class="primary&#45;&#45;text mx-2" :items="permitCommersionFlag" v-model="deposit.checkAgent" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
+                                -->
                                 <dc-switch v-model="deposit.permitCommersionFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
@@ -30,16 +30,16 @@
                                 <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-<!--
-                                <v-select class="primary&#45;&#45;text mx-2" :items="acctReatraintCheck" v-model="deposit.checkRestraint" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
--->
+                                <!--
+                                                                <v-select class="primary&#45;&#45;text mx-2" :items="acctReatraintCheck" v-model="deposit.checkRestraint" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                                -->
                                 <dc-switch v-model="deposit.acctReatraintCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">存入违约类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="weiYueType" v-model="deposit.weiYueType" label="存入违约类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="breakType" v-model="deposit.breakType" label="存入违约类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">违约处理方式*</v-subheader>
@@ -51,9 +51,9 @@
                                 <v-subheader class="primary--text subheading">起存金额检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-<!--
-                                <v-select class="primary&#45;&#45;text mx-2" :items="startAmtCheck" v-model="deposit.startAmtCheck" label="起存金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
--->
+                                <!--
+                                                                <v-select class="primary&#45;&#45;text mx-2" :items="startAmtCheck" v-model="deposit.startAmtCheck" label="起存金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                                -->
                                 <dc-switch v-model="deposit.startAmtCheck"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
@@ -72,9 +72,9 @@
                                 <v-subheader class="primary--text subheading">单次存入金额检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-<!--
-                                <v-select class="primary&#45;&#45;text mx-2" :items="danciDepositCheck" v-model="deposit.danciDepositCheck" label="单次存入金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
--->
+                                <!--
+                                                                <v-select class="primary&#45;&#45;text mx-2" :items="danciDepositCheck" v-model="deposit.danciDepositCheck" label="单次存入金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
+                                -->
                                 <dc-switch v-model="deposit.checkInitAmt"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
@@ -122,7 +122,7 @@
                 key: "",
                 value: ""
             }],
-            weiYueType: [{
+            breakType: [{
                 key: "",
                 value: ""
             }],
@@ -144,7 +144,7 @@
                 permitCommersionFlag: '',
                 cashResource: '',
                 acctReatraintCheck: '',
-                weiYueType: '',
+                breakType: '',
                 dealingWay: '',
                 startAmtCheck: '',
                 sgDepMinAmt: '',
@@ -173,12 +173,12 @@
             },
             selectByProd(val) {
                 this.deposit = {}
-                this.depositControlApproach = ""//存入控制方式
+                this.deposit.depositControlApproach = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue//存入控制方式
                 this.deposit.permitCommersionFlag = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
                 this.deposit.acctReatraintCheck = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
-                this.cashResource = ""//资金来源方式
-                this.deposit.weiYueType =""//存入违约类型
-                this.deposit.dealingWay =""//违约处理方式
+                this.deposit.cashResource = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue;//资金来源方式
+                this.deposit.breakType = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.DEPOSIT_BREAK_TYPE.attrValue//存入违约类型
+                this.deposit.dealingWay = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue//违约处理方式
                 this.deposit.startAmtCheck = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.CHECK_INIT_AMT.attrValue
                 this.deposit.sgDepMinAmt = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.SG_DEP_MIN_AMT.attrValue
                 this.deposit.sgDepMaxAmt = val.mbEventInfos["DEP_"+val.prodType.prodType].mbEventAttrs.SG_DEP_MAX_AMT.attrValue
@@ -191,7 +191,7 @@
                 this.permitCommersionFlag = this.refData[2].paraDataRb.permitCommersionFlag;
                 this.cashResource = this.refData[2].paraDataRb.cashResource;
                 this.acctReatraintCheck = this.refData[2].paraDataRb.acctReatraintCheck;
-                this.weiYueType = this.refData[2].paraDataRb.weiYueType;
+                this.breakType = this.refData[2].paraDataRb.breakType;
                 this.dealingWay = this.refData[2].paraDataRb.dealingWay;
                 this.startAmtCheck = this.refData[2].paraDataRb.startAmtCheck;
                 this.danciDepositCheck = this.refData[2].paraDataRb.danciDepositCheck;

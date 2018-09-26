@@ -11,7 +11,7 @@
                             <v-flex md4 lg4>
                                 <v-select class="primary--text mx-2" :items="drawControlWay" v-model="drawInfo.drawControlWay" label="支取控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
-                            <v-flex xs12 md2 lg2>
+                            <v-flex>
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
@@ -162,7 +162,7 @@
             drawInfo: {
                 drawControlWay: '',
                 checkAgent: '',
-               // daiBanFlag: '',
+                // daiBanFlag: '',
                 cashResource: '',
                 attrReatraintCheck: '',
                 withDrawlCheck: '',
@@ -198,17 +198,16 @@
                 this.drawInfo.drawControlWay = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue
                 this.drawInfo.checkAgent = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
                 this.drawInfo.cashResource = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue
-                this.drawInfo.dealingWay = ""
-                this.drawInfo.breakType = ""
+                this.drawInfo.dealingWay = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue//
+                this.drawInfo.breakType = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue//
                 this.drawInfo.attrReatraintCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
                 this.drawInfo.withDrawlCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
-                this.drawInfo.voucherTypeCheck = ""
+                this.drawInfo.voucherTypeCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue//
                 this.drawInfo.sgMinAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.SG_MIN_AMT.attrValue
                 this.drawInfo.acctBalanceCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_KEEP_BAL.attrValue
                 this.drawInfo.sgMaxAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.SG_MAX_AMT.attrValue
                 this.drawInfo.keepMinBal = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue
-                this.drawInfo.sgBalCheck = ""
-
+                this.drawInfo.sgBalCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_SG_AMT.attrValue
             },
             initRefDate() {
                 this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;

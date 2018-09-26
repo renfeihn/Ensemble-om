@@ -39,9 +39,9 @@
                                 <v-subheader class="primary--text subheading">组合产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-<!--
-                                <v-select class="primary&#45;&#45;text mx-2" :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
--->
+                                <!--
+                                                                <v-select class="primary&#45;&#45;text mx-2" :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
+                                -->
                                 <dc-switch v-model="acctBaseInfo.prodGroup"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
@@ -95,12 +95,12 @@
                             <v-flex md4 lg4>
                                 <v-select class="primary--text mx-2" :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
                             </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">默认币种*</v-subheader>
+                            <!--<v-flex xs12 md2 lg2>
+                                <v-subheader class="primary&#45;&#45;text subheading">默认币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="defaultCcy" label="默认币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
+                                <v-select class="primary&#45;&#45;text mx-2" :items="defaultCcy" label="默认币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>-->
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">计息标志*</v-subheader>
                             </v-flex>
@@ -177,9 +177,9 @@
 </template>
 
 <script>
-import DcSwitch from "@/components/widgets/DcSwitch";
-import { getInitData } from "@/mock/init";
-import { getProdData } from "@/api/prod";
+    import DcSwitch from "@/components/widgets/DcSwitch";
+    import { getInitData } from "@/mock/init";
+    import { getProdData } from "@/api/prod";
     export default {
         components: { DcSwitch },
         props: ["prodData"],
@@ -195,10 +195,10 @@ import { getProdData } from "@/api/prod";
                 key: "Y",
                 value: "Y-是"
             },
-            {
-                key: "N",
-                value: 'N-否'
-            }],
+                {
+                    key: "N",
+                    value: 'N-否'
+                }],
             prodClass: [{
                 key: "",
                 value: ""
@@ -248,8 +248,8 @@ import { getProdData } from "@/api/prod";
                 value: ""
             }],
             voucherType: [{
-            key: "",
-            value: ""
+                key: "",
+                value: ""
             }],
             withdrawalType: [{
                 key: "",
@@ -272,6 +272,18 @@ import { getProdData } from "@/api/prod";
                 value: ""
             }],
             docType: [{
+                key: "",
+                value: ""
+            }],
+            discountCcy: [{
+                key: "",
+                value: ""
+            }],
+            multiCcy: [{
+                key: "",
+                value: ""
+            }],
+            docFlag: [{
                 key: "",
                 value: ""
             }],
@@ -350,7 +362,7 @@ import { getProdData } from "@/api/prod";
                 this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
                 this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
-              //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
+                //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
                 this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
                 this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
                 this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
@@ -359,8 +371,7 @@ import { getProdData } from "@/api/prod";
                 this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
                 this.acctBaseInfo.ccy = val.prodDefines.CCY.attrValue
                 this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
-                this.acctBaseInfo.discountCcy = ""
-                this.acctBaseInfo.defaultCcy = ""
+                this.acctBaseInfo.discountCcy = val.prodDefines.CONVERT_CCY.attrValue
             },
             selectByProd() {
                 getProdData(this.listValue).then(response => {
@@ -404,6 +415,8 @@ import { getProdData } from "@/api/prod";
                 this.discountCcy = this.refData[2].paraDataRb.discountCcy;
                 this.acctClass = this.refData[2].paraDataRb.acctClass;
                 this.fixedCall = this.refData[2].paraDataRb.fixedCall;
+                this.multiCcy = this.refData[2].paraDataRb.multiCcy;
+                this.docFlag = this.refData[2].paraDataRb.docFlag;
             },
             closeDialog() {
                 this.$parent.isActive = false;
