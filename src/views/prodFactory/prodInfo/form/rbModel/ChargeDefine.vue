@@ -75,7 +75,7 @@
             <template>
                 <v-data-table :headers="headers" :items="chargeDefinesInfo" hide-actions class="elevation-0">
                     <template slot="items" slot-scope="props">
-                        <tr v-bind:class="{'selected': props.item==editedItem }" @click="getChargeDefine(props.item)" highlight-row>
+                        <tr @click="getChargeDefine(props.item)" v-bind:class="{'chargeSelected': props.item==editedItem }" highlight-row>
                         <td class="text-xs-left">{{ props.item.feeType }}</td>
                         <td class="text-xs-left">{{ props.item.chargePeriodFreq }}</td>
                         <td class="text-xs-left">{{ props.item.chargeDay }}</td>
@@ -209,8 +209,8 @@ export default {
     }
 };
 </script>
-<style scoped>
-.selected {
+<style>
+.chargeSelected {
   background-color: #e3f2fd;
 }
 </style>
