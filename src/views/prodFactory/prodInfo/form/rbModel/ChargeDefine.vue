@@ -75,7 +75,7 @@
             <template>
                 <v-data-table :headers="headers" :items="chargeDefinesInfo" hide-actions class="elevation-0">
                     <template slot="items" slot-scope="props">
-                        <tr @click="getChargeDefine(props.item)" highlight-row>
+                        <tr v-bind:class="{'selected': props.item==editedItem }" @click="getChargeDefine(props.item)" highlight-row>
                         <td class="text-xs-left">{{ props.item.feeType }}</td>
                         <td class="text-xs-left">{{ props.item.chargePeriodFreq }}</td>
                         <td class="text-xs-left">{{ props.item.chargeDay }}</td>
@@ -100,6 +100,7 @@ export default {
             addFlag: false,
             modFlag: false,
             prodType: '',
+            open: true,
             headers: [
                 {text: '批量收费类型', align: 'left', value: 'feeType'},
                 {text: '收费频率', value: 'chargePeriodFreq'},
@@ -208,3 +209,8 @@ export default {
     }
 };
 </script>
+<style scoped>
+.selected {
+  background-color: #e3f2fd;
+}
+</style>
