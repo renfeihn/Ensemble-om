@@ -25,7 +25,7 @@
             >
 
               <prod-diff v-if="i=='产品属性'" :prodData="prodData"></prod-diff>
-              <base-table v-if="i=='收费定义'" :prodData="prodData"></base-table>
+              <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -41,12 +41,14 @@
   import tranCheckFlowInfo from './tranCheckFlowInfo'
   import tranReleaseFlowInfo from './tranReleaseFlowInfo'
   import { getDiffList } from "@/api/url/prodInfo";
+  import {getColumnDesc_} from '@/utils/columnDesc'
   export default {
         components: {
             prodDiff,
             baseTable,
             tranCheckFlowInfo,
-            tranReleaseFlowInfo
+            tranReleaseFlowInfo,
+            getColumnDesc_
         },
       data (){
           return {
@@ -54,6 +56,7 @@
               optKey: 0,
               optValue: '',
               prodData: {},
+              prodCharge: {},
               diffList: ["产品属性","收费定义"]
           }
       },
@@ -81,7 +84,46 @@
                 var data={'mainSeqNo': this.code};
                 getDiffList(data).then(response => {
                     this.prodData=response.data.data;
+                    //将收费定义的差异组装
+                    this.assembleProdCharge();
                 });
+            },
+            assembleProdCharge(){
+                const prodInfo=this.prodData.prodInfo.mbProdCharge;
+                const prodChargeDiff=this.prodData.diff.mbProdCharge;
+                let assembleColumns=[];
+                let heards=[];
+                for(const key in prodInfo[0]){
+                    let head={};
+                    head["text"]=getColumnDesc_(key);
+                    head["value"]=key;
+                    heards.push(head);
+                }
+                for(const prodCharge in prodInfo){
+                    const chargeColumn= prodInfo[prodCharge];
+                   const keyAndValue="{\"FEE_TYPE\":\""+chargeColumn.feeType+"\",\"PROD_TYPE\":\""+
+                       chargeColumn.prodType+"\"}";
+                   const diff=prodChargeDiff[keyAndValue];
+                  if(diff== undefined){
+                     assembleColumns.push(chargeColumn)
+                   }else{
+                      const dmlType=diff.dmlType;
+                      if(dmlType == 'I'){
+                          assembleColumns.push(diff)
+                      }else if(dmlType == 'U'){
+                          for(const col in chargeColumn){
+                              let chargeCol=chargeColumn[col];
+                              let diffCol=diff[col];
+                              if(chargeCol!=diffCol){
+                                  chargeColumn[col]= chargeCol+'>'+diffCol
+                              }
+                          }
+                          assembleColumns.push(chargeColumn)
+                      }
+                  }
+                }
+                const reColumn = {"headers": heards,"column": assembleColumns}
+                this.prodCharge= reColumn;
             }
 //            ,
 //            addCompare () {

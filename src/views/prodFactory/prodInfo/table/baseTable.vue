@@ -3,22 +3,18 @@
           :items="desserts"
           class="elevation-1"
           hide-actions
-          hide-headers
           :headers="headers"
   >
     <template slot="items" slot-scope="props">
-      <td>{{ props.item.name }}</td>
-      <td class="text-xs-right">{{ props.item.calories }}</td>
-      <td class="text-xs-right">{{ props.item.fat }}</td>
-      <td class="text-xs-right">{{ props.item.carbs }}</td>
-      <td class="text-xs-right">{{ props.item.protein }}</td>
-      <td class="text-xs-right">{{ props.item.iron }}</td>
+      <td v-for="key in props.item">
+        {{key}}
+      </td>
     </template>
   </v-data-table>
 </template>
 <script>
     export default {
-        props: ["prodData"],
+        props: ["prodCharge"],
         data () {
             return {
                 desserts: [
@@ -36,7 +32,7 @@
             }
         },
         watch: {
-            prodData (val) {
+            prodCharge (val) {
                 this.getChargeDefinesInfo(val)
             }
         },
@@ -44,9 +40,10 @@
 
         },
         methods: {
-            getChargeDefinesInfo(val) {
+            getChargeDefinesInfo(prodService) {
                 //初始化产品对应的信息
-
+                this.headers=prodService.headers;
+                this.desserts=prodService.column;
             }
         }
     }
