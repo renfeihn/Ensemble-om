@@ -148,29 +148,37 @@ export default {
           this.assemblingDiff(data);
     },
     assemblingDiff(prodService){
-        const prodInfo=prodService.prodInfo;
-        const prodDiff=prodService.diff;
+        const prodDefines=prodService.prodDefines;
+        let prodDiff=prodService.diff;
         const prodType=prodService.prodType;
+        if(prodDiff==undefined){
+            prodDiff={};
+        }
         let columnDesc=[];
         let columnNew=[];
         let columnOld=[];
       //产品本身下参数固定组
       //产品下属性组合
-       let prodDefines=prodInfo.prodDefines;
        if(JSON.stringify(prodDefines)!="{}"){
        for(let index in prodDefines){
            let prodDefine=prodDefines[index];
-           let diff=prodDiff['MB_PROD_DEFINE.'+prodDefine.attrKey];
-           if(diff==null||diff==undefined){
-            diff=prodDefine.attrValue;
+           let attrKey=prodDefine.attrKey;
+           let attrValue=prodDefine.attrValue;
+           if(attrKey==undefined){
+               attrKey=index;
+               attrValue=prodDefine;
            }
-           const keyDesc=getColumnDesc(prodDefine.attrKey);
-           if(diff != prodDefine.attrValue){
-                 columnOld.push({title: prodDefine.attrValue,diff: true});
+           let diff=prodDiff[attrKey];
+           if(diff==null||diff==undefined){
+            diff=attrValue;
+           }
+           const keyDesc=getColumnDesc(attrKey);
+           if(diff != attrValue){
+                 columnOld.push({title: attrValue,diff: true});
                  columnNew.push({title: diff,diff: true});
                  columnDesc.push({title: keyDesc,diff: true});
            }else{
-                 columnOld.push({title: prodDefine.attrValue});
+                 columnOld.push({title: attrValue});
                  columnNew.push({title: diff});
                  columnDesc.push({title: keyDesc});
            }

@@ -24,7 +24,12 @@
                     :key="i"
             >
 
-              <prod-diff v-if="i=='产品属性'" :prodData="prodData"></prod-diff>
+              <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
+              <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
+              <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
+              <prod-diff v-if="i=='存入定义'" :prodData="prodEventCret"></prod-diff>
+              <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
+              <prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>
               <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
             </v-tab-item>
           </v-tabs-items>
@@ -57,7 +62,13 @@
               optValue: '',
               prodData: {},
               prodCharge: {},
-              diffList: ["产品属性","收费定义"]
+              prodDefineData: {},
+              prodEventOpen: {},
+              prodEventClose: {},
+              prodEventCret: {},
+              prodEventCycle: {},
+              prodEventDebt: {},
+              diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"]
           }
       },
 
@@ -84,12 +95,43 @@
                 var data={'mainSeqNo': this.code};
                 getDiffList(data).then(response => {
                     this.prodData=response.data.data;
+                    this.assembleProdDefine();
+                    this.assembleEvent();
                     //将收费定义的差异组装
                     this.assembleProdCharge();
+
                 });
             },
+            assembleProdDefine() {
+                const prodDefine=this.prodData.prodDefine;
+                const prodDefineDiff=this.prodData.diff.prodDefine;
+                const prodType=this.prodData.prodType;
+                const prodDefineData={"prodDefines": prodDefine,"diff": prodDefineDiff,"prodType": prodType};
+                this.prodDefineData=prodDefineData;
+            },
+            assembleEvent(){
+                const prodEvent=this.prodData.prodEvent;
+                const prodDefineDiff=this.prodData.diff.prodDefine;
+                const prodType=this.prodData.prodType;
+                 for(const key in prodEvent){
+                     const openEvent={"prodDefines": prodEvent[key],"diff": prodDefineDiff,"prodType": prodType}
+                     if(key.indexOf('OPEN')>=0){
+                         this.prodEventOpen=openEvent;
+                     }else
+                     if(key.indexOf('CLOSE')>=0){
+                        this.prodEventClose= openEvent
+                     }else if(key.indexOf('WTD')>=0){
+                         this.prodEventCret= openEvent
+                     }else if(key.indexOf('CYCLE')>=0){
+                         this.prodEventCycle= openEvent
+                     }else if(key.indexOf('DEP')>=0){
+                         this.prodEventDebt= openEvent
+                     }
+
+                 }
+            },
             assembleProdCharge(){
-                const prodInfo=this.prodData.prodInfo.mbProdCharge;
+                const prodInfo=this.prodData.mbProdCharge;
                 const prodChargeDiff=this.prodData.diff.mbProdCharge;
                 let assembleColumns=[];
                 let heards=[];
