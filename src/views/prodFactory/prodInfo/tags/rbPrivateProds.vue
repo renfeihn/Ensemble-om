@@ -396,7 +396,7 @@
                 this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withDrawalType
                 this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
                 this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
-                this.prodData.prodDefines.CONVERT_CCY = val.acctBaseInfo.discountCcy
+                this.prodData.prodDefines.CONVERT_CCY.attrValue = val.acctBaseInfo.discountCcy
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;

@@ -2,14 +2,12 @@
   <div>
     <v-card>
       <v-toolbar scroll-off-screen scroll-target="#scrolling-techniques" flat>
-        <v-switch
-                v-model="ex11"
-                label="隐藏相同项"
-                color="success"
-                value="onlyDiff"
-                hide-details
-                class="prodDiffSwitch"
-        ></v-switch>
+        <dc-switch v-model="ex11"
+                          label="隐藏相同项"
+                          color="success"
+                          value="onlyDiff"
+                          hide-details
+                          class="prodDiffSwitch"></dc-switch>
       </v-toolbar>
       <v-card-text class="pa-0">
 
@@ -51,12 +49,14 @@
 <script>
 
 import {getColumnDesc} from '@/utils/columnDesc'
+import DcSwitch from "@/components/widgets/DcSwitch";
 export default {
+    components: { DcSwitch },
     props: ['prodData'],
   data() {
     return {
       ex11: "",
-      onlyDiff: false,
+      onlyDiff: 'Y',
       prodDiffData: [
         {
           prodType: "",
@@ -113,15 +113,16 @@ export default {
   },
   watch: {
     ex11(val) {
-      if (val == 'onlyDiff') {
+      if (val == this.onlyDiff) {
         let prodList = this.prodDiffData;
         let newListSub = [];
         for (const item in prodList) {
           let newList = [];
           for (const items in prodList[item].items) {
             if (prodList[item].items[items].diff == true) {
-              newList.push(prodList[item].items[items - 1]);
+              newList.push({ divider: true, inset: true });
               newList.push(prodList[item].items[items]);
+
             }
           }
           if (newList.length > 0) {
@@ -136,15 +137,12 @@ export default {
       }
     },
       prodData (val) {
-          this.queryDespositProdData(val)
+          this.queryDespositProdData()
       }
-  },
-  mounted: function() {
-
   },
   methods: {
     queryDespositProdData() {
-      var data= this.$props.prodData;
+       let data= this.$props.prodData;
           this.assemblingDiff(data);
     },
     assemblingDiff(prodService){
@@ -196,10 +194,10 @@ export default {
                       columnNew.push({ divider: true, inset: true });
                 }
        }
-       var diffList=[];
-       var columnDescList={prodType: '',items: columnDesc};
-       var columnNewList={prodType: prodType+'修改后',items: columnNew};
-       var columnOldList={prodType: prodType+'修改前' ,items: columnOld};
+       let diffList=[];
+       let columnDescList={prodType: '',items: columnDesc};
+       let columnNewList={prodType: prodType+'修改后',items: columnNew};
+       let columnOldList={prodType: prodType+'修改前' ,items: columnOld};
        diffList.push(columnDescList);
        diffList.push(columnNewList);
        diffList.push(columnOldList);

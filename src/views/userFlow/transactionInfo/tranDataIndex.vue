@@ -111,20 +111,49 @@
             },
             assembleEvent(){
                 const prodEvent=this.prodData.prodEvent;
-                const prodDefineDiff=this.prodData.diff.prodDefine;
+                const prodEventDiff=this.prodData.diff.mbProdEvent;
                 const prodType=this.prodData.prodType;
+                //区分差异
+                const openDiff={}
+                const closeDiff={}
+                const cycleDiff={}
+                const debtDiff={}
+                const cretDiff={}
+                for(const diffKey in prodEventDiff){
+                    const key=diffKey.substring(diffKey.indexOf('.')+1);
+                    if(diffKey.indexOf('OPEN')>=0){
+                        openDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('CLOSE')>=0){
+                        closeDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('WTD')>=0){
+                        cretDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('CYCLE')>=0){
+                        cycleDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('DEP')>=0){
+                        debtDiff[key]=prodEventDiff[diffKey];
+                    }
+                }
                  for(const key in prodEvent){
-                     const openEvent={"prodDefines": prodEvent[key],"diff": prodDefineDiff,"prodType": prodType}
+                     const openEvent={"prodDefines": prodEvent[key],"prodType": prodType}
                      if(key.indexOf('OPEN')>=0){
+                         openEvent["diff"]=openDiff
                          this.prodEventOpen=openEvent;
                      }else
                      if(key.indexOf('CLOSE')>=0){
+                         openEvent[key]=closeDiff
                         this.prodEventClose= openEvent
                      }else if(key.indexOf('WTD')>=0){
+                         openEvent[key]=cretDiff
                          this.prodEventCret= openEvent
                      }else if(key.indexOf('CYCLE')>=0){
+                         openEvent[key]=cycleDiff
                          this.prodEventCycle= openEvent
                      }else if(key.indexOf('DEP')>=0){
+                         openEvent[key]=debtDiff
                          this.prodEventDebt= openEvent
                      }
 
