@@ -1,6 +1,5 @@
 
 const axios = require("axios");
-const common = require('./common');
 const iconv = require('iconv-lite');
 import { getPkListRf } from "@/api/url/prodInfo";
 const util=  require('../utils/util');
