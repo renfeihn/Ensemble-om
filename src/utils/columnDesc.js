@@ -49,7 +49,10 @@ const column= {
     'TRANSFER_PERIOD': '转移周期',
     'RESTRAINT_AMT': '限制金额',
     'TRANSFER_CONDITION': '转移条件',
-    'TRAN_AFTER_FLAG': '转移后是否结息'
+    'TRAN_AFTER_FLAG': '转移后是否结息',
+    'NEXT_CHARGE_DATE': '下一收费日',
+    'TRAN_TIME_STAMP': '交易时间戳',
+    'TRAM_TIME': '交易时间'
 }
 
 export function getColumnDesc (data) {
