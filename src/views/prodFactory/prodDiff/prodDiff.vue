@@ -23,12 +23,11 @@
                 <v-divider
                         v-if="item.divider"
                         :inset="item.inset"
-                        :key="index"
                 ></v-divider>
                 <v-list-tile
                         :key="item.title"
                         avatar
-                        v-else
+                        v-if="!item.divider"
                         :class="{'tbColor':item.diff}"
                 >
                   <v-list-tile-content>
