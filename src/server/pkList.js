@@ -2,7 +2,6 @@
 const axios = require("axios");
 const common = require('./common');
 const iconv = require('iconv-lite');
-const path=common.dictionaryPath;
 import { getPkListRf } from "@/api/url/prodInfo";
 const util=  require('../utils/util');
 export function getPkList (params,callback1) {
