@@ -27,7 +27,7 @@
                 <v-list-tile
                         :key="item.title"
                         avatar
-                        v-if="!item.divider"
+                        v-else
                         :class="{'tbColor':item.diff}"
                 >
                   <v-list-tile-content>
