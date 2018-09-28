@@ -1,23 +1,34 @@
 
-const fs = require("fs");
-// var Finder = require('fs-finder');
-const glob = require("glob");
-var path = '../../data/server/dictionarys'
-
-export function getPkList (params) {
-    var files = glob.sync(path, {nodir: true})
-    files.forEach(function (filePath) {
-        const statFile = fs.statSync(filePath);
-        // var paths = Finder.in(files).find();
-        // if (!statFile.isDirectory()) {
-        //     // 如果是文件，读取文件
-        //     var fileStr = fs.readFileSync(filePath, {encoding: 'binary'});
-        //     var buf = new Buffer(fileStr, 'binary');
-        //     var data = iconv.decode(buf, 'GBK');
-        //     const json = JSON.parse(data);
-        //     objs.push(json);
-        // }
-        var test =''
-    });
+const axios = require("axios");
+const common = require('./common');
+const iconv = require('iconv-lite');
+const path=common.dictionaryPath;
+import { getPkListRf } from "@/api/url/prodInfo";
+const util=  require('../utils/util');
+export function getPkList (params,callback1) {
+    let columnList=[];
+    const file = require('./columnValue');
+    const columnInfo=file[params];
+    if(util.isNotNull(columnInfo)){
+        const method=columnInfo.valueMethod;
+        const score=columnInfo.valueScore
+        if(method=='VL'){
+          const valueList=score.split(',');
+          for(const key in valueList){
+              const valueInfo=valueList[key];
+              const begin=valueInfo.indexOf(':');
+              const key=valueInfo.substring(0,begin);
+              const value=valueInfo.substring(begin+1)
+              columnList.push({keySet: key, value: value})
+          }
+            callback1(columnList);
+        }else{
+            const param={pkInfo: score}
+            getPkListRf(param).then(response => {
+                var re= response.data;
+                callback1(re);
+            });
+        }
+    }
 
 }

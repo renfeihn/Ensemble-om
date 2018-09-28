@@ -146,3 +146,10 @@ export function getCheckFlowList () {
         method: 'post'
     });
 }
+export function getPkListRf (params) {
+    return request({
+        url: '/getPkList',
+        method: 'post',
+        data: params
+    });
+}
