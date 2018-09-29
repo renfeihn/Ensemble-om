@@ -61,7 +61,7 @@
                             </v-flex>
                             <v-flex md4 lg4>
                                 <v-menu ref="startDateMenu" lazy :close-on-content-click="false" v-model="prodStartDate" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-                                    <v-text-field slot="activator" label="失效日期" v-model="acctBaseInfo.prodStartDate" append-icon="event" single-line hide-details></v-text-field>
+                                    <v-text-field slot="activator" label="生效日期" v-model="acctBaseInfo.prodStartDate" append-icon="event" single-line hide-details></v-text-field>
                                     <v-date-picker v-model="acctBaseInfo.prodStartDate" @input="$refs.startDateMenu.save(prodStartDate)" no-title scrollable locale="zh-cn"></v-date-picker>
                                 </v-menu>
                             </v-flex>
@@ -93,7 +93,7 @@
                                 <v-subheader class="primary--text subheading">币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="ccy" v-bind:value="acctBaseInfo.ccy | getValues" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
                             </v-flex>
                             <!--<v-flex xs12 md2 lg2>
                                 <v-subheader class="primary&#45;&#45;text subheading">默认币种*</v-subheader>
@@ -118,7 +118,7 @@
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="voucherType" v-bind:value="acctBaseInfo.docType | getValues" label="凭证类型" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="voucherType" v-bind:value="acctBaseInfo.docType | getValues" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -136,13 +136,13 @@
                                 <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctNature" v-model="acctBaseInfo.acctNature" label="账户属性" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="acctNature" v-bind:value="acctBaseInfo.acctNature | getValues" label="账户属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ownershipType" v-model="acctBaseInfo.ownerShipType" label="关系属性" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="ownershipType" v-bind:value="acctBaseInfo.ownerShipType | getValues" label="关系属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
@@ -191,7 +191,6 @@
             }
         },
         components: { DcSwitch },
-
         props: ["prodData"],
         data: () => ({
             title: null,
