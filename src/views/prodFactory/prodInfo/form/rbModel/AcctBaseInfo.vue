@@ -118,7 +118,7 @@
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="voucherType" label="凭证类型" v-model="acctBaseInfo.docType" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="voucherType" v-bind:value="acctBaseInfo.docType | getValues" label="凭证类型" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -160,7 +160,7 @@
                                 <v-subheader class="primary--text subheading">支取方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="withdrawalType" v-model="acctBaseInfo.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="withdrawalType" :v-model="acctBaseInfo.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">折算币种*</v-subheader>
@@ -181,7 +181,17 @@
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
+        filters: {
+            getValues: function (key) {
+                let value=[];
+                if(key!=undefined){
+                    value=key.split(',');
+                }
+                return value
+            }
+        },
         components: { DcSwitch },
+
         props: ["prodData"],
         data: () => ({
             title: null,
