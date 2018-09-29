@@ -118,7 +118,9 @@
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="voucherType" v-bind:value="acctBaseInfo.docType | getValues" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+
+                                <v-select class="primary--text mx-2" :items="voucherType" v-model="acctBaseInfo.docType" label="凭证类型" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -181,15 +183,6 @@
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
-        filters: {
-            getValues: function (key) {
-                let value=[];
-                if(key!=undefined){
-                    value=key.split(',');
-                }
-                return value
-            }
-        },
         components: { DcSwitch },
         props: ["prodData"],
         data: () => ({
@@ -369,7 +362,10 @@
                 var str1 = val.prodDefines.PROD_END_DATE.attrValue
                 this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
                 this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
-                this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue
+                let docType=val.prodDefines.DOC_TYPE.attrValue;
+                if(docType!=undefined){
+                this.acctBaseInfo.docType =docType.split(',');
+                }
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
                 //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
                 this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
