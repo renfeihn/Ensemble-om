@@ -144,19 +144,31 @@
                          this.prodEventOpen=openEvent;
                      }else
                      if(key.indexOf('CLOSE')>=0){
-                         openEvent[key]=closeDiff
+                         openEvent["diff"]=closeDiff
                         this.prodEventClose= openEvent
                      }else if(key.indexOf('WTD')>=0){
-                         openEvent[key]=cretDiff
+                         openEvent["diff"]=cretDiff
                          this.prodEventCret= openEvent
                      }else if(key.indexOf('CYCLE')>=0){
-                         openEvent[key]=cycleDiff
+                         openEvent["diff"]=cycleDiff
                          this.prodEventCycle= openEvent
                      }else if(key.indexOf('DEP')>=0){
-                         openEvent[key]=debtDiff
+                         openEvent["diff"]=debtDiff
                          this.prodEventDebt= openEvent
                      }
-
+                 }
+                 if(JSON.stringify(prodEvent)=='{}'){
+                     let diffEvent={"prodType": prodType}
+                     diffEvent["diff"]=openDiff
+                     this.prodEventOpen=diffEvent;
+                     diffEvent["diff"]=closeDiff
+                     this.prodEventClose= diffEvent;
+                     diffEvent["diff"]=cycleDiff
+                     this.prodEventCycle= diffEvent
+                     diffEvent["diff"]=cretDiff
+                     this.prodEventCret= diffEvent
+                     diffEvent["diff"]=debtDiff
+                     this.prodEventDebt= diffEvent
                  }
             },
             assembleProdCharge(){

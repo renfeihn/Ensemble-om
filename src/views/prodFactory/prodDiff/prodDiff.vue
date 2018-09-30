@@ -156,7 +156,7 @@ export default {
         let columnOld=[];
       //产品本身下参数固定组
       //产品下属性组合
-       if(JSON.stringify(prodDefines)!="{}"){
+       if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}"){
        for(let index in prodDefines){
            let prodDefine=prodDefines[index];
            let attrKey=prodDefine.attrKey;

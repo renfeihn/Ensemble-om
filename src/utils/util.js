@@ -8,9 +8,13 @@ const isNotNull = function (obj) {
     } else {
         return false;
     }
-
 };
-
+function isEmptyObject(obj) {
+    for (const key in obj){
+        return false;//返回false，不为空对象
+    }
+    return true;//返回true，为空对象
+}
 const nvl = function (source, target) {
     if (isNull(source)) {
         return target;
@@ -20,7 +24,8 @@ const nvl = function (source, target) {
 const Models = {
     nvl: nvl,
     isNull: isNull,
-    isNotNull: isNotNull
+    isNotNull: isNotNull,
+    isEmptyObject: isEmptyObject
 };
 
 module.exports = Models;
