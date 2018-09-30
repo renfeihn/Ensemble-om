@@ -395,7 +395,7 @@
                 this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate.substr(0, 4) + val.acctBaseInfo.prodStartDate.substr(5, 2) + val.acctBaseInfo.prodStartDate.substr(8, 2)
                 this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate.substr(0, 4) + val.acctBaseInfo.prodEndDate.substr(5, 2) + val.acctBaseInfo.prodEndDate.substr(8, 2)
                 this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
-                this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withDrawalType
+                this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withdrawalType
                 this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
                 this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
                 this.prodData.prodDefines.CONVERT_CCY.attrValue = val.acctBaseInfo.discountCcy

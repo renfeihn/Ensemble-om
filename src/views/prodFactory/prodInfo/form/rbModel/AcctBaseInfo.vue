@@ -15,32 +15,32 @@
                                 <v-subheader class="primary--text subheading">产品描述*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-2" label="产品描述" name="title" v-model="acctBaseInfo.prodDesc" single-line hide-details disabled/>
+                                <v-text-field class="primary--text " label="产品描述" name="title" v-model="acctBaseInfo.prodDesc" single-line hide-details disabled/>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">业务模块*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" @change="isSelectCcy" :items="sourceModule" v-model="acctBaseInfo.sourceModule" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " @change="isSelectCcy" :items="sourceModule" v-model="acctBaseInfo.sourceModule" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品分类*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodClass" v-model="acctBaseInfo.prodClass" label="产品分类" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="prodClass" v-model="acctBaseInfo.prodClass" label="产品分类" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodAttr" v-model="acctBaseInfo.prodRange" label="产品属性" item-text="value" item-value="key" value="'S'" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="prodAttr" v-model="acctBaseInfo.prodRange" label="产品属性" item-text="value" item-value="key" value="'S'" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">组合产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
                                 <!--
-                                                                <v-select class="primary&#45;&#45;text mx-2" :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
+                                                                <v-select class="primary&#45;&#45;text " :items="isGroup" v-model="acctBaseInfo.prodGroup" label="组合产品" item-text="value" item-value="key" single-line hide-details></v-select>
                                 -->
                                 <dc-switch v-model="acctBaseInfo.prodGroup"></dc-switch>
                             </v-flex>
@@ -48,13 +48,13 @@
                                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodStatus" v-model="acctBaseInfo.status" label="产品状态" item-text="value" item-value="key" value="A" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="prodStatus" v-model="acctBaseInfo.status" label="产品状态" item-text="value" item-value="key" value="A" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">基础产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-1" :items="baseprodtype" v-model="acctBaseInfo.baseProdType" label="基础产品" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="baseprodtype" v-model="acctBaseInfo.baseProdType" label="基础产品" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">生效日期*</v-subheader>
@@ -78,7 +78,7 @@
                                 <v-subheader class="primary--text subheading">利润中心*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-1" :items="profitCentre" v-model="acctBaseInfo.profitCenter" label="利润中心" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="profitCentre" v-model="acctBaseInfo.profitCenter" label="利润中心" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12>
                             </v-flex>
@@ -86,32 +86,32 @@
                                 <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!-- <v-select class="primary--text mx-2" :items="isMultiCcy" @change="isSelectCcy" v-model="acctBaseInfo.multiCcy" item-text="value" item-value="key" single-line hide-details></v-select> -->
+                                <!-- <v-select class="primary--text " :items="isMultiCcy" @change="isSelectCcy" v-model="acctBaseInfo.multiCcy" item-text="value" item-value="key" single-line hide-details></v-select> -->
                                 <dc-switch v-model="acctBaseInfo.multiCcy"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ccy" v-bind:value="acctBaseInfo.ccy | getValues" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="ccy" v-model="acctBaseInfo.ccy" label="币种" item-text="value" item-value="key" ref="ccy" multiple chips single-line hide-details></v-select>
                             </v-flex>
                             <!--<v-flex xs12 md2 lg2>
                                 <v-subheader class="primary&#45;&#45;text subheading">默认币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary&#45;&#45;text mx-2" :items="defaultCcy" label="默认币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary&#45;&#45;text " :items="defaultCcy" label="默认币种" v-model="acctBaseInfo.defaultCcy" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>-->
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">计息标志*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctIntFlag" v-model="acctBaseInfo.acctIntFlag" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="acctIntFlag" v-model="acctBaseInfo.acctIntFlag" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!-- <v-select class="primary--text mx-2" :items="isJudge" v-model="acctBaseInfo.docFlag" item-text="value" item-value="key" single-line hide-details></v-select> -->
+                                <!-- <v-select class="primary--text " :items="isJudge" v-model="acctBaseInfo.docFlag" item-text="value" item-value="key" single-line hide-details></v-select> -->
                                 <dc-switch v-model="acctBaseInfo.docFlag"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
@@ -119,38 +119,38 @@
                             </v-flex>
                             <v-flex md4 lg4>
 
-                                <v-select class="primary--text mx-2" :items="voucherType" v-model="acctBaseInfo.docType" label="凭证类型" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <v-select class="primary--text " :items="voucherType" v-model="acctBaseInfo.docType" label="凭证类型" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
 
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctType" v-model="acctBaseInfo.acctType" label="账户类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="acctType" v-model="acctBaseInfo.acctType" label="账户类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="subAcctType" v-model="acctBaseInfo.fixedCall" label="账户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="subAcctType" v-model="acctBaseInfo.fixedCall" label="账户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctNature" v-bind:value="acctBaseInfo.acctNature | getValues" label="账户属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="acctNature" v-model="acctBaseInfo.acctNature" label="账户属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ownershipType" v-bind:value="acctBaseInfo.ownerShipType | getValues" label="关系属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="ownershipType" v-model="acctBaseInfo.ownerShipType" label="关系属性" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="acctClass" v-model="acctBaseInfo.acctClass" label="账户类别" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="acctClass" v-model="acctBaseInfo.acctClass" label="账户类别" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">余额类别*</v-subheader>
@@ -162,7 +162,7 @@
                                 <v-subheader class="primary--text subheading">支取方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="withdrawalType" :v-model="acctBaseInfo.withDrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="withdrawalType" v-model="acctBaseInfo.withdrawalType" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">折算币种*</v-subheader>
@@ -315,7 +315,7 @@
                 ownerShipType: '',
                 acctClass: '',
                 balType: '',
-                withDrawalType: '',
+                withdrawalType: '',
                 defaultCcy: '',
                 discountCcy: '',
                 dodcFlag: '',
@@ -373,13 +373,23 @@
                 this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
                 //  this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
                 this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
-                this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
-                this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
+                let acctNature=val.prodDefines.ACCT_NATURE.attrValue
+                if(acctNature!=undefined) {
+                    this.acctBaseInfo.acctNature = acctNature.split(',');
+                }
+                let ownerShipType= val.prodDefines.OWNERSHIP_TYPE.attrValue
+                if(ownerShipType!=undefined) {
+                    this.acctBaseInfo.ownerShipType = ownerShipType.split(',')
+                }
                 this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
                 this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
-                this.acctBaseInfo.withDrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
-                this.acctBaseInfo.ccy = val.prodDefines.CCY.attrValue
+                this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
+                let ccy=val.prodDefines.CCY.attrValue;
+                if(ccy!=undefined) {
+                    this.acctBaseInfo.ccy = ccy.split(',');
+                }
                 this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
+
                 this.acctBaseInfo.discountCcy = val.prodDefines.CONVERT_CCY.attrValue
             },
             selectByProd() {
@@ -398,7 +408,7 @@
                     this.ccy = response.data.prodFrom.ccy;
                     this.acctIntFlag = response.data.prodFrom.acctIntFlag;
                     this.profitCentre = response.data.prodFrom.profitCentre;
-                    this.withdrawalType = response.data.prodForm.withdrawalType;
+                    this.withdrawalType = response.data.prodFrom.withdrawalType;
                 });
             },
             initRefDate() {
@@ -445,4 +455,4 @@
         border-top: 2px solid #ddd;
         text-align: center;
     }
-</style
+</style>
