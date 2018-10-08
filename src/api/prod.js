@@ -40,7 +40,7 @@ export function getDiffProd (params) {
 }
 export function getDiffList (params) {
   return request({
-    url: '/prod/getDiffList',
+    url: '/getProdDiff',
     method: 'get',
     params
   });

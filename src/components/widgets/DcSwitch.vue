@@ -28,6 +28,7 @@ export default {
     value: {
       handler(val) {
         this.dcSwitch = val === "Y" ? true : false;
+        this.switchChange()
       },
       // watch 的一个特点是，最初绑定的时候是不会执行的，要等到 value 改变时才执行监听计算
       // 代表在wacth里声明了value这个方法之后立即先去执行handler方法

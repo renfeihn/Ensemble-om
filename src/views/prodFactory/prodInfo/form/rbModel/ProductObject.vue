@@ -9,43 +9,43 @@
                                 <v-subheader class="primary--text subheading">客户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientType" v-model="productObject.clientType" label="客户类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientType" v-bind:value="productObject.clientType | getValues" label="客户类型" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">境内外标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="inlandOffshore" v-model="productObject.inlandOffshore" label="境内外标识" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="inlandOffshore" v-bind:value="productObject.inLandOffshore | getValues" label="境内外标识" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientSubType" v-model="productObject.clientSubType" label="客户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="clientSubType" v-bind:value="productObject.clientSubType | getValues" label="客户子类型" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户等级*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="clientLevel" v-model="productObject.clientLevel" label="客户等级" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="clientLevel" v-bind:value="productObject.clientInd | getValues" label="客户等级" item-text="value" item-value="key" multiple single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">年龄区间*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="ageSection" v-model="productObject.ageBetween" label="年龄区间" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="ageSection" v-bind:value="productObject.ageSection | getValues" label="年龄区间" item-text="value" item-value="key" multiple single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">职业*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="profession" v-model="productObject.occupation" label="职业" item-text="value" item-value="key" single-line hide-details ></v-select>
+                                <v-select class="primary--text mx-2" :items="profession" v-bind:value="productObject.occupation | getValues" label="职业" item-text="value" item-value="key" multiple single-line hide-details ></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="channelChoose" v-model="productObject.channelChoose" label="渠道选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="channelChoose" v-bind:value="productObject.channelChoose | getValues" label="渠道选择" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用区域*</v-subheader>
@@ -57,20 +57,21 @@
                                 <v-subheader class="primary--text subheading">区域选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="areaChoose" v-model="productObject.areaChoose" label="区域选择" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="areaChoose" v-bind:value="productObject.areaChoose | getValues" label="区域选择" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="applyBranch" v-model="productObject.applyBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodBranch" v-model="productObject.prodBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
 
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">机构选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="branchChoice" v-model="productObject.branchChoice" label="机构选择" item-text="value" item-value="key" single-line hide-details></v-select>
+
+                                <v-select class="primary--text mx-2" :items="branchChoice" v-bind:value="productObject.prodBranch | getValues" label="机构选择" item-text="value" item-value="key" multiple single-line hide-details></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -81,9 +82,20 @@
 </template>
 
 <script>
-import { getInitData } from "@/mock/init";
-import { getProdData } from "@/api/prod";
+    import DcSwitch from "@/components/widgets/DcSwitch";
+    import { getInitData } from "@/mock/init";
+    import { getProdData } from "@/api/prod";
     export default {
+        filters: {
+            getValues: function (key) {
+                let value=[];
+                if(key!=undefined){
+                    value=key.split(',');
+                }
+                return value
+            }
+        },
+        components: {DcSwitch},
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -119,20 +131,27 @@ import { getProdData } from "@/api/prod";
                 key: "",
                 value: ""
             }],
+            prodBranch: [{
+                key: "",
+                value: ""
+            }],
             refData: getInitData,
             productObject: {
                 clientType: '',
-                inlandOffshore: '',
+                inLandOffshore: '',
                 clientSubType: '',
                 clientLevel: '',
-                ageBetween: '',
+                ageSection: '',
                 occupation: '',
                 channelChoose: '',
                 applyBranch: '',
                 branchChoice: '',
                 applyArea: '',
-                areaChoose: ''
-            },
+                areaChoose: '',
+                fixedCall: '',
+                clientInd: '',
+                prodBranch: ''
+            }
         }),
         computed: {
             progress() {
@@ -148,29 +167,32 @@ import { getProdData } from "@/api/prod";
             this.initRefDate();
         },
         methods: {
+            callbackprod() {
+                this.$emit("callBackProdObject",{"productObject": this.productObject})
+            },
             selectByProd(val) {
-                this.eventForm = {}
-                this.productObject.clientType = val.productObject.clientType
-                this.productObject.inlandOffshore = val.productObject.inlandOffshore
-                this.productObject.clientSubType = val.productObject.clientSubType
-                this.productObject.clientLevel = val.productObject.clientLevel
-                this.productObject.ageBetween = val.productObject.ageBetween
-                this.productObject.occupation = val.productObject.occupation
-                this.productObject.channelChoose = val.productObject.channelChoose
-                this.productObject.applyBranch = val.productObject.applyBranch
-                this.productObject.branchChoice = val.productObject.branchChoice
-                this.productObject.applyArea = val.productObject.applyArea
-                this.productObject.areaChoose = val.productObject.areaChoose
+                this.productObject = {}
+                this.productObject.clientType = val.prodDefines.CLIENT_TYPE.attrValue
+                this.productObject.inLandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
+                this.productObject.prodBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
+                this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
+                this.productObject.clientSubType = val.prodDefines.CLIENT_GENERAL_TYPE.attrValue//客户子类型
+                this.productObject.channelChoose = ""//渠道选择
+                this.productObject.ageSection = val.prodDefines.AGE_PART.attrValue//年龄区间
+                this.productObject.occupation = val.prodDefines.PROFESSION.attrValue//职业
+                this.productObject.prodBranch = val.prodDefines.PROD_BRANCH.attrValue//机构选择
+                this.productObject.applyArea = val.prodDefines.ADUPTER_AREA.attrValue//适用区域
+                this.productObject.areaChoose = val.prodDefines.AREA_TYPE.attrValue//区域选择
             },
             initRefDate() {
                 this.clientType = this.refData[2].paraDataRb.clientType;
                 this.inlandOffshore = this.refData[2].paraDataRb.inlandOffshore;
                 this.clientSubType = this.refData[2].paraDataRb.clientSubType;
                 this.clientLevel = this.refData[2].paraDataRb.clientLevel;
-                this.ageSection = this.refData[2].paraDataRb.ageBetween;
+                this.ageSection = this.refData[2].paraDataRb.ageSection;
                 this.profession = this.refData[2].paraDataRb.occupation;
                 this.channelChoose = this.refData[2].paraDataRb.channelChoose;
-                this.applyBranch = this.refData[2].paraDataRb.applyBranch;
+                this.prodBranch = this.refData[2].paraDataRb.applyBranch;
                 this.branchChoice = this.refData[2].paraDataRb.branchChoice;
                 this.applyArea = this.refData[2].paraDataRb.applyArea;
                 this.areaChoose = this.refData[2].paraDataRb.areaChoose;

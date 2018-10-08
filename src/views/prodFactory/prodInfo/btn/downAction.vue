@@ -64,6 +64,7 @@ export default {
       alert("button click");
     },
       copyOn() {
+          this.showCopy = false
           this.$emit('listenToCopy',{'prodType': this.prodType,'prodDesc': this.prodDesc,'showCopy': this.showCopy})
       },
       save(){

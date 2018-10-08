@@ -4,6 +4,7 @@ import prodAPI from './prodDiff'
 import tableAPI from './table'
 import initAPI from './init'
 import dataAPI from './data'
+import privateDataAPI from './privateData'
 //
 import nLoanAPI from './nLoan'
 
@@ -33,6 +34,8 @@ Mock.mock(/\/prod\/info\.*/, 'get', prodAPI.getProd);
 Mock.mock(/\/prod\/userCollect\.*/, 'get', userCollectAPI.getUserCollectProds());
 
 Mock.mock(/\/getProdInfo/, 'post', dataAPI.getProdInfo);
+
+Mock.mock(/\/getPrivateData/, 'post', privateDataAPI.getPrivateData);
 
 //网贷合作方信息管理
 Mock.mock(/\/init\/initLoanData\.*/, 'get', nLoanAPI.getInitData);

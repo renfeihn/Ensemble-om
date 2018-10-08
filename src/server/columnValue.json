@@ -1,0 +1,10 @@
+{
+    "PROD_TYPE":{
+        "valueMethod":"RF",
+        "valueScore":"mb_prod_type.prod_type|prod_desc"
+    },
+    "ACCORD_TYPE":{
+        "valueMethod":"VL",
+        "valueScore":"1:是,2:www"
+    }
+}

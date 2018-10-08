@@ -2,40 +2,7 @@
   <div class="app-container">
     <v-layout row wrap>
       <v-flex lg3 sm3 class="v-card">
-        <vue-perfect-scrollbar class="depositTree">
-          <v-list two-line subheader>
-            <v-subheader inset>我的理财产品</v-subheader>
-            <v-list-tile class="prodList" v-for="item in files" :key="item.title" avatar @click="handleClick">
-              <v-list-tile-avatar>
-                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn icon ripple>
-                  <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-            <v-subheader inset>内部账产品</v-subheader>
-            <v-list-tile class="chat-list prodList" avatar v-for="(item) in glFolders" :key="item.title" @click="handleClick(item)">
-              <v-list-tile-avatar>
-                <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.value }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ item.label }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn icon ripple>
-                  <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list>
-        </vue-perfect-scrollbar>
+        <prod-class-cmb v-bind:sourceModel="sourceModel" v-on:listenToProdClass="listenToProdClass"></prod-class-cmb>
       </v-flex>
       <v-flex lg9 sm9 class="v-card">
         <prod-list-cmb :items="prodListDtl"></prod-list-cmb>
@@ -45,126 +12,99 @@
 </template>
 
 <script>
-  getDepositProdListTow
-  import {
-    getDepositProdListTow
-  } from '@/api/prod';
-  getDepositDtl
-  import {
-    getDepositDtl
-  } from '@/api/prod';
-  import {
-      getProdClass
-  } from '@/api/prod';
-  import {
-      getProdType
-  } from '@/api/prod';
-  import VWidget from '@/components/VWidget';
-  import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-  import prodListCmb from './prodListCmb';
-  export default {
-    name: 'depositCmb',
-    components: {
-      VWidget,
-      VuePerfectScrollbar,
-      prodListCmb
-    },
-    data() {
-      return {
-        listLoading: true,
-          prodClass: '',
-        prodListDtl: [],
-        depositProd: {
-          prodcode: '100002',
-          version: '1.0'
+//    getDepositProdListTow
+//    import {
+//        getDepositProdListTow
+//    } from '@/api/prod';
+//    getDepositDtl
+//    import {
+//        getDepositDtl
+//    } from '@/api/prod';
+    import {
+        getProdType
+    } from '@/api/url/prodInfo'
+    import VWidget from '@/components/VWidget';
+    import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+    import prodListCmb from './prodListCmb';
+    import prodClassCmb from './prodClassCmb';
+
+    export default {
+        name: 'depositCmb',
+        components: {
+            VWidget,
+            VuePerfectScrollbar,
+            prodListCmb,
+            prodClassCmb
         },
-        listValue: '',
-        activeName: 'basic',
-        eventForm: {
-          ccy: []
-        },
-        acctForm: {},
-        prodInfo: ['基本信息', '账户信息', '核算信息'],
-        files: [{
-            icon: 'assignment',
-            iconClass: 'blue white--text',
-            value: '我收藏的理财产品',
-            lable: '我收藏的理财产品'
-          },
-          {
-            icon: 'assignment',
-            iconClass: 'blue white--text',
-            value: '我评论的理财产品',
-            lable: '我评论的理财产品'
-          }
-        ],
-        folders: [],
-        clFolders: [],
-        glFolders: []
-      }
-    },
-    created() {
-      this.depositProd = {
-        prodcode: this.$route.params.prodType,
-        version: '1.0'
-      }
-    },
-      mounted: function() {
-          this.getProdClassData()
-          this.prodclass = 'GL100'
-          this.getProdType(this.prodclass)
-      },
-    methods: {
-      handleClick(prodList) {
-          //渲染产品信息列表时，先清空原有产品信息
-          this.prodListDtl = []
-          this.prodclass = prodList.value
-          this.getProdType(this.prodclass)
-      },
-      onSubmit() {
-        this.$message('submit!')
-      },
-      onCancel() {
-        this.$message({
-          message: 'cancel!',
-          type: 'warning'
-        })
-      },
-      queryDespositProdData() {
-        getDepositProdListTow().then(response => {
-          this.folders = response.data.prodListTwo
-          this.queryDespositDtl(this.folders[0].value,this.folders[0].label)
-        })
-      },
-      queryDespositDtl(prodCode,prodType) {
-        getDepositDtl({'prodCode': prodCode,'prodType': prodType}).then(response => {
-          this.prodListDtl = response.data
-        })
-      },
-        //初始化加载菜单列表
-        getProdClassData() {
-            getProdClass().then(response => {
-                for (let i=0; i<response.data.prodClassForm.length; i++)
-                {
-                   if('GL'== response.data.prodClassForm[i].parentProdClass){
-                        this.glFolders.push(response.data.prodClassForm[i])
-                    }
+        data() {
+            return {
+                listLoading: true,
+                prodListDtl: [],
+                sourceModel: 'GL',
+                files: [{
+                    icon: 'assignment',
+                    iconClass: 'blue white--text',
+                    value: '我收藏的产品',
+                    lable: '我收藏的产品'
+                },
+                ],
+                folders: [],
+                header: {
+                    prodClass: 'GL100'
                 }
-            })
+            }
         },
-        //通过点击菜单目录，显示相关联的所有产品信息
-        getProdType(val) {
-            getProdType(val).then(response => {
-                let length = response.data.prodTypeForm.length
-                for (let i = 0; i < length; i++) {
-                    if (val === response.data.prodTypeForm[i].prodClass) {
-                        this.prodListDtl.push(response.data.prodTypeForm[i])
+        created() {
+            this.sourceModel = 'GL'
+            this.listenToProdClass(this.header)
+
+        },
+        methods: {
+//            onSubmit() {
+//                this.$message('submit!')
+//            },
+//            onCancel() {
+//                this.$message({
+//                    message: 'cancel!',
+//                    type: 'warning'
+//                })
+//            },
+//            queryDespositProdData() {
+//                getDepositProdListTow().then(response => {
+//                    this.folders = response.data.prodListTwo
+//                    this.queryDespositDtl(this.folders[0].value, this.folders[0].label)
+//                })
+//            },
+//            queryDespositDtl(prodCode, prodType) {
+//                getDepositDtl({
+//                    'prodCode': prodCode,
+//                    'prodType': prodType
+//                }).then(response => {
+//                    this.prodListDtl = response.data
+//                })
+//            },
+            //通过点击菜单目录，显示产品分类下的所有产品信息
+            listenToProdClass(val) {
+                this.prodListDtl = []
+                getProdType(val.prodClass).then(response => {
+                    let length = response.data.data.length
+                    for (let i = 0; i < length; i++) {
+                        if(response.data.data[i].status === "A"){
+                            response.data.data[i].status = "可售"
+                        }else if(response.data.data[i].status === "F"){
+                            response.data.data[i].status = "停售"
+                        }
+                        if(response.data.data[i].prodGroup === "Y"){
+                            response.data.data[i].prodGroup = "组合产品"
+                        }else if(response.data.data[i].prodGroup === "N"){
+                            response.data.data[i].prodGroup = "单一产品"
+                        }
+                        this.prodListDtl.push(response.data.data[i])
                     }
-                }
-            })
+                })
+            }
         }
     }
-  }
 </script>
 
 <style scoped>
@@ -174,5 +114,11 @@
   .depositTree {
     height: calc(100vh - 48px);
   }
+  /*  .prodList {
+                    border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);
+                  }
+                  .prodLists {
+                    border-bottom-style: solid;border-bottom-width: 3px;border-color: rgba(183, 172, 177, 0.6);
+                  }*/
 </style>
 

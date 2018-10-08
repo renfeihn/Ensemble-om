@@ -307,9 +307,8 @@
                 this.eventForm.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
                 this.eventForm.prodStartDate = val.prodDefines.PROD_START_DATE.attrValue
                 this.eventForm.prodEndDate = val.prodDefines.PROD_END_DATE.attrValue
-
-                //mbEventInfos
-                this.eventForm.baseprod = val.mbEventInfos.CLOSE_RB101.mbEventAttrs.CHECK_AGENT.attrValue
+                //mbEventInfos CLOSE_RB101
+                this.eventForm.baseprod = val.mbEventInfos["CLOSE_"+ val.prodType.prodType].mbEventAttrs.CHECK_AGENT.attrValue
 
             },
             callbackprod() {

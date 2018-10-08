@@ -16,11 +16,12 @@
                                                               <img :src="props.item.avatar" alt="">
                                                             </v-avatar>
                                                           </td> -->
-                                                          <td>{{ props.item.value }}</td>
-                                                          <td>{{ props.item.label }}</td>
+                                                          <td>{{ props.item.prodType }}</td>
+                                                          <td>{{ props.item.prodDesc }}</td>
+                                                            <td>{{ props.item.prodGroup }}</td>
                                                           <td>{{ props.item.status }}</td>
                                                           <td>
-                                                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item.value)">
+                                                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
                                                               <v-icon>edit</v-icon>
                                                             </v-btn>
                                                             <v-btn depressed outline icon fab dark color="pink" small>
@@ -62,11 +63,15 @@
                         // },
                         {
                             text: '产品代码',
-                            value: 'value'
+                            value: 'prodType'
                         },
                         {
-                            text: '产品类型',
-                            value: 'label'
+                            text: '产品描述',
+                            value: 'prodDesc'
+                        },
+                        {
+                            text: '产品属性',
+                            value: 'prodGroup'
                         },
                         {
                             text: '产品状态',
@@ -93,18 +98,18 @@
                     }
                 })
             },
-            handleClick(prodCode) {
-                getProdType(prodCode).then(response => {
-                    let length = response.data.prodTypeForm.length
-                    for (let i = 0; i < length; i++) {
-                       if(prodCode === response.data.prodTypeForm[i].value){
-                           this.prodclass = response.data.prodTypeForm[i].prodClass
-                       }
-                    }
-                    if('RB100' == this.prodclass){
-                        this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': this.prodclass,'prodCodeCmp': prodCode}})
-                    }
-                })
+            handleClick(val) {
+                if(val.prodClass === "RB400") {
+                    this.$router.push({
+                        name: 'prod/rbPrivateProd',
+                        params: {'prodClassCmp': val.prodClass, 'prodType': val.prodType}
+                    })
+                }else if(val.prodClass === "RB100") {
+                    this.$router.push({
+                        name: 'prod/rbPrivateProds',
+                        params: {'prodClassCmp': val.prodClass, 'prodType': val.prodType}
+                    })
+                }
             }
         }
     };

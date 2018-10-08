@@ -1,5 +1,5 @@
 {
-   "sourceModule":[
+  "sourceModule":[
     {
       "key":"RB",
       "value":"RB-存款"
@@ -101,38 +101,38 @@
   ],
   "acctType":[
     {
-	"key":"A",
-	"value":"A-AIO账户"
+      "key":"A",
+      "value":"A-AIO账户"
     },
     {
-	"key":"C",
-	"value":"C-结算账户"
+      "key":"C",
+      "value":"C-结算账户"
     },
     {
-	"key":"S",
-	"value":"S-储蓄账户"
+      "key":"S",
+      "value":"S-储蓄账户"
     },
     {
-	"key":"T",
-	"value":"T-定期账户"
+      "key":"T",
+      "value":"T-定期账户"
     }
   ],
   "subAcctType":[
-      {
-	"key":"A",
-	"value":"A-AIO账户"
+    {
+      "key":"A",
+      "value":"A-AIO账户"
     },
     {
-	"key":"C",
-	"value":"C-结算账户"
+      "key":"C",
+      "value":"C-结算账户"
     },
     {
-	"key":"S",
-	"value":"S-储蓄账户"
+      "key":"S",
+      "value":"S-储蓄账户"
     },
     {
-	"key":"T",
-	"value":"T-定期账户"
+      "key":"T",
+      "value":"T-定期账户"
     }
   ],
   "isMultiCcy":[
@@ -201,12 +201,12 @@
       "value":"2-个人储蓄户"
     }
   ],
- "balType":[
-   {
-     "key":"CA",
-     "value":"CA-钞余额"
-   }
- ],
+  "balType":[
+    {
+      "key":"CA",
+      "value":"CA-钞余额"
+    }
+  ],
   "ownershipType":[
     {
       "key":"SG",
@@ -258,7 +258,7 @@
     }
   ],
   "discountCcy":[
-   {
+    {
       "key":"CNY",
       "value":"CNY-人民币"
     },
@@ -285,16 +285,16 @@
   ],
   "clientType":[
     {
-      "key":"10",
-      "value":"10-个人"
+      "key":"100",
+      "value":"100-个人"
     },
     {
-      "key":"20",
-      "value":"20-公司"
+      "key":"200",
+      "value":"200-公司"
     },
     {
-      "key":"30",
-      "value":"30-同业"
+      "key":"300",
+      "value":"300-同业"
     }
   ],
   "inlandOffshore":[
@@ -327,7 +327,7 @@
       "value":"V-VIP客户"
     }
   ],
-  "ageBetween":[
+  "ageSection":[
     {
       "key":"down",
       "value":"down-18岁以下"
@@ -363,6 +363,10 @@
     {
       "key":"AC",
       "value":"AC-自助渠道"
+    },
+    {
+      "key":"CP",
+      "value":"CP-手机银行"
     }
   ],
   "applyBranch":[
@@ -491,19 +495,15 @@
   ],
   "structureType":[
     {
-	"key": "CD2",
-	"value": "CD2-账号生成规则"
+      "key": "CD2",
+      "value": "CD2-账号生成规则"
     }
   ],
   "numOfClient":[],
   "checkWdrawnType":[
     {
-      "key":"Y",
-      "value":"Y-是"
-    },
-    {
-      "key":"N",
-      "value":"N-否"
+      "key":"W",
+      "value":"W-测试1"
     }
   ],
   "mediumTypeFlag":[
@@ -548,8 +548,8 @@
   ],
   "checkRestraint":[
     {
-    "key":"Y",
-    "value":"Y-是"
+      "key":"Y",
+      "value":"Y-是"
     },
     {
       "key":"N",
@@ -703,7 +703,7 @@
       "value":"N-否"
     }
   ],
-  "daiBanFlag":[
+  "checkAgent":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -787,7 +787,7 @@
       "value":"Y-自定义"
     }
   ],
-  "daiBanFlag":[
+  "checkAgent":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -833,7 +833,7 @@
       "value":"N-否"
     }
   ],
-  "weiYueType":[
+  "breakType":[
     {
       "key":"D",
       "value":"D-单次支取金额违约"
@@ -843,13 +843,7 @@
       "value":"S-起存金额违约"
     }
   ],
-  "dealingWay":[
-    {
-      "key":"D",
-      "value":"D-拒绝"
-    }
-  ],
-  "danciYueCheck":[
+  "singleTimeDepositCheck":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -889,7 +883,7 @@
       "value":"N-否"
     }
   ],
-  "huiTuiFlag":[
+  "closeAcctRollbackFlag":[
     {
       "key":"Y",
       "value":"Y-是"
@@ -927,6 +921,234 @@
     {
       "key":"002",
       "value":"002-本外币对私定期存单"
+    }
+  ],
+  "sgBalCheck": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "closeAcctRollbackFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "docType": [
+    {
+      "key":"001",
+      "value": "001-本外币对私存折"
+    },
+    {
+      "key":"002",
+      "value": "002-本外币对私定期存单"
+    }
+  ],
+  "clientFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "channelFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "branchControlFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "chargeFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "moveFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "multiCcy": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "docFlag": [
+    {
+      "key":"Y",
+      "value":"Y-是"
+    },
+    {
+      "key":"N",
+      "value":"N-否"
+    }
+  ],
+  "feeType": [
+    {
+      "key":"L01",
+      "value":"L01-承兑承诺费"
+    },
+    {
+      "key":"L10",
+      "value":"L10-提前还款费"
+    },
+    {
+      "key":"R01",
+      "value":"R01-小额账户管理费"
+    },
+    {
+      "key":"R02",
+      "value":"R02-账户验资开户费"
+    },
+    {
+      "key":"R03",
+      "value":"R03-对公账户管理费"
+    }
+  ],
+  "chargePeriodFreq": [
+    {
+      "key":"1D",
+      "value":"1D-一天"
+    },
+    {
+      "key":"3D",
+      "value":"3D-三天"
+    },
+    {
+      "key":"5D",
+      "value":"5D-五天"
+    },
+    {
+      "key":"1M",
+      "value":"1M-一个月"
+    },
+    {
+      "key":"2M",
+      "value":"2M-两个月"
+    },
+    {
+      "key":"6M",
+      "value":"6M-六个月"
+    }
+  ],
+  "chargeDealMethod": [
+    {
+      "key":"10",
+      "value":"10-实时生效"
+    },
+    {
+      "key":"11",
+      "value":"11-日终处理"
+    }
+  ],
+  "conDeductFlag": [
+    {
+      "key":"Y",
+      "value":"Y-持续扣款"
+    },
+    {
+      "key":"N",
+      "value":"N-非持续扣款"
+    }
+  ],
+  "accountingStatus": [
+    {
+      "key":"ALL",
+      "value":"ALL-全部"
+    },
+    {
+      "key":"FY",
+      "value":"FY-非应计（手工）"
+    },
+    {
+      "key":"FYJ",
+      "value":"FYJ-非应计"
+    },
+    {
+      "key":"TER",
+      "value":"TER-终止"
+    },
+    {
+      "key":"WRN",
+      "value":"WRN-核销"
+    },
+    {
+      "key":"YUQ",
+      "value":"YUQ-逾期"
+    },
+    {
+      "key":"ZHC",
+      "value":"ZHC-正常"
+    }
+  ],
+  "glCode": [
+    {
+      "key":"10310101",
+      "value":"10310101-存出境内保证金"
+    },
+    {
+      "key":"10310201",
+      "value":"10310201-存出境外保证金"
+    },
+    {
+      "key":"11010702",
+      "value":"11010702-公允价值变动"
+    },
+    {
+      "key":"10110401",
+      "value":"10110401-其他存放同业"
+    },
+    {
+      "key":"11321101",
+      "value":"11321101-债券类投资应收利息"
+    },
+    {
+      "key":"11321301",
+      "value":"11321301-存放央行款项应收利息"
+    },
+    {
+      "key":"11321410",
+      "value":"11321410-应收其他存放同业款项利息"
     }
   ]
 }

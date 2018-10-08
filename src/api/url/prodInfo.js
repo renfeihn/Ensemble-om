@@ -38,13 +38,6 @@ export function getDiffProd (params) {
       data
   });
 }
-export function getDiffList (params) {
-  return request({
-    url: '/prod/getDiffList',
-    method: 'get',
-    params
-  });
-}
 
 export function getProdData (prodType) {
   // const data={
@@ -70,6 +63,23 @@ export function getProdType (prodClass) {
     data
   });
 }
+
+export function getProdClassList () {
+    return request({
+        url: '/getProdClassList',
+        method: 'post'
+    });
+}
+
+
+export function getAllProdList () {
+    return request({
+        url: '/getAllProdList',
+        method: 'post'
+    });
+}
+
+
 export function getDepositDtl (data) {
   return request({
     url: '/prod/dtlDeposit',
@@ -122,10 +132,24 @@ export function getFlowList () {
     method: 'post'
 });
 }
+export function getDiffList (params) {
+    return request({
+        url: '/getProdDiff',
+        method: 'post',
+        data: params
+    });
+}
 
 export function getCheckFlowList () {
     return request({
         url: '/reviewCheckList',
         method: 'post'
+    });
+}
+export function getPkListRf (params) {
+    return request({
+        url: '/getPkList',
+        method: 'post',
+        data: params
     });
 }

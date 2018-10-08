@@ -76,7 +76,7 @@
             <v-subheader class="primary--text subheading">复核状态:</v-subheader>
           </v-flex>
           <v-flex md11 lg11>
-            <v-switch color="success" hide-details value="Y" :label="`${checkInfo.isApproved==='Y'?'复核通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
+            <v-switch color="success" hide-details value="Y" :label="`${checkInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
           </v-flex>
         </v-layout>
             <v-divider></v-divider>
