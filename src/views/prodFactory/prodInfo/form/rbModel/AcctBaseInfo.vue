@@ -99,7 +99,7 @@
                                 <v-subheader class="primary--text subheading">币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="ccy" v-model="acctBaseInfo.ccy" label="" item-text="value" item-value="key" multiple chips FAsingle-line hide-details></v-select>
+                                <dc-multiselect v-model="acctBaseInfo.ccy" :options="ccy"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
@@ -172,9 +172,10 @@
 <script>
     import DcSwitch from "@/components/widgets/DcSwitch";
     import { getInitData } from "@/mock/init";
+    import DcMultiselect from '@/components/widgets/DcMultiselect'
     import { getProdData } from "@/api/prod";
     export default {
-        components: { DcSwitch },
+        components: { DcSwitch, DcMultiselect },
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -184,6 +185,10 @@
             endDateMenu: false,
             startDate: null,
             proddescData: "",
+            ccy: [{
+                key: '',
+                value: ''
+            }],
             refData: getInitData,
             acctBaseInfo: {
                 prodType: '',
@@ -275,10 +280,8 @@
                 this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
                 this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
                 this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
-                let ccy=val.prodDefines.CCY.attrValue;
-                if(ccy!=undefined) {
-                    this.acctBaseInfo.ccy = ccy.split(',');
-                }
+
+                    this.acctBaseInfo.ccy = val.prodDefines.CCY.attrValue;
                 this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
 
                 this.acctBaseInfo.discountCcy = val.prodDefines.CONVERT_CCY.attrValue
