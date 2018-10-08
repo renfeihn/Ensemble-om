@@ -25,7 +25,6 @@
                         :inset="item.inset"
                 ></v-divider>
                 <v-list-tile
-                        :key="item.title"
                         avatar
                         v-else
                         :class="{'tbColor':item.diff}"
