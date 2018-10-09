@@ -173,10 +173,8 @@
             selectByProd(val) {
                 this.productObject = {}
                 this.productObject.clientType = val.prodDefines.CLIENT_TYPE.attrValue
-                this.productObject.inLandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
                 this.productObject.applyBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
                 this.productObject.inlandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
-                this.productObject.prodBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
                 this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
                 this.productObject.clientSubType = val.prodDefines.CLIENT_GENERAL_TYPE.attrValue//客户子类型
                 this.productObject.channelChoose = ""//渠道选择
