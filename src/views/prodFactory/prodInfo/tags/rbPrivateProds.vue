@@ -171,15 +171,20 @@
                 targetData: {}
             }
         },
-        created() {
-            this.prodClass = this.$route.params.prodClassCmp
-        },
+//        created() {
+//            this.prodClass = this.$route.params.prodClassCmp
+//        },
         mounted: function() {
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码
                 this.prodClass = this.$route.hash
+                //默认展示RB101产品信息
+                getProdData("RB101").then(response => {
+                    this.prodData = response.data.data
+                    this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
@@ -385,6 +390,7 @@
                 this.prodData.prodDefines.SOURCE_MODULE.attrValue = val.acctBaseInfo.sourceModule
                 this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.acctBaseInfo.profitCenter
                 this.prodData.prodDefines.MULTI_CCY.attrValue = val.acctBaseInfo.multiCcy
+                this.prodData.prodDefines.CCY.attrValue = val.acctBaseInfo.ccy
                 this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.acctBaseInfo.acctIntFlag
                 this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
                 this.prodData.prodDefines.ACCT_TYPE.attrValue = val.acctBaseInfo.acctType

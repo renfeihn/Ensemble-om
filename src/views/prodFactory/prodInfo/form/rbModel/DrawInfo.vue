@@ -118,46 +118,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            drawControlWay: [{
-                key: "",
-                value: ""
-            }],
-            daiBanFlag: [{
-                key: "N",
-                value: "N-否"
-            }],
-            cashResource: [{
-                key: "",
-                value: ""
-            }],
-            attrReatraintCheck: [{
-                key: "",
-                value: ""
-            }],
-            withDrawlCheck: [{
-                key: "",
-                value: ""
-            }],
-            voucherTypeCheck: [{
-                key: "",
-                value: ""
-            }],
-            breakType: [{
-                key: "",
-                value: ""
-            }],
-            dealingWay: [{
-                key: "",
-                value: ""
-            }],
-            singleTimeBalCheck: [{
-                key: "",
-                value: ""
-            }],
-            acctBalanceCheck: [{
-                key: "",
-                value: ""
-            }],
             refData: getInitData,
             drawInfo: {
                 drawControlWay: '',

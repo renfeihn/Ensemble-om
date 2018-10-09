@@ -79,34 +79,6 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            systemControlApproach: [{
-                key: "",
-                value: ""
-            }],
-            permitCommersionFlag: [{
-                key: "",
-                value: ""
-            }],
-            cashResouce: [{
-                key: "",
-                value: ""
-            }],
-            acctReatraintCheck: [{
-                key: "",
-                value: ""
-            }],
-            resignCheck: [{
-                key: "",
-                value: ""
-            }],
-            ownCheck: [{
-                key: "",
-                value: ""
-            }],
-            closeAcctRollbackFlag: [{
-                key: "",
-                value: ""
-            }],
             refData: getInitData,
             closeAcct: {
                 systemControlApproach: '',
