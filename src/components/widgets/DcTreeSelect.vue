@@ -1,6 +1,6 @@
 <template>
     <div >
-        <treeselect v-model="value" :multiple="true" openDirection="below" :options="options" :always-open="true" :limit="5" :sort-value-by="INDEX"/>
+        <treeselect v-model="value" :multiple="true" openDirection="below" :options="thisOptions" :always-open="true" :limit="5" :sort-value-by="INDEX"/>
     </div>
 </template>
 <script>
@@ -16,7 +16,7 @@
             return {
                 value: [
                 ],
-                options: [
+                thisOptions: [
                 ]
             }
         },
@@ -47,7 +47,7 @@
                     option.isDefaultExpanded=true
                     options.push(option);
                 }
-                this.options=options;
+                this.thisOptions=options;
                 if(msg !=undefined){
                     let data=msg.split(',')
                     let values=[];
