@@ -27,7 +27,7 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
-                        <acct-base-info v-if="i==1" ref="callback" v-bind:prodData="prodData" v-on:callBackAcctBaseInfo="callBackAcctBaseInfo"></acct-base-info>
+                        <acct-base-info v-if="i==1" v-bind:prodData="prodData"></acct-base-info>
                         <control-info v-if="i==2" ref="callback" v-bind:prodData="prodData" v-on:callBackControlInfo="callBackControlInfo"></control-info>
                         <product-object v-if="i==3" ref="callback" v-bind:prodData="prodData" v-on:callBackProdObject="callBackProdObject"></product-object>
                         <int-detail v-if="i == 4" ref="callback" v-bind:prodData="prodData" v-on:callBackIntDetail="callBackIntDetail"></int-detail>
@@ -166,7 +166,9 @@
                     lable: ''
                 }],
                 folders: [],
-                prodData: {},
+                prodData: {
+                    prodType: ''
+                },
                 sourceProdData: {},
                 targetData: {}
             }
@@ -223,7 +225,7 @@
                 this.$refs.callback[4].callbackprod()
                 this.$refs.callback[5].callbackprod()
                 this.$refs.callback[6].callbackprod()
-                this.$refs.callback[7].callbackprod()
+//                this.$refs.callback[7].callbackprod()
                 this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -248,7 +250,7 @@
                 this.$refs.callback[4].callbackprod()
                 this.$refs.callback[5].callbackprod()
                 this.$refs.callback[6].callbackprod()
-                this.$refs.callback[7].callbackprod()
+//                this.$refs.callback[7].callbackprod()
                 this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -379,34 +381,34 @@
                 this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_SG_AMT.attrValue = val.drawInfo.sgBalCheck
 
             },
-            callBackAcctBaseInfo(val) {
-                console.log(val)
-                this.prodData.prodType.prodType = val.acctBaseInfo.prodType
-                this.prodData.prodType.prodDesc = val.acctBaseInfo.prodDesc
-                this.prodData.prodType.prodRange = val.acctBaseInfo.prodRange
-                this.prodData.prodType.prodClass = val.acctBaseInfo.prodClass
-                this.prodData.prodType.prodGroup = val.acctBaseInfo.prodGroup
-                this.prodData.prodType.status = val.acctBaseInfo.status
-                this.prodData.prodType.baseProdType = val.acctBaseInfo.baseProdType
-                this.prodData.prodDefines.SOURCE_MODULE.attrValue = val.acctBaseInfo.sourceModule
-                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.acctBaseInfo.profitCenter
-                this.prodData.prodDefines.MULTI_CCY.attrValue = val.acctBaseInfo.multiCcy
-                this.prodData.prodDefines.CCY.attrValue = val.acctBaseInfo.ccy
-                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.acctBaseInfo.acctIntFlag
-                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
-                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.acctBaseInfo.acctType
-                this.prodData.prodDefines.ACCT_NATURE.attrValue = val.acctBaseInfo.acctNature
-                this.prodData.prodDefines.OWNERSHIP_TYPE.attrValue = val.acctBaseInfo.ownerShipType
-                this.prodData.prodDefines.ACCT_CLASS.attrValue = val.acctBaseInfo.acctClass
-                this.prodData.prodDefines.BAL_TYPE.attrValue = val.acctBaseInfo.balType
-                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate.substr(0, 4) + val.acctBaseInfo.prodStartDate.substr(5, 2) + val.acctBaseInfo.prodStartDate.substr(8, 2)
-                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate.substr(0, 4) + val.acctBaseInfo.prodEndDate.substr(5, 2) + val.acctBaseInfo.prodEndDate.substr(8, 2)
-                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
-                this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withdrawalType
-                this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
-                this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
-                this.prodData.prodDefines.CONVERT_CCY.attrValue = val.acctBaseInfo.discountCcy
-            },
+//            callBackAcctBaseInfo(val) {
+//                console.log(val)
+//                this.prodData.prodType.prodType = val.acctBaseInfo.prodType
+//                this.prodData.prodType.prodDesc = val.acctBaseInfo.prodDesc
+//                this.prodData.prodType.prodRange = val.acctBaseInfo.prodRange
+//                this.prodData.prodType.prodClass = val.acctBaseInfo.prodClass
+//                this.prodData.prodType.prodGroup = val.acctBaseInfo.prodGroup
+//                this.prodData.prodType.status = val.acctBaseInfo.status
+//                this.prodData.prodType.baseProdType = val.acctBaseInfo.baseProdType
+//                this.prodData.prodDefines.SOURCE_MODULE.attrValue = val.acctBaseInfo.sourceModule
+//                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.acctBaseInfo.profitCenter
+//                this.prodData.prodDefines.MULTI_CCY.attrValue = val.acctBaseInfo.multiCcy
+//                this.prodData.prodDefines.CCY.attrValue = val.acctBaseInfo.ccy
+//                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.acctBaseInfo.acctIntFlag
+//                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
+//                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.acctBaseInfo.acctType
+//                this.prodData.prodDefines.ACCT_NATURE.attrValue = val.acctBaseInfo.acctNature
+//                this.prodData.prodDefines.OWNERSHIP_TYPE.attrValue = val.acctBaseInfo.ownerShipType
+//                this.prodData.prodDefines.ACCT_CLASS.attrValue = val.acctBaseInfo.acctClass
+//                this.prodData.prodDefines.BAL_TYPE.attrValue = val.acctBaseInfo.balType
+//                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate.substr(0, 4) + val.acctBaseInfo.prodStartDate.substr(5, 2) + val.acctBaseInfo.prodStartDate.substr(8, 2)
+//                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate.substr(0, 4) + val.acctBaseInfo.prodEndDate.substr(5, 2) + val.acctBaseInfo.prodEndDate.substr(8, 2)
+//                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
+//                this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withdrawalType
+//                this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
+//                this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
+//                this.prodData.prodDefines.CONVERT_CCY.attrValue = val.acctBaseInfo.discountCcy
+//            },
             listenToCopy(data) {
                 this.prodCode=data.prodType;
                 this.prodData.prodType.prodType=data.prodType;
