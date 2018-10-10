@@ -21,7 +21,7 @@
                                 <v-subheader class="primary--text subheading">业务模块*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text " @change="isSelectCcy" :items="sourceModule" v-model="prodData.prodDefines.SOURCE_MODULE.attrValue" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text " :items="sourceModule" v-model="prodData.prodDefines.SOURCE_MODULE.attrValue" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品分类*</v-subheader>
@@ -203,99 +203,16 @@
                 value: ''
             }],
             refData: getInitData,
-//            acctBaseInfo: {
-//                prodType: '',
-//                prodDesc: '',
-//                prodClass: '',
-//                ccy: '',
-//                prodGroup: '',
-//                prodRange: '',
-//                baseProdType: '',
-//                status: '',
-//                prodStartDate: '',
-//                prodEndDate: '',
-//                intDay: '',
-//                sourceModule: '',
-//                profitCenter: '',
-//                multiCcy: '',
-//                docType: '',
-//                acctType: '',
-//                fixedCall: '',
-//                acctNature: '',
-//                ownerShipType: '',
-//                acctClass: '',
-//                balType: '',
-//                withdrawalType: '',
-//                defaultCcy: '',
-//                discountCcy: '',
-//                dodcFlag: '',
-//                withDrawaType: '',
-//                acctIntFlag: '',
-//                docFlag: ''
-//            }
         }),
         computed: {
             progress() {
                 return Math.min(100, this.value.length * 10);
             }
         },
-//        watch: {
-//            prodData(val) {
-//                this.updateBaseInfo(val)
-//            }
-//        },
         mounted() {
             this.initRefDate();
         },
         methods: {
-//            callbackprod() {
-//                this.$emit("callBackAcctBaseInfo",{"acctBaseInfo": this.acctBaseInfo})
-//            },
-            isSelectCcy(){
-                console.log(this.acctBaseInfo.isMultiCcy);
-                if(this.acctBaseInfo.isMultiCcy === 'Y'){
-                    this.$refs.ccy.multiple='true'
-                }else{
-                    this.$refs.ccy.multiple='false'
-                }
-            },
-
-//            updateBaseInfo(val) {
-//                this.acctBaseInfo = {}
-//                this.acctBaseInfo.prodType = val.prodType.prodType
-//                this.acctBaseInfo.prodDesc = val.prodType.prodDesc
-//                this.acctBaseInfo.prodClass = val.prodType.prodClass
-//                this.acctBaseInfo.prodGroup = val.prodType.prodGroup
-//                this.acctBaseInfo.prodRange = val.prodType.prodRange
-//                this.acctBaseInfo.status = val.prodType.status
-//                this.acctBaseInfo.baseProdType = val.prodType.baseProdType
-//                this.acctBaseInfo.sourceModule = val.prodDefines.SOURCE_MODULE.attrValue
-//                var str = val.prodDefines.PROD_START_DATE.attrValue
-//                this.acctBaseInfo.prodStartDate = str.substr(0,4)+"-"+str.substr(4,2)+"-"+str.substr(6,2)
-//                this.acctBaseInfo.profitCenter = val.prodDefines.PROFIT_CENTRE.attrValue
-//                this.acctBaseInfo.multiCcy = val.prodDefines.MULTI_CCY.attrValue
-//                var str1 = val.prodDefines.PROD_END_DATE.attrValue
-//                this.acctBaseInfo.prodEndDate = str1.substr(0,4)+"-"+str1.substr(4,2)+"-"+str1.substr(6,2)
-//                this.acctBaseInfo.acctIntFlag = val.prodDefines.ACCT_INT_FLAG.attrValue
-//
-//                this.acctBaseInfo.docType = val.prodDefines.DOC_TYPE.attrValue;
-//
-//                this.acctBaseInfo.acctType = val.prodDefines.ACCT_TYPE.attrValue
-//                this.acctBaseInfo.fixedCall = val.prodDefines.FIXED_CALL.attrValue
-//
-//                this.acctBaseInfo.acctNature = val.prodDefines.ACCT_NATURE.attrValue
-//
-//                this.acctBaseInfo.ownerShipType = val.prodDefines.OWNERSHIP_TYPE.attrValue
-//
-//                this.acctBaseInfo.acctClass = val.prodDefines.ACCT_CLASS.attrValue
-//                this.acctBaseInfo.balType = val.prodDefines.BAL_TYPE.attrValue
-//                this.acctBaseInfo.withdrawalType = val.prodDefines.WITHDRAWAL_TYPE.attrValue
-//
-//                    this.acctBaseInfo.ccy = val.prodDefines.CCY.attrValue;
-//                this.acctBaseInfo.docFlag = val.prodDefines.DOC_FLAG.attrValue
-//
-//                this.acctBaseInfo.discountCcy = val.prodDefines.CONVERT_CCY.attrValue
-//            },
             initRefDate() {
                 this.sourceModule = this.refData[2].paraDataRb.sourceModule;
                 this.prodClass = this.refData[2].paraDataRb.prodClass;

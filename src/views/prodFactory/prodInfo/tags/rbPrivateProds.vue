@@ -28,13 +28,13 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
                         <acct-base-info v-if="i==1" v-bind:prodData="prodData"></acct-base-info>
-                        <control-info v-if="i==2" ref="callback" v-bind:prodData="prodData" v-on:callBackControlInfo="callBackControlInfo"></control-info>
-                        <product-object v-if="i==3" ref="callback" v-bind:prodData="prodData" v-on:callBackProdObject="callBackProdObject"></product-object>
-                        <int-detail v-if="i == 4" ref="callback" v-bind:prodData="prodData" v-on:callBackIntDetail="callBackIntDetail"></int-detail>
-                        <open-acct v-if="i==5" ref="callback" v-bind:prodData="prodData" v-on:callBackOpenAcct="callBackOpenAcct"></open-acct>
-                        <close-acct v-if="i==6" ref="callback" v-bind:prodData="prodData" v-on:callBackCloseAcct="callBackCloseAcct"></close-acct>
-                        <Deposit v-if="i==7" ref="callback" v-bind:prodData="prodData" v-on:callBackDeposit="callBackDeposit"></Deposit>
-                        <draw-info v-if="i==8" ref="callback" v-bind:prodData="prodData" v-on:callBackDrawInfo="callBackDrawInfo"></draw-info>
+                        <control-info v-if="i==2" v-bind:prodData="prodData"></control-info>
+                        <product-object v-if="i==3" v-bind:prodData="prodData"></product-object>
+                        <int-detail v-if="i == 4" v-bind:prodData="prodData"></int-detail>
+                        <open-acct v-if="i==5" v-bind:prodData="prodData"></open-acct>
+                        <close-acct v-if="i==6" v-bind:prodData="prodData"></close-acct>
+                        <Deposit v-if="i==7" v-bind:prodData="prodData"></Deposit>
+                        <draw-info v-if="i==8" v-bind:prodData="prodData"></draw-info>
                         <charge-define v-if="i==9" v-bind:prodData="prodData"></charge-define>
                         <rate-info v-if="i==10" v-bind:prodData="prodData"></rate-info>
                         <form-shift v-if="i==11" v-bind:prodData="prodData"></form-shift>
@@ -173,9 +173,6 @@
                 targetData: {}
             }
         },
-//        created() {
-//            this.prodClass = this.$route.params.prodClassCmp
-//        },
         mounted: function() {
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
@@ -218,14 +215,6 @@
                 console.log('start query prod info')
             },
             saveProd() {
-                this.$refs.callback[0].callbackprod()
-                this.$refs.callback[1].callbackprod()
-                this.$refs.callback[2].callbackprod()
-                this.$refs.callback[3].callbackprod()
-                this.$refs.callback[4].callbackprod()
-                this.$refs.callback[5].callbackprod()
-                this.$refs.callback[6].callbackprod()
-//                this.$refs.callback[7].callbackprod()
                 this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -243,14 +232,6 @@
                 })
             },
             tempProd() {
-                this.$refs.callback[0].callbackprod()
-                this.$refs.callback[1].callbackprod()
-                this.$refs.callback[2].callbackprod()
-                this.$refs.callback[3].callbackprod()
-                this.$refs.callback[4].callbackprod()
-                this.$refs.callback[5].callbackprod()
-                this.$refs.callback[6].callbackprod()
-//                this.$refs.callback[7].callbackprod()
                 this.targetData = filterChangeData(this.prodData,this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -297,118 +278,6 @@
                     type: 'warning'
                 })
             },
-            callBackControlInfo(val) {
-                console.log(val)
-                this.prodData.prodDefines.AUTOMATIC_RANGE.attrValue = val.controlInfo.draRange
-                this.prodData.prodDefines.CIR_EXCHANGE_RANGE.attrValue = val.controlInfo.depRange
-                this.prodData.prodDefines.TRAN_CIR_EXCG_FLAG.attrValue = val.controlInfo.tDepFlag
-                this.prodData.prodDefines.CASH_CIR_EXCG_FLAG.attrValue = val.controlInfo.cashDepFlag
-                this.prodData.prodDefines.CLIENT_CONTRAL_FLAG.attrValue = val.controlInfo.clientFlag
-                this.prodData.prodDefines.CHANNEL_CONT_FLAG.attrValue = val.controlInfo.channelFlag
-                this.prodData.prodDefines.BRC_AREA_CONT_FLAG.attrValue = val.controlInfo.branchControlFlag
-                this.prodData.prodDefines.CHARGE_TYPE.attrValue = val.controlInfo.chargeFlag
-                this.prodData.prodDefines.STATUS_TRAN_FLAG.attrValue = val.controlInfo.moveFlag
-            },
-            callBackProdObject(val) {
-                console.log(val)
-                this.prodData.prodDefines.CLIENT_TYPE.attrValue = val.productObject.clientType
-                this.prodData.prodDefines.INLAND_OFFSHORE.attrValue = val.productObject.inLandOffshore
-                this.prodData.prodDefines.PROD_BRANCH.attrValue = val.productObject.prodBranch
-                this.prodData.prodDefines.CLIENT_IND.attrValue = val.productObject.clientInd
-                this.prodData.prodDefines.AGE_PART.attrValue = val.productObject.ageSection
-                this.prodData.prodDefines.PROFESSION.attrValue = val.productObject.occupation
-                this.prodData.prodDefines.ADUPTER_AREA.attrValue = val.productObject.applyArea
-                this.prodData.prodDefines.AREA_TYPE.attrValue = val.productObject.areaChoose
-                this.prodData.prodDefines.CHANNEL_CHOOSE.attrValue = val.productObject.channelChoose
-            },
-            callBackIntDetail(val) {
-                console.log(val)
-                this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue = val.intDetail.cycleFreq
-                this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.INT_DAY.attrValue = val.intDetail.intDay
-                this.prodData.mbEventInfos["CYCLE_"+this.prodData.prodType.prodType].mbEventAttrs.INT_CAP.attrValue = val.intDetail.cycleSelfFlag
-            },
-            callBackOpenAcct(val) {
-                console.log(val)
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.STRUCTURE_TYPE.attrValue = val.openAcct.structureType
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue = val.openAcct.checkWadrawnType
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.openAcct.restraintFlag
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.openAcct.checkAgent
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.NUM_OF_CLIENT.attrValue = val.openAcct.numOfClient
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.MAX_BACK_DATE_DAYS.attrValue = val.openAcct.maxBackDateDays
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.DOC_TYPE_DEAL.attrValue = val.openAcct.withdrawTypeHandeling
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_CLIENT_NUM_FLAG.attrValue = val.openAcct.clientAmtCheckFlag
-                this.prodData.mbEventInfos["OPEN_"+this.prodData.prodType.prodType].mbEventAttrs.START_INT_DATE_FALG.attrValue = val.openAcct.startDepositAmt
-            },
-            callBackCloseAcct(val) {
-                console.log(val)
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.closeAcct.permitCommersionFlag
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.closeAcct.acctReatraintCheck
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue = val.closeAcct.resignCheck
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue = val.closeAcct.ownCheck
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue = val.closeAcct.systemControlApproach
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue = val.closeAcct.cashResouce
-                this.prodData.mbEventInfos["CLOSE_"+this.prodData.prodType.prodType].mbEventAttrs.CLOSE_BACK_FLAG.attrValue = val.closeAcct.closeAcctRollbackFlag
-            },
-            callBackDeposit(val) {
-                console.log(val)
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.deposit.permitCommersionFlag
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.deposit.acctReatraintCheck
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_INIT_AMT.attrValue = val.deposit.startAmtCheck
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.SG_DEP_MIN_AMT.attrValue = val.deposit.sgDepMinAmt
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.SG_DEP_MAX_AMT.attrValue = val.deposit.sgDepMaxAmt
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_INIT_AMT.attrValue = val.deposit.checkInitAmt
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MIN_BAL.attrValue = val.deposit.keepMinBal
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.KEEP_MAX_BAL.attrValue = val.deposit.keepMaxBal
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue = val.deposit.depositControlApproach
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue = val.deposit.cashResource
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.DEPOSIT_BREAK_TYPE.attrValue = val.deposit.breakType
-                this.prodData.mbEventInfos["DEP_"+this.prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue = val.deposit.dealingWay
-            },
-            callBackDrawInfo(val) {
-                console.log(val)
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue = val.drawInfo.drawControlWay
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue = val.drawInfo.checkAgent
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue = val.drawInfo.cashResource
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue = val.drawInfo.attrReatraintCheck
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue = val.drawInfo.withDrawlCheck
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT.attrValue = val.drawInfo.sgMinAmt
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL.attrValue = val.drawInfo.acctBalanceCheck
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT.attrValue = val.drawInfo.sgMaxAmt
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL.attrValue = val.drawInfo.keepMinBal
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue = val.drawInfo.dealingWay
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue = val.drawInfo.breakType
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue = val.drawInfo.voucherTypeCheck
-                this.prodData.mbEventInfos["WTD_"+this.prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_SG_AMT.attrValue = val.drawInfo.sgBalCheck
-
-            },
-//            callBackAcctBaseInfo(val) {
-//                console.log(val)
-//                this.prodData.prodType.prodType = val.acctBaseInfo.prodType
-//                this.prodData.prodType.prodDesc = val.acctBaseInfo.prodDesc
-//                this.prodData.prodType.prodRange = val.acctBaseInfo.prodRange
-//                this.prodData.prodType.prodClass = val.acctBaseInfo.prodClass
-//                this.prodData.prodType.prodGroup = val.acctBaseInfo.prodGroup
-//                this.prodData.prodType.status = val.acctBaseInfo.status
-//                this.prodData.prodType.baseProdType = val.acctBaseInfo.baseProdType
-//                this.prodData.prodDefines.SOURCE_MODULE.attrValue = val.acctBaseInfo.sourceModule
-//                this.prodData.prodDefines.PROFIT_CENTRE.attrValue = val.acctBaseInfo.profitCenter
-//                this.prodData.prodDefines.MULTI_CCY.attrValue = val.acctBaseInfo.multiCcy
-//                this.prodData.prodDefines.CCY.attrValue = val.acctBaseInfo.ccy
-//                this.prodData.prodDefines.ACCT_INT_FLAG.attrValue = val.acctBaseInfo.acctIntFlag
-//                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
-//                this.prodData.prodDefines.ACCT_TYPE.attrValue = val.acctBaseInfo.acctType
-//                this.prodData.prodDefines.ACCT_NATURE.attrValue = val.acctBaseInfo.acctNature
-//                this.prodData.prodDefines.OWNERSHIP_TYPE.attrValue = val.acctBaseInfo.ownerShipType
-//                this.prodData.prodDefines.ACCT_CLASS.attrValue = val.acctBaseInfo.acctClass
-//                this.prodData.prodDefines.BAL_TYPE.attrValue = val.acctBaseInfo.balType
-//                this.prodData.prodDefines.PROD_START_DATE.attrValue = val.acctBaseInfo.prodStartDate.substr(0, 4) + val.acctBaseInfo.prodStartDate.substr(5, 2) + val.acctBaseInfo.prodStartDate.substr(8, 2)
-//                this.prodData.prodDefines.PROD_END_DATE.attrValue = val.acctBaseInfo.prodEndDate.substr(0, 4) + val.acctBaseInfo.prodEndDate.substr(5, 2) + val.acctBaseInfo.prodEndDate.substr(8, 2)
-//                this.prodData.prodDefines.DOC_TYPE.attrValue = val.acctBaseInfo.docType
-//                this.prodData.prodDefines.WITHDRAWAL_TYPE.attrValue = val.acctBaseInfo.withdrawalType
-//                this.prodData.prodDefines.FIXED_CALL.attrValue = val.acctBaseInfo.fixedCall
-//                this.prodData.prodDefines.DOC_FLAG.attrValue = val.acctBaseInfo.docFlag
-//                this.prodData.prodDefines.CONVERT_CCY.attrValue = val.acctBaseInfo.discountCcy
-//            },
             listenToCopy(data) {
                 this.prodCode=data.prodType;
                 this.prodData.prodType.prodType=data.prodType;

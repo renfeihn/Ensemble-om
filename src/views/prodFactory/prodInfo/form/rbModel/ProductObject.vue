@@ -9,53 +9,54 @@
                                 <v-subheader class="primary--text subheading">客户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.clientType" :options="clientType"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_TYPE.attrValue" :options="clientType"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">境内外标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.inlandOffshore" :options="inlandOffshore"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.INLAND_OFFSHORE.attrValue" :options="inlandOffshore"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.clientSubType" :options="clientSubType"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_GENERAL_TYPE.attrValue" :options="clientSubType"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户等级*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.clientInd" :options="clientInd"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_IND.attrValue" :options="clientInd"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">年龄区间*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.ageSection" :options="ageSection"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.AGE_PART.attrValue" :options="ageSection"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">职业*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.occupation" :options="occupation"></dc-multiselect>                            </v-flex>
+                                <dc-multiselect v-model="prodData.prodDefines.PROFESSION.attrValue" :options="occupation"></dc-multiselect>                            </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用区域*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="applyArea" v-model="productObject.applyArea" label="适用区域" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="applyArea" v-model="prodData.prodDefines.ADUPTER_AREA.attrValue" label="适用区域" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">区域选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.areaChoose" :options="areaChoose"></dc-multiselect>                               </v-flex>
+                                <dc-multiselect v-model="prodData.prodDefines.AREA_TYPE.attrValue" :options="areaChoose"></dc-multiselect>
+                            </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="prodBranch" v-model="productObject.applyBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="prodBranch" v-model="prodData.prodDefines.APPLY_BRANCH.attrValue" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex md6 lg6>
                             </v-flex>
@@ -66,7 +67,7 @@
                                     </v-subheader>
                                 </v-flex>
                                 <v-flex md11 ml-5 class="branchCard auto">
-                                    <dc-tree-select v-model="productObject.prodBranch" :multiple="true" :options="branchChoice"></dc-tree-select>
+                                    <dc-tree-select v-model="prodData.prodDefines.PROD_BRANCH.attrValue" :multiple="true" :options="branchChoice"></dc-tree-select>
                                 </v-flex>
                             </v-flex>
                             <v-flex md6 lg6>
@@ -74,7 +75,7 @@
                                     <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
                                 </v-flex>
                                 <v-flex md11 ml-5 class="branchCard auto">
-                                    <dc-tree-select v-model="productObject.channelChoose" :options="channelChoose" ></dc-tree-select>
+                                    <dc-tree-select v-model="prodData.prodDefines.CHANNEL_CHOOSE.attrValue" :options="channelChoose" ></dc-tree-select>
                                 </v-flex>
                             </v-flex>
                         </v-layout>
@@ -93,15 +94,6 @@
     import { getProdData } from "@/api/prod";
     export default {
         components: { DcSwitch, DcMultiselect,DcTreeSelect },
-        filters: {
-            getValues: function (key) {
-                let value=[];
-                if(key!=undefined){
-                    value=key.split(',');
-                }
-                return value
-            }
-        },
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -146,53 +138,16 @@
             }],
             fixedCall: '',
             prodBranch: '',
-            productObject: {
-                clientType: '',
-                inlandOffshore: '',
-                clientSubType: '',
-                clientInd: '',
-                ageSection: '',
-                occupation: '',
-                channelChoose: '',
-                applyBranch: '',
-                branchChoice: '',
-                applyArea: '',
-                areaChoose: '',
-                fixedCall: '',
-                prodBranch: ''
-            }
         }),
         computed: {
             progress() {
                 return Math.min(100, this.value.length * 10);
             }
         },
-        watch: {
-            prodData(val) {
-                this.selectByProd(val)
-            }
-        },
         mounted() {
             this.initRefDate();
         },
         methods: {
-            callbackprod() {
-                this.$emit("callBackProdObject",{"productObject": this.productObject})
-            },
-            selectByProd(val) {
-                this.productObject = {}
-                this.productObject.clientType = val.prodDefines.CLIENT_TYPE.attrValue
-                this.productObject.applyBranch = val.prodDefines.APPLY_BRANCH.attrValue//适用机构
-                this.productObject.inlandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
-                this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
-                this.productObject.clientSubType = val.prodDefines.CLIENT_GENERAL_TYPE.attrValue//客户子类型
-                this.productObject.channelChoose = val.prodDefines.CHANNEL_CHOOSE.attrValue//渠道选择
-                this.productObject.ageSection = val.prodDefines.AGE_PART.attrValue//年龄区间
-                this.productObject.occupation = val.prodDefines.PROFESSION.attrValue//职业
-                this.productObject.prodBranch = val.prodDefines.PROD_BRANCH.attrValue//机构选择
-                this.productObject.applyArea = val.prodDefines.ADUPTER_AREA.attrValue//适用区域
-                this.productObject.areaChoose = val.prodDefines.AREA_TYPE.attrValue//区域选择
-            },
             initRefDate() {
                 this.clientType = this.refData[2].paraDataRb.clientType;
                 this.inlandOffshore = this.refData[2].paraDataRb.inlandOffshore;
