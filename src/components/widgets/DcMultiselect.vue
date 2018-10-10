@@ -1,7 +1,8 @@
 
 <template>
     <div >
-        <multiselect v-model="value" name="key" open-direction="bottom" tag-placeholder="Add this as new tag" placeholder="请选择..." :searchable="false" label="value" track-by="value" :options="options" :multiple="true" :taggable="false" @tag="addTag"></multiselect>
+        <multiselect v-model="value" name="key" open-direction="bottom" placeholder="请选择..." selectLabel=""
+         :searchable="false" label="value" track-by="value" :options="options" :multiple="true"></multiselect>
     </div>
 </template>
 <script>
@@ -16,11 +17,7 @@ export default {
   data() {
     return {
       value: [],
-      options: [
-        { name: "Vue.js", code: "vu" },
-        { name: "Javascript", code: "js" },
-        { name: "Open Source", code: "os" }
-      ]
+      options: []
     };
   },
   watch: {
@@ -35,7 +32,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.init();
   },
   methods: {
@@ -65,7 +62,9 @@ export default {
           value = value + "," + newValue[index].key;
         }
       }
-      this.$emit("getVue", value);
+      if (value) {
+        this.$emit("getVue", value);
+      }
     },
     addTag(newTag) {
       const tag = {
