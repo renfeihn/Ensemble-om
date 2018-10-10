@@ -41,21 +41,23 @@
         },
         methods: {
             init (msg) {
-                let data=msg.split(',')
-                let options=this._props.options
-                let values=[];
-                for(const num in data){
-                    let value={};
-                    value.key=data[num];
-                 for(const index in options){
-                    const option= options[index]
-                     if(option.key==value.key){
-                         value.value=option.value
-                     }
-                 }
-                 values.push(value)
+                if(msg !== null && msg !== undefined) {
+                    let data = msg.split(',')
+                    let options = this._props.options
+                    let values = [];
+                    for (const num in data) {
+                        let value = {};
+                        value.key = data[num];
+                        for (const index in options) {
+                            const option = options[index]
+                            if (option.key == value.key) {
+                                value.value = option.value
+                            }
+                        }
+                        values.push(value)
+                    }
+                    this.value = values;
                 }
-                this.value=values;
             },
             reback (newValue) {
                 let value=''
