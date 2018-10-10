@@ -317,6 +317,7 @@
                 this.prodData.prodDefines.PROFESSION.attrValue = val.productObject.occupation
                 this.prodData.prodDefines.ADUPTER_AREA.attrValue = val.productObject.applyArea
                 this.prodData.prodDefines.AREA_TYPE.attrValue = val.productObject.areaChoose
+                this.prodData.prodDefines.CHANNEL_CHOOSE.attrValue = val.productObject.channelChoose
             },
             callBackIntDetail(val) {
                 console.log(val)
