@@ -41,11 +41,6 @@
                             <v-flex md4 lg4>
                                 <dc-multiselect v-model="productObject.occupation" :options="occupation"></dc-multiselect>                            </v-flex>
                             <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.channelChoose" :options="channelChoose"></dc-multiselect>                               </v-flex>
-                            <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用区域*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
@@ -62,12 +57,25 @@
                             <v-flex md4 lg4>
                                 <v-select class="primary--text mx-2" :items="prodBranch" v-model="productObject.applyBranch" label="适用机构" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
-
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">机构选择*</v-subheader>
+                            <v-flex md6 lg6>
                             </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-multiselect v-model="productObject.branchChoice" :options="branchChoice"></dc-multiselect>
+                            <v-flex md6 lg6>
+                                <v-flex md12 class="auto">
+                                    <v-subheader class="primary--text subheading">
+                                        机构选择*
+                                    </v-subheader>
+                                </v-flex>
+                                <v-flex md11 ml-5 class="branchCard auto">
+                                    <dc-tree-select v-model="productObject.prodBranch" :multiple="true" :options="branchChoice"></dc-tree-select>
+                                </v-flex>
+                            </v-flex>
+                            <v-flex md6 lg6>
+                                <v-flex md12 class="auto">
+                                    <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
+                                </v-flex>
+                                <v-flex md11 ml-5 class="branchCard auto">
+                                    <dc-tree-select v-model="productObject.channelChoose" :options="channelChoose" ></dc-tree-select>
+                                </v-flex>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -80,10 +88,11 @@
 <script>
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcMultiselect from '@/components/widgets/DcMultiselect'
+    import DcTreeSelect from "@/components/widgets/DcTreeSelect";
     import { getInitData } from "@/mock/init";
     import { getProdData } from "@/api/prod";
     export default {
-        components: { DcSwitch, DcMultiselect },
+        components: { DcSwitch, DcMultiselect,DcTreeSelect },
         filters: {
             getValues: function (key) {
                 let value=[];
@@ -177,10 +186,10 @@
                 this.productObject.inlandOffshore = val.prodDefines.INLAND_OFFSHORE.attrValue
                 this.productObject.clientInd = val.prodDefines.CLIENT_IND.attrValue
                 this.productObject.clientSubType = val.prodDefines.CLIENT_GENERAL_TYPE.attrValue//客户子类型
-                this.productObject.channelChoose = ""//渠道选择
+                this.productObject.channelChoose = val.prodDefines.CHANNEL_CHOOSE.attrValue//渠道选择
                 this.productObject.ageSection = val.prodDefines.AGE_PART.attrValue//年龄区间
                 this.productObject.occupation = val.prodDefines.PROFESSION.attrValue//职业
-                this.productObject.branchChoice = val.prodDefines.PROD_BRANCH.attrValue//机构选择
+                this.productObject.prodBranch = val.prodDefines.PROD_BRANCH.attrValue//机构选择
                 this.productObject.applyArea = val.prodDefines.ADUPTER_AREA.attrValue//适用区域
                 this.productObject.areaChoose = val.prodDefines.AREA_TYPE.attrValue//区域选择
             },
@@ -200,3 +209,13 @@
         }
     }
 </script>
+<style scoped>
+    .branchCard {
+        height: 350px;
+    }
+    .auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
