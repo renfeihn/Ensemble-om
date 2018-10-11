@@ -9,97 +9,79 @@
                                 <v-subheader class="primary--text subheading">支取控制方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="drawControlWay" v-model="drawInfo.drawControlWay" label="支取控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="drawControlWay" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue" label="支取控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex>
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="daiBanFlag" v-model="drawInfo.daiBanFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="drawInfo.checkAgent"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">资金去向方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="cashResource" v-model="drawInfo.cashResource" label="资金去向方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="cashResource" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue" label="资金去向方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="attrReatraintCheck" v-model="drawInfo.attrReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="drawInfo.attrReatraintCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">支取方式检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="withDrawlCheck" v-model="drawInfo.withDrawlCheck" label="支取方式检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="drawInfo.withDrawlCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">凭证类型检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="voucherTypeCheck" v-model="drawInfo.voucherTypeCheck" label="凭证类型检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="drawInfo.voucherTypeCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">支取违约类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="breakType" v-model="drawInfo.breakType" label="支取违约类型" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="breakType" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue" label="支取违约类型" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">违约处理方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="dealingWay" v-model="drawInfo.dealingWay" label="违约处理方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="dealingWay" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue" label="违约处理方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">单次支取金额检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="sgBalCheck" v-model="drawInfo.sgBalCheck" label="单次支取金额检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="drawInfo.sgBalCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.CHECK_SG_AMT.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最小支取金额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最小支取金额" name="sgMinAmt" v-model="drawInfo.sgMinAmt" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最小支取金额" name="sgMinAmt" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT.attrValue" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最大支取金额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最大支取金额" name="sgMaxAmt" v-model="drawInfo.sgMaxAmt" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最大支取金额" name="sgMaxAmt" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT.attrValue" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户留存余额检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                            <v-select class="primary&#45;&#45;text mx-2" :items="acctBalanceCheck" v-model="drawInfo.acctBalanceCheck" label="账户留存余额检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="drawInfo.acctBalanceCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">最小留存余额*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="最小留存余额" name="keepMinBal" v-model="drawInfo.keepMinBal" single-line hide-details></v-text-field>
+                                <v-text-field class="primary--text mx-1" label="最小留存余额" name="keepMinBal" v-model="prodData.mbEventInfos['WTD_'+prodData.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL.attrValue" single-line hide-details></v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -119,56 +101,16 @@
         data: () => ({
             title: null,
             refData: getInitData,
-            drawInfo: {
-                drawControlWay: '',
-                checkAgent: '',
-                // daiBanFlag: '',
-                cashResource: '',
-                attrReatraintCheck: '',
-                withDrawlCheck: '',
-                voucherTypeCheck: '',
-                breakType: '',
-                dealingWay: '',
-                sgBalCheck: '',
-                acctBalanceCheck: '',
-                sgMinAmt: '',
-                sgMaxAmt: '',
-                keepMinBal: ''
-            }
         }),
         computed: {
             progress() {
                 return Math.min(100, this.value.length * 10);
             }
         },
-        watch: {
-            prodData(val) {
-                this.selectByProd(val);
-            }
-        },
         mounted() {
             this.initRefDate();
         },
         methods: {
-            callbackprod() {
-                this.$emit("callBackDrawInfo",{"drawInfo": this.drawInfo})
-            },
-            selectByProd(val) {
-                this.drawInfo = {}
-                this.drawInfo.drawControlWay = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.WITHDRAWAL_TYPE.attrValue
-                this.drawInfo.checkAgent = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
-                this.drawInfo.cashResource = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.FUND_TRAN_TYPE.attrValue
-                this.drawInfo.dealingWay = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.BREAK_DEAL_WAY.attrValue//
-                this.drawInfo.breakType = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.DRAW_BREAK_TYPE.attrValue//
-                this.drawInfo.attrReatraintCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
-                this.drawInfo.withDrawlCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_WDRAWN_TYPE.attrValue
-                this.drawInfo.voucherTypeCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventAttrs.CHECK_DOC_TYPE.attrValue//
-                this.drawInfo.sgMinAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MIN_AMT.attrValue
-                this.drawInfo.acctBalanceCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.CHECK_KEEP_BAL.attrValue
-                this.drawInfo.sgMaxAmt = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.SG_MAX_AMT.attrValue
-                this.drawInfo.keepMinBal = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_KEEP_BAL_PA.KEEP_MIN_BAL.attrValue
-                this.drawInfo.sgBalCheck = val.mbEventInfos["WTD_"+val.prodType.prodType].mbEventParts.CHECK_SG_AMT_PA.CHECK_SG_AMT.attrValue
-            },
             initRefDate() {
                 this.drawControlWay = this.refData[2].paraDataRb.drawControlWay;
                 this.daiBanFlag = this.refData[2].paraDataRb.daiBanFlag;

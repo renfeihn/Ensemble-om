@@ -34,25 +34,27 @@ export default {
     }
   },
   created() {
-    this.init();
+    this.init(this._props.msg);
   },
   methods: {
     init(msg) {
-      let data = msg.split(",");
-      let options = this._props.options;
-      let values = [];
-      for (const num in data) {
-        let value = {};
-        value.key = data[num];
-        for (const index in options) {
-          const option = options[index];
-          if (option.key == value.key) {
-            value.value = option.value;
-          }
+        if(msg !== null && msg !== undefined) {
+            let data = msg.split(",");
+            let options = this._props.options;
+            let values = [];
+            for (const num in data) {
+                let value = {};
+                value.key = data[num];
+                for (const index in options) {
+                    const option = options[index];
+                    if (option.key == value.key) {
+                        value.value = option.value;
+                    }
+                }
+                values.push(value);
+            }
+            this.value = values;
         }
-        values.push(value);
-      }
-      this.value = values;
     },
     reback(newValue) {
       let value = "";

@@ -9,58 +9,43 @@
                                 <v-subheader class="primary--text subheading">存入控制方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="systemControlApproach" v-model="closeAcct.systemControlApproach" label="存入控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="systemControlApproach" v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue" label="存入控制方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否允许代办*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                               <v-select class="primary&#45;&#45;text mx-2" :items="permitCommersionFlag" v-model="closeAcct.permitCommersionFlag" label="是否允许代办" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="closeAcct.permitCommersionFlag"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">资金来源方式*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <v-select class="primary--text mx-2" :items="cashResouce" v-model="closeAcct.cashResouce" label="资金来源方式" item-text="value" item-value="key" single-line hide-details></v-select>
+                                <v-select class="primary--text mx-2" :items="cashResouce" v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue" label="资金来源方式" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户限制检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                                 <v-select class="primary&#45;&#45;text mx-2" :items="acctReatraintCheck" v-model="closeAcct.acctReatraintCheck" label="账户限制检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="closeAcct.acctReatraintCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">签约检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                                 <v-select class="primary&#45;&#45;text mx-2" :items="resignCheck" v-model="closeAcct.resignCheck" label="签约检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="closeAcct.resignCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">欠费检查*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                                   <v-select class="primary&#45;&#45;text mx-2" :items="ownCheck" v-model="closeAcct.ownCheck" label="欠费检查" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="closeAcct.ownCheck"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue"></dc-switch>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否允许销户回退*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <!--
-                                                                   <v-select class="primary&#45;&#45;text mx-2" :items="closeAcctRollbackFlag" v-model="closeAcct.closeAcctRollbackFlag" label="是否允许销户回退" item-text="value" item-value="key" single-line hide-details></v-select>
-                                -->
-                                <dc-switch v-model="closeAcct.closeAcctRollbackFlag"></dc-switch>
+                                <dc-switch v-model="prodData.mbEventInfos['CLOSE_'+prodData.prodType.prodType].mbEventAttrs.CLOSE_BACK_FLAG.attrValue"></dc-switch>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -80,43 +65,16 @@
         data: () => ({
             title: null,
             refData: getInitData,
-            closeAcct: {
-                systemControlApproach: '',
-                permitCommersionFlag: '',
-                cashResouce: '',
-                acctReatraintCheck: '',
-                resignCheck: '',
-                ownCheck: '',
-                closeAcctRollbackFlag: ''
-            }
         }),
         computed: {
             progress() {
                 return Math.min(100, this.value.length * 10);
             }
         },
-        watch: {
-            prodData(val) {
-                this.selectByProd(val)
-            }
-        },
         mounted() {
             this.initRefDate();
         },
         methods: {
-            callbackprod() {
-                this.$emit("callBackCloseAcct",{"closeAcct": this.closeAcct})
-            },
-            selectByProd(val) {
-                this.closeAcct = {}
-                this.closeAcct.systemControlApproach = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.DEPOSIT_CONTRAL_WAY.attrValue//存入控制
-                this.closeAcct.permitCommersionFlag = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.AGENT_FLAG.attrValue
-                this.closeAcct.cashResouce = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CAPITAL_ORIGIN_WAY.attrValue//资金来源方式
-                this.closeAcct.acctReatraintCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_RESTRAINT.attrValue
-                this.closeAcct.resignCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_SIGN.attrValue
-                this.closeAcct.ownCheck = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CHECK_CLOSE_FEE.attrValue
-                this.closeAcct.closeAcctRollbackFlag = val.mbEventInfos["CLOSE_"+val.prodType.prodType].mbEventAttrs.CLOSE_BACK_FLAG.attrValue//是否允许西销户回退
-            },
             initRefDate() {
                 this.systemControlApproach = this.refData[2].paraDataRb.systemControlApproach;
                 this.permitCommersionFlag = this.refData[2].paraDataRb.permitCommersionFlag;
