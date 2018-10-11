@@ -626,3 +626,28 @@ table.v-table tbody td {
   font-weight: 400;
   font-size: 14px;
 }
+
+/*------------------------------------------------------------------
+[Components / components/widgets/DcMultiselect]
+*/ 
+
+.multiselect__option--highlight {
+  background: #4caf50;
+  outline: none;
+  color: white;
+}
+
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #4caf50;
+  color: white;
+}
+
+.multiselect__tag {
+    background: #4caf50 !important;
+    margin-bottom: 0px;
+}
+
+.multiselect__spinner:after {
+  border-color: #4caf50 transparent transparent;
+}

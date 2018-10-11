@@ -2,7 +2,8 @@
 <template>
     <div >
         <multiselect v-model="value" name="key" open-direction="bottom" placeholder="请选择..." selectLabel=""
-         :searchable="false" label="value" track-by="value" :options="options" :multiple="true"></multiselect>
+         :searchable="false" :close-on-select="false" label="value" :hide-selected="true" track-by="value" 
+         :options="options" :multiple="true"></multiselect>
     </div>
 </template>
 <script>
