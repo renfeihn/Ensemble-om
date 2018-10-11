@@ -5,10 +5,10 @@
                 <v-subheader class="primary--text subheading justify-start" >是否使用固定利率*</v-subheader>
             </v-flex>
             <v-flex xs12 sm4>
-                <v-select class="primary--text mx-2" :items="draRange" v-model="busimodelData" item-text="value" item-value="key" single-line hide-details return-object></v-select>
+                <dc-switch v-model="switchValue"></dc-switch>
             </v-flex>
         </v-toolbar>
-        <v-card-text class="pa-0">
+        <v-card-text class="pa-0" v-if="switchFlag == 0">
             <div>
                 <v-data-table
                 :headers="headers"
@@ -20,7 +20,7 @@
                         <td class="text-xs-center">{{ props.item.eventType | getColumnDesc}}</td>
                         <td class="text-xs-center">{{ props.item.intClass | getColumnDesc}}</td>
                         <td class="text-xs-center">{{ props.item.intType | getColumnDesc}}</td>
-                        <td class="text-xs-center">{{ props.item.intTypeDesc | getColumnDesc}}</td>
+                        <td class="text-xs-center" >{{ props.item.intTypeDesc | getColumnDesc}}</td>
                         <td class="text-xs-center">{{ props.item.intCalcBal | getColumnDesc}}</td>
                         <td class="text-xs-center">{{ props.item.rateAmtId | getColumnDesc}}</td>
                         <td class="text-xs-center">{{ props.item.intAmtId | getColumnDesc}}</td>
@@ -40,13 +40,36 @@
                 </v-data-table>
             </div>
         </v-card-text>
+
+        <v-card-text class="pa-0" v-if="switchFlag == 1">
+            <div>
+                <v-data-table
+                        :headers="headers2"
+                        :items="projects"
+                        class="elevation-1"
+                        hide-actions
+                >
+                    <template slot="items" slot-scope="props">
+                        <td class="text-xs-center">{{ props.item.eventType | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.intType | getColumnDesc}}</td>
+                        <td class="text-xs-center">{{ props.item.fixedInt | getColumnDesc}}</td>
+                    </template>
+                    <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                        Your search for "{{ search }}" found no results.
+                    </v-alert>
+                </v-data-table>
+            </div>
+        </v-card-text>
+
     </v-card>
 </template>
 <script>
+import DcSwitch from "@/components/widgets/DcSwitch";
 import {getRateInfo} from '@/api/table';
 import {getColumnDesc} from '@/utils/columnDesc'
 
 export default {
+    components: { DcSwitch},
     filters: {
         getDescByKey: function (key) {
             return getColumnDesc(key)
@@ -56,6 +79,8 @@ export default {
     data () {
         return {
             selected: [],
+            switchFlag: '',
+            switchValue: "",
             headers: [
                 {text: '事件类型', value: 'eventType', align: 'center', width: 'xs1'},
                 {text: '利息分类', value: 'intClass', align: 'center', width: 'xs1'},
@@ -73,6 +98,11 @@ export default {
                 {text: '靠档标志', value: 'intRateInd', align: 'center', width: 'xs1'},
                 {text: '靠档天数计算方式', value: 'intDaysType', align: 'center', width: 'xs1'},
                 {text: '税率类型', value: 'taxType', align: 'center', width: 'xs1'}
+            ],
+            headers2: [
+                {text: '事件类型', value: 'eventType', align: 'center', width: 'xs1'},
+                {text: '利率代码', value: 'intType', align: 'center', width: 'xs1'},
+                {text: '固定利率值', value: 'fixedInt', align: 'center', width: 'xs1'}
             ],
             projects: [{
                 eventType: '',
@@ -97,7 +127,11 @@ export default {
     watch: {
         prodData (val) {
             this.getChargeDefinesInfo(val)
+        },
+        switchValue(val){
+            this.switchChange(val)
         }
+
     },
     mounted: function() {
         this.queryDespositProdData()
@@ -112,6 +146,14 @@ export default {
             //初始化产品对应的信息
             this.projects = val.irlProdInt
         },
+        switchChange(val){
+            console.log(val)
+            if(val === "Y"){
+                this.switchFlag = 1
+            }else{
+                this.switchFlag = 0
+            }
+        }
     }
 };
 </script>

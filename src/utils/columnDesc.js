@@ -228,7 +228,8 @@ const column= {
     'TRAN_LIMIT_TERM': '限额周期',
     'TT_TRAN_FLAG': '转账交易标志',
     'UPD_OD': '透支登记标志',
-    'WITHDRAWAL_TYPE': '支取方式'
+    'WITHDRAWAL_TYPE': '支取方式',
+    'FIXED_INT': '固定利率值'
 }
 
 export function getColumnDesc (data) {
