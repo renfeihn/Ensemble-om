@@ -1,9 +1,78 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <a-button type="primary" >新增</a-button>
-            <a-button type="primary" class="ml-2">修改</a-button>
-            <a-button type="primary" class="ml-2">删除</a-button>
+
+            <a-button type="primary" @click="onAdd">新增</a-button>
+            <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
+            <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
+            <v-dialog
+                    v-model="dialog"
+                    width="500"
+            >
+                <v-card>
+                    <v-card-text>
+                <v-form v-model="valid">
+                    <v-text-field
+                            v-model="selected.feeType"
+                            :counter="10"
+                            label="费用类型"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.chargePeriodFerq"
+                            label="收费频率"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.chargeDay"
+                            label="收费日"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.nextChargeDate"
+                            label="下一收费日期"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.chargeDealMethod"
+                            label="收费处理方式"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.conDeductFlag"
+                            label="持续扣款标示"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.conDeductTimes"
+                            label="持续扣款次数"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                </v-form>
+                <v-btn
+                        color="green darken-1"
+                        flat="flat"
+                        @click="submit"
+                >
+                    确认
+                </v-btn>
+                  <v-btn
+                          color="green darken-1"
+                          flat="flat"
+                          @click="dialog = false"
+                  >
+                      取消
+                  </v-btn>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
@@ -19,7 +88,7 @@ import {getChargeDefine} from '@/api/table';
 import toast from '@/utils/toast';
 import { getInitData } from "@/mock/init";
 import {getColumnDesc} from '@/utils/columnDesc'
-
+import {removeByValue} from '@/utils/util'
 
 export default {
     filters: {
@@ -32,13 +101,17 @@ export default {
         return {
             prodType: '',
             open: true,
+            valid: true,
+            dialog: false,
             refData: getInitData,
+            option: '',
             selectedRowKeys: [],
             selected: {},
             columns: [
                 {dataIndex: 'feeType', title: '批量收费类型',scopedSlots: { customRender: 'feeType' }},
-                {dataIndex: 'chargePeriodFreq', title: '收费频率'},
+                {dataIndex: 'chargePeriodFerq', title: '收费频率'},
                 {dataIndex: 'chargeDay', title: '收费日期'},
+                {dataIndex: 'nextChargeDate', title: '下一收费日'},
                 {dataIndex: 'chargeDealMethod', title: '收费处理方式'},
                 {dataIndex: 'conDeductFlag', title: '持续扣款标识'},
                 {dataIndex: 'conDeductTimes', title: '持续扣款次数'}
@@ -56,6 +129,28 @@ export default {
     },
 
     methods: {
+        submit () {
+            if(this.option == 'add'){
+                let dataSource=this.chargeDefinesInfo
+                let selected=this.selected;
+                selected.prodType=this.prodType
+                dataSource.push(selected)
+            }
+            this.dialog=false;
+        },
+        onDelete () {
+            let dataSource=this.chargeDefinesInfo
+            removeByValue(dataSource,this.selected)
+        },
+        onAdd () {
+            this.option='add';
+            this.selected={};
+            this.dialog=true;
+        },
+        onEdit () {
+            this.option='edit';
+            this.dialog=true;
+        },
         customRow (record) {
             return {
                 on: {
