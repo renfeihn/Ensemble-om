@@ -9,37 +9,37 @@
                                 <v-subheader class="primary--text subheading">客户类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_TYPE.attrValue" :options="clientType"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_TYPE.attrValue" :options="clientType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">境内外标识*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.INLAND_OFFSHORE.attrValue" :options="inlandOffshore"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.INLAND_OFFSHORE.attrValue" :options="inlandOffshore" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户子类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_GENERAL_TYPE.attrValue" :options="clientSubType"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_GENERAL_TYPE.attrValue" :options="clientSubType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">客户等级*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_IND.attrValue" :options="clientInd"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CLIENT_IND.attrValue" :options="clientInd" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">年龄区间*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.AGE_PART.attrValue" :options="ageSection"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.AGE_PART.attrValue" :options="ageSection" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">职业*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.PROFESSION.attrValue" :options="occupation"></dc-multiselect>                            </v-flex>
+                                <dc-multiselect v-model="prodData.prodDefines.PROFESSION.attrValue" :options="occupation" class="dcMulti"></dc-multiselect>                            </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用区域*</v-subheader>
                             </v-flex>
@@ -50,7 +50,7 @@
                                 <v-subheader class="primary--text subheading">区域选择*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.AREA_TYPE.attrValue" :options="areaChoose"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.AREA_TYPE.attrValue" :options="areaChoose" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">适用机构*</v-subheader>
@@ -60,20 +60,22 @@
                             </v-flex>
                             <v-flex md6 lg6>
                             </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                <v-subheader class="primary--text subheading">机构选择*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                            </v-flex>
+                            <v-flex xs12 md2 lg2>
+                                <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
+                            </v-flex>
+                            <v-flex md4 lg4>
+                            </v-flex>
                             <v-flex md6 lg6>
-                                <v-flex md12 class="auto">
-                                    <v-subheader class="primary--text subheading">
-                                        机构选择*
-                                    </v-subheader>
-                                </v-flex>
                                 <v-flex md11 ml-5 class="branchCard auto">
                                     <dc-tree-select v-model="prodData.prodDefines.PROD_BRANCH.attrValue" :multiple="true" :options="branchChoice"></dc-tree-select>
                                 </v-flex>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <v-flex md12 class="auto">
-                                    <v-subheader class="primary--text subheading">渠道选择*</v-subheader>
-                                </v-flex>
                                 <v-flex md11 ml-5 class="branchCard auto">
                                     <dc-tree-select v-model="prodData.prodDefines.CHANNEL_CHOOSE.attrValue" :options="channelChoose" ></dc-tree-select>
                                 </v-flex>
@@ -171,6 +173,9 @@
     .auto {
         margin-left: auto;
         margin-right: auto;
+    }
+    .dcMulti {
+        margin-top: 10px;
     }
 
 </style>

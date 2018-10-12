@@ -4,19 +4,10 @@
             <v-flex lg9 sm9 class="v-card">
                 <v-toolbar color="primary lighten-1" dark tabs>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
-                    <v-toolbar-title class="white--text">活期产品</v-toolbar-title>
+                    <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon>
-                        <v-icon>search</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon>apps</v-icon>
-                    </v-btn>
-                    <v-btn icon>
+                    <v-btn icon @click="refreshClick">
                         <v-icon>refresh</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon>more_vert</v-icon>
                     </v-btn>
                     <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
@@ -112,13 +103,9 @@
         data () {
             return {
                 listLoading: true,
-                searchValue: '',
                 showCopy: '',
-                depositProd: {
-                    prodcode: '',
-                    version: ''
-                },
                 prodCode: '',
+                prodDesc: '',
                 pendFlag: 0,
                 prodClass: '',
                 activeName: 'basic',
@@ -166,14 +153,13 @@
                     lable: ''
                 }],
                 folders: [],
-                prodData: {
-                    prodType: ''
-                },
+                prodData: {},
                 sourceProdData: {},
                 targetData: {}
             }
         },
         mounted: function() {
+            //检查是否存在待处理数据
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             if(this.$route.hash !== "" && this.$route.hash !== null) {
@@ -182,6 +168,8 @@
                 //默认展示RB101产品信息
                 getProdData("RB101").then(response => {
                     this.prodData = response.data.data
+                    this.prodCode = response.data.data.prodType.prodType
+                    this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
@@ -225,7 +213,6 @@
                 this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
-                        //置灰提交按钮，防止为此提交
                         this.pendFlag = 1
                         toast.success("提交成功！");
                     }
@@ -248,8 +235,10 @@
             },
             listenToProdList(value) {
                 this.prodCode = value.prodType
+                this.prodData = {}
                 getProdData(this.prodCode).then(response => {
                     this.prodData = response.data.data
+                    this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
             },
@@ -280,6 +269,7 @@
             },
             listenToCopy(data) {
                 this.prodCode=data.prodType;
+                this.prodDesc = data.prodDesc;
                 this.prodData.prodType.prodType=data.prodType;
                 this.prodData.prodType.prodDesc=data.prodDesc;
                 const newData=this.copy(this.prodData,[]);
@@ -289,6 +279,14 @@
                 }else{
                     this.showCopy = '';
                 }
+            },
+            refreshClick() {
+                getProdData(this.prodCode).then(response => {
+                    this.prodData = response.data.data
+                    this.prodCode = response.data.data.prodType.prodType
+                    this.prodDesc = response.data.data.prodType.prodDesc
+                    this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                });
             }
         }
     }
