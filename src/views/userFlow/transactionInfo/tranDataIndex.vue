@@ -190,10 +190,6 @@
                   if(diff== undefined){
                      assembleColumns.push(chargeColumn)
                    }else{
-                      const dmlType=diff.dmlType;
-                      if(dmlType == 'I'){
-                          assembleColumns.push(diff)
-                      }else if(dmlType == 'U'){
                           for(const col in chargeColumn){
                               let chargeCol=chargeColumn[col];
                               let diffCol=diff[col];
@@ -202,12 +198,34 @@
                               }
                           }
                           assembleColumns.push(chargeColumn)
-                      }
                   }
+                }
+                if(heards.size==0){
+                    for(const key in prodChargeDiff[0]){
+                        let head={};
+                        head["text"]=getColumnDesc_(key);
+                        head["value"]=key;
+                        heards.push(head);
+                    }
+                }
+                for(const index in prodChargeDiff){
+                    const prodCharge= prodChargeDiff[index];
+                    const dmlType=prodCharge.dmlType;
+                    let diffData={}
+                    if(dmlType == 'I'){
+                        const keyAndValue=index;
+                        for(const num in heards){
+                            const value=heards[num].value
+                            diffData[value]=prodCharge[value];
+                        }
+
+                        assembleColumns.push(diffData)
+                    }
                 }
                 const reColumn = {"headers": heards,"column": assembleColumns}
                 this.prodCharge= reColumn;
-            }
+            },
+
 //            ,
 //            addCompare () {
 //
