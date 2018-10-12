@@ -20,7 +20,7 @@
                             class="mx-5"
                     ></v-text-field>
                     <v-text-field
-                            v-model="selected.chargePeriodFerq"
+                            v-model="selected.chargePeriodFreq"
                             label="收费频率"
                             class="mx-5"
                             required
@@ -109,7 +109,7 @@ export default {
             selected: {},
             columns: [
                 {dataIndex: 'feeType', title: '批量收费类型',scopedSlots: { customRender: 'feeType' }},
-                {dataIndex: 'chargePeriodFerq', title: '收费频率'},
+                {dataIndex: 'chargePeriodFreq', title: '收费频率'},
                 {dataIndex: 'chargeDay', title: '收费日期'},
                 {dataIndex: 'nextChargeDate', title: '下一收费日'},
                 {dataIndex: 'chargeDealMethod', title: '收费处理方式'},
