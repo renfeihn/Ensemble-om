@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div class="branchCard">
         <treeselect v-model="value" :multiple="true" openDirection="below" :options="thisOptions" :always-open="true" :limit="10" :sort-value-by="INDEX"/>
     </div>
 </template>
@@ -71,3 +71,8 @@ export default {
   }
 };
 </script>
+<style>
+    .branchCard {
+        height: auto;
+    }
+</style>
