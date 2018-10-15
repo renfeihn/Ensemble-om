@@ -85,8 +85,6 @@
                                 <v-select class="primary--text " :items="acctIntFlag" v-model="prodData.prodDefines.ACCT_INT_FLAG.attrValue" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
                             </v-flex>
 
-                            <!--<v-flex xs12>-->
-                            <!--</v-flex>-->
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
                             </v-flex>
@@ -97,7 +95,7 @@
                                 <v-subheader class="primary--text subheading">币种*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.CCY.attrValue" :options="ccy"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.CCY.attrValue" :options="ccy" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
@@ -109,7 +107,7 @@
                                 <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.DOC_TYPE.attrValue" :options="docType"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.DOC_TYPE.attrValue" :options="docType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类型*</v-subheader>
@@ -127,14 +125,14 @@
                                 <v-subheader class="primary--text subheading">账户属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.ACCT_NATURE.attrValue" :options="acctNature"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.ACCT_NATURE.attrValue" :options="acctNature" class="dcMulti"></dc-multiselect>
 
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">关系属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.OWNERSHIP_TYPE.attrValue" :options="ownerShipType"></dc-multiselect>
+                                <dc-multiselect v-model="prodData.prodDefines.OWNERSHIP_TYPE.attrValue" :options="ownerShipType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">账户类别*</v-subheader>
@@ -181,6 +179,7 @@
             startDateMenu: false,
             endDate: null,
             endDateMenu: false,
+            mult: true,
             startDate: null,
             ccy: [{
                 key: '',
@@ -258,4 +257,8 @@
         border-top: 2px solid #ddd;
         text-align: center;
     }
+    .dcMulti {
+        margin-top: 10px;
+    }
+
 </style>

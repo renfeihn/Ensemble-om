@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-    this.init();
+    this.init(this._props.msg);
   },
   methods: {
     init(msg) {

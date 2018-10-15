@@ -1,74 +1,150 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <v-dialog v-model="dialog" max-width="1100px">
-                <v-btn slot="activator" color="success" dark class="mb-2" @click="addClick">新增</v-btn>
-                <v-btn slot="activator" color="success" dark class="mb-2" @click="modClick">修改</v-btn>
+                <a-button type="primary" class="ml-2" @click="onAdd">新增</a-button>
+                <a-button type="primary" class="ml-2" @click="onEdit">修改</a-button>
+                <a-button type="primary" class="ml-2" @click="onDelete">删除</a-button>
+                <v-dialog
+                        v-model="dialog"
+                        width="500"
+                >
                 <v-card>
                     <v-card-text>
-                        <v-flex xs12 md12 lg12>
-                            <div slot="widget-content">
-                                <v-container fluid pt-1>
-                                    <v-layout row wrap>
-                                        <v-flex xs12 md2 lg2>
-                                            <v-subheader class="primary--text subheading">产品类型*</v-subheader>
-                                        </v-flex>
-                                        <v-flex md4 lg4>
-                                            <v-text-field class="primary--text mx-1" label="产品类型" name="title" v-model="editedItem.prodType" single-line hide-details disabled>
-                                            </v-text-field>
-                                        </v-flex>
-                                        <v-flex xs12 md2 lg2>
-                                            <v-subheader class="primary--text subheading">核算状态*</v-subheader>
-                                        </v-flex>
-                                        <v-flex md4 lg4>
-                                            <v-select class="primary--text mx-2" :items="accountingStatus" v-model="editedItem.accountingStatus" label="核算状态" item-text="value" item-value="key" single-line hide-details></v-select>
-                                       </v-flex>
-                                    </v-layout>
-                                    <v-layout row wrap>
-                                        <v-flex xs12 md2 lg2>
-                                            <v-subheader class="primary--text subheading">账套*</v-subheader>
-                                        </v-flex>
-                                        <v-flex md4 lg4>
-                                            <v-text-field class="primary--text mx-1" label="账套" name="title" v-model="editedItem.businessUnit" single-line hide-details>
-                                            </v-text-field>
-                                        </v-flex>
-                                        <v-flex xs12 md2 lg2>
-                                            <v-subheader class="primary--text subheading">负债科目代码*</v-subheader>
-                                        </v-flex>
-                                        <v-flex md4 lg4>
-                                            <v-select class="primary--text mx-2" :items="glCodeL" v-model="editedItem.glCodeL" label="负债科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
-                                        </v-flex>
-                                    </v-layout>
-                                    <v-layout row wrap>
-                                        <v-flex xs12 md2 lg2>
-                                            <v-subheader class="primary--text subheading">利息支出科目代码*</v-subheader>
-                                        </v-flex>
-                                        <v-flex md4 lg4>
-                                            <v-select class="primary--text mx-2" :items="glCodeIntE" v-model="editedItem.glCodeIntE" label="利息支出科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
-                                        </v-flex>
-                                        <v-flex xs12 md2 lg2>
-                                            <v-subheader class="primary--text subheading">应付利息科目代码*</v-subheader>
-                                        </v-flex>
-                                        <v-flex md4 lg4>
-                                            <v-select class="primary--text mx-2" :items="glCodeIntPay" v-model="editedItem.glCodeIntPay" label="应付利息科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
-                            </div>
-                        </v-flex>
-                        <v-layout row wrap>
-                            <v-flex xs12 md3 lg3>
-                            </v-flex>
-                            <v-btn color="success" depressed="" @click="close"><v-icon >assignment_turned_in</v-icon>取消</v-btn>
-                            <v-flex xs12 md4 lg4>
-                            </v-flex>
-                            <v-btn color="success" depressed="" @click="saveClick"><v-icon >assignment_turned_in</v-icon>保存</v-btn>
-                        </v-layout>
+                    <v-form v-model="valid">
+                    <v-text-field
+                            v-model="selected.prodType"
+                            :counter="10"
+                            label="产品类型"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.accountingStatus"
+                            :counter="10"
+                            label="核算状态"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.businessUnit"
+                            :counter="10"
+                            label="账套"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.glCodeL"
+                            :counter="10"
+                            label="负债科目代码"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.glCodeIntE"
+                            :counter="10"
+                            label="利息支出科目代码"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                        <v-text-field
+                                v-model="selected.glCodeIntPay"
+                                :counter="10"
+                                label="应付利息科目代码"
+                                required
+                                class="mx-5"
+                        ></v-text-field>
+                    </v-form>
+                        <v-btn
+                                color="green darken-1"
+                                flat="flat"
+                                @click="submit"
+                        >
+                            确认
+                        </v-btn>
+                        <v-btn
+                                color="green darken-1"
+                                flat="flat"
+                                @click="dialog = false"
+                        >
+                            取消
+                        </v-btn>
                     </v-card-text>
                 </v-card>
-            </v-dialog>
+                </v-dialog>
         </v-toolbar>
         <v-divider></v-divider>
+        <v-card-text class="pa-0">
+            <a-table :customRow="customRow" :columns="columns" :dataSource="accountingInfos" bordered>
+            </a-table>
+            <v-divider></v-divider>
+        </v-card-text>
+    </v-card>
+</template>
+    <!-- <v-card>
+         <v-card-text>
+             <v-flex xs12 md12 lg12>
+                 <div slot="widget-content">
+                     <v-container fluid pt-1>
+                         <v-layout row wrap>
+                             <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary&#45;&#45;text subheading">产品类型*</v-subheader>
+                             </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-text-field class="primary&#45;&#45;text mx-1" label="产品类型" name="title" v-model="editedItem.prodType" single-line hide-details disabled>
+                                 </v-text-field>
+                             </v-flex>
+                             <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary&#45;&#45;text subheading">核算状态*</v-subheader>
+                             </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-select class="primary&#45;&#45;text mx-2" :items="accountingStatus" v-model="editedItem.accountingStatus" label="核算状态" item-text="value" item-value="key" single-line hide-details></v-select>
+                            </v-flex>
+                         </v-layout>
+                         <v-layout row wrap>
+                             <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary&#45;&#45;text subheading">账套*</v-subheader>
+                             </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-text-field class="primary&#45;&#45;text mx-1" label="账套" name="title" v-model="editedItem.businessUnit" single-line hide-details>
+                                 </v-text-field>
+                             </v-flex>
+                             <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary&#45;&#45;text subheading">负债科目代码*</v-subheader>
+                             </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-select class="primary&#45;&#45;text mx-2" :items="glCodeL" v-model="editedItem.glCodeL" label="负债科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
+                             </v-flex>
+                         </v-layout>
+                         <v-layout row wrap>
+                             <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary&#45;&#45;text subheading">利息支出科目代码*</v-subheader>
+                             </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-select class="primary&#45;&#45;text mx-2" :items="glCodeIntE" v-model="editedItem.glCodeIntE" label="利息支出科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
+                             </v-flex>
+                             <v-flex xs12 md2 lg2>
+                                 <v-subheader class="primary&#45;&#45;text subheading">应付利息科目代码*</v-subheader>
+                             </v-flex>
+                             <v-flex md4 lg4>
+                                 <v-select class="primary&#45;&#45;text mx-2" :items="glCodeIntPay" v-model="editedItem.glCodeIntPay" label="应付利息科目代码" item-text="value" item-value="key" single-line hide-details></v-select>
+                             </v-flex>
+                         </v-layout>
+                     </v-container>
+                 </div>
+             </v-flex>
+             <v-layout row wrap>
+                 <v-flex xs12 md3 lg3>
+                 </v-flex>
+                 <v-btn color="success" depressed="" @click="close"><v-icon >assignment_turned_in</v-icon>取消</v-btn>
+                 <v-flex xs12 md4 lg4>
+                 </v-flex>
+                 <v-btn color="success" depressed="" @click="saveClick"><v-icon >assignment_turned_in</v-icon>保存</v-btn>
+             </v-layout>
+         </v-card-text>
+     </v-card>
+ </v-dialog>
+</v-toolbar>-->
+       <!-- <v-divider></v-divider>
         <v-card-text class="pa-0">
             <template>
                 <v-data-table :headers="headers" :items="prodAccountingInfo" hide-actions class="elevation-0">
@@ -85,15 +161,15 @@
                 </v-data-table>
             </template>
             <v-divider></v-divider>
-        </v-card-text>
-    </v-card>
-</template>
+        </v-card-text>-->
+
+
 <script>
     import {getChargeDefine} from '@/api/table';
     import {getColumnDesc} from '@/utils/columnDesc'
     import toast from '@/utils/toast';
     import { getInitData } from "@/mock/init";
-
+    import {removeByValue} from '@/utils/util'
 
     export default {
         filters: {
@@ -104,19 +180,23 @@
         props: ["prodData"],
         data () {
             return {
+                valid: true,
+                select: {},
+                columns: [
+                    {dataIndex: 'prodType', title: '产品类型',scopedSlots: { customRender: 'prodType' }},
+                    {dataIndex: 'accountingStatus', title: '核算状态'},
+                    {dataIndex: 'businessUnit', title: '账套'},
+                    {dataIndex: 'glCodeL', title: '负债科目编码'},
+                    {dataIndex: 'glCodeIntE', title: '利息支出科目代码'},
+                    {dataIndex: 'glCodeIntPay', title: '应付利息科目代码'},
+                ],
                 dialog: false,
+                accountingInfos: [],
+                selected: {},
+                option: '',
                 addFlag: false,
                 modFlag: false,
                 refData: getInitData,
-                prodType: '',
-                headers: [
-                    {text: '产品类型', align: 'left', value: 'prodType'},
-                    {text: '核算状态', value: 'accountingStatus'},
-                    {text: '账套', value: 'businessUnit'},
-                    {text: '负债科目代码', value: 'glCodeL' },
-                    {text: '利息支出科目代码', value: 'glCodeIntE'},
-                    {text: '应付利息科目代码', value: 'glCodeIntPay'}
-                ],
                 editedItem: {
                     prodType: '',
                     accountingStatus: '',
@@ -157,6 +237,49 @@
             this.initRefDate()
         },
         methods: {
+            submit () {
+                if(this.option == 'add'){
+                    let dataSource=this.accountingInfos
+                    let selected=this.selected;
+                    selected.prodType=this.prodType
+                    dataSource.push(selected)
+                }
+                this.dialog=false;
+            },
+            onDelete () {
+                let dataSource=this.accountingInfos
+                removeByValue(dataSource,this.selected)
+            },
+            onAdd () {
+                this.option='add';
+                this.selected={};
+                this.dialog=true;
+            },
+            onEdit () {
+                this.option='edit';
+                this.dialog=true;
+            },
+            customRow (record) {
+                return {
+                    on: {
+                        click: this.clickRow.bind(this, record)
+                    }
+                }
+            },
+            clickRow(record,event){
+                var tr=event.currentTarget;
+                var tbd=tr.parentNode;
+                for (const i in tbd.childNodes) {
+                    if (!isNaN(i)) {
+                        if (tr == tbd.childNodes[i]) {
+                            tbd.childNodes[i].style = 'background-color: #e6f7ff';
+                        } else {
+                            tbd.childNodes[i].style = '';
+                        }
+                    }
+                }
+                this.selected=record;
+            },
             getChargeDefinesInfo(val) {
                 //初始化产品对应的信息
                 this.prodAccountingInfo = []

@@ -1,97 +1,94 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <v-dialog v-model="dialog" max-width="900px">
-                <v-btn slot="activator" color="success" dark class="mb-2" @click="addClick">新增</v-btn>
-                <v-btn slot="activator" color="success" dark class="mb-2" @click="modClick">修改</v-btn>
+
+            <a-button type="primary" @click="onAdd">新增</a-button>
+            <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
+            <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
+            <v-dialog
+                    v-model="dialog"
+                    width="500"
+            >
                 <v-card>
                     <v-card-text>
-                        <v-flex xs12 md12 lg12>
-                             <div slot="widget-content">
-                                 <v-container fluid pt-1>
-                                     <v-layout row wrap>
-                                         <v-flex>
-                                             <v-subheader class="primary--text subheading">批量收费类型*</v-subheader>
-                                         </v-flex>
-                                         <v-flex md4 lg4>
-                                             <v-select class="primary--text mx-2" :items="feeType" v-model="editedItem.feeType" label="批量收费类型" item-text="value" item-value="key" single-line hide-details></v-select>
-                                         </v-flex>
-                                         <v-flex xs12 md2 lg2>
-                                             <v-subheader class="primary--text subheading">收费频率*</v-subheader>
-                                         </v-flex>
-                                         <v-flex md4 lg4>
-                                             <v-select class="primary--text mx-2" :items="chargePeriodFreq" v-model="editedItem.chargePeriodFreq" label="收费频率" item-text="value" item-value="key" single-line hide-details></v-select>
-                                         </v-flex>
-                                     </v-layout>
-                                     <v-layout row wrap>
-                                         <v-flex xs12 md2 lg2>
-                                             <v-subheader class="primary--text subheading">收费日*</v-subheader>
-                                         </v-flex>
-                                         <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-2" label="收费日" name="title" v-model="editedItem.chargeDay" single-line hide-details/>
-                                         </v-flex>
-                                         <v-flex xs12 md2 lg2>
-                                             <v-subheader class="primary--text subheading">收费处理方式*</v-subheader>
-                                         </v-flex>
-                                         <v-flex md4 lg4>
-                                             <v-select class="primary--text mx-2" :items="chargeDealMethod" v-model="editedItem.chargeDealMethod" label="收费处理方式" item-text="value" item-value="key" single-line hide-details></v-select>
-                                         </v-flex>
-                                     </v-layout>
-                                     <v-layout row wrap>
-                                         <v-flex xs12 md2 lg2>
-                                             <v-subheader class="primary--text subheading">持续扣款标识*</v-subheader>
-                                         </v-flex>
-                                         <v-flex md4 lg4>
-                                             <v-select class="primary--text mx-2" :items="conDeductFlag" v-model="editedItem.conDeductFlag" label="持续扣款标识" item-text="value" item-value="key" single-line hide-details></v-select>
-                                         </v-flex>
-                                         <v-flex xs12 md2 lg2>
-                                             <v-subheader class="primary--text subheading">持续扣款次数*</v-subheader>
-                                         </v-flex>
-                                         <v-flex md4 lg4>
-                                             <v-text-field class="primary--text mx-2" label="持续扣款次数" name="title" v-model="editedItem.conDeductTimes" single-line hide-details/>
-                                         </v-flex>
-                                     </v-layout>
-                                 </v-container>
-                             </div>
-                         </v-flex>
-                        <v-layout row wrap>
-                            <v-flex xs12 md3 lg3>
-                            </v-flex>
-                            <v-btn color="success" depressed="" @click="close"><v-icon >assignment_turned_in</v-icon>取消</v-btn>
-                            <v-flex xs12 md3 lg3>
-                            </v-flex>
-                            <v-btn color="success" depressed="" @click="saveClick"><v-icon >assignment_turned_in</v-icon>保存</v-btn>
-                        </v-layout>
+                <v-form v-model="valid">
+                    <v-text-field
+                            v-model="selected.feeType"
+                            :counter="10"
+                            label="费用类型"
+                            required
+                            class="mx-5"
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.chargePeriodFreq"
+                            label="收费频率"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.chargeDay"
+                            label="收费日"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.nextChargeDate"
+                            label="下一收费日期"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.chargeDealMethod"
+                            label="收费处理方式"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.conDeductFlag"
+                            label="持续扣款标示"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="selected.conDeductTimes"
+                            label="持续扣款次数"
+                            class="mx-5"
+                            required
+                    ></v-text-field>
+                </v-form>
+                <v-btn
+                        color="green darken-1"
+                        flat="flat"
+                        @click="submit"
+                >
+                    确认
+                </v-btn>
+                  <v-btn
+                          color="green darken-1"
+                          flat="flat"
+                          @click="dialog = false"
+                  >
+                      取消
+                  </v-btn>
                     </v-card-text>
                 </v-card>
             </v-dialog>
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
-            <template>
-                <v-data-table :headers="headers" :items="chargeDefinesInfo" hide-actions class="elevation-0">
-                    <template slot="items" slot-scope="props">
-                        <tr @click="getChargeDefine(props.item)" v-bind:class="{'chargeSelected': props.item==editedItem }" highlight-row>
-                        <td class="text-xs-left">{{ props.item.feeType | getDescByKey}}</td>
-                        <td class="text-xs-left">{{ props.item.chargePeriodFreq | getDescByKey}}</td>
-                        <td class="text-xs-left">{{ props.item.chargeDay}}</td>
-                        <td class="text-xs-left">{{ props.item.chargeDealMethod | getDescByKey}}</td>
-                        <td class="text-xs-left">{{ props.item.conDeductFlag | getDescByKey}}</td>
-                        <td class="text-xs-left">{{ props.item.conDeductTimes}}</td>
-                        </tr>
-                    </template>
-                </v-data-table>
-            </template>
+            <a-table :customRow="customRow" :columns="columns" :dataSource="chargeDefinesInfo" bordered>
+            </a-table>
             <v-divider></v-divider>
         </v-card-text>
     </v-card>
+
 </template>
 <script>
 import {getChargeDefine} from '@/api/table';
 import toast from '@/utils/toast';
 import { getInitData } from "@/mock/init";
 import {getColumnDesc} from '@/utils/columnDesc'
-
+import {removeByValue} from '@/utils/util'
 
 export default {
     filters: {
@@ -102,51 +99,25 @@ export default {
     props: ["prodData"],
     data () {
         return {
-            dialog: false,
-            addFlag: false,
-            modFlag: false,
             prodType: '',
             open: true,
+            valid: true,
+            dialog: false,
             refData: getInitData,
-            headers: [
-                {text: '批量收费类型', align: 'left', value: 'feeType'},
-                {text: '收费频率', value: 'chargePeriodFreq'},
-                {text: '收费日期', value: 'chargeDay'},
-                {text: '收费处理方式', value: 'chargeDealMethod' },
-                {text: '持续扣款标识', value: 'conDeductFlag'},
-                {text: '持续扣款次数', value: 'conDeductTimes'}
+            option: '',
+            selectedRowKeys: [],
+            selected: {},
+            columns: [
+                {dataIndex: 'feeType', title: '批量收费类型',scopedSlots: { customRender: 'feeType' }},
+                {dataIndex: 'chargePeriodFreq', title: '收费频率'},
+                {dataIndex: 'chargeDay', title: '收费日期'},
+                {dataIndex: 'nextChargeDate', title: '下一收费日'},
+                {dataIndex: 'chargeDealMethod', title: '收费处理方式'},
+                {dataIndex: 'conDeductFlag', title: '持续扣款标识'},
+                {dataIndex: 'conDeductTimes', title: '持续扣款次数'}
             ],
-            editedItem: {
-                prodType: '',
-                feeType: '',
-                chargePeriodFreq: '',
-                chargeDay: '',
-                chargeDealMethod: '',
-                conDeductFlag: '',
-                conDeductTimes: ''
-            },
-            defaultItem: {
-                feeType: '',
-                chargePeriodFreq: '',
-                chargeDay: '',
-                chargeDealMethod: '',
-                conDeductFlag: '',
-                conDeductTimes: ''
-            },
-            projects: [{
-                feeType: '',
-                chargePeriodFreq: '',
-                chargeDay: '',
-                chargeDealMethod: '',
-                conDeductFlag: '',
-                conDeductTimes: ''
-            }],
-            chargeDefinesInfo: {}
+            chargeDefinesInfo: []
         };
-    },
-
-    computed: {
-
     },
     watch: {
         prodData (val) {
@@ -154,20 +125,59 @@ export default {
         }
     },
     mounted: function() {
-        this.queryDespositProdData(this.prodData)
+        this.getChargeDefinesInfo(this._props.prodData)
     },
+
     methods: {
+        submit () {
+            if(this.option == 'add'){
+                let dataSource=this.chargeDefinesInfo
+                let selected=this.selected;
+                selected.prodType=this.prodType
+                dataSource.push(selected)
+            }
+            this.dialog=false;
+        },
+        onDelete () {
+            let dataSource=this.chargeDefinesInfo
+            removeByValue(dataSource,this.selected)
+        },
+        onAdd () {
+            this.option='add';
+            this.selected={};
+            this.dialog=true;
+        },
+        onEdit () {
+            this.option='edit';
+            this.dialog=true;
+        },
+        customRow (record) {
+            return {
+                on: {
+                    click: this.clickRow.bind(this, record)
+                }
+            }
+        },
+        clickRow(record,event){
+            var tr=event.currentTarget;
+            var tbd=tr.parentNode;
+            for (const i in tbd.childNodes) {
+                if (!isNaN(i)) {
+                    if (tr == tbd.childNodes[i]) {
+                        tbd.childNodes[i].style = 'background-color: #e6f7ff';
+                    } else {
+                        tbd.childNodes[i].style = '';
+                    }
+                }
+            }
+            this.selected=record;
+        },
         getChargeDefinesInfo(val) {
             //初始化产品对应的信息
-            this.chargeDefinesInfo = []
+            if(val!=undefined&&val.prodType!=undefined){
             this.chargeDefinesInfo = val.mbProdCharge
             this.prodType = val.prodType.prodType
-        },
-        editItem (item) {
-            this.editedIndex = this.projects.indexOf(item)
-            this.editedItem = Object.assign({}, item)
-            this.dialog = true
-            this.close()
+            }
         },
         initRefDate() {
             this.feeType = this.refData[2].paraDataRb.feeType;
@@ -210,21 +220,6 @@ export default {
                 }
             }
         },
-        getChargeDefine(value){
-            this.editedItem = []
-            this.editedItem = value
-        },
-        addClick() {
-            this.initRefDate();
-            this.editedItem = []
-            this.modFlag = false
-            this.addFlag = true
-        },
-        modClick() {
-            this.initRefDate();
-            this.addFlag = false
-            this.modFlag = true
-        },
         saveClick() {
             if(this.addFlag){
                 this.save()
@@ -235,8 +230,3 @@ export default {
     }
 };
 </script>
-<style>
-.chargeSelected {
-  background-color: #e3f2fd;
-}
-</style>

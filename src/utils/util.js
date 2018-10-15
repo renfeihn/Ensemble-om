@@ -9,6 +9,21 @@ const isNotNull = function (obj) {
         return false;
     }
 };
+function removeByValue(arr, val) {
+
+    for(let i=0; i<arr.length; i++) {
+
+        if(arr[i] == val) {
+
+            arr.splice(i, 1);
+
+            break;
+
+        }
+
+    }
+
+}
 function isEmptyObject(obj) {
     for (const key in obj){
         return false;//返回false，不为空对象
@@ -25,7 +40,8 @@ const Models = {
     nvl: nvl,
     isNull: isNull,
     isNotNull: isNotNull,
-    isEmptyObject: isEmptyObject
+    isEmptyObject: isEmptyObject,
+    removeByValue: removeByValue
 };
 
 module.exports = Models;
