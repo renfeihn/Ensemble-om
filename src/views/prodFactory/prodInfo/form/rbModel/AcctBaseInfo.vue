@@ -1,5 +1,6 @@
 <template>
     <v-container fluid pr-5 pt-0>
+<<<<<<< HEAD
         <div slot="widget-content">
             <v-container fluid pt-1>
                 <v-layout row wrap>
@@ -57,19 +58,13 @@
                         <v-subheader class="primary--text subheading">生效日期*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <v-menu ref="startDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
-                            <v-text-field slot="activator" label="生效日期" v-model="prodData.prodDefines.PROD_START_DATE.attrValue" append-icon="event" single-line hide-details></v-text-field>
-                            <v-date-picker v-model="prodData.prodDefines.PROD_START_DATE.attrValue" @input="$refs.startDateMenu.save(prodData.prodDefines.PROD_START_DATE.attrValue)" no-title scrollable locale="zh-cn"></v-date-picker>
-                        </v-menu>
+                        <dc-date v-model="prodData.prodDefines.PROD_START_DATE.attrValue" label="生效日期"></dc-date>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">失效日期*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-                            <v-text-field slot="activator" label="失效日期" v-model="prodData.prodDefines.PROD_END_DATE.attrValue" append-icon="event" single-line hide-details></v-text-field>
-                            <v-date-picker v-model="prodData.prodDefines.PROD_END_DATE.attrValue" @input="$refs.endDateMenu.save(prodData.prodDefines.PROD_END_DATE.attrValue)" no-title scrollable locale="zh-cn"></v-date-picker>
-                        </v-menu>
+                        <dc-date v-model="prodData.prodDefines.PROD_END_DATE.attrValue" label="失效日期"></dc-date>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">利润中心*</v-subheader>
@@ -156,7 +151,8 @@
                         <dc-multiselect v-model="prodData.prodDefines.CONVERT_CCY.attrValue" :options="discountCcy" :isMultiSelect="false"></dc-multiselect>
                     </v-flex>
                 </v-layout>
-            </v-container></div>
+            </v-container>
+        </div>
     </v-container>
 </template>
 
@@ -165,11 +161,10 @@
     import DcMultiselect from '@/components/widgets/DcMultiselect'
     import DcTextField from '@/components/widgets/DcTextField'
     import { getInitData } from "@/mock/init";
-
-    import { getProdData } from "@/api/prod";
+    import DcDate from '@/components/widgets/DcDate'
 
     export default {
-        components: { DcSwitch, DcMultiselect, DcTextField },
+        components: { DcSwitch, DcMultiselect,DcDate,DcTextField},
         props: ["prodData"],
         data: () => ({
             title: null,
