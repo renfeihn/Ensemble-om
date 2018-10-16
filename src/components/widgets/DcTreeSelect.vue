@@ -1,5 +1,5 @@
 <template>
-    <div class="branchCard">
+    <div :style="{height: heightSize+'px'}">
         <treeselect v-model="value" :multiple="true" openDirection="below" :options="thisOptions" :always-open="true" :limit="10" :sort-value-by="INDEX"/>
     </div>
 </template>
@@ -15,7 +15,8 @@ export default {
   data() {
     return {
       value: [],
-      thisOptions: []
+      thisOptions: [],
+      heightSize: 0,
     };
   },
   watch: {
@@ -35,6 +36,12 @@ export default {
   },
   methods: {
     init(msg) {
+      //通过数据个数动态修改树结构hight  每条数据hight=36px  计算最大个数为11 当数据个数>11时 树形界面右侧实现滚动条拖拽
+      if(this._props.options.length > 11){
+        this.heightSize = 335
+      }else{
+        this.heightSize = this.getHeigthSize(this._props.options.length)
+      }
       let PropOptions = this._props.options;
       let options = [];
       for (const index in PropOptions) {
@@ -67,12 +74,11 @@ export default {
       if (value) {
         this.$emit("getVue", value);
       }
+    },
+    getHeigthSize(val) {
+        var enumArray = [68,68,94,120,144,170,192,217,248,270,300,319]
+        return enumArray[val]
     }
   }
 };
 </script>
-<style>
-    .branchCard {
-        height: auto;
-    }
-</style>

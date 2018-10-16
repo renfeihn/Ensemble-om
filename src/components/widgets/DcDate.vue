@@ -62,7 +62,7 @@
             },
             reback(newValue){
                 let value = "";
-                value = newValue.subString(0,4)+newValue.subString(5,7)+newVaue.subString(8,10)
+                value = newValue.subString(0,4)+newValue.subString(5,7)+newValue.subString(8,10)
                 this.$emit("getVue", value);
             }
           /*  formatDate (date) {
