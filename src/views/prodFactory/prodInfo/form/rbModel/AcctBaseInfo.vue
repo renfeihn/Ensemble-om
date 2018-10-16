@@ -1,6 +1,5 @@
 <template>
     <v-container fluid pr-5 pt-0>
-<<<<<<< HEAD
         <div slot="widget-content">
             <v-container fluid pt-1>
                 <v-layout row wrap>
