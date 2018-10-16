@@ -37,12 +37,23 @@
                 handler(msg) {
                     this.init(msg);
                 }
+            },
+            value: {
+                handler(newValue) {
+                    this.reback(newValue);
+                }
             }
         },
         created() {
             this.init(this._props.msg);
         },
         methods: {
+            reback(newValue) {
+                let value = newValue;
+                if (value) {
+                    this.$emit("getVue", value);
+                }
+            },
             peopleClick() {
                 if(this.peopleColor === "grey lighten-1") {
                     this.peopleColor = "red"
