@@ -97,12 +97,19 @@
 //      },
             reback(newValue) {
                 let value = "";
-                for (const index in newValue) {
-                    if (index == 0) {
-                        value = newValue[index].key;
-                    } else {
-                        value = value + "," + newValue[index].key;
+                if(this.isMulti === true) {
+                    //多选数据组装
+                    for (const index in newValue) {
+                        if (index == 0) {
+                            value = newValue[index].key;
+                        } else {
+                            value = value + "," + newValue[index].key;
+                        }
                     }
+                }
+                if(this.isMulti === false){
+                    //单选数据组装
+                    value = newValue.key
                 }
                 if (value) {
                     this.$emit("getVue", value);
