@@ -8,10 +8,20 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px">
-                    <v-text-field slot="activator" v-model="value" append-icon="event" single-line hide-details></v-text-field>
-                    <v-date-picker v-model="value" @input="$refs.endDateMenu.save(dateFormatted)" no-title scrollable locale="zh-cn"></v-date-picker>
-            </v-menu>
+            <v-flex>
+                <v-menu transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px">
+                    <v-text-field slot="activator" v-model="dateFormatted" append-icon="event" single-line hide-details></v-text-field>
+                    <v-date-picker v-model="dateFormatted" no-title scrollable locale="zh-cn"></v-date-picker>
+                </v-menu>
+            </v-flex>
+            <v-flex md3 lg3 v-if="personShow==1">
+                <v-tooltip right :color="peopleColor">
+                    <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick">
+                        <v-icon>people</v-icon>
+                    </v-btn>
+                    <span>{{peopleDesc}}</span>
+                </v-tooltip>
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
@@ -21,14 +31,18 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["options", "msg"],
+        props: ["options", "msg","perShow"],
         data: () => ({
             date: null,
             dateFormatted: null,
             menu1: false,
             menu2: false,
+            flag: null,
             value: [],
-            options: []
+            options: [],
+            peopleColor: "grey lighten-1",
+            peopleDesc: "产品生效",
+            personShow: 1
         }),
 
         computed: {
@@ -43,7 +57,7 @@
                     this.init(msg);
                 }
             },
-            value: {
+            dateFormatted: {
                 handler(newValue) {
                     this.reback(newValue);
                 }
@@ -53,17 +67,27 @@
             this.init(this._props);
         },
         methods: {
+            peopleClick() {
+                if(this.peopleColor === "grey lighten-1") {
+                    this.peopleColor = "red"
+                    this.peopleDesc = "分户生效"
+                }else if (this.peopleColor === "red"){
+                    this.peopleColor = "grey lighten-1"
+                    this.peopleDesc = "产品生效"
+                }
+            },
             init(msg){
                 if(msg !== null && msg !== undefined){
                     let dates = this._props.msg
-                    let time =dates.substring(0,4)+"年"+dates.substring(4,6)+"月"+dates.substring(6)+"日"
-                    this.value = time
+                    let time =dates.substring(0,4)+"-"+dates.substring(4,6)+"-"+dates.substring(6)
+                    this.dateFormatted = time
                 }
             },
             reback(newValue){
-                let value = "";
-                value = newValue.subString(0,4)+newValue.subString(5,7)+newValue.subString(8,10)
-                this.$emit("getVue", value);
+                let dateFormatted = "";
+                dateFormatted = newValue.subString(0,4)+newValue.subString(5,7)+newValue.subString(8)
+                alert(dateFormatted)
+                this.$emit("getVue", dateFormatted);
             }
           /*  formatDate (date) {
                 if (!date) return null
