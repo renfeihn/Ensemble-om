@@ -8,15 +8,15 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-            <v-flex>
-                <v-menu transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px">
+            <v-flex md9 lg9>
+                <v-menu transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" class="dcMulti">
                     <v-text-field slot="activator" v-model="dateFormatted" append-icon="event" single-line hide-details></v-text-field>
                     <v-date-picker v-model="dateFormatted" no-title scrollable locale="zh-cn"></v-date-picker>
                 </v-menu>
             </v-flex>
             <v-flex md3 lg3 v-if="personShow==1">
                 <v-tooltip right :color="peopleColor">
-                    <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick">
+                    <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
                         <v-icon>people</v-icon>
                     </v-btn>
                     <span>{{peopleDesc}}</span>
@@ -105,3 +105,15 @@
         }
     }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
+</style>
+<style scoped>
+    .dcMulti {
+        margin-top: -23px;
+        margin-right: 20px;
+    }
+    .dcMulti1 {
+        margin-top: -3px;
+        margin-left: 14px;
+    }
+</style>
