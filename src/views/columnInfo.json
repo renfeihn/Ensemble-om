@@ -1,81 +1,154 @@
 {
-    "PROD_TYPE":{
-        "valueMethod":"RF",
-        "PROD_TYPE":"RB101",
-        "columnDesc":"产品类型",
-        "columnType":"input",
-        "valueScore":"mb_prod_type.prod_type|prod_desc"
-    },
-    "ACCORD_TYPE":{
-        "ACCORD_TYPE":"1",
-        "valueMethod":"VL",
-        "columnDesc":"测试",
-        "columnType":"select",
-        "valueScore": [{
-          "key":"RB",
-          "value":"RB-存款类"
-        },
-        {
-          "key":"RB100",
-          "value":"RB100-个人存款组"
-        }]
-    },
-    "ACCORD_TYPE1":{
-        "ACCORD_TYPE":"1",
-        "valueMethod":"VL",
-        "columnDesc":"测试2",
-        "columnType":"switch",
-        "valueScore":"1:是,2:www"
-    },
-    "ACCORD_TYPE2":{
-        "ACCORD_TYPE":"1",
-        "valueMethod":"VL",
-        "columnDesc":"测试3",
-        "columnType":"tree",
-        "valueScore":[{
-          "key":"RB",
-          "value":"RB-存款类"
-        },
-        {
-          "key":"RB100",
-          "value":"RB100-个人存款组"
-        },
-          {
-            "key":"RB100",
-            "value":"RB100-个人存款组"
-          },
-          {
-            "key":"RB100",
-            "value":"RB100-个人存款组"
-          },
-          {
-            "key":"RB100",
-            "value":"RB100-个人存款组"
-          },
-          {
-            "key":"RB100",
-            "value":"RB100-个人存款组"
-          }]
-    },
-    "ACCORD_TYPE34":{
-        "ACCORD_TYPE":"1",
-        "valueMethod":"VL",
-        "columnDesc":"测试4",
-        "columnType":"input",
-        "valueScore":"1:是,2:www"
-    },
-    "ACCORD_TYPE5":{
-        "ACCORD_TYPE":"1",
-        "valueMethod":"VL",
-        "columnDesc":"测试5",
-        "columnType":"tree",
-        "valueScore":[{
-          "key":"RB",
-          "value":"RB-存款类"
-        },
-          {
-            "key":"RB100",
-            "value":"RB100-个人存款组"
-          }]
-    }
+  "PROFIT_CENTRE": {
+    "valueMethod": "VL",
+    "columnDesc": "利润中心",
+    "columnType": "select",
+    "valueScore": [
+      {
+        "key": "99",
+        "value": "99-利润中心"
+      }
+    ]
+  },
+  "ACCT_INT_FLAG": {
+    "valueMethod": "VL",
+    "columnDesc": "计息标志",
+    "columnType": "select",
+    "valueScore": [
+      {
+        "key": "00",
+        "value": "00-不计息"
+      },
+      {
+        "key": "10",
+        "value": "10-计息"
+      }
+    ]
+  },
+  "MULTI_CCY": {
+    "columnDesc": "是否多币种",
+    "columnType": "switch"
+  },
+  "CCY": {
+    "columnDesc": "币种",
+    "columnType": "select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "CNY",
+        "value": "CNY-美元"
+      },
+      {
+        "key": "AUD",
+        "value": "AUD-澳大利亚元"
+      },
+      {
+        "key": "CAD",
+        "value": "CAD-加拿大元"
+      },
+      {
+        "key": "EUR",
+        "value": "EUR-欧元"
+      },
+      {
+        "key": "USD",
+        "value": "USD-美元"
+      }
+    ]
+  },
+  "DOC_FLAG":{
+    "columnDesc":"是否多凭证",
+    "columnType":"switch"
+  },
+  "DOC_TYPE":{
+    "columnDesc":"凭证类型",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "001",
+        "value": "001-本外币对私存折"
+      },
+      {
+        "key": "002",
+        "value": "002-本外币对私定期存单 "
+      }
+    ]
+  },
+  "ACCT_TYPE":{
+    "columnDesc":"账户类型",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "A",
+        "value": "A-AIO账户"
+      },
+      {
+        "key": "C",
+        "value": "C-结算账户 "
+      },
+      {
+        "key": "S",
+        "value": "S-储蓄账户 "
+      },
+      {
+        "key": "T",
+        "value": "T-定期账户 "
+      }
+    ]
+  },
+  "FIXED_CALL":{
+    "columnDesc":"账户子类型",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "A",
+        "value": "A-AIO账户"
+      },
+      {
+        "key": "C",
+        "value": "C-结算账户 "
+      },
+      {
+        "key": "S",
+        "value": "S-储蓄账户 "
+      },
+      {
+        "key": "T",
+        "value": "T-定期账户 "
+      }
+    ]
+  },
+  "ACCT_NATURE":{
+    "columnDesc":"账户属性",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "1",
+        "value": "1-个人结算户"
+      },
+      {
+        "key": "2",
+        "value": "2-个人储蓄户"
+      }
+    ]
+  },
+  "OWNERSHIP_TYPE":{
+    "columnDesc":"关系属性",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "SG",
+        "value": "SG-独立账户"
+      },
+      {
+        "key": "AS",
+        "value": "AS-多联名账户"
+      }
+    ]
+  }
 }
