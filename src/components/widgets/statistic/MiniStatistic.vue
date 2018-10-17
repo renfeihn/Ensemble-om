@@ -5,7 +5,10 @@
         <div class="layout row ma-0">
           <div class="sm6 xs6 flex">
             <div class="layout column ma-0 justify-center align-center">
-              <v-icon size="56px" :color="color">{{icon}}</v-icon>
+              <!-- <v-icon size="56px" :color="color">{{icon}}</v-icon> -->
+              <v-avatar size="60" tile="false" color="white">
+                <span :class=classSpan>{{mark}}</span>
+              </v-avatar>
             </div>
           </div>
           <div class="sm6 xs6 flex text-sm-center py-3 white--text" :class="color">
@@ -22,9 +25,18 @@
 export default {
   props: {
     icon: String,
+    mark: String,
     title: String,
     subTitle: String,
     color: String
+  },
+  data() {
+    return {
+      classSpan: ""
+    };
+  },
+  created() {
+    this.classSpan = this._props.color + "--text display-2 font-weight-medium";
   }
 };
 </script>

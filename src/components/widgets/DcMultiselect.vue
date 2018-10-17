@@ -1,9 +1,10 @@
 <template>
+
     <div>
         <v-layout row wrap>
             <v-flex md9 lg9>
                 <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel=""
-                             :searchable="false" label="value" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                             :searchable="false" :close-on-select="false" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                 </multiselect>
             </v-flex>
             <v-flex md3 lg3 v-if="personShow==1">
