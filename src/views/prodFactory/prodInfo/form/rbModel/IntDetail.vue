@@ -1,7 +1,5 @@
 <template>
   <v-container fluid pr-5 pt-0>
-    <v-layout row wrap>
-      <v-flex xs12 md12 lg12>
         <div slot="widget-content">
           <v-container fluid pt-1>
             <v-layout row wrap>
@@ -9,13 +7,13 @@
                 <v-subheader class="primary--text subheading">结息周期*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <v-select class="primary--text mx-2" :items="cycleFreq" v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue" label="结息周期" item-text="value" item-value="key" single-line hide-details></v-select>
+                <dc-multiselect v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.CYCLE_FREQ.attrValue" :options="cycleFreq" :isMultiSelect="false"></dc-multiselect>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="primary--text subheading">结息日*</v-subheader>
               </v-flex>
               <v-flex md4 lg4>
-                <v-text-field class="primary--text mx-1" label="结息日" name="settleDay" v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.INT_DAY.attrValue" single-line hide-details></v-text-field>
+                <dc-text-field v-model="prodData.mbEventInfos['CYCLE_'+prodData.prodType.prodType].mbEventAttrs.INT_DAY.attrValue"></dc-text-field>
               </v-flex>
 
               <v-flex xs12 md2 lg2>
@@ -27,17 +25,17 @@
             </v-layout>
           </v-container>
         </div>
-      </v-flex>
-    </v-layout>
   </v-container>
 </template>
 
 <script>
     import  DcSwitch from "@/components/widgets/DcSwitch";
     import { getInitData } from "@/mock/init";
+    import DcMultiselect from '@/components/widgets/DcMultiselect'
+    import DcTextField from '@/components/widgets/DcTextField'
     import { getProdData } from "@/api/prod";
     export default {
-        components: { DcSwitch },
+        components: { DcSwitch, DcMultiselect, DcTextField },
         props: ["prodData"],
         data: () => ({
             title: null,

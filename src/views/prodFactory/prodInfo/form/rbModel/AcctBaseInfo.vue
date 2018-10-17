@@ -1,178 +1,169 @@
 <template>
     <v-container fluid pr-5 pt-0>
-        <v-layout row wrap>
-            <v-flex xs12 md12 lg12>
-                <div slot="widget-content">
-                    <v-container fluid pt-1>
-                        <v-layout row wrap>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品代码*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="prodData.prodType.prodType" single-line hide-details disabled></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品描述*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-text-field class="primary--text " label="产品描述" name="title" v-model="prodData.prodType.prodDesc" single-line hide-details disabled/>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">业务模块*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="sourceModule" v-model="prodData.prodDefines.SOURCE_MODULE.attrValue" label="业务模块" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品分类*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="prodClass" v-model="prodData.prodType.prodClass" label="产品分类" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品属性*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="prodAttr" v-model="prodData.prodType.prodRange" label="产品属性" item-text="value" item-value="key" value="'S'" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">组合产品*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-
-                                <dc-switch v-model="prodData.prodType.prodGroup"></dc-switch>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品状态*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="prodStatus" v-model="prodData.prodType.status" label="产品状态" item-text="value" item-value="key" value="A" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">基础产品*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="baseprodtype" v-model="prodData.prodType.baseProdType" label="基础产品" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">生效日期*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-menu ref="startDateMenu" lazy :close-on-content-click="false" v-model="startDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="startDate">
-                                    <v-text-field slot="activator" label="生效日期" v-model="prodData.prodDefines.PROD_START_DATE.attrValue" append-icon="event" single-line hide-details></v-text-field>
-                                    <v-date-picker v-model="prodData.prodDefines.PROD_START_DATE.attrValue" @input="$refs.startDateMenu.save(prodData.prodDefines.PROD_START_DATE.attrValue)" no-title scrollable locale="zh-cn"></v-date-picker>
-                                </v-menu>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">失效日期*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-menu ref="endDateMenu" lazy :close-on-content-click="false" v-model="endDateMenu" transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" :return-value.sync="endDate">
-                                    <v-text-field slot="activator" label="失效日期" v-model="prodData.prodDefines.PROD_END_DATE.attrValue" append-icon="event" single-line hide-details></v-text-field>
-                                    <v-date-picker v-model="prodData.prodDefines.PROD_END_DATE.attrValue" @input="$refs.endDateMenu.save(prodData.prodDefines.PROD_END_DATE.attrValue)" no-title scrollable locale="zh-cn"></v-date-picker>
-                                </v-menu>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">利润中心*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="profitCentre" v-model="prodData.prodDefines.PROFIT_CENTRE.attrValue" label="利润中心" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">计息标志*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="acctIntFlag" v-model="prodData.prodDefines.ACCT_INT_FLAG.attrValue" label="计息标志" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-switch v-model="prodData.prodDefines.MULTI_CCY.attrValue"></dc-switch>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">币种*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.CCY.attrValue" :options="ccy" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-switch v-model="prodData.prodDefines.DOC_FLAG.attrValue"></dc-switch>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.DOC_TYPE.attrValue" :options="docType" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">账户类型*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="acctType" v-model="prodData.prodDefines.ACCT_TYPE.attrValue" label="账户类型" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">账户子类型*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="subAcctType" v-model="prodData.prodDefines.FIXED_CALL.attrValue" label="账户子类型" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">账户属性*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.ACCT_NATURE.attrValue" :options="acctNature" class="dcMulti"></dc-multiselect>
-
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">关系属性*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <dc-multiselect v-model="prodData.prodDefines.OWNERSHIP_TYPE.attrValue" :options="ownerShipType" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">账户类别*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="acctClass" v-model="prodData.prodDefines.ACCT_CLASS.attrValue" label="账户类别" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">余额类别*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select :items="balType" v-model="prodData.prodDefines.BAL_TYPE.attrValue" label="余额类别" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">支取方式*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select class="primary--text " :items="withdrawalType" v-model="prodData.prodDefines.WITHDRAWAL_TYPE.attrValue" label="支取方式" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">折算币种*</v-subheader>
-                            </v-flex>
-                            <v-flex md4 lg4>
-                                <v-select :items="discountCcy" v-model="prodData.prodDefines.CONVERT_CCY.attrValue" label="折算币种" item-text="value" item-value="key" single-line hide-details></v-select>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </div>
-            </v-flex>
-        </v-layout>
+        <div slot="widget-content">
+            <v-container fluid pt-1>
+                <v-layout row wrap>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">产品代码*</v-subheader>
+                    </v-flex>
+                    <v-flex md3 lg3>
+                        <v-text-field class="primary--text mx-1" name="title" v-model="prodData.prodType.prodType" disabled single-line hide-details></v-text-field>
+                    </v-flex>
+                    <v-flex md1 lg1>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">产品描述*</v-subheader>
+                    </v-flex>
+                    <v-flex md3 lg3>
+                        <v-text-field class="primary--text mx-1" name="title" v-model="prodData.prodType.prodDesc" disabled single-line hide-details></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">业务模块*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.SOURCE_MODULE.attrValue" :options="sourceModule" :isMultiSelect="false" :perShow="true"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">产品分类*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodType.prodClass" :options="prodClass" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">产品属性*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodType.prodRange" :options="prodAttr" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">组合产品*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-switch v-model="prodData.prodType.prodGroup"></dc-switch>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">产品状态*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodType.status" :options="prodStatus" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">基础产品*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodType.baseProdType" :options="baseprodtype" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">生效日期*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-date v-model="prodData.prodDefines.PROD_START_DATE.attrValue" label="生效日期" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">失效日期*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-date v-model="prodData.prodDefines.PROD_END_DATE.attrValue" label="失效日期" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">利润中心*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.PROFIT_CENTRE.attrValue" :options="profitCentre" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">计息标志*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_INT_FLAG.attrValue" :options="acctIntFlag" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">是否多币种*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-switch v-model="prodData.prodDefines.MULTI_CCY.attrValue"></dc-switch>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">币种*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.CCY.attrValue" :options="ccy"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">是否多凭证*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-switch v-model="prodData.prodDefines.DOC_FLAG.attrValue"></dc-switch>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">凭证类型*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.DOC_TYPE.attrValue" :options="docType"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">账户类型*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_TYPE.attrValue" :options="acctType" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">账户子类型*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.FIXED_CALL.attrValue" :options="subAcctType" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">账户属性*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_NATURE.attrValue" :options="acctNature"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">关系属性*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.OWNERSHIP_TYPE.attrValue" :options="ownerShipType"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">账户类别*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.ACCT_CLASS.attrValue" :options="acctClass" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">余额类别*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.BAL_TYPE.attrValue" :options="balType" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">支取方式*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.WITHDRAWAL_TYPE.attrValue" :options="withdrawalType" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                    <v-flex xs12 md2 lg2>
+                        <v-subheader class="primary--text subheading">折算币种*</v-subheader>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                        <dc-multiselect v-model="prodData.prodDefines.CONVERT_CCY.attrValue" :options="discountCcy" :isMultiSelect="false"></dc-multiselect>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </div>
     </v-container>
 </template>
 
 <script>
     import DcSwitch from "@/components/widgets/DcSwitch";
-    import { getInitData } from "@/mock/init";
     import DcMultiselect from '@/components/widgets/DcMultiselect'
-    import { getProdData } from "@/api/prod";
+    import DcTextField from '@/components/widgets/DcTextField'
+    import { getInitData } from "@/mock/init";
+    import DcDate from '@/components/widgets/DcDate'
+
     export default {
-        components: { DcSwitch, DcMultiselect },
+        components: { DcSwitch, DcMultiselect,DcDate,DcTextField},
         props: ["prodData"],
         data: () => ({
             title: null,
@@ -245,20 +236,3 @@
         }
     };
 </script>
-<style scoped>
-    .top {
-        padding-top: 8px;
-    }
-    .depositTree {
-        height: calc(90vh - 48px);
-    }
-    .line_02{
-        height: 3px;
-        border-top: 2px solid #ddd;
-        text-align: center;
-    }
-    .dcMulti {
-        margin-top: 10px;
-    }
-
-</style>
