@@ -51,15 +51,19 @@
     import {filterChangeData} from "@/server/filterChangeData";
     import { getCheckFlowList } from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import downAction from '@/views/prodFactory/prodInfo/btn/downAction';
     import column from './column'
     import tags from './tags'
     import columnInfo from './columnInfo'
+    import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './BaseProd'
     export default {
         name: 'deposit',
         components: {
             VWidget,
-            BaseProd
+            BaseProd,
+            downAction,
+            PendingForm
         },
         data () {
             return {

@@ -8,32 +8,36 @@
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品代码*</v-subheader>
                             </v-flex>
-                            <v-flex md4 lg4>
+                            <v-flex md3 lg3>
                                 <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="prodType.prodType" single-line hide-details disabled></v-text-field>
+                            </v-flex>
+                            <v-flex md1 lg1>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品描述*</v-subheader>
                             </v-flex>
-                            <v-flex md4 lg4>
+                            <v-flex md3 lg3>
                                 <v-text-field class="primary--text " label="产品描述" name="title" v-model="prodType.prodDesc" single-line hide-details disabled/>
+                            </v-flex>
+                            <v-flex md1 lg1>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">业务模块*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect :options="sourceModuleOption" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :options="sourceModuleOption" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品分类*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect :options="prodClassOption" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :options="prodClassOption" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">产品属性*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect :options="prodRangeOption" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :options="prodRangeOption" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">组合产品*</v-subheader>
@@ -45,13 +49,13 @@
                                 <v-subheader class="primary--text subheading">产品状态*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect :options="statusOption" v-model="prodType.status" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :options="statusOption" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
                                 <v-subheader class="primary--text subheading">基础产品*</v-subheader>
                             </v-flex>
                             <v-flex md4 lg4>
-                                <dc-multiselect :options="baseProdTypeOption" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :options="baseProdTypeOption" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                         </v-layout>
                         <v-flex v-for="(keyData ,key ,index) in dataSource" v-bind:key="key" lg6>
@@ -73,7 +77,7 @@
                                                   name="title" v-model="prodDefines[keyData.key].attrValue" single-line
                                                   hide-details></v-text-field>
                                     <dc-multiselect v-if="keyData.columnType == 'select'" v-model="prodDefines[keyData.key].attrValue"
-                                                    :options="keyData.valueScore" class="dcMulti"></dc-multiselect>
+                                                    :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                                     <dc-switch v-if="keyData.columnType == 'switch'"
                                                v-model="prodDefines[keyData.key].attrValue"></dc-switch>
                                 </v-flex>

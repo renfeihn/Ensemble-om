@@ -3,6 +3,7 @@
     "valueMethod": "VL",
     "columnDesc": "利润中心",
     "columnType": "select",
+    "isMultiSelect": false,
     "valueScore": [
       {
         "key": "99",
@@ -14,6 +15,7 @@
     "valueMethod": "VL",
     "columnDesc": "计息标志",
     "columnType": "select",
+    "isMultiSelect": false,
     "valueScore": [
       {
         "key": "00",
@@ -33,6 +35,7 @@
     "columnDesc": "币种",
     "columnType": "select",
     "valueMethod": "VL",
+    "isMultiSelect": false,
     "valueScore": [
       {
         "key": "CNY",
@@ -63,6 +66,7 @@
   "DOC_TYPE":{
     "columnDesc":"凭证类型",
     "columnType":"select",
+    "isMultiSelect": true,
     "valueMethod": "VL",
     "valueScore": [
       {
@@ -79,6 +83,7 @@
     "columnDesc":"账户类型",
     "columnType":"select",
     "valueMethod": "VL",
+    "isMultiSelect": true,
     "valueScore": [
       {
         "key": "A",
@@ -102,6 +107,7 @@
     "columnDesc":"账户子类型",
     "columnType":"select",
     "valueMethod": "VL",
+    "isMultiSelect": true,
     "valueScore": [
       {
         "key": "A",
@@ -125,6 +131,7 @@
     "columnDesc":"账户属性",
     "columnType":"select",
     "valueMethod": "VL",
+    "isMultiSelect": true,
     "valueScore": [
       {
         "key": "1",
@@ -140,6 +147,7 @@
     "columnDesc":"关系属性",
     "columnType":"select",
     "valueMethod": "VL",
+    "isMultiSelect": true,
     "valueScore": [
       {
         "key": "SG",
@@ -148,6 +156,10 @@
       {
         "key": "AS",
         "value": "AS-多联名账户"
+      },
+      {
+        "key": "SU",
+        "value": "SU-测试"
       }
     ]
   },
@@ -155,6 +167,7 @@
     "columnDesc":"通存范围",
     "columnType":"select",
     "valueMethod": "VL",
+    "isMultiSelect": true,
     "valueScore": [
       {
         "key": "O",
@@ -173,10 +186,11 @@
   "CIR_EXCHANGE_RANGE":{
     "columnDesc":"转账通兑标识",
     "columnType":"select",
+    "isMultiSelect": false,
     "valueMethod": "VL",
     "valueScore": [
       {
-        "key": "O",
+        "key": "0",
         "value": "0-不允许通存"
       },
       {
