@@ -150,5 +150,79 @@
         "value": "AS-多联名账户"
       }
     ]
+  },
+  "AUTOMATIC_RANGE":{
+    "columnDesc":"通存范围",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "O",
+        "value": "0-不允许通存"
+      },
+      {
+        "key": "1",
+        "value": "1-全行通存"
+      },
+      {
+        "key": "2",
+        "value": "2-分行通存"
+      }
+    ]
+  },
+  "CIR_EXCHANGE_RANGE":{
+    "columnDesc":"转账通兑标识",
+    "columnType":"select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "O",
+        "value": "0-不允许通存"
+      },
+      {
+        "key": "1",
+        "value": "1-全行通存"
+      },
+      {
+        "key": "2",
+        "value": "2-分行通存"
+      }
+    ]
+  },
+  "TRAN_CIR_EXCG_FLAG":{
+    "columnDesc":"现金通兑标识",
+    "columnType":"switch"
+  },
+  "CLIENT_CONTRAL_FLAG":{
+    "columnDesc":"客户控制标识",
+    "columnType":"switch"
+  },
+  "CHANNEL_CONT_FLAG":{
+    "columnDesc":"渠道控制标识",
+    "columnType":"switch"
+  },
+  "BRC_AREA_CONT_FLAG":{
+    "columnDesc":"机构区域控制",
+    "columnType":"switch"
+  },
+  "CHARGE_TYPE":{
+    "columnDesc":"收费标识",
+    "columnType":"switch"
+  },
+  "STATUS_TRAN_FLAG":{
+    "columnDesc":"状态转移标识",
+    "columnType":"switch"
+  },
+  "ACCT_PREFIX_FLAG":{
+    "columnDesc":"测试事件",
+    "columnType":"switch"
+  },
+  "CHECK_AGENT":{
+    "columnDesc":"测试事件",
+    "columnType":"switch"
+  },
+  "STRUCTURE_TYPE":{
+    "columnDesc":"测试事件",
+    "columnType":"switch"
   }
 }
