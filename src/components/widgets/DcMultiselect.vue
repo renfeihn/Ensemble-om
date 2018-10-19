@@ -4,7 +4,7 @@
         <v-layout row wrap>
             <v-flex md9 lg9>
                 <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel=""
-                             :searchable="false" :close-on-select="false" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                             :searchable="false" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                 </multiselect>
             </v-flex>
             <v-flex md3 lg3 v-if="personShow==1">
@@ -34,6 +34,7 @@
                 options: [],
                 personShow: 0,
                 isMulti: true,
+                closeSelect: false,
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效"
             };
@@ -101,11 +102,12 @@
             },
             initProperty() {
                 //判断是否多选
-                if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null){
+                if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null || this._props.isMultiSelect === true){
                     //是否多选标志未定义时，默认为多选
                     this.isMulti = true
                 }else{
                     this.isMulti = this._props.isMultiSelect;
+                    this.closeSelect = true
                 }
                 //判断是否显示分户生效标识
                 if(this._props.perShow === true){

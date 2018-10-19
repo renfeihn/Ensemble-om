@@ -57,13 +57,13 @@
                         <v-subheader class="primary--text subheading">生效日期*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-date v-model="prodData.prodDefines.PROD_START_DATE" label="生效日期" :perShow="true" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
+                        <dc-date v-model="prodData.prodDefines.PROD_START_DATE" label="生效日期" :perShow="true"></dc-date>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">失效日期*</v-subheader>
                     </v-flex>
                     <v-flex md4 lg4>
-                        <dc-date v-model="prodData.prodDefines.PROD_END_DATE" label="失效日期" :perShow="true" @input="$refs.endDateMenu.save(dateFormatted)"></dc-date>
+                        <dc-date v-model="prodData.prodDefines.PROD_END_DATE" label="失效日期" :perShow="true"></dc-date>
                     </v-flex>
                     <v-flex xs12 md2 lg2>
                         <v-subheader class="primary--text subheading">利润中心*</v-subheader>
@@ -167,11 +167,7 @@
         props: ["prodData"],
         data: () => ({
             title: null,
-            startDateMenu: false,
-            endDate: null,
-            endDateMenu: false,
             mult: true,
-            startDate: null,
             ccy: [{
                 key: '',
                 value: ''
