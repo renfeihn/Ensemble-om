@@ -78,30 +78,18 @@
             },
             init(msg){
                 if(msg !== null && msg !== undefined){
-                    let dates = this._props.msg
+                    let dates = this._props.msg.attrValue
                     let time =dates.substring(0,4)+"-"+dates.substring(4,6)+"-"+dates.substring(6)
                     this.dateFormatted = time
                 }
             },
             reback(newValue){
                 let dateFormatted = "";
-                dateFormatted = newValue.subString(0,4)+newValue.subString(5,7)+newValue.subString(8)
-                alert(dateFormatted)
-                this.$emit("getVue", dateFormatted);
+                dateFormatted = newValue.substring(0,4)+newValue.substring(5,7)+newValue.substring(8)
+//                alert(dateFormatted)
+                this._props.msg.attrValue = dateFormatted
+                this.$emit("getVue", this._props.msg);
             }
-          /*  formatDate (date) {
-                if (!date) return null
-
-                const [year, month, day] = date.split('-')
-                return `${month}/${day}/${year}`
-            },
-            parseDate (date) {
-                if (!date) return null
-
-                //const [month, day, year] = date.split('/')
-                return date.subString(0,4)+'-'+date.subString(4,6)+'-'+date.subString(6)
-                 // return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-            }*/
         }
     }
 </script>
