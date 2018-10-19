@@ -76,10 +76,11 @@
                                                   class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
                                                   name="title" v-model="prodDefines[keyData.key].attrValue" single-line
                                                   hide-details></v-text-field>
-                                    <dc-multiselect v-if="keyData.columnType == 'select'" v-model="prodDefines[keyData.key].attrValue"
+                                    <dc-multiselect v-if="keyData.columnType == 'select'" v-model="prodDefines[keyData.key]"
                                                     :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                                     <dc-switch v-if="keyData.columnType == 'switch'"
                                                v-model="prodDefines[keyData.key].attrValue"></dc-switch>
+                                    <dc-date v-if="keyData.columnType == 'date'" v-model="prodDefines[keyData.key].attrValue" label="生效日期"></dc-date>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
@@ -94,8 +95,9 @@
     import DcMultiselect from '@/components/widgets/DcMultiselect'
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
+    import DcDate from '@/components/widgets/DcDate'
     export default {
-        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect},
+        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate},
         props: ["prodType","prodDefines","tags"],
         data: () => ({
             dataSource: {},

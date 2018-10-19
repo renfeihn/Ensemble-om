@@ -63,6 +63,14 @@
     "columnDesc":"是否多凭证",
     "columnType":"switch"
   },
+  "PROD_START_DATE":{
+    "columnDesc":"生效日期",
+    "columnType":"date"
+  },
+  "PROD_END_DATE":{
+    "columnDesc":"失效日期",
+    "columnType":"date"
+  },
   "DOC_TYPE":{
     "columnDesc":"凭证类型",
     "columnType":"select",
