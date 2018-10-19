@@ -1,93 +1,143 @@
 <template>
   <div>
     <v-layout row wrap>
-    <v-flex xs12 md4 lg4>
-      <v-card>
-        <v-toolbar color="white">
-          <v-icon large color="blue darken-2">info</v-icon>
-          <v-toolbar-title>产品基本信息{{info}}</v-toolbar-title>
-        </v-toolbar>
+      <v-flex xs12 md3 lg3>
+        <v-card>
 
-        <v-card-text>
-          <v-layout wrap>
-            <v-flex xs12 md2 lg4>
-              <v-subheader class="primary--text subheading">组合产品*</v-subheader>
-            </v-flex>
-            <v-flex md4 lg4>
-              <dc-text-field v-model="prodGroup" item-text="value" item-value="key"></dc-text-field>
-            </v-flex>
+
+          <v-flex>
+            <v-layout>
+              <v-flex class="test">组合产品</v-flex>
+
+              <v-flex class="test1">{{prodGroup}}</v-flex>
+            </v-layout>
+          </v-flex>
+
+
+          <v-layout>
+            <v-flex class="test">产品分类</v-flex>
+
+            <v-flex class="test1">{{prodClass}}</v-flex>
           </v-layout>
 
-          <v-layout wrap>
-          <v-flex xs12 md2 lg4>
-            <v-subheader class="primary--text subheading">产品分类*</v-subheader>
-          </v-flex>
-          <v-flex md4 lg4>
-            <dc-text-field v-model="prodClass"></dc-text-field>
-          </v-flex>
+          <v-layout>
+            <v-flex class="test">产品描述</v-flex>
+
+            <v-flex class="test1">{{prodDesc}}</v-flex>
           </v-layout>
 
-          <v-layout wrap>
-          <v-flex xs12 md2 lg4>
-            <v-subheader class="primary--text subheading">产品描述*</v-subheader>
-          </v-flex>
-          <v-flex md4 lg4>
-            <dc-text-field v-model="prodDesc"></dc-text-field>
-          </v-flex>
+
+          <v-layout>
+            <v-flex class="test">产品状态</v-flex>
+
+            <v-flex class="test1">{{status}}</v-flex>
           </v-layout>
 
-          <v-layout wrap>
-          <v-flex xs12 md2 lg4>
-            <v-subheader class="primary--text subheading">产品状态*</v-subheader>
-          </v-flex>
-          <v-flex md4 lg4>
-            <dc-text-field v-model="status"></dc-text-field>
-          </v-flex>
+
+          <v-layout>
+            <v-flex class="test">基础产品</v-flex>
+
+            <v-flex class="test1">{{baseProdType}}</v-flex>
           </v-layout>
 
-          <v-layout wrap>
-          <v-flex xs12 md2 lg4>
-            <v-subheader class="primary--text subheading">基础产品*</v-subheader>
-          </v-flex>
-          <v-flex md4 lg4>
-            <dc-text-field v-model="baseProdType"></dc-text-field>
-          </v-flex>
+
+          <v-layout>
+            <v-flex class="test">产品范围</v-flex>
+
+            <v-flex class="test1">{{prodRange}}</v-flex>
           </v-layout>
 
-          <v-layout wrap>
-            <v-flex xs12 md2 lg4>
-              <v-subheader class="primary--text subheading">产品范围*</v-subheader>
-            </v-flex>
-            <v-flex md4 lg4>
-              <dc-text-field v-model="prodRange"></dc-text-field>
-            </v-flex>
+
+          <v-layout>
+            <v-flex class="test">产品类型</v-flex>
+
+            <v-flex class="test1">{{prodType}}</v-flex>
           </v-layout>
 
-          <v-layout wrap>
-            <v-flex xs12 md2 lg4>
-              <v-subheader class="primary--text subheading">产品类型*</v-subheader>
-            </v-flex>
-            <v-flex md4 lg4>
-              <dc-text-field v-model="prodType"></dc-text-field>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
-      </v-card>
-    </v-flex>
 
-    <v-flex md8 lg8>
-      <v-card>
-        <v-toolbar color="white" >
-          <v-icon large color="blue darken-2">chat</v-icon>
-          <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
-          <v-spacer></v-spacer>
+
+        </v-card>
+      </v-flex>
+
+      <!-- <v-card-text>
+         <v-layout wrap>
+           <v-flex xs12 md2 lg4>
+             <v-subheader class="primary&#45;&#45;text subheading">组合产品*</v-subheader>
+           </v-flex>
+           <v-flex md4 lg4>
+             <dc-text-field v-model="prodGroup" item-text="value" item-value="key"></dc-text-field>
+           </v-flex>
+         </v-layout>
+
+         <v-layout wrap>
+         <v-flex xs12 md2 lg4>
+           <v-subheader class="primary&#45;&#45;text subheading">产品分类*</v-subheader>
+         </v-flex>
+         <v-flex md4 lg4>
+           <dc-text-field v-model="prodClass"></dc-text-field>
+         </v-flex>
+         </v-layout>
+
+         <v-layout wrap>
+         <v-flex xs12 md2 lg4>
+           <v-subheader class="primary&#45;&#45;text subheading">产品描述*</v-subheader>
+         </v-flex>
+         <v-flex md4 lg4>
+           <dc-text-field v-model="prodDesc"></dc-text-field>
+         </v-flex>
+         </v-layout>
+
+         <v-layout wrap>
+         <v-flex xs12 md2 lg4>
+           <v-subheader class="primary&#45;&#45;text subheading">产品状态*</v-subheader>
+         </v-flex>
+         <v-flex md4 lg4>
+           <dc-text-field v-model="status"></dc-text-field>
+         </v-flex>
+         </v-layout>
+
+         <v-layout wrap>
+         <v-flex xs12 md2 lg4>
+           <v-subheader class="primary&#45;&#45;text subheading">基础产品*</v-subheader>
+         </v-flex>
+         <v-flex md4 lg4>
+           <dc-text-field v-model="baseProdType"></dc-text-field>
+         </v-flex>
+         </v-layout>
+
+         <v-layout wrap>
+           <v-flex xs12 md2 lg4>
+             <v-subheader class="primary&#45;&#45;text subheading">产品范围*</v-subheader>
+           </v-flex>
+           <v-flex md4 lg4>
+             <dc-text-field v-model="prodRange"></dc-text-field>
+           </v-flex>
+         </v-layout>
+
+         <v-layout wrap>
+           <v-flex xs12 md2 lg4>
+             <v-subheader class="primary&#45;&#45;text subheading">产品类型*</v-subheader>
+           </v-flex>
+           <v-flex md4 lg4>
+             <dc-text-field v-model="prodType"></dc-text-field>
+           </v-flex>
+         </v-layout>
+       </v-card-text>-->
+
+
+      <v-flex md9 lg9>
+        <v-card>
+          <v-toolbar color="white" >
+            <v-icon large color="blue darken-2">chat</v-icon>
+            <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
+            <v-spacer></v-spacer>
             <v-btn color="info" @click="print()">导出</v-btn>
             <v-btn color="info">{{optValue}}</v-btn>
-        </v-toolbar>
-        <tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>
-        <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
-      </v-card>
-    </v-flex>
+          </v-toolbar>
+          <tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>
+          <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
+        </v-card>
+      </v-flex>
     </v-layout>
 
 
@@ -97,7 +147,7 @@
           <v-tab v-for="n in diffList"
                  :key="n"
           >
-             {{n}}
+            {{n}}
           </v-tab>
           <v-tabs-items v-model="model">
             <v-tab-item
@@ -122,15 +172,15 @@
   </div>
 </template>
 <script>
-  import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
-  import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
-  import tranCheckFlowInfo from './tranCheckFlowInfo'
-  import tranReleaseFlowInfo from './tranReleaseFlowInfo'
-  import { getDiffList } from "@/api/url/prodInfo";
-  import {getColumnDesc_} from '@/utils/columnDesc'
-  import DcTextField from '@/components/widgets/DcTextField'
-  import { getProdData } from "@/api/prod";
-  export default {
+    import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
+    import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
+    import tranCheckFlowInfo from './tranCheckFlowInfo'
+    import tranReleaseFlowInfo from './tranReleaseFlowInfo'
+    import { getDiffList } from "@/api/url/prodInfo";
+    import {getColumnDesc_} from '@/utils/columnDesc'
+    import DcTextField from '@/components/widgets/DcTextField'
+    import { getProdData } from "@/api/prod";
+    export default {
         components: {
             prodDiff,
             baseTable,
@@ -139,47 +189,47 @@
             getColumnDesc_,
             DcTextField
         },
-      props: ["prodData"],
-      data (){
-          return {
-              code: '',
-              optKey: 0,
-              optValue: '',
-              prodData: {},
-              prodCharge: {},
-              prodDefineData: {},
-              prodEventOpen: {},
-              prodEventClose: {},
-              prodEventCret: {},
-              prodEventCycle: {},
-              prodEventDebt: {},
-              diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"],
-              prodGroup: [{
-                  key: 'Y',
-                  value: 'Y-是'
-              }],
-              prodClass: [{
-                  key: 'RB100',
-                  value: 'RB100-A'
-              }],
-              prodRange: [{
-                  key: '',
-                  value: ''
-              }],
-              status: [{
-                  key: '',
-                  value: ''
-              }],
-              baseProdType: [{
-                  key: '',
-                  value: ''
-              }],
-              prodType: [{
-                  key: '',
-                  value: ''
-              }]
-          }
-      },
+        props: ["prodData"],
+        data (){
+            return {
+                code: '',
+                optKey: 0,
+                optValue: '',
+                prodData: {},
+                prodCharge: {},
+                prodDefineData: {},
+                prodEventOpen: {},
+                prodEventClose: {},
+                prodEventCret: {},
+                prodEventCycle: {},
+                prodEventDebt: {},
+                diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"],
+                prodGroup: [{
+                    key: 'Y',
+                    value: 'Y-是'
+                }],
+                prodClass: [{
+                    key: 'RB100',
+                    value: 'RB100-A'
+                }],
+                prodRange: [{
+                    key: '',
+                    value: ''
+                }],
+                status: [{
+                    key: '',
+                    value: ''
+                }],
+                baseProdType: [{
+                    key: '',
+                    value: ''
+                }],
+                prodType: [{
+                    key: '',
+                    value: ''
+                }]
+            }
+        },
 
         created() {
             this.code = this.$route.params.code
@@ -253,39 +303,39 @@
                         debtDiff[key]=prodEventDiff[diffKey];
                     }
                 }
-                 for(const key in prodEvent){
-                     const openEvent={"prodDefines": prodEvent[key],"prodType": prodType}
-                     if(key.indexOf('OPEN')>=0){
-                         openEvent["diff"]=openDiff
-                         this.prodEventOpen=openEvent;
-                     }else
-                     if(key.indexOf('CLOSE')>=0){
-                         openEvent["diff"]=closeDiff
+                for(const key in prodEvent){
+                    const openEvent={"prodDefines": prodEvent[key],"prodType": prodType}
+                    if(key.indexOf('OPEN')>=0){
+                        openEvent["diff"]=openDiff
+                        this.prodEventOpen=openEvent;
+                    }else
+                    if(key.indexOf('CLOSE')>=0){
+                        openEvent["diff"]=closeDiff
                         this.prodEventClose= openEvent
-                     }else if(key.indexOf('WTD')>=0){
-                         openEvent["diff"]=cretDiff
-                         this.prodEventCret= openEvent
-                     }else if(key.indexOf('CYCLE')>=0){
-                         openEvent["diff"]=cycleDiff
-                         this.prodEventCycle= openEvent
-                     }else if(key.indexOf('DEP')>=0){
-                         openEvent["diff"]=debtDiff
-                         this.prodEventDebt= openEvent
-                     }
-                 }
-                 if(JSON.stringify(prodEvent)=='{}'){
-                     let diffEvent={"prodType": prodType}
-                     diffEvent["diff"]=openDiff
-                     this.prodEventOpen=diffEvent;
-                     diffEvent["diff"]=closeDiff
-                     this.prodEventClose= diffEvent;
-                     diffEvent["diff"]=cycleDiff
-                     this.prodEventCycle= diffEvent
-                     diffEvent["diff"]=cretDiff
-                     this.prodEventCret= diffEvent
-                     diffEvent["diff"]=debtDiff
-                     this.prodEventDebt= diffEvent
-                 }
+                    }else if(key.indexOf('WTD')>=0){
+                        openEvent["diff"]=cretDiff
+                        this.prodEventCret= openEvent
+                    }else if(key.indexOf('CYCLE')>=0){
+                        openEvent["diff"]=cycleDiff
+                        this.prodEventCycle= openEvent
+                    }else if(key.indexOf('DEP')>=0){
+                        openEvent["diff"]=debtDiff
+                        this.prodEventDebt= openEvent
+                    }
+                }
+                if(JSON.stringify(prodEvent)=='{}'){
+                    let diffEvent={"prodType": prodType}
+                    diffEvent["diff"]=openDiff
+                    this.prodEventOpen=diffEvent;
+                    diffEvent["diff"]=closeDiff
+                    this.prodEventClose= diffEvent;
+                    diffEvent["diff"]=cycleDiff
+                    this.prodEventCycle= diffEvent
+                    diffEvent["diff"]=cretDiff
+                    this.prodEventCret= diffEvent
+                    diffEvent["diff"]=debtDiff
+                    this.prodEventDebt= diffEvent
+                }
             },
             assembleProdCharge(){
                 const prodInfo=this.prodData.mbProdCharge;
@@ -300,21 +350,21 @@
                 }
                 for(const prodCharge in prodInfo){
                     const chargeColumn= prodInfo[prodCharge];
-                   const keyAndValue="{\"FEE_TYPE\":\""+chargeColumn.feeType+"\",\"PROD_TYPE\":\""+
-                       chargeColumn.prodType+"\"}";
-                   const diff=prodChargeDiff[keyAndValue];
-                  if(diff== undefined){
-                     assembleColumns.push(chargeColumn)
-                   }else{
-                          for(const col in chargeColumn){
-                              let chargeCol=chargeColumn[col];
-                              let diffCol=diff[col];
-                              if(chargeCol!=diffCol){
-                                  chargeColumn[col]= chargeCol+'>'+diffCol
-                              }
-                          }
-                          assembleColumns.push(chargeColumn)
-                  }
+                    const keyAndValue="{\"FEE_TYPE\":\""+chargeColumn.feeType+"\",\"PROD_TYPE\":\""+
+                        chargeColumn.prodType+"\"}";
+                    const diff=prodChargeDiff[keyAndValue];
+                    if(diff== undefined){
+                        assembleColumns.push(chargeColumn)
+                    }else{
+                        for(const col in chargeColumn){
+                            let chargeCol=chargeColumn[col];
+                            let diffCol=diff[col];
+                            if(chargeCol!=diffCol){
+                                chargeColumn[col]= chargeCol+'>'+diffCol
+                            }
+                        }
+                        assembleColumns.push(chargeColumn)
+                    }
                 }
                 if(heards.size==0){
                     for(const key in prodChargeDiff[0]){
@@ -350,5 +400,11 @@
     }
 </script>
 <style scoped>
+  .test {
+    font-size: large;
+  }
+  .test1 {
+    font-size: large;
+  }
 
 </style>
