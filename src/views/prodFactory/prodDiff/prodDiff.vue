@@ -2,12 +2,12 @@
   <div>
     <v-card>
       <v-toolbar scroll-off-screen scroll-target="#scrolling-techniques" flat>
-        <dc-switch v-model="ex11"
+        <v-switch v-model="ex11"
                           label="隐藏相同项"
                           color="success"
-                          value="onlyDiff"
+                          value="Y"
                           hide-details
-                          class="prodDiffSwitch"></dc-switch>
+                          class="prodDiffSwitch"></v-switch>
       </v-toolbar>
       <v-card-text class="pa-0">
 
