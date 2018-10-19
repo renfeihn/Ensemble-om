@@ -6,24 +6,24 @@
 * 在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
 */
 <template>
-    <v-container grid-list-md>
+    <div style="margin-top: 30px">
         <v-layout row wrap>
             <v-flex md9 lg9>
-                <v-menu transition="scale-transition" offset-y full-width :nudge-bottom="-22" min-width="290px" class="dcMulti">
-                    <v-text-field slot="activator" v-model="dateFormatted" append-icon="event" single-line hide-details></v-text-field>
+                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" class="dcDate">
+                    <v-text-field slot="activator" v-model="dateFormatted" append-icon="event"></v-text-field>
                     <v-date-picker v-model="dateFormatted" no-title scrollable locale="zh-cn"></v-date-picker>
                 </v-menu>
             </v-flex>
             <v-flex md3 lg3 v-if="personShow==1">
                 <v-tooltip right :color="peopleColor">
-                    <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
+                    <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcDate1">
                         <v-icon>people</v-icon>
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
             </v-flex>
         </v-layout>
-    </v-container>
+    </div>
 </template>
 <script>
     export default {
@@ -86,7 +86,6 @@
             reback(newValue){
                 let dateFormatted = "";
                 dateFormatted = newValue.substring(0,4)+newValue.substring(5,7)+newValue.substring(8)
-//                alert(dateFormatted)
                 this._props.msg.attrValue = dateFormatted
                 this.$emit("getVue", this._props.msg);
             }
@@ -96,12 +95,14 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css">
 </style>
 <style scoped>
-    .dcMulti {
+    .dcDate {
         margin-top: -23px;
         margin-right: 20px;
+        width: 100%;
+        height: 40px;
     }
-    .dcMulti1 {
-        margin-top: -3px;
-        margin-left: 14px;
+    .dcDate1 {
+        margin-top: -18px;
+        margin-left: 8px;
     }
 </style>
