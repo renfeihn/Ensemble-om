@@ -1,161 +1,39 @@
 <template>
   <div>
     <v-layout row wrap>
-      <v-flex xs12 md3 lg3>
-        <v-card>
-
-
-          <v-flex>
-            <v-layout>
-              <v-flex class="test">组合产品</v-flex>
-
-              <v-flex class="test1">{{prodGroup}}</v-flex>
-            </v-layout>
-          </v-flex>
-
-
-          <v-layout>
-            <v-flex class="test">产品分类</v-flex>
-
-            <v-flex class="test1">{{prodClass}}</v-flex>
-          </v-layout>
-
-          <v-layout>
-            <v-flex class="test">产品描述</v-flex>
-
-            <v-flex class="test1">{{prodDesc}}</v-flex>
-          </v-layout>
-
-
-          <v-layout>
-            <v-flex class="test">产品状态</v-flex>
-
-            <v-flex class="test1">{{status}}</v-flex>
-          </v-layout>
-
-
-          <v-layout>
-            <v-flex class="test">基础产品</v-flex>
-
-            <v-flex class="test1">{{baseProdType}}</v-flex>
-          </v-layout>
-
-
-          <v-layout>
-            <v-flex class="test">产品范围</v-flex>
-
-            <v-flex class="test1">{{prodRange}}</v-flex>
-          </v-layout>
-
-
-          <v-layout>
-            <v-flex class="test">产品类型</v-flex>
-
-            <v-flex class="test1">{{prodType}}</v-flex>
-          </v-layout>
-
-
-
-        </v-card>
-      </v-flex>
-
-      <!-- <v-card-text>
-         <v-layout wrap>
-           <v-flex xs12 md2 lg4>
-             <v-subheader class="primary&#45;&#45;text subheading">组合产品*</v-subheader>
-           </v-flex>
-           <v-flex md4 lg4>
-             <dc-text-field v-model="prodGroup" item-text="value" item-value="key"></dc-text-field>
-           </v-flex>
-         </v-layout>
-
-         <v-layout wrap>
-         <v-flex xs12 md2 lg4>
-           <v-subheader class="primary&#45;&#45;text subheading">产品分类*</v-subheader>
-         </v-flex>
-         <v-flex md4 lg4>
-           <dc-text-field v-model="prodClass"></dc-text-field>
-         </v-flex>
-         </v-layout>
-
-         <v-layout wrap>
-         <v-flex xs12 md2 lg4>
-           <v-subheader class="primary&#45;&#45;text subheading">产品描述*</v-subheader>
-         </v-flex>
-         <v-flex md4 lg4>
-           <dc-text-field v-model="prodDesc"></dc-text-field>
-         </v-flex>
-         </v-layout>
-
-         <v-layout wrap>
-         <v-flex xs12 md2 lg4>
-           <v-subheader class="primary&#45;&#45;text subheading">产品状态*</v-subheader>
-         </v-flex>
-         <v-flex md4 lg4>
-           <dc-text-field v-model="status"></dc-text-field>
-         </v-flex>
-         </v-layout>
-
-         <v-layout wrap>
-         <v-flex xs12 md2 lg4>
-           <v-subheader class="primary&#45;&#45;text subheading">基础产品*</v-subheader>
-         </v-flex>
-         <v-flex md4 lg4>
-           <dc-text-field v-model="baseProdType"></dc-text-field>
-         </v-flex>
-         </v-layout>
-
-         <v-layout wrap>
-           <v-flex xs12 md2 lg4>
-             <v-subheader class="primary&#45;&#45;text subheading">产品范围*</v-subheader>
-           </v-flex>
-           <v-flex md4 lg4>
-             <dc-text-field v-model="prodRange"></dc-text-field>
-           </v-flex>
-         </v-layout>
-
-         <v-layout wrap>
-           <v-flex xs12 md2 lg4>
-             <v-subheader class="primary&#45;&#45;text subheading">产品类型*</v-subheader>
-           </v-flex>
-           <v-flex md4 lg4>
-             <dc-text-field v-model="prodType"></dc-text-field>
-           </v-flex>
-         </v-layout>
-       </v-card-text>-->
-
-
-      <v-flex md9 lg9>
-        <v-card>
-          <v-toolbar color="white" >
-            <v-icon large color="blue darken-2">chat</v-icon>
-            <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn color="info" @click="print()">导出</v-btn>
-            <v-btn color="info">{{optValue}}</v-btn>
-          </v-toolbar>
-          <tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>
-          <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
-        </v-card>
+      <v-toolbar color="blue" dark tabs>
+        <v-toolbar-side-icon></v-toolbar-side-icon>
+          <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn color="write" @click="print()" flat>导出</v-btn>
+      </v-toolbar>
+      <v-flex md8 lg8>
+        <tran-check-flow-info v-if="optKey==3" v-on:getNewProdData="getNewProdData" ref="callback"></tran-check-flow-info>
+        <tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>
+     </v-flex>
+      <v-flex xs12 md4 lg4 color: white>
+        <img src="/static/user/MyUser.png" class="imgUserIndexFlow">
+        <v-layout>
+          <v-subheader class="showMsg">欢迎admin用户复核存款产品</v-subheader>
+        </v-layout>
+        <v-layout>
+          <v-subheader class="showMsg1">RB101-个人活期产品</v-subheader>
+        </v-layout>
+        <v-layout>
+          <v-btn style="margin-top: 5%; margin-left: 25%; width: 50%; font-size: large" color="green" dark large @click='checkConfirm'>确 认</v-btn>
+        </v-layout>
       </v-flex>
     </v-layout>
-
-
-    <v-card md20 lg20>
+    <v-toolbar color="blue" dark tabs>
+      <v-toolbar-side-icon @click="showClick"></v-toolbar-side-icon>
+      <v-toolbar-title class="white--text">产品修改差异展示</v-toolbar-title>
+    </v-toolbar>
+    <v-card md20 lg20 v-if="showFlag==1">
       <v-card-text>
         <v-tabs fixed-tabs>
-          <v-tab v-for="n in diffList"
-                 :key="n"
-          >
-            {{n}}
-          </v-tab>
+          <v-tab v-for="n in diffList" :key="n" class="test">{{n}}</v-tab>
           <v-tabs-items v-model="model">
-            <v-tab-item
-                    v-for="i in diffList"
-                    :id="`tab-${i}`"
-                    :key="i"
-            >
-
+            <v-tab-item v-for="i in diffList" :id="`tab-${i}`" :key="i">
               <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
               <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
               <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
@@ -168,19 +46,22 @@
         </v-tabs>
       </v-card-text>
     </v-card>
-
   </div>
 </template>
 <script>
-    import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
-    import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
-    import tranCheckFlowInfo from './tranCheckFlowInfo'
-    import tranReleaseFlowInfo from './tranReleaseFlowInfo'
-    import { getDiffList } from "@/api/url/prodInfo";
-    import {getColumnDesc_} from '@/utils/columnDesc'
-    import DcTextField from '@/components/widgets/DcTextField'
-    import { getProdData } from "@/api/prod";
-    export default {
+    import {
+        tranFlowInfo
+    } from '@/api/url/prodInfo';
+  import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
+  import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
+  import tranCheckFlowInfo from './tranCheckFlowInfo'
+  import tranReleaseFlowInfo from './tranReleaseFlowInfo'
+  import { getDiffList } from "@/api/url/prodInfo";
+  import {getColumnDesc_} from '@/utils/columnDesc'
+  import DcTextField from '@/components/widgets/DcTextField'
+  import { getProdData } from "@/api/prod";
+    import toast from '@/utils/toast';
+  export default {
         components: {
             prodDiff,
             baseTable,
@@ -189,48 +70,48 @@
             getColumnDesc_,
             DcTextField
         },
-        props: ["prodData"],
-        data (){
-            return {
-                code: '',
-                optKey: 0,
-                optValue: '',
-                prodData: {},
-                prodCharge: {},
-                prodDefineData: {},
-                prodEventOpen: {},
-                prodEventClose: {},
-                prodEventCret: {},
-                prodEventCycle: {},
-                prodEventDebt: {},
-                diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"],
-                prodGroup: [{
-                    key: 'Y',
-                    value: 'Y-是'
-                }],
-                prodClass: [{
-                    key: 'RB100',
-                    value: 'RB100-A'
-                }],
-                prodRange: [{
-                    key: '',
-                    value: ''
-                }],
-                status: [{
-                    key: '',
-                    value: ''
-                }],
-                baseProdType: [{
-                    key: '',
-                    value: ''
-                }],
-                prodType: [{
-                    key: '',
-                    value: ''
-                }]
-            }
-        },
-
+      props: ["prodData"],
+      data (){
+          return {
+              code: '',
+              optKey: 0,
+              showFlag: 0,
+              optValue: '',
+              prodData: {},
+              prodCharge: {},
+              prodDefineData: {},
+              prodEventOpen: {},
+              prodEventClose: {},
+              prodEventCret: {},
+              prodEventCycle: {},
+              prodEventDebt: {},
+              diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"],
+              prodGroup: [{
+                  key: 'Y',
+                  value: 'Y-是'
+              }],
+              prodClass: [{
+                  key: 'RB100',
+                  value: 'RB100-A'
+              }],
+              prodRange: [{
+                  key: '',
+                  value: ''
+              }],
+              status: [{
+                  key: '',
+                  value: ''
+              }],
+              baseProdType: [{
+                  key: '',
+                  value: ''
+              }],
+              prodType: [{
+                  key: '',
+                  value: ''
+              }]
+          }
+      },
         created() {
             this.code = this.$route.params.code
             this.optValue = this.$route.params.optValue
@@ -239,6 +120,10 @@
 
         },
         methods: {
+            showClick() {
+                this.showFlag = this.showFlag ===0?1:0
+                this.getDiffProdData();
+            },
             setOptKey(val) {
                 if(val === "复核") {
                     this.optKey = 3
@@ -249,6 +134,25 @@
             },
             print () {
                 window.print()
+            },
+            checkConfirm() {
+                this.$refs.callback.callbackprod
+            },
+            getNewProdData(val) {
+                console.log(val)
+                if(val.isApproved !== "Y"){
+                    val.isApproved = "N"
+                }
+                tranFlowInfo(this.checkInfo).then(response => {
+                    if(response.status === 200 && this.checkInfo.isApproved === "Y") {
+                        toast.success("复核成功！");
+                        this.$router.push({ name: 'userIndexFlow'});
+                    }
+                    if(response.status === 200 && this.checkInfo.isApproved === "N") {
+                        toast.success("驳回成功！");
+                        this.$router.push({ name: 'userIndexFlow'});
+                    }
+                })
             },
             getDiffProdData(){
                 var data={'mainSeqNo': this.code};
@@ -400,11 +304,24 @@
     }
 </script>
 <style scoped>
-  .test {
-    font-size: large;
-  }
-  .test1 {
-    font-size: large;
-  }
-
+    .test {
+      font-size: large;
+    }
+    .imgUserIndexFlow {
+      width: 100px;
+      display: inline-block;
+      margin-left: 40%
+    }
+  .showMsg {
+       color: deepskyblue;
+       font-size: x-large;
+       font-style: inherit;
+       margin-left: 10%;
+     }
+    .showMsg1 {
+      color: deepskyblue;
+      font-size: large;
+      font-style: inherit;
+      margin-left: 25%;
+    }
 </style>
