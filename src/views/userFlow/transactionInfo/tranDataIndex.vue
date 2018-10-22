@@ -21,38 +21,38 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-layout wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">提交人:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo1.flowCommitInfo.userId" single-line hide-details>
                   </v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">提交时间:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo1.flowCommitInfo.tranTime" single-line hide-details>
                   </v-text-field>
                 </v-flex>
               </v-layout>
 
               <v-layout row wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">提交原因:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo1.flowCommitInfo.remark" single-line hide-details>
                   </v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">备注信息:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" single-line hide-details>
                   </v-text-field>
                 </v-flex>
@@ -60,36 +60,36 @@
             </v-stepper-content>
             <v-stepper-content step="2">
               <v-layout wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">复核人:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.userId" single-line hide-details>
                   </v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">复核日期:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.date" value="2018/09/07" single-line hide-details>
                   </v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">复核状态:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-switch color="success" style="margin-top: 8px" hide-details value="Y" :label="`${checkInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 md3 lg3>
+                <v-flex xs12 md2 lg2>
                   <v-subheader class="class1">复核意见:</v-subheader>
                 </v-flex>
-                <v-flex md9 lg9>
+                <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="checkInfo.remark" single-line hide-details>
                   </v-text-field>
                 </v-flex>
@@ -188,36 +188,36 @@
           </v-stepper-content>
           <v-stepper-content step="3">
             <v-layout wrap>
-              <v-flex xs12 md3 lg3>
+              <v-flex xs12 md2 lg2>
                 <v-subheader class="class1">发布人:</v-subheader>
               </v-flex>
-              <v-flex md9 lg9>
+              <v-flex md10 lg10>
                 <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseInfo.userId" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs12 md3 lg3>
+              <v-flex xs12 md2 lg2>
                 <v-subheader class="class1">发布时间:</v-subheader>
               </v-flex>
-              <v-flex md9 lg9>
+              <v-flex md10 lg10>
                 <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseInfo.date" value="2018/09/07" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs12 md3 lg3>
+              <v-flex xs12 md2 lg2>
                 <v-subheader class="class1">发布状态:</v-subheader>
               </v-flex>
-              <v-flex md9 lg9>
+              <v-flex md10 lg10>
                 <v-switch color="success" style="margin-top: 8px " hide-details value="Y" :label="`${releaseInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs12 md3 lg3>
+              <v-flex xs12 md2 lg2>
                 <v-subheader class="class1">发布意见:</v-subheader>
               </v-flex>
-              <v-flex md9 lg9>
+              <v-flex md10 lg10>
                 <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="releaseInfo.remark" single-line hide-details>
                 </v-text-field>
               </v-flex>
@@ -647,7 +647,7 @@ import {
       font-style: inherit;
       margin-right: 0px;
       margin-top: 0px;
-      margin-left: 20%
+      margin-left: 10%
     }
     .textBox {
       margin-top: 5px;
