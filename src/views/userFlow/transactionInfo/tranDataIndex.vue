@@ -8,8 +8,9 @@
           <v-btn color="write" @click="print()" flat>导出</v-btn>
       </v-toolbar>
       <v-flex md8 lg8>
-        <!--<tran-check-flow-info v-if="optKey==3" v-on:getNewProdData="getNewProdData" ref="callback"></tran-check-flow-info>-->
+        <!--<tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>-->
         <!--<tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>-->
+        <!--复核流程信息-->
         <v-stepper v-model="e11" v-if="optKey == 3">
           <v-stepper-header style="font-size: large">
             <v-divider></v-divider>
@@ -22,35 +23,28 @@
             <v-stepper-content step="1">
               <v-layout wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">提交人:</v-subheader>
+                  <v-subheader class="descClass">提交人:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo1.flowCommitInfo.userId" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.flowCommitInfo.userId" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-              </v-layout>
-              <v-layout row wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">提交时间:</v-subheader>
+                  <v-subheader class="descClass">提交时间:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo1.flowCommitInfo.tranTime" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.flowCommitInfo.tranTime" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-              </v-layout>
-
-              <v-layout row wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">提交原因:</v-subheader>
+                  <v-subheader class="descClass">提交原因:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo1.flowCommitInfo.remark" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.flowCommitInfo.remark" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-              </v-layout>
-              <v-layout row wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">备注信息:</v-subheader>
+                  <v-subheader class="descClass">备注信息:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" single-line hide-details>
@@ -61,47 +55,38 @@
             <v-stepper-content step="2">
               <v-layout wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">复核人:</v-subheader>
+                  <v-subheader class="descClass">复核人:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.userId" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.userId" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-              </v-layout>
-              <v-layout row wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">复核日期:</v-subheader>
+                  <v-subheader class="descClass">复核日期:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.date" value="2018/09/07" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.date" value="2018/09/07" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-              </v-layout>
-              <v-layout row wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">复核状态:</v-subheader>
+                  <v-subheader class="descClass">复核状态:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-switch color="success" style="margin-top: 8px" hide-details value="Y" :label="`${checkInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
+                  <v-switch color="success" style="margin-top: 8px" hide-details value="Y" :label="`${checkFlowInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
                 </v-flex>
-              </v-layout>
-              <v-layout row wrap>
                 <v-flex xs12 md2 lg2>
-                  <v-subheader class="class1">复核意见:</v-subheader>
+                  <v-subheader class="descClass">复核意见:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="checkInfo.remark" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="checkFlowInfo.remark" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-                <!--<v-flex md2 lg2>-->
-                  <!--<v-btn color="green" dark large @click='checkConfirm'>确 认</v-btn>-->
-
-                <!--</v-flex>-->
               </v-layout>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
 
+        <!--发布流程信息-->
         <v-stepper v-model="e1" style="color: white" v-if="optKey == 4">
           <v-stepper-header style="font-size: large">
             <v-stepper-step editable :complete="e1 > 1" step="1">提交信息</v-stepper-step>
@@ -113,35 +98,28 @@
           <v-stepper-content step="1">
             <v-layout wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">提交人:</v-subheader>
+                <v-subheader class="descClass">提交人:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo.flowCommitInfo.userId" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.flowCommitInfo.userId" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">提交时间:</v-subheader>
+                <v-subheader class="descClass">提交时间:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo.flowCommitInfo.tranTime" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.flowCommitInfo.tranTime" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">提交原因:</v-subheader>
+                <v-subheader class="descClass">提交原因:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="flowInfo.flowCommitInfo.remark" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.flowCommitInfo.remark" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">备注信息:</v-subheader>
+                <v-subheader class="descClass">备注信息:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
                 <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" single-line hide-details>
@@ -152,36 +130,30 @@
           <v-stepper-content step="2">
             <v-layout wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">复核人:</v-subheader>
+                <v-subheader class="descClass">复核人:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" v-model="flowInfo.flowCheckInfo.userId" name="title" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" v-model="releaseFlowInfo.flowCheckInfo.userId" name="title" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">复核时间:</v-subheader>
+                <v-subheader class="descClass">复核时间:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" v-model="flowInfo.flowCheckInfo.tranTime" name="title" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" v-model="releaseFlowInfo.flowCheckInfo.tranTime" name="title" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">复核状态:</v-subheader>
+                <v-subheader class="descClass">复核状态:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-switch color="success" style="margin-top: 8px" hide-details value=true disabled="false" v-model="flowInfo.flowCheckInfo.isApproved" :label="`${flowInfo.flowCheckInfo.isApproved==='Y'?'通过':'驳回'}`" ></v-switch>
+                <v-switch color="success" style="margin-top: 8px" hide-details value=true disabled="false" v-model="releaseFlowInfo.flowCheckInfo.isApproved" :label="`${flowInfo.flowCheckInfo.isApproved==='Y'?'通过':'驳回'}`" ></v-switch>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">复核意见:</v-subheader>
+                <v-subheader class="descClass">复核意见:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" disabled="false" label="" name="title" v-model="flowInfo.flowCheckInfo.remark" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" disabled="false" label="" name="title" v-model="releaseFlowInfo.flowCheckInfo.remark" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
@@ -189,36 +161,30 @@
           <v-stepper-content step="3">
             <v-layout wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">发布人:</v-subheader>
+                <v-subheader class="descClass">发布人:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseInfo.userId" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.userId" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">发布时间:</v-subheader>
+                <v-subheader class="descClass">发布时间:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseInfo.date" value="2018/09/07" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.date" value="2018/09/07" single-line hide-details>
                 </v-text-field>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">发布状态:</v-subheader>
+                <v-subheader class="descClass">发布状态:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-switch color="success" style="margin-top: 8px " hide-details value="Y" :label="`${releaseInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
+                <v-switch color="success" style="margin-top: 8px " hide-details value="Y" :label="`${releaseFlowInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
               </v-flex>
-            </v-layout>
-            <v-layout row wrap>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="class1">发布意见:</v-subheader>
+                <v-subheader class="descClass">发布意见:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="releaseInfo.remark" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="releaseFlowInfo.remark" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
@@ -228,16 +194,13 @@
       <v-flex xs12 md4 lg4 color: white>
         <img src="/static/user/MyUser.png" class="imgUserIndexFlow">
         <v-layout>
-          <v-subheader class="showMsg">欢迎admin用户{{optDesc}}存款产品</v-subheader>
+          <v-subheader class="showMsg">{{optDesc}}存款产品</v-subheader>
         </v-layout>
         <v-layout>
-          <v-subheader class="showMsg1">{{prodType}}-{{prodDesc}}</v-subheader>
+          <v-subheader class="showMsg">{{prodType}}-{{prodDesc}}</v-subheader>
         </v-layout>
-        <v-layout v-if="optKey == 4">
-          <v-btn style="margin-top: 5%; margin-left: 25%; width: 50%; font-size: large" color="green" dark large @click='releaseConfirm'>确 认</v-btn>
-        </v-layout>
-        <v-layout v-if="optKey == 3">
-          <v-btn style="margin-top: 5%; margin-left: 25%; width: 50%; font-size: large" color="green" dark large @click='checkConfirm'>确 认</v-btn>
+        <v-layout>
+          <v-btn class="btnClass" color="green" dark large @click='confirmClick'>确 认</v-btn>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -248,7 +211,7 @@
     <v-card md20 lg20 v-if="showFlag==1">
       <v-card-text>
         <v-tabs fixed-tabs>
-          <v-tab v-for="n in diffList" :key="n" class="test">{{n}}</v-tab>
+          <v-tab v-for="n in diffList" :key="n" class="diffTitle">{{n}}</v-tab>
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList" :id="`tab-${i}`" :key="i">
               <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
@@ -266,9 +229,6 @@
   </div>
 </template>
 <script>
-//    import {
-//        tranFlowInfo
-//    } from '@/api/url/prodInfo';
   import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
   import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
   import tranCheckFlowInfo from './tranCheckFlowInfo'
@@ -297,7 +257,7 @@ import {
       data (){
           return {
               e1: 3,
-              flowInfo: [],
+              releaseFlowInfo: [],
               temp: [],
               releaseInfo: {
                   mainSeqNo: '',
@@ -308,7 +268,8 @@ import {
                   optType: '4'//发布
               },
               e11: 2,
-              flowInfo1: [],
+              checkFlowInfo: [],
+              confirmInfo: [],
               checkInfo: {
                   mainSeqNo: '',
                   date: '',
@@ -357,48 +318,36 @@ import {
               }]
           }
       },
-        created() {
-            this.code = this.$route.params.code
-            this.optValue = this.$route.params.optValue
-            this.setOptKey(this.optValue)
-            this.getDiffProdData();
-
-        },
+       created() {
+           //交易单号
+           this.code = this.$route.params.code
+           this.setOptKey(this.$route.params.optValue)
+           this.getDiffProdData();
+       },
       mounted() {
-          this.checkInfo.mainSeqNo = this.$route.params.code
-          this.checkInfo.userId = sessionStorage.getItem("userId")
-          this.getDate1()
-          this.initFlowInfo1(this.$route.params.flowInfo)
-
-          this.code = this.$route.params.code;
+          //获取当前操作日期
           this.getDate()
-          this.releaseInfo.mainSeqNo = this.$route.params.code;
-          this.releaseInfo.userId = sessionStorage.getItem("userId")
-
-          this.initFlowInfo(this.$route.params.flowInfo)
-
+          //初始化流程信息
+          this.initFlowInfo(this.$route.params)
       },
         methods: {
-            getDate1() {
-                var date = new Date();
-                var year = date.getFullYear();
-                var month = date.getMonth()+1;//js中是从0开始所以要加1
-                var day = date.getDate();
-                this.checkInfo.date = year+'/'+month+'/'+day;
-            },
-            initFlowInfo1(val) {
-                for(let i=0; i<val.length; i++) {
-                    if(val[i].flowManage.mainSeqNo === this.checkInfo.mainSeqNo){
-                        this.flowInfo1 = this.$route.params.flowInfo[i]
+            initFlowInfo(val) {
+                if(this.optKey === 3){
+                    this.checkInfo.mainSeqNo = val.code
+                    this.checkInfo.userId = sessionStorage.getItem("userId")
+                    for(let i=0; i<val.flowInfo.length; i++) {
+                        if(val.flowInfo[i].flowManage.mainSeqNo === this.checkInfo.mainSeqNo){
+                            this.checkFlowInfo = val.flowInfo[i]
+                        }
                     }
                 }
-
-            },
-
-            initFlowInfo(val) {
-                for(let i=0; i<val.length; i++) {
-                    if(val[i].flowManage.mainSeqNo === this.releaseInfo.mainSeqNo){
-                        this.flowInfo =this.$route.params.flowInfo[i]
+                if(this.optKey === 4){
+                    this.releaseInfo.mainSeqNo = val.code;
+                    this.releaseInfo.userId = sessionStorage.getItem("userId")
+                    for(let i=0; i<val.flowInfo.length; i++) {
+                        if (val.flowInfo[i].flowManage.mainSeqNo === this.releaseInfo.mainSeqNo) {
+                            this.releaseFlowInfo = val.flowInfo[i]
+                        }
                     }
                 }
             },
@@ -407,40 +356,32 @@ import {
                 var year = date.getFullYear();
                 var month = date.getMonth()+1;//js中是从0开始所以要加1
                 var day = date.getDate();
-                this.releaseInfo.date = year+'年'+month+'月'+day+'日';
+                this.releaseInfo.date = year+'/'+month+'/'+day;
+                this.checkInfo.date = year+'/'+month+'/'+day;
             },
-            checkConfirm() {
-                console.log(this.checkInfo)
-                if(this.checkInfo.isApproved !== "Y"){
-                    this.checkInfo.isApproved = "N"
+            //提交事件
+            confirmClick() {
+                if(this.optKey === 3){
+                    this.confirmInfo = this.checkInfo;
                 }
-                tranFlowInfo(this.checkInfo).then(response => {
-                    if(response.status === 200 && this.checkInfo.isApproved === "Y") {
-                        toast.success("复核成功！");
+                if(this.optKey === 4){
+                    this.confirmInfo = this.releaseInfo
+                }
+                if(this.confirmInfo.isApproved !== "Y"){
+                    this.confirmInfo.isApproved = "N"
+                }
+                tranFlowInfo(this.confirmInfo).then(response => {
+                    if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
+                        toast.success("操作成功！");
                         this.$router.push({ name: 'userIndexFlow'});
                     }
-                    if(response.status === 200 && this.checkInfo.isApproved === "N") {
+                    if(response.status === 200 && this.confirmInfo.isApproved === "N") {
                         toast.success("驳回成功！");
                         this.$router.push({ name: 'userIndexFlow'});
                     }
                 })
             },
-            releaseConfirm() {
-                console.log(this.releaseInfo)
-                if(this.releaseInfo.isApproved !== "Y"){
-                    this.releaseInfo.isApproved = "N"
-                }
-                tranFlowRelease(this.releaseInfo).then(response => {
-                    if(response.status === 200 && this.releaseInfo.isApproved === "Y") {
-                        toast.success("发布成功！");
-                        this.$router.push({ name: 'userIndexFlow'});
-                    }
-                    if(response.status === 200 && this.releaseInfo.isApproved === "N") {
-                        toast.success("驳回成功！");
-                        this.$router.push({ name: 'userIndexFlow'});
-                    }
-                })
-            },
+            //展开/隐藏差异信息列表
             showClick() {
                 this.showFlag = this.showFlag ===0?1:0
                 this.getDiffProdData();
@@ -457,25 +398,6 @@ import {
             },
             print () {
                 window.print()
-            },
-//            checkConfirm() {
-//                this.$refs.callback.callbackprod
-//            },
-            getNewProdData(val) {
-                console.log(val)
-                if(val.isApproved !== "Y"){
-                    val.isApproved = "N"
-                }
-                tranFlowInfo(this.checkInfo).then(response => {
-                    if(response.status === 200 && this.checkInfo.isApproved === "Y") {
-                        toast.success("复核成功！");
-                        this.$router.push({ name: 'userIndexFlow'});
-                    }
-                    if(response.status === 200 && this.checkInfo.isApproved === "N") {
-                        toast.success("驳回成功！");
-                        this.$router.push({ name: 'userIndexFlow'});
-                    }
-                })
             },
             getDiffProdData(){
                 var data={'mainSeqNo': this.code};
@@ -621,7 +543,7 @@ import {
     }
 </script>
 <style scoped>
-    .test {
+    .diffTitle {
       font-size: large;
     }
     .imgUserIndexFlow {
@@ -633,15 +555,9 @@ import {
        color: deepskyblue;
        font-size: x-large;
        font-style: inherit;
-       margin-left: 15%;
+       margin-left: 30%;
      }
-    .showMsg1 {
-      color: deepskyblue;
-      font-size: large;
-      font-style: inherit;
-      margin-left: 30%;
-    }
-    .class1 {
+    .descClass {
       color: deepskyblue;
       font-size: large;
       font-style: inherit;
@@ -652,4 +568,10 @@ import {
     .textBox {
       margin-top: 5px;
     }
+  .btnClass {
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;
+    font-size: large;
+  }
 </style>
