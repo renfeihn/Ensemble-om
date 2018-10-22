@@ -14,10 +14,10 @@
       <v-flex xs12 md4 lg4 color: white>
         <img src="/static/user/MyUser.png" class="imgUserIndexFlow">
         <v-layout>
-          <v-subheader class="showMsg">欢迎admin用户复核存款产品</v-subheader>
+          <v-subheader class="showMsg">欢迎admin用户{{optDesc}}存款产品</v-subheader>
         </v-layout>
         <v-layout>
-          <v-subheader class="showMsg1">RB101-个人活期产品</v-subheader>
+          <v-subheader class="showMsg1">{{prodType}}-{{prodDesc}}</v-subheader>
         </v-layout>
         <v-layout>
           <v-btn style="margin-top: 5%; margin-left: 25%; width: 50%; font-size: large" color="green" dark large @click='checkConfirm'>确 认</v-btn>
@@ -77,6 +77,7 @@
               optKey: 0,
               showFlag: 0,
               optValue: '',
+              optDesc: '',
               prodData: {},
               prodCharge: {},
               prodDefineData: {},
@@ -127,9 +128,11 @@
             setOptKey(val) {
                 if(val === "复核") {
                     this.optKey = 3
+                    this.optDesc = "复核"
                 }
                 if(val === "发布") {
                     this.optKey = 4
+                    this.optDesc = "发布"
                 }
             },
             print () {
@@ -288,18 +291,12 @@
                             const value=heards[num].value
                             diffData[value]=prodCharge[value];
                         }
-
                         assembleColumns.push(diffData)
                     }
                 }
                 const reColumn = {"headers": heards,"column": assembleColumns}
                 this.prodCharge= reColumn;
             },
-
-//            ,
-//            addCompare () {
-//
-//            }
         }
     }
 </script>
@@ -316,12 +313,12 @@
        color: deepskyblue;
        font-size: x-large;
        font-style: inherit;
-       margin-left: 10%;
+       margin-left: 15%;
      }
     .showMsg1 {
       color: deepskyblue;
       font-size: large;
       font-style: inherit;
-      margin-left: 25%;
+      margin-left: 30%;
     }
 </style>
