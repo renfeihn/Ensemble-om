@@ -22,7 +22,7 @@
                 <v-flex mx-5>
                     <dc-multiselect
                             :isMultiSelect="false"
-                            v-model="selected.chargeFreq"
+                            v-model="selected.chargePeriodFreq"
                             :options="chargePeriodFreq1"
                             label="收费频率"
                     ></dc-multiselect>
