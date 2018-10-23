@@ -133,7 +133,7 @@
                 if(typeof this._props.msg === "object") {
                     this._props.msg.attrValue = value
                 }
-                if(typeof this._props.msg === "string") {
+                if(typeof this._props.msg === "string" || typeof this._props.msg === "undefined") {
                     this._props.msg = value
                 }
                 if (value) {
