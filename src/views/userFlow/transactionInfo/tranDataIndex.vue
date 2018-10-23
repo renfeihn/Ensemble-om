@@ -58,27 +58,27 @@
                   <v-subheader class="descClass">复核人:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.userId" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.userId" single-line hide-details>
                   </v-text-field>
                 </v-flex>
                 <v-flex xs12 md2 lg2>
                   <v-subheader class="descClass">复核日期:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkFlowInfo.date" value="2018/09/07" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.date" value="2018/09/07" single-line hide-details>
                   </v-text-field>
                 </v-flex>
                 <v-flex xs12 md2 lg2>
                   <v-subheader class="descClass">复核状态:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-switch color="success" style="margin-top: 8px" hide-details value="Y" :label="`${checkFlowInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
+                  <v-switch color="success" style="margin-top: 8px" hide-details value="Y" :label="`${checkInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
                 </v-flex>
                 <v-flex xs12 md2 lg2>
                   <v-subheader class="descClass">复核意见:</v-subheader>
                 </v-flex>
                 <v-flex md10 lg10>
-                  <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="checkFlowInfo.remark" single-line hide-details>
+                  <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="checkInfo.remark" single-line hide-details>
                   </v-text-field>
                 </v-flex>
               </v-layout>
@@ -147,7 +147,7 @@
                 <v-subheader class="descClass">复核状态:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-switch color="success" style="margin-top: 8px" hide-details value=true disabled="false" v-model="releaseFlowInfo.flowCheckInfo.isApproved" :label="`${flowInfo.flowCheckInfo.isApproved==='Y'?'通过':'驳回'}`" ></v-switch>
+                <v-switch color="success" style="margin-top: 8px" hide-details value=true disabled="false" v-model="releaseFlowInfo.flowCheckInfo.isApproved" :label="`${releaseFlowInfo.flowCheckInfo.isApproved==='Y'?'通过':'驳回'}`" ></v-switch>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="descClass">复核意见:</v-subheader>
@@ -164,27 +164,27 @@
                 <v-subheader class="descClass">发布人:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.userId" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseInfo.userId" single-line hide-details>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="descClass">发布时间:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseFlowInfo.date" value="2018/09/07" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="releaseInfo.date" value="2018/09/07" single-line hide-details>
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="descClass">发布状态:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-switch color="success" style="margin-top: 8px " hide-details value="Y" :label="`${releaseFlowInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
+                <v-switch color="success" style="margin-top: 8px " hide-details value="Y" :label="`${releaseInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
               </v-flex>
               <v-flex xs12 md2 lg2>
                 <v-subheader class="descClass">发布意见:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
-                <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="releaseFlowInfo.remark" single-line hide-details>
+                <v-text-field class="primary--text mx-1 textBox" label="" name="title" v-model="releaseInfo.remark" single-line hide-details>
                 </v-text-field>
               </v-flex>
             </v-layout>
