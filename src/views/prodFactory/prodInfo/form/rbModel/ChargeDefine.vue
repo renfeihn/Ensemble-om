@@ -1,7 +1,6 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-
             <a-button type="primary" @click="onAdd">新增</a-button>
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
             <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
@@ -13,21 +12,25 @@
                     <v-card-text>
                 <v-form v-model="valid">
                     <v-text-field
+                            :disabled="disabledFlag"
                             v-model="selected.feeType"
                             :counter="10"
-                            label="费用类型"
+                            label="批量收费类型"
                             required
                             class="mx-5"
                     ></v-text-field>
-                    <v-text-field
-                            v-model="selected.chargePeriodFreq"
+                <v-flex mx-5>
+                    <dc-multiselect
+                            :isMultiSelect="false"
+                            v-model="selected.chargeFreq"
+                            :options="chargePeriodFreq1"
                             label="收费频率"
-                            class="mx-5"
-                            required
-                    ></v-text-field>
+                    ></dc-multiselect>
+
+                    </v-flex>
                     <v-text-field
                             v-model="selected.chargeDay"
-                            label="收费日"
+                            label="收费日期"
                             class="mx-5"
                             required
                     ></v-text-field>
@@ -45,7 +48,7 @@
                     ></v-text-field>
                     <v-text-field
                             v-model="selected.conDeductFlag"
-                            label="持续扣款标示"
+                            label="持续扣款标识"
                             class="mx-5"
                             required
                     ></v-text-field>
@@ -84,6 +87,7 @@
 
 </template>
 <script>
+import DcMultiselect from '@/components/widgets/DcMultiselect'
 import {getChargeDefine} from '@/api/table';
 import toast from '@/utils/toast';
 import { getInitData } from "@/mock/init";
@@ -96,9 +100,12 @@ export default {
             return getColumnDesc(key)
         }
     },
+    components: { DcMultiselect },
     props: ["prodData"],
     data () {
         return {
+            chargeDefinesInfo: '',
+            disabledFlag: false,
             prodType: '',
             open: true,
             valid: true,
@@ -107,6 +114,16 @@ export default {
             option: '',
             selectedRowKeys: [],
             selected: {},
+            chargePeriodFreq1: [
+                {
+                    "key": "3D",
+                    "value": "3D-3天"
+                },
+                {
+                    "key": "2D",
+                    "value": "2D-2天"
+                }
+            ],
             columns: [
                 {dataIndex: 'feeType', title: '批量收费类型',scopedSlots: { customRender: 'feeType' }},
                 {dataIndex: 'chargePeriodFreq', title: '收费频率'},
@@ -115,8 +132,7 @@ export default {
                 {dataIndex: 'chargeDealMethod', title: '收费处理方式'},
                 {dataIndex: 'conDeductFlag', title: '持续扣款标识'},
                 {dataIndex: 'conDeductTimes', title: '持续扣款次数'}
-            ],
-            chargeDefinesInfo: []
+            ]
         };
     },
     watch: {
@@ -135,8 +151,12 @@ export default {
                 let selected=this.selected;
                 selected.prodType=this.prodType
                 dataSource.push(selected)
+                this.dialog=false;
             }
-            this.dialog=false;
+            if(this.option =='edit')
+            {
+                this.dialog=false;
+            }
         },
         onDelete () {
             let dataSource=this.chargeDefinesInfo
@@ -146,10 +166,12 @@ export default {
             this.option='add';
             this.selected={};
             this.dialog=true;
+            this.disabledFlag =false;
         },
         onEdit () {
             this.option='edit';
             this.dialog=true;
+            this.disabledFlag = true;
         },
         customRow (record) {
             return {

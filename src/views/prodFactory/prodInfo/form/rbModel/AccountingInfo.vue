@@ -9,15 +9,16 @@
                         width="500"
                 >
                 <v-card>
-                    <v-card-text>
-                    <v-form v-model="valid">
-                    <v-text-field
-                            v-model="selected.prodType"
-                            :counter="10"
-                            label="产品类型"
-                            required
-                            class="mx-5"
-                    ></v-text-field>
+                        <v-card-text>
+                            <v-form v-model="valid">
+                                <v-text-field
+                                        :disabled="disabledFlag"
+                                        v-model="selected.prodType"
+                                        :counter="10"
+                                        label="产品类型"
+                                        required
+                                        class="mx-5"
+                                ></v-text-field>
                     <v-text-field
                             v-model="selected.accountingStatus"
                             :counter="10"
@@ -96,6 +97,7 @@
         props: ["prodData"],
         data () {
             return {
+                disabledFlag: false,
                 valid: true,
                 select: {},
                 columns: [
@@ -145,12 +147,11 @@
         },
         watch: {
             prodData (val) {
-                this.getChargeDefinesInfo(val)
+                this.getAccountingInfo(val)
             }
         },
         mounted: function() {
-            this.queryDespositProdData(this.prodData)
-            this.initRefDate()
+            this.getAccountingInfo(this._props.prodData)
         },
         methods: {
             submit () {
@@ -170,10 +171,12 @@
                 this.option='add';
                 this.selected={};
                 this.dialog=true;
+                this.disabledFlag=false
             },
             onEdit () {
                 this.option='edit';
                 this.dialog=true;
+                this.disabledFlag = true;
             },
             customRow (record) {
                 return {
@@ -196,11 +199,12 @@
                 }
                 this.selected=record;
             },
-            getChargeDefinesInfo(val) {
+            getAccountingInfo(val) {
                 //初始化产品对应的信息
-                this.prodAccountingInfo = []
-                this.prodAccountingInfo = val.glProdAccounting
-                this.prodType = val.prodType.prodType
+                if(val!=undefined&&val.prodType.prodType!=undefined) {
+                    this.accountingInfos = val.glProdAccounting
+                    this.prodType = val.prodType.prodType
+                }
             },
             editItem (item) {
                 this.editedIndex = this.projects.indexOf(item)
@@ -215,7 +219,6 @@
                 this.glCodeL = this.refData[2].paraDataRb.glCode;
                 this.glCodeIntE = this.refData[2].paraDataRb.glCode;
                 this.glCodeIntPay = this.refData[2].paraDataRb.glCode;
-
             },
             deleteItem (item) {
                 const index = this.projects.indexOf(item)
