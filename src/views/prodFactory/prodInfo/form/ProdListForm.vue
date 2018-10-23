@@ -5,8 +5,8 @@
       <v-toolbar dense class="chat-history-toolbar prodLists">
         <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="请输入产品代码或描述" v-model="searchValue"></v-text-field>
       </v-toolbar>
-      <vue-perfect-scrollbar class="depositTree">
-        <v-list two-line subheader>
+      <vue-perfect-scrollbar >
+        <v-list two-line subheader class="depositTree">
           <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
             <v-list-tile-avatar>
               <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>

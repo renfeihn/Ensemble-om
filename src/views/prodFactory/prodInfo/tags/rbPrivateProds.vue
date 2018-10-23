@@ -17,7 +17,8 @@
                     </v-tabs>
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
-                    <v-tab-item v-for="i in 12" :key="i" :id="'mobile-tabs-5-' + i">
+                    <v-tab-item v-for="i in 12" :key="i">
+                        <v-card flat>
                         <acct-base-info v-if="i==1" v-bind:prodData="prodData"></acct-base-info>
                         <control-info v-if="i==2" v-bind:prodData="prodData"></control-info>
                         <product-object v-if="i==3" v-bind:prodData="prodData"></product-object>
@@ -30,6 +31,7 @@
                         <rate-info v-if="i==10" v-bind:prodData="prodData"></rate-info>
                         <form-shift v-if="i==11" v-bind:prodData="prodData"></form-shift>
                         <accounting-info v-if="i==12" v-bind:prodData="prodData"></accounting-info>
+                        </v-card>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>

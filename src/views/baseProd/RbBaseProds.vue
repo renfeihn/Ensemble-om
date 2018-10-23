@@ -17,7 +17,7 @@
                     </v-tabs>
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
-                    <v-tab-item v-for="i in 3" :key="i" :id="'mobile-tabs-5-' + i">
+                    <v-tab-item v-for="i in 3" :key="i">
                         <base-prod v-if="i==1" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
                         <base-prod v-if="i==2" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
                         <base-prod v-if="i==3" :prodDefines="eventList"></base-prod>
