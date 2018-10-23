@@ -1,10 +1,13 @@
 <template>
  <div >
   <v-layout row wrap>
-   <v-flex md9 lg9>
-    <v-text-field class="primary--text mx-1" name="title" v-model="value" single-line hide-details :perShow="perShow"></v-text-field>
+   <v-flex md4 lg4>
+   <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
    </v-flex>
-   <v-flex md3 lg3 v-if="personShow==1">
+   <v-flex md6 lg6>
+    <v-text-field class="primary--text mx-1" name="title" v-model="value" single-line hide-details :perShow="perShow" label="label"></v-text-field>
+   </v-flex>
+   <v-flex md2 lg2 v-if="personShow==1">
     <v-tooltip right :color="peopleColor">
     <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
      <v-icon>people</v-icon>
@@ -22,9 +25,10 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["msg","perShow"],
+        props: ["msg","perShow","label"],
         data() {
             return {
+                labelText: "",
                 value: [],
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效",
@@ -69,6 +73,7 @@
                 }
             },
             init(msg) {
+                this.labelText = this._props.label+' :'
                 //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
                 this.value = typeof msg === "object"?this._props.msg.attrValue:this._props.msg
                 //判断是否显示分户生效标识
