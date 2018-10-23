@@ -3,7 +3,7 @@
         <v-toolbar card dense color="transparent">
                 <a-button type="primary" class="ml-2" @click="onAdd">新增</a-button>
                 <a-button type="primary" class="ml-2" @click="onEdit">修改</a-button>
-                <a-button type="primary" class="ml-2" @click="onDelete">删除</a-button>
+                <a-button type="primary" class="ml-2" dark @click="onDelete">删除</a-button>
                 <v-dialog
                         v-model="dialog"
                         width="500"
@@ -171,7 +171,7 @@
                 this.option='add';
                 this.selected={};
                 this.dialog=true;
-                this.disabledFlag=false
+                this.disabledFlag=true
             },
             onEdit () {
                 this.option='edit';
