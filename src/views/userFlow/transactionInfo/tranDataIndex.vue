@@ -213,7 +213,7 @@
         <v-tabs fixed-tabs>
           <v-tab v-for="n in diffList" :key="n" class="diffTitle">{{n}}</v-tab>
           <v-tabs-items v-model="model">
-            <v-tab-item v-for="i in diffList" :id="`tab-${i}`" :key="i">
+            <v-tab-item v-for="i in diffList" :key="i">
               <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
               <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
               <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
