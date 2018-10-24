@@ -58,32 +58,34 @@
                                 <dc-multiselect :options="baseProdTypeOption" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                         </v-layout>
-                        <v-flex v-for="(keyData ,key ,index) in dataSource" v-bind:key="key" lg6>
-                            <v-layout row wrap>
-                                <v-flex xs12 md4 lg4 v-if="keyData.columnDesc != undefined">
-                                    <v-subheader class="primary--text subheading">{{keyData.columnDesc}}*</v-subheader>
-                                </v-flex>
-                                <v-flex md8 lg4 v-if="keyData.columnType == 'tree'">
-                                </v-flex>
-                                <v-flex md12 lg12 v-if="keyData.columnType == 'tree'">
-                                    <v-flex md11 ml-5 class="auto">
-                                        <dc-tree-select v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue"
-                                                        :multiple="true" :options="keyData.valueScore"></dc-tree-select>
+                        <draggable v-model="dataSource" :move="getdata" @update="datadragEnd" class="layout row wrap">
+                            <v-flex v-for="(keyData ,key ,index) in dataSource" v-bind:key="key" lg6>
+                                <v-layout row wrap>
+                                    <v-flex xs12 md4 lg4 v-if="keyData.columnDesc != undefined">
+                                        <v-subheader class="primary--text subheading">{{keyData.columnDesc}}*</v-subheader>
                                     </v-flex>
-                                </v-flex>
-                                <v-flex md8 lg8 v-else>
-                                    <v-text-field v-if="keyData.columnType == 'input'"
-                                                  class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
-                                                  name="title" v-model="prodDefines[keyData.key].attrValue" single-line
-                                                  hide-details></v-text-field>
-                                    <dc-multiselect v-if="keyData.columnType == 'select'" v-model="prodDefines[keyData.key]"
-                                                    :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
-                                    <dc-switch v-if="keyData.columnType == 'switch'"
-                                               v-model="prodDefines[keyData.key].attrValue"></dc-switch>
-                                    <dc-date v-if="keyData.columnType == 'date'" v-model="prodDefines[keyData.key].attrValue" label="生效日期"></dc-date>
-                                </v-flex>
-                            </v-layout>
-                        </v-flex>
+                                    <v-flex md8 lg4 v-if="keyData.columnType == 'tree'">
+                                    </v-flex>
+                                    <v-flex md12 lg12 v-if="keyData.columnType == 'tree'">
+                                        <v-flex md11 ml-5 class="auto">
+                                            <dc-tree-select v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue"
+                                                            :multiple="true" :options="keyData.valueScore"></dc-tree-select>
+                                        </v-flex>
+                                    </v-flex>
+                                    <v-flex md8 lg8 v-else>
+                                        <v-text-field v-if="keyData.columnType == 'input'"
+                                                      class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
+                                                      name="title" v-model="prodDefines[keyData.key].attrValue" single-line
+                                                      hide-details></v-text-field>
+                                        <dc-multiselect v-if="keyData.columnType == 'select'" v-model="prodDefines[keyData.key]"
+                                                        :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
+                                        <dc-switch v-if="keyData.columnType == 'switch'"
+                                                   v-model="prodDefines[keyData.key].attrValue"></dc-switch>
+                                        <dc-date v-if="keyData.columnType == 'date'" v-model="prodDefines[keyData.key].attrValue" label="生效日期"></dc-date>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+                        </draggable>
                     </v-layout>
                 </v-container>
             </div>
@@ -96,8 +98,11 @@
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
     import DcDate from '@/components/widgets/DcDate'
+    import {saveColumn} from "@/api/url/prodInfo";
+    import toast from '@/utils/toast';
+    import draggable from 'vuedraggable'
     export default {
-        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate},
+        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,draggable},
         props: ["prodType","prodDefines","tags"],
         data: () => ({
             dataSource: {},
@@ -185,18 +190,45 @@
             }
         },
         methods: {
+            getdata (evt) {
+                console.log(evt.draggedContext.element.id)
+            },
+            saveColumn (){
+                saveColumn({column: this.dataSource,prodType: this._props.prodType.prodType}).then(response => {
+                    if(response.status === 200) {
+                        toast.success("顺序编辑完成！");
+                    }
+                });
+            },
+            datadragEnd (evt) {
+                console.log('拖动前的索引 :' + evt.oldIndex)
+                console.log('拖动后的索引 :' + evt.newIndex)
+                const oldIndex=evt.oldIndex;
+                const newIndex=evt.newIndex;
+                let dataSourceEnd=[]
+                let dataSource=this.dataSource
+                for(const index in dataSource){
+                    dataSource[index].pageSeqNo=parseInt(index)+1;
+                }
+                this.saveColumn();
+                //拖动后改变column数组
+                console.log(this.tags)
+            },
             init(prodData) {
                 let columnList=[]
                 //通过后台的产品有关信息查数据字典
-                for(const index in prodData){
-                    const dataSource=columnInfo;
-                   let column=dataSource[index];
-                   if(column!=undefined&&column!='undefined'&&this._props.tags==prodData[index].pageCode){
-                       column['key']=index
-                   columnList.push(column)
-                   }
+                for(const index in prodData) {
+                    const dataSource = columnInfo;
+                    let column = dataSource[index];
+                    if (column != undefined && column != 'undefined' && this._props.tags == prodData[index].pageCode) {
+                        column['key'] = index
+                        column['pageSeqNo'] = prodData[index].pageSeqNo
+                            column['pageCode'] = prodData[index].pageCode
+                        columnList.push(column)
+                    }
                 }
                 this.dataSource = columnList
+
             }
         }
     }
