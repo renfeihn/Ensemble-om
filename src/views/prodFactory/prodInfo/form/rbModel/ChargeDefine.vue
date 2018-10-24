@@ -45,7 +45,7 @@
                         <dc-multiselect
                                 :isMultiSelect="false"
                                 v-model="selected.chargeDealMethod"
-                                :options="chargePeriodFreq1"
+                                :options="chargeDealMethod1"
                                 labelDesc="  收费处理方式"
                         ></dc-multiselect>
 
@@ -60,7 +60,7 @@
                         <dc-multiselect
                                 :isMultiSelect="false"
                                 v-model="selected.conDeductFlag"
-                                :options="chargePeriodFreq1"
+                                :options="conDeductFlag1"
                                 labelDesc="  持续扣款标识"
                         ></dc-multiselect>
 
@@ -145,6 +145,26 @@ export default {
                 {
                     "key": "2D",
                     "value": "2D-2天"
+                }
+            ],
+            chargeDealMethod1: [
+                {
+                    "key":"10",
+                    "value":"10-实时生效"
+                },
+                {
+                    "key":"11",
+                    "value":"11-日终处理"
+                }
+            ],
+            conDeductFlag1: [
+                {
+                    "key":"Y",
+                    "value":"Y-持续扣款"
+                },
+                {
+                    "key":"N",
+                    "value":"N-非持续扣款"
                 }
             ],
             columns: [
