@@ -45,7 +45,7 @@
             options: [],
             peopleColor: "grey lighten-1",
             peopleDesc: "产品生效",
-            personShow: 1,
+            personShow: 0,
             labelText: ''
         }),
 

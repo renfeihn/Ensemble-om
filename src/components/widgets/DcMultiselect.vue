@@ -1,5 +1,9 @@
+/**
+*labelDesc属性
+*例子: 数据为String字符串的时候:  <dc-multiselect label="测试测试"></dc-multiselect>  加载后数据为：测试测试
+*      数据为变量的时候:          <dc-multiselect :label="object"></dc-multiselect>  加载后数据为变量object对应数据
+*/
 <template>
-
     <div>
         <v-layout row wrap>
             <v-flex md4 lg4>
