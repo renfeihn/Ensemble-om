@@ -5,7 +5,7 @@
    <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
    </v-flex>
    <v-flex md6 lg6>
-    <v-text-field class="primary--text mx-1" name="title" v-model="value" single-line hide-details :perShow="perShow" label="label"></v-text-field>
+    <v-text-field class="primary--text mx-1" name="title" v-model="value" single-line hide-details :perShow="perShow" labelDesc="labelDesc"></v-text-field>
    </v-flex>
    <v-flex md2 lg2 v-if="personShow==1">
     <v-tooltip right :color="peopleColor">
@@ -25,7 +25,7 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["msg","perShow","label"],
+        props: ["msg","perShow","labelDesc"],
         data() {
             return {
                 labelText: "",
@@ -73,7 +73,7 @@
                 }
             },
             init(msg) {
-                this.labelText = this._props.label+' :'
+                this.labelText = this._props.labelDesc+' :'
                 //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
                 this.value = typeof msg === "object"?this._props.msg.attrValue:this._props.msg
                 //判断是否显示分户生效标识

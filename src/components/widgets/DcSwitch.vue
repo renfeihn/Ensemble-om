@@ -8,10 +8,13 @@
 <template>
  <div >
   <v-layout row wrap>
-   <v-flex md9 lg9>
-    <v-switch :label="desc" color="success" v-model="dcSwitch" @change="switchChange" hide-details :perShow="perShow"></v-switch>
+   <v-flex md4 lg4>
+    <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
    </v-flex>
-   <v-flex md3 lg3 v-if="personShow==1">
+   <v-flex md6 lg6>
+    <v-switch :label="desc" color="success" v-model="dcSwitch" @change="switchChange" hide-details :perShow="perShow" labelDesc="labelDesc"></v-switch>
+   </v-flex>
+   <v-flex md2 lg2 v-if="personShow==1">
     <v-tooltip right :color="peopleColor">
      <v-btn flat small :color="peopleColor" icon="people" slot="activator" class="left" @click="peopleClick">
       <v-icon>people</v-icon>
@@ -35,7 +38,8 @@
                 default: "是,否"
             },
             value: {},
-            perShow: String
+            perShow: String,
+            labelDesc: String
         },
         data() {
             return {
@@ -44,7 +48,8 @@
                 currentValue: "",
                 desc: "",
                 dcSwitch: false,
-                personShow: 0
+                personShow: 0,
+                labelText: ''
             };
         },
         watch: {
@@ -56,7 +61,6 @@
                     else if(typeof val === "string"){
                         this.dcSwitch = val === "Y" ? true : false
                     }
-//                    this.dcSwitch = typeof val === "object"?val.attrValue:val === "Y" ? true : false;
                     if(typeof val !== "undefined") {
                         this.switchChange()
                         this.initPerson()
@@ -68,6 +72,7 @@
             }
         },
         mounted() {
+            this.labelText = this._props.labelDesc+' :'
             this.switchChange();
         },
         methods: {

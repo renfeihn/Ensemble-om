@@ -2,12 +2,15 @@
 
     <div>
         <v-layout row wrap>
-            <v-flex md9 lg9>
+            <v-flex md4 lg4>
+                <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
+            </v-flex>
+            <v-flex md6 lg6>
                 <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel=""
-                             :searchable="false" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                             :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                 </multiselect>
             </v-flex>
-            <v-flex md3 lg3 v-if="personShow==1">
+            <v-flex md2 lg2 v-if="personShow==1">
                 <v-tooltip right :color="peopleColor">
                     <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
                         <v-icon>people</v-icon>
@@ -27,7 +30,7 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["options", "msg","isMultiSelect","perShow"],
+        props: ["options", "msg","isMultiSelect","perShow","labelDesc"],
         data() {
             return {
                 value: [],
@@ -54,6 +57,7 @@
             }
         },
         created() {
+            this.labelText = this._props.labelDesc+' :'
             if(typeof this._props.msg !== "undefined") {
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }

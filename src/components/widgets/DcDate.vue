@@ -8,13 +8,16 @@
 <template>
     <div style="margin-top: 30px">
         <v-layout row wrap>
-            <v-flex md9 lg9>
-                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" class="dcDate">
+            <v-flex md4 lg4>
+                <v-subheader class="primary--text subheading labelDesc">{{labelText}}</v-subheader>
+            </v-flex>
+            <v-flex md6 lg6>
+                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" class="dcDate" labelDesc="labelDesc">
                     <v-text-field slot="activator" v-model="dateFormatted" append-icon="event"></v-text-field>
                     <v-date-picker v-model="dateFormatted" no-title scrollable locale="zh-cn"></v-date-picker>
                 </v-menu>
             </v-flex>
-            <v-flex md3 lg3 v-if="personShow==1">
+            <v-flex md2 lg2 v-if="personShow==1">
                 <v-tooltip right :color="peopleColor">
                     <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcDate1">
                         <v-icon>people</v-icon>
@@ -31,7 +34,7 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["options", "msg","perShow"],
+        props: ["options", "msg","perShow","labelDesc"],
         data: () => ({
             date: null,
             dateFormatted: null,
@@ -42,7 +45,8 @@
             options: [],
             peopleColor: "grey lighten-1",
             peopleDesc: "产品生效",
-            personShow: 1
+            personShow: 1,
+            labelText: ''
         }),
 
         computed: {
@@ -77,6 +81,7 @@
                 }
             },
             init(msg){
+                this.labelText = this._props.labelDesc+' :'
                 if(msg !== null && msg !== undefined){
                     let dates = this._props.msg.attrValue
                     let time =dates.substring(0,4)+"-"+dates.substring(4,6)+"-"+dates.substring(6)
@@ -96,13 +101,16 @@
 </style>
 <style scoped>
     .dcDate {
-        margin-top: -23px;
+        margin-top: -40px;
         margin-right: 20px;
         width: 100%;
         height: 40px;
     }
     .dcDate1 {
-        margin-top: -18px;
+        margin-top: -10px;
         margin-left: 8px;
+    }
+    .labelDesc {
+        margin-top: -25px;
     }
 </style>
