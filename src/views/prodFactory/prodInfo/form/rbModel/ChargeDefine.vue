@@ -19,60 +19,82 @@
                             required
                             class="mx-5"
                     ></v-text-field>
-                <v-flex mx-5>
-                    <dc-multiselect
-                            :isMultiSelect="false"
-                            v-model="selected.chargePeriodFreq"
-                            :options="chargePeriodFreq1"
-                            label="收费频率"
-                    ></dc-multiselect>
-
-                    </v-flex>
-                    <v-text-field
-                            v-model="selected.chargeDay"
-                            label="收费日期"
-                            class="mx-5"
-                            required
-                    ></v-text-field>
-                    <v-text-field
-                            v-model="selected.nextChargeDate"
-                            label="下一收费日期"
-                            class="mx-5"
-                            required
-                    ></v-text-field>
-                    <v-text-field
-                            v-model="selected.chargeDealMethod"
-                            label="收费处理方式"
-                            class="mx-5"
-                            required
-                    ></v-text-field>
-                    <v-text-field
-                            v-model="selected.conDeductFlag"
-                            label="持续扣款标识"
-                            class="mx-5"
-                            required
-                    ></v-text-field>
                     <v-text-field
                             v-model="selected.conDeductTimes"
                             label="持续扣款次数"
                             class="mx-5"
                             required
                     ></v-text-field>
+                    <v-flex>
+                        <dc-multiselect
+                                :isMultiSelect="false"
+                                v-model="selected.chargePeriodFreq"
+                                :options="chargePeriodFreq1"
+                                labelDesc="  收费频率"
+                        ></dc-multiselect>
+
+                    </v-flex>
+
+                   <!-- <v-text-field
+                            v-model="selected.chargeDealMethod"
+                            label="收费处理方式"
+                            class="mx-5"
+                            required
+                    ></v-text-field>-->
+                    <v-flex>
+                        <dc-multiselect
+                                :isMultiSelect="false"
+                                v-model="selected.chargeDealMethod"
+                                :options="chargePeriodFreq1"
+                                labelDesc="  收费处理方式"
+                        ></dc-multiselect>
+
+                    </v-flex>
+                    <!--<v-text-field
+                            v-model="selected.conDeductFlag"
+                            label="持续扣款标识"
+                            class="mx-5"
+                            required
+                    ></v-text-field>-->
+                    <v-flex>
+                        <dc-multiselect
+                                :isMultiSelect="false"
+                                v-model="selected.conDeductFlag"
+                                :options="chargePeriodFreq1"
+                                labelDesc="  持续扣款标识"
+                        ></dc-multiselect>
+
+                    </v-flex>
+                    <v-flex>
+                        <dc-date v-model="selected.chargeDay" labelDesc="收费日期"></dc-date>
+                    </v-flex>
+                    <!-- <v-text-field
+                             v-model="selected.nextChargeDate"
+                             label="下一收费日期"
+                             class="mx-5"
+                             required
+                     ></v-text-field>-->
+                    <v-flex>
+                        <dc-date v-model="selected.nextChargeDate" labelDesc="下一收费日期"></dc-date>
+                    </v-flex>
                 </v-form>
-                <v-btn
-                        color="green darken-1"
-                        flat="flat"
-                        @click="submit"
-                >
+<v-spacer></v-spacer>
+                <v-flex mx-5>
+                    <v-btn
+                    color="green darken-1"
+                    flat="flat"
+                    @click="submit"
+                    >
                     确认
-                </v-btn>
-                  <v-btn
-                          color="green darken-1"
-                          flat="flat"
-                          @click="dialog = false"
-                  >
-                      取消
-                  </v-btn>
+                    </v-btn>
+                    <v-btn
+                    color="green darken-1"
+                    flat="flat"
+                    @click="dialog = false"
+                    >
+                    取消
+                    </v-btn>
+                </v-flex>
                     </v-card-text>
                 </v-card>
             </v-dialog>
@@ -93,6 +115,7 @@ import toast from '@/utils/toast';
 import { getInitData } from "@/mock/init";
 import {getColumnDesc} from '@/utils/columnDesc'
 import {removeByValue} from '@/utils/util'
+import DcDate from '@/components/widgets/DcDate'
 
 export default {
     filters: {
@@ -100,7 +123,7 @@ export default {
             return getColumnDesc(key)
         }
     },
-    components: { DcMultiselect },
+    components: { DcMultiselect,DcDate},
     props: ["prodData"],
     data () {
         return {
