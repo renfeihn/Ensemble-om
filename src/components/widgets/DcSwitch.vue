@@ -72,7 +72,9 @@
             }
         },
         mounted() {
-            this.labelText = this._props.labelDesc+' :'
+            if(typeof this._props.labelDesc !== "undefined") {
+                this.labelText = this._props.labelDesc + ' :';
+            }
             this.switchChange();
         },
         methods: {

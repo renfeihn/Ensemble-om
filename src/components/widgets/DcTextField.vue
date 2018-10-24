@@ -73,8 +73,9 @@
                 }
             },
             init(msg) {
-                this.labelText = this._props.labelDesc+' :'
-                //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
+                if(typeof this._props.labelDesc !== "undefined") {
+                    this.labelText = this._props.labelDesc + ' :';
+                }                //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
                 this.value = typeof msg === "object"?this._props.msg.attrValue:this._props.msg
                 //判断是否显示分户生效标识
                 if(this._props.perShow === true){

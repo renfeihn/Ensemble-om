@@ -57,7 +57,9 @@
             }
         },
         created() {
-            this.labelText = this._props.labelDesc+' :'
+            if(typeof this._props.labelDesc !== "undefined") {
+                this.labelText = this._props.labelDesc + ' :';
+            }
             if(typeof this._props.msg !== "undefined") {
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }

@@ -81,7 +81,9 @@
                 }
             },
             init(msg){
-                this.labelText = this._props.labelDesc+' :'
+                if(typeof this._props.labelDesc !== "undefined") {
+                    this.labelText = this._props.labelDesc + ' :';
+                }
                 if(msg !== null && msg !== undefined){
                     let dates = this._props.msg.attrValue
                     let time =dates.substring(0,4)+"-"+dates.substring(4,6)+"-"+dates.substring(6)
