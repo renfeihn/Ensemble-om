@@ -60,7 +60,7 @@
                                                         :options="keyData.valueScore" :labelDesc="keyData.columnDesc" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                                         <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
                                                    v-model="prodDefines[keyData.key].attrValue"></dc-switch>
-                                        <dc-date v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key].attrValue" label="生效日期"></dc-date>
+                                        <dc-date v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]" label="生效日期"></dc-date>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>

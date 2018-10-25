@@ -149,22 +149,22 @@ export default {
             ],
             chargeDealMethod1: [
                 {
-                    "key":"10",
-                    "value":"10-实时生效"
+                    "key": "10",
+                    "value": "10-实时生效"
                 },
                 {
-                    "key":"11",
-                    "value":"11-日终处理"
+                    "key": "11",
+                    "value": "11-日终处理"
                 }
             ],
             conDeductFlag1: [
                 {
-                    "key":"Y",
-                    "value":"Y-持续扣款"
+                    "key": "Y",
+                    "value": "Y-持续扣款"
                 },
                 {
-                    "key":"N",
-                    "value":"N-非持续扣款"
+                    "key": "N",
+                    "value": "N-非持续扣款"
                 }
             ],
             columns: [
