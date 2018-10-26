@@ -19,9 +19,9 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in 3" :key="i">
                         <v-card flat>
-                        <base-prod v-if="i==1" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
-                        <base-prod v-if="i==2" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
-                        <base-prod v-if="i==3" :prodDefines="eventList"></base-prod>
+                        <base-prod v-if="i==1" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
+                        <base-prod v-if="i==2" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
+                        <base-prod v-if="i==3" :prodTypeCode="prodData.prodType.prodType" :prodDefines="eventList"></base-prod>
                         </v-card>
                       <!--  <get-action v-if="i==13" v-bind:prodData="prodData"></get-action>-->
                     </v-tab-item>
@@ -98,7 +98,9 @@
                     lable: ''
                 }],
                 folders: [],
-                prodData: {},
+                prodData: {
+                    prodType: ''
+                },
                 sourceProdData: {},
                 targetData: {}
             }

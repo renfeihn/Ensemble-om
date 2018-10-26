@@ -72,9 +72,6 @@
             }
         },
         mounted() {
-            if(typeof this._props.labelDesc !== "undefined") {
-                this.labelText = this._props.labelDesc + ' :';
-            }
             this.switchChange();
         },
         methods: {
@@ -106,6 +103,9 @@
                 }
             },
             switchChange() {
+                if(typeof this._props.labelDesc !== "undefined") {
+                    this.labelText = this._props.labelDesc + ' :';
+                }
                 if (this.dcSwitch) {
                     if(this._props.value.attrValue !== undefined) {
                         this._props.value.attrValue = "Y";

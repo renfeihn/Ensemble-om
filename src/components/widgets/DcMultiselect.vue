@@ -61,9 +61,7 @@
             }
         },
         created() {
-            if(typeof this._props.labelDesc !== "undefined") {
-                this.labelText = this._props.labelDesc + ' :';
-            }
+
             if(typeof this._props.msg !== "undefined") {
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }
@@ -84,6 +82,9 @@
                 }
             },
             init(msg) {
+                if(typeof this._props.labelDesc !== "undefined") {
+                    this.labelText = this._props.labelDesc + ' :';
+                }
                 if(msg !== null && msg !== undefined) {
                     let data = msg.split(",");
                     let options = this._props.options;
@@ -138,7 +139,7 @@
                 }
                 if(this.isMulti === false){
                     //单选数据组装
-                    value = newValue.key
+                    value = newValue[0].key
                 }
                 if(typeof this._props.msg === "object") {
                     this._props.msg.attrValue = value

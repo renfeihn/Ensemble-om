@@ -56,11 +56,11 @@
                                                        class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
                                                        name="title" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key].attrValue" single-line
                                                        hide-details></dc-text-field>
-                                        <dc-multiselect v-if="keyData.columnType == 'select'" v-model="prodDefines[keyData.key]"
-                                                        :options="keyData.valueScore" :labelDesc="keyData.columnDesc" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
+                                        <dc-multiselect v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
+                                                        :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                                         <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
                                                    v-model="prodDefines[keyData.key].attrValue"></dc-switch>
-                                        <dc-date v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]" label="生效日期"></dc-date>
+                                        <dc-date v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
@@ -83,7 +83,7 @@
     import draggable from 'vuedraggable'
     export default {
         components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable},
-        props: ["prodType","prodDefines","tags"],
+        props: ["prodType","prodDefines","tags","prodTypeCode"],
         data: () => ({
             dataSource: {},
             valueData: [],
@@ -174,7 +174,7 @@
                 console.log(evt.draggedContext.element.id)
             },
             saveColumn (){
-                saveColumn({column: this.dataSource,prodType: this._props.prodType.prodType}).then(response => {
+                saveColumn({column: this.dataSource,prodType: this._props.prodTypeCode}).then(response => {
                     if(response.status === 200) {
                         toast.success("顺序编辑完成！");
                     }
@@ -183,14 +183,14 @@
             datadragEnd (evt) {
                 console.log('拖动前的索引 :' + evt.oldIndex)
                 console.log('拖动后的索引 :' + evt.newIndex)
-                const oldIndex=evt.oldIndex;
+/*                const oldIndex=evt.oldIndex;
                 const newIndex=evt.newIndex;
                 let dataSourceEnd=[]
                 let dataSource=this.dataSource
                 for(const index in dataSource){
                     dataSource[index].pageSeqNo=parseInt(index)+1;
                 }
-                this.saveColumn();
+                this.saveColumn();*/
                 //拖动后改变column数组
                 console.log(this.tags)
             },
