@@ -183,14 +183,14 @@
             datadragEnd (evt) {
                 console.log('拖动前的索引 :' + evt.oldIndex)
                 console.log('拖动后的索引 :' + evt.newIndex)
-/*                const oldIndex=evt.oldIndex;
+                const oldIndex=evt.oldIndex;
                 const newIndex=evt.newIndex;
                 let dataSourceEnd=[]
                 let dataSource=this.dataSource
                 for(const index in dataSource){
                     dataSource[index].pageSeqNo=parseInt(index)+1;
                 }
-                this.saveColumn();*/
+                this.saveColumn();
                 //拖动后改变column数组
                 console.log(this.tags)
             },
