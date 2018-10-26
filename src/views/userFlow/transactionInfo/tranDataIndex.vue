@@ -361,25 +361,39 @@ import {
             },
             //提交事件
             confirmClick() {
+
                 if(this.optKey === 3){
                     this.confirmInfo = this.checkInfo;
+                    if(this.confirmInfo.isApproved !== "Y"){
+                        this.confirmInfo.isApproved = "N"
+                    }
+                    tranFlowInfo(this.confirmInfo).then(response => {
+                        if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
+                            toast.success("复核成功！");
+                            this.$router.push({ name: 'userIndexFlow'});
+                        }
+                        if(response.status === 200 && this.confirmInfo.isApproved === "N") {
+                            toast.success("驳回成功！");
+                            this.$router.push({ name: 'userIndexFlow'});
+                        }
+                    })
                 }
                 if(this.optKey === 4){
                     this.confirmInfo = this.releaseInfo
-                }
-                if(this.confirmInfo.isApproved !== "Y"){
-                    this.confirmInfo.isApproved = "N"
-                }
-                tranFlowInfo(this.confirmInfo).then(response => {
-                    if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
-                        toast.success("操作成功！");
-                        this.$router.push({ name: 'userIndexFlow'});
+                    if(this.confirmInfo.isApproved !== "Y"){
+                        this.confirmInfo.isApproved = "N"
                     }
-                    if(response.status === 200 && this.confirmInfo.isApproved === "N") {
-                        toast.success("驳回成功！");
-                        this.$router.push({ name: 'userIndexFlow'});
-                    }
-                })
+                    tranFlowRelease(this.confirmInfo).then(response => {
+                        if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
+                            toast.success("复核成功！");
+                            this.$router.push({ name: 'userIndexFlow'});
+                        }
+                        if(response.status === 200 && this.confirmInfo.isApproved === "N") {
+                            toast.success("驳回成功！");
+                            this.$router.push({ name: 'userIndexFlow'});
+                        }
+                    })
+                }
             },
             //展开/隐藏差异信息列表
             showClick() {

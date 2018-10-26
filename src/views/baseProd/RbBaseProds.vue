@@ -6,9 +6,31 @@
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="refreshClick">
-                        <v-icon>refresh</v-icon>
-                    </v-btn>
+                    <v-dialog v-model="dialog" persistent max-width="500px">
+                        <v-btn slot="activator" color="primary" dark @click="addClick"><v-icon>add</v-icon></v-btn>
+                        <v-card>
+                            <v-card-title style="background-color: #5C6BC0">
+                                <span class="addClass">{{prodCode}}-{{prodDesc}}[{{addColumnPageCode}}]增加参数</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <v-layout wrap>
+                                    <v-flex xs12 sm12>
+                                        <v-autocomplete :items="addColumnsRef" label="请选择或者输入参数名称" v-model="addColumnRef" multiple chips></v-autocomplete>
+                                    </v-flex>
+                                </v-layout>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn slot="activator" @click="resetAddClick" color="success" dark style="margin-left: 8px;margin-top: -10px;width: 160px">取消</v-btn>
+                                <v-btn slot="activator" @click="useAddClick(addColumnRef)" color="success" dark style="margin-left: 140px;margin-top: -10px;width: 160px">应用</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <v-tooltip bottom :color="grey">
+                        <v-btn flat icon="refresh" slot="activator" @click="refreshClick">
+                            <v-icon>refresh</v-icon>
+                        </v-btn>
+                        <span>刷新</span>
+                    </v-tooltip>
                     <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="n in prodInfo" :key="n">
@@ -17,13 +39,12 @@
                     </v-tabs>
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
-                    <v-tab-item v-for="i in 3" :key="i">
+                    <v-tab-item v-for="i in columnArr" :key="i">
                         <v-card flat>
                         <base-prod v-if="i==1" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
                         <base-prod v-if="i==2" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
                         <base-prod v-if="i==3" :prodTypeCode="prodData.prodType.prodType" :prodDefines="eventList"></base-prod>
                         </v-card>
-                      <!--  <get-action v-if="i==13" v-bind:prodData="prodData"></get-action>-->
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -59,32 +80,43 @@
     import columnInfo from './columnInfo'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './BaseProd'
+
     export default {
         name: 'deposit',
         components: {
             VWidget,
             BaseProd,
             downAction,
-            PendingForm
+            PendingForm,
+            columnInfo
         },
         data () {
             return {
                 listLoading: true,
+                dialog: false,
                 showCopy: '',
                 prodCode: '',
                 prodDesc: '',
                 pendFlag: 0,
+                columnArr: [1,2,3],
+                addColumnRef: [],
                 prodClass: '',
                 activeName: 'basic',
+                addColumnPageCode: '',
                 eventList: {},
+                addColumnsRef: [],
+                addColumnInfos: [],
                 prodInfo: [
                     {
                     icon: 'account_balance',
-                    text: '基本信息'
+                    text: '基本信息',
+                        pageCode: 'BASE'
                     }, {
                     icon: 'filter_vintage',
-                    text: '控制信息'
-                   }, {
+                    text: '控制信息',
+                        pageCode: 'CONTROL'
+
+                    }, {
                         icon: 'filter_vintage',
                         text: '开户定义'
                     }
@@ -131,6 +163,8 @@
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                    this.sourceProdDataww = this.copy(this.prodData,this.sourceProdDataww)
+
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
@@ -246,7 +280,80 @@
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                    this.sourceProdDataww = this.copy(this.prodData,this.sourceProdDataww)
                 });
+            },
+            useAddClick(val) {
+                //获取当前界面key
+                let addColumnPageCode = this.prodInfo[this.activeName].pageCode
+                //获取新增参数pageSeqNo
+                let addColumnPageSeqNo = this.getMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+1
+                //获取新增参数SeqNo
+                let addColumnSeqNo = (parseInt(this.getMaxSeqNo(this.prodData,addColumnPageCode,"seqNo"))+1)+""
+                let addColumnData = this.copy(this.prodData,this.addData)
+                let showFlag = 0
+                for(let i=0; i<val.length; i++){
+                    //组装向mbProdDefine表保存的数据对象
+                    let columnKey = val[i].split("--")[0]
+                    let columnDesc = val[i].split("--")[1]
+                    if(this.prodData.prodDefines[columnKey] !== undefined){
+                        //已经存在该条数据
+                        showFlag = 1
+                        toast.info("产品已存在参数"+columnKey+"【"+columnDesc+"】");
+                    }else {
+                        addColumnData.prodDefines[columnKey] = {}
+                        addColumnData.prodDefines[columnKey].prodType = this.prodCode
+                        addColumnData.prodDefines[columnKey].seqNo = addColumnSeqNo
+                        addColumnData.prodDefines[columnKey].pageCode = addColumnPageCode
+                        addColumnData.prodDefines[columnKey].pageSeqNo = addColumnPageSeqNo
+                        addColumnData.prodDefines[columnKey].attrKey = columnKey
+                        addColumnData.prodDefines[columnKey].attrValue = ""
+                        addColumnData.prodDefines[columnKey].status = "A"
+                        addColumnData.prodDefines[columnKey].assembleType = "ATTR"
+                        addColumnData.prodDefines[columnKey].assembleId = columnKey
+                        //多条参数添加  序号递增
+                        addColumnPageSeqNo = addColumnPageSeqNo + 1
+                        addColumnSeqNo = addColumnSeqNo+1
+                    }
+                }
+                if(showFlag === 0) {
+                    this.addColumnRef = []
+                    this.prodData = addColumnData
+                    toast.success("产品增加参数成功！");
+                    this.dialog = false
+                }
+            },
+            resetAddClick() {
+                //弹出框取消增加的属性 清空已选数据集合
+                this.addColumnRef = []
+                this.dialog = false
+            },
+            addClick() {
+                this.addColumnPageCode = this.prodInfo[this.activeName].text
+                //获取所有参数定义的json文件（columnInfo.json）增加到待选数据集合
+                for(let i in columnInfo){
+                    this.addColumnsRef.push(i+'--'+columnInfo[i].columnDesc)
+                }
+            },
+            getMaxSeqNo(val,pageCode,key) {
+                //获取界面元素数组
+                let SeqNoArr = []
+                let keys = key
+                for(let i in val.prodDefines){
+                    if(keys === "pageSeqNo" && val.prodDefines[i].pageCode === pageCode && val.prodDefines[i][keys] !== null && val.prodDefines[i][keys] !== '') {
+                        SeqNoArr.push(val.prodDefines[i][keys])
+                    }else if(keys === "seqNo" && val.prodDefines[i].prodType === this.prodCode){
+                        SeqNoArr.push(val.prodDefines[i][keys])
+                    }
+                }
+                //获取seqNoArr数组最大数据
+                let maxSeqNo = SeqNoArr[0]
+                for(let j=1; j<SeqNoArr.length; j++){
+                    if(maxSeqNo < SeqNoArr[j]){
+                        maxSeqNo = SeqNoArr[j]
+                    }
+                }
+                return maxSeqNo
             }
         }
     }
@@ -258,6 +365,11 @@
     }
     .depositTree {
         height: calc(90vh - 48px);
+    }
+    .addClass {
+        color: white;
+        margin-left: 20%;
+        font-size: large;
     }
     /*  .prodList {
                   border-top-style: solid;border-top-width: 1px;border-color: rgba(40, 24, 31, 0.21);

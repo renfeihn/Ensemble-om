@@ -11,6 +11,18 @@
       }
     ]
   },
+  "TEST_ADD_COLUMN": {
+    "valueMethod": "VL",
+    "columnDesc": "测试数据add",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "222",
+        "value": "222-测试数据"
+      }
+    ]
+  },
   "ACCT_INT_FLAG": {
     "valueMethod": "VL",
     "columnDesc": "计息标志",

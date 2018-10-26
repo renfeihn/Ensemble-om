@@ -164,10 +164,10 @@
         }),
         watch: {
             prodDefines: {
-                handler(prodType) {
-                    this.init(prodType);
-                }
-            }
+                handler(prodDefines) {
+                    this.init(prodDefines);
+                },
+            },
         },
         methods: {
             getdata (evt) {

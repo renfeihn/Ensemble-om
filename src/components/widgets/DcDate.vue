@@ -85,7 +85,7 @@
                     this.labelText = this._props.labelDesc + ' :';
                 }
                 if(msg !== null && msg !== undefined){
-                    let dates = this._props.msg.attrValue
+                    let dates = this._props.msg.attrValue === undefined?this._props.msg:this._props.msg.attrValue
                     let time =dates.substring(0,4)+"-"+dates.substring(4,6)+"-"+dates.substring(6)
                     this.dateFormatted = time
                 }
@@ -93,7 +93,11 @@
             reback(newValue){
                 let dateFormatted = "";
                 dateFormatted = newValue.substring(0,4)+newValue.substring(5,7)+newValue.substring(8)
-                this._props.msg.attrValue = dateFormatted
+                if(this._props.msg.attrValue === undefined){
+                    this._props.msg = dateFormatted
+                }else{
+                    this._props.msg.attrValue = dateFormatted
+                }
                 this.$emit("getVue", this._props.msg);
             }
         }
