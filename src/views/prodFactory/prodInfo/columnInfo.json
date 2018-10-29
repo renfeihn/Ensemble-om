@@ -486,9 +486,9 @@
       }
     ]
   },
-  "CYCLE_FREQ": {
+  "INT_DAY": {
     "valueMethod": "VL",
-    "columnDesc": "结息周期",
+    "columnDesc": "结息日",
     "columnType": "input"
   },
   "INT_CAP": {
@@ -496,9 +496,9 @@
     "columnDesc": "是否结息到本账户",
     "columnType": "switch"
   },
-  "INT_DAY": {
+  "CYCLE_FREQ": {
     "valueMethod": "VL",
-    "columnDesc": "结息日",
+    "columnDesc": "结息周期",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": [
