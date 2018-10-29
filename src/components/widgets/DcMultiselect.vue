@@ -37,7 +37,7 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["options", "msg","isMultiSelect","perShow","labelDesc"],
+        props: ["options", "msg","isMultiSelect","perShow","labelDesc","baseAttr"],
         data() {
             return {
                 value: [],

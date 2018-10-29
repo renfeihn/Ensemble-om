@@ -21,7 +21,7 @@
                             </v-flex>
                             <v-flex md1 lg1>
                             </v-flex>
-                            <v-flex md6 lg6>
+                            <v-flex md6 lg6 v-if="prodDefines!=undefined">
                                 <dc-multiselect :options="sourceModuleOption" labelDesc="业务模块" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
@@ -164,10 +164,10 @@
         }),
         watch: {
             prodDefines: {
-                handler(prodType) {
-                    this.init(prodType);
-                }
-            }
+                handler(prodDefines) {
+                    this.init(prodDefines);
+                },
+            },
         },
         methods: {
             getdata (evt) {
@@ -203,7 +203,7 @@
                     if (column != undefined && column != 'undefined' && this._props.tags == prodData[index].pageCode) {
                         column['key'] = index
                         column['pageSeqNo'] = prodData[index].pageSeqNo
-                            column['pageCode'] = prodData[index].pageCode
+                        column['pageCode'] = prodData[index].pageCode
                         columnList.push(column)
                     }
                 }

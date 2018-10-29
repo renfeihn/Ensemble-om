@@ -33,26 +33,28 @@
                     </v-tooltip>
                     <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
-                        <v-tab v-for="n in prodInfo" :key="n">
+                        <v-tab v-for="n in prodInfo" :key="n.pageCode">
                             {{ n.text}}
                         </v-tab>
                     </v-tabs>
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
-                    <v-tab-item v-for="i in columnArr" :key="i">
+                    <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                         <v-card flat>
-                            <base-prod v-if="i==1" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
-                            <base-prod v-if="i==2" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
-                            <base-prod v-if="i==3" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
-                            <base-prod v-if="i==4" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="RATE"></base-prod>
-                            <base-prod v-if="i==5" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
-                            <base-prod v-if="i==6" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
-                            <base-prod v-if="i==7" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEPOSIT"></base-prod>
-                            <base-prod v-if="i==8" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DRAW"></base-prod>
-                            <charge-define v-if="i==9" v-bind:prodData="prodData"></charge-define>
-                            <rate-info v-if="i==10" v-bind:prodData="prodData"></rate-info>
-                            <form-shift v-if="i==11" v-bind:prodData="prodData"></form-shift>
-                            <accounting-info v-if="i==12" v-bind:prodData="prodData"></accounting-info>
+
+                            <base-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
+                            <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></sold-prod>
+                            <base-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
+                            <base-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
+                            <base-prod v-if="i.pageCode=='RATE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="RATE"></base-prod>
+                            <base-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
+                            <base-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
+                            <base-prod v-if="i.pageCode=='DEPOSIT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEPOSIT"></base-prod>
+                            <base-prod v-if="i.pageCode=='DRAW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DRAW"></base-prod>
+                            <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
+                            <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
+                            <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
+                            <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                         </v-card>
                     </v-tab-item>
                 </v-tabs-items>
@@ -89,6 +91,7 @@
     import columnInfo from './columnInfo'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
+    import SoldProd from './soldProd/soldProd'
     import ChargeDefine from './form/rbModel/ChargeDefine';
     import RateInfo from './form/rbModel/RateInfo';
     import FormShift from './form/rbModel/FormShift';
@@ -99,6 +102,7 @@
         components: {
             VWidget,
             BaseProd,
+            SoldProd,
             downAction,
             PendingForm,
             columnInfo,
@@ -128,14 +132,14 @@
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'RATE'},
-                    {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPRN'},
+                    {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '存入定义', pageCode: 'DEPOSIT'},
                     {icon: 'filter_vintage', text: '支取定义', pageCode: 'DRAW'},
-                    {icon: 'filter_vintage', text: '收费定义'},
-                    {icon: 'filter_vintage', text: '利率信息'},
-                    {icon: 'filter_vintage', text: '形态转移'},
-                    {icon: 'filter_vintage', text: '核算信息'},
+                    {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
+                    {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
+                    {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
+                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'},
 
                 ],
                 tagList: [
@@ -184,10 +188,6 @@
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
-            }
-            //通过全局搜索/产品目录 获取目标产品代码
-            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
-                this.listenToProdList(this.$route.params)
             }
         },
         methods: {

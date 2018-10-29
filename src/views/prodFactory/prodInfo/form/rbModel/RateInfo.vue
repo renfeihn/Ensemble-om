@@ -171,7 +171,7 @@
 
         },
         mounted: function() {
-            this.getChargeDefinesInfo()
+            this.getChargeDefinesInfo(this._props.prodData)
         },
         methods: {
             getChargeDefinesInfo(val) {

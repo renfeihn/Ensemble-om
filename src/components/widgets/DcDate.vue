@@ -1,7 +1,7 @@
 /**
 * chengliang 20180917
 * 日期组件
-* 示例 <dc-date v-model="prodData.prodDefines.PROD_END_DATE.attrValue"></dc-date>
+* 示例
 * 将其 value 特性绑定到一个名叫 value 的 prop 上
 * 在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
 */
@@ -84,9 +84,13 @@
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';
                 }
-                if(msg !== null && msg !== undefined){
-                    let dates = this._props.msg.attrValue === undefined?this._props.msg:this._props.msg.attrValue
-                    let time =dates.substring(0,4)+"-"+dates.substring(4,6)+"-"+dates.substring(6)
+                if(msg !== null && msg !== undefined &&msg.msg!=undefined) {
+                    let dates = this._props.msg
+                    if (this._props.msg.attrValue != undefined) {
+                        dates = this._props.msg.attrValue
+                    }
+                    dates=dates.toString()
+                    let time = dates.substring(0, 4) + "-" + dates.substring(4, 6) + "-" + dates.substring(6)
                     this.dateFormatted = time
                 }
             },

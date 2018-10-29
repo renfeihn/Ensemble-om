@@ -21,7 +21,7 @@
                             </v-flex>
                             <v-flex md1 lg1>
                             </v-flex>
-                            <v-flex md6 lg6>
+                            <v-flex md6 lg6 v-if="prodDefines!=undefined">
                                 <dc-multiselect :options="sourceModuleOption" labelDesc="业务模块" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
