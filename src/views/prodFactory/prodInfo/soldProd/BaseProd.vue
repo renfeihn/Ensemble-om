@@ -72,7 +72,7 @@
     </v-container>
 </template>
 <script>
-    import columnInfo from './columnInfo'
+    import columnInfo from '../columnInfo'
     import DcMultiselect from '@/components/widgets/DcMultiselect'
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
@@ -164,10 +164,10 @@
         }),
         watch: {
             prodDefines: {
-                handler(prodDefines) {
-                    this.init(prodDefines);
-                },
-            },
+                handler(prodType) {
+                    this.init(prodType);
+                }
+            }
         },
         methods: {
             getdata (evt) {

@@ -79,8 +79,7 @@
     import tags from './tags'
     import columnInfo from './columnInfo'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
-    import BaseProd from './BaseProd'
-
+    import BaseProd from './baseProd/BaseProd'
     export default {
         name: 'deposit',
         components: {

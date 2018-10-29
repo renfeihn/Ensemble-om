@@ -1157,7 +1157,7 @@ import(
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/baseProd/RbBaseProds.vue'
+        '@/views/prodFactory/prodInfo/RbBaseProds.vue'
       )
   },
   {

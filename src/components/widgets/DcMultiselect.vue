@@ -5,14 +5,17 @@
 */
 <template>
     <div>
-        <v-layout row wrap>
+
+        <v-layout row wrap >
             <v-flex md4 lg4>
                 <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
             </v-flex>
             <v-flex md6 lg6>
-                <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel=""
+                <div :class="background">
+                <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
                              :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                 </multiselect>
+                </div>
             </v-flex>
             <v-flex md2 lg2 v-if="personShow==1">
                 <v-tooltip right :color="peopleColor">
@@ -41,6 +44,7 @@
                 options: [],
                 personShow: 0,
                 isMulti: true,
+                background: '',
                 closeSelect: false,
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效"
@@ -84,6 +88,11 @@
             init(msg) {
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';
+                }
+                if(this._props.labelDesc == '币种'){
+                    this.background= 'delete'
+                }else{
+                    this.background= ''
                 }
                 if(msg !== null && msg !== undefined) {
                     let data = msg.split(",");
@@ -170,5 +179,8 @@
     }
     .dcMulti1 {
         margin-top: 15px;
+    }
+    .delete {
+        background-color: #ff6d47;
     }
 </style>
