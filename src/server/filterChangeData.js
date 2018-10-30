@@ -28,22 +28,21 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     //处理prodDefines对象数据
     var prodDefines = {}
     for (let j in prodData.prodDefines) {
+        let newMap = {newData: {},oldData: {},optionType: ""}
         if(copyFlag === "Y"){
             //产品复制时，保留所有最新数据
-            let newMap = {newData: {},oldData: {}}
             newMap.newData = prodData.prodDefines[j]
+            newMap.optionType = "I"
             prodDefines[j] = newMap
         }else if (sourceProdData.prodDefines[j] === undefined) {
-            //sourceProdData.prodDefines[j] === undefined 当界面增加参数
-            let newMap = {newData: {},oldData: {},optionType: ""}
+            //prodDefine 增加参数
             newMap.newData = prodData.prodDefines[j]
-            newMap.oldData = {}
             newMap.optionType = "I"
             prodDefines[j] = newMap
         }else if(prodData.prodDefines[j].attrValue !== sourceProdData.prodDefines[j].attrValue){
-            let newMap = {newData: {},oldData: {},optionType: ""}
+            //prodDefine 修改参数
             newMap.newData = prodData.prodDefines[j]
-            // newMap.oldData = sourceProdData.prodDefines[j]
+            newMap.oldData = sourceProdData.prodDefines[j]
             newMap.optionType = "U"
             prodDefines[j] = newMap
         }
@@ -64,15 +63,16 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
 
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
-            if(copyFlag === "Y"){
-                let newDataMap= {newData: {}, oldData: {}}
+            let newDataMap= {newData: {}, oldData: {},optionType: ""}
+            if(copyFlag === "Y" || sourceProdData.mbEventInfos[m].mbEventAttrs[k] === undefined){
                 newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
+                newDataMap.optionType = "I"
                 flag = "true"
                 mbEventAttrs[k] = newDataMap
             }else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue) {
-                let newDataMap= {newData: {}, oldData: {}}
                 newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
                 newDataMap.oldData = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
+                newDataMap.optionType = "U"
                 flag = "true"
                 mbEventAttrs[k] = newDataMap
             }

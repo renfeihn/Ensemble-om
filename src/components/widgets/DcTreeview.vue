@@ -1,28 +1,19 @@
 <template>
     <v-card>
         <v-toolbar card color="grey lighten-3">
-            <v-toolbar-title class="primary--text subheading" style="font-size: large">产品参数增加</v-toolbar-title>
+            <v-toolbar-title style="font-size: large">{{labelText}}</v-toolbar-title>
         </v-toolbar>
         <v-layout>
             <v-flex xs12 md6>
                 <v-card-text>
-                    <v-treeview
-                            v-model="tree"
-                            :items="items"
-                            selected-color="green"
-                            open-on-click
-                            selectable
-                            :options="options"
-                            expand-icon="mdi-assignment_turned_in-down"
-                    >
-                    </v-treeview>
+                    <v-treeview v-model="tree" :items="items" selected-color="green" open-on-click selectable :options="options" expand-icon="mdi-assignment_turned_in-down" labelDesc="labelDesc"></v-treeview>
                 </v-card-text>
             </v-flex>
             <v-divider vertical></v-divider>
             <v-flex xs12 md6>
                 <v-card-text>
                     <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">
-                        请选择需要增加的产品信息...
+                        请选择需要增加的信息...
                     </div>
                     <v-scroll-x-transition group hide-on-leave>
                         <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller>
@@ -35,29 +26,27 @@
         </v-layout>
         <v-divider></v-divider>
         <v-card-actions>
-            <v-btn flat @click="resetClick">Reset</v-btn>
+            <v-btn class="white--text" color="green darken-1" @click="sheet = false" depressed>取消</v-btn>
             <v-spacer></v-spacer>
-            <v-btn class="white--text" color="green darken-1" @click="saveClick" depressed>Save</v-btn>
+            <v-btn class="white--text" color="green darken-1" @click="saveClick" depressed>保存</v-btn>
         </v-card-actions>
     </v-card>
 </template>
 <script>
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 export default {
-  components: { Treeselect },
   model: {
     prop: "msg",
     event: "getVue"
   },
-  props: ["options", "msg"],
+  props: ["options", "msg","labelDesc"],
   data() {
     return {
         items: [],
         brewerie: [],
-        tree: ["9901"],
-        types: [],
-        options: []
+        tree: [],
+        options: [],
+        labelText: "",
+        backValue: []
     };
   },
     computed: {
@@ -77,16 +66,11 @@ export default {
         this.init(msg);
       }
     },
-      options: {
-        handler(msg){
-            this.init(msg);
-        }
-      },
-    value: {
-      handler(newValue) {
-        this.reback(newValue);
-      }
-    }
+    options: {
+       handler(msg){
+          this.init(msg);
+       }
+     }
   },
   created() {
       this.init();
@@ -96,12 +80,23 @@ export default {
   },
   methods: {
       saveClick() {
-          console.log("ghjkl")
+          this.backValue = []
+          for(let y=0; y<this.tree.length; y++){
+              for(let x=0; x<this.brewerie.length; x++){
+                  if(this.brewerie[x].id === this.tree[y]){
+                      this.backValue.push(this.brewerie[x].key+"--"+this.brewerie[x].name)
+                  }
+              }
+          }
+          this.$emit("getVue", this.backValue);
       },
       resetClick() {
           this.tree = []
       },
       init() {
+          if(typeof this._props.labelDesc !== "undefined") {
+              this.labelText = this._props.labelDesc;
+          }
           //加工树形结构数据
           let options = this._props.options
           let parent = []
@@ -130,21 +125,35 @@ export default {
                   parent[parent.length] = temp
               }
           }
+          let index = parent.length+1
           for(let k=0; k<options.length; k++){
               let brewerieTemps = {}
-              brewerieTemps.id = this.brewerie.length+1
+              brewerieTemps.id = index
               brewerieTemps.name = options[k].columnDesc
+              brewerieTemps.key = options[k].key
               this.brewerie.push(brewerieTemps)
               for(let n=0; n<parent.length; n++){
                   if(options[k].parentCode !== undefined && options[k].parentCode === parent[n].code){
                       let temps = {}
-                      temps.id = this.brewerie.length+1
+                      temps.id = index
                       temps.name = options[k].columnDesc
                       parent[n].children.push(temps)
                   }
               }
+              index++
           }
           this.items = parent
+          //根据v-model绑定数据初始化树形结构
+          if(this._props.msg !== undefined){
+              this.tree.push()
+              for(let m=0; m<this.brewerie.length; m++){
+                  for(let p=0; p<this._props.msg.length; p++){
+                      if(this._props.msg[p] === this.brewerie[m].key){
+                          this.tree.push(this.brewerie[m].id)
+                      }
+                  }
+              }
+          }
       }
     }
 };
