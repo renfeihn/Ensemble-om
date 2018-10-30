@@ -6,6 +6,14 @@
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
+                    <v-bottom-sheet inset max-width="50%">
+                        <v-btn slot="activator" color="primary lighten-1" fab small @click="addClick">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                        <v-card>
+                            <dc-treeview v-model="tree" :options="treeOptions"></dc-treeview>
+                        </v-card>
+                    </v-bottom-sheet>
                     <v-dialog v-model="dialog" persistent max-width="500px">
                         <v-btn slot="activator" color="primary lighten-1" @click="addClick" fab small><v-icon>add</v-icon></v-btn>
                         <v-card>
@@ -96,6 +104,8 @@
     import RateInfo from './form/rbModel/RateInfo';
     import FormShift from './form/rbModel/FormShift';
     import AccountingInfo from './form/rbModel/AccountingInfo';
+    import DcTreeview from "@/components/widgets/DcTreeview";
+
 
     export default {
         name: 'deposit',
@@ -109,7 +119,8 @@
             ChargeDefine,
             RateInfo,
             FormShift,
-            AccountingInfo
+            AccountingInfo,
+            DcTreeview
         },
         data () {
             return {
@@ -160,13 +171,52 @@
                     prodType: ''
                 },
                 sourceProdData: {},
-                targetData: {}
+                targetData: {},
+                attrClass: [
+                    {
+                        classType: "ACCT",
+                        classDesc: "账户信息"
+                    },
+                    {
+                        classType: "AGREEMENT",
+                        classDesc: "协议信息"
+                    },
+                    {
+                        classType: "BALANCE",
+                        classDesc: "余额信息"
+                    },
+                    {
+                        classType: "FREQUCY",
+                        classDesc: "期限信息"
+                    },
+                    {
+                        classType: "MEDIA",
+                        classDesc: "介质信息"
+                    },
+                    {
+                        classType: "PRICE",
+                        classDesc: "定价信息"
+                    },
+                    {
+                        classType: "RISK",
+                        classDesc: "风险信息"
+                    }
+                ],
+                treeOptions: [],
+                treeBreweries: [],
+                tree: []
             }
         },
         mounted: function() {
             //检查是否存在待处理数据
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
+            //组织树形组件备选数据
+            for(let i in columnInfo){
+                if(columnInfo[i].parentCode !== undefined){
+                    this.treeOptions.push(columnInfo[i])
+                }
+            }
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码
                 this.prodClass = this.$route.hash

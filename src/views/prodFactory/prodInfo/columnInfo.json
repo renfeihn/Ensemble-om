@@ -763,5 +763,89 @@
   "STATUS_TRAN_FLAG":{
     "columnDesc":"状态转移标识",
     "columnType":"switch"
+  },
+  "CHECK_ACCT_CLASS":{
+    "columnDesc":"账户类别检查",
+    "columnType":"switch",
+    "parentCode": "ACCT",
+    "parentDesc": "账户信息"
+  },
+  "CHECK_PROD_DATE":{
+    "columnDesc":"检查产品日期",
+    "columnType":"switch",
+    "parentCode": "ACCT",
+    "parentDesc": "账户信息"
+  },
+  "CHECK_MISS_NUM":{
+    "columnDesc":"漏存次数检查",
+    "columnType":"switch",
+    "parentCode": "AGREEMENT",
+    "parentDesc": "协议信息"
+  },
+  "PART_WITHDRAW_FLAG":{
+    "columnDesc":"是否允许部分提取",
+    "columnType":"switch",
+    "parentCode": "AGREEMENT",
+    "parentDesc": "协议信息"
+  },
+  "MULTI_BAL_TYPE":{
+    "columnDesc":"是否多余额",
+    "columnType":"switch",
+    "parentCode": "BALANCE",
+    "parentDesc": "余额信息"
+  },
+  "BAL_TYPE_PRIORITY":{
+    "columnDesc":"余额优先级",
+    "columnType":"input",
+    "parentCode": "BALANCE",
+    "parentDesc": "余额信息"
+  },
+  "TERM_LONG_FLAG":{
+    "columnDesc":"是否允许延期",
+    "columnType":"switch",
+    "parentCode": "FREQUCY",
+    "parentDesc": "期限信息"
+  },
+  "TERM_SHORT_FLAG":{
+    "columnDesc":"是否允许缩期",
+    "columnType":"switch",
+    "parentCode": "FREQUCY",
+    "parentDesc": "期限信息"
+  },
+  "PB_FLAG":{
+    "columnDesc":"是否带折标记",
+    "columnType":"switch",
+    "parentCode": "MEDIA",
+    "parentDesc": "介质信息"
+  },
+  "SHOW_ON_STMT":{
+    "columnDesc":"对账单标志",
+    "columnType":"switch",
+    "parentCode": "MEDIA",
+    "parentDesc": "介质信息"
+  },
+  "INIT_FLAG":{
+    "columnDesc":"起存金额控制标记",
+    "columnType":"switch",
+    "parentCode": "PRICE",
+    "parentDesc": "定价信息"
+  },
+  "TAXABLE":{
+    "columnDesc":"收税标志",
+    "columnType":"switch",
+    "parentCode": "PRICE",
+    "parentDesc": "定价信息"
+  },
+  "BACK_FLOAT_FLAG":{
+    "columnDesc":"早起息",
+    "columnType":"switch",
+    "parentCode": "RISK",
+    "parentDesc": "风险信息"
+  },
+  "CA_TRAN_FLAG":{
+    "columnDesc":"现金交易",
+    "columnType":"switch",
+    "parentCode": "RISK",
+    "parentDesc": "风险信息"
   }
 }
