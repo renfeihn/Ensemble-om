@@ -3,13 +3,14 @@
   <v-layout row wrap>
    <v-flex md4 lg4>
     <v-layout row wrap right>
-     <v-flex md2>
-    <i v-if="baseAttr==false" class="material-icons baseIcon small">
-     call_merge
-    </i>
-     </v-flex>
-     <v-flex md10>
-   <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
+     <!--<v-flex md2>-->
+    <!--<i v-if="baseAttr==false" class="material-icons baseIcon small">-->
+     <!--call_merge-->
+    <!--</i>-->
+     <!--</v-flex>-->
+     <!--<v-flex md10>-->
+     <v-flex md12>
+         <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
      </v-flex>
     </v-layout>
    </v-flex>
@@ -23,7 +24,10 @@
     </v-btn>
     <span>{{peopleDesc}}</span>
    </v-tooltip>
-    <dc-navbar></dc-navbar>
+    <dc-navbar v-if="showEdit == true"></dc-navbar>
+    <i v-if="baseAttr==true" class="material-icons baseIcon small">
+     call_merge
+    </i>
    </v-flex>
   </v-layout>
  </div>
@@ -45,11 +49,11 @@
             labelDesc: String ,
             baseAttr: {
                 type: String,
-                default: true
+                default: false
             },
             showEdit: {
                 type: String,
-                default: true
+                default: false
             }
         },
         data() {

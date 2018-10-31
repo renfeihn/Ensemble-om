@@ -5,23 +5,24 @@
 */
 <template>
     <div>
-
         <v-layout row wrap >
             <v-flex md4 lg4>
                 <v-layout row wrap right>
-                    <v-flex md2 v-if="baseAttr==true">
-                        <i class="material-icons baseIcon small">
-                            call_merge
-                        </i>
-                    </v-flex>
-                    <v-flex md2 v-else>
-                        <i class="material-icons baseIconDis small">
-                            call_merge
-                        </i>
-                    </v-flex>
-                    <v-flex md10>
-                        <v-subheader class="primary--text subheading pr-1">
-                            {{labelText}}</v-subheader>
+                    <!--<v-flex md2 v-if="baseAttr==true">-->
+                        <!--<i class="material-icons baseIcon small">-->
+                            <!--call_merge-->
+                        <!--</i>-->
+                    <!--</v-flex>-->
+                    <!--<v-flex md2 v-else>-->
+                        <!--<i class="material-icons baseIconDis small">-->
+                            <!--call_merge-->
+                        <!--</i>-->
+                    <!--</v-flex>-->
+                    <!--<v-flex md10>-->
+                        <!--<v-subheader class="primary&#45;&#45;text subheading pr-1">-->
+                            <!--{{labelText}}</v-subheader>-->
+                    <v-flex md12 row wrap>
+                        <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
                     </v-flex>
                 </v-layout>
             </v-flex>
@@ -39,7 +40,10 @@
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
-               <dc-navbar></dc-navbar>
+               <dc-navbar v-if="showEdit == true"></dc-navbar>
+                <i v-if="baseAttr==true" class="material-icons baseIcon small">
+                    call_merge
+                </i>
             </v-flex>
         </v-layout>
     </div>

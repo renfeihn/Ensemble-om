@@ -5,33 +5,11 @@
                 <v-container fluid pt-1>
                     <v-layout row wrap>
                         <v-layout row wrap v-if="prodType!= undefined ">
-                            <v-flex xs12 md2 lg2>
-                                <v-layout row wrap>
-                                    <v-flex md2>
-                                    </v-flex>
-                                    <v-flex md10>
-                                <v-subheader class="primary--text subheading">产品代码*</v-subheader>
-                                    </v-flex>
-                                </v-layout>
+                            <v-flex md6 lg6>
+                                <dc-text-field labelDesc="产品代码" v-model="prodType.prodType"></dc-text-field>
                             </v-flex>
-                            <v-flex md3 lg3>
-                                <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="prodType.prodType" single-line hide-details disabled></v-text-field>
-                            </v-flex>
-                            <v-flex md1 lg1>
-                            </v-flex>
-                            <v-flex xs12 md2 lg2>
-                                <v-layout row wrap>
-                                <v-flex md2>
-                                </v-flex>
-                                <v-flex md10>
-                                <v-subheader class="primary--text subheading">产品描述*</v-subheader>
-                                </v-flex>
-                                </v-layout>
-                            </v-flex>
-                            <v-flex md3 lg3>
-                                <v-text-field class="primary--text " label="产品描述" name="title" v-model="prodType.prodDesc" single-line hide-details disabled/>
-                            </v-flex>
-                            <v-flex md1 lg1>
+                            <v-flex md6 lg6>
+                                <dc-text-field labelDesc="产品描述" v-model="prodType.prodDesc"></dc-text-field>
                             </v-flex>
                             <v-flex md6 lg6 v-if="prodDefines!=undefined">
                                 <dc-multiselect :options="sourceModuleOption" labelDesc="业务模块" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
