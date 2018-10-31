@@ -9,18 +9,33 @@
  <div >
   <v-layout row wrap>
    <v-flex md4 lg4>
-    <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
+    <v-layout row wrap right>
+     <v-flex md2>
+     <i v-if="baseAttr==true" class="material-icons baseIcon small">
+      call_merge
+     </i>
+     </v-flex>
+     <v-flex md10>
+    <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
+     </v-flex>
+    </v-layout>
    </v-flex>
    <v-flex md6 lg6>
     <v-switch :label="desc" color="success" v-model="dcSwitch" @change="switchChange" hide-details :perShow="perShow" labelDesc="labelDesc"></v-switch>
    </v-flex>
-   <v-flex md2 lg2 v-if="personShow==1">
-    <v-tooltip right :color="peopleColor">
+   <v-flex md2 lg2>
+    <v-tooltip v-if="personShow==1" right :color="peopleColor">
      <v-btn flat small :color="peopleColor" icon="people" slot="activator" class="left" @click="peopleClick">
       <v-icon>people</v-icon>
      </v-btn>
      <span>{{peopleDesc}}</span>
     </v-tooltip>
+    <i v-if="showEdit==true" class="material-icons lock" >
+     delete_forever
+    </i>
+    <i v-if="showEdit==true" class="material-icons " @click="isOpen=isOpen=='lock_open'?'lock':'lock_open'">
+     {{isOpen}}
+    </i>
    </v-flex>
   </v-layout>
  </div>
@@ -39,7 +54,15 @@
             },
             value: {},
             perShow: String,
-            labelDesc: String
+            labelDesc: String,
+            baseAttr: {
+                type: String,
+                default: true
+            },
+            showEdit: {
+                type: String,
+                default: true
+            }
         },
         data() {
             return {
@@ -47,6 +70,7 @@
                 peopleDesc: "产品生效",
                 currentValue: "",
                 desc: "",
+                isOpen: 'lock',
                 dcSwitch: false,
                 personShow: 0,
                 labelText: ''
@@ -130,5 +154,13 @@
   margin-left: 8px;
   margin-top: 20px;
   margin-right: auto;
+ }
+ .baseIcon {
+  padding-top: 15px;
+  color: #ff110e;
+ }
+ .lock {
+  color: #ff8511;
+  padding-top: 20px;
  }
 </style>

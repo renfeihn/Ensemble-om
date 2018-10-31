@@ -6,7 +6,13 @@
                     <v-layout row wrap>
                         <v-layout row wrap v-if="prodType!= undefined ">
                             <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品代码*</v-subheader>
+                                <v-layout row wrap>
+                                    <v-flex md2>
+                                    </v-flex>
+                                    <v-flex md10>
+                                        <v-subheader class="primary--text subheading">产品代码*</v-subheader>
+                                    </v-flex>
+                                </v-layout>
                             </v-flex>
                             <v-flex md3 lg3>
                                 <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="prodType.prodType" single-line hide-details disabled></v-text-field>
@@ -14,7 +20,14 @@
                             <v-flex md1 lg1>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
-                                <v-subheader class="primary--text subheading">产品描述*</v-subheader>
+                                <v-layout row wrap>
+                                    <v-flex md2>
+
+                                    </v-flex>
+                                    <v-flex md10>
+                                        <v-subheader class="primary--text subheading">产品描述*</v-subheader>
+                                    </v-flex>
+                                </v-layout>
                             </v-flex>
                             <v-flex md3 lg3>
                                 <v-text-field class="primary--text " label="产品描述" name="title" v-model="prodType.prodDesc" single-line hide-details disabled/>
@@ -22,22 +35,22 @@
                             <v-flex md1 lg1>
                             </v-flex>
                             <v-flex md6 lg6 v-if="prodDefines!=undefined">
-                                <dc-multiselect :options="sourceModuleOption" labelDesc="业务模块" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect ::showEdit="showEdit" :options="sourceModuleOption" labelDesc="业务模块" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <dc-multiselect :options="prodClassOption" labelDesc="产品分类" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :showEdit="showEdit" :options="prodClassOption" labelDesc="产品分类" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <dc-multiselect :options="prodRangeOption" labelDesc="产品属性" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :showEdit="showEdit" :options="prodRangeOption" labelDesc="产品属性" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <dc-switch v-model="prodType.prodGroup" labelDesc="组合产品"></dc-switch>
+                                <dc-switch :showEdit="showEdit" v-model="prodType.prodGroup" labelDesc="组合产品"></dc-switch>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <dc-multiselect :options="statusOption" labelDesc="产品状态" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :showEdit="showEdit" :options="statusOption" labelDesc="产品状态" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <dc-multiselect :options="baseProdTypeOption" labelDesc="基础产品" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
+                                <dc-multiselect :showEdit="showEdit" :options="baseProdTypeOption" labelDesc="基础产品" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
                             </v-flex>
                         </v-layout>
                         <draggable v-model="dataSource" :move="getdata" @update="datadragEnd" class="layout row wrap">
@@ -47,20 +60,20 @@
                                     </v-flex>
                                     <v-flex md12 lg12 v-if="keyData.columnType == 'tree'">
                                         <v-flex md11 ml-5 class="auto">
-                                            <dc-tree-select v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue"
+                                            <dc-tree-select :showEdit="showEdit" v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue"
                                                             :multiple="true" :options="keyData.valueScore"></dc-tree-select>
                                         </v-flex>
                                     </v-flex>
                                     <v-flex md12 lg12 v-else>
-                                        <dc-text-field v-if="keyData.columnType == 'input'"
+                                        <dc-text-field :showEdit="showEdit" v-if="keyData.columnType == 'input'"
                                                        class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
                                                        name="title" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key].attrValue" single-line
                                                        hide-details></dc-text-field>
-                                        <dc-multiselect v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
+                                        <dc-multiselect :showEdit="showEdit" v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
                                                         :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
-                                        <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
+                                        <dc-switch :showEdit="showEdit" v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
                                                    v-model="prodDefines[keyData.key].attrValue"></dc-switch>
-                                        <dc-date v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
+                                        <dc-date :showEdit="showEdit" v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
@@ -83,7 +96,16 @@
     import draggable from 'vuedraggable'
     export default {
         components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable},
-        props: ["prodType","prodDefines","tags","prodTypeCode"],
+        props: {
+            prodType: String,
+            prodDefines: String,
+            tags: String,
+            prodTypeCode: String,
+            showEdit: {
+                type: String,
+                default: true
+            }
+        },
         data: () => ({
             dataSource: {},
             valueData: [],

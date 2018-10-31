@@ -14,6 +14,8 @@
                             <dc-treeview v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeview>
                         </v-card>
                     </v-bottom-sheet>
+                        <v-btn slot="activator" color="primary lighten-1" @click="editClick" fab small><v-icon>edit</v-icon></v-btn>
+
                     <v-tooltip bottom :color="grey">
                         <v-btn flat icon="refresh" slot="activator" @click="refreshClick">
                             <v-icon>refresh</v-icon>
@@ -30,8 +32,8 @@
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                         <v-card flat>
-                            <base-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
-                            <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></sold-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
+                            <sold-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></sold-prod>
                             <base-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
                             <base-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
                             <base-prod v-if="i.pageCode=='CYCLE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></base-prod>
@@ -112,6 +114,9 @@
                 prodClass: '',
                 activeName: 'basic',
                 eventList: {},
+                showEdit: false,
+                addColumnsRef: [],
+                addColumnInfos: [],
                 prodInfo: [
                     {icon: 'account_balance', text: '基本信息', pageCode: 'BASE'},
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
@@ -348,6 +353,18 @@
                 if(showFlag === 0) {
                     this.prodData = addColumnData
                     toast.success("产品增加参数成功！");
+                    this.dialog = false
+                }
+            },
+            editClick() {
+                const edit=this.showEdit;
+                this.showEdit=edit==false?true:false;
+            },
+            addClick() {
+                this.addColumnPageDesc = this.prodInfo[this.activeName].text
+                //获取所有参数定义的json文件（columnInfo.json）增加到待选数据集合
+                for(let i in columnInfo){
+                    this.addColumnsRef.push(i+'--'+columnInfo[i].columnDesc)
                 }
             },
             //获取mbProdDefine最大seqNo val:目标集合 pageCode：当前所属界面标志

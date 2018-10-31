@@ -6,24 +6,39 @@
 * 在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
 */
 <template>
-    <div style="margin-top: 30px">
-        <v-layout row wrap>
+    <div>
+        <v-layout row wrap class="dcDate">
             <v-flex md4 lg4>
-                <v-subheader class="primary--text subheading labelDesc">{{labelText}}</v-subheader>
+                <v-layout row wrap right>
+                <v-flex md2>
+                    <i v-if="baseAttr==true" class="material-icons baseIcon small">
+                        call_merge
+                    </i>
+                </v-flex>
+                <v-flex md10>
+                <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
+                </v-flex>
+                </v-layout>
             </v-flex>
             <v-flex md6 lg6>
-                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" class="dcDate" labelDesc="labelDesc">
+                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" labelDesc="labelDesc">
                     <v-text-field slot="activator" v-model="dateFormatted" append-icon="event"></v-text-field>
                     <v-date-picker v-model="dateFormatted" no-title scrollable locale="zh-cn"></v-date-picker>
                 </v-menu>
             </v-flex>
-            <v-flex md2 lg2 v-if="personShow==1">
-                <v-tooltip right :color="peopleColor">
+            <v-flex md2 lg2>
+                <v-tooltip v-if="personShow==1" right :color="peopleColor">
                     <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcDate1">
                         <v-icon>people</v-icon>
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
+                <i v-if="showEdit==true" class="material-icons lock" >
+                    delete_forever
+                </i>
+                <i v-if="showEdit==true" class="material-icons " @click="isOpen=isOpen=='lock_open'?'lock':'lock_open'">
+                    {{isOpen}}
+                </i>
             </v-flex>
         </v-layout>
     </div>
@@ -34,7 +49,20 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["options", "msg","perShow","labelDesc"],
+        props: {
+            options: String,
+            msg: String,
+            perShow: String,
+            labelDesc: String,
+            baseAttr: {
+                type: String,
+                default: true
+            },
+            showEdit: {
+                type: String,
+                default: true
+            }
+        },
         data: () => ({
             date: null,
             dateFormatted: null,
@@ -42,6 +70,7 @@
             menu2: false,
             flag: null,
             value: [],
+            isOpen: 'lock',
             options: [],
             peopleColor: "grey lighten-1",
             peopleDesc: "产品生效",
@@ -111,7 +140,7 @@
 </style>
 <style scoped>
     .dcDate {
-        margin-top: -40px;
+        margin-top: 10px;
         margin-right: 20px;
         width: 100%;
         height: 40px;
@@ -120,7 +149,12 @@
         margin-top: -10px;
         margin-left: 8px;
     }
-    .labelDesc {
-        margin-top: -25px;
+    .baseIcon {
+        padding-top: 15px;
+        color: #ff110e;
+    }
+    .lock {
+        color: #ff8511;
+        padding-top: 20px;
     }
 </style>

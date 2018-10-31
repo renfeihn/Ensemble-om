@@ -6,7 +6,16 @@
                     <v-layout row wrap>
                         <v-layout row wrap v-if="prodType!= undefined ">
                             <v-flex xs12 md2 lg2>
+                                <v-layout row wrap>
+                                    <v-flex md2>
+                                        <i class="material-icons baseIcon">
+                                            call_merge
+                                        </i>
+                                    </v-flex>
+                                    <v-flex md10>
                                 <v-subheader class="primary--text subheading">产品代码*</v-subheader>
+                                    </v-flex>
+                                </v-layout>
                             </v-flex>
                             <v-flex md3 lg3>
                                 <v-text-field class="primary--text mx-1" label="产品代码" name="title" v-model="prodType.prodType" single-line hide-details disabled></v-text-field>
@@ -14,7 +23,13 @@
                             <v-flex md1 lg1>
                             </v-flex>
                             <v-flex xs12 md2 lg2>
+                                <v-layout row wrap>
+                                <v-flex md2>
+                                </v-flex>
+                                <v-flex md10>
                                 <v-subheader class="primary--text subheading">产品描述*</v-subheader>
+                                </v-flex>
+                                </v-layout>
                             </v-flex>
                             <v-flex md3 lg3>
                                 <v-text-field class="primary--text " label="产品描述" name="title" v-model="prodType.prodDesc" single-line hide-details disabled/>
@@ -83,7 +98,12 @@
     import draggable from 'vuedraggable'
     export default {
         components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable},
-        props: ["prodType","prodDefines","tags","prodTypeCode"],
+        props: {
+            prodType: String,
+            prodDefines: String,
+            tags: String,
+            prodTypeCode: String
+        },
         data: () => ({
             dataSource: {},
             valueData: [],
@@ -221,5 +241,9 @@
     .auto {
         margin-left: auto;
         margin-right: auto;
+    }
+    .baseIcon {
+        padding-top: 20px;
+        color: #f4ff73;
     }
 </style>

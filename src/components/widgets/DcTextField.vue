@@ -2,18 +2,33 @@
  <div >
   <v-layout row wrap>
    <v-flex md4 lg4>
-   <v-subheader class="primary--text subheading">{{labelText}}</v-subheader>
+    <v-layout row wrap right>
+     <v-flex md2>
+    <i v-if="baseAttr==true" class="material-icons baseIcon small">
+     call_merge
+    </i>
+     </v-flex>
+     <v-flex md10>
+   <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
+     </v-flex>
+    </v-layout>
    </v-flex>
    <v-flex md6 lg6>
     <v-text-field class="primary--text mx-1" name="title" v-model="value" single-line hide-details :perShow="perShow" labelDesc="labelDesc"></v-text-field>
    </v-flex>
-   <v-flex md2 lg2 v-if="personShow==1">
-    <v-tooltip right :color="peopleColor">
+   <v-flex md2 lg2>
+    <v-tooltip right :color="peopleColor" v-if="personShow==1">
     <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
      <v-icon>people</v-icon>
     </v-btn>
     <span>{{peopleDesc}}</span>
    </v-tooltip>
+    <i v-if="showEdit==true" class="material-icons lock" >
+     delete_forever
+    </i>
+    <i v-if="showEdit==true" class="material-icons " @click="isOpen=isOpen=='lock_open'?'lock':'lock_open'">
+     {{isOpen}}
+    </i>
    </v-flex>
   </v-layout>
  </div>
@@ -25,7 +40,15 @@
             prop: "msg",
             event: "getVue"
         },
-        props: ["msg","perShow","labelDesc"],
+        props: {
+            msg: String,
+            perShow: String ,
+            labelDesc: String ,
+            baseAttr: {
+                type: String,
+                default: true
+            }
+        },
         data() {
             return {
                 labelText: "",
@@ -98,5 +121,13 @@
 <style scoped>
  .dcMulti1 {
   margin-top: 18px;
+ }
+ .baseIcon {
+  padding-top: 15px;
+  color: #ff110e;
+ }
+ .lock {
+  color: #ff8511;
+  padding-top: 20px;
  }
 </style>
