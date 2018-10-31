@@ -8,9 +8,6 @@
                             <v-flex xs12 md2 lg2>
                                 <v-layout row wrap>
                                     <v-flex md2>
-                                        <i class="material-icons baseIcon">
-                                            call_merge
-                                        </i>
                                     </v-flex>
                                     <v-flex md10>
                                 <v-subheader class="primary--text subheading">产品代码*</v-subheader>
@@ -245,9 +242,5 @@
     .auto {
         margin-left: auto;
         margin-right: auto;
-    }
-    .baseIcon {
-        padding-top: 20px;
-        color: #f4ff73;
     }
 </style>

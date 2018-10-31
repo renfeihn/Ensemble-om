@@ -7,7 +7,7 @@
 */
 <template>
  <div >
-  <v-layout row wrap>
+  <v-layout row wrap class="switch" >
    <v-flex md4 lg4>
     <v-layout row wrap right>
      <v-flex md2>
@@ -30,19 +30,18 @@
      </v-btn>
      <span>{{peopleDesc}}</span>
     </v-tooltip>
-    <i v-if="showEdit==true" class="material-icons lock" >
-     delete_forever
-    </i>
-    <i v-if="showEdit==true" class="material-icons " @click="isOpen=isOpen=='lock_open'?'lock':'lock_open'">
-     {{isOpen}}
-    </i>
+    <dc-navbar></dc-navbar>
    </v-flex>
   </v-layout>
  </div>
 </template>
 
 <script>
+    import DcNavbar from './DcNavbar'
     export default {
+        components: {
+            DcNavbar
+        },
         model: {
             prop: "value",
             event: "getVue"
@@ -162,5 +161,8 @@
  .lock {
   color: #ff8511;
   padding-top: 20px;
+ }
+ .switch {
+  padding-top: 10px;
  }
 </style>

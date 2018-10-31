@@ -33,18 +33,17 @@
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
-                <i v-if="showEdit==true" class="material-icons lock" >
-                    delete_forever
-                </i>
-                <i v-if="showEdit==true" class="material-icons " @click="isOpen=isOpen=='lock_open'?'lock':'lock_open'">
-                    {{isOpen}}
-                </i>
+                <dc-navbar></dc-navbar>
             </v-flex>
         </v-layout>
     </div>
 </template>
 <script>
+    import DcNavbar from './DcNavbar'
     export default {
+        components: {
+            DcNavbar
+        },
         model: {
             prop: "msg",
             event: "getVue"
