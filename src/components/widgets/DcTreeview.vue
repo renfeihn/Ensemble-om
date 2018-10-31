@@ -1,20 +1,32 @@
 <template>
     <v-card>
-        <v-toolbar card color="grey lighten-3">
-            <v-toolbar-title style="font-size: large">{{labelText}}</v-toolbar-title>
+        <v-toolbar card color="primary lighten-1">
+            <v-toolbar-title style="font-size: large; color: #eeeeee">{{labelText}}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-tooltip bottom color="orange">
+                <v-btn flat icon="edit" slot="activator" color="white" @click="tree = []">
+                    <v-icon>refresh</v-icon>
+                </v-btn>
+                <span>重置</span>
+            </v-tooltip>
+            <v-tooltip bottom color="orange">
+                <v-btn flat icon="edit" slot="activator" color="white" @click="saveClick">
+                    <v-icon>save</v-icon>
+                </v-btn>
+                <span>保存</span>
+            </v-tooltip>
         </v-toolbar>
         <v-layout>
-            <v-flex xs12 md6>
+            <v-flex xs12 md4>
                 <v-card-text>
-                    <v-treeview v-model="tree" :items="items" selected-color="green" open-on-click selectable :options="options" expand-icon="mdi-assignment_turned_in-down" labelDesc="labelDesc"></v-treeview>
+                    <v-treeview v-model="tree" :items="items" selected-color="green" open-on-click selectable :options="options" expand-icon="mdi-assignment_turned_in-down" on-icon="add_circle" off-icon="add_circle_outline" indeterminate-icon="remove_circle" labelDesc="labelDesc">
+                    </v-treeview>
                 </v-card-text>
             </v-flex>
             <v-divider vertical></v-divider>
-            <v-flex xs12 md6>
+            <v-flex xs12 md8>
                 <v-card-text>
-                    <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">
-                        请选择需要增加的信息...
-                    </div>
+                    <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">请选择需要增加的信息...</div>
                     <v-scroll-x-transition group hide-on-leave>
                         <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller>
                             <v-icon left small>mdi-beer</v-icon>
@@ -24,16 +36,12 @@
                 </v-card-text>
             </v-flex>
         </v-layout>
-        <v-divider></v-divider>
-        <v-card-actions>
-            <v-btn class="white--text" color="green darken-1" @click="sheet = false" depressed>取消</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn class="white--text" color="green darken-1" @click="saveClick" depressed>保存</v-btn>
-        </v-card-actions>
     </v-card>
 </template>
 <script>
-export default {
+    import toast from '@/utils/toast';
+
+    export default {
   model: {
     prop: "msg",
     event: "getVue"
@@ -72,28 +80,31 @@ export default {
        }
      }
   },
-  created() {
-      this.init();
-  },
   mounted() {
     this.init();
   },
   methods: {
       saveClick() {
-          this.backValue = []
-          for(let y=0; y<this.tree.length; y++){
-              for(let x=0; x<this.brewerie.length; x++){
-                  if(this.brewerie[x].id === this.tree[y]){
-                      this.backValue.push(this.brewerie[x].key+"--"+this.brewerie[x].name)
+          if(!this.tree.length){
+              toast.info("请选择要添加的信息!");
+          }else {
+              this.backValue = []
+              for (let y = 0; y < this.tree.length; y++) {
+                  for (let x = 0; x < this.brewerie.length; x++) {
+                      if (this.brewerie[x].id === this.tree[y]) {
+                          this.backValue.push(this.brewerie[x].key + "--" + this.brewerie[x].name)
+                      }
                   }
               }
+              this.$emit("getVue", this.backValue);
           }
-          this.$emit("getVue", this.backValue);
       },
       resetClick() {
           this.tree = []
+          console.log("gg")
       },
       init() {
+          this.tree = []
           if(typeof this._props.labelDesc !== "undefined") {
               this.labelText = this._props.labelDesc;
           }
@@ -158,3 +169,8 @@ export default {
     }
 };
 </script>
+<style scoped>
+    .btn {
+        width: 200px;
+    }
+</style>

@@ -92,7 +92,7 @@
             labelDesc: String,
             baseAttr: {
                 type: String,
-                default: true
+                default: false
             },
             showEdit: {
                 type: String,

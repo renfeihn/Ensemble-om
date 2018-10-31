@@ -6,17 +6,21 @@
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-bottom-sheet>
-                        <v-btn slot="activator" color="primary lighten-1" fab small @click="addClick">
-                            <v-icon>add</v-icon>
-                        </v-btn>
+                    <v-bottom-sheet v-if="showAdd">
+                         <v-btn flat icon="refresh" slot="activator" @click="addClick" color="orange">
+                              <v-icon>add</v-icon>
+                         </v-btn>
                         <v-card>
                             <dc-treeview v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeview>
                         </v-card>
                     </v-bottom-sheet>
-                        <v-btn slot="activator" color="primary lighten-1" @click="editClick" fab small><v-icon>edit</v-icon></v-btn>
-
-                    <v-tooltip bottom :color="grey">
+                    <v-tooltip bottom color="orange">
+                        <v-btn flat icon="edit" slot="activator" @click="editClick" :color="editColor">
+                            <v-icon>edit</v-icon>
+                        </v-btn>
+                        <span>{{editDesc}}</span>
+                    </v-tooltip>
+                    <v-tooltip bottom color="orange">
                         <v-btn flat icon="refresh" slot="activator" @click="refreshClick">
                             <v-icon>refresh</v-icon>
                         </v-btn>
@@ -109,6 +113,7 @@
                 showCopy: '',
                 prodCode: '',
                 prodDesc: '',
+                showAdd: false,
                 pendFlag: 0,
                 columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
                 prodClass: '',
@@ -150,7 +155,9 @@
                 sourceProdData: {},
                 targetData: {},
                 treeOptions: [],
-                tree: []
+                tree: [],
+                editColor: "write",
+                editDesc: "编辑模式"
             }
         },
         watch: {
@@ -183,12 +190,8 @@
                     const reProd  = response.data.data
                     this.prodData=reProd;
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
-                    //初始化事件，指标参数
-                    this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
-                    this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
-                    this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
-                    this.depositList = this.dealEventPart(reProd,"DEP",this.prodCode)
-                    this.drawList = this.dealEventPart(reProd,"WTD",this.prodCode)
+                    this.initEventAttr(reProd)
+
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
@@ -196,6 +199,14 @@
             }
         },
         methods: {
+            initEventAttr(reProd) {
+                //初始化事件，指标参数
+                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
+                this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
+                this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
+                this.depositList = this.dealEventPart(reProd,"DEP",this.prodCode)
+                this.drawList = this.dealEventPart(reProd,"WTD",this.prodCode)
+            },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
                 getCheckFlowList().then(response => {
@@ -293,6 +304,20 @@
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 });
             },
+            //编辑事件触发
+            editClick() {
+                const edit=this.showEdit;
+                this.showEdit=edit==false?true:false;
+                if(this.showAdd){
+                    this.showAdd = false
+                    this.editDesc = "编辑模式"
+                    this.editColor = "write"
+                }else{
+                    this.showAdd = true
+                    this.editDesc = "退出编辑"
+                    this.editColor = "orange"
+                }
+            },
             //增加参数处理事件
             useAddClick(val) {
                 //获取当前界面key
@@ -352,14 +377,15 @@
                 }
                 if(showFlag === 0) {
                     this.prodData = addColumnData
+                    this.initEventAttr(this.prodData)
                     toast.success("产品增加参数成功！");
                     this.dialog = false
                 }
             },
-            editClick() {
-                const edit=this.showEdit;
-                this.showEdit=edit==false?true:false;
-            },
+//            editClick() {
+//                const edit=this.showEdit;
+//                this.showEdit=edit==false?true:false;
+//            },
             addClick() {
                 this.addColumnPageDesc = this.prodInfo[this.activeName].text
                 //获取所有参数定义的json文件（columnInfo.json）增加到待选数据集合
