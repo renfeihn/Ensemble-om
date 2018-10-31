@@ -4,7 +4,7 @@
    <v-flex md4 lg4>
     <v-layout row wrap right>
      <v-flex md2>
-    <i v-if="baseAttr==true" class="material-icons baseIcon small">
+    <i v-if="baseAttr==false" class="material-icons baseIcon small">
      call_merge
     </i>
      </v-flex>
