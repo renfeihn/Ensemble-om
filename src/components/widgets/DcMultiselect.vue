@@ -33,7 +33,7 @@
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
-                <div class="navbar">  <v-btn
+                <div class="navbar" v-if="showEdit">  <v-btn
                         fab
                         dark
                         class="smallButton"
@@ -96,7 +96,7 @@
             },
             showEdit: {
                 type: String,
-                default: true
+                default: false
             }
         },
         data() {
@@ -256,12 +256,14 @@
         transform: translate3d(0, 0, 0);
     }
     .navbar {
+
         padding-top: 9px;
         border-radius: 50%;
         background: #fff;
-        position: relative;
+        height: 100px;
+        width: 100px;
+        position: absolute;
         cursor: pointer;
-        text-align: center;
         font-size: 1.75em;
         font-weight: bold;
         color: #99b977;
@@ -288,7 +290,7 @@
     }
     .navbar .menu li{
         position: absolute;
-        left: 18px;
+        left: 0px;
         top: -85px;
         transform-origin: 22px 65px;
         transition: all 0.5s 0.1s;
