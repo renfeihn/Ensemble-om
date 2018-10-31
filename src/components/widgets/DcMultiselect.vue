@@ -46,30 +46,27 @@
                             <v-btn
                                     fab
                                     dark
-                                    class="smallButton"
                                     color="green"
                             >
-                        <v-icon>close</v-icon>
+                        <v-icon class="smallIconChild">close</v-icon>
                     </v-btn>
                         </li>
                         <li>
                     <v-btn
                             fab
                             dark
-                            class="smallButton"
                             color="indigo"
                     >
-                        <v-icon>edit</v-icon>
+                        <v-icon class="smallIconChild">edit</v-icon>
                     </v-btn>
                         </li>
                         <li>
                     <v-btn
                             fab
                             dark
-                            class="smallButton"
                             color="red"
                     >
-                        <v-icon>delete</v-icon>
+                        <v-icon class="smallIconChild">delete</v-icon>
                     </v-btn>
                         </li>
                     </ul>
@@ -278,8 +275,6 @@
         padding: 0;
         margin: 0;
         position: absolute;
-
-
         cursor: default;
         border-radius: 50%;
         transform: scale(0);
@@ -293,44 +288,43 @@
     }
     .navbar .menu li{
         position: absolute;
-        top: -88px;
-        left: -50px;
-        transform-origin: 70px 70px;
+        left: 18px;
+        top: -85px;
+        transform-origin: 22px 65px;
         transition: all 0.5s 0.1s;
     }
     .navbar:hover .menu li{
         transition: all 0.6s;
     }
     .navbar .menu li button{
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
         line-height: 45px;
         border-radius: 50%;
         background: #fff;
         position: absolute;
         font-size: 60%;
-
         transition: 0.6s;
     }
     .navbar:hover .menu li:nth-child(1){
-        transition-delay: 0.02s;
-        transform: rotate(93deg);
+        transition-delay: 0.82s;
+        transform: rotate(45deg);
     }
     .navbar:hover .menu li:nth-child(1)  button{
         transition-delay: 0.84s;
-        transform: rotate(200deg);
+        transform: rotate(180deg);
     }
     .navbar:hover .menu li:nth-child(2){
-        transition-delay: 0.04s;
-        transform: rotate(132deg);
+        transition-delay: 0.82s;
+        transform: rotate(90deg);
     }
     .navbar:hover .menu li:nth-child(2)  button{
         transition-delay: 0.84s;
         transform: rotate(595deg);
     }
     .navbar:hover .menu li:nth-child(3){
-        transition-delay: 0.06s;
-        transform: rotate(172deg);
+        transition-delay: 0.82s;
+        transform: rotate(135deg);
     }
     .navbar:hover .menu li:nth-child(3)  button{
         transition-delay: 0.84s;
@@ -387,5 +381,8 @@
     .smallButton {
         width: 30px;
         height: 30px;
+    }
+    .smallIconChild {
+        font-size: 16px;
     }
 </style>
