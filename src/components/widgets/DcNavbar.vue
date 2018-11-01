@@ -4,42 +4,57 @@
          fab
          dark
          class="smallButton"
-         color="blue darken-2"
+         :color="selected.color"
  >
-  <v-icon>add</v-icon>
+  <v-icon>{{selected.text}}</v-icon>
  </v-btn>
-  <ul class="menu">
-   <li>
+  <ul class="menu" >
+   <li v-for="btn in btnList" v-if="btn.text!=selected.text">
     <v-btn
             fab
             dark
-            color="green"
+            :color="btn.color"
     >
-     <v-icon class="smallIconChild">close</v-icon>
-    </v-btn>
-   </li>
-   <li>
-    <v-btn
-            fab
-            dark
-            color="indigo"
-    >
-     <v-icon class="smallIconChild">edit</v-icon>
-    </v-btn>
-   </li>
-   <li>
-    <v-btn
-            fab
-            dark
-            color="red"
-    >
-     <v-icon class="smallIconChild">delete</v-icon>
+     <v-icon class="smallIconChild" @click="changeSelected(btn)">{{btn.text}}</v-icon>
     </v-btn>
    </li>
   </ul>
  </div>
 </template>
-
+<script>
+    export default {
+        data()
+        {
+            return {
+               btnList: [
+                   {
+                       color: 'blue darken-2',
+                       text: 'edit'
+                   },{
+                       color: 'indigo',
+                       text: 'no_sim'
+                   },
+                   {
+                       color: 'green',
+                       text: 'visibility_off'
+                   },{
+                       color: 'red',
+                       text: 'delete'
+                   }
+               ],
+                selected: {
+                    color: 'blue darken-2',
+                    text: 'edit'
+                }
+            }
+        },
+        methods: {
+             changeSelected (seleted) {
+                 this.selected=seleted;
+             }
+        }
+    }
+ </script>
 <style scoped>
  .demo{
   padding: 2em 0;
@@ -104,7 +119,7 @@
  }
  .navbar:hover .menu li:nth-child(1)  button{
   transition-delay: 0.84s;
-  transform: rotate(180deg);
+  transform: rotate(290deg);
  }
  .navbar:hover .menu li:nth-child(2){
   transition-delay: 0.82s;
@@ -112,7 +127,7 @@
  }
  .navbar:hover .menu li:nth-child(2)  button{
   transition-delay: 0.84s;
-  transform: rotate(595deg);
+  transform: rotate(445deg);
  }
  .navbar:hover .menu li:nth-child(3){
   transition-delay: 0.82s;
@@ -120,7 +135,7 @@
  }
  .navbar:hover .menu li:nth-child(3)  button{
   transition-delay: 0.84s;
-  transform: rotate(555deg);
+  transform: rotate(620deg);
  }
  .navbar:hover .menu li:nth-child(4){
   transition-delay: 0.08s;
