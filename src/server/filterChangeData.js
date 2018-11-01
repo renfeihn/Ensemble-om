@@ -40,9 +40,11 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
             prodDefines[j] = newMap
         }else if(prodData.prodDefines[j].attrValue !== sourceProdData.prodDefines[j].attrValue){
             //prodDefine 修改参数
+            prodData.prodDefines[j].group = null
             newMap.newData = prodData.prodDefines[j]
             newMap.oldData = sourceProdData.prodDefines[j]
             newMap.optionType = "U"
+            prodDefines[j] = newMap
         }
     }
     backData.prodDefines = prodDefines

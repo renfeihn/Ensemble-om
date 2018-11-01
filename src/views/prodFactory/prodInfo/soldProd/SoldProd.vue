@@ -36,10 +36,9 @@
                                     <v-flex md8 lg4 v-if="keyData.columnType == 'tree'">
                                     </v-flex>
                                     <v-flex md12 lg12 v-if="keyData.columnType == 'tree'">
-                                        <v-flex md11 ml-5 class="auto">
-                                            <dc-tree-select :baseAttr="baseAttr" v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue"
-                                                            :multiple="true" :options="keyData.valueScore"></dc-tree-select>
-                                        </v-flex>
+                                        <!--<v-flex md12 ml-12 class="auto">-->
+                                            <dc-treeview v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue" :options="keyData.valueScore"></dc-treeview>
+                                        <!--</v-flex>-->
                                     </v-flex>
                                     <v-flex md12 lg12 v-else>
                                         <dc-text-field :baseAttr="prodDefines[keyData.key].group" v-if="keyData.columnType == 'input'"
@@ -66,13 +65,15 @@
     import DcMultiselect from '@/components/widgets/DcMultiselect'
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
+    import DcTreeview from "@/components/widgets/DcTreeview";
+
     import DcTextField from "@/components/widgets/DcTextField";
     import DcDate from '@/components/widgets/DcDate'
     import {saveColumn} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import draggable from 'vuedraggable'
     export default {
-        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable},
+        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable,DcTreeview},
         props: {
             prodType: String,
             prodDefines: String,

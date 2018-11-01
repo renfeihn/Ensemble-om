@@ -36,9 +36,8 @@
                                     <v-flex md8 lg4 v-if="keyData.columnType == 'tree'">
                                     </v-flex>
                                     <v-flex md12 lg12 v-if="keyData.columnType == 'tree'">
-                                        <v-flex md11 ml-5 class="auto">
-                                            <dc-tree-select :showEdit="showEdit" v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue"
-                                                            :multiple="true" :options="keyData.valueScore"></dc-tree-select>
+                                        <v-flex md11 ml-11 class="auto">
+                                            <dc-treeview v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue" :options="keyData.valueScore" :labelDesc="keyData.columnDesc"></dc-treeview>
                                         </v-flex>
                                     </v-flex>
                                     <v-flex md12 lg12 v-else>
@@ -71,8 +70,10 @@
     import {saveColumn} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import draggable from 'vuedraggable'
+    import DcTreeview from "@/components/widgets/DcTreeview";
+
     export default {
-        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable},
+        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable,DcTreeview},
         props: {
             prodType: String,
             prodDefines: String,
