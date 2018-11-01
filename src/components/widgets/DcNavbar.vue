@@ -114,27 +114,27 @@
   transition: 0.6s;
  }
  .navbar:hover .menu li:nth-child(1){
-  transition-delay: 0.82s;
+  transition-delay: 0.52s;
   transform: rotate(45deg);
  }
  .navbar:hover .menu li:nth-child(1)  button{
-  transition-delay: 0.84s;
+  transition-delay: 0.54s;
   transform: rotate(290deg);
  }
  .navbar:hover .menu li:nth-child(2){
-  transition-delay: 0.82s;
+  transition-delay: 0.52s;
   transform: rotate(90deg);
  }
  .navbar:hover .menu li:nth-child(2)  button{
-  transition-delay: 0.84s;
+  transition-delay: 0.54s;
   transform: rotate(445deg);
  }
  .navbar:hover .menu li:nth-child(3){
-  transition-delay: 0.82s;
+  transition-delay: 0.52s;
   transform: rotate(135deg);
  }
  .navbar:hover .menu li:nth-child(3)  button{
-  transition-delay: 0.84s;
+  transition-delay: 0.54s;
   transform: rotate(620deg);
  }
  .navbar:hover .menu li:nth-child(4){

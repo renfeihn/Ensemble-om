@@ -28,7 +28,7 @@
                 <v-card-text>
                     <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">请选择需要增加的信息...</div>
                     <v-scroll-x-transition group hide-on-leave>
-                        <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller>
+                        <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller close @input="remove(selection)">
                             <v-icon left small>mdi-beer</v-icon>
                             {{ selection.name }}
                         </v-chip>
@@ -102,6 +102,10 @@
       resetClick() {
           this.tree = []
           console.log("gg")
+      },
+      remove(name) {
+          this.selections.splice(this.selections.indexOf(name))
+          this.selections = [...this.selections]
       },
       init() {
           this.tree = []
