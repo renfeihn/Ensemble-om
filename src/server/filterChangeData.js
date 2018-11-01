@@ -10,7 +10,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var newProdMap = {}
     var oldProdMap = {}
     if(copyFlag === "Y"){
-        //产品复制时，保留所有最新数据
         newProdMap = prodData.prodType
     }else {
         for (let i in prodData.prodType) {
@@ -27,10 +26,10 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backData.prodType = prodType
     //处理prodDefines对象数据
     var prodDefines = {}
+    // prodDefinesDeal(prodData,sourceProdData,copyFlag,prodDefines)
     for (let j in prodData.prodDefines) {
         let newMap = {newData: {},oldData: {},optionType: ""}
         if(copyFlag === "Y"){
-            //产品复制时，保留所有最新数据
             newMap.newData = prodData.prodDefines[j]
             newMap.optionType = "I"
             prodDefines[j] = newMap
@@ -44,11 +43,9 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
             newMap.newData = prodData.prodDefines[j]
             newMap.oldData = sourceProdData.prodDefines[j]
             newMap.optionType = "U"
-            prodDefines[j] = newMap
         }
     }
     backData.prodDefines = prodDefines
-
     //处理mbEventInfos对象数据
     for (let m in prodData.mbEventInfos){
         let mbEventAttrs = {}
@@ -60,7 +57,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         let oldataType = {}
         let flagPart = "false"
         let flagType = "false"
-
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
             let newDataMap= {newData: {}, oldData: {},optionType: ""}
@@ -79,7 +75,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         }
         temp.mbEventAttrs = Object.assign(temp.mbEventAttrs,mbEventAttrs)
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
-
         //mbEventParts
         for (let x in prodData.mbEventInfos[m].mbEventParts){
             //降低复杂度
@@ -87,7 +82,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         }
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
-
         //mbEventType
         for (let y in prodData.mbEventInfos[m].mbEventType){
             if(copyFlag === "Y") {
@@ -109,35 +103,22 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
             delete backData.mbEventInfos[m]
         }
     }
-    //处理单表数据 mbProdCharge
-    //加工后数据集合
+    //处理单表数据
     var backVal = []
-    //表名
     var tables = "mbProdCharge"
-    // var primaryKey =  {prodType: 'prodType', feeType: 'feeType'}
-    //调用处理方法
     tablesMainDeal(prodData,sourceProdData,backVal,tables)
     //将加工后数据回填到待返回数据集合
     backData.mbProdCharge = backVal
-
-    //glProdAccounting
     backVal = []
     tables = "glProdAccounting"
-    // var primaryKey =  {prodType: 'prodType', accountingStatus: 'accountingStatus'}
     tablesMainDeal(prodData,sourceProdData,backVal,tables)
     backData.glProdAccounting = backVal
-
-    //irl_prod_int
     backVal = []
     tables = "irlProdInt"
-    // var primaryKey =  {prodType: 'prodType', eventType: 'eventType', intClass: 'intClass'}
     tablesMainDeal(prodData,sourceProdData,backVal,tables)
     backData.irlProdInt = backVal
-
-    //mb_acct_stats
     backVal = []
     tables = "mbAcctStats"
-    // var primaryKey =  {internalKey: 'internalKey'}
     tablesMainDeal(prodData,sourceProdData,backVal,tables)
     backData.mbAcctStats = backVal
     return backData
@@ -236,6 +217,32 @@ export function mbEventPartDeal(prodData,x,m,copyFlag,flagPart,mbEventParts,sour
         }
     }
 }
+
+// export function prodDefinesDeal(prodData,sourceProdData,copyFlag,prodDefines) {
+//     for (let j in prodData.prodDefines) {
+//         let newMap = {newData: {},oldData: {},optionType: ""}
+//         if(copyFlag === "Y"){
+//             newMap.newData = prodData.prodDefines[j]
+//             newMap.optionType = "I"
+//             prodDefines[j] = newMap
+//         }else if (sourceProdData.prodDefines[j] === undefined) {
+//             //prodDefine 增加参数
+//             newMap.newData = prodData.prodDefines[j]
+//             newMap.optionType = "I"
+//             prodDefines[j] = newMap
+//         }else if(prodData.prodDefines[j].attrValue !== sourceProdData.prodDefines[j].attrValue){
+//             //prodDefine 修改参数
+//             newMap.newData = prodData.prodDefines[j]
+//             newMap.oldData = sourceProdData.prodDefines[j]
+//             if(prodData.prodDefines[j].group === "BASE"){
+//                 newMap.optionType = "I"
+//             }else {
+//                 newMap.optionType = "U"
+//             }
+//             prodDefines[j] = newMap
+//         }
+//     }
+// }
 
 //对象浅拷贝
 export function copy(obj1,obj2) {

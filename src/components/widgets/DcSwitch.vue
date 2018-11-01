@@ -26,7 +26,7 @@
      <span>{{peopleDesc}}</span>
     </v-tooltip>
     <dc-navbar v-if="showEdit == true"></dc-navbar>
-    <i v-if="baseAttr==true" class="material-icons baseIcon small">
+    <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
      call_merge
     </i>
    </v-flex>
@@ -54,7 +54,7 @@
             labelDesc: String,
             baseAttr: {
                 type: String,
-                default: false
+                default: "SOLD"
             },
             showEdit: {
                 type: String,

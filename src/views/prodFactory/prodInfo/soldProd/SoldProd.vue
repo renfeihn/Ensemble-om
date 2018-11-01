@@ -42,15 +42,15 @@
                                         </v-flex>
                                     </v-flex>
                                     <v-flex md12 lg12 v-else>
-                                        <dc-text-field :baseAttr="baseAttr" v-if="keyData.columnType == 'input'"
+                                        <dc-text-field :baseAttr="prodDefines[keyData.key].group" v-if="keyData.columnType == 'input'"
                                                        class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
                                                        name="title" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key].attrValue" single-line
                                                        hide-details></dc-text-field>
-                                        <dc-multiselect :baseAttr="baseAttr" v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
+                                        <dc-multiselect :baseAttr="prodDefines[keyData.key].group" v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
                                                         :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
-                                        <dc-switch :baseAttr="baseAttr" v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
+                                        <dc-switch :baseAttr="prodDefines[keyData.key].group" v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
                                                    v-model="prodDefines[keyData.key].attrValue"></dc-switch>
-                                        <dc-date :baseAttr="baseAttr" v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
+                                        <dc-date :baseAttr="prodDefines[keyData.key].group" v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
