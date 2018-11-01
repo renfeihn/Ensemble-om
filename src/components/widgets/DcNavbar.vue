@@ -23,35 +23,66 @@
 </template>
 <script>
     export default {
+        model: {
+            prop: "option",
+            event: "getVue"
+        },
+        props: {
+            option: String
+        },
         data()
         {
             return {
                btnList: [
                    {
                        color: 'blue darken-2',
-                       text: 'edit'
+                       text: 'edit',
+                       opt: 'E'
                    },{
                        color: 'indigo',
-                       text: 'no_sim'
+                       text: 'no_sim',
+                       opt: 'N'
                    },
                    {
                        color: 'green',
-                       text: 'visibility_off'
+                       text: 'visibility_off',
+                       opt: 'V'
                    },{
                        color: 'red',
-                       text: 'delete'
+                       text: 'delete',
+                       opt: 'D'
                    }
                ],
                 selected: {
                     color: 'blue darken-2',
-                    text: 'edit'
+                    text: 'edit',
+                    opt: 'E'
                 }
+            }
+        },
+        watch: {
+            option: {
+                handler(msg) {
+                  this.init(msg)
+                }
+            }
+        },
+        created() {
+            if(typeof this._props.option !== "undefined") {
+                this.init(this._props.option)
             }
         },
         methods: {
              changeSelected (seleted) {
-                 this.selected=seleted;
-             }
+                 this.$emit("getVue", seleted.opt);
+             },
+            init (msg){
+                for(const select in this.btnList){
+                    if(this.btnList[select].opt == msg){
+                        this.selected=this.btnList[select]
+                    }
+                }
+            }
         }
     }
  </script>

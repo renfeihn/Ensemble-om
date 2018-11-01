@@ -29,7 +29,7 @@
             <v-flex md6 lg6>
                 <div :class="background">
                     <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
-                                 :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                                :option="msg.optionPrmissions" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                     </multiselect>
                 </div>
             </v-flex>
@@ -40,8 +40,8 @@
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
-               <dc-navbar v-if="showEdit == true"></dc-navbar>
-                <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
+               <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
+                <i v-if="baseAttr==BASE" class="material-icons baseIcon small">
                     call_merge
                 </i>
             </v-flex>
@@ -81,6 +81,7 @@
                 personShow: 0,
                 isMulti: true,
                 isOpen: 'fas fa-eye',
+                optionPermissions: '',
                 background: '',
                 closeSelect: false,
                 peopleColor: "grey lighten-1",
@@ -99,6 +100,11 @@
                 handler(newValue) {
                     this.reback(newValue);
                 }
+            },
+            optionPermissions: {
+                handler(newValue) {
+                    this.rebackOption(newValue);
+                }
             }
         },
         created() {
@@ -110,6 +116,7 @@
         mounted: function() {
             this.initProperty();
         },
+
         methods: {
             peopleClick() {
                 if(this.peopleColor === "grey lighten-1") {
@@ -147,6 +154,10 @@
                         values.push(value);
                     }
                     this.value = values;
+                    //选项赋值
+                    if(this._props.msg.optionPermissions!==undefined){
+                        this.optionPermissions= this._props.msg.optionPermissions
+                    }
                 }
                 //根据产品配置信息，初始化分户生效标志
                 if(this._props.msg.perEffect === "true"){
@@ -169,6 +180,12 @@
                 //判断是否显示分户生效标识
                 if(this._props.perShow === true){
                     this.personShow = 1
+                }
+            },
+            rebackOption(newValue){
+                if(typeof this._props.msg === "object"){
+                this._props.msg.optionPermissions=newValue
+                    this.$emit("getVue", this._props.msg);
                 }
             },
             reback(newValue) {
