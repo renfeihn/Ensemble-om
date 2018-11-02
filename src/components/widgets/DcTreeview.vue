@@ -1,14 +1,8 @@
 <template>
     <v-card>
-        <v-toolbar card color="primary lighten-1">
-            <v-toolbar-title style="font-size: large; color: #eeeeee">{{labelText}}</v-toolbar-title>
+        <v-toolbar card color="blue" style="height: 40px">
+            <v-toolbar-title style="font-size: medium; color: #eeeeee; margin-top: -20px">{{labelText}}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <!--<v-tooltip bottom color="orange">-->
-                <!--<v-btn flat icon="edit" slot="activator" color="white" @click="saveClick">-->
-                    <!--<v-icon>save</v-icon>-->
-                <!--</v-btn>-->
-                <!--<span>保存</span>-->
-            <!--</v-tooltip>-->
         </v-toolbar>
         <v-layout>
             <v-flex xs12 md5>
@@ -53,14 +47,16 @@
   },
   computed: {
       selections: function () {
-          const selections = []
-          for (const leaf of this.tree) {
-              const brewery = this.brewerie.find(brewery => brewery.id + "" === leaf + "")
-              if (!brewery) continue
-              selections.push(brewery)
+          if(this.tree.length) {
+              const selections = []
+              for (const leaf of this.tree) {
+                  const brewery = this.brewerie.find(brewery => brewery.id + "" === leaf + "")
+                  if (!brewery) continue
+                  selections.push(brewery)
+              }
+              this.backValue = this.tree
+              return selections
           }
-          this.backValue = this.tree
-          return selections
       }
   },
   watch: {
@@ -75,9 +71,9 @@
        }
      },
      backValue(msg) {
-         let back = msg[0].key
+         let back = msg[0]
          for(let i=1; i<msg.length; i++){
-             back = back+","+msg[i].key
+             back = back+","+msg[i]
          }
          this.$emit("getVue", back);
      }
@@ -106,8 +102,20 @@
           this.tree = []
       },
       remove(name) {
-          this.selections.splice(this.selections.indexOf(name))
-          this.selections = [...this.selections]
+          const items=this.items
+          this.tree.splice(this.tree.indexOf(name.id),1)
+          let id=0;
+          for(const index in items){
+              const item= items[index]
+              for(const cIndex in item.children){
+                  if(item.children[cIndex].id ==name.id){
+                      id=item.id;
+                  }
+              }
+          }
+          if(id>0&&this.tree.indexOf(id)>=0){
+              this.tree.splice(this.tree.indexOf(id),1)
+          }
       },
       init() {
           if(typeof this._props.labelDesc !== "undefined") {
@@ -134,7 +142,7 @@
               }
               if(flag === 0){
                   let temp = {}
-                  temp.id = parent.length+1
+                  temp.id = options[i].parentCode;
                   temp.code = options[i].parentCode;
                   temp.name = options[i].parentDesc;
                   temp.children = []
