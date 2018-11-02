@@ -11,7 +11,7 @@
                               <v-icon>add</v-icon>
                          </v-btn>
                         <v-card>
-                            <dc-treeview v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeview>
+                            <dc-treeAttr v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeAttr>
                         </v-card>
                     </v-bottom-sheet>
                     <v-tooltip bottom color="orange">
@@ -90,7 +90,7 @@
     import RateInfo from './form/rbModel/RateInfo';
     import FormShift from './form/rbModel/FormShift';
     import AccountingInfo from './form/rbModel/AccountingInfo';
-    import DcTreeview from "@/components/widgets/DcTreeview";
+    import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     export default {
         name: 'deposit',
         components: {
@@ -104,7 +104,7 @@
             RateInfo,
             FormShift,
             AccountingInfo,
-            DcTreeview
+            DcTreeAttr
         },
         data () {
             return {
