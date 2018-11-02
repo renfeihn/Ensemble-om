@@ -83,12 +83,16 @@
         methods: {
             reback(newValue) {
                 let value = newValue;
-                if(typeof this._props.msg === "object") {
-                    this._props.msg.attrValue = value
+                let reValue=this._props.msg
+                if(typeof reValue === "object") {
+                    reValue.attrValue = value
                 }else{
-                    this._props.msg = value
+                    reValue = value
                 }
-                this.$emit("getVue", this._props.msg);
+                if(reValue != undefined){
+                this.$emit("getVue", reValue);
+                }
+
             },
             peopleClick() {
                 //预留 未处理v-model为String类型时 分户生效标识处理 (如果传入为String时 分户生效标识不显示 )
@@ -112,7 +116,7 @@
                     this.personShow = 1
                 }
                 //分户生效标识回显 如果传入msg为对象 则进入if判断  如果为String 则this._props.msg.perEffect === undefined 不执行以下操作
-                if(this._props.msg.perEffect !== undefined && this._props.msg.perEffect !== null){
+                if(this._props.msg!== undefined&&typeof this._props.msg === "object"&&this._props.msg.perEffect !== undefined && this._props.msg.perEffect !== null){
                     if(this._props.msg.perEffect === "true"){
                         this.peopleColor = "red"
                         this.peopleDesc = "分户生效"

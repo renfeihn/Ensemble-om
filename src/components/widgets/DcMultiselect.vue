@@ -29,7 +29,7 @@
             <v-flex md6 lg6>
                 <div :class="background">
                     <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
-                                :option="msg.optionPrmissions" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                                :option="msg.optionPermissions" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                     </multiselect>
                 </div>
             </v-flex>
@@ -60,7 +60,12 @@
         },
         props: {
             options: String,
-            msg: String,
+            msg: {
+                type: String ,
+                default: {
+                    optionPermissions: ''
+                }
+            },
             isMultiSelect: String,
             perShow: String,
             labelDesc: String,

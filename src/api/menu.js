@@ -128,6 +128,7 @@ const Menu = [
       { name: 'deposit', title: '产品展现', component: 'prod/deposit' },
       { name: 'publishForm', title: '参数变动记录', component: 'publishForm' },
       { name: 'RB100', title: '连通后台测试', component: 'RbBaseProds' },
+      { name: 'RB100', title: '连通后台测试2', component: 'publishDate2' },
       { name: 'publishDate2', title: '参数变动记录2', component: 'publishDate2' },
     ]
   },
