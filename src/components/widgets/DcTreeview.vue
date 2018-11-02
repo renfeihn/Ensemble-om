@@ -95,7 +95,7 @@
               for (let y = 0; y < this.tree.length; y++) {
                   for (let x = 0; x < this.brewerie.length; x++) {
                       if (this.brewerie[x].id === this.tree[y]) {
-                          this.backValue.push(this.brewerie[x].key + "--" + this.brewerie[x].name)
+                          this.backValue.push(this.brewerie[x].id + "--" + this.brewerie[x].name)
                       }
                   }
               }
@@ -142,12 +142,10 @@
               }
           }
           let index = parent.length+1
-//          this.brewerie = []
           for(let k=0; k<options.length; k++){
               let brewerieTemps = {}
               brewerieTemps.id = options[k].key+""
               brewerieTemps.name = options[k].columnDesc
-              brewerieTemps.key = options[k].key+""
               this.brewerie.push(brewerieTemps)
               for(let n=0; n<parent.length; n++){
                   if(options[k].parentCode !== undefined && options[k].parentCode === parent[n].code){
