@@ -87,6 +87,7 @@
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
     import ChargeDefine from './form/rbModel/ChargeDefine';
+    import ProdListForm from './form/ProdListForm';
     import RateInfo from './form/rbModel/RateInfo';
     import FormShift from './form/rbModel/FormShift';
     import AccountingInfo from './form/rbModel/AccountingInfo';
@@ -98,6 +99,7 @@
             BaseProd,
             SoldProd,
             downAction,
+            ProdListForm,
             PendingForm,
             columnInfo,
             ChargeDefine,
@@ -182,16 +184,15 @@
             //初始化产品信息
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码
-                this.prodClass = this.$route.hash
-                //默认展示RB101产品信息
-                getProdData("RB101").then(response => {
+                getProdData(this.$route.hash).then(response => {
                     //初始化产品基础参数
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     const reProd  = response.data.data
-                    this.prodData=reProd;
+                    this.prodData= reProd;
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                     this.initEventAttr(reProd)
+                    this.prodClass= this.prodData.prodType.prodClass
 
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){

@@ -165,14 +165,13 @@
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             if(this.$route.hash !== "" && this.$route.hash !== null) {
-                //点击主菜单产品组时 获取产品组代码
-                this.prodClass = this.$route.hash
                 //默认展示RB101产品信息
-                getProdData("RB101").then(response => {
+                getProdData(this.$route.hash).then(response => {
                     this.prodData = response.data.data
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                this.prodClass= response.data.data.prodType.prodClass
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
