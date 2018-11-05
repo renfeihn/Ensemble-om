@@ -6,7 +6,7 @@
         <v-text-field flat solo full-width clearable prepend-icon="search" class="top" label="请输入产品代码或描述" v-model="searchValue"></v-text-field>
       </v-toolbar>
       <vue-perfect-scrollbar >
-        <v-list two-line subheader class="depositTree">
+        <v-list two-line subheader :class="depositTree">
           <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
             <v-list-tile-avatar>
               <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
@@ -33,15 +33,29 @@
     } from '@/api/url/prodInfo'
 
     export default {
+
         props: ["prodClass"],
         data: () => ({
             folders: [],
-            prodType: ''
+            prodType: '',
+            depositTree: 'depositTree'
         }),
         watch: {
             prodClass(val) {
                 this.initProdList(val)
             }
+        },
+        mounted() {
+            // 监听这个dom的scroll事件
+            window.addEventListener('scroll', () => {
+                const height= window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                if(height>=176){
+                    this.depositTree='depositTreeFixed'
+                }else{
+                    this.depositTree='depositTree'
+                }
+
+            }, true)
         },
         methods: {
             initProdList(val) {
@@ -65,5 +79,10 @@
   }
   .depositTree {
     height: calc(90vh - 48px);
+  }
+  .depositTreeFixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
   }
 </style>
