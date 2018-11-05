@@ -1,33 +1,35 @@
 <template>
     <div>
-        <v-layout row wrap >
-            <v-flex md4 lg4>
-                <v-layout row wrap right>
-                    <v-flex md12 row wrap>
-                        <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
-                    </v-flex>
-                </v-layout>
-            </v-flex>
-            <v-flex md6 lg6>
-                <div :class="background">
-                    <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
-                                :option="msg.optionPrmissions" :disabled="disabled" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
-                    </multiselect>
-                </div>
-            </v-flex>
-            <v-flex md2 lg2 >
-                <v-tooltip v-if="personShow==1" right :color="peopleColor">
-                    <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
-                        <v-icon>people</v-icon>
-                    </v-btn>
-                    <span>{{peopleDesc}}</span>
-                </v-tooltip>
-               <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
-                <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
-                    call_merge
-                </i>
-            </v-flex>
-        </v-layout>
+        <transition name="slide-fade">
+            <v-layout row wrap :class="background" v-if="show">
+                <v-flex md4 lg4>
+                    <v-layout row wrap right>
+                        <v-flex md12 row wrap>
+                            <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+                <v-flex md6 lg6>
+                    <div>
+                        <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
+                                     :option="msg.optionPrmissions" :disabled="disabled" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                        </multiselect>
+                    </div>
+                </v-flex>
+                <v-flex md2 lg2>
+                    <v-tooltip v-if="personShow==1" right :color="peopleColor">
+                        <v-btn flat small :color="peopleColor" icon="people" slot="activator" @click="peopleClick" class="dcMulti1">
+                            <v-icon>people</v-icon>
+                        </v-btn>
+                        <span>{{peopleDesc}}</span>
+                    </v-tooltip>
+                    <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
+                    <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
+                        call_merge
+                    </i>
+                </v-flex>
+            </v-layout>
+        </transition>
     </div>
 </template>
 
@@ -68,6 +70,7 @@
                 fab: false,
                 personShow: 0,
                 isMulti: true,
+                show: false,
                 isOpen: 'fas fa-eye',
                 optionPermissions: '',
                 background: '',
@@ -125,11 +128,6 @@
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';
                 }
-                if(this._props.labelDesc == '币种'){
-                    this.background= 'delete'
-                }else{
-                    this.background= ''
-                }
                 if(msg !== null && msg !== undefined) {
                     let data = msg.split(",");
                     let options = this._props.options;
@@ -161,6 +159,12 @@
                 }
             },
             initProperty() {
+                let t;
+                clearTimeout(t)
+                let that = this;
+                t= setTimeout(function (){
+                    that.show= true
+                }, 1000);
                 //判断是否多选
                 if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null || this._props.isMultiSelect === true){
                     //是否多选标志未定义时，默认为多选
@@ -176,7 +180,7 @@
             },
             rebackOption(newValue){
                 if(typeof this._props.msg === "object"){
-                this._props.msg.optionPermissions=newValue
+                    this._props.msg.optionPermissions=newValue
                     this.$emit("getVue", this._props.msg);
                 }
             },
@@ -238,5 +242,19 @@
         color: #ff8511;
         padding-top: 20px;
     }
-
+    .background {
+        transform:rotate(360deg);
+        transition:  transform 0.5s 0.2s;
+    }
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active for below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
 </style>

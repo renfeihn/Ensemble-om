@@ -7,7 +7,8 @@
 */
 <template>
  <div >
-  <v-layout row wrap class="switch" >
+  <transition name="slide-fade">
+  <v-layout row wrap class="switch" v-if="show">
    <v-flex md4 lg4>
     <v-layout row wrap right>
      <v-flex md12>
@@ -31,7 +32,9 @@
     </i>
    </v-flex>
   </v-layout>
+  </transition>
  </div>
+
 </template>
 
 <script>
@@ -68,6 +71,7 @@
                 peopleDesc: "产品生效",
                 currentValue: "",
                 desc: "",
+                show: false,
                 isOpen: 'lock',
                 dcSwitch: false,
                 personShow: 0,
@@ -94,6 +98,12 @@
             }
         },
         mounted() {
+            let t;
+            clearTimeout(t)
+            let that = this;
+            t= setTimeout(function (){
+                that.show= true
+            }, 1000);
             if(this._props.baseAttr === "BASE"){
                 this.disabled = true
             }else{
@@ -168,5 +178,16 @@
  }
  .switch {
   padding-top: 10px;
+ }
+ .slide-fade-enter-active {
+  transition: all .3s ease;
+ }
+ .slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+ }
+ .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
  }
 </style>
