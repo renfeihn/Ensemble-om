@@ -16,7 +16,7 @@
     </v-layout>
    </v-flex>
    <v-flex md6 lg6>
-    <v-switch :label="desc" color="success" v-model="dcSwitch" @change="switchChange" hide-details :perShow="perShow" labelDesc="labelDesc"></v-switch>
+    <v-switch :label="desc" color="success" :disabled="disabled" v-model="dcSwitch" @change="switchChange" hide-details :perShow="perShow" labelDesc="labelDesc"></v-switch>
    </v-flex>
    <v-flex md2 lg2>
     <v-tooltip v-if="personShow==1" right :color="peopleColor">
@@ -51,6 +51,7 @@
             },
             value: {},
             perShow: String,
+            disabled: String,
             labelDesc: String,
             baseAttr: {
                 type: String,
@@ -93,6 +94,11 @@
             }
         },
         mounted() {
+            if(this._props.baseAttr === "BASE"){
+                this.disabled = true
+            }else{
+                this.disabled = false
+            }
             this.switchChange();
         },
         methods: {

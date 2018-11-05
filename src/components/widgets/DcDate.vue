@@ -16,7 +16,7 @@
                 </v-layout>
             </v-flex>
             <v-flex md6 lg6>
-                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" labelDesc="labelDesc">
+                <v-menu transition="scale-transition" :nudge-bottom="-22" min-width="290px" :disabled="disabled" labelDesc="labelDesc">
                     <v-text-field slot="activator" v-model="dateFormatted" append-icon="event"></v-text-field>
                     <v-date-picker v-model="dateFormatted" no-title scrollable locale="zh-cn"></v-date-picker>
                 </v-menu>
@@ -51,6 +51,7 @@
             msg: String,
             perShow: String,
             labelDesc: String,
+            disabled: String,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -95,6 +96,14 @@
         },
         created() {
             this.init(this._props);
+        },
+        mounted: function() {
+            //判断参数取自基础产品||可售产品
+            if(this._props.baseAttr === "BASE"){
+                this.disabled = true
+            }else{
+                this.disabled = false
+            }
         },
         methods: {
             peopleClick() {

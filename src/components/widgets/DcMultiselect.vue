@@ -1,26 +1,8 @@
-/**
-*labelDesc属性
-*例子: 数据为String字符串的时候:  <dc-multiselect label="测试测试"></dc-multiselect>  加载后数据为：测试测试
-*      数据为变量的时候:          <dc-multiselect :label="object"></dc-multiselect>  加载后数据为变量object对应数据
-*/
 <template>
     <div>
         <v-layout row wrap >
             <v-flex md4 lg4>
                 <v-layout row wrap right>
-                    <!--<v-flex md2 v-if="baseAttr==true">-->
-                        <!--<i class="material-icons baseIcon small">-->
-                            <!--call_merge-->
-                        <!--</i>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex md2 v-else>-->
-                        <!--<i class="material-icons baseIconDis small">-->
-                            <!--call_merge-->
-                        <!--</i>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex md10>-->
-                        <!--<v-subheader class="primary&#45;&#45;text subheading pr-1">-->
-                            <!--{{labelText}}</v-subheader>-->
                     <v-flex md12 row wrap>
                         <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
                     </v-flex>
@@ -29,7 +11,7 @@
             <v-flex md6 lg6>
                 <div :class="background">
                     <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
-                                :option="msg.optionPermissions" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                                :option="msg.optionPrmissions" :disabled="disabled" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                     </multiselect>
                 </div>
             </v-flex>
@@ -41,7 +23,7 @@
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
                <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
-                <i v-if="baseAttr==BASE" class="material-icons baseIcon small">
+                <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
                     call_merge
                 </i>
             </v-flex>
@@ -69,6 +51,7 @@
             isMultiSelect: String,
             perShow: String,
             labelDesc: String,
+            disabled: String,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -113,15 +96,19 @@
             }
         },
         created() {
-
             if(typeof this._props.msg !== "undefined") {
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }
         },
         mounted: function() {
+            //判断参数取自基础产品||可售产品
+            if(this._props.baseAttr === "BASE"){
+                this.disabled = true
+            }else{
+                this.disabled = false
+            }
             this.initProperty();
         },
-
         methods: {
             peopleClick() {
                 if(this.peopleColor === "grey lighten-1") {

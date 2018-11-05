@@ -1,24 +1,26 @@
 <template>
     <v-card>
-        <v-toolbar card color="primary lighten-1">
-            <v-toolbar-title style="font-size: large; color: #eeeeee">{{labelText}}</v-toolbar-title>
+        <v-toolbar card color="blue-grey lighten-5">
+            <v-toolbar-title style="font-size: large; color: slategrey">{{labelText}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-tooltip bottom color="orange">
-                <v-btn flat icon="edit" slot="activator" color="white" @click="saveClick">
+                <v-btn flat icon="edit" slot="activator" color="blue" @click="saveClick">
                     <v-icon>save</v-icon>
                 </v-btn>
-                <span>保存</span>
+                <span>应用</span>
             </v-tooltip>
         </v-toolbar>
         <v-layout>
-            <v-flex xs12 md5>
+            <v-flex xs6 md12>
                 <v-card-text>
-                    <v-treeview v-model="tree" activatable :items="items" selected-color="green" open-on-click selectable :options="options" expand-icon="mdi-assignment_turned_in-down" labelDesc="labelDesc">
+                    <v-treeview slot="header" v-model="tree" activatable :items="items" selected-color="green" open-on-click selectable :options="options" expand-icon="mdi-assignment_turned_in-down" labelDesc="labelDesc">
                     </v-treeview>
                 </v-card-text>
             </v-flex>
-            <v-divider vertical></v-divider>
-            <v-flex xs12 md7>
+        </v-layout>
+        <v-divider></v-divider>
+        <v-layout>
+            <v-flex xs6 md12>
                 <v-card-text>
                     <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">请选择...</div>
                     <v-scroll-x-transition group hide-on-leave>

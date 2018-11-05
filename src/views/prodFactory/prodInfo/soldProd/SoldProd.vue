@@ -36,9 +36,7 @@
                                     <v-flex md8 lg4 v-if="keyData.columnType == 'tree'">
                                     </v-flex>
                                     <v-flex md12 lg12 v-if="keyData.columnType == 'tree'">
-                                        <!--<v-flex md12 ml-12 class="auto">-->
-                                            <dc-treeview v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue" :options="keyData.valueScore"></dc-treeview>
-                                        <!--</v-flex>-->
+                                        <dc-treeview v-if="keyData.columnType == 'tree'" v-model="prodDefines[keyData.key].attrValue" :options="keyData.valueScore"></dc-treeview>
                                     </v-flex>
                                     <v-flex md12 lg12 v-else>
                                         <dc-text-field :baseAttr="prodDefines[keyData.key].group" v-if="keyData.columnType == 'input'"

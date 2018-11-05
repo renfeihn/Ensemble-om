@@ -15,11 +15,6 @@
               <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
               <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-action>
-              <v-btn icon ripple>
-                <v-icon color="grey lighten-1">info</v-icon>
-              </v-btn>
-            </v-list-tile-action>
           </v-list-tile>
         </v-list>
       </vue-perfect-scrollbar>
@@ -56,6 +51,8 @@
                 }
 
             }, true)
+            this.initProdList(this._props.prodClass)
+
         },
         methods: {
             initProdList(val) {

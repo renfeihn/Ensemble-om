@@ -15,7 +15,7 @@
     </v-layout>
    </v-flex>
    <v-flex md6 lg6>
-    <v-text-field class="primary--text mx-1" name="title" v-model="value" single-line hide-details :perShow="perShow" labelDesc="labelDesc"></v-text-field>
+    <v-text-field class="primary--text mx-1" :disabled="disabled" name="title" v-model="value" single-line hide-details :perShow="perShow" labelDesc="labelDesc"></v-text-field>
    </v-flex>
    <v-flex md2 lg2>
     <v-tooltip right :color="peopleColor" v-if="personShow==1">
@@ -47,6 +47,7 @@
             msg: String,
             perShow: String ,
             labelDesc: String ,
+            disabled: String,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -79,6 +80,13 @@
         },
         created() {
             this.init(this._props.msg);
+        },
+        mounted() {
+            if (this._props.baseAttr === "BASE") {
+                this.disabled = true
+            } else {
+                this.disabled = false
+            }
         },
         methods: {
             reback(newValue) {

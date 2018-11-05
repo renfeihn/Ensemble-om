@@ -16,7 +16,7 @@
                 <v-card-text>
                     <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">请选择...</div>
                     <v-scroll-x-transition group hide-on-leave>
-                        <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller close @input="remove(selection)">
+                        <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller close @input="remove(selection)" text-color="white">
                             <v-icon left small>mdi-beer</v-icon>
                             {{ selection.name }}
                         </v-chip>

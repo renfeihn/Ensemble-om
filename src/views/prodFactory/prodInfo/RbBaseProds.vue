@@ -6,14 +6,14 @@
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-bottom-sheet v-if="showAdd">
-                         <v-btn flat icon="refresh" slot="activator" @click="addClick" color="orange">
-                              <v-icon>add</v-icon>
-                         </v-btn>
-                        <v-card>
-                            <dc-treeAttr v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeAttr>
-                        </v-card>
-                    </v-bottom-sheet>
+                    <!--<v-bottom-sheet v-if="showAdd">-->
+                    <!--<v-btn flat icon="refresh" slot="activator" @click="addClick" color="orange">-->
+                    <!--<v-icon>add</v-icon>-->
+                    <!--</v-btn>-->
+                    <!--<v-card>-->
+                    <!--<dc-treeAttr v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeAttr>-->
+                    <!--</v-card>-->
+                    <!--</v-bottom-sheet>-->
                     <v-tooltip bottom color="orange">
                         <v-btn flat icon="edit" slot="activator" @click="editClick" :color="editColor">
                             <v-icon>edit</v-icon>
@@ -35,7 +35,7 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                        <v-card flat>
+                        <!--<v-card flat>-->
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
                             <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></sold-prod>
                             <base-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
@@ -49,7 +49,7 @@
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
                             <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
-                        </v-card>
+                        <!--</v-card>-->
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -60,7 +60,21 @@
                         <pending-form v-if="pendFlag==1"></pending-form>
                     </v-card-text>
                 </v-card>
-                <prod-list-form v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
+                <v-window v-model="onboarding">
+                    <v-card-actions v-if="windowShow == 1">
+                        <v-item-group v-model="onboarding" style="margin-left: 30%">
+                            <v-item v-for="n in length" :key="`btn-${n}`">
+                                <v-btn slot-scope="{ active, toggle }" :input-value="active" icon @click="toggle">
+                                    <v-icon color="orange">home</v-icon>
+                                </v-btn>
+                                </v-item>
+                        </v-item-group>
+                    </v-card-actions>
+                    <v-window-item v-for="n in length" :key="`card-${n}`">
+                        <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
+                        <dc-treeAttr v-if="n == 1 && windowShow != 0" v-model="tree" :options="treeOptions" labelDesc="产品参数"></dc-treeAttr>
+                    </v-window-item>
+                </v-window>
             </v-flex>
         </v-layout>
     </div>
@@ -113,7 +127,10 @@
                 listLoading: true,
                 dialog: false,
                 showCopy: '',
+                length: 2,
+                onboarding: 0,
                 prodCode: '',
+                windowShow: 0,
                 prodDesc: '',
                 showAdd: false,
                 pendFlag: 0,
@@ -308,6 +325,7 @@
             },
             //编辑事件触发
             editClick() {
+                this.windowShow = this.windowShow?0:1
                 const edit=this.showEdit;
                 this.showEdit=edit==false?true:false;
 //                const baseAttr = this.baseAttr
