@@ -20,7 +20,7 @@
       </v-flex>
     </v-layout>
     <div v-show="showCopy">
-    <v-layout row wrap>
+    <v-layout row wrap v-if="edit == 'false'">
       <v-flex md4 lg4>
         <v-subheader class="primary--text pt-3 subheading">产品类型</v-subheader>
       </v-flex>
@@ -28,8 +28,6 @@
         <v-text-field class="primary--text" label="产品类型" name="title" v-model="prodType" single-line hide-details>
         </v-text-field>
       </v-flex>
-    </v-layout>
-    <v-layout row wrap>
       <v-flex md4 lg4>
         <v-subheader class="primary--text pt-3 subheading">产品描述</v-subheader>
       </v-flex>
@@ -37,10 +35,13 @@
         <v-text-field class="primary--text" label="产品描述" name="title" v-model="prodDesc" single-line hide-details/>
       </v-flex>
     </v-layout>
-      <div class="text-xs-center">
+
+      <div class="text-xs-center" v-if="edit == 'false'">
           <v-btn color="cyan" @click="copyOn" dark>
-              <v-icon>done</v-icon>确认</v-btn>
-          </div>
+              <v-icon>done</v-icon>
+            确认
+          </v-btn>
+      </div>
     </div>
   </div>
 </template>
