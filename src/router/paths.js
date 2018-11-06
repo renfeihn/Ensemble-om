@@ -1150,7 +1150,7 @@ import(
     path: '/RbBaseProds',
     meta: {
       breadcrumb: true,
-      title: '连通后台测试'
+      title: '产品信息'
     },
     name: 'RbBaseProds',
     component: () =>

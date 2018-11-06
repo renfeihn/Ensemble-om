@@ -60,8 +60,8 @@
                         <pending-form v-if="pendFlag==1"></pending-form>
                     </v-card-text>
                 </v-card>
-                <v-window v-model="onboarding">
-                    <v-card-actions v-if="windowShow == 1">
+                <v-window v-model="onboarding" :class="depositTree">
+                    <v-card-actions v-if="windowShow == 3">
                         <v-item-group v-model="onboarding" style="margin-left: 30%">
                             <v-item v-for="n in length" :key="`btn-${n}`">
                                 <v-btn slot-scope="{ active, toggle }" :input-value="active" icon @click="toggle">
@@ -133,6 +133,7 @@
                 windowShow: 0,
                 prodDesc: '',
                 showAdd: false,
+                depositTree: '',
                 pendFlag: 0,
                 columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
                 prodClass: '',
@@ -189,6 +190,16 @@
             }
         },
         mounted: function() {
+            // 监听这个dom的scroll事件
+            window.addEventListener('scroll', () => {
+                const height= window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                if(height>=176){
+                    this.depositTree='depositTreeFixed'
+                }else{
+                    this.depositTree=''
+                }
+
+            }, true)
             this.queryProdFlow();
             window.getApp.$emit('APP_DRAWER_TOGGLED');
             //组织树形组件备选数据
@@ -490,5 +501,10 @@
     .addBtn {
         margin-top: -10px;
         width: 160px
+    }
+    .depositTreeFixed {
+        position: fixed;
+        top: 63px;
+        width: 24%;
     }
 </style>

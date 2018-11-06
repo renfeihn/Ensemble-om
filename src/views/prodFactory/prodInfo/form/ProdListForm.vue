@@ -41,16 +41,6 @@
             }
         },
         mounted() {
-            // 监听这个dom的scroll事件
-            window.addEventListener('scroll', () => {
-                const height= window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-                if(height>=176){
-                    this.depositTree='depositTreeFixed'
-                }else{
-                    this.depositTree='depositTree'
-                }
-
-            }, true)
             this.initProdList(this._props.prodClass)
 
         },
