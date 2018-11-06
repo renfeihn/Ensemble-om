@@ -24,7 +24,7 @@
     </v-btn>
     <span>{{peopleDesc}}</span>
    </v-tooltip>
-    <dc-navbar v-if="showEdit == true"></dc-navbar>
+    <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
     <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
      call_merge
     </i>
@@ -64,6 +64,7 @@
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效",
                 personShow: 0,
+                optionPermissions: '',
                 show: false
             };
         },
@@ -76,6 +77,11 @@
             value: {
                 handler(newValue) {
                     this.reback(newValue);
+                }
+            },
+            optionPermissions: {
+                handler(newValue) {
+                    this.rebackOption(newValue);
                 }
             }
         },
@@ -93,6 +99,12 @@
             }
         },
         methods: {
+            rebackOption(newValue){
+                if(typeof this._props.msg === "object"){
+                    this._props.msg.optionPermissions=newValue
+                    this.$emit("getVue", this._props.msg);
+                }
+            },
             dealNewAttr(val) {
                 //新增参数延迟展示
                 if(val !== undefined && val.newAttr) {
@@ -134,8 +146,14 @@
             init(msg) {
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';
-                }                //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
-                this.value = typeof msg === "object"?this._props.msg.attrValue:this._props.msg
+                }
+                //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
+                if(typeof this._props.msg === "object"){
+                    this.value = this._props.msg.attrValue
+                    this.optionPermissions = this._props.msg.optionPermissions
+                }else if(typeof this._props.msg === "string"){
+                    this.value = this._props.msg
+                }
                 //判断是否显示分户生效标识
                 if(this._props.perShow === true){
                     this.personShow = 1

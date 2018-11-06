@@ -15,7 +15,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         if(prodData.prodDefines[j].newAttr !== undefined){
             delete prodData.prodDefines[j].newAttr
         }
-        if(copyFlag === "Y" && prodData.prodDefines[j].group !== "BASE"){
+        if(copyFlag === "Y" && prodData.prodDefines[j].group === "SOLD" || prodData.prodDefines[j].optionPermissions === "E"){
             prodData.prodDefines[j].group = null
             newMap.newData = prodData.prodDefines[j];
             newMap.optionType = "I"

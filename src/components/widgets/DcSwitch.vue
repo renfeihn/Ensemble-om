@@ -26,7 +26,7 @@
      </v-btn>
      <span>{{peopleDesc}}</span>
     </v-tooltip>
-    <dc-navbar v-if="showEdit == true"></dc-navbar>
+    <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
     <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
      call_merge
     </i>
@@ -72,6 +72,7 @@
                 currentValue: "",
                 desc: "",
                 show: false,
+                optionPermissions: '',
                 isOpen: 'lock',
                 dcSwitch: false,
                 personShow: 0,
@@ -83,6 +84,7 @@
                 handler(val) {
                     if(typeof val === "object"){
                         this.dcSwitch = val.attrValue=== "Y" ? true : false
+                        this.optionPermissions = val.optionPermissions
                     }
                     else if(typeof val === "string"){
                         this.dcSwitch = val === "Y" ? true : false
@@ -95,6 +97,11 @@
                 // watch 的一个特点是，最初绑定的时候是不会执行的，要等到 value 改变时才执行监听计算
                 // 代表在wacth里声明了value这个方法之后立即先去执行handler方法
                 immediate: true
+            },
+            optionPermissions: {
+                handler(newValue) {
+                    this.rebackOption(newValue);
+                }
             }
         },
         created() {
@@ -109,6 +116,12 @@
             this.switchChange();
         },
         methods: {
+            rebackOption(newValue){
+                if(typeof this._props.value === "object"){
+                    this._props.value.optionPermissions=newValue
+                    this.$emit("input", this._props.value);
+                }
+            },
             dealNewAttr(val) {
                 //新增参数延迟展示
                 if(val !== undefined && val.newAttr) {

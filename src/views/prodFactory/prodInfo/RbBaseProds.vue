@@ -56,7 +56,7 @@
             <v-flex lg3 sm3 class="v-card">
                 <v-card>
                     <v-card-text>
-                        <down-action v-if="pendFlag==0" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
+                        <down-action v-if="pendFlag==0" v-bind:editShow="editShow" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
                         <pending-form v-if="pendFlag==1"></pending-form>
                     </v-card-text>
                 </v-card>
@@ -133,6 +133,7 @@
                 windowShow: 0,
                 prodDesc: '',
                 showAdd: false,
+                editShow: false,
                 depositTree: '',
                 pendFlag: 0,
                 columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -336,6 +337,7 @@
             },
             //编辑事件触发
             editClick() {
+                this.editShow = this.editShow === true?false:true
                 this.windowShow = this.windowShow?0:1
                 const edit=this.showEdit;
                 this.showEdit=edit==false?true:false;

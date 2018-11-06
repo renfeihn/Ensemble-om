@@ -28,7 +28,7 @@
                     </v-btn>
                     <span>{{peopleDesc}}</span>
                 </v-tooltip>
-                <dc-navbar v-if="showEdit == true"></dc-navbar>
+                <dc-navbar v-if="showEdit == true" v-model="optionPermissions"></dc-navbar>
                 <i v-if="baseAttr=='BASE'" class="material-icons baseIcon small">
                     call_merge
                 </i>
@@ -68,6 +68,7 @@
             menu2: false,
             flag: null,
             show: false,
+            optionPermissions: '',
             value: [],
             isOpen: 'lock',
             options: [],
@@ -93,6 +94,11 @@
                 handler(newValue) {
                     this.reback(newValue);
                 }
+            },
+            optionPermissions: {
+                handler(newValue) {
+                    this.rebackOption(newValue);
+                }
             }
         },
         created() {
@@ -109,6 +115,12 @@
             }
         },
         methods: {
+            rebackOption(newValue){
+                if(typeof this._props.msg === "object"){
+                    this._props.msg.optionPermissions=newValue
+                    this.$emit("getVue", this._props.msg);
+                }
+            },
             dealNewAttr(val) {
                 //新增参数延迟展示
                 if(val !== undefined && val.newAttr) {
@@ -139,6 +151,7 @@
                     let dates = this._props.msg
                     if (this._props.msg.attrValue != undefined) {
                         dates = this._props.msg.attrValue
+                        this.optionPermissions = this._props.msg.optionPermissions
                     }
                     dates=dates.toString()
                     let time = dates.substring(0, 4) + "-" + dates.substring(4, 6) + "-" + dates.substring(6)
