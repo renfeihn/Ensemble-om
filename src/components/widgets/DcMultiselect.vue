@@ -102,6 +102,7 @@
             if(typeof this._props.msg !== "undefined") {
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }
+            this.dealNewAttr(this._props.msg)
         },
         mounted: function() {
             //判断参数取自基础产品||可售产品
@@ -113,6 +114,19 @@
             this.initProperty();
         },
         methods: {
+            dealNewAttr(val) {
+                //新增参数延迟展示
+                if(val !== undefined && val.newAttr) {
+                    let t;
+                    clearTimeout(t)
+                    let that = this;
+                    t = setTimeout(function () {
+                        that.show = true
+                    }, 1000);
+                }else{
+                    this.show = true
+                }
+            },
             peopleClick() {
                 if(this.peopleColor === "grey lighten-1") {
                     this.peopleColor = "red"
@@ -159,12 +173,6 @@
                 }
             },
             initProperty() {
-                let t;
-                clearTimeout(t)
-                let that = this;
-                t= setTimeout(function (){
-                    that.show= true
-                }, 1000);
                 //判断是否多选
                 if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null || this._props.isMultiSelect === true){
                     //是否多选标志未定义时，默认为多选
@@ -186,6 +194,7 @@
             },
             reback(newValue) {
                 let value = "";
+                //多选
                 if(this.isMulti === true) {
                     //多选数据组装
                     for (const index in newValue) {
@@ -197,8 +206,12 @@
                     }
                 }
                 if(this.isMulti === false){
-                    //单选数据组装
-                    value = newValue[0].key
+                    //默认单选
+                    if(newValue[0] !== undefined){
+                        value = newValue[0].key
+                    }else {
+                        value = newValue.key
+                    }
                 }
                 if(typeof this._props.msg === "object") {
                     this._props.msg.attrValue = value

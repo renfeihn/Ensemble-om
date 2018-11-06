@@ -21,7 +21,7 @@
         <v-divider></v-divider>
         <v-layout>
             <v-flex xs6 md12>
-                <v-card-text>
+                <v-card-text style="height: 400px">
                     <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">请选择...</div>
                     <v-scroll-x-transition group hide-on-leave>
                         <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller close @input="remove(selection)">

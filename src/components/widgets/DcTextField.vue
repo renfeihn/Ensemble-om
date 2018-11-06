@@ -2,7 +2,7 @@
  <div >
   <v-layout row wrap>
    <v-flex md4 lg4>
-    <v-layout row wrap right>
+    <v-layout row wrap right v-if="show">
      <!--<v-flex md2>-->
     <!--<i v-if="baseAttr==false" class="material-icons baseIcon small">-->
      <!--call_merge-->
@@ -63,7 +63,8 @@
                 value: [],
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效",
-                personShow: 0
+                personShow: 0,
+                show: false
             };
         },
         watch: {
@@ -79,9 +80,12 @@
             }
         },
         created() {
+            //控件加载处理
+            this.dealNewAttr(this._props.msg)
             this.init(this._props.msg);
         },
         mounted() {
+            //区别可售产品取自基础产品参数
             if (this._props.baseAttr === "BASE") {
                 this.disabled = true
             } else {
@@ -89,6 +93,19 @@
             }
         },
         methods: {
+            dealNewAttr(val) {
+                //新增参数延迟展示
+                if(val !== undefined && val.newAttr) {
+                    let t;
+                    clearTimeout(t)
+                    let that = this;
+                    t = setTimeout(function () {
+                        that.show = true
+                    }, 1000);
+                }else{
+                    this.show = true
+                }
+            },
             reback(newValue) {
                 let value = newValue;
                 let reValue=this._props.msg
@@ -148,5 +165,20 @@
  .lock {
   color: #ff8511;
   padding-top: 20px;
+ }
+ .background {
+  transform:rotate(360deg);
+  transition:  transform 0.5s 0.2s;
+ }
+ .slide-fade-enter-active {
+  transition: all .3s ease;
+ }
+ .slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+ }
+ .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
  }
 </style>

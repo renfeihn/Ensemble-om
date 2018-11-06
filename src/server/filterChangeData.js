@@ -11,6 +11,10 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var prodDefines = {}
     for (let j in prodData.prodDefines) {
         let newMap = {newData: {},oldData: {},optionType: ""}
+        //前端返回数据 去除新增参数标识
+        if(prodData.prodDefines[j].newAttr !== undefined){
+            delete prodData.prodDefines[j].newAttr
+        }
         if(copyFlag === "Y" && prodData.prodDefines[j].group !== "BASE"){
             prodData.prodDefines[j].group = null
             newMap.newData = prodData.prodDefines[j];
@@ -46,6 +50,10 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
 
         //mbEventAttrs
         for (let k in prodData.mbEventInfos[m].mbEventAttrs){
+            //前端返回数据 去除新增参数标识
+            if(prodData.mbEventInfos[m].mbEventAttrs[k].newAttr !== undefined){
+                delete prodData.mbEventInfos[m].mbEventAttrs[k].newAttr
+            }
             let newDataMap= {newData: {}, oldData: {},optionType: ""}
             if(copyFlag === "Y" || sourceProdData.mbEventInfos[m].mbEventAttrs[k] === undefined){
                 newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]

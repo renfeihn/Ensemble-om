@@ -43,12 +43,12 @@
                                     <v-flex md12 lg12 v-else>
                                         <dc-text-field :showEdit="showEdit" v-if="keyData.columnType == 'input'"
                                                        class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
-                                                       name="title" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key].attrValue" single-line
+                                                       name="title" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]" single-line
                                                        hide-details></dc-text-field>
                                         <dc-multiselect :showEdit="showEdit" v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
                                                         :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                                         <dc-switch :showEdit="showEdit" v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
-                                                   v-model="prodDefines[keyData.key].attrValue"></dc-switch>
+                                                   v-model="prodDefines[keyData.key]"></dc-switch>
                                         <dc-date :showEdit="showEdit" v-if="keyData.columnType == 'date'" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
                                     </v-flex>
                                 </v-layout>

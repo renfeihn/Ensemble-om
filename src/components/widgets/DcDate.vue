@@ -7,7 +7,7 @@
 */
 <template>
     <div>
-        <v-layout row wrap class="dcDate">
+        <v-layout row wrap class="dcDate" v-if="show">
             <v-flex md4 lg4>
                 <v-layout row wrap right>
                 <v-flex md12>
@@ -67,6 +67,7 @@
             menu1: false,
             menu2: false,
             flag: null,
+            show: false,
             value: [],
             isOpen: 'lock',
             options: [],
@@ -96,6 +97,8 @@
         },
         created() {
             this.init(this._props);
+            //控件加载处理
+            this.dealNewAttr(this._props.msg)
         },
         mounted: function() {
             //判断参数取自基础产品||可售产品
@@ -106,6 +109,19 @@
             }
         },
         methods: {
+            dealNewAttr(val) {
+                //新增参数延迟展示
+                if(val !== undefined && val.newAttr) {
+                    let t;
+                    clearTimeout(t)
+                    let that = this;
+                    t = setTimeout(function () {
+                        that.show = true
+                    }, 1000);
+                }else{
+                    this.show = true
+                }
+            },
             peopleClick() {
                 if(this.peopleColor === "grey lighten-1") {
                     this.peopleColor = "red"
@@ -162,5 +178,20 @@
     .lock {
         color: #ff8511;
         padding-top: 20px;
+    }
+    .background {
+        transform:rotate(360deg);
+        transition:  transform 0.5s 0.2s;
+    }
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active for below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
     }
 </style>

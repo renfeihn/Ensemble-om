@@ -381,6 +381,8 @@
                             addColumnData.prodDefines[columnKey].status = "A"
                             addColumnData.prodDefines[columnKey].assembleType = "ATTR"
                             addColumnData.prodDefines[columnKey].assembleId = columnKey
+                            //新增参数标识 newAttr
+                            addColumnData.prodDefines[columnKey].newAttr = true
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
@@ -405,6 +407,8 @@
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].perEffect = ""
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageCode = addColumnPageCode
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageSeqNo = PageSeqNo
+                            //新增参数标识 newAttr
+                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].newAttr = true
                         }
                     }
                 }

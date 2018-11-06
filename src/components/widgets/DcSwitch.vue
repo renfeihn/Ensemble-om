@@ -97,13 +97,10 @@
                 immediate: true
             }
         },
+        created() {
+            this.dealNewAttr(this._props.value)
+        },
         mounted() {
-            let t;
-            clearTimeout(t)
-            let that = this;
-            t= setTimeout(function (){
-                that.show= true
-            }, 1000);
             if(this._props.baseAttr === "BASE"){
                 this.disabled = true
             }else{
@@ -112,6 +109,19 @@
             this.switchChange();
         },
         methods: {
+            dealNewAttr(val) {
+                //新增参数延迟展示
+                if(val !== undefined && val.newAttr) {
+                    let t;
+                    clearTimeout(t)
+                    let that = this;
+                    t = setTimeout(function () {
+                        that.show = true
+                    }, 1000);
+                }else{
+                    this.show = true
+                }
+            },
             peopleClick() {
                 //分户生效标识点击事件
                 if(this.peopleColor === "grey lighten-1") {
