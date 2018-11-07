@@ -217,6 +217,8 @@
                     //初始化产品基础参数
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
+                    this.$store.dispatch('setProdType',this.prodCode)
+                    this.$store.dispatch('setProdDesc',this.prodDesc)
                     const reProd  = response.data.data
                     this.prodData= reProd;
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)

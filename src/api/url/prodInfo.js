@@ -160,3 +160,10 @@ export function saveColumn (params) {
         data: params
     });
 }
+export function findChildProd (params) {
+    return request({
+        url: '/findChildProd',
+        method: 'post',
+        data: params
+    })
+}

@@ -12,7 +12,7 @@
                 <v-flex md6 lg6>
                     <div>
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
-                                     :option="msg.optionPrmissions" :disabled="disabled" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                                     :disabled="disabled" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                         </multiselect>
                     </div>
                 </v-flex>
@@ -30,26 +30,24 @@
                 </v-flex>
             </v-layout>
         </transition>
+       <warn-dialog v-model="dialog" :oldOptionPermissions="oldOptionPermissions" v-on:rebackOptionPermissions="rebackOptionPermissions" :diffProdList="diffProdList"></warn-dialog>
     </div>
 </template>
 
 <script>
     import Multiselect from "vue-multiselect";
     import DcNavbar from './DcNavbar'
+    import {findChildProd} from "@/api/url/prodInfo";
+    import warnDialog from '@/views/prodFactory/prodInfo/baseProd/warnDialog';
     export default {
-        components: { Multiselect ,DcNavbar },
+        components: { Multiselect ,DcNavbar ,warnDialog},
         model: {
             prop: "msg",
             event: "getVue"
         },
         props: {
             options: String,
-            msg: {
-                type: String ,
-                default: {
-                    optionPermissions: ''
-                }
-            },
+            msg: String,
             isMultiSelect: String,
             perShow: String,
             labelDesc: String,
@@ -73,8 +71,11 @@
                 show: false,
                 isOpen: 'fas fa-eye',
                 optionPermissions: '',
+                oldOptionPermissions: '',
+                dialog: false,
                 background: '',
                 closeSelect: false,
+                diffProdList: [],
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效"
             };
@@ -93,7 +94,12 @@
                 }
             },
             optionPermissions: {
-                handler(newValue) {
+                handler(newValue,oldValue) {
+                    //查询上收，下收影响的产品列表
+                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions!=newValue){
+                        this.oldOptionPermissions=oldValue;
+                        this.findChildProd();
+                    }
                     this.rebackOption(newValue);
                 }
             }
@@ -137,6 +143,22 @@
                     this.peopleDesc = "产品生效"
                     this._props.msg.perEffect = "false"
                 }
+            },
+            findChildProd() {
+                if(this._props.msg!= undefined&& this._props.msg.attrKey!= undefined){
+                const column ={'prodType': this.$store.getters.prodType,'attrType': this._props.msg.attrKey,'attrValue': this._props.msg.attrValue};
+                findChildProd(column).then(response => {
+                    const reList = response.data.data
+                    //如果存在差异弹出差异列表
+                    if(reList!= undefined&&reList.length>0){
+                    this.dialog=true;
+                    this.diffProdList=reList
+                    }
+                });
+                }
+            },
+            rebackOptionPermissions (optionPermissions){
+                this.optionPermissions=optionPermissions;
             },
             init(msg) {
                 if(typeof this._props.labelDesc !== "undefined") {
