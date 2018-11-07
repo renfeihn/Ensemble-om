@@ -5,7 +5,7 @@
         <v-toolbar-side-icon></v-toolbar-side-icon>
           <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn color="write" @click="print()" flat>导出</v-btn>
+          <v-btn color="write" @click="printDown()" flat>导出</v-btn>
       </v-toolbar>
       <v-flex md8 lg8>
         <!--<tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>-->
@@ -208,7 +208,7 @@
       <v-toolbar-side-icon @click="showClick"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">产品修改差异展示</v-toolbar-title>
     </v-toolbar>
-    <v-card md20 lg20 v-if="showFlag==1">
+    <v-card md20 lg20 v-show="showFlag==1" ref="print">
       <v-card-text>
         <v-tabs fixed-tabs>
           <v-tab v-for="n in diffList" :key="n" class="diffTitle">{{n}}</v-tab>
@@ -234,6 +234,7 @@
   import tranCheckFlowInfo from './tranCheckFlowInfo'
   import tranReleaseFlowInfo from './tranReleaseFlowInfo'
   import { getDiffList } from "@/api/url/prodInfo";
+  import {PrintInfo} from '@/utils/print/print'
   import {getColumnDesc_} from '@/utils/columnDesc'
   import DcTextField from '@/components/widgets/DcTextField'
   import { getProdData } from "@/api/prod";
@@ -410,8 +411,8 @@ import {
                     this.optDesc = "发布"
                 }
             },
-            print () {
-                window.print()
+            printDown () {
+                PrintInfo(this.$refs.print)
             },
             getDiffProdData(){
                 var data={'mainSeqNo': this.code};
