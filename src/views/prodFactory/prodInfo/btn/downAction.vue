@@ -13,10 +13,10 @@
     </v-layout>
     <v-layout row wrap v-if="edit == 'true'">
       <v-flex md6 lg6>
-        <v-btn color="success" depressed="" @click="temp" style="width: 80%"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+        <v-btn color="success" depressed="" @click="temp" class="downClass"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
       </v-flex>
       <v-flex md6 lg6>
-        <v-btn color="success" depressed="" @click="save" style="width: 80%;margin-left: 20%"><v-icon >history</v-icon>保存</v-btn>
+        <v-btn color="success" depressed="" @click="save" class="downClass"><v-icon >history</v-icon>保存</v-btn>
       </v-flex>
     </v-layout>
     <div v-show="showCopy">
@@ -91,3 +91,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+  .downClass {
+    width: 80%;
+    margin-left: 10%
+  }
+</style>

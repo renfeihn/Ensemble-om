@@ -37,14 +37,21 @@
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                         <!--<v-card flat>-->
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD"></base-prod>
                             <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></sold-prod>
-                            <base-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
-                            <base-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
-                            <base-prod v-if="i.pageCode=='CYCLE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></base-prod>
-                            <base-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
-                            <base-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
-                            <base-prod v-if="i.pageCode=='DEP'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP"></base-prod>
-                            <base-prod v-if="i.pageCode=='WTD'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD"></base-prod>
+                            <sold-prod v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD"></sold-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
@@ -396,7 +403,7 @@
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1
                         //获取新增参数SeqNo
                         let SeqNo = (parseInt(this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"seqNo",eventType))+i+1)+""
-                        if(this.prodData.mbEventInfos[eventType][columnKey] !== undefined){
+                        if(this.prodData.mbEventInfos[eventType].mbEventAttrs[columnKey] !== undefined){
                             //已经存在该条数据
                             showFlag = 1
                             toast.info("事件" + eventType +"已存在参数【" + columnDesc + "】");

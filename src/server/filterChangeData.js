@@ -4,6 +4,8 @@
 export function filterChangeData (prodData,sourceProdData,optionType) {
     var backData = {}
     var copyFlag = optionType
+    //产品属性 B-基础产品 S-可售产品
+    let prodRange = prodData.prodType.prodRange
     backData = copy(sourceProdData,backData)
     // 处理prodType对象数据
     prodTypeDeal(prodData,sourceProdData,backData,copyFlag)
@@ -15,18 +17,25 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         if(prodData.prodDefines[j].newAttr !== undefined){
             delete prodData.prodDefines[j].newAttr
         }
-        if(copyFlag === "Y" && prodData.prodDefines[j].group === "SOLD" || prodData.prodDefines[j].optionPermissions === "E"){
+        if(copyFlag === "Y" && prodData.prodDefines[j].group === "SOLD" || copyFlag === "Y" && prodRange === "B"){
+            //可售产品-可售产品 || 基础产品-基础产品
             prodData.prodDefines[j].group = null
             newMap.newData = prodData.prodDefines[j];
             newMap.optionType = "I"
             prodDefines[j] = newMap
-        }else if (sourceProdData.prodDefines[j] === undefined) {
+        }else if(copyFlag === "Y" && prodRange === "S" && prodData.prodDefines[j].optionPermissions === "E"){
+            //基础产品-可售产品复制
+            prodData.prodDefines[j].group = null
+            newMap.newData = prodData.prodDefines[j];
+            newMap.optionType = "I"
+            prodDefines[j] = newMap
+        } else if (sourceProdData.prodDefines[j] === undefined) {
             //prodDefine 增加参数
             newMap.newData = prodData.prodDefines[j]
             newMap.optionType = "I"
             prodDefines[j] = newMap
-        }else if(prodData.prodDefines[j].attrValue !== sourceProdData.prodDefines[j].attrValue){
-            //prodDefine 修改参数
+        } else if(prodData.prodDefines[j].attrValue !== sourceProdData.prodDefines[j].attrValue || prodData.prodDefines[j].optionPermissions !== sourceProdData.prodDefines[j].optionPermissions){
+            //prodDefine 修改参数value || 修改参数操作属性（E:可编辑 N：不可编辑 V:不可见）
             prodData.prodDefines[j].group = null
             newMap.newData = prodData.prodDefines[j]
             newMap.oldData = sourceProdData.prodDefines[j]
@@ -55,12 +64,25 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
                 delete prodData.mbEventInfos[m].mbEventAttrs[k].newAttr
             }
             let newDataMap= {newData: {}, oldData: {},optionType: ""}
-            if(copyFlag === "Y" || sourceProdData.mbEventInfos[m].mbEventAttrs[k] === undefined){
+            if(copyFlag === "Y" && sourceProdData.mbEventInfos[m].mbEventAttrs[k].group === "SOLD" || copyFlag === "Y" && prodRange === "B"){
+                sourceProdData.mbEventInfos[m].mbEventAttrs[k].group = null
                 newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
                 newDataMap.optionType = "I"
                 flag = "true"
                 mbEventAttrs[k] = newDataMap
-            }else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue) {
+            }else if (copyFlag === "Y" && prodRange === "S" && sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E"){
+                sourceProdData.mbEventInfos[m].mbEventAttrs[k].group = null
+                newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
+                newDataMap.optionType = "I"
+                flag = "true"
+                mbEventAttrs[k] = newDataMap
+            } else if (sourceProdData.mbEventInfos[m].mbEventAttrs[k] === undefined){
+                newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
+                newDataMap.optionType = "I"
+                flag = "true"
+                mbEventAttrs[k] = newDataMap
+            } else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue || prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions) {
+                sourceProdData.mbEventInfos[m].mbEventAttrs[k].group = null
                 newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
                 newDataMap.oldData = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
                 newDataMap.optionType = "U"
