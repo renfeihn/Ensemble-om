@@ -17,6 +17,10 @@
     import diffProdTable from './diffProdTable'
     export default {
         components: {diffProdTable},
+        model: {
+            prop: "dialog",
+            event: "getVue"
+        },
         props: {
             dialog: {
                 type: String,
@@ -24,10 +28,6 @@
             },
             oldOptionPermissions: String,
             diffProdList: Object
-        },
-        model: {
-            prop: "dialog",
-            event: "getVue"
         },
         data() {
             return {

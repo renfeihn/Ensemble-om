@@ -96,9 +96,12 @@
             optionPermissions: {
                 handler(newValue,oldValue) {
                     //查询上收，下收影响的产品列表
-                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions!=newValue){
+                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions==''){
                         this.oldOptionPermissions=oldValue;
                         this.findChildProd();
+                    }else{
+                        this.oldOptionPermissions=''
+                        this.dialog=false
                     }
                     this.rebackOption(newValue);
                 }
@@ -159,6 +162,7 @@
             },
             rebackOptionPermissions (optionPermissions){
                 this.optionPermissions=optionPermissions;
+                this.oldOptionPermissions=''
             },
             init(msg) {
                 if(typeof this._props.labelDesc !== "undefined") {
