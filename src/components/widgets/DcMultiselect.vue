@@ -96,7 +96,7 @@
             optionPermissions: {
                 handler(newValue,oldValue) {
                     //查询上收，下收影响的产品列表
-                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions==''){
+                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions.reback==undefined){
                         this.oldOptionPermissions=oldValue;
                         this.findChildProd();
                     }else{
@@ -161,8 +161,8 @@
                 }
             },
             rebackOptionPermissions (optionPermissions){
-                this.optionPermissions=optionPermissions;
-                this.oldOptionPermissions=''
+                this.optionPermissions=optionPermissions.reback;
+                this.oldOptionPermissions=optionPermissions
             },
             init(msg) {
                 if(typeof this._props.labelDesc !== "undefined") {
