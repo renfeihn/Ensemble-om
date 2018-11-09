@@ -51,7 +51,6 @@
             msg: String,
             perShow: String,
             labelDesc: String,
-            disabled: String,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -68,6 +67,7 @@
             menu2: false,
             flag: null,
             show: false,
+            disabled: false,
             optionPermissions: '',
             value: [],
             isOpen: 'lock',

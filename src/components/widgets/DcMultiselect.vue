@@ -51,7 +51,6 @@
             isMultiSelect: String,
             perShow: String,
             labelDesc: String,
-            disabled: String,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -71,6 +70,7 @@
                 show: false,
                 isOpen: 'fas fa-eye',
                 optionPermissions: '',
+                disabled: false,
                 oldOptionPermissions: '',
                 dialog: false,
                 background: '',
@@ -114,7 +114,12 @@
             this.dealNewAttr(this._props.msg)
         },
         mounted: function() {
-
+            //判断参数取自基础产品||可售产品
+            if(this._props.baseAttr === "BASE"){
+                this.disabled = true
+            }else{
+                this.disabled = false
+            }
             this.initProperty();
         },
         methods: {
@@ -160,6 +165,11 @@
                 this.oldOptionPermissions=optionPermissions
             },
             init(msg) {
+                if(this._props.baseAttr === "BASE"){
+                    this.disabled = true
+                }else{
+                    this.disabled = false
+                }
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';
                 }
@@ -194,12 +204,6 @@
                 }
             },
             initProperty() {
-                //判断参数取自基础产品||可售产品
-                if(this._props.baseAttr === "BASE"){
-                    this.disabled = true
-                }else{
-                    this.disabled = false
-                }
                 //判断是否多选
                 if(this._props.isMultiSelect === undefined || this._props.isMultiSelect === null || this._props.isMultiSelect === true){
                     //是否多选标志未定义时，默认为多选

@@ -54,7 +54,6 @@
             },
             value: {},
             perShow: String,
-            disabled: String,
             labelDesc: String,
             baseAttr: {
                 type: String,
@@ -72,6 +71,7 @@
                 currentValue: "",
                 desc: "",
                 show: false,
+                disabled: false,
                 optionPermissions: '',
                 isOpen: 'lock',
                 dcSwitch: false,

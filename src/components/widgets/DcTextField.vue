@@ -47,7 +47,6 @@
             msg: String,
             perShow: String ,
             labelDesc: String ,
-            disabled: String,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -63,6 +62,7 @@
                 value: [],
                 peopleColor: "grey lighten-1",
                 peopleDesc: "产品生效",
+                disabled: false,
                 personShow: 0,
                 optionPermissions: '',
                 show: false
