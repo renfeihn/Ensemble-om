@@ -1161,17 +1161,31 @@ import(
       )
   },
   {
-    path: '/publishDate2',
+    path: '/tableParentView',
     meta: {
       breadcrumb: true,
-      title: '连通后台测试2'
+      title: '参数管理'
     },
-    name: 'publishDate2',
+    name: 'tableParentView',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/userFlow/publish/publishDate2.vue'
+        '@/views/baseTable/tableParentView.vue'
       )
   },
+{
+    path: '/tableInfo',
+        meta: {
+    breadcrumb: true,
+        title: '参数信息'
+},
+    name: 'tableInfo',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/baseTable/tableInfo.vue'
+)
+},
 ];

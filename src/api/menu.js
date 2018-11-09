@@ -33,7 +33,7 @@ const Menu = [
       items: [
           { name: 'partner', title: '合作方签约', component: 'partner/partnerMain' },
           { name: 'RB200', title: '合作方解约', component: 'prod/rbPublicProd' },
-          { name: 'RB300', title: '合作方信息维护', component: 'prod/rbHorizontalProd' },
+          { name: 'RB300', title: '合作方信息维护', component: 'prod/rbHorizontalrod' },
       ]
   },
   { header: '产品工厂' },
@@ -47,7 +47,7 @@ const Menu = [
       { name: 'RB200', title: '对公存款组', component: 'prod/rbPublicProd' },
       { name: 'RB300', title: '同业存款组', component: 'prod/rbHorizontalProd' },
         { name: 'RB101', title: '存款可售产品', component: 'RbBaseProds' },
-      { name: 'RB100', title: '存款基础产品', component: 'RbBaseProds' },
+      { name: 'RB100', title: '存款基础产品', component: 'RbBaseProds' }
     ]
   },
   {
@@ -84,7 +84,7 @@ const Menu = [
     component: 'components',
     icon: 'view_list',
     items: [
-      { name: '404', title: '参数管理入口', component: 'NotFound' },
+      { title: '参数管理入口', component: 'tableParentView' },
     ]
   },
     { header: '权限管理' },
@@ -128,7 +128,7 @@ const Menu = [
       { name: 'deposit', title: '产品展现', component: 'prod/deposit' },
       { name: 'publishForm', title: '参数变动记录', component: 'publishForm' },
       { name: 'RB100', title: '连通后台测试', component: 'RbBaseProds' },
-      { name: 'RB100', title: '连通后台测试2', component: 'publishDate2' },
+      { name: 'RB100', title: '连通后台测试2', component: 'tableParentView' },
       { name: 'publishDate2', title: '参数变动记录2', component: 'publishDate2' },
     ]
   },

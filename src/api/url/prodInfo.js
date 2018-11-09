@@ -167,3 +167,17 @@ export function findChildProd (params) {
         data: params
     })
 }
+export function getParamTable (params) {
+    return request({
+        url: '/getTableInfo',
+        method: 'post',
+        params: { tableName: params}
+    })
+}
+export function getTableList (params) {
+    return request({
+        url: '/getTableList',
+        method: 'post',
+        params: { system: params}
+    })
+}

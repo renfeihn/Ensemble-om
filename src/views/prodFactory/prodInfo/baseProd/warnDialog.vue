@@ -57,7 +57,7 @@
         methods: {
             reback () {
                 this.dialogFlag=false;
-                this.$emit('rebackOptionPermissions',{'reback':this._props.oldOptionPermissions});
+                this.$emit('rebackOptionPermissions',{'reback': this._props.oldOptionPermissions});
             }
         }
     }
