@@ -195,8 +195,9 @@ export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
     backData.prodType = prodType
 }
 //处理prodDefines对象数据
-export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRange) {
+export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRange,optionPermissions) {
     var prodDefines = {}
+    var tempObject = {}
     for (let j in prodData.prodDefines) {
         let newMap = {newData: {},oldData: {},optionType: ""}
         //前端返回数据 去除新增参数标识
@@ -228,7 +229,32 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
             newMap.optionType = "U"
             prodDefines[j] = newMap
         }
+        //判断编辑信息 E:可编辑 N:不可编辑 V:不可见 D:删除
+        let optObject = {key: "",tableName: "",optPerm: ""}
+        if(prodData.prodDefines[j].optionPermissions !== sourceProdData.prodDefines[j].optionPermissions){
+            if(sourceProdData.prodDefines[j].optionPermissions === "E" && prodData.prodDefines[j].optionPermissions === "D"){
+                //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
+                optObject.key = j
+                optObject.tableName = "MB_PROD_DEFINE"
+                optObject.optPerm = "DALL"
+            }else if(sourceProdData.prodDefines[j].optionPermissions === "E"){
+                //E-V E-N  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
+                optObject.key = j
+                optObject.tableName = "MB_PROD_DEFINE"
+                optObject.optPerm = "D"
+            }
+            if(prodData.prodDefines[j].optionPermissions === "E"){
+                //N-E V-E 继承于该基础产品的可售产品增加该条参数 optPerm = "I"
+                optObject.key = j
+                optObject.tableName = "MB_PROD_DEFINE"
+                optObject.optPerm = "I"
+            }
+        }
+        if(optObject.key !== ""){
+            tempObject[j] = optObject
+        }
     }
+    backData["optionPermissions"] = tempObject
     backData.prodDefines = prodDefines
 }
 
