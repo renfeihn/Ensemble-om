@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialogFlag" persistent max-width="550">
+    <v-dialog v-model="dialogFlag" persistent max-width="45%">
         <v-card>
             <v-card-title class="headline">影响可售产品列表</v-card-title>
             <v-card-text>

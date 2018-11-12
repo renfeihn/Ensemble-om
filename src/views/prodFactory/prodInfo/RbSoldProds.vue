@@ -35,14 +35,14 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD"></base-prod>
+                           <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD"></sold-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>

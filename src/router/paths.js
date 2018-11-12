@@ -1150,7 +1150,7 @@ import(
     path: '/RbBaseProds',
     meta: {
       breadcrumb: true,
-      title: '产品信息'
+      title: '存款基础产品'
     },
     name: 'RbBaseProds',
     component: () =>
@@ -1160,6 +1160,20 @@ import(
         '@/views/prodFactory/prodInfo/RbBaseProds.vue'
       )
   },
+{
+    path: '/RbSoldProds',
+        meta: {
+    breadcrumb: true,
+        title: '存款可售产品'
+},
+    name: 'RbSoldProds',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/prodFactory/prodInfo/RbSoldProds.vue'
+)
+},
   {
     path: '/tableParentView',
     meta: {

@@ -68,6 +68,7 @@
                 personShow: 0,
                 isMulti: true,
                 show: false,
+                baseAttr: "",
                 isOpen: 'fas fa-eye',
                 optionPermissions: '',
                 disabled: false,
@@ -96,7 +97,7 @@
             optionPermissions: {
                 handler(newValue,oldValue) {
                     //查询上收，下收影响的产品列表
-                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions.reback==undefined){
+                    if((newValue=='E'|| oldValue=='E')&&this.oldOptionPermissions.reback==undefined && oldValue !== "" && oldValue !== null){
                         this.oldOptionPermissions=oldValue;
                         this.findChildProd();
                     }else{
@@ -105,6 +106,15 @@
                     }
                     this.rebackOption(newValue);
                 }
+            },
+            baseAttr: {
+                handler(newValue) {
+                    if(newValue === "BASE"){
+                        this.disabled = true
+                    }else{
+                        this.disabled = false
+                    }
+                }
             }
         },
         created() {
@@ -112,14 +122,15 @@
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }
             this.dealNewAttr(this._props.msg)
-        },
-        mounted: function() {
             //判断参数取自基础产品||可售产品
             if(this._props.baseAttr === "BASE"){
                 this.disabled = true
             }else{
                 this.disabled = false
             }
+        },
+        mounted: function() {
+
             this.initProperty();
         },
         methods: {
