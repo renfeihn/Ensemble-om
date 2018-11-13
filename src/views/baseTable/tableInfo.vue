@@ -7,7 +7,7 @@
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
-            <a-table :customRow="customRow" :columns="columns" :dataSource="dataInfo" bordered>
+            <a-table :customRow="customRow" :columns="columns" @change="changeTable" :dataSource="dataInfo" bordered>
             </a-table>
             <v-divider></v-divider>
         </v-card-text>
@@ -78,14 +78,20 @@
                 this.selected = record;
             },
             onEdit() {
+                this.tbd.style = '';
                 this.dialog = true;
             },
             onAdd() {
+                this.tbd.style = '';
                 this.selected = {};
                 this.dialog = true
             },
             onDelete() {
+                this.tbd.style = '';
                 remove(this.dataInfo,this.selected)
+            },
+            changeTable() {
+                this.tbd.style = '';
             },
             editAction(option, editSelected) {
                 this.dialog = false;
