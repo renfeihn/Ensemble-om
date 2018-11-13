@@ -855,5 +855,90 @@
     "columnType":"switch",
     "parentCode": "RISK",
     "parentDesc": "风险信息"
+  },
+  "PROD_TYPE": {
+    "valueMethod": "RF",
+    "columnDesc": "产品类型",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "MB_PROD_TYPE",
+      "columnCode": "PROD_TYPE",
+      "columnDesc": "PROD_DESC"
+    }
+  },
+  "PROD_DESC": {
+    "columnDesc": "产品类型描述",
+    "columnType": "input"
+  },
+  "PROD_CLASS": {
+    "valueMethod": "RF",
+    "columnDesc": "产品分类",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "MB_PROD_CLASS",
+      "columnCode": "PROD_CLASS",
+      "columnDesc": "PROD_CLASS_DESC"
+    }
+  },
+  "PROD_GROUP":{
+    "columnDesc":"是否组合产品",
+    "columnType":"switch"
+  },
+  "PROD_RANGE": {
+    "valueMethod": "VL",
+    "columnDesc": "产品作用范围",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "B",
+        "value": "B-基础产品"
+      },
+      {
+        "key": "S",
+        "value": "S-可售产品"
+      }
+    ]
+  },
+  "BASE_PROD_TYPE": {
+    "valueMethod": "RF",
+    "columnDesc": "基础产品类型",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "MB_PROD_TYPE",
+      "columnCode": "PROD_TYPE",
+      "columnDesc": "PROD_DESC"
+    }
+  },
+  "COMPANY": {
+    "valueMethod": "VL",
+    "columnDesc": "法人代码",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "DCITS",
+        "value": "DCITS-神州信息"
+      }
+    ]
+  },
+  "STATUS": {
+    "valueMethod": "VL",
+    "columnDesc": "状态",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "A",
+        "value": "A-有效"
+      },
+      {
+        "key": "F",
+        "value": "F-无效"
+      }
+    ]
   }
 }

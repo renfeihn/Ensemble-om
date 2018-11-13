@@ -153,6 +153,13 @@ export function getPkListRf (params) {
         data: params
     });
 }
+export function getPkListColumnRf (params) {
+    return request({
+        url: '/getPkListColumnRf',
+        method: 'post',
+        data: params
+    });
+}
 export function saveColumn (params) {
     return request({
         url: '/saveColumn',

@@ -20,9 +20,19 @@ function removeByValue(arr, val) {
             break;
 
         }
-
     }
-
+}
+function findIndex(arr, val) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == val) return i;
+    }
+    return -1;
+}
+function remove(arr, val) {
+    var index = findIndex(arr,val);
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
 }
 function isEmptyObject(obj) {
     for (const key in obj){
@@ -41,7 +51,8 @@ const Models = {
     isNull: isNull,
     isNotNull: isNotNull,
     isEmptyObject: isEmptyObject,
-    removeByValue: removeByValue
+    removeByValue: removeByValue,
+    remove: remove
 };
 
 module.exports = Models;

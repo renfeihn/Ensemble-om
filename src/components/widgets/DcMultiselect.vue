@@ -63,7 +63,6 @@
         data() {
             return {
                 value: [],
-                options: [],
                 fab: false,
                 personShow: 0,
                 isMulti: true,
@@ -84,10 +83,16 @@
         watch: {
             msg: {
                 handler(msg) {
-                    if(typeof msg !== "undefined") {
+                    if(typeof msg !== "undefined"&&msg!== null) {
                         this.init(typeof msg === "object" ? msg.attrValue : msg);
                     }
                 }
+            },
+            options: {
+                handler(newValue){
+                    this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg)
+                },
+                deep: true
             },
             value: {
                 handler(newValue) {
