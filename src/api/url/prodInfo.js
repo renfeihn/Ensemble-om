@@ -78,7 +78,12 @@ export function getAllProdList () {
         method: 'post'
     });
 }
-
+export function getAllDefines (params) {
+    return request({
+        url: '/getAllDefineList',
+        method: 'post',
+    });
+}
 
 export function getDepositDtl (data) {
   return request({

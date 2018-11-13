@@ -10,7 +10,7 @@ const Menu = [
     title: '产品目录',
     group: 'apps',
     icon: 'widgets',
-    name: 'prodCmb',
+    name: 'prodCmbs',
   },
   {
     title: '我的工作台',
@@ -129,7 +129,9 @@ const Menu = [
       { name: 'publishForm', title: '参数变动记录', component: 'publishForm' },
       { name: 'RB100', title: '连通后台测试', component: 'RbBaseProds' },
       { name: 'RB100', title: '连通后台测试2', component: 'tableParentView' },
-      { name: 'publishDate2', title: '参数变动记录2', component: 'publishDate2' },
+        { name: 'prodCmbs', title: '产品目录展示', component: 'prodCmbs' },
+
+        { name: 'publishDate2', title: '参数变动记录2', component: 'publishDate2' },
     ]
   },
   {

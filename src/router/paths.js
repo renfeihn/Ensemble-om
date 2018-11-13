@@ -1189,6 +1189,20 @@ import(
       )
   },
 {
+    path: '/prodCmbs',
+        meta: {
+    breadcrumb: true,
+        title: '产品目录'
+},
+    name: 'prodCmbs',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/prodFactory/prodFlow/windowsFlow/prodCmbs.vue'
+)
+},
+{
     path: '/tableInfo',
         meta: {
     breadcrumb: true,
