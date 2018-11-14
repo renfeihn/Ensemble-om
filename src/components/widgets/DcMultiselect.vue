@@ -126,6 +126,10 @@
             if(typeof this._props.msg !== "undefined") {
                 this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
             }
+            //初始化描述
+            if(typeof this._props.labelDesc !== "undefined") {
+                this.labelText = this._props.labelDesc + ' :';
+            }
             this.dealNewAttr(this._props.msg)
             //判断参数取自基础产品||可售产品
             if(this._props.baseAttr === "BASE"){
@@ -186,9 +190,6 @@
                 }else{
                     this.disabled = false
                 }
-                if(typeof this._props.labelDesc !== "undefined") {
-                    this.labelText = this._props.labelDesc + ' :';
-                }
                 if(msg !== null && msg !== undefined) {
                     let data = msg.split(",");
                     let options = this._props.options;
@@ -209,6 +210,9 @@
                     if(this._props.msg.optionPermissions!==undefined){
                         this.optionPermissions= this._props.msg.optionPermissions
                     }
+                }
+                if(typeof this._props.labelDesc !== "undefined") {
+                    this.labelText = this._props.labelDesc + ' :';
                 }
                 //根据产品配置信息，初始化分户生效标志
                 if(this._props.msg.perEffect === "true"){
