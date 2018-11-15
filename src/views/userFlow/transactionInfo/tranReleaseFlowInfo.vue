@@ -137,7 +137,7 @@
         tranFlowRelease
     } from '@/api/url/prodInfo';
     import toast from '@/utils/toast';
-
+    import download2 from '@/utils/download2';
     export default {
         data (){
             return {
@@ -186,7 +186,8 @@
                 tranFlowRelease(this.releaseInfo).then(response => {
                     if(response.status === 200 && this.releaseInfo.isApproved === "Y") {
                     toast.success("发布成功！");
-                    this.$router.push({ name: 'userIndexFlow'});
+                        download2.download(response.data.data.sql, "dlDataUrlText.txt", "text/plain");
+                /*    this.$router.push({ name: 'userIndexFlow'});*/
                 }
                     if(response.status === 200 && this.releaseInfo.isApproved === "N") {
                         toast.success("驳回成功！");

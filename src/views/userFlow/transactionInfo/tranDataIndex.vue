@@ -5,7 +5,8 @@
         <v-toolbar-side-icon></v-toolbar-side-icon>
           <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn color="write" @click="printDown()" flat>导出</v-btn>
+          <v-btn color="write" @click="printDown()" flat>打印</v-btn>
+          <v-btn color="write" @click="downLoad()" flat>导出</v-btn>
       </v-toolbar>
       <v-flex md8 lg8>
         <!--<tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>-->
@@ -233,11 +234,13 @@
   import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
   import tranCheckFlowInfo from './tranCheckFlowInfo'
   import tranReleaseFlowInfo from './tranReleaseFlowInfo'
+
   import { getDiffList } from "@/api/url/prodInfo";
   import {PrintInfo} from '@/utils/print/print'
   import {getColumnDesc_} from '@/utils/columnDesc'
   import DcTextField from '@/components/widgets/DcTextField'
   import { getProdData } from "@/api/prod";
+  import download2 from '@/utils/download2';
     import toast from '@/utils/toast';
     import {
         tranFlowInfo
@@ -352,6 +355,15 @@ import {
                     }
                 }
             },
+            downLoad() {
+                this.releaseInfo['downLoad']=false;
+                    tranFlowRelease(this.releaseInfo).then(response => {
+                            if (response.status === 200) {
+                                toast.success("sql导出成功！");
+                                download2.download(response.data.data.sql, "dlDataUrlText.txt", "text/plain");
+                            }
+                        })
+            },
             getDate() {
                 var date = new Date();
                 var year = date.getFullYear();
@@ -380,13 +392,15 @@ import {
                     })
                 }
                 if(this.optKey === 4){
+                    this.releaseInfo['downLoad']=true;
                     this.confirmInfo = this.releaseInfo
                     if(this.confirmInfo.isApproved !== "Y"){
                         this.confirmInfo.isApproved = "N"
                     }
                     tranFlowRelease(this.confirmInfo).then(response => {
                         if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
-                            toast.success("复核成功！");
+
+                            toast.success("发布成功！");
                             this.$router.push({ name: 'userIndexFlow'});
                         }
                         if(response.status === 200 && this.confirmInfo.isApproved === "N") {
