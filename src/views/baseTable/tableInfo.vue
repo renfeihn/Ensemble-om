@@ -4,6 +4,7 @@
             <a-button type="primary" @click="onAdd">新增</a-button>
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
             <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
+            <a-button type="primary" @click="onSave" class="ml-2">提交</a-button>
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
@@ -92,6 +93,9 @@
             },
             changeTable() {
                 this.tbd.style = '';
+            },
+            onSave() {
+                
             },
             editAction(option, editSelected) {
                 this.dialog = false;
