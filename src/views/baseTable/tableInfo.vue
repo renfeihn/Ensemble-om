@@ -23,7 +23,14 @@
 <script>
     import EditTableInfo from './editTableInfo'
     import {getParamTable} from "@/api/url/prodInfo";
+    import toast from '@/utils/toast';
+
+    import {
+        savaProdInfo
+    } from '@/api/url/prodInfo';
     import {remove} from '@/utils/util'
+    import {filterTableChangeData} from "@/server/filterTableChangeData";
+
     export default {
         components: {
             EditTableInfo
@@ -31,6 +38,7 @@
         data () {
             return {
                 dataInfo: [],
+                sourceDataInfo: [],
                 disabledFlag: false,
                 prodType: '',
                 open: true,
@@ -40,7 +48,8 @@
                 option: '',
                 selectedRowKeys: [],
                 selected: {},
-                columns: []
+                columns: [],
+                backValue: {}
             };
         },
         mounted: function () {
@@ -53,8 +62,21 @@
                 let that = this;
                 getParamTable("MB_PROD_TYPE").then(function (response) {
                     that.dataInfo = response.data.data.columnInfo;
+                    that.sourceDataInfo = that.copy(that.dataInfo,that.sourceDataInfo)
                     that.columns = response.data.data.column;
                 });
+            },
+            copy(obj1,obj2) {
+                var obj = obj2||{};
+                for(let name in obj1){
+                    if(typeof obj1[name] === "object" && obj1[name]!== null){
+                        obj[name]= (obj1[name].constructor===Array)?[]:{};
+                        this.copy(obj1[name],obj[name]);
+                    }else{
+                        obj[name]=obj1[name];
+                    }
+                }
+                return obj;
             },
             customRow (record) {
                 return {
@@ -95,7 +117,17 @@
                 this.tbd.style = '';
             },
             onSave() {
-                
+                console.log("ssss")
+                let test  =this.dataInfo
+                this.backValue.data = filterTableChangeData(this.columns,this.dataInfo,this.sourceDataInfo)
+                this.backValue.tableName = "MB_PROD_TYPE"
+                this.backValue.userName = sessionStorage.getItem("userId")
+                savaProdInfo(this.backValue).then(response => {
+                    if(response.status === 200){
+                        toast.success("提交成功！");
+                    }
+                })
+
             },
             editAction(option, editSelected) {
                 this.dialog = false;
