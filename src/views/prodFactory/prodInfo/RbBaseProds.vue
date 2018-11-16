@@ -234,8 +234,8 @@
                 this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
                 this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
                 this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
-                this.depositList = this.dealEventPart(reProd,"DEP",this.prodCode)
-                this.drawList = this.dealEventPart(reProd,"WTD",this.prodCode)
+                this.depositList = this.dealEventPart(reProd,"DEBT",this.prodCode)
+                this.drawList = this.dealEventPart(reProd,"CRET",this.prodCode)
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
