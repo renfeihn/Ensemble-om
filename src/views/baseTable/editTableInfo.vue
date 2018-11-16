@@ -80,11 +80,6 @@
                         }
                         const dataSource = columnInfo;
                         let column = dataSource[key];
-                        if(column.columnType=='select'&&column.valueMethod=='RF'&&!(column.valueScore instanceof Array)){
-                            getPkList(column.valueScore,response => {
-                                column.valueScore=response
-                            });
-                        }
                         if (column != undefined && column != 'undefined'){
                             column['value']=value
                             locSelected[key]=column;

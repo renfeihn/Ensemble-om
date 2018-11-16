@@ -38,6 +38,7 @@
     import Multiselect from "vue-multiselect";
     import DcNavbar from './DcNavbar'
     import {findChildProd} from "@/api/url/prodInfo";
+    import {getPkList} from '@/views/prodFactory/prodInfo/pkListColumnInfo'
     import warnDialog from '@/views/prodFactory/prodInfo/baseProd/warnDialog';
     export default {
         components: { Multiselect ,DcNavbar ,warnDialog},
@@ -210,6 +211,12 @@
                     if(this._props.msg.optionPermissions!==undefined){
                         this.optionPermissions= this._props.msg.optionPermissions
                     }
+                }
+                if(this._props.options!==undefined&&!(typeof this._props.options === 'object' && !isNaN(this._props.options.length))){
+                    getPkList(this._props.options,response => {
+                        this._props.options=response
+                    });
+                    this._props.options=[];
                 }
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';

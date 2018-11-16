@@ -46,8 +46,8 @@ const Menu = [
       { name: 'RB101', title: '活期产品组', component: 'prod/rbPrivateProds' },
       { name: 'RB200', title: '对公存款组', component: 'prod/rbPublicProd' },
       { name: 'RB300', title: '同业存款组', component: 'prod/rbHorizontalProd' },
-        { name: 'RB101', title: '存款可售产品', component: 'RbSoldProds' },
-      { name: 'RB100', title: '存款基础产品', component: 'RbBaseProds' },
+        { name: '10001001', title: '存款可售产品', component: 'RbSoldProds' },
+      { name: '10001', title: '存款基础产品', component: 'RbBaseProds' },
     ]
   },
   {

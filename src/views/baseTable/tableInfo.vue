@@ -23,6 +23,7 @@
 <script>
     import EditTableInfo from './editTableInfo'
     import {getParamTable} from "@/api/url/prodInfo";
+    import {saveTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
 
     import {
@@ -117,12 +118,12 @@
                 this.tbd.style = '';
             },
             onSave() {
-                console.log("ssss")
                 let test  =this.dataInfo
                 this.backValue.data = filterTableChangeData(this.columns,this.dataInfo,this.sourceDataInfo)
                 this.backValue.tableName = "MB_PROD_TYPE"
+                this.backValue.option = "save"
                 this.backValue.userName = sessionStorage.getItem("userId")
-                savaProdInfo(this.backValue).then(response => {
+                saveTable(this.backValue).then(response => {
                     if(response.status === 200){
                         toast.success("提交成功！");
                     }

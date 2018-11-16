@@ -193,3 +193,10 @@ export function getTableList (params) {
         params: { system: params}
     })
 }
+export function saveTable (params) {
+    return request({
+        url: '/saveTable',
+        method: 'post',
+        data: params
+    })
+}
