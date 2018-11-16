@@ -29,48 +29,38 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
             keySet[columns[k].dataIndex] = columns[k].dataIndex
         }
     }
+    var paraOpt = "0"
     for(let i=0; i<newData.length; i++){
-        let paraOpt = ""
-        let ttt = "1"
+        paraOpt = "0"
         for(let j=0; j<oldData.length; j++){
             let keySem = 0  //0-主键相同匹配到数据  1-存在不相同主键匹配失败
             for(let l in keySet){
                 if(newData[i][l] === oldData[j][l]){
                     //主键相同
                     keySem = keySem +1
+                    paraOpt = "1"
                 }
             }
             let arr = Object.keys(keySet)
             if(keySem === arr.length) {
                 tableDeal(i, j, newData, oldData, backValue, delFlag)
-            }
-            //匹配到最后一条数据
-            if(keySem === 0 && j === oldData.length){
-                //未匹配到主键参数
-                if(delFlag === "0"){
-                    //新增参数
-                    paraOpt = "I"
-                }
-                if(delFlag === "1"){
-                    //删除参数
-                    paraOpt = "D"
-                }
+                break
             }
         }
         //数据组装
-        if(paraOpt === "I"){
+        if(delFlag === "0" && paraOpt === "0"){
             let temp = {}
             temp["newData"] = newData[i]
             temp["oldData"] = {}
-            temp["optType"] = paraOpt
+            temp["optType"] = "I"
             backValue[backValue.length] = temp
 
         }
-        if(paraOpt === "D"){
+        if(delFlag === "1" && paraOpt === "0"){
             let temp = {}
             temp["newData"] = {}
             temp["oldData"] = newData[i]
-            temp["optType"] = paraOpt
+            temp["optType"] = "D"
             backValue[backValue.length] = temp
         }
     }
