@@ -1216,4 +1216,18 @@ import(
     '@/views/baseTable/tableInfo.vue'
 )
 },
+{
+    path: '/userManagementIndex',
+        meta: {
+    breadcrumb: true,
+        title: '用户权限管理'
+},
+    name: 'userManagementIndex',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/userFlow/userManagement/userManagementIndex.vue'
+)
+},
 ];

@@ -79,7 +79,7 @@ export default {
         href: "#",
         title: "Settings",
         click: e => {
-          console.log(e);
+            window.getApp.$emit("APP_USER_MANAGEMENT");
         }
       },
       {

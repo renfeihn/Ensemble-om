@@ -16,6 +16,12 @@ export default [
       this.$router.replace({ path: '/login' });
     }
   },
+    {
+        name: 'APP_USER_MANAGEMENT',
+        callback: function (e) {
+            this.$router.replace({ path: '/userManagementIndex' });
+        }
+    },
   {
     name: 'APP_PAGE_LOADED',
     callback: function (e) {
