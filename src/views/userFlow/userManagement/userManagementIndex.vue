@@ -2,7 +2,7 @@
     <v-layout align-center>
         <v-item-group
                 v-model="window"
-                class="shrink mr-4 ml-1"
+                class="shrink ml-1"
                 mandatory
                 tag="v-flex"
         >
@@ -104,7 +104,7 @@
         height: 30px;
         display: block;
         margin-top: 15px;
-        color: #E0E0E0;
+        color: #757575;
     }
     .spanItemSelected {
         height: 30px;

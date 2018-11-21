@@ -30,7 +30,7 @@
     <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
       <v-btn icon large flat slot="activator">
         <v-avatar size="30px">
-          <img src="/static/avatar/man_4.jpg" alt="Michael Wang" />
+          <img src="/static/avatar/timg.jpg" alt="Michael Wang" />
         </v-avatar>
       </v-btn>
       <v-list class="pa-0">
@@ -69,7 +69,7 @@ export default {
       {
         icon: "account_circle",
         href: "#",
-        title: "Profile",
+        title: "个人设置",
         click: e => {
           console.log(e);
         }
@@ -77,7 +77,7 @@ export default {
       {
         icon: "settings",
         href: "#",
-        title: "Settings",
+        title: "权限管理",
         click: e => {
             window.getApp.$emit("APP_USER_MANAGEMENT");
         }
@@ -85,7 +85,7 @@ export default {
       {
         icon: "fullscreen_exit",
         href: "#",
-        title: "Logout",
+        title: "登出",
         click: e => {
           window.getApp.$emit("APP_LOGOUT");
         }
