@@ -1217,17 +1217,33 @@ import(
 )
 },
 {
-    path: '/userManagementIndex',
+    path: '/systemManageIndex',
         meta: {
     breadcrumb: true,
-        title: '用户权限管理'
+        title: '系统管理'
 },
-    name: 'userManagementIndex',
+    name: 'systemManageIndex',
         component: () =>
 import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    '@/views/userFlow/userManagement/userManagementIndex.vue'
+    '@/views/systemManage/systemManageIndex.vue'
 )
 },
+
+{
+    path: '/permManageIndex',
+        meta: {
+    breadcrumb: true,
+        title: '权限管理'
+},
+    name: 'permManageIndex',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/permManage/permManageIndex.vue'
+)
+},
+
 ];

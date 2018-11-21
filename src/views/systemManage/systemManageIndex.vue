@@ -1,36 +1,20 @@
 <template>
     <v-layout align-center>
-        <v-item-group
-                v-model="window"
-                class="shrink ml-1"
-                mandatory
-                tag="v-flex"
-        >
-            <v-item
-                    v-for="n in userManagement"
-                    :key="n.index"
-            >
+        <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
+            <v-item v-for="n in userManagement" :key="n.index">
                 <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span v-if="n.index=='title'" >Personal settings </span>
+                    <span v-if="n.index=='title'" >System manage </span>
                     <span v-else @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
                 </div>
             </v-item>
         </v-item-group>
 
         <v-flex>
-            <v-window
-                    v-model="window"
-                    class="elevation-1"
-                    vertical
-            >
-                <v-window-item
-                        v-for="n in userManagement"
-                        :key="n.index"
-                >
+            <v-window v-model="window" class="elevation-1" vertical>
+                <v-window-item v-for="n in userManagement" :key="n.index">
                     <v-card flat>
                         <v-card-text>
                             <v-layout align-center mb-3>
-
                                 <strong class="title">{{ n.text }}</strong>
                                 <v-spacer></v-spacer>
                                 <v-btn icon>
@@ -46,18 +30,19 @@
     </v-layout>
 </template>
 <script>
-    import UserList from './userList'
+    import UserList from './tables/menuManage'
     export default {
         components: {
             UserList
         },
         data: () => ({
             userManagement: [
-                {text: '用户权限管理',index: 'title', class: 'windowTitle', classSpan: 'spanItem'},
-                {text: '用户权限管理',index: 'userPower', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '菜单权限管理',index: 'menuPower', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '产品级别管理',index: 'prodManagement', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '参数表级别管理',index: 'tableManagement', class: 'windowItem', classSpan: 'spanItem'}
+                {text: '菜单管理',index: 'title', class: 'windowTitle', classSpan: 'spanItem'},
+                {text: '菜单管理',index: 'menuPower', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '角色管理',index: 'userPower', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '角色菜单授权',index: 'prodManagement', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '用户管理',index: 'userPower', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '用户角色管理',index: 'tableManagement', class: 'windowItem', classSpan: 'spanItem'}
                 ],
             window: 0,
             windowItem: 'windowItem',

@@ -38,7 +38,7 @@
           <v-list-tile-action v-if="item.icon">
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>
+          <v-list-tile-content style="margin-left: -20px">
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -77,11 +77,19 @@ export default {
       {
         icon: "settings",
         href: "#",
-        title: "权限管理",
+        title: "系统管理",
         click: e => {
-            window.getApp.$emit("APP_USER_MANAGEMENT");
+            window.getApp.$emit("APP_SYSTEM_MANAGEMENT");
         }
       },
+        {
+            icon: "settings",
+            href: "#",
+            title: "权限管理",
+            click: e => {
+                window.getApp.$emit("APP_PERM_PERMISSIONS");
+            }
+        },
       {
         icon: "fullscreen_exit",
         href: "#",

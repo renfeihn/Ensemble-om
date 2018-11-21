@@ -17,9 +17,15 @@ export default [
     }
   },
     {
-        name: 'APP_USER_MANAGEMENT',
+        name: 'APP_SYSTEM_MANAGEMENT',
         callback: function (e) {
-            this.$router.replace({ path: '/userManagementIndex' });
+            this.$router.replace({ path: '/systemManageIndex' });
+        }
+    },
+    {
+        name: 'APP_PERM_PERMISSIONS',
+        callback: function (e) {
+            this.$router.replace({ path: '/permManageIndex' });
         }
     },
   {
