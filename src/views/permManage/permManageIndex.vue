@@ -46,7 +46,7 @@
     </v-layout>
 </template>
 <script>
-    import UserList from './tables/paramPermManage'
+    import UserList from './tables/paramPermTables'
     export default {
         components: {
             UserList

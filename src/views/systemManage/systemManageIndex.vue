@@ -30,7 +30,7 @@
     </v-layout>
 </template>
 <script>
-    import UserList from './tables/menuManage'
+    import UserList from './tables/menuTables'
     export default {
         components: {
             UserList
