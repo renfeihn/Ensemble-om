@@ -183,12 +183,14 @@ export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
         newProdMap = prodData.prodType
     }else {
         for (let i in prodData.prodType) {
-            if (prodData.prodType[i] === sourceProdData.prodType[i]) {
-                oldProdMap[i] = sourceProdData.prodType[i]
-            } else {
+            // if (prodData.prodType[i] === sourceProdData.prodType[i]) {
+            //     oldProdMap[i] = sourceProdData.prodType[i]
+            //     newProdMap[i] = prodData.prodType[i]
+            //
+            // } else {
                 newProdMap[i] = prodData.prodType[i]
                 oldProdMap[i] = sourceProdData.prodType[i]
-            }
+            // }
         }
     }
     prodType.newData = Object.assign(prodType.newData,newProdMap)

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout row wrap>
-      <v-toolbar color="blue" dark tabs>
+      <v-toolbar color="blue lighten-2" dark tabs>
         <v-toolbar-side-icon></v-toolbar-side-icon>
           <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -193,19 +193,20 @@
         </v-stepper>
      </v-flex>
       <v-flex xs12 md4 lg4 color: white>
-        <img src="/static/user/MyUser.png" class="imgUserIndexFlow">
-        <v-layout>
-          <v-subheader class="showMsg">{{optDesc}}存款产品</v-subheader>
-        </v-layout>
-        <v-layout>
-          <v-subheader class="showMsg">{{prodType}}-{{prodDesc}}</v-subheader>
-        </v-layout>
-        <v-layout>
-          <v-btn class="btnClass" color="green" dark large @click='confirmClick'>确 认</v-btn>
-        </v-layout>
+        <v-parallax dark src="/static/nature/n5.jpeg" style="height: 100%">
+          <!--<v-layout>-->
+            <!--<v-subheader class="showMsg">{{optDesc}}存款产品</v-subheader>-->
+          <!--</v-layout>-->
+          <v-layout>
+            <v-subheader class="showMsg">{{prodType}}-{{prodDesc}}</v-subheader>
+          </v-layout>
+          <v-layout>
+            <v-btn class="btnClass" color="green" dark large @click='confirmClick'>确 认</v-btn>
+          </v-layout>
+        </v-parallax>
       </v-flex>
     </v-layout>
-    <v-toolbar color="blue" dark tabs>
+    <v-toolbar color="blue lighten-2" dark tabs>
       <v-toolbar-side-icon @click="showClick"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">产品修改差异展示</v-toolbar-title>
     </v-toolbar>
@@ -450,13 +451,15 @@ import {
                 const prodDefine=this.prodData.prodDefine;
                 const prodDefineDiff=this.prodData.diff.prodDefine;
                 const prodType=this.prodData.prodType;
-                const prodDefineData={"prodDefines": prodDefine,"diff": prodDefineDiff,"prodType": prodType};
+                const baseEffectProd = this.prodData.baseEffectProd;
+                const prodDefineData={"prodDefines": prodDefine,"diff": prodDefineDiff,"prodType": prodType,"baseEffectProd": baseEffectProd};
                 this.prodDefineData=prodDefineData;
             },
             assembleEvent(){
                 const prodEvent=this.prodData.prodEvent;
                 const prodEventDiff=this.prodData.diff.mbProdEvent;
                 const prodType=this.prodData.prodType;
+                const baseEffectProd = this.prodData.baseEffectProd;
                 //区分差异
                 const openDiff={}
                 const closeDiff={}
@@ -471,13 +474,13 @@ import {
                     if(diffKey.indexOf('CLOSE')>=0){
                         closeDiff[key]=prodEventDiff[diffKey];
                     }
-                    if(diffKey.indexOf('WTD')>=0){
+                    if(diffKey.indexOf('CRET')>=0){
                         cretDiff[key]=prodEventDiff[diffKey];
                     }
                     if(diffKey.indexOf('CYCLE')>=0){
                         cycleDiff[key]=prodEventDiff[diffKey];
                     }
-                    if(diffKey.indexOf('DEP')>=0){
+                    if(diffKey.indexOf('DEBT')>=0){
                         debtDiff[key]=prodEventDiff[diffKey];
                     }
                 }
@@ -485,19 +488,24 @@ import {
                     const openEvent={"prodDefines": prodEvent[key],"prodType": prodType}
                     if(key.indexOf('OPEN')>=0){
                         openEvent["diff"]=openDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventOpen=openEvent;
                     }else
                     if(key.indexOf('CLOSE')>=0){
                         openEvent["diff"]=closeDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventClose= openEvent
-                    }else if(key.indexOf('WTD')>=0){
+                    }else if(key.indexOf('CRET')>=0){
                         openEvent["diff"]=cretDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventCret= openEvent
                     }else if(key.indexOf('CYCLE')>=0){
                         openEvent["diff"]=cycleDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventCycle= openEvent
-                    }else if(key.indexOf('DEP')>=0){
+                    }else if(key.indexOf('DEBT')>=0){
                         openEvent["diff"]=debtDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventDebt= openEvent
                     }
                 }
@@ -581,13 +589,15 @@ import {
       margin-left: 40%
     }
   .showMsg {
-       color: deepskyblue;
+       color: white;
        font-size: x-large;
        font-style: inherit;
-       margin-left: 30%;
+       margin-left: auto;
+    margin-right: 0px;
+    margin-top: 20%;
      }
     .descClass {
-      color: deepskyblue;
+      color: #64b5f6;
       font-size: large;
       font-style: inherit;
       margin-right: 0px;
@@ -599,7 +609,7 @@ import {
     }
   .btnClass {
     margin-top: 5%;
-    margin-left: 25%;
+    margin-left: 28%;
     width: 50%;
     font-size: large;
   }

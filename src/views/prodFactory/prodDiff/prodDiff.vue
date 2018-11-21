@@ -6,12 +6,16 @@
           <v-flex xs12 md5 lg5>
             <v-switch v-model="ex11" label="隐藏未修改参数" color="success" value="Y" hide-details class="prodDiffSwitch"></v-switch>
           </v-flex>
-          <v-flex xs12 md4 lg4>
-            <v-toolbar-title>修改前参数值</v-toolbar-title>
+          <v-parallax dark src="/static/bg/18.jpg" style="width: 37%;height: 60px;margin-left: -6%">
+            <v-flex xs12 md4 lg4>
+            <v-toolbar-title>NEW</v-toolbar-title>
           </v-flex>
-          <v-flex xs12 md3 lg3>
-            <v-toolbar-title>修改后参数值</v-toolbar-title>
-          </v-flex>
+          </v-parallax>
+          <v-parallax dark src="/static/bg/13.jpg" style="width: 37%;height: 60px;margin-left: 5px;margin-right: -2%">
+            <v-flex xs12 md3 lg3>
+              <v-toolbar-title>OLD</v-toolbar-title>
+            </v-flex>
+          </v-parallax>
         </v-layout>
       </v-toolbar>
 
@@ -29,9 +33,29 @@
                         v-else
                         :class="{'tbColor':item.diff}"
                 >
+
                   <v-list-tile-content>
                     <v-list-tile-title v-html="item.title"></v-list-tile-title>
                   </v-list-tile-content>
+                  <v-tooltip bottom color="orange lighten-1" v-if="prodRange == 'B' && item.isBase == true">
+                    <v-btn round color="blue" dark style="height: 100%;font-size: small" slot="activator">
+                      影响范围
+                    </v-btn>
+                    <span>
+                        <v-list style="background-color: orange">
+                          <template v-for="(item, index) in baseEffectProd" >
+                                <v-list-tile-title v-html="item.prodType+'--  '+item.prodDesc" style="color: white; font-size: small"></v-list-tile-title>
+                          </template>
+                        </v-list>
+                    </span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom color="orange" v-if="item.perm !== undefined">
+                    <v-btn flat icon="edit" slot="activator">
+                      <v-icon :color="item.color">{{item.perm}}</v-icon>
+                    </v-btn>
+                    <span>{{item.desc}}</span>
+                  </v-tooltip>
                 </v-list-tile>
               </template>
             </v-list>
@@ -53,6 +77,32 @@ export default {
     return {
       ex11: "",
       onlyDiff: 'Y',
+        ee: "ww",
+        prodRange: "",
+        show: 0,
+        optPerm: {
+            E: {
+                icon: "edit",
+                color: "blue",
+                desc: "可编辑"
+            },
+            N: {
+                icon: "no_sim",
+                color: "orange",
+                desc: "不可编辑"
+            },
+            V: {
+                icon: "visibility_off",
+                color: "green",
+                desc: "不可见"
+            },
+            D: {
+                icon: "delete",
+                color: "red",
+                desc: "删除"
+            }
+      },
+        baseEffectProd: {},
       prodDiffData: [
         {
           prodType: "",
@@ -139,12 +189,17 @@ export default {
   methods: {
     queryDespositProdData() {
        let data= this.$props.prodData;
-          this.assemblingDiff(data);
+        this.assemblingDiff(data);
     },
     assemblingDiff(prodService){
         const prodDefines=prodService.prodDefines;
         let prodDiff=prodService.diff;
         const prodType=prodService.prodType;
+        const baseEffectProd = prodService.baseEffectProd
+        if(baseEffectProd !== undefined) {
+            this.baseEffectProd = prodService.baseEffectProd
+            this.prodRange = baseEffectProd[prodType].prodRange
+        }
         if(prodDiff==undefined){
             prodDiff={};
         }
@@ -155,14 +210,20 @@ export default {
       //产品下属性组合
        if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}"){
        for(let index in prodDefines){
+
            let prodDefine=prodDefines[index];
            let attrKey=prodDefine.attrKey;
            let attrValue=prodDefine.attrValue;
            if(attrKey==undefined){
                attrKey=index;
-               attrValue=prodDefine;
+               attrValue=prodDefine.attrValue;
            }
            let diff=prodDiff[attrKey];
+           let optPerm = ""
+           if(diff !== undefined){
+               diff = prodDiff[attrKey].attrValue
+               optPerm = prodDiff[attrKey].optionPermissions
+           }
            if(diff==null||diff==undefined){
             diff=attrValue;
            }
@@ -170,18 +231,34 @@ export default {
            if(diff != attrValue){
                  columnOld.push({title: attrValue,diff: true});
                  columnNew.push({title: diff,diff: true});
-                 columnDesc.push({title: keyDesc,diff: true});
+                 if(this.prodRange === "B"){
+                     columnDesc.push({title: keyDesc,diff: true,isBase: true});
+                 }else {
+                     columnDesc.push({title: keyDesc, diff: true});
+                 }
            }else{
-                 columnOld.push({title: attrValue});
-                 columnNew.push({title: diff});
-                 columnDesc.push({title: keyDesc});
+                   columnOld.push({title: attrValue});
+                   columnNew.push({title: diff});
+                   columnDesc.push({title: keyDesc});
            }
-
+           //参数状态位处理
+           if(optPerm !== "" && optPerm !== prodDefine.optionPermissions){
+               let oldPerm = optPerm
+               let newPerm = prodDefine.optionPermissions
+               columnNew.push({title: attrValue,diff: true,perm: this.optPerm[oldPerm].icon,color: this.optPerm[oldPerm].color,desc: this.optPerm[oldPerm].desc});
+               columnOld.push({title: diff,diff: true,perm: this.optPerm[newPerm].icon,color: this.optPerm[newPerm].color,desc: this.optPerm[newPerm].desc});
+               if(this.prodRange === "B"){
+                   columnDesc.push({title: keyDesc,diff: true,isBase: true});
+               }else {
+                   columnDesc.push({title: keyDesc,diff: true});
+               }
+           }
            columnDesc.push({ divider: true, inset: true });
            columnOld.push({ divider: true, inset: true });
            columnNew.push({ divider: true, inset: true });
        }
-       }else{
+       }
+       else{
                 for(let index in prodDiff){
                       let desc= index.substring(index.lastIndexOf('.')+1);
                       columnDesc.push({title: desc});
@@ -220,6 +297,7 @@ export default {
 }
 .prodDiffSwitch {
   display: inline-block;
+  margin-top: 4%;
 }
 .prodDiffButton {
   float: right;
