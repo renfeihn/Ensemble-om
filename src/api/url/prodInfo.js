@@ -207,3 +207,18 @@ export function getMenuList (params) {
         data: params
     })
 }
+export function getSysTable (params) {
+    return request({
+        url: '/getSysTable',
+        method: 'post',
+        params: { tableName: params}
+    })
+}
+
+export function saveSysTable (params) {
+    return request({
+        url: '/saveSysTable',
+        method: 'post',
+        data: params
+    })
+}

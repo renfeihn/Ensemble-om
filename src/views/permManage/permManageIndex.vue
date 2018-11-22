@@ -1,43 +1,19 @@
 <template>
     <v-layout align-center>
-        <v-item-group
-                v-model="window"
-                class="shrink ml-1"
-                mandatory
-                tag="v-flex"
-        >
-            <v-item
-                    v-for="n in userManagement"
-                    :key="n.index"
-            >
+        <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
+            <v-item v-for="n in userManagement" :key="n.index">
                 <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span v-if="n.index=='title'" >Permissions manage </span>
-                    <span v-else @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
+                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
                 </div>
             </v-item>
         </v-item-group>
-
         <v-flex>
-            <v-window
-                    v-model="window"
-                    class="elevation-1"
-                    vertical
-            >
-                <v-window-item
-                        v-for="n in userManagement"
-                        :key="n.index"
-                >
+            <v-window v-model="window" class="elevation-1" vertical>
+                <v-window-item v-for="n in userManagement" :key="n.index">
                     <v-card flat>
                         <v-card-text>
-                            <v-layout align-center mb-3>
-
-                                <strong class="title">{{ n.text }}</strong>
-                                <v-spacer></v-spacer>
-                                <v-btn icon>
-                                    <v-icon>mdi-account</v-icon>
-                                </v-btn>
-                            </v-layout>
-                            <user-list></user-list>
+                            <prod-perm v-bind:title="n.text" v-if="n.index == 'prod'"></prod-perm>
+                            <param-perm v-bind:title="n.text" v-if="n.index == 'param'"></param-perm>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -46,17 +22,19 @@
     </v-layout>
 </template>
 <script>
-    import UserList from './tables/paramPermTables'
+    import ParamPerm from './tables/paramPermTables'
+    import ProdPerm from './tables/prodPermTables'
+
     export default {
         components: {
-            UserList
+            ParamPerm,
+            ProdPerm
         },
         data: () => ({
             userManagement: [
-                {text: '产品权限管理',index: 'title', class: 'windowTitle', classSpan: 'spanItem'},
-                {text: '产品权限管理',index: 'prodManagement', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '参数权限管理',index: 'tableManagement', class: 'windowItem', classSpan: 'spanItem'}
-                ],
+                {text: '产品工厂权限管理',index: 'prod', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '参数配置权限权利',index: 'param', class: 'windowItem', classSpan: 'spanItem'},
+            ],
             window: 0,
             windowItem: 'windowItem',
             windowTitle: 'windowTitle',

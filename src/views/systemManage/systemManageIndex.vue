@@ -3,25 +3,20 @@
         <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
             <v-item v-for="n in userManagement" :key="n.index">
                 <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span v-if="n.index=='title'" >System manage </span>
-                    <span v-else @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
+                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
                 </div>
             </v-item>
         </v-item-group>
-
         <v-flex>
             <v-window v-model="window" class="elevation-1" vertical>
                 <v-window-item v-for="n in userManagement" :key="n.index">
                     <v-card flat>
                         <v-card-text>
-                            <v-layout align-center mb-3>
-                                <strong class="title">{{ n.text }}</strong>
-                                <v-spacer></v-spacer>
-                                <v-btn icon>
-                                    <v-icon>mdi-account</v-icon>
-                                </v-btn>
-                            </v-layout>
-                            <user-list></user-list>
+                            <menu-tables v-bind:title="n.text" v-if="n.index == 'menu'"></menu-tables>
+                            <role-tables v-bind:title="n.text" v-if="n.index == 'role'"></role-tables>
+                            <user-tables v-bind:title="n.text" v-if="n.index == 'user'"></user-tables>
+                            <role-menu v-bind:title="n.text" v-if="n.index == 'roleMenu'"></role-menu>
+                            <user-role v-bind:title="n.text" v-if="n.index == 'userRole'"></user-role>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -30,20 +25,28 @@
     </v-layout>
 </template>
 <script>
-    import UserList from './tables/menuTables'
+    import MenuTables from './tables/menuTables'
+    import RoleTables from './tables/roleTables'
+    import UserTables from './tables/userTables'
+    import RoleMenu from './tables/roleMenuRelationTables'
+    import UserRole from './tables/userRoleRelationTables'
+
     export default {
         components: {
-            UserList
+            MenuTables,
+            RoleTables,
+            UserTables,
+            RoleMenu,
+            UserRole
         },
         data: () => ({
             userManagement: [
-                {text: '菜单管理',index: 'title', class: 'windowTitle', classSpan: 'spanItem'},
-                {text: '菜单管理',index: 'menuPower', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '角色管理',index: 'userPower', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '角色菜单授权',index: 'prodManagement', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '用户管理',index: 'userPower', class: 'windowItem', classSpan: 'spanItem'},
-                {text: '用户角色管理',index: 'tableManagement', class: 'windowItem', classSpan: 'spanItem'}
-                ],
+                {text: '菜单管理',index: 'menu', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '角色管理',index: 'role', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '角色菜单授权',index: 'roleMenu', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '用户管理',index: 'user', class: 'windowItem', classSpan: 'spanItem'},
+                {text: '用户角色管理',index: 'userRole', class: 'windowItem', classSpan: 'spanItem'}
+            ],
             window: 0,
             windowItem: 'windowItem',
             windowTitle: 'windowTitle',
