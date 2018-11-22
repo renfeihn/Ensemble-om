@@ -9,7 +9,7 @@
                 <td>保存</td>
             </v-btn>
             <v-dialog v-model="dialog" max-width="500px">
-                <v-btn round slot="activator" color="blue" dark>
+                <v-btn round slot="activator" color="blue" dark @click="addClick">
                     <v-icon>add</v-icon>
                     <td>添加</td>
                 </v-btn>
@@ -21,14 +21,14 @@
                     <v-card-text style="margin-top: -10%">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
                                     <v-text-field v-model="editedItem.roleId" label="角色ID"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                    <v-text-field v-model="editedItem.roleId" label="角色ID" disabled></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.roleName" label="角色名称"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.roleDesc" label="角色描述"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -47,12 +47,9 @@
                 <td>{{ props.item.roleName }}</td>
                 <td>{{ props.item.roleDesc }}</td>
                 <td>
-                    <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-                    <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+                    <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
+                    <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
                 </td>
-            </template>
-            <template slot="no-data">
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>
         </v-data-table>
     </div>
@@ -67,6 +64,8 @@
     export default {
         props: ["title"],
         data: () => ({
+            disabled: "false",
+
             dialog: false,
             headers: [
                 { text: '角色ID',sortable: false},
@@ -125,8 +124,12 @@
                 this.editedIndex = this.desserts.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
-            },
+                this.disabled = "true";
 
+            },
+            addClick() {
+                this.disabled = "false"
+            },
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
                 confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)

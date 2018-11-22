@@ -9,7 +9,7 @@
                 <td>保存</td>
             </v-btn>
             <v-dialog v-model="dialog" max-width="500px">
-                <v-btn round slot="activator" color="blue" dark>
+                <v-btn round slot="activator" color="blue" dark @click="addClick">
                     <v-icon>add</v-icon>
                     <td>添加</td>
                 </v-btn>
@@ -20,7 +20,10 @@
                     <v-card-text style="margin-top: -10%">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm6 md6>
+                                <v-flex xs12 sm6 md6 v-if="disabled=='true'">
+                                    <v-text-field v-model="editedItem.menuSeqNo" label="菜单序号" disabled></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md6 v-if="disabled=='false'">
                                     <v-text-field v-model="editedItem.menuSeqNo" label="菜单序号"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
@@ -67,12 +70,9 @@
                 <td>{{ props.item.menuIcon }}</td>
                 <td>{{ props.item.menuComponent }}</td>
                 <td>
-                    <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-                    <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+                    <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
+                    <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
                 </td>
-            </template>
-            <template slot="no-data">
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>
         </v-data-table>
     </div>
@@ -88,6 +88,7 @@
         props: ["title"],
         data: () => ({
             dialog: false,
+            disabled: "false",
             headers: [
                 {text: '菜单序号'},
                 {text: '菜单ID',sortable: false,size: "medium"},
@@ -161,6 +162,10 @@
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },
+            addClick() {
+              this.disabled = "false"
+            },
+
             initParentRef() {
                 let temp = {}
                 let that = this
@@ -175,8 +180,8 @@
                 this.editedIndex = this.desserts.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
+                this.disabled = "true";
             },
-
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
                 confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)

@@ -9,7 +9,7 @@
                 <td>保存</td>
             </v-btn>
             <v-dialog v-model="dialog" max-width="500px">
-                <v-btn round slot="activator" color="blue" dark>
+                <v-btn round slot="activator" color="blue" dark @click="addClick">
                     <v-icon>add</v-icon>
                     <td>添加</td>
                 </v-btn>
@@ -20,13 +20,22 @@
                     <v-card-text style="margin-top: -10%">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                    <v-select v-model="editedItem.userId" label="用户名称" :items="user" item-text="value" item-value="key" disabled></v-select>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                    <v-select v-model="editedItem.systemId" label="系统ID" :items="sys" item-text="value" item-value="key" disabled></v-select>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                    <v-select v-model="editedItem.modelId" label="模块ID" :items="model" item-text="value" item-value="key" disabled></v-select>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
                                     <v-select v-model="editedItem.userId" label="用户名称" :items="user" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
                                     <v-select v-model="editedItem.systemId" label="系统ID" :items="sys" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
                                     <v-select v-model="editedItem.modelId" label="模块ID" :items="model" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
@@ -50,12 +59,9 @@
                 <td>{{ props.item.modelId }}</td>
                 <td>{{ props.item.permLevel }}</td>
                 <td>
-                    <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-                    <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+                    <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
+                    <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
                 </td>
-            </template>
-            <template slot="no-data">
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>
         </v-data-table>
     </div>
@@ -71,6 +77,8 @@
         props: ["title"],
         data: () => ({
             dialog: false,
+            disabled: "false",
+
             headers: [
                 { text: '用户名称',sortable: false},
                 { text: '系统ID',sortable: false},
@@ -139,6 +147,9 @@
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },
+            addClick() {
+                this.disabled = "false"
+            },
             initParentRef() {
                 let temp = {}
                 let that = this
@@ -153,6 +164,8 @@
                 this.editedIndex = this.desserts.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
+                this.disabled = "true";
+
             },
 
             deleteItem (item) {

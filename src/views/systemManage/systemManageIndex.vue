@@ -3,7 +3,7 @@
         <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
             <v-item v-for="n in userManagement" :key="n.index">
                 <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
+                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5" style="width: 100%">{{n.text}}</span>
                 </div>
             </v-item>
         </v-item-group>

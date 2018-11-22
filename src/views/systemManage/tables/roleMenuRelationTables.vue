@@ -23,7 +23,7 @@
                                 <v-flex xs12 sm12 md12>
                                     <v-select v-model="editedItem.roleId" label="角色ID" :items="roleRef" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs12 sm12 md12 >
                                     <v-select v-model="editedItem.menuId" label="菜单ID" :items="muneRef" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                             </v-layout>
@@ -42,11 +42,8 @@
                 <td>{{ props.item.roleId }}</td>
                 <td>{{ props.item.menuId }}</td>
                 <td>
-                    <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+                    <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
                 </td>
-            </template>
-            <template slot="no-data">
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>
         </v-data-table>
     </div>
