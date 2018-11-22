@@ -74,6 +74,7 @@
 <script>
 import { Menu } from "@/api/menu";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import {getMenuList} from "@/api/url/prodInfo";
 export default {
   name: "app-drawer",
   components: {
@@ -113,6 +114,9 @@ export default {
       //this.drawer = !this.drawer;
       this.mini = !this.mini;
     });
+      getMenuList({userId: sessionStorage.getItem("userId")}).then(response => {
+          this.menus=response.data.data;
+      })
   },
 
   methods: {
@@ -131,14 +135,13 @@ export default {
 </script>
 
 
-<style lang="stylus">
-// @import '../../node_modules/vuetify/src/stylus/settings/_elevations.styl';
+<style lang="stylus" scoped>
 #appDrawer {
   overflow: hidden;
-
+}
   .drawer-menu--scroll {
     height: calc(100vh - 48px);
     overflow: auto;
   }
-}
+
 </style>

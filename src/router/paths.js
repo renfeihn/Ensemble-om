@@ -1230,7 +1230,6 @@ import(
     '@/views/systemManage/systemManageIndex.vue'
 )
 },
-
 {
     path: '/permManageIndex',
         meta: {
@@ -1245,5 +1244,18 @@ import(
     '@/views/permManage/permManageIndex.vue'
 )
 },
-
+    {
+        path: '/userInfoIndex',
+        meta: {
+            breadcrumb: true,
+            title: '用户信息管理'
+        },
+        name: 'userInfoIndex',
+        component: () =>
+            import(
+                /* webpackChunkName: "routes" */
+                /* webpackMode: "lazy-once" */
+                '@/views/userFlow/userManagement/userInfoIndex.vue'
+                )
+    },
 ];

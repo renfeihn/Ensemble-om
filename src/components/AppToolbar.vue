@@ -71,7 +71,7 @@ export default {
         href: "#",
         title: "个人设置",
         click: e => {
-          console.log(e);
+            window.getApp.$emit("APP_USER_INFO_MANAGEMENT");
         }
       },
       {

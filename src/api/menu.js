@@ -1,115 +1,93 @@
 const Menu = [
-  { header: 'Apps' },
+  { header: 'Apps',menuId: '1' },
   {
     title: '首页',
-    group: 'apps',
     icon: 'home',
     name: 'Dashboard',
+      menuId: '10'
+  },
+  {
+      title: '我的工作台',
+      name: 'userIndexFlow',
+      icon: 'assistant',
+      menuId: '11'
   },
   {
     title: '产品目录',
-    group: 'apps',
     icon: 'widgets',
     name: 'prodCmbs',
-  },
-  {
-    title: '我的工作台',
-    group: 'apps',
-    name: 'userIndexFlow',
-    icon: 'assistant'
+      menuId: '12'
   },
   {
     title: '我收藏的产品',
     group: 'apps',
     name: 'MyProd',
-    icon: 'favorite_border'
+    icon: 'favorite_border',
+      menuId: '13'
   },
-  { header: '网贷管理端' },
+  { header: '网贷管理端' ,menuId: '2'},
   {
       title: '合作方信息管理',
-      group: 'components',
-      component: 'components',
+
       icon: 'account_balance',
+      menuId: '20',
       items: [
-          { name: 'partner', title: '合作方签约', component: 'partner/partnerMain' },
-          { name: 'RB200', title: '合作方解约', component: 'prod/rbPublicProd' },
-          { name: 'RB300', title: '合作方信息维护', component: 'prod/rbHorizontalrod' },
+          { name: 'partner', title: '合作方签约', component: 'partner/partnerMain', menuId: '201'},
+          { name: 'RB200', title: '合作方解约', component: 'prod/rbPublicProd', menuId: '202'},
+          { name: 'RB300', title: '合作方信息维护', component: 'prod/rbHorizontalrod', menuId: '203'},
       ]
   },
-  { header: '产品工厂' },
+  { header: '产品工厂', menuId: '3'},
   {
     title: '存款产品',
-    group: 'components',
-    component: 'components',
+
     icon: 'account_balance',
+    menuId: '30',
     items: [
-      { name: 'RB101', title: '活期产品组', component: 'prod/rbPrivateProds' },
-      { name: 'RB200', title: '对公存款组', component: 'prod/rbPublicProd' },
-      { name: 'RB300', title: '同业存款组', component: 'prod/rbHorizontalProd' },
-        { name: '10001001', title: '存款可售产品', component: 'RbSoldProds' },
-      { name: '10001', title: '存款基础产品', component: 'RbBaseProds' },
+      { name: 'RB101', title: '活期产品组', component: 'prod/rbPrivateProds', menuId: '301'},
+      { name: 'RB200', title: '对公存款组', component: 'prod/rbPublicProd', menuId: '302'},
+      { name: 'RB300', title: '同业存款组', component: 'prod/rbHorizontalProd', menuId: '303'},
+        { name: '10001001', title: '存款可售产品', component: 'RbSoldProds', menuId: '304'},
+      { name: '10001', title: '存款基础产品', component: 'RbBaseProds', menuId: '305'},
     ]
   },
   {
     title: '贷款产品',
-    group: 'components',
-    component: 'components',
+
+    menuId: '31',
     icon: 'filter_vintage',
     items: [
-      { name: 'CL100', title: '对私贷款组', component: 'prod/clPrivateProd' },
-      { name: 'CL200', title: '对公贷款组', component: 'prod/clPublicProd' },
-      { name: 'CL300', title: '贴现组', component: 'prod/clDiscountProd' },
-      { name: 'CL400', title: '垫款组', component: 'prod/clAdvancesProd' },
-      { name: 'CL500', title: '委托贷款组', component: 'prod/clEntrustedProd' },
-      { name: 'CL600', title: '银团贷款组', component: 'prod/clSyndicatedProd' },
-      { name: 'CLBASE', title: '贷款基础产品组', component: 'prod/clBaseProd' },
+      { name: 'CL100', title: '对私贷款组', component: 'prod/clPrivateProd', menuId: '311'},
+      { name: 'CL200', title: '对公贷款组', component: 'prod/clPublicProd', menuId: '312'},
+      { name: 'CL300', title: '贴现组', component: 'prod/clDiscountProd', menuId: '313'},
+      { name: 'CL400', title: '垫款组', component: 'prod/clAdvancesProd', menuId: '314'},
+      { name: 'CL500', title: '委托贷款组', component: 'prod/clEntrustedProd', menuId: '315'},
+      { name: 'CL600', title: '银团贷款组', component: 'prod/clSyndicatedProd', menuId: '316'},
+      { name: 'CLBASE', title: '贷款基础产品组', component: 'prod/clBaseProd', menuId: '317'},
     ]
   },
   {
     title: '内部帐产品',
-    group: 'components',
-    component: 'components',
+
     icon: 'work',
+    menuId: '32',
     items: [
-      { name: 'GL100', title: '内部账组', component: 'prod/glInternalProd' },
-      { name: 'GL200', title: '存放同业组', component: 'prod/glToHorizontalProd' },
-      { name: 'GL300', title: '同业存放组', component: 'prod/glPromHorizontalProd' },
-      { name: 'GLBASE', title: '内部账基础产品组', component: 'prod/glBaseProd' },
+      { name: 'GL100', title: '内部账组', component: 'prod/glInternalProd', menuId: '321'},
+      { name: 'GL200', title: '存放同业组', component: 'prod/glToHorizontalProd', menuId: '322'},
+      { name: 'GL300', title: '同业存放组', component: 'prod/glPromHorizontalProd', menuId: '323'},
+      { name: 'GLBASE', title: '内部账基础产品组', component: 'prod/glBaseProd', menuId: '324'},
     ]
   },
-  { header: '参数工厂' },
+  { header: '参数工厂', menuId: '4' },
   {
     title: '参数管理',
-    group: 'components',
-    component: 'components',
+
     icon: 'view_list',
-    items: [
-      { title: '参数管理入口', component: 'tableParentView' },
+    menuId: '40',
+     items: [
+      { title: '参数管理入口', component: 'tableParentView',menuId: '401'},
     ]
   },
-    { header: '权限管理' },
-    {
-        title: '角色菜单管理  ',
-        group: 'components',
-        component: 'components',
-        icon: 'view_list',
-        items: [
-            { name: '404', title: '角色管理', component: 'NotFound' },
-            { name: '404', title: '菜单管理', component: 'propertyManage/muneManage' },
-            { name: '404', title: '角色菜单授权', component: 'NotFound' },
-        ]
-    },
-    {
-        title: '用户管理  ',
-        group: 'components',
-        component: 'components',
-        icon: 'filter_vintage',
-        items: [
-            { name: '404', title: '用户管理', component: 'NotFound' },
-            { name: '404', title: '用户角色授权', component: 'NotFound' },
-
-        ]
-    },
   { divider: true },
   { header: 'Extras' },
   {

@@ -200,3 +200,10 @@ export function saveTable (params) {
         data: params
     })
 }
+export function getMenuList (params) {
+    return request({
+        url: '/getMenuList',
+        method: 'post',
+        data: params
+    })
+}
