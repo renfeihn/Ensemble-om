@@ -8,7 +8,6 @@ import i18n from './lang';
 import 'font-awesome/css/font-awesome.css';
 import './theme/default.styl';
 import VeeValidate from 'vee-validate';
-import colors from 'vuetify/es5/util/colors';
 import VueResource from 'vue-resource'
 import Truncate from 'lodash.truncate';
 import store from './store';
