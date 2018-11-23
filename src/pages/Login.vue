@@ -67,6 +67,7 @@ export default {
           } else {
             this.loading = true;
             sessionStorage.setItem("userId", this.model.userId);
+            sessionStorage.setItem("userLevel", JSON.parse(response.data.data).omUser.userLevel);
             //将用户产品权限放入
               const levelList=JSON.parse(response.data.data).omProdPermDefList;
              for(const index in levelList){
