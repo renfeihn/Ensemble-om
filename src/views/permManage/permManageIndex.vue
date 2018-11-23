@@ -1,5 +1,6 @@
 <template>
     <v-layout align-center>
+        <v-flex xs12 md2 lg2>
         <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
             <v-item v-for="n in userManagement" :key="n.index">
                 <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
@@ -7,8 +8,9 @@
                 </div>
             </v-item>
         </v-item-group>
-        <v-flex>
-            <v-window v-model="window" class="elevation-1" vertical>
+        </v-flex>
+        <v-flex xs12 md10 lg10>
+            <v-window v-model="window" class="elevation-1" vertical style="height: 700px">
                 <v-window-item v-for="n in userManagement" :key="n.index">
                     <v-card flat>
                         <v-card-text>

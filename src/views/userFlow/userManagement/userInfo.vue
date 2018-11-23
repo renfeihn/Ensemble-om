@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form style="width: 100%">
         <v-text-field
                 v-validate="'required|max:10'"
                 v-model="name"

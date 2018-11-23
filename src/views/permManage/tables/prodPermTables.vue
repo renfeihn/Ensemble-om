@@ -33,8 +33,12 @@
                                     <v-select v-model="editedItem.modelType" label="模块信息" :items="model" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.permLevel" label="权限等级"></v-text-field>
+                                    <v-select v-model="editedItem.baseProdLevel" label="基础产品权限设置" :items="permLevel" item-text="value" item-value="key"></v-select>
                                 </v-flex>
+                                <v-flex xs12 sm12 md12>
+                                    <v-select v-model="editedItem.soldProdLevel" label="可售产品权限设置" :items="permLevel" item-text="value" item-value="key"></v-select>
+                                </v-flex>
+
                             </v-layout>
                         </v-container>
                     </v-card-text>
@@ -50,7 +54,8 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.userId }}</td>
                 <td>{{ props.item.modelType }}</td>
-                <td>{{ props.item.permLevel }}</td>
+                <td>{{ props.item.baseProdLevel }}</td>
+                <td>{{ props.item.soldProdLevel }}</td>
                 <td>
                     <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
                     <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
@@ -71,12 +76,25 @@
         data: () => ({
             dialog: false,
             disabled: "false",
-
             headers: [
                 { text: '用户名称',sortable: false},
                 { text: '模块信息',sortable: false},
-                { text: '权限等级',sortable: false },
-                { text: 'Action',sortable: false }
+                { text: '基础产品权限',sortable: false },
+                { text: '可售产品权限',sortable: false }
+            ],
+            permLevel: [
+                {
+                    key: "A",
+                    value: "可编辑可修改查看",
+                },
+                {
+                    key: "E",
+                    value: "可修改查看",
+                },
+                {
+                    key: "V",
+                    value: "查看",
+                }
             ],
             user: [{key: "",value: ""}],
             model: [{key: "RB",value: "存款模块"},{key: "CL",value: "贷款模块"}],
@@ -97,12 +115,14 @@
             editedItem: {
                 userId: '',
                 modelType: '',
-                permLevel: ''
+                baseProdLevel: '',
+                soldProdLevel: ''
             },
             defaultItem: {
                 userId: '',
                 modelType: '',
-                permLevel: ''
+                baseProdLevel: '',
+                soldProdLevel: ''
             },
             backValue: {}
         }),

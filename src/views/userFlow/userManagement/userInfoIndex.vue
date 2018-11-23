@@ -1,20 +1,14 @@
 <template>
-
     <v-card>
         <v-layout row wrap>
             <v-flex md2 lg2>
-                <v-navigation-drawer
-                        v-model="drawer"
-                        permanent
-                        absolute
-                >
+                <v-navigation-drawer v-model="drawer" permanent absolute>
                     <v-toolbar flat class="transparent">
                         <v-list class="pa-0">
                             <v-list-tile avatar>
                                 <v-list-tile-avatar>
                                     <img src="/static/avatar/timg.jpg">
                                 </v-list-tile-avatar>
-
                                 <v-list-tile-content>
                                     <v-list-tile-title>admin</v-list-tile-title>
                                 </v-list-tile-content>
@@ -24,17 +18,10 @@
 
                     <v-list class="pt-0" dense>
                         <v-divider></v-divider>
-
-                        <v-list-tile
-                                v-for="item in items"
-                                :key="item.title"
-                                @click="actionTag(item)"
-                                :class="item.class"
-                        >
+                        <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
                             <v-list-tile-action>
                                 <v-icon>{{ item.icon }}</v-icon>
                             </v-list-tile-action>
-
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                             </v-list-tile-content>

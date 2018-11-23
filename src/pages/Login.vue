@@ -67,7 +67,7 @@ export default {
           } else {
             this.loading = true;
             sessionStorage.setItem("userId", this.model.userId);
-            sessionStorage.setItem("userLevel",JSON.parse( response.data.data).userLevel);
+            sessionStorage.setItem("userLevel",JSON.parse(response.data.data).userLevel);
             setToken(this.model.userId);
             this.$router.push("/dashboard");
           }
