@@ -35,14 +35,14 @@
                 </v-toolbar>
                 <v-tabs-items v-model="activeName" class="white elevation-1">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" :disablePower="disablePower" tags="BASE"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD" :disablePower="disablePower"></base-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
@@ -173,7 +173,9 @@
                 treeOptions: [],
                 tree: [],
                 editColor: "write",
-                editDesc: "编辑模式"
+                disablePower: true,
+                editDesc: "编辑模式",
+                powerButton: false
             }
         },
         watch: {
@@ -218,7 +220,7 @@
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                     this.initEventAttr(reProd)
                     this.prodClass= this.prodData.prodType.prodClass
-
+                    this.powerByLevel(this.prodClass);
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
@@ -251,6 +253,19 @@
                         }
                     }
                 });
+            },
+            //根据用户的权限等级设置权限
+            powerByLevel(prodClass){
+                const level=sessionStorage.getItem("base"+prodClass)
+                switch (level) {
+                    case '1':
+                        this.powerButton=true;
+                        this.disablePower=false
+                        break
+                    case '2':
+                        this.disablePower=false;
+
+                }
             },
             //保存事件
             saveProd() {
@@ -333,6 +348,10 @@
             },
             //编辑事件触发
             editClick() {
+                if(!this.powerButton){
+                    alert("用户没有编辑基础产品权限")
+                    return
+                }
                 this.editShow = this.editShow === true?false:true
                 this.windowShow = this.windowShow?0:1
                 const edit=this.showEdit;

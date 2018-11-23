@@ -59,6 +59,10 @@
             showEdit: {
                 type: String,
                 default: false
+            },
+            disablePower: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
@@ -121,6 +125,15 @@
                         this.disabled = false
                     }
                 }
+            },
+            disablePower: {
+                handler(newValue) {
+                    if(this._props.baseAttr === "BASE"){
+                        this.disabled = true
+                    }else{
+                        this.disabled= newValue;
+                    }
+                }
             }
         },
         created() {
@@ -136,7 +149,7 @@
             if(this._props.baseAttr === "BASE"){
                 this.disabled = true
             }else{
-                this.disabled = false
+                this.disabled= this._props.disablePower;
             }
         },
         mounted: function() {
@@ -189,7 +202,7 @@
                 if(this._props.baseAttr === "BASE"){
                     this.disabled = true
                 }else{
-                    this.disabled = false
+                    this.disabled= this._props.disablePower;
                 }
                 if(msg !== null && msg !== undefined) {
                     let data = msg.split(",");

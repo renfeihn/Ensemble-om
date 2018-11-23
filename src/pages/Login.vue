@@ -67,7 +67,13 @@ export default {
           } else {
             this.loading = true;
             sessionStorage.setItem("userId", this.model.userId);
-            sessionStorage.setItem("userLevel",JSON.parse(response.data.data).userLevel);
+            //将用户产品权限放入
+              const levelList=JSON.parse(response.data.data).omProdPermDefList;
+             for(const index in levelList){
+                 const level=levelList[index];
+               sessionStorage.setItem("base"+level.modelType, level.baseProdLevel);
+               sessionStorage.setItem("sold"+level.modelType, level.soldProdLevel);
+             }
             setToken(this.model.userId);
             this.$router.push("/dashboard");
           }
