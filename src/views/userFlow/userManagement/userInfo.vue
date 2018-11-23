@@ -1,20 +1,13 @@
 <template>
     <form style="width: 100%">
         <v-text-field
-                v-validate="'required|max:10'"
                 v-model="name"
-                :counter="10"
-                :error-messages="errors.collect('name')"
                 label="Name"
-                data-vv-name="name"
                 required
         ></v-text-field>
         <v-text-field
-                v-validate="'required|email'"
                 v-model="email"
-                :error-messages="errors.collect('email')"
                 label="E-mail"
-                data-vv-name="email"
                 required
         ></v-text-field>
         <v-select

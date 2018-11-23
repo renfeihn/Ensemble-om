@@ -1,37 +1,35 @@
 <template>
     <form>
         <v-text-field
-                v-validate="'required|max:10'"
-                v-model="name"
-                :counter="10"
-                :error-messages="errors.collect('name')"
+                v-model="userId"
                 label="用户名"
-                data-vv-name="name"
+                disabled= true
                 required
         ></v-text-field>
         <v-text-field
-                v-validate="'required|email'"
-                v-model="email"
-                :error-messages="errors.collect('email')"
-                label="邮箱"
-                data-vv-name="email"
+                v-model="password"
+                :rules="passwordErrors"
+                label="原密码"
                 required
         ></v-text-field>
-        <v-select
-                v-validate="'required'"
-                :items="items"
-                v-model="select"
-                :error-messages="errors.collect('select')"
-                label="密码"
-                data-vv-name="select"
+        <v-text-field
+                v-model="newPassword"
+                label="新密码"
+                :rules="passwordErrors"
                 required
-        ></v-select>
+        ></v-text-field>
+        <v-text-field
+                v-model="newPasswordEnd"
+                label="新密码"
+                :rules="[v => v==newPassword||'与上次输入新密码不一致']"
+                required
+        ></v-text-field>
         <v-checkbox
                 v-validate="'required'"
                 v-model="checkbox"
                 :error-messages="errors.collect('checkbox')"
                 value="1"
-                label="Option"
+                label="修改密码将重新跳到登录页"
                 data-vv-name="checkbox"
                 type="checkbox"
                 required
@@ -43,30 +41,24 @@
 </template>
 <script>
     import axios from 'axios'
-
     export default {
+
         data: () => ({
             valid: true,
-            name: '',
-            nameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters'
-            ],
-            email: '',
-            emailRules: [
-                v => !!v || 'E-mail is required',
-                v => /.+@.+/.test(v) || 'E-mail must be valid'
-            ],
-            select: null,
-            items: [
-                'Item 1',
-                'Item 2',
-                'Item 3',
-                'Item 4'
+            newPasswordEnd: '',
+            password: '',
+            newPassword: '',
+            passwordErrors: [
+                v => v.length>=6||'密码长度必须大于6位',
+                v => v.length<=16||'密码最大长度不能超过16',
             ],
             checkbox: false
         }),
-
+       computed: {
+         userId (){
+             return sessionStorage.getItem("userId")
+         }
+       },
         methods: {
             submit () {
                 if (this.$refs.form.validate()) {
@@ -78,6 +70,11 @@
                         checkbox: this.checkbox
                     })
                 }
+            },
+            passwordEndErrors () {
+                const errors = []
+
+                return errors
             },
             clear () {
                 this.$refs.form.reset()
