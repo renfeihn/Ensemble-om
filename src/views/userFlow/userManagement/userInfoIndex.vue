@@ -10,11 +10,11 @@
                                 <v-toolbar flat class="transparent">
                                     <v-list class="pa-0" style="margin-left: -40px">
                                         <v-list-tile avatar>
-                                            <v-list-tile-avatar>
+                                            <v-list-tile-avatar style="margin-top: -9%">
                                                 <img src="/static/avatar/timg.jpg">
                                             </v-list-tile-avatar>
                                             <v-list-tile-content>
-                                                <v-list-tile-title class="class2">Admin</v-list-tile-title>
+                                                <v-list-tile-title class="class2" style="margin-left: 0%">Admin</v-list-tile-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                     </v-list>
@@ -27,7 +27,7 @@
                         <v-divider></v-divider>
                         <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
                             <v-list-tile-action>
-                                <v-icon>{{ item.icon }}</v-icon>
+                                <v-icon :color="item.color">{{ item.icon }}</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-content>
                                 <v-list-tile-title style="font-size: medium">{{ item.title }}</v-list-tile-title>
@@ -57,8 +57,8 @@
             return {
                 drawer: true,
                 items: [
-                    {title: '个人信息管理', name: 'userInfo', icon: 'person', class: ''},
-                    {title: '密码管理', name: 'userPassword', icon: 'lock', class: ''}
+                    {title: '个人信息管理', name: 'userInfo', icon: 'person', class: '',color: "blue"},
+                    {title: '密码管理', name: 'userPassword', icon: 'lock', class: '', color: "red"}
                 ],
                 right: null,
                 action: 'userInfo'
