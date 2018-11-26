@@ -1,5 +1,5 @@
 <template>
-  <div class="tags-view-container">
+  <div class="tags-view-container elevation-2">
     <scroll-pane class= 'tags-view-wrapper' ref= 'scrollPane'>
       <router-link ref= 'tag' class= 'tags-view-item' :class= "isActive(tag)?'active':''" v-for= 'tag in Array.from(visitedViews)'
                    :to= 'tag' :key= 'tag.path' @contextmenu.prevent.native= 'openMenu(tag,$event)'>
@@ -122,7 +122,7 @@ export default {
 .tags-view-container {
   .tags-view-wrapper {
     background: #fff;
-    height: 40px;
+    height: 50px;
     border-bottom: 1px solid #d8dce5;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
     .tags-view-item {

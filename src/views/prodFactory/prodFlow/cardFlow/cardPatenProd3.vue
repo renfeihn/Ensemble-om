@@ -58,7 +58,7 @@
   }
   .prod2-app-container{
     height: 700px;
-    background-color: #fafafa;
+    background-color: #eeeeee;
     /*background-color: rgb(238, 238, 238);*/
   }
   .prodCol {

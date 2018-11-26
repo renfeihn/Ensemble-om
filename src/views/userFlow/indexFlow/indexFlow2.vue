@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-card>
+  <div class="pt-2">
+    <v-card class="elevation-2 radiusDc">
       <v-layout align-center justify-space-between row fill-height>
         <v-flex lg2 sm2 pl-3>
           <img src="/static/user/MyUser.png" class="imgUserIndexFlow">
@@ -46,7 +46,7 @@
     </v-card>
     <v-layout row>
       <v-flex xs9 sm9 pt-2 pl-2>
-        <v-card>
+        <v-card class="elevation-2 radiusDc">
           <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>我的任务</v-toolbar-title>
@@ -61,7 +61,7 @@
         </v-card>
       </v-flex>
       <v-flex xs3 sm3 pt-2 px-2>
-        <v-card>
+        <v-card class="elevation-2 radiusDc">
           <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>快捷导航</v-toolbar-title>

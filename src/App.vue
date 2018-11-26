@@ -1,13 +1,13 @@
 <template>
   <div id="appRoot">
     <template v-if="!$route.meta.public">
-      <v-app id="inspire" class="app">
-        <app-drawer class="app--drawer"></app-drawer>
-        <app-toolbar class="app--toolbar"></app-toolbar>
+      <v-app id="inspire" class="app backPower">
+        <app-drawer class="app--drawer elevation-2"></app-drawer>
+        <app-toolbar class="app--toolbar elevation-2"></app-toolbar>
         <v-content>
           <!-- Page Header -->
        <!--   <page-header v-if="$route.meta.breadcrumb"></page-header>-->
-
+          <div class="pl-4 pt-3 pr-4">
           <tags-view></tags-view>
           <div class="page-wrapper">
             <router-view></router-view>
@@ -18,6 +18,7 @@
             <v-spacer></v-spacer>
             <span class="caption mr-1"> ensemble-om </span> <v-icon color="pink" small>favorite</v-icon>
           </v-footer>
+          </div>
         </v-content>
         <!-- Go to top -->
         <app-fab></app-fab>
@@ -79,6 +80,7 @@ export default {
   data: () => ({
     expanded: true,
     rightDrawer: false,
+    dashboard: true,
     snackbar: {
       show: false,
       text: "",

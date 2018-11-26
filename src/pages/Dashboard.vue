@@ -8,6 +8,7 @@
                   icon="fa fa-facebook"
                   mark="RB"
                   title="存款产品"
+                  class="elevation-2 radiusDc"
                   sub-title="210"
                   color="indigo"
           >
@@ -16,6 +17,7 @@
         <v-flex lg3 sm6 xs12>
           <mini-statistic
                   icon="fa fa-google"
+                  class="elevation-2 radiusDc"
                   mark="CL"
                   title="贷款产品"
                   sub-title="187"
@@ -27,6 +29,7 @@
           <mini-statistic
                   icon="fa fa-twitter"
                   mark="GL"
+                  class="elevation-2 radiusDc"
                   title="内部帐"
                   sub-title="120"
                   color="light-blue"
@@ -37,6 +40,7 @@
           <mini-statistic
                   icon="fa fa-instagram"
                   mark="SF"
+                  class="elevation-2 radiusDc"
                   title="特色理财"
                   sub-title="20"
                   color="purple"
@@ -45,7 +49,7 @@
         </v-flex>
         <!-- mini statistic  end -->
         <v-flex lg8 sm12 xs12>
-          <v-widget title="系统发布统计" content-bg="white">
+          <v-widget title="系统发布统计" content-bg="white" class="elevation-2">
             <v-btn icon slot="widget-header-action">
               <v-icon class="text--secondary">refresh</v-icon>
             </v-btn>
@@ -75,7 +79,7 @@
           </v-widget>
         </v-flex>
         <v-flex lg4 sm12 xs12>
-          <v-widget title="产品扇形图" content-bg="white">
+          <v-widget title="产品扇形图" content-bg="white" class="elevation-2">
             <div slot="widget-content">
               <e-chart
                       :path-option="[

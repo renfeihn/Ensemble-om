@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="elevation-2">
         <v-layout row wrap>
             <v-flex md2 lg2>
                 <v-navigation-drawer v-model="drawer" permanent absolute>

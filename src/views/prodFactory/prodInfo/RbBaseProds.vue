@@ -1,7 +1,7 @@
 <template>
-    <div class="app-container">
+    <div class="app-container pt-2">
         <v-layout row wrap>
-            <v-flex lg9 sm9 class="v-card">
+            <v-flex lg9 sm9 class="v-card elevation-2">
                 <v-toolbar color="primary lighten-1" dark tabs>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
@@ -50,7 +50,7 @@
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
-            <v-flex lg3 sm3 class="v-card">
+            <v-flex lg3 sm3 class="v-card elevation-2 pl-2">
                 <v-card>
                     <v-card-text>
                         <down-action v-if="pendFlag==0" v-bind:editShow="editShow" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
