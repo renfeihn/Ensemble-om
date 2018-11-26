@@ -72,6 +72,7 @@
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -86,7 +87,7 @@
                 { text: '权限等级',sortable: false },
                 { text: 'Action',sortable: false }
             ],
-            user: [{key: "",value: ""}],
+            user: [],
             sys: [{key: "KBS",value: "核心系统"},{key: "GL",value: "核算系统"}],
             model: [{key: "MB",value: "业务参数"},{key: "FM",value: "系统参数"}],
             desserts: [],
@@ -151,13 +152,19 @@
                 this.disabled = "false"
             },
             initParentRef() {
-                let temp = {}
                 let that = this
-                temp["tableName"] = "OM_USER";
-                temp["columnCode"] = "USER_ID";
-                temp["columnDesc"] = "USER_NAME"
-                getPkList(temp,response => {
-                    that.user = response
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                //用户id备选数据加载
+                getSysInfoByUser(userId).then(function (response) {
+                    //初始化 新增时候  父级菜单信息
+                    that.userInfo = response.data.data.userInfo;
+                    for(let i=0; i<that.userInfo.length; i++){
+                        let temp={}
+                        temp["key"] = that.userInfo[i].userId
+                        temp["value"] = that.userInfo[i].userName
+                        that.user.push(temp)
+                    }
                 });
             },
             editItem (item) {

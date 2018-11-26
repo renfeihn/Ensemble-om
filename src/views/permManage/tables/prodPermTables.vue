@@ -70,6 +70,8 @@
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import {getParamTable} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -80,7 +82,9 @@
                 { text: '用户名称',sortable: false},
                 { text: '模块信息',sortable: false},
                 { text: '基础产品权限',sortable: false },
-                { text: '可售产品权限',sortable: false }
+                { text: '可售产品权限',sortable: false },
+                { text: 'Action',sortable: false }
+
             ],
             permLevel: [
                 {
@@ -96,8 +100,10 @@
                     value: "查看",
                 }
             ],
-            user: [{key: "",value: ""}],
-            model: [{key: "RB",value: "存款模块"},{key: "CL",value: "贷款模块"}],
+            user: [],
+            userInfo: [],
+            prodClass: [],
+            model: [],
             desserts: [],
             sourceData: [],
             keySet: [
@@ -141,7 +147,7 @@
 
         created () {
             this.initialize()
-            this.initParentRef()
+            this.initRef()
         },
 
         methods: {
@@ -155,14 +161,32 @@
             addClick() {
                 this.disabled = "false"
             },
-            initParentRef() {
-                let temp = {}
+            initRef() {
                 let that = this
-                temp["tableName"] = "OM_USER";
-                temp["columnCode"] = "USER_ID";
-                temp["columnDesc"] = "USER_NAME"
-                getPkList(temp,response => {
-                    that.user = response
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                //用户id备选数据加载
+                getSysInfoByUser(userId).then(function (response) {
+                    //初始化 新增时候  父级菜单信息
+                    that.userInfo = response.data.data.userInfo;
+                    for(let i=0; i<that.userInfo.length; i++){
+                        let temp={}
+                        temp["key"] = that.userInfo[i].userId
+                        temp["value"] = that.userInfo[i].userName
+                        that.user.push(temp)
+                    }
+                });
+                //所属模块备选数据加载
+                getParamTable("MB_PROD_CLASS").then(function (response) {
+                    that.prodClass = response.data.data.columnInfo;
+                    for(let k=0; k<that.prodClass.length; k++){
+                        if(that.prodClass[k].PROD_CLASS_LEVEL === "1"){
+                            let temp={}
+                            temp["key"] = that.prodClass[k].PROD_CLASS
+                            temp["value"] = that.prodClass[k].PROD_CLASS_DESC
+                            that.model.push(temp)
+                        }
+                    }
                 });
             },
             editItem (item) {

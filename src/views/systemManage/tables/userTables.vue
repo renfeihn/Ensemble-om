@@ -31,7 +31,7 @@
                                     <v-text-field v-model="editedItem.userName" label="用户名称"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
-                                    <v-select v-model="editedItem.parentUserId" label="父级用户" :items="perent" item-text="value" item-value="key"></v-select>
+                                    <v-text-field v-model="editedItem.parentUserId" label="父级用户" disabled></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-text-field v-model="editedItem.userLevel" label="用户级别"></v-text-field>
@@ -76,6 +76,8 @@
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
+
 
     export default {
         props: ["title"],
@@ -146,8 +148,13 @@
         methods: {
             initialize () {
                 let that = this
-                getSysTable("OM_USER").then(function (response) {
-                    that.desserts = response.data.data.columnInfo;
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                //增加用户 父级用户默认为本身
+                that.editedItem.parentUserId = userId
+                //获取角色信息
+                getSysInfoByUser(userId).then(function (response) {
+                    that.desserts = response.data.data.userInfo;
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },

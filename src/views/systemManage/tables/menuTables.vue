@@ -24,7 +24,7 @@
                                     <v-text-field v-model="editedItem.menuSeqNo" label="菜单序号" disabled></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6 v-if="disabled=='false'">
-                                    <v-text-field v-model="editedItem.menuSeqNo" label="菜单序号"></v-text-field>
+                                    <v-text-field v-model="editedItem.menuSeqNo" label="菜单序号" disabled></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-text-field v-model="editedItem.menuId" label="菜单ID"></v-text-field>
@@ -33,7 +33,7 @@
                                     <v-text-field v-model="editedItem.menuName" label="菜单名称"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
-                                    <v-select v-model="editedItem.menuParentId" label="父级菜单" :items="perent" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.menuParentId" label="父级菜单" :items="parent" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-text-field v-model="editedItem.menuLevel" label="菜单等级"></v-text-field>
@@ -79,6 +79,8 @@
 </template>
 <script>
     import {getSysTable} from "@/api/url/prodInfo";
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
+
     import {getPkList} from '@/views/prodFactory/prodInfo/pkListColumnInfo'
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
@@ -101,8 +103,9 @@
                 { text: '菜单URL',sortable: false },
                 { text: 'Action',sortable: false }
             ],
-            perent: [{key: "",value: ""}],
+            parent: [],
             desserts: [],
+            menuInfo: [],
             sourceData: [],
             keySet: [
                 {
@@ -149,32 +152,48 @@
             }
         },
 
-        created () {
-            this.initialize()
-            this.initParentRef()
+        mounted() {
+            this.initialize();
+            this.initMenuSeqNo();
         },
-
         methods: {
             initialize () {
                 let that = this
-                getSysTable("OM_MENU").then(function (response) {
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                getSysInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.columnInfo;
+                    //初始化 新增时候  父级菜单信息
+                    for(let i=0; i<that.desserts.length; i++){
+                        if(that.desserts[i].menuLevel === userLevel){
+                            let temp={}
+                            temp["key"] = that.desserts[i].menuId
+                            temp["value"] = that.desserts[i].menuName
+                            that.parent.push(temp)
+                        }
+                    }
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },
-            addClick() {
-              this.disabled = "false"
-            },
-
-            initParentRef() {
-                let temp = {}
+            initMenuSeqNo() {
+                //新增菜单时候  菜单序号默认顺延
                 let that = this
-                temp["tableName"] = "OM_MENU";
-                temp["columnCode"] = "MENU_ID";
-                temp["columnDesc"] = "MENU_NAME"
-                getPkList(temp,response => {
-                    that.perent = response
+                getSysTable("OM_MENU").then(function (response) {
+                    that.menuInfo = response.data.data.columnInfo;
+                    if(that.menuInfo.length>0) {
+                        let max = 0
+                        max = parseInt(that.menuInfo[0].menuSeqNo)
+                        for (let m = 1; m < that.menuInfo.length; m++) {
+                            if(parseInt(that.menuInfo[m].menuSeqNo) >max){
+                                max = parseInt(that.menuInfo[m].menuSeqNo)
+                            }
+                        }
+                        that.editedItem.menuSeqNo = max+1+"";
+                    }
                 });
+            },
+            addClick() {
+                this.disabled = "false"
             },
             editItem (item) {
                 this.editedIndex = this.desserts.indexOf(item)

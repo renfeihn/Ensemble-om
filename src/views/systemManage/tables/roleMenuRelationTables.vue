@@ -54,6 +54,7 @@
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -105,18 +106,21 @@
 
         created () {
             this.initialize()
-            this.initParentRef()
+            this.initRf()
         },
 
         methods: {
             initialize () {
                 let that = this
-                getSysTable("OM_MENU_ROLE").then(function (response) {
-                    that.desserts = response.data.data.columnInfo;
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                //获取角色信息
+                getSysInfoByUser(userId).then(function (response) {
+                    that.desserts = response.data.data.menuRoleInfo;
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },
-            initParentRef() {
+            initRf() {
                 //装载菜单列表
                 let tempMenu = {}
                 let that = this

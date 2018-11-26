@@ -30,6 +30,9 @@
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.roleName" label="角色名称"></v-text-field>
                                 </v-flex>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="editedItem.roleLevel" label="角色等级"></v-text-field>
+                                </v-flex>
                             </v-layout>
                         </v-container>
                     </v-card-text>
@@ -46,6 +49,7 @@
                 <td>{{ props.item.roleId }}</td>
                 <td>{{ props.item.roleName }}</td>
                 <td>{{ props.item.roleDesc }}</td>
+                <td>{{ props.item.roleLevel }}</td>
                 <td>
                     <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
                     <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
@@ -60,6 +64,7 @@
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -71,6 +76,7 @@
                 { text: '角色ID',sortable: false},
                 { text: '角色名称',sortable: false },
                 { text: '角色描述',sortable: false },
+                { text: '角色适用等级',sortable: false },
                 { text: 'Action',sortable: false }
             ],
             desserts: [],
@@ -86,12 +92,14 @@
             editedItem: {
                 roleId: '',
                 roleName: '',
-                roleDesc: ''
+                roleDesc: '',
+                roleLevel: ''
             },
             defaultItem: {
                 roleId: '',
                 roleName: '',
-                roleDesc: ''
+                roleDesc: '',
+                roleLevel: ''
             },
             backValue: {}
         }),
@@ -115,8 +123,11 @@
         methods: {
             initialize () {
                 let that = this
-                getSysTable("OM_ROLE").then(function (response) {
-                    that.desserts = response.data.data.columnInfo;
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                //获取角色信息
+                getSysInfoByUser(userId).then(function (response) {
+                    that.desserts = response.data.data.roleInfo;
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },

@@ -215,6 +215,14 @@ export function getSysTable (params) {
     })
 }
 
+export function getSysInfoByUser (params) {
+    return request({
+        url: '/getSysInfoByUser',
+        method: 'post',
+        params: { userId: params}
+    })
+}
+
 export function saveSysTable (params) {
     return request({
         url: '/saveSysTable',

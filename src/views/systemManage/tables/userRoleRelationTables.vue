@@ -59,6 +59,7 @@
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -115,8 +116,11 @@
         methods: {
             initialize () {
                 let that = this
-                getSysTable("OM_USER_ROLE").then(function (response) {
-                    that.desserts = response.data.data.columnInfo;
+                let userId = sessionStorage.getItem("userId")
+                let userLevel = sessionStorage.getItem("userLevel")
+                //获取角色信息
+                getSysInfoByUser(userId).then(function (response) {
+                    that.desserts = response.data.data.userRoleInfo;
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },
