@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-2">
+  <div class="pt-4">
     <v-card class="elevation-2 radiusDc">
       <v-layout align-center justify-space-between row fill-height>
         <v-flex lg2 sm2 pl-3>
@@ -47,7 +47,7 @@
     <v-layout row pt-4>
       <v-flex xs9 sm9 pt-2>
         <v-card class="elevation-2 radiusDc">
-          <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-2" flat>
+          <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-2" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>我的任务</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -62,7 +62,7 @@
       </v-flex>
       <v-flex xs3 sm3 pt-2 pl-4>
         <v-card class="elevation-2 radiusDc">
-          <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-2" flat>
+          <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-2" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>快捷导航</v-toolbar-title>
             <v-spacer></v-spacer>

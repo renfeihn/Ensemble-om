@@ -1,8 +1,8 @@
 <template>
-    <div class="app-container pt-2">
+    <div class="app-container pt-4">
         <v-layout row wrap>
             <v-flex lg9 sm9 class="v-card elevation-2">
-                <v-toolbar color="primary lighten-1" dark tabs>
+                <v-toolbar color="primary lighten-2" dark tabs>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>

@@ -1,7 +1,7 @@
 <template>
   <div class="tags-view-container elevation-2">
     <scroll-pane class= 'tags-view-wrapper' ref= 'scrollPane'>
-      <router-link ref= 'tag' class= 'tags-view-item' :class= "isActive(tag)?'active':''" v-for= 'tag in Array.from(visitedViews)'
+      <router-link ref= 'tag' class= 'tags-view-item' :class= "isActive(tag)?'active primary lighten-1':''" v-for= 'tag in Array.from(visitedViews)'
                    :to= 'tag' :key= 'tag.path' @contextmenu.prevent.native= 'openMenu(tag,$event)'>
         {{generateTitle(tag.title)}}
         <v-icon @click.prevent.stop= 'closeSelectedTag(tag)'>highlight_off</v-icon>
@@ -123,15 +123,13 @@ export default {
   .tags-view-wrapper {
     background: #fff;
     height: 46px;
-    border-bottom: 1px solid #d8dce5;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
     .tags-view-item {
       text-decoration: none;
       display: inline-block;
       position: relative;
-      height: 35px;
+      height: 41px;
       line-height: 26px;
-      border: 1px solid #d8dce5;
       color: #495060;
       background: #fff;
       padding: 0 10px;
@@ -143,9 +141,8 @@ export default {
         margin-left: 15px;
       }
       &.active {
-        background-color: #3f51b5 !important;
         color: #fff;
-        border-color: #3f51b5 !important;
+        border-bottom: 2px solid #ffeb3b !important;
         &::before {
           content: "";
           // background: #57ff4f;
@@ -159,6 +156,7 @@ export default {
       }
     }
   }
+
   .contextMenu {
     margin: 0;
     background: #fff;

@@ -7,9 +7,8 @@
         <v-content>
           <!-- Page Header -->
        <!--   <page-header v-if="$route.meta.breadcrumb"></page-header>-->
-          <div class="pl-4 pt-3 pr-4">
           <tags-view></tags-view>
-          <div class="page-wrapper">
+          <div class="px-4">
             <router-view></router-view>
           </div>
            <!-- App Footer -->
@@ -18,7 +17,6 @@
             <v-spacer></v-spacer>
             <span class="caption mr-1"> ensemble-om </span> <v-icon color="pink" small>favorite</v-icon>
           </v-footer>
-          </div>
         </v-content>
         <!-- Go to top -->
         <app-fab></app-fab>

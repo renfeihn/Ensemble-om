@@ -8,9 +8,10 @@
     v-model="drawer"
     width="260"
     >
-    <v-toolbar color="primary darken-1" dark>
+    <!--取消加深  lighten-1 darken-1-->
+    <v-toolbar color="primary" dark>
       <img v-bind:src="computeLogo" height="36" alt="产品工厂">
-      <v-toolbar-title class="ml-0 pl-1">
+      <v-toolbar-title class="ml-0 pl-1 ">
         <span class="hidden-sm-and-down">{{titleName}}</span>
       </v-toolbar-title>
     </v-toolbar>
