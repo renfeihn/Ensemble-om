@@ -26,7 +26,7 @@
                         </v-btn>
                         <span>刷新</span>
                     </v-tooltip>
-                    <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
+                    <v-tabs color="primary lighten-2" slot="extension" v-model="activeName" grow show-arrows>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="n in prodInfo" :key="n.pageCode">
                             {{ n.text}}
