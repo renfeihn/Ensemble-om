@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0" item-key="code" select-all light v-model="selected">
+    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="code" select-all light v-model="selected">
         <template slot="items" slot-scope="props">
                                     <tr @click="props.expanded = !props.expanded">
                                   <td>

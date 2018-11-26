@@ -44,10 +44,10 @@
         </v-flex>
       </v-layout>
     </v-card>
-    <v-layout row>
-      <v-flex xs9 sm9 pt-2 pl-2>
+    <v-layout row pt-4>
+      <v-flex xs9 sm9 pt-2>
         <v-card class="elevation-2 radiusDc">
-          <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+          <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-2" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>我的任务</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -55,14 +55,14 @@
               <v-icon>more_vert</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-card-text class="py-0">
+          <v-card-text class="py-1">
             <user-work-tags></user-work-tags>
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs3 sm3 pt-2 px-2>
+      <v-flex xs3 sm3 pt-2 pl-4>
         <v-card class="elevation-2 radiusDc">
-          <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+          <v-toolbar color="indigo lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-2" flat>
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>快捷导航</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -70,7 +70,7 @@
               <v-icon>more_vert</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-card-text style="text-align: center;">
+          <v-card-text style="text-align: center; " class="py-1">
             <v-list>
               <v-list-tile v-for="item in items" :key="item.title" avatar @click="keyboardClick(item)">
 

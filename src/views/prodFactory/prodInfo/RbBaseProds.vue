@@ -33,7 +33,7 @@
                         </v-tab>
                     </v-tabs>
                 </v-toolbar>
-                <v-tabs-items v-model="activeName" class="white elevation-1">
+                <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" :disablePower="disablePower" tags="BASE"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
@@ -50,15 +50,15 @@
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
-            <v-flex lg3 sm3 class="v-card elevation-2 pl-2">
-                <v-card>
+            <v-flex lg3 sm3 class="v-card pl-3">
+                <v-card class="elevation-2">
                     <v-card-text>
                         <down-action v-if="pendFlag==0" v-bind:editShow="editShow" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
                         <pending-form v-if="pendFlag==1"></pending-form>
                     </v-card-text>
                 </v-card>
-                <v-window v-model="onboarding" :class="depositTree">
-                    <v-card-actions v-if="windowShow == 3">
+                <v-window v-model="onboarding" :class="depositTree" class="pt-2" >
+                    <v-card-actions v-if="windowShow == 3" class="elevation-2">
                         <v-item-group v-model="onboarding" style="margin-left: 30%">
                             <v-item v-for="n in length" :key="`btn-${n}`">
                                 <v-btn slot-scope="{ active, toggle }" :input-value="active" icon @click="toggle">
@@ -67,7 +67,7 @@
                             </v-item>
                         </v-item-group>
                     </v-card-actions>
-                    <v-window-item v-for="n in length" :key="`card-${n}`">
+                    <v-window-item v-for="n in length" :key="`card-${n}`" class="elevation-2">
                         <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
                         <dc-treeAttr v-if="n == 1 && windowShow != 0" v-model="tree" :options="treeOptions" labelDesc="产品参数"></dc-treeAttr>
                     </v-window-item>
@@ -527,5 +527,8 @@
         position: fixed;
         top: 63px;
         width: 24%;
+    }
+    .textProd{
+        height: calc(90vh - 24px)
     }
 </style>

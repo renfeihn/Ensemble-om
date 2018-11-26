@@ -1,7 +1,7 @@
 <template>
-    <v-layout>
+    <v-layout class="pt-2">
         <v-flex md2 lg2>
-            <v-card>
+            <v-card class="elevation-2">
                 <v-card-media src="/static/bg/18.jpg" height="80px">
                     <v-card-title class="pb-0">
                             <h4 class="title" style="font-size: x-large">{{title}}</h4>
@@ -10,7 +10,7 @@
                     </v-card-title>
                 </v-card-media>
             </v-card>
-            <v-expansion-panel style="color: #0d47a1">
+            <v-expansion-panel style="color: #0d47a1" class="elevation-2 pt-2">
                 <v-expansion-panel-content v-for="(item, i) in 1" :key="i">
                     <div slot="header" style="color: #0d47a1;font-size: large;margin-left: auto;margin-right: 0px">
                         <v-icon style="margin-left: -10px;color: #0d47a1;margin-right: 10px;margin-top: 2px">list</v-icon>
@@ -44,8 +44,8 @@
                 </v-item>
             </v-item-group>
         </v-flex>
-        <v-flex md10 lg10>
-            <v-window v-model="window" class="elevation-1" vertical>
+        <v-flex md10 lg10 class="pl-4">
+            <v-window v-model="window" class="elevation-2" vertical>
                 <v-window-item v-for="n in length" :key="n">
                     <v-card flat>
                         <v-card-text>
