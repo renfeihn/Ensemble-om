@@ -529,6 +529,7 @@
         width: 24%;
     }
     .textProd{
-        height: calc(90vh - 24px)
+        min-height: calc(90vh - 14px);
+        padding-bottom: 120px;
     }
 </style>

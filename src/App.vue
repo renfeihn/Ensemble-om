@@ -12,7 +12,7 @@
             <router-view></router-view>
           </div>
            <!-- App Footer -->
-          <v-footer height="auto" class="white pa-3 app--footer">
+          <v-footer height="auto" class="white pa-3 app--footer elevation-2 dcFooter">
             <span class="caption">SmartEnsemble-om &copy; {{ new Date().getFullYear() }}</span>
             <v-spacer></v-spacer>
             <span class="caption mr-1"> ensemble-om </span> <v-icon color="pink" small>favorite</v-icon>
@@ -112,4 +112,9 @@ export default {
 .page-wrapper {
   min-height: calc(100vh - 64px - 50px - 81px);
 }
+  .dcFooter{
+    position:fixed
+    bottom: 0px
+    width: 88%
+  }
 </style>
