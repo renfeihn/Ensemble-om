@@ -1,47 +1,44 @@
 <template>
-    <div class="app-container pt-3">
-    <v-card>
-        <v-layout row wrap>
+    <div class="pt-3">
+        <v-layout>
             <v-flex md2 lg2>
-                <v-navigation-drawer v-model="drawer" permanent absolute>
-                    <v-card>
-                        <v-card-media src="/static/nature/tree2.png" class="class1">
-                            <v-card-title class="pb-0">
-                                <v-toolbar flat class="transparent">
-                                    <v-list class="pa-0" style="margin-left: -40px">
-                                        <v-list-tile avatar>
-                                            <v-list-tile-avatar style="margin-top: -9%">
-                                                <img src="/static/avatar/timg.jpg">
-                                            </v-list-tile-avatar>
-                                            <v-list-tile-content>
-                                                <v-list-tile-title class="class2" style="margin-left: 0%">Admin</v-list-tile-title>
-                                            </v-list-tile-content>
-                                        </v-list-tile>
-                                    </v-list>
-                                </v-toolbar>
-                                <h4 class="title class3">系统管理员</h4>
-                            </v-card-title>
+                <v-flex xs12>
+                    <v-card class="pt-3">
+                        <v-card-media src="/static/avatar/per1.jpg" class="class1">
                         </v-card-media>
-                    </v-card>
-                    <v-list class="pt-0" dense>
-                        <v-divider></v-divider>
-                        <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
-                            <v-list-tile-action>
-                                <v-icon :color="item.color">{{ item.icon }}</v-icon>
-                            </v-list-tile-action>
-                            <v-list-tile-content>
-                                <v-list-tile-title style="font-size: medium">{{ item.title }}</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
+                        <v-list style="margin-right: 10%;margin-left: 10%">
+                            <v-list-tile>
+                                <v-icon color="blue">event</v-icon>
+                                <v-list-tile-content>
+                                        <v-list-tile-title style="font-size: x-large;margin-left: 7%; margin-right: auto;color: green">系统管理员</v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
                         </v-list>
-                </v-navigation-drawer>
+                        <h4 style="margin-left: 31%;margin-right: 50%;margin-top: -5%;color: green">Admin</h4>
+                    </v-card>
+                </v-flex>
+                <v-flex xs12>
+                    <v-card class="mt-2 pb-2" style="height: 200%">
+                        <v-list>
+                            <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
+                                <v-list-tile-action>
+                                    <v-icon :color="item.color">{{ item.icon }}</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title style="font-size: medium">{{ item.title }}</v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-flex>
             </v-flex>
-            <v-flex md10 lg10 class="pl-5">
-                <user-info v-if="action=='userInfo'"></user-info>
-                <user-password v-else></user-password>
+            <v-flex md10 lg10 class="pl-2 pb-2">
+                <v-card>
+                    <user-info v-if="action=='userInfo'"></user-info>
+                    <user-password v-else></user-password>
+                </v-card>
             </v-flex>
         </v-layout>
-    </v-card>
     </div>
 </template>
 <script>
@@ -82,12 +79,12 @@
         background-color: #e8e8e8;
     }
     .class1 {
-        width: 100%;height: 220px
+        width: 100%;height: 100%;margin-top: -5%;
     }
     .class2 {
-        color: white;font-size: x-large
+        color: blue;font-size: x-large
     }
     .class3 {
-        font-size: large; color: white; margin-left: 5px
+        font-size: large; color: deepskyblue; margin-left: 5px
     }
 </style>

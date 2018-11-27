@@ -63,7 +63,7 @@
         width: 122px;
     }
     .class2 {
-        width: 90%;margin-left: 6%;height: 500px;margin-top: 4%
+        width: 90%;margin-left: 6%;height: 300px;margin-top: 4%
     }
     .class3 {
         font-size: large; color: white; margin-left: 5px
