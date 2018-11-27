@@ -3,8 +3,8 @@
     <v-toolbar color="primary" fixed dark app>
         <img v-bind:src="computeLogo" height="36" alt="产品工厂">
         <v-toolbar-title class="ml-0 pl-1">
-            <span class="hidden-sm-and-down">{{titleName}}</span>
-            <v-toolbar-side-icon @click.stop="handleDrawerToggle"></v-toolbar-side-icon>
+            <span class="hidden-sm-and-down pr-3">{{titleName}}</span>
+            <v-toolbar-side-icon @click.stop="handleDrawerToggle" class="ml-3"></v-toolbar-side-icon>
         </v-toolbar-title>
         <!--<v-text-field-->
         <!--flat-->
@@ -16,10 +16,29 @@
         <!--v-model="country"-->
         <!--&gt;-->
         <!--</v-text-field>-->
-        <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text mx-3 pt-2"
-                        @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
+
         <v-spacer></v-spacer>
-        <v-switch v-model="dcSwitch" @change="switchChange" label="menu" class="pt-4"></v-switch>
+        <v-switch v-model="dcSwitch" @change="switchChange" label="menu" class="pt-4 pr-2" style="flex:none"></v-switch>
+
+            <v-btn
+                    class="purple"
+                    color="primary"
+                    @click="showSearchAction"
+                    dark
+            >
+                Search
+            </v-btn>
+              <v-card :class="searchDc">
+                  <v-layout pt-2 px-5>
+                      <v-flex md11 lg11>
+                <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text"
+                                @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
+                      </v-flex>
+                      <v-flex md1 lg1>
+                  <v-icon @click="showSearchNon" class="material-icons pt-3 pl-1">close_sweep</v-icon>
+                      </v-flex>
+                  </v-layout>
+              </v-card>
         <v-btn icon @click="handleFullScreen()">
             <v-icon>fullscreen</v-icon>
         </v-btn>
@@ -62,9 +81,11 @@
         getAllProdList
     } from '@/api/url/prodInfo'
     import config from '@/config'
+    import Layout from "./media/Layout";
     export default {
         name: "app-toolbar",
         components: {
+            Layout,
             NotificationList
         },
         data: () => ({
@@ -72,6 +93,7 @@
             prodList: [],
             prodCode: "",
             dcSwitch: true,
+            searchDc: 'searchDcNone',
             titleName: config.name,
             prodClass: "",
             prodListSplit: [],
@@ -163,6 +185,12 @@
                 this.$emit("menuSwitch");
                 window.getApp.$emit('APP_DRAWER_TOGGLED');
             },
+            showSearchAction(){
+                this.searchDc='searchDc';
+            },
+            showSearchNon(){
+              this.searchDc='searchDcNone';
+            },
             getInitProdList() {
                 getAllProdList().then(response => {
                     for (let i = 0; i < response.data.data.length; i++) {
@@ -178,3 +206,22 @@
         }
     };
 </script>
+<style lang="stylus" scoped>
+    .searchDc{
+        width 100%
+        position fixed
+        transition: all 0.7s
+        height auto
+        top 0
+        left 0
+        z-index 8
+    }
+    .searchDcNone{
+        position absolute
+        top -65px
+        transition: all 0.7s
+        width 100%
+        left 0
+        z-index 1
+    }
+    </style>
