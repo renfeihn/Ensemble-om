@@ -1,7 +1,7 @@
 <template>
-    <v-layout justify-center>
+    <v-layout justify-center pt-4>
         <v-flex xs12 sm12>
-            <v-toolbar card dense color="indigo" dark>
+            <v-toolbar card dense color="primary lighten-2" dark>
                 <v-toolbar-title>MB_PROD_TYPE-产品定义表</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
@@ -23,8 +23,7 @@
                     <a-button type="primary" @click="onSave" class="ml-2">提交</a-button>
                 </v-toolbar>
                 <v-card-text class="pa-0">
-                    <a-table :customRow="customRow" :columns="columns" @change="changeTable" :dataSource="dataInfo"
-                             bordered class="pl-2 pr-2">
+                    <a-table :customRow="customRow" :columns="columns" @change="changeTable" :dataSource="dataInfo">
                     </a-table>
                     <v-divider></v-divider>
                 </v-card-text>

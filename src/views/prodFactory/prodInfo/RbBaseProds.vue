@@ -57,7 +57,7 @@
                         <pending-form v-if="pendFlag==1"></pending-form>
                     </v-card-text>
                 </v-card>
-                <v-window v-model="onboarding" :class="depositTree" class="pt-2" >
+                <v-window v-model="onboarding" :class="depositTree" class="pt-2">
                     <v-card-actions v-if="windowShow == 3" class="elevation-2">
                         <v-item-group v-model="onboarding" style="margin-left: 30%">
                             <v-item v-for="n in length" :key="`btn-${n}`">

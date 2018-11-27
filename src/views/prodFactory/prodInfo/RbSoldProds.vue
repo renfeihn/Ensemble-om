@@ -1,8 +1,8 @@
 <template>
-    <div class="app-container">
+    <div class="app-container pt-4">
         <v-layout row wrap>
-            <v-flex lg9 sm9 class="v-card">
-                <v-toolbar color="primary lighten-1" dark tabs>
+            <v-flex lg9 sm9 class="v-card elevation-2">
+                <v-toolbar color="primary lighten-2" dark tabs>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
@@ -26,14 +26,14 @@
                         </v-btn>
                         <span>刷新</span>
                     </v-tooltip>
-                    <v-tabs color="primary lighten-1" slot="extension" v-model="activeName" grow show-arrows>
+                    <v-tabs color="primary lighten-2" slot="extension" v-model="activeName" grow show-arrows>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="n in prodInfo" :key="n.pageCode">
                             {{ n.text}}
                         </v-tab>
                     </v-tabs>
                 </v-toolbar>
-                <v-tabs-items v-model="activeName" class="white elevation-1">
+                <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                            <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
@@ -50,15 +50,15 @@
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
-            <v-flex lg3 sm3 class="v-card">
-                <v-card>
+            <v-flex lg3 sm3 class="v-card" pl-3>
+                <v-card class="elevation-2">
                     <v-card-text>
                         <down-action v-if="pendFlag==0" v-bind:editShow="editShow" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
                         <pending-form v-if="pendFlag==1"></pending-form>
                     </v-card-text>
                 </v-card>
-                <v-window v-model="onboarding" :class="depositTree">
-                    <v-card-actions v-if="windowShow == 3">
+                <v-window v-model="onboarding" :class="depositTree" class="pt-2">
+                    <v-card-actions v-if="windowShow == 3" class="elevation-2">
                         <v-item-group v-model="onboarding" style="margin-left: 30%">
                             <v-item v-for="n in length" :key="`btn-${n}`">
                                 <v-btn slot-scope="{ active, toggle }" :input-value="active" icon @click="toggle">
@@ -67,7 +67,7 @@
                             </v-item>
                         </v-item-group>
                     </v-card-actions>
-                    <v-window-item v-for="n in length" :key="`card-${n}`">
+                    <v-window-item v-for="n in length" :key="`card-${n}`" class="elevation-2">
                         <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
                         <dc-treeAttr v-if="n == 1 && windowShow != 0" v-model="tree" :options="treeOptions" labelDesc="产品参数"></dc-treeAttr>
                     </v-window-item>
@@ -532,5 +532,9 @@
         position: fixed;
         top: 63px;
         width: 24%;
+    }
+    .textProd{
+        min-height: calc(90vh - 14px);
+        padding-bottom: 120px;
     }
 </style>

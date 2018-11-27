@@ -3,7 +3,7 @@
             :headers="headers"
             :items="projects"
             hide-actions
-            class="elevation-0"
+            class="elevation-1"
     >
         <template slot="items" slot-scope="props">
             <td class="text-xs-left">{{ props.item.tableName }}</td>
@@ -11,7 +11,7 @@
             <td class="text-xs-left">{{ props.item.parameter }}</td>
             <td class="text-xs-left">{{ props.item.system }}</td>
             <td>
-                <v-btn depressed outline icon fab dark color="primary" small @click="routerTableInfo(props.item.tableName)">
+                <v-btn depressed outline icon fab dark color="primary lighten-2" small @click="routerTableInfo(props.item.tableName)">
                     <v-icon>edit</v-icon>
                 </v-btn>
                 <v-btn depressed outline icon fab dark color="pink" small>

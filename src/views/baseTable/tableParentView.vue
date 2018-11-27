@@ -1,5 +1,5 @@
 <template>
-    <v-layout align-center>
+    <v-layout align-center pt-4>
         <v-item-group
                 v-model="window"
                 class="shrink mr-4"
@@ -11,7 +11,7 @@
                     :key="n"
             >
                 <div slot-scope="{ active, toggle }">
-                        <v-chip color="indigo" text-color="white" @click="toggle">
+                        <v-chip color="primary lighten-2" text-color="white" @click="toggle">
                             {{n}}
                             <v-icon right>star</v-icon>
                         </v-chip>
@@ -22,7 +22,7 @@
         <v-flex>
             <v-window
                     v-model="window"
-                    class="elevation-1"
+                    class="elevation-2"
                     vertical
             >
                 <v-window-item

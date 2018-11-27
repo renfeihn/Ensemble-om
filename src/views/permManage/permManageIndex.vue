@@ -1,16 +1,16 @@
 <template>
-    <v-layout align-center>
+    <v-layout align-center pt-4>
         <v-flex xs12 md2 lg2>
         <v-item-group v-model="window" class="shrink ml-1" mandatory tag="v-flex">
             <v-item v-for="n in userManagement" :key="n.index">
                 <div :class="n.class" slot-scope="{ active, toggle }" @click="clickItem(n.index)">
-                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5">{{n.text}}</span>
+                    <span @click="toggle" :class="n.classSpan" class="ml-2 mr-5 elevation-2">{{n.text}}</span>
                 </div>
             </v-item>
         </v-item-group>
         </v-flex>
         <v-flex xs12 md10 lg10>
-            <v-window v-model="window" class="elevation-1" vertical style="height: 700px">
+            <v-window v-model="window" class="elevation-2" vertical style="height: 700px">
                 <v-window-item v-for="n in userManagement" :key="n.index">
                     <v-card flat>
                         <v-card-text>
