@@ -8,7 +8,7 @@
           <!-- Page Header -->
        <!--   <page-header v-if="$route.meta.breadcrumb"></page-header>-->
           <tags-view></tags-view>
-          <div class="px-4">
+          <div class="px-4 pb-5">
             <router-view></router-view>
           </div>
            <!-- App Footer -->
@@ -120,7 +120,7 @@ export default {
   min-height: calc(100vh - 64px - 50px - 81px);
 }
   .dcFooter{
-    position:relative
+    position:absolute
     bottom: 0px
     width: 100%
   }
