@@ -8,13 +8,12 @@
                         </v-card-media>
                         <v-list style="margin-right: 10%;margin-left: 10%">
                             <v-list-tile>
-                                <v-icon color="blue">event</v-icon>
                                 <v-list-tile-content>
-                                        <v-list-tile-title style="font-size: x-large;margin-left: 7%; margin-right: auto;color: green">系统管理员</v-list-tile-title>
+                                        <v-list-tile-title style="font-size: x-large;margin-left: 10%; margin-right: 50%;color: #42A5F5">系统管理员</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
-                        <h4 style="margin-left: 31%;margin-right: 50%;margin-top: -5%;color: green">Admin</h4>
+                        <h4 style="margin-left: 33%;margin-right: 50%;margin-top: -5%;color: #42A5F5">Admin</h4>
                     </v-card>
                 </v-flex>
                 <v-flex xs12>
@@ -33,10 +32,8 @@
                 </v-flex>
             </v-flex>
             <v-flex md10 lg10 class="pl-2 pb-2">
-                <v-card>
                     <user-info v-if="action=='userInfo'"></user-info>
                     <user-password v-else></user-password>
-                </v-card>
             </v-flex>
         </v-layout>
     </div>

@@ -1,6 +1,19 @@
 <template>
     <v-layout row wrap>
-        <h4 style="margin-left: 6%;color: #00b0ff;font-size: x-large;margin-top: 4%">密码管理</h4>
+        <v-card style="height: 100%;width: 100%">
+            <v-toolbar color="primary lighten-2" dark>
+                <v-btn icon>
+                    <v-icon>lock</v-icon>
+                </v-btn>
+                <v-toolbar-title>密码管理</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-tooltip bottom color="blue">
+                    <v-btn flat icon="save" slot="activator">
+                        <v-icon>save</v-icon>
+                    </v-btn>
+                    <span>保存修改</span>
+                </v-tooltip>
+            </v-toolbar>
         <form class="class2">
             <v-text-field v-model="userId" label="用户ID" disabled= true required append-icon="person"></v-text-field>
             <v-text-field v-model="password" :rules="passwordErrors" label="原密码" required append-icon="lock"></v-text-field>
@@ -10,9 +23,8 @@
                     <v-icon style="color: orangered">info</v-icon>
                     修改成功后将重新登录
                 </h5>
-            <v-btn @click="submit" style="margin-left: 70%;width: 122px;color: white;background-color: #00b0ff" round>确   认</v-btn>
-            <v-btn @click="clear" style="margin-left: 3%; width: 122px;color: white;background-color: #00b0ff" round>取   消</v-btn>
         </form>
+        </v-card>
     </v-layout>
 
 </template>
@@ -65,7 +77,7 @@
         width: 122px;
     }
     .class2 {
-        width: 90%;margin-left: 6%;height: 500px;margin-top: 4%
+        width: 90%;margin-left: 6%;height: 400px;margin-top: 4%
     }
     .class3 {
         font-size: large; color: white; margin-left: 5px
