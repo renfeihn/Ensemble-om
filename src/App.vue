@@ -2,8 +2,8 @@
   <div id="appRoot">
     <template v-if="!$route.meta.public">
       <v-app id="inspire" class="app backPower">
-        <app-drawer class="app--drawer elevation-2"></app-drawer>
-        <app-toolbar class="app--toolbar elevation-2"></app-toolbar>
+        <app-drawer class="app--drawer elevation-2 dcMenu" :showMenuLog="showMenuLog"></app-drawer>
+        <app-toolbar class="app--toolbar elevation-2 pl-0" v-on:menuSwitch="menuSwitch" ></app-toolbar>
         <v-content>
           <!-- Page Header -->
        <!--   <page-header v-if="$route.meta.breadcrumb"></page-header>-->
@@ -79,6 +79,7 @@ export default {
     expanded: true,
     rightDrawer: false,
     dashboard: true,
+    showMenuLog: false,
     snackbar: {
       show: false,
       text: "",
@@ -96,6 +97,9 @@ export default {
     openThemeSettings() {
       this.$vuetify.goTo(0);
       this.rightDrawer = !this.rightDrawer;
+    },
+    menuSwitch() {
+        this.showMenuLog=!this.showMenuLog;
     }
   }
 };
@@ -103,6 +107,9 @@ export default {
 
 
 <style lang="stylus" scoped>
+  .dcMenu {
+    margin-top 66px!important
+  }
 .setting-fab {
   top: 50% !important;
   right: 0;

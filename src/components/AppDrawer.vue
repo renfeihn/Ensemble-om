@@ -1,20 +1,13 @@
 <template>
   <v-navigation-drawer
     id="appDrawer"
-    :mini-variant.sync="mini"
     fixed
     :dark="$vuetify.dark"
+    :temporary="!menuSwitch"
     app
     v-model="drawer"
     width="260"
     >
-    <!--取消加深  lighten-1 darken-1-->
-    <v-toolbar color="primary" dark>
-      <img v-bind:src="computeLogo" height="36" alt="产品工厂">
-      <v-toolbar-title class="ml-0 pl-1 ">
-        <span class="hidden-sm-and-down">{{titleName}}</span>
-      </v-toolbar-title>
-    </v-toolbar>
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
       <v-list dense expand>
         <template v-for="(item, i) in menus">
@@ -85,13 +78,18 @@ export default {
     expanded: {
       type: Boolean,
       default: true
+    },
+    showMenuLog: {
+        type: Boolean,
+        default: false
     }
   },
   data() {
     return {
       titleName: this.globalConfig.name,
       mini: false,
-      drawer: true,
+      drawer: false,
+        menuSwitch: false,
       menus: Menu,
       scrollSettings: {
         maxScrollbarLength: 160
@@ -110,16 +108,20 @@ export default {
       return this.$vuetify.options.extra.sideNav;
     }
   },
+    watch: {
+        showMenuLog (val) {
+            this.menuSwitch=val
+        }
+    },
   created() {
     window.getApp.$on("APP_DRAWER_TOGGLED", () => {
-      //this.drawer = !this.drawer;
-      this.mini = !this.mini;
+    this.drawer = !this.drawer;
+     /* this.mini = !this.mini;*/
     });
       getMenuList({userId: sessionStorage.getItem("userId")}).then(response => {
           this.menus=response.data.data;
       })
   },
-
   methods: {
     genChildTarget(item, subItem) {
       if (subItem.href) return;
