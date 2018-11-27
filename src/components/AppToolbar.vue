@@ -4,7 +4,7 @@
         <img v-bind:src="computeLogo" height="36" alt="产品工厂">
         <v-toolbar-title class="ml-0 pl-1">
             <span class="hidden-sm-and-down pr-3">{{titleName}}</span>
-            <v-toolbar-side-icon @click.stop="handleDrawerToggle" class="ml-3"></v-toolbar-side-icon>
+            <v-toolbar-side-icon v-if="dcSwitch" @click.stop="handleDrawerToggle" class="ml-3"></v-toolbar-side-icon>
         </v-toolbar-title>
         <!--<v-text-field-->
         <!--flat-->
@@ -187,9 +187,12 @@
             },
             showSearchAction(){
                 this.searchDc='searchDc';
+                document.getElementsByTagName("main")[0].addEventListener("click",this.showSearchNon);
+
             },
             showSearchNon(){
               this.searchDc='searchDcNone';
+                document.getElementsByTagName("main")[0].removeEventListener("click",this.showSearchNon);
             },
             getInitProdList() {
                 getAllProdList().then(response => {
