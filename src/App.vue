@@ -113,8 +113,8 @@ export default {
   min-height: calc(100vh - 64px - 50px - 81px);
 }
   .dcFooter{
-    position:fixed
+    position:relative
     bottom: 0px
-    width: 88%
+    width: 100%
   }
 </style>

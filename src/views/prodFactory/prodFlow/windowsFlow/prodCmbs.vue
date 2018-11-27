@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="pt-2">
+    <v-layout class="pt-4">
         <v-flex md2 lg2>
             <v-card class="elevation-2">
                 <v-card-media src="/static/bg/18.jpg" height="80px">
