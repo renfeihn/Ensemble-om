@@ -144,7 +144,6 @@
         },
         mounted: function() {
             this.queryProdFlow();
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码
                 this.prodClass = this.$route.hash

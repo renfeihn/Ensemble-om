@@ -163,7 +163,6 @@
         mounted: function() {
             //检查是否存在待处理数据
             this.queryProdFlow();
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //默认展示RB101产品信息
                 getProdData(this.$route.hash).then(response => {

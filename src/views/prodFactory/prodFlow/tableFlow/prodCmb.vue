@@ -58,9 +58,6 @@ export default {
       ]
     };
   },
-  mounted: function() {
-    window.getApp.$emit("APP_DRAWER_TOGGLED");
-  },
   methods: {
     queryProdInfo() {
       console.log("start query prod info");

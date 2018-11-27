@@ -201,7 +201,6 @@
 
             }, true)
             this.queryProdFlow();
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
             //组织树形组件备选数据
             for(let i in columnInfo){
                 if(columnInfo[i].parentCode !== undefined){

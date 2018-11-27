@@ -112,7 +112,6 @@
             this.prodClass = this.$route.params.prodClassCmp
         },
         mounted: function() {
-            window.getApp.$emit('APP_DRAWER_TOGGLED');
             this.prodClass = this.$route.hash
             if(this.$route.params.prodClassCmp !=''){
                 this.prodClass = this.$route.params.prodClassCmp

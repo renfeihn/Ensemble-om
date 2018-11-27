@@ -18,7 +18,7 @@
         <!--</v-text-field>-->
 
         <v-spacer></v-spacer>
-        <v-switch v-model="dcSwitch" @change="switchChange" label="menu" class="pt-4 pr-2" style="flex:none"></v-switch>
+        <v-switch v-model="dcSwitch" @change="switchChange" class="pt-4 pr-2" style="flex:none"></v-switch>
 
             <v-btn
                     class="purple"
