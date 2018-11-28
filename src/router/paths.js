@@ -1189,6 +1189,35 @@ import(
       )
   },
 {
+    path: '/tableList',
+        meta: {
+    breadcrumb: true,
+        title: '交易模块管理'
+},
+    name: 'tableList',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/baseTable/tables/tableListManage.vue'
+)
+},
+{
+    path: '/tableColumn',
+        meta: {
+    breadcrumb: true,
+        title: '交易字典管理'
+},
+    name: 'tableColumn',
+        component: () =>
+import(
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    '@/views/baseTable/tables/tableColumnManage.vue'
+)
+},
+
+{
     path: '/prodCmbs',
         meta: {
     breadcrumb: true,

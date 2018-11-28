@@ -32,11 +32,11 @@
     </v-layout>
 </template>
 <script>
-    import TableList from './tableList'
+//    import TableList from './tables/tableList'
     export default {
-        components: {
-            TableList
-        },
+//        components: {
+//            TableList
+//        },
         data: () => ({
             system: ['Ensemble','Accounting','Price'],
             window: 0

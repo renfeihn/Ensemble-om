@@ -23,7 +23,6 @@
                                     <v-icon>mdi-account</v-icon>
                                 </v-btn>
                             </v-layout>
-                           <table-list></table-list>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -32,11 +31,11 @@
     </v-layout>
 </template>
 <script>
-    import TableList from './tableList'
+//    import TableList from './tables/tableList'
     export default {
-        components: {
-            TableList
-        },
+//        components: {
+//            TableList
+//        },
         data: () => ({
             system: ['Ensemble','Accounting','Price'],
             window: 0
