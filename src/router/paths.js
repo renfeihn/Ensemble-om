@@ -1175,45 +1175,31 @@ import(
 )
 },
   {
-    path: '/tableParentView',
+    path: '/tableParamManage',
     meta: {
       breadcrumb: true,
       title: '参数管理'
     },
-    name: 'tableParentView',
+    name: 'tableParamManage',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/baseTable/tableParentView.vue'
+        '@/views/baseTable/tableParamManage.vue'
       )
   },
 {
-    path: '/tableList',
+    path: '/tableTranManage',
         meta: {
     breadcrumb: true,
-        title: '交易模块管理'
+        title: '交易管理'
 },
-    name: 'tableList',
+    name: 'tableTranManage',
         component: () =>
 import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    '@/views/baseTable/tables/tableListManage.vue'
-)
-},
-{
-    path: '/tableColumn',
-        meta: {
-    breadcrumb: true,
-        title: '交易字典管理'
-},
-    name: 'tableColumn',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    '@/views/baseTable/tables/tableColumnManage.vue'
+    '@/views/baseTable/tableTransManage.vue'
 )
 },
 

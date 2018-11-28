@@ -2,7 +2,9 @@
   "BILL_PERIOD": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "账单周期"
+    "columnDesc": "账单周期",
+    "valueType": "varchar",
+    "valueLength": "20"
   },
   "HANG_TERM": {
     "columnType": "select",

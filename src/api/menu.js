@@ -85,35 +85,16 @@ const Menu = [
     icon: 'view_list',
     menuId: '40',
      items: [
-      { title: '参数管理入口', component: 'tableParentView',menuId: '401'},
+      { title: '参数管理入口', component: 'tableParamManage',menuId: '401'},
     ]
   },
     {
-        title: '交易模块管理',
+        title: '交易管理入口',
 
         icon: 'view_list',
         menuId: '40',
         items: [
-            { title: '交易模块管理', component: 'tableList',menuId: '402'},
-        ]
-    },
-    {
-        title: '交易字典管理',
-
-        icon: 'view_list',
-        menuId: '40',
-        items: [
-            { title: '交易字典管理', component: 'tableColumn',menuId: '403'},
-        ]
-    },
-
-    {
-        title: '',
-
-        icon: 'view_list',
-        menuId: '40',
-        items: [
-            { title: '参数交易定义', component: 'tableColumn',menuId: '402'},
+            { title: '交易管理入口', component: 'tableTranManage',menuId: '402'},
         ]
     },
   { divider: true },
