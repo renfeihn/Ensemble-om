@@ -49,7 +49,7 @@
     } from '@/api/url/prodInfo';
     import {remove} from '@/utils/util'
     import {filterTableChangeData} from "@/server/filterTableChangeData";
-    import DcMultiselect from "../../components/widgets/DcMultiselect";
+    import DcMultiselect from "../../../components/widgets/DcMultiselect";
 
     export default {
         components: {

@@ -85,7 +85,7 @@ const Menu = [
     icon: 'view_list',
     menuId: '40',
      items: [
-      { title: '参数管理入口', component: 'tableParamManage',menuId: '401'},
+      { title: '参数管理入口', component: 'paramManage',menuId: '401'},
     ]
   },
     {
@@ -94,7 +94,7 @@ const Menu = [
         icon: 'view_list',
         menuId: '40',
         items: [
-            { title: '交易管理入口', component: 'tableTranManage',menuId: '402'},
+            { title: '交易管理入口', component: 'transManage',menuId: '402'},
         ]
     },
   { divider: true },

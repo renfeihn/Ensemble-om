@@ -1175,31 +1175,31 @@ import(
 )
 },
   {
-    path: '/tableParamManage',
+    path: '/paramManage',
     meta: {
       breadcrumb: true,
       title: '参数管理'
     },
-    name: 'tableParamManage',
+    name: 'paramManage',
     component: () =>
       import(
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/baseTable/tableParamManage.vue'
+        '@/views/baseTable/paramManage.vue'
       )
   },
 {
-    path: '/tableTranManage',
+    path: '/transManage',
         meta: {
     breadcrumb: true,
         title: '交易管理'
 },
-    name: 'tableTranManage',
+    name: 'transManage',
         component: () =>
 import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    '@/views/baseTable/tableTransManage.vue'
+    '@/views/baseTable/transManage.vue'
 )
 },
 
@@ -1228,7 +1228,7 @@ import(
 import(
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    '@/views/baseTable/tableInfo.vue'
+    '@/views/baseTable/tables/tableInfo.vue'
 )
 },
 {

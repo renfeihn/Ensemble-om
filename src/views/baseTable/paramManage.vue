@@ -51,7 +51,7 @@
     </div>
 </template>
 <script>
-    import TableList from './tableList'
+    import TableList from './tables/tableList'
     import {getTableList} from "@/api/url/prodInfo";
 
     export default {
