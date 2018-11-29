@@ -15,12 +15,10 @@ export default [
       public: false,
     },
     name: 'NotFound',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/NotFound.vue'
-      )
+        require(['@/pages/NotFound.vue'],resolve)
   },
   {
     path: '/403',
@@ -54,12 +52,10 @@ export default [
       public: true,
     },
     name: 'Login',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/Login.vue'
-      )
+          require(['@/pages/Login.vue'],resolve)
   },
   {
     path: '/',
@@ -79,12 +75,10 @@ export default [
       title: '首页',
     },
     name: 'Dashboard',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/Dashboard.vue'
-      )
+        require(['@/pages/Dashboard.vue'],resolve)
   },
 
   // {
@@ -104,11 +98,10 @@ export default [
     props: (route) => ({
       type: route.query.type
     }),
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/Media.vue'
+        require(['@/pages/Media.vue'],resolve
       )
   },
   {
@@ -118,9 +111,10 @@ export default [
     },
     name: 'Chat',
     component: () =>
-      import(
-        /* webpackChunkName: "routes" */
-        '@/components/chat/ChatLayout.vue'
+        (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/components/chat/ChatLayout.vue'],resolve
       ),
     redirect: {
       path: '/chat/messaging'
@@ -148,11 +142,10 @@ export default [
         },
         name: 'ChatContact',
         components: {
-          default: () =>
-            import(
+          default: (resolve) =>
               /* webpackChunkName: "routes" */
               /* webpackMode: "lazy-once" */
-              '@/components/chat/ChatContact.vue'
+              require(['@/components/chat/ChatContact.vue'],resolve
             ),
 
         }
@@ -390,11 +383,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/tooltips',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Tooltip.vue'
+        require(['@/pages/ui/Tooltip.vue'],resolve
       )
   },
   {
@@ -403,11 +395,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/paginations',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Pagination.vue'
+        require(['@/pages/ui/Pagination.vue'],resolve
       )
   },
   {
@@ -416,11 +407,10 @@ export default [
       breadcrumb: true
     },
     name: 'pickers/datepicker',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Datepicker.vue'
+        require(['@/pages/ui/Datepicker.vue'],resolve
       )
   },
   {
@@ -429,11 +419,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/typography',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Typography.vue'
+        require(['@/pages/ui/Typography.vue'],resolve
       )
   },
   {
@@ -442,11 +431,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/color',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Colors.vue'
+        require(['@/pages/ui/Colors.vue'],resolve
       )
   },
   {
@@ -455,11 +443,10 @@ export default [
       breadcrumb: true
     },
     name: 'pickers/timepicker',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Timepicker.vue'
+        require(['@/pages/ui/Timepicker.vue'],resolve
       )
   },
   {
@@ -468,11 +455,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/bottom-sheets',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/BottomSheets.vue'
+        require(['@/pages/layout/BottomSheets.vue'],resolve
       )
   },
   {
@@ -481,11 +467,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/expansion-panels',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/ExpansionPanels.vue'
+        require(['@/pages/layout/ExpansionPanels.vue'],resolve
       )
   },
   {
@@ -494,11 +479,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/footer',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Footers.vue'
+        require(['@/pages/layout/Footers.vue'],resolve
       )
   },
   {
@@ -507,11 +491,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/timeline',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Timeline.vue'
+        require(['@/pages/layout/Timeline.vue'],resolve
       )
   },
   {
@@ -520,11 +503,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/lists',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Lists.vue'
+        require(['@/pages/layout/Lists.vue'],resolve
       )
   },
   {
@@ -533,11 +515,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/toolbar',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Toolbar.vue'
+        require(['@/pages/layout/Toolbar.vue'],resolve
       )
   },
   {
@@ -546,11 +527,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/jumbotrons',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Jumbotrons.vue'
+        require(['@/pages/layout/Jumbotrons.vue'],resolve
       )
   },
   {
@@ -559,11 +539,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/menus',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Menus.vue'
+        require(['@/pages/layout/Menus.vue'],resolve
       )
   },
   {
@@ -572,11 +551,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/navigation-drawers',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/NavigationDrawers.vue'
+        require(['@/pages/layout/NavigationDrawers.vue'],resolve
       )
   },
   {
@@ -585,11 +563,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/tabs',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/layout/Tabs.vue'
+        require(['@/pages/layout/Tabs.vue'],resolve
       )
   },
   {
@@ -598,11 +575,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/basic-forms',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/form/BasicForms.vue'
+        require(['@/pages/form/BasicForms.vue'],resolve
       )
   },
   {
@@ -611,11 +587,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/selects',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/form/Selects.vue'
+        require(['@/pages/form/Selects.vue'],resolve
       )
   },
   {
@@ -624,11 +599,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/editors',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/form/Editors.vue'
+        require(['@/pages/form/Editors.vue'],resolve
       )
   },
   {
@@ -637,11 +611,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/selection-controls',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/form/SelectionControls.vue'
+        require(['@/pages/form/SelectionControls.vue'],resolve
       )
   },
   {
@@ -650,11 +623,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/text-fields',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/form/TextFields.vue'
+        require(['@/pages/form/TextFields.vue'],resolve
       )
   },
   {
@@ -663,11 +635,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/steppers',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/form/Steppers.vue'
+        require(['@/pages/form/Steppers.vue'],resolve
       )
   },
   {
@@ -676,11 +647,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/social',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/widgets/Social.vue'
+        require(['@/pages/widgets/Social.vue'],resolve
       )
   },
   {
@@ -689,11 +659,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/widget-post',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/widgets/Post.vue'
+        require(['@/pages/widgets/Post.vue'],resolve
       )
   },
   {
@@ -702,11 +671,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/statistic',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/widgets/Statistic.vue'
+        require(['@/pages/widgets/Statistic.vue'],resolve
       )
   },
   {
@@ -715,11 +683,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/chart',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/widgets/Chart.vue'
+        require(['@/pages/widgets/Chart.vue'],resolve
       )
   },
   {
@@ -728,11 +695,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/widget-list',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/widgets/List.vue'
+        require(['@/pages/widgets/List.vue'],resolve
       )
   },
   {
@@ -742,11 +708,10 @@ export default [
       title: '产品流程4'
     },
     name: 'prod/SerchList',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodFlow/searchFlow/SearchList.vue'
+        require(['@/views/prodFactory/prodFlow/searchFlow/SearchList.vue'],resolve
       )
   },
   {
@@ -756,11 +721,10 @@ export default [
       title: '我的工作台'
     },
     name: 'MyWork',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue'
+        require(['@/views/prodFactory/prodFlow/cardFlow/cardPatenProd.vue'],resolve
       )
   },
   {
@@ -770,11 +734,10 @@ export default [
       title: '我收藏的产品'
     },
     name: 'MyProd',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'
+        require(['@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'],resolve
       )
   },
   {
@@ -784,11 +747,10 @@ export default [
       title: '产品流程2'
     },
     name: 'prod/cardPatenProd3',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'
+        require(['@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'],resolve
       )
   },
   {
@@ -798,9 +760,10 @@ export default [
       title: '产品展现2'
     },
     name: 'prod/deposit2',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/deposit2.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/deposit2.vue'],resolve
       )
   },
   {
@@ -810,9 +773,10 @@ export default [
       title: '个人存款组'
     },
     name: 'prod/rbPrivateProd',
-    component: () =>
-      import(
-        `@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue`
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require([`@/views/prodFactory/prodInfo/tags/rbPrivateProd.vue`],resolve
       )
   },
 {
@@ -822,9 +786,10 @@ export default [
         title: '活期产品组'
 },
     name: 'prod/rbPrivateProds',
-        component: () =>
-import(
-    `@/views/prodFactory/prodInfo/tags/rbPrivateProds.vue`
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require([`@/views/prodFactory/prodInfo/tags/rbPrivateProds.vue`],resolve
 )
 },
   {
@@ -834,9 +799,10 @@ import(
       title: '对公存款组'
     },
     name: 'prod/rbPublicProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/rbPublicProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/rbPublicProd.vue'],resolve
       )
   },
   {
@@ -846,9 +812,10 @@ import(
       title: '同业存款组'
     },
     name: 'prod/rbHorizontalProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/rbHorizontalProd.vue'],resolve
       )
   },
   {
@@ -858,9 +825,10 @@ import(
       title: '菜单管理'
     },
     name: 'propertyManage/muneManage',
-    component: () =>
-      import(
-        '@/views/propertyManage/muneManage.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/propertyManage/muneManage.vue'],resolve
       )
   },
   {
@@ -870,9 +838,10 @@ import(
       title: '存款基础产品组'
     },
     name: 'prod/rbBaseProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/rbBaseProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/rbBaseProd.vue'],resolve
       )
   },
   {
@@ -882,9 +851,10 @@ import(
       title: '对私贷款组'
     },
     name: 'prod/clPrivateProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clPrivateProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clPrivateProd.vue'],resolve
       )
   },
   {
@@ -894,9 +864,10 @@ import(
       title: '对公贷款组'
     },
     name: 'prod/clPublicProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clPublicProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clPublicProd.vue'],resolve
       )
   },
   {
@@ -906,9 +877,10 @@ import(
       title: '贴现组'
     },
     name: 'prod/clDiscountProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clDiscountProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clDiscountProd.vue'],resolve
       )
   },
   {
@@ -918,9 +890,10 @@ import(
       title: '垫款组'
     },
     name: 'prod/clAdvancesProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clAdvancesProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clAdvancesProd.vue'],resolve
       )
   },
   {
@@ -930,9 +903,10 @@ import(
       title: '委托贷款组'
     },
     name: 'prod/clEntrustedProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clEntrustedProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clEntrustedProd.vue'],resolve
       )
   },
   {
@@ -942,9 +916,10 @@ import(
       title: '银团贷款组'
     },
     name: 'prod/clSyndicatedProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clSyndicatedProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clSyndicatedProd.vue'],resolve
       )
   },
   {
@@ -954,9 +929,10 @@ import(
       title: '贷款基础产品组'
     },
     name: 'prod/clBaseProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/clBaseProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/clBaseProd.vue'],resolve
       )
   },
   {
@@ -966,9 +942,10 @@ import(
       title: '内部账组'
     },
     name: 'prod/glInternalProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/glInternalProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/glInternalProd.vue'],resolve
       )
   },
   {
@@ -978,9 +955,10 @@ import(
       title: '存放同业组'
     },
     name: 'prod/glToHorizontalProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/glToHorizontalProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/glToHorizontalProd.vue'],resolve
       )
   },
   {
@@ -990,9 +968,10 @@ import(
       title: '同业存放组'
     },
     name: 'prod/glPromHorizontalProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/glPromHorizontalProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/glPromHorizontalProd.vue'],resolve
       )
   },
   {
@@ -1014,11 +993,10 @@ import(
       title: '差异对比'
     },
     name: 'diff/prodDiff',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodDiff/prodDiff.vue'
+        require(['@/views/prodFactory/prodDiff/prodDiff.vue'],resolve
       )
   },
   {
@@ -1028,11 +1006,10 @@ import(
       title: '差异对比2'
     },
     name: 'diffList',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodDiff/diffList/diffList.vue'
+        require(['@/views/prodFactory/prodDiff/diffList/diffList.vue'],resolve
       )
   },
   {
@@ -1042,11 +1019,10 @@ import(
       title: '产品目录'
     },
     name: 'prodCmb',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue'
+        require(['@/views/prodFactory/prodFlow/tableFlow/prodCmb.vue'],resolve
       )
   },
 
@@ -1057,11 +1033,10 @@ import(
       title: '产品信息'
     },
     name: 'prod/deposit',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodInfo/tags/deposit.vue'
+        require(['@/views/prodFactory/prodInfo/tags/deposit.vue'],resolve
       )
   },
   {
@@ -1071,25 +1046,10 @@ import(
       title: '我的工作台'
     },
     name: 'userWorkTags',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/userFlow/userWork/userWorkTags.vue'
-      )
-  },
-  {
-    path: '/userWork/userWorkNavigation',
-    meta: {
-      breadcrumb: true,
-      title: '我的工作台2'
-    },
-    name: 'userWorkNavigation',
-    component: () =>
-      import(
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        '@/views/userFlow/userWork/userWorkNavigation.vue'
+        require(['@/views/userFlow/userWork/userWorkTags.vue'],resolve
       )
   },
   {
@@ -1099,11 +1059,10 @@ import(
       title: '我的工作台'
     },
     name: 'userIndexFlow',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/userFlow/indexFlow/indexFlow2.vue'
+        require(['@/views/userFlow/indexFlow/indexFlow2.vue'],resolve
       )
   },
   {
@@ -1113,12 +1072,10 @@ import(
       title: '交易详细信息'
     },
     name: 'tranDataIndex',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/userFlow/transactionInfo/tranDataIndex.vue'
-      )
+        require(['@/views/userFlow/transactionInfo/tranDataIndex.vue'],resolve)
   },
   {
     path: '/publish/publishForm',
@@ -1127,11 +1084,10 @@ import(
       title: '参数变动记录'
     },
     name: 'publishForm',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/userFlow/publish/publishDate.vue'
+        require(['@/views/userFlow/publish/publishDate.vue'],resolve
       )
   },
   {
@@ -1141,10 +1097,11 @@ import(
       title: '合作方签约'
     },
     name: 'partner/partnerMain',
-    component: () =>
-      import(
-        '@/views/nlManage/partnerManage/partnerMain.vue'
-      )
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/nlManage/partnerManage/partnerMain.vue'],resolve
+        )
   },
   {
     path: '/RbBaseProds',
@@ -1153,11 +1110,10 @@ import(
       title: '存款基础产品'
     },
     name: 'RbBaseProds',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/views/prodFactory/prodInfo/RbBaseProds.vue'
+        require(['@/views/prodFactory/prodInfo/RbBaseProds.vue'],resolve
       )
   },
 {
@@ -1167,12 +1123,10 @@ import(
         title: '存款可售产品'
 },
     name: 'RbSoldProds',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    '@/views/prodFactory/prodInfo/RbSoldProds.vue'
-)
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/RbSoldProds.vue'],resolve)
 },
   {
     path: '/paramManage',
@@ -1181,12 +1135,10 @@ import(
       title: '参数管理'
     },
     name: 'paramManage',
-    component: () =>
-      import(
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        '@/views/baseTable/paramManage.vue'
-      )
+    component: (resolve) =>
+    /* webpackChunkName: "routes" */
+    /* webpackMode: "lazy-once" */
+    require(['@/views/baseTable/paramManage.vue'],resolve)
   },
 {
     path: '/transManage',
@@ -1210,26 +1162,22 @@ import(
         title: '产品目录'
 },
     name: 'prodCmbs',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    '@/views/prodFactory/prodFlow/windowsFlow/prodCmbs.vue'
-)
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodFlow/windowsFlow/prodCmbs.vue'],resolve)
 },
 {
     path: '/tableInfo',
-        meta: {
+    meta: {
     breadcrumb: true,
-        title: '参数信息'
-},
+    title: '参数信息'
+    },
     name: 'tableInfo',
-        component: () =>
-import(
+       component: (resolve) =>
     /* webpackChunkName: "routes" */
     /* webpackMode: "lazy-once" */
-    '@/views/baseTable/tables/tableInfo.vue'
-)
+    require(['@/views/baseTable/tables/tableInfo.vue'],resolve)
 },
 {
     path: '/systemManageIndex',
@@ -1238,11 +1186,10 @@ import(
         title: '系统管理'
 },
     name: 'systemManageIndex',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    '@/views/systemManage/systemManageIndex.vue'
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/systemManage/systemManageIndex.vue'],resolve
 )
 },
 {
@@ -1252,12 +1199,10 @@ import(
         title: '权限管理'
 },
     name: 'permManageIndex',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    '@/views/permManage/permManageIndex.vue'
-)
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/permManage/permManageIndex.vue'],resolve)
 },
     {
         path: '/userInfoIndex',
@@ -1266,11 +1211,9 @@ import(
             title: '用户信息管理'
         },
         name: 'userInfoIndex',
-        component: () =>
-            import(
-                /* webpackChunkName: "routes" */
-                /* webpackMode: "lazy-once" */
-                '@/views/userFlow/userManagement/userInfoIndex.vue'
-                )
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/userFlow/userManagement/userInfoIndex.vue'],resolve)
     },
 ];

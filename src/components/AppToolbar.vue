@@ -29,15 +29,8 @@
                 Search
             </v-btn>
               <v-card :class="searchDc">
-                  <v-layout pt-2 px-5>
-                      <v-flex md11 lg11>
-                <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text"
+                <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text px-5 pt-2"
                                 @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
-                      </v-flex>
-                      <v-flex md1 lg1>
-                  <v-icon @click="showSearchNon" class="material-icons pt-3 pl-1">close_sweep</v-icon>
-                      </v-flex>
-                  </v-layout>
               </v-card>
         <v-btn icon @click="handleFullScreen()">
             <v-icon>fullscreen</v-icon>
