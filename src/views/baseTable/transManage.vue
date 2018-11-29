@@ -5,12 +5,12 @@
                 <v-flex xs12>
                     <v-card-media src="/static/bg/18.jpg" height="200px" class="elevation-4">
                         <v-card-title class="pb-0">
-                            <td>
-                                <h3 class="" style="color: white;margin-top: -75px">{{title}}</h3>
-                            </td>
-                            <td>
-                                <h1 class="" style="color: white;margin-top: 60%;">{{titleNum}}</h1>
-                            </td>
+                            <v-layout>
+                                <td><h3 class="" style="color: white;margin-top: -80px">{{title}}</h3></td>
+                            </v-layout>
+                            <v-layout>
+                                <td><h1 class="" style="color: white;margin-top: 55px;margin-left: -50px">{{titleNum}}</h1></td>
+                            </v-layout>
                         </v-card-title>
                     </v-card-media>
                 </v-flex>
@@ -39,6 +39,8 @@
 <script>
     import tableColumn from './tables/tableColumnManage'
     import tableList from './tables/tableListManage'
+    import {getSysTable} from "@/api/url/prodInfo";
+    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         components: {
@@ -47,8 +49,8 @@
         },
         data() {
             return {
-                title: "交易数量",
-                titleNum: "105",
+                title: "",
+                titleNum: "",
                 action: 'model',
                 items: [
                     {title: '交易模块维护',name: 'model', class: '',icon: 'settings',color: "blue"},
@@ -59,15 +61,34 @@
                 windowTitle: 'windowTitle',
             }
         },
+        created () {
+            this.getParaTable()
+        },
         methods: {
+            getParaTable() {
+              //获取参数信息
+                let that = this
+                getSysTable("OM_TABLE_LIST").then(function (response) {
+                    that.titleNum = response.data.data.columnInfo.length
+                    that.title = "交易数量"
+                });
+            },
             actionTag(item) {
+                let that = this
                 if(item.name === "model"){
                     this.title = "交易数量"
-                    this.titleNum = "105"
+                    getSysTable("OM_TABLE_LIST").then(function (response) {
+                        that.titleNum = response.data.data.columnInfo.length
+                    });
                 }
                 if(item.name === "json"){
-                    this.title = "字段数量"
-                    this.titleNum = "213"
+                    that.title = "字段数量"
+                    let count = 0
+                    const dataSource = columnInfo;
+                    for(let i in dataSource){
+                        count++
+                    }
+                    that.titleNum = count+''
                 }
                 this.action = item.name;
                 item.class="selected";

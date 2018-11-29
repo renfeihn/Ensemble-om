@@ -31,16 +31,17 @@
                                     <!--<v-text-field v-model="editedItem.valueLength" label="数据长度"></v-text-field>-->
                                 <!--</v-flex>-->
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.columnType" label="字段属性"></v-text-field>
+                                    <v-select v-model="editedItem.columnType" label="字段属性" :items="columnTypeRf" item-text="value" item-value="key"></v-select>
+
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.valueMethod" label="数据模型"></v-text-field>
+                                    <v-select v-model="editedItem.valueMethod" label="数据模型" :items="valueMethodRf" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.valueScore" label="数据来源"></v-text-field>
+                                    <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.valueScoreColumn" label="表字段"></v-text-field>
+                                    <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -89,13 +90,54 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         props: ["title"],
         data: () => ({
             dialog: false,
             disabled: "false",
-
+            tab: [],
+            valueMethodRf: [
+                {
+                    key: "RF",
+                    value: "数据来源他表"
+                },
+                {
+                    key: "VL",
+                    value: "固定备选数据"
+                },
+                {
+                    key: "FD",
+                    value: "手动输入"
+                },
+                {
+                    key: "YN",
+                    value: "YN"
+                }
+            ],
+            columnTypeRf: [
+                {
+                    key: "select",
+                    value: "下拉选择"
+                },
+                {
+                    key: "input",
+                    value: "手动输入"
+                },
+                {
+                    key: "switch",
+                    value: "开关"
+                },
+                {
+                    key: "data",
+                    value: "日期控件"
+                },
+                {
+                    key: "tree",
+                    value: "树形结构"
+                }
+            ],
             headers: [
                 { text: '字段ID',sortable: false},
                 { text: '字段名称',sortable: false},
@@ -103,63 +145,11 @@
 //                { text: '数据长度',sortable: false },
                 { text: '字段属性',sortable: false },
                 { text: '数据模型',sortable: false },
-                { text: '数据来源',sortable: false },
-                { text: '表字段',sortable: false },
+                { text: '数据来源表',sortable: false },
+                { text: '数据参数',sortable: false },
                 { text: 'Action',sortable: false }
             ],
-            desserts: [
-                {
-                    columnId: 'BILL_PERIOD',
-                    columnDesc: '账单周期',
-//                    valueType: 'varchar',
-//                    valueLength: '20',
-                    columnType: 'input',
-                    valueMethod: 'FD',
-                    valueScore: '',
-                    valueScoreColumn: ''
-                },
-                {
-                    columnId: 'HANG_TERM',
-                    columnDesc: '挂账期限',
-//                    valueType: 'varchar',
-//                    valueLength: '1',
-                    columnType: 'select',
-                    valueMethod: 'RF',
-                    valueScore: 'PERIOD_FREQ',
-                    valueScoreColumn: 'FREQ_DESC,PERIOD_FREQ'
-
-                },
-                {
-                    columnId: 'NON_GENL_STATUS',
-                    columnDesc: '非正常停止发放',
-//                    valueType: 'varchar',
-//                    valueLength: '1',
-                    columnType: 'YN',
-                    valueMethod: '',
-                    valueScore: '',
-                    valueScoreColumn: ''
-                },
-                {
-                    columnId: 'ALLOW_PROD',
-                    columnDesc: '允许透支的存款产品',
-//                    valueType: 'varchar',
-//                    valueLength: '20',
-                    columnType: 'select',
-                    valueMethod: 'RF',
-                    valueScore: 'MB_PROD_TYPE',
-                    valueScoreColumn: 'PROD_TYPE,PROD_DESC'
-                },
-                {
-                    columnId: 'REPAY_SEQ_TYPE_NP',
-                    columnDesc: '非应计利息还款顺序',
-//                    valueType: 'varchar',
-//                    valueLength: '20',
-                    columnType: 'select',
-                    valueMethod: 'VL',
-                    valueScore: 'B-大本大息,S-小本小息',
-                    valueScoreColumn: ''
-                }
-            ],
+            desserts: [],
             sourceData: [],
             keySet: [
                 {
@@ -205,17 +195,48 @@
             }
         },
 
-//        created () {
-////            this.initialize()
-//        },
+        created () {
+            this.initialize()
+            this.initRf()
+        },
 
         methods: {
-            initialize () {
+            initRf() {
                 let that = this
                 getSysTable("OM_TABLE_LIST").then(function (response) {
-                    that.desserts = response.data.data.columnInfo;
-                    that.sourceData = that.copy(that.desserts,that.sourceData)
+                    for(let i=0; i<response.data.data.columnInfo.length; i++){
+                        let temp = {}
+                        temp["key"] = response.data.data.columnInfo[i].tableName
+                        temp["value"] = response.data.data.columnInfo[i].tableDesc
+                        that.tab.push(temp)
+                    }
                 });
+            },
+            initialize () {
+                let that = this
+                //读取本地json文件
+                const dataSource = columnInfo;
+                for(let i in dataSource){
+                    let temp = {}
+                    temp["columnId"] = i
+                    temp["columnDesc"] = dataSource[i].columnDesc
+                    temp["columnType"] = dataSource[i].columnType
+                    temp["valueMethod"] = dataSource[i].valueMethod
+                    temp["valueScore"] = dataSource[i].valueScore === undefined?"":dataSource[i].valueScore.tableName
+                    let valueScoreColumn = " "
+                    if(dataSource[i].valueMethod === "RF" && dataSource[i].valueScore !== undefined){
+                        valueScoreColumn = dataSource[i].valueScore.columnCode
+                        valueScoreColumn = valueScoreColumn + dataSource[i].valueScore.columnDesc
+                    }
+                    if(dataSource[i].valueMethod == "VL" && dataSource[i].valueScore !== undefined){
+                        for(let j=0; j<dataSource[i].valueScore.length; j++){
+                            valueScoreColumn =valueScoreColumn + dataSource[i].valueScore[j].key +"-" + dataSource[i].valueScore[j].value +','
+                        }
+                        valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
+                    }
+                    temp["valueScoreColumn"] = valueScoreColumn
+                    that.desserts.push(temp)
+                }
             },
             addClick() {
                 this.disabled = "false"
@@ -247,16 +268,16 @@
                 } else {
                     this.desserts.push(this.editedItem)
                 }
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_TABLE_LIST"
-                this.backValue.keySet = "TABLE_NAME"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
+//                //保存数据本地json文件
+//                var fs = require('fs');
+//                fs.writeFile('@/views/prodFactory/prodInfo/columnInfo.json',JSON.stringify(this.desserts),function(err){
+//                    if(err){
+//                        console.error(err);
+//                    }
+//                    console.log('----------新增成功-------------');
+//                })
+////                this.desserts
+                toast.success("提交成功！");
                 this.close()
             },
             //对象浅复制
@@ -271,18 +292,6 @@
                     }
                 }
                 return obj;
-            },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_TABLE_LIST"
-                this.backValue.keySet = "TABLE_NAME"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
             }
         }
     }

@@ -5,8 +5,12 @@
                 <v-flex xs12>
                     <v-card-media src="/static/bg/18.jpg" height="200px" class="elevation-4">
                         <v-card-title class="pb-0">
-                            <td><h3 class="" style="color: white;margin-top: -75px">{{title}}</h3></td>
-                            <td><h1 class="" style="color: white;margin-top: 60%;">{{titleNum}}</h1></td>
+                            <v-layout>
+                                <td><h3 class="" style="color: white;margin-top: -80px">{{title}}</h3></td>
+                            </v-layout>
+                            <v-layout>
+                                <td><h1 class="" style="color: white;margin-top: 55px;margin-left: -50px">{{titleNum}}</h1></td>
+                            </v-layout>
                         </v-card-title>
                     </v-card-media>
                 </v-flex>
@@ -39,7 +43,7 @@
                             <td>{{ props.item.modelId }}</td>
                             <td>{{ props.item.parameter }}</td>
                             <td>
-                                <v-btn depressed outline icon fab dark color="primary lighten-2" small @click="routerTableInfo(props.item.tableName)">
+                                <v-btn depressed outline icon fab dark color="primary lighten-2" small @click="routerTableInfo(props.item)">
                                     <v-icon>edit</v-icon>
                                 </v-btn>
                             </td>
@@ -60,14 +64,14 @@
         },
         data() {
             return {
-                title: "核心系统",
-                titleE: "Ensemble",
-                titleNum: "105",
+                title: "",
+                titleE: "",
+                titleNum: "",
                 action: 'ensemble',
                 items: [
-                    {title: '核心系统',name: 'Ensemble', class: '',icon: 'settings',color: "blue"},
-                    {title: '核算系统',name: 'Accounting', class: '',icon: 'settings',color: "blue"},
-                    {title: '利率市场化',name: 'Price', class: '',icon: 'settings',color: "blue"}
+                    {title: '核心系统',name: 'ensemble', class: '',icon: 'settings',color: "blue"},
+                    {title: '核算系统',name: 'accounting', class: '',icon: 'settings',color: "blue"},
+                    {title: '利率市场化',name: 'price', class: '',icon: 'settings',color: "blue"}
                 ],
                 window: 0,
                 windowItem: 'windowItem',
@@ -105,22 +109,23 @@
         },
         methods: {
             actionTag(item) {
-                if(item.name === "Ensemble"){
-                    this.title = "核心系统"
-                    this.titleE = "Ensemble"
-                    this.titleNum = "125"
-                }
-                if(item.name === "Accounting"){
-                    this.title = "核算系统"
-                    this.titleE = "Accounting"
-                    this.titleNum = "105"
-                }
-                if(item.name === "Price"){
-                    this.title = "利率市场化"
-                    this.titleE = "Price"
-                    this.titleNum = "213"
-                }
                 this.action = item.name;
+                let that=this;
+                getTableList(this.action).then(function (response){
+                    that.desserts=response.data.data.tableList;
+                    that.titleE = that.action
+                    if(that.action === "ensemble") {
+                        that.title = "核心系统"
+                    }
+                    if(that.action === "accounting") {
+                        that.title = "核算系统"
+                    }
+                    if(that.action === "price") {
+                        that.title = "利率市场化"
+                    }
+                    that.titleNum = response.data.data.tableList.length
+                });
+
                 item.class="selected";
                 for(const index in this.items){
                     if(this.items[index].name != item.name) {
@@ -132,13 +137,17 @@
                 let that=this;
                 getTableList("ensemble").then(function (response){
                     that.desserts=response.data.data.tableList;
+                    that.titleNum = response.data.data.tableList.length
+                    that.title = "核心系统"
+                    that.titleE = "ensemble"
                 });
             },
-            routerTableInfo(tableName) {
+            routerTableInfo(item) {
                 this.$router.push({
                     name: 'tableInfo',
                     params: {
-                        'tableName': tableName
+                        'tableName': item.tableName,
+                        'tableDesc': item.tableDesc
                     }
                 })
             },

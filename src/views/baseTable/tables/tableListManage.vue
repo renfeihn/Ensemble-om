@@ -33,6 +33,9 @@
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.parameter" label="参数类型"></v-text-field>
                                 </v-flex>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="editedItem.searchColumn" label="检索条件"></v-text-field>
+                                </v-flex>
                             </v-layout>
                         </v-container>
                     </v-card-text>
@@ -51,6 +54,7 @@
                 <td>{{ props.item.system }}</td>
                 <td>{{ props.item.modelId }}</td>
                 <td>{{ props.item.parameter }}</td>
+                <td>{{ props.item.searchColumn }}</td>
                 <td>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
                         <v-btn flat icon="edit" slot="activator">
@@ -89,6 +93,7 @@
                 { text: '所属系统',sortable: false },
                 { text: '所属模块',sortable: false },
                 { text: '参数类型',sortable: false },
+                { text: '检索条件',sortable: false },
                 { text: 'Action',sortable: false }
             ],
             desserts: [],
@@ -106,14 +111,16 @@
                 tableDesc: '',
                 system: '',
                 modelId: '',
-                parameter: ''
+                parameter: '',
+                searchColumn: ''
             },
             defaultItem: {
                 tableName: '',
                 tableDesc: '',
                 system: '',
                 modelId: '',
-                parameter: ''
+                parameter: '',
+                searchColumn: ''
             },
             backValue: {}
         }),

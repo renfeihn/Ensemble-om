@@ -2,7 +2,7 @@
     <v-layout justify-center pt-4>
         <v-flex xs12 sm12>
             <v-toolbar card dense color="primary lighten-2" dark>
-                <v-toolbar-title>MB_PROD_TYPE-产品定义表</v-toolbar-title>
+                <v-toolbar-title>{{title}}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
             <v-card>
@@ -59,6 +59,8 @@
         },
         data() {
             return {
+                title: "",
+                tableName: "",
                 dataInfo: [],
                 sourceDataInfo: [],
                 disabledFlag: false,
@@ -88,13 +90,15 @@
         },
         mounted: function () {
             if (this.$route.params.tableName != undefined) {
+                this.title = this.$route.params.tableName + "-" + this.$route.params.tableDesc
+                this.tableName = this.$route.params.tableName
                 this.getParaTable(this.$route.params.tableName);
             }
         },
         methods: {
             getParaTable(tableName) {
                 let that = this;
-                getParamTable("MB_PROD_TYPE").then(function (response) {
+                getParamTable(tableName).then(function (response) {
                     that.dataInfo = response.data.data.columnInfo;
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
                     that.columns = response.data.data.column;
@@ -153,7 +157,7 @@
             onSave() {
                 let test = this.dataInfo
                 this.backValue.data = filterTableChangeData(this.columns, this.dataInfo, this.sourceDataInfo)
-                this.backValue.tableName = "MB_PROD_TYPE"
+                this.backValue.tableName = this.tableName
                 this.backValue.option = "save"
                 this.backValue.userName = sessionStorage.getItem("userId")
                 saveTable(this.backValue).then(response => {
