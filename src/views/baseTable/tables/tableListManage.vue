@@ -15,25 +15,25 @@
                     <v-card-text style="margin-top: -10%">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                <v-flex xs6 sm6 md6 v-if="disabled=='true'">
                                     <v-text-field v-model="editedItem.tableName" label="交易ID" disabled></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
+                                <v-flex xs6 sm6 md6 v-if="disabled=='false'">
                                     <v-text-field v-model="editedItem.tableName" label="交易ID"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.tableDesc" label="交易名称"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.system" label="所属系统"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.modelId" label="所属模块"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.parameter" label="参数类型"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.searchColumn" label="检索条件"></v-text-field>
                                 </v-flex>
                             </v-layout>

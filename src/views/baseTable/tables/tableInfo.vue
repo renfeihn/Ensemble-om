@@ -1,11 +1,13 @@
 <template>
     <v-layout justify-center pt-4>
         <v-flex xs12 sm12>
-            <v-toolbar card dense color="primary lighten-2" dark>
-                <v-toolbar-title>{{title}}</v-toolbar-title>
+            <v-card class="radiusDc">
+                <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+                    <v-icon>widgets</v-icon>
+                    <v-toolbar-title>{{title}}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
-            <v-card>
+
                 <v-toolbar card dense color="transparent">
                     <v-layout justify-center>
                         <v-flex xs6 sm6>

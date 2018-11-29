@@ -1,17 +1,15 @@
 <template>
   <div>
     <v-layout row wrap>
-      <v-toolbar color="blue lighten-2" dark tabs>
-        <v-toolbar-side-icon></v-toolbar-side-icon>
-          <v-toolbar-title>交易单号:{{code}}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn color="write" @click="printDown()" flat>打印</v-btn>
-          <v-btn color="write" @click="downLoad()" flat>导出</v-btn>
-      </v-toolbar>
       <v-flex md8 lg8>
         <!--<tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>-->
         <!--<tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>-->
         <!--复核流程信息-->
+        <v-card class="mt-4 elevation-4 radiusDc">
+          <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+            <v-icon>call_split</v-icon>
+            <v-toolbar-title>{{title}}</v-toolbar-title>
+          </v-toolbar>
         <v-stepper v-model="e11" v-if="optKey == 3">
           <v-stepper-header style="font-size: large">
             <v-divider></v-divider>
@@ -191,25 +189,47 @@
             </v-layout>
           </v-stepper-content>
         </v-stepper>
+        </v-card>
      </v-flex>
-      <v-flex xs12 md4 lg4 color: white>
-        <v-parallax dark src="/static/nature/n5.jpeg" style="height: 100%">
-          <!--<v-layout>-->
-            <!--<v-subheader class="showMsg">{{optDesc}}存款产品</v-subheader>-->
-          <!--</v-layout>-->
+      <v-flex xs12 md4 lg4>
+        <v-card class="ml-4 mt-4 elevation-4 radiusDc">
+          <v-card-media src="/static/avatar/prod1.jpg" style="margin-left: 135px;margin-right: 135px">
+          </v-card-media>
           <v-layout>
-            <v-subheader class="showMsg">{{prodType}}-{{prodDesc}}</v-subheader>
+            <v-subheader class="showMsg" style="color: #00b0ff">产品代码:</v-subheader>
+            <v-subheader class="showMsg" style="color: #00b0ff">{{prodType}}</v-subheader>
           </v-layout>
           <v-layout>
-            <v-btn class="btnClass" color="green" dark large @click='confirmClick'>确 认</v-btn>
+            <v-subheader style="font-size: x-large;font-style: inherit;margin-left: 5%;color: #00b0ff">产品名称:</v-subheader>
+            <v-subheader style="font-size: x-large;font-style: inherit;margin-left: 0%;color: #00b0ff">{{prodDesc}}</v-subheader>
           </v-layout>
-        </v-parallax>
+          <v-layout>
+            <v-btn class="btnClass" color="primary lighten-2" dark large @click='confirmClick'>确 认</v-btn>
+          </v-layout>
+        </v-card>
       </v-flex>
     </v-layout>
-    <v-toolbar color="blue lighten-2" dark tabs>
+    <v-card class="elevation-2 radiusDc">
+    <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-4 mt-4" flat>
       <v-toolbar-side-icon @click="showClick"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">产品修改差异展示</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-tooltip bottom color="blue">
+        <v-btn flat icon="print" slot="activator">
+          <v-icon class="mr-2" @click="printDown()" style="color: white">print</v-icon>
+        </v-btn>
+        <span>打      印</span>
+      </v-tooltip>
+      <v-tooltip bottom color="blue">
+        <v-btn flat icon="widgets" slot="activator">
+          <v-icon @click="downLoad()" style="color: white">widgets</v-icon>
+        </v-btn>
+        <span>导      出</span>
+      </v-tooltip>
+
     </v-toolbar>
+    </v-card>
+
     <v-card md20 lg20 v-show="showFlag==1" ref="print">
       <v-card-text>
         <v-tabs fixed-tabs>
@@ -228,6 +248,7 @@
         </v-tabs>
       </v-card-text>
     </v-card>
+    <!--</v-layout>-->
   </div>
 </template>
 <script>
@@ -264,6 +285,7 @@ import {
               e1: 3,
               releaseFlowInfo: [],
               temp: [],
+              title: "",
               releaseInfo: {
                   mainSeqNo: '',
                   date: '',
@@ -420,10 +442,12 @@ import {
                 if(val === "复核") {
                     this.optKey = 3
                     this.optDesc = "复核"
+                    this.title = "交易复核流程"
                 }
                 if(val === "发布") {
                     this.optKey = 4
                     this.optDesc = "发布"
+                    this.title = "交易发布流程"
                 }
             },
             printDown () {
@@ -589,12 +613,10 @@ import {
       margin-left: 40%
     }
   .showMsg {
-       color: white;
        font-size: x-large;
        font-style: inherit;
-       margin-left: auto;
-    margin-right: 0px;
-    margin-top: 20%;
+       margin-left: 5%;
+        margin-top: 4%;
      }
     .descClass {
       color: #64b5f6;
@@ -608,8 +630,9 @@ import {
       margin-top: 5px;
     }
   .btnClass {
-    margin-top: 5%;
+    margin-top: 3%;
     margin-left: 28%;
+    margin-bottom: 3%;
     width: 50%;
     font-size: large;
   }

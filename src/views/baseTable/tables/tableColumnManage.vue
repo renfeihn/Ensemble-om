@@ -15,13 +15,13 @@
                     <v-card-text style="margin-top: -10%">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                <v-flex xs6 sm6 md6 v-if="disabled=='true'">
                                     <v-text-field v-model="editedItem.columnId" label="字段ID" disabled></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
+                                <v-flex xs6 sm6 md6 v-if="disabled=='false'">
                                     <v-text-field v-model="editedItem.columnId" label="字段ID"></v-text-field>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.columnDesc" label="字段名称"></v-text-field>
                                 </v-flex>
                                 <!--<v-flex xs12 sm12 md12>-->
@@ -30,17 +30,17 @@
                                 <!--<v-flex xs12 sm12 md12>-->
                                     <!--<v-text-field v-model="editedItem.valueLength" label="数据长度"></v-text-field>-->
                                 <!--</v-flex>-->
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.columnType" label="字段属性" :items="columnTypeRf" item-text="value" item-value="key"></v-select>
 
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.valueMethod" label="数据模型" :items="valueMethodRf" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12>
+                                <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数"></v-text-field>
                                 </v-flex>
                             </v-layout>

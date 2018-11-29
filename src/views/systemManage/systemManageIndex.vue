@@ -3,13 +3,13 @@
         <v-layout>
             <v-flex md3 lg3 class="pl-4">
                 <v-flex xs12>
-                    <v-card class="pt-4 elevation-4">
+                    <v-card class="pt-4 elevation-4 radiusDc">
                         <v-card-media src="/static/avatar/sys1.jpg">
                         </v-card-media>
                     </v-card>
                 </v-flex>
                 <v-flex xs12 class="mt-2 pb-4">
-                    <v-card style="height: 200%" class="elevation-4">
+                    <v-card style="height: 200%" class="elevation-4 radiusDc">
                         <v-list>
                             <v-list-tile v-for="item in items" :key="item.title" @click="actionTag(item)" :class="item.class">
                                 <v-list-tile-action>
