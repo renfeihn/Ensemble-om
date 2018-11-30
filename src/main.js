@@ -21,11 +21,12 @@ import 'vuetify/dist/vuetify.min.css'
 
 // 导入 table 和 分页组件
 import {VTable,VPagination} from 'vue-easytable'
-import { Table,Divider,Tag ,Button } from 'ant-design-vue'
+import { Spin, Table,Divider,Tag ,Button} from 'ant-design-vue'
 Vue.component(Table.name, Table)
 Vue.component(Divider.name, Divider)
 Vue.component(Tag.name, Tag)
 Vue.component(Button.name, Button)
+Vue.component(Spin.name, Spin)
 // 注册到全局
 Vue.component(VTable.name, VTable)
 Vue.component(VPagination.name, VPagination)

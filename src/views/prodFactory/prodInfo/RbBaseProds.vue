@@ -1,4 +1,5 @@
 <template>
+    <a-spin tip="Loading..." size="large" :spinning="spinning">
     <div class="app-container pt-4">
         <v-layout row wrap>
             <v-flex lg9 sm9 class="v-card elevation-2">
@@ -74,6 +75,7 @@
             </v-flex>
         </v-layout>
     </div>
+    </a-spin>
 </template>
 
 <script>
@@ -120,6 +122,7 @@
                 listLoading: true,
                 dialog: false,
                 showCopy: '',
+                spinning: true,
                 length: 2,
                 onboarding: 0,
                 prodCode: '',
@@ -219,6 +222,7 @@
                     this.initEventAttr(reProd)
                     this.prodClass= this.prodData.prodType.prodClass
                     this.powerByLevel(this.prodClass);
+                    this.spinning= false
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
