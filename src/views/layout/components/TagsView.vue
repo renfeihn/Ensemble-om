@@ -4,7 +4,7 @@
       <router-link ref= 'tag' class= 'tags-view-item' :class= "isActive(tag)?'active primary lighten-1':''" v-for= 'tag in Array.from(visitedViews)'
                    :to= 'tag' :key= 'tag.path' @contextmenu.prevent.native= 'openMenu(tag,$event)'>
         {{generateTitle(tag.title)}}
-        <v-icon @click.prevent.stop= 'closeSelectedTag(tag)' class="material-icons">delete_sweep</v-icon>
+        <v-icon @click.prevent.stop= 'closeSelectedTag(tag)' class="material-icons">close</v-icon>
       </router-link>
     </scroll-pane>
     <ul class='contextMenu' v-show="visible" :style="{left:left+'px',top:top+'px'}">
@@ -149,7 +149,6 @@
             // background: #57ff4f;
             display: inline-block;
             width: 8px;
-
             height: 8px;
             border-radius: 50%;
             position: relative;

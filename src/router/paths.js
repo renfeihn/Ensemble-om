@@ -26,11 +26,10 @@ export default [
       public: false,
     },
     name: 'AccessDenied',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/Deny.vue'
+        require(['@/pages/Deny.vue'],resolve
       )
   },
   {
@@ -39,11 +38,10 @@ export default [
       public: false,
     },
     name: 'ServerError',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/Error.vue'
+        require(['@/pages/Error.vue'],resolve
       )
   },
   {
@@ -81,16 +79,6 @@ export default [
         require(['@/pages/Dashboard.vue'],resolve)
   },
 
-  // {
-  //   path: '/calendar',
-  //   meta: { breadcrumb: true },
-  //   name: 'Calendar',
-  //   component: (a) => import(
-  //     /* webpackChunkName: "routes" */
-  //     /* webpackMode: "lazy-once" */
-  //     '@/pages/Calendar.vue'
-  //   )
-  // },
   {
     path: '/media',
     meta: {},
@@ -127,11 +115,10 @@ export default [
         name: 'ChatMessaging',
         props: true,
         components: {
-          default: () =>
-            import(
+          default: (resolve) =>
               /* webpackChunkName: "routes" */
               /* webpackMode: "lazy-once" */
-              '@/components/chat/ChatMessaging.vue'
+              require(['@/components/chat/ChatMessaging.vue'],resolve
             ),
         }
       },
@@ -158,11 +145,10 @@ export default [
       public: false,
     },
     name: 'Mail',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/components/email/Layout.vue'
+        require(['@/components/email/Layout.vue'],resolve
       ),
     redirect: {
       path: '/mail/all'
@@ -173,11 +159,10 @@ export default [
           public: false,
         },
         name: 'MailIndex',
-        component: () =>
-          import(
+        component: (resolve) =>
             /* webpackChunkName: "routes" */
             /* webpackMode: "lazy-once" */
-            '@/components/email/List.vue'
+            require(['@/components/email/List.vue'],resolve
           ),
       },
       {
@@ -186,11 +171,10 @@ export default [
           public: false,
         },
         name: 'MailDetail',
-        component: () =>
-          import(
+        component: (resolve) =>
             /* webpackChunkName: "routes" */
             /* webpackMode: "lazy-once" */
-            '@/components/email/Reply.vue'
+            require(['@/components/email/Reply.vue'],resolve
           ),
       }
     ]
@@ -201,11 +185,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/alerts',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Alert.vue'
+        require(['@/pages/ui/Alert.vue'],resolve
       )
   },
   {
@@ -214,11 +197,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/avatars',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Avatar.vue'
+        require(['@/pages/ui/Avatar.vue'],resolve
       )
   },
   {
@@ -227,11 +209,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/badges',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Badge.vue'
+        require(['@/pages/ui/Badge.vue'],resolve
       )
   },
   {
@@ -240,11 +221,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/buttons',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Button.vue'
+        require(['@/pages/ui/Button.vue'],resolve
       )
   },
   {
@@ -253,11 +233,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/parallax',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Parallax.vue'
+        require(['@/pages/ui/Parallax.vue'],resolve
       )
   },
   {
@@ -266,11 +245,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/snackbar',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Snackbar.vue'
+        require(['@/pages/ui/Snackbar.vue'],resolve
       )
   },
   {
@@ -279,11 +257,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/chips',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Chip.vue'
+        require(['@/pages/ui/Chip.vue'],resolve
       )
   },
   {
@@ -292,11 +269,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/cards',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Cards.vue'
+        require(['@/pages/ui/Cards.vue'],resolve
       )
   },
   {
@@ -305,11 +281,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/tables',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Tables.vue'
+        require(['@/pages/ui/Tables.vue'],resolve
       )
   },
   {
@@ -318,11 +293,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/carousels',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Carousels.vue'
+        require(['@/pages/ui/Carousels.vue'],resolve
       )
   },
   {
@@ -331,11 +305,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/dialogs',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Dialogs.vue'
+        require(['@/pages/ui/Dialogs.vue'],resolve
       )
   },
   {
@@ -344,11 +317,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/icons',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Icon.vue'
+        require(['@/pages/ui/Icon.vue'],resolve
       )
   },
   {
@@ -357,11 +329,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/progress',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Progress.vue'
+        require(['@/pages/ui/Progress.vue'],resolve
       )
   },
   {
@@ -370,11 +341,10 @@ export default [
       breadcrumb: true
     },
     name: 'components/sliders',
-    component: () =>
-      import(
+    component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        '@/pages/ui/Slider.vue'
+        require(['@/pages/ui/Slider.vue'],resolve
       )
   },
   {
@@ -981,9 +951,10 @@ export default [
       title: '内部账基础产品组'
     },
     name: 'prod/glBaseProd',
-    component: () =>
-      import(
-        '@/views/prodFactory/prodInfo/tags/glBaseProd.vue'
+    component: (resolve) =>
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        require(['@/views/prodFactory/prodInfo/tags/glBaseProd.vue'],resolve
       )
   },
   {
@@ -1147,11 +1118,10 @@ export default [
         title: '交易管理'
 },
     name: 'transManage',
-        component: () =>
-import(
-    /* webpackChunkName: "routes" */
-    /* webpackMode: "lazy-once" */
-    '@/views/baseTable/transManage.vue'
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/baseTable/transManage.vue'],resolve
 )
 },
 

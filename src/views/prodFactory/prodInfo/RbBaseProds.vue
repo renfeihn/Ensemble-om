@@ -26,13 +26,12 @@
                         </v-btn>
                         <span>刷新</span>
                     </v-tooltip>
-                    <v-tabs color="primary lighten-2" slot="extension" v-model="activeName" grow show-arrows>
-                        <v-tabs-slider color="yellow"></v-tabs-slider>
-                        <v-tab v-for="n in prodInfo" :key="n.pageCode">
-                            {{ n.text}}
-                        </v-tab>
-                    </v-tabs>
                 </v-toolbar>
+                <v-tabs slot="extension" v-model="activeName" grow show-arrows>
+                    <v-tab v-for="n in prodInfo" :key="n.pageCode">
+                        {{ n.text}}
+                    </v-tab>
+                </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" :disablePower="disablePower" tags="BASE"></base-prod>

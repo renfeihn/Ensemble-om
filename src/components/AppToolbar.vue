@@ -20,15 +20,10 @@
         <v-spacer></v-spacer>
         <v-switch v-model="dcSwitch" @change="switchChange" class="pt-4 pr-2" style="flex:none"></v-switch>
 
-            <v-btn
-                    class="purple"
-                    color="primary"
-                    @click="showSearchAction"
-                    dark
-            >
-                Search
-            </v-btn>
-              <v-card :class="searchDc">
+
+        <v-icon @click="showSearchAction" class="material-icons">search</v-icon>
+
+        <v-card :class="searchDc">
                 <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text px-5 pt-2"
                                 @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
               </v-card>

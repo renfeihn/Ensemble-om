@@ -2,8 +2,7 @@
   <v-container fluid grid-list-md py-0 px-0>
     <v-tabs v-model="active" slider-color="red">
       <v-tab v-for="n in userWork" :key="n" ripple>
-        <v-chip label outline color="red">
-          <v-avatar text-color="red">5</v-avatar>{{n}}</v-chip>
+        <span class="itemDc">{{n}}</span>
       </v-tab>
       <v-tab-item v-for="n in 3" :key="n" class="pb-2">
         <user-work-check-table v-if="n==1" v-bind:userWorkData="userWorkData"></user-work-check-table>
@@ -50,3 +49,8 @@
     }
   }
 </script>
+<style scoped>
+ .itemDc{
+   width: 300px;
+ }
+</style>
