@@ -62,7 +62,6 @@ import AppDrawer from "@/components/AppDrawer";
 import AppToolbar from "@/components/AppToolbar";
 import AppFab from "@/components/AppFab";
 import PageHeader from "@/components/PageHeader";
-import menu from "@/api/menu";
 import ThemeSettings from "@/components/ThemeSettings";
 import AppEvents from "./event";
 import TagsView from "@/views/layout/components/TagsView";
