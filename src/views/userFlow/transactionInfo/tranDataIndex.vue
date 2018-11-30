@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ml-4">
     <v-layout row wrap>
       <v-flex md8 lg8>
         <!--<tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>-->
@@ -630,7 +630,7 @@ import {
       margin-top: 5px;
     }
   .btnClass {
-    margin-top: 3%;
+    margin-top: 5%;
     margin-left: 28%;
     margin-bottom: 3%;
     width: 50%;

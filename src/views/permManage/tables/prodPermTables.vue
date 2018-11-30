@@ -93,15 +93,15 @@
             ],
             permLevel: [
                 {
-                    key: "A",
+                    key: "1",
                     value: "可编辑可修改查看",
                 },
                 {
-                    key: "E",
+                    key: "2",
                     value: "可修改查看",
                 },
                 {
-                    key: "V",
+                    key: "3",
                     value: "查看",
                 }
             ],
