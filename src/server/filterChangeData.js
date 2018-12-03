@@ -234,7 +234,7 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
         }
         //判断编辑信息 E:可编辑 N:不可编辑 V:不可见 D:删除
         let optObject = {key: "",tableName: "",optPerm: ""}
-        if(prodData.prodDefines[j].optionPermissions !== sourceProdData.prodDefines[j].optionPermissions){
+        if(dealFalg(prodData.prodDefines[j],sourceProdData.prodDefines[j])){
             if(sourceProdData.prodDefines[j].optionPermissions === "E" && prodData.prodDefines[j].optionPermissions === "D"){
                 //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
                 optObject.key = j
@@ -264,7 +264,19 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
     }
     backData.prodDefines = prodDefines
 }
-
+export function dealFalg(val1,val2){
+    if(val1!== undefined && val2!== undefined)
+    {
+        if(val1.optionPermissions !== val2.optionPermissions) {
+            return true;
+        }
+        else{
+            return false
+        }
+    }else{
+        return false
+    }
+}
 /*
  * @description 处理mbEventAttr对象数据
  * @param  m 事件
