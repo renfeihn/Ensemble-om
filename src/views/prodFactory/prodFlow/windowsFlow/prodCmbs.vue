@@ -1,59 +1,43 @@
 <template>
     <v-layout class="pt-4">
-        <v-flex md2 lg2>
-            <v-card class="elevation-2">
-                <v-card-media src="/static/bg/18.jpg" height="80px">
-                    <v-card-title class="pb-0">
-                            <h4 class="title" style="font-size: x-large">{{title}}</h4>
-                        <h4 class="title" style="font-size: x-large">{{titleSum}}</h4>
+        <v-flex md3 lg3 class="ml-4">
+            <v-flex xs12>
+                <v-card class="elevation-4 radiusDc">
 
-                    </v-card-title>
-                </v-card-media>
-            </v-card>
-            <v-expansion-panel style="color: #0d47a1" class="elevation-2 pt-2">
-                <v-expansion-panel-content v-for="(item, i) in 1" :key="i">
-                    <div slot="header" style="color: #0d47a1;font-size: large;margin-left: auto;margin-right: 0px">
-                        <v-icon style="margin-left: -10px;color: #0d47a1;margin-right: 10px;margin-top: 2px">list</v-icon>
-                        {{checkedType}}
-                    </div>
-                    <v-card>
-                        <v-card-text class="grey lighten-3">
-                            <v-list-tile class="chat-list prodList" style="height: 40px" avatar v-for="(item) in files" :key="item.title" @click="handleClick(item)">
-                                <v-list-tile-avatar>
-                                    <v-icon :class="subheading" style="color: #00b0ff">{{ 'call_to_action'}}</v-icon>
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-sub-title class="subheading" style="color: black">{{ item.lable }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                        </v-card-text>
-                    </v-card>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-
-            <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex" style="margin-top: -5%">
-                <v-item v-for="n in checkedClass" :key="n.key">
-                    <div slot-scope="{ active, toggle }" @click="chipClick(n)">
-                        <v-chip color="blue" text-color="white" @click="toggle" style="width: 100%;height: 40px;font-size: medium;">
-                            <v-avatar>
-                                <v-icon>label</v-icon>
-                            </v-avatar>
-                            {{n.lable}}
-                        </v-chip>
-                    </div>
-                </v-item>
-            </v-item-group>
+                    <v-card-media src="/static/bg/18.jpg" style="height: 150px">
+                        <v-card-title class="pb-0" style="font-size: xx-large">
+                            <h2 class="title">{{title}}</h2>
+                            <h2 class="title" style="color: white">{{titleSum}}</h2>
+                        </v-card-title>
+                    </v-card-media>
+                    <v-layout style="margin-top: -9px">
+                        <v-flex md1 lg1>
+                            <v-icon style="margin-top: 20px;color: blue;">call_split</v-icon>
+                        </v-flex>
+                        <v-flex md11 lg11>
+                            <v-select :items="typeClass" hide-details v-model="selectValue" label="请选择分类" item-text="value" color="write" item-value="key" single-line>
+                            </v-select>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-flex>
+            <v-flex xs12 class="mt-2 pb-4">
+                <v-card style="height: 200%" class="elevation-4 radiusDc">
+                    <v-list>
+                        <v-list-tile v-for="item in checkedClass" :key="item.title" @click="chipClick(item)" :class="item.class">
+                            <v-list-tile-action>
+                                <v-icon color="blue">widgets</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title style="font-size: medium">{{ item.lable }}</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                </v-card>
+            </v-flex>
         </v-flex>
-        <v-flex md10 lg10 class="pl-4">
-            <v-window v-model="window" class="elevation-2" vertical>
-                <v-window-item v-for="n in length" :key="n">
-                    <v-card flat>
-                        <v-card-text>
-                            <prod-list-cmb :items="prodListDtl"></prod-list-cmb>
-                        </v-card-text>
-                    </v-card>
-                </v-window-item>
-            </v-window>
+        <v-flex md9 lg9 class="pl-4">
+            <prod-list-cmb :items="prodListDtl"></prod-list-cmb>
         </v-flex>
     </v-layout>
 </template>
@@ -72,16 +56,33 @@
             prodListCmb,
         },
         data: () => ({
-            length: 5,
             titleSum: "",
             title: "",
-            checkedType: "请选择分类",
+            selectValue: "",
             checkedTypeKey: "",
             checkedClass: [],
             window: 0,
             panel: [false, true, true],
             items: [],
             prodListDtl: [],
+            typeClass: [
+                {
+                    key: "SOURCE_MODULE",
+                    value: "业务模块分类"
+                },
+                {
+                    key: "prodRange",
+                    value: "产品属性分类"
+                },
+                {
+                    key: "status",
+                    value: "产品状态分类"
+                },
+                {
+                    key: "baseProdType",
+                    value: "基础产品分类"
+                }
+            ],
             files: [
                 {
                     icon: 'assignment',
@@ -114,9 +115,19 @@
             prodDefinesList: {},
             prodTemp: []
         }),
+        watch: {
+            selectValue: {
+                handler(val){
+                    this.selectClick(val)
+                }
+            },
+        },
         created() {
             //查询所有产品信息
             this.getAllProdInfo()
+        },
+        mounted: function() {
+            this.selectValue = "SOURCE_MODULE"
         },
         methods: {
             //获取所有prod_type prod_define prod_class产品信息
@@ -135,6 +146,15 @@
                 //获取所有prodClass
                 getProdClassList().then(response => {
                     this.prodClassList = response.data.data
+                    for(let i=0; i<response.data.data.length; i++){
+                        if(response.data.data[i].prodClassLevel === "1") {
+                            let obj = {}
+                            obj["key"] = i
+                            obj["value"] = response.data.data[i].prodClass
+                            obj["lable"] = response.data.data[i].prodClassDesc
+                            this.checkedClass.push(obj)
+                        }
+                    }
                 });
             },
             chipClick(val) {
@@ -165,11 +185,11 @@
                 this.prodListDtl = this.prodTemp
 
             },
-            handleClick(val){
-                this.checkedType = val.lable
-                this.checkedTypeKey = val.value
+            selectClick(val){
+                let key = val
+                this.checkedTypeKey = key
                 this.checkedClass = []
-                if(val.value === "SOURCE_MODULE"){
+                if(key === "SOURCE_MODULE"){
                     //从prodClass中获取所有一级目录
                     for(let i=0; i<this.prodClassList.length; i++){
                         if(this.prodClassList[i].prodClassLevel === "1") {
@@ -181,8 +201,8 @@
                         }
                     }
                 }
-                if(val.value === "baseProdType"){
-                    let key = val.value
+                if(key === "baseProdType"){
+                    let key = key
                     for(let k=0; k<this.prodTypeList.length; k++){
                         if(this.prodTypeList[k].prodRange === "B" && !this.findIn(this.checkedClass,this.prodTypeList[k][key])){
                             let objBaseType = {}
@@ -193,24 +213,25 @@
                         }
                     }
                 }
-                if(val.value === "prodRange" || val.value === "status"){
-                    let key = val.value
-                    for(let j=0; j<this.prodTypeList.length; j++){
-                        if(!this.findIn(this.checkedClass,this.prodTypeList[j][key])) {
-                            let objType = {}
-                            objType["key"] = j
-                            objType["value"] = this.prodTypeList[j][key]
-                            if (this.prodTypeList[j][key] === "B") {
-                                objType["lable"] = "基础产品"
+                if(key === "prodRange" || key === "status"){
+                    let key1 = key
+                    let tempList = this.prodTypeList
+                    for(let j=0; j<tempList.length; j++){
+                        if(!this.findIn(this.checkedClass,tempList[j][key1])) {
+                            let objType = {key: "",value: "",lable: ""}
+                            objType.key = j
+                            objType.value = tempList[j][key1]
+                            if (tempList[j][key1] == "B") {
+                                objType.lable = "基础产品"
                             }
-                            if (this.prodTypeList[j][key] === "S") {
-                                objType["lable"] = "可售产品"
+                            if (tempList[j][key1] == "S") {
+                                objType.lable = "可售产品"
                             }
-                            if (this.prodTypeList[j][key] === "A") {
-                                objType["lable"] = "有效产品"
+                            if (tempList[j][key1] == "A") {
+                                objType.lable = "有效产品"
                             }
-                            if (this.prodTypeList[j][key] === "C") {
-                                objType["lable"] = "封存产品"
+                            if (tempList[j][key1] == "C") {
+                                objType.lable = "封存产品"
                             }
                             this.checkedClass.push(objType)
                         }
@@ -235,6 +256,6 @@
         margin-left: -10px;
     }
     .title {
-        color: white;margin-left: auto;margin-right: auto;margin-top: 10px;margin-bottom: auto
+        color: white;margin-left: auto;margin-right: auto;margin-top: 1px;margin-bottom: auto
     }
 </style>

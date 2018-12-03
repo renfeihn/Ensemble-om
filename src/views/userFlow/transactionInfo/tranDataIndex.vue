@@ -191,9 +191,9 @@
         </v-stepper>
         </v-card>
      </v-flex>
-      <v-flex xs12 md4 lg4>
+      <v-flex md4 lg4>
         <v-card class="ml-4 mt-4 elevation-4 radiusDc">
-          <v-card-media src="/static/avatar/prod1.jpg" style="margin-left: 135px;margin-right: 135px">
+          <v-card-media src="/static/avatar/prod1.jpg" style="margin-left: 29%;margin-right: 30%">
           </v-card-media>
           <v-layout>
             <v-subheader class="showMsg" style="color: #00b0ff">产品代码:</v-subheader>
