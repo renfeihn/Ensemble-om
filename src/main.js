@@ -15,12 +15,10 @@ import qs from 'qs';
 import globalConfig from "./config.js";
 // import './mock';
 
-import 'vue-easytable/libs/themes-base/index.css'
 import 'ant-design-vue/dist/antd.css';
 import 'vuetify/dist/vuetify.min.css'
 
 // 导入 table 和 分页组件
-import {VTable,VPagination} from 'vue-easytable'
 import { Spin, Table,Divider,Tag ,Button} from 'ant-design-vue'
 Vue.component(Table.name, Table)
 Vue.component(Divider.name, Divider)
@@ -28,8 +26,6 @@ Vue.component(Tag.name, Tag)
 Vue.component(Button.name, Button)
 Vue.component(Spin.name, Spin)
 // 注册到全局
-Vue.component(VTable.name, VTable)
-Vue.component(VPagination.name, VPagination)
 Vue.prototype.$qs = qs
 //Global Config
 Vue.prototype.globalConfig = globalConfig

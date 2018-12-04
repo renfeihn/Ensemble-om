@@ -30,20 +30,18 @@
         <v-btn icon @click="handleFullScreen()">
             <v-icon>fullscreen</v-icon>
         </v-btn>
-        <v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
+        <v-menu v-model="taskMenu" :close-on-content-click="false" offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
             <v-btn icon flat slot="activator">
                 <v-badge color="red" overlap>
-                    <span slot="badge">3</span>
+                    <span slot="badge">4</span>
                     <v-icon medium>notifications</v-icon>
                 </v-badge>
             </v-btn>
-            <notification-list></notification-list>
+           <task-list v-on:closeMenu="closeMenu"></task-list>
         </v-menu>
         <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
             <v-btn icon large flat slot="activator">
-                <v-avatar size="30px">
-                    <img src="/static/avatar/timg.jpg" alt="Michael Wang"/>
-                </v-avatar>
+                <v-icon>more_vert</v-icon>
             </v-btn>
             <v-list class="pa-0">
                 <v-list-tile v-for="(item,index) in items" :to="!item.href ? { name: item.name } : null"
@@ -61,7 +59,7 @@
     </v-toolbar>
 </template>
 <script>
-    import NotificationList from "@/components/widgets/list/NotificationList";
+    import TaskList from "@/views/propertyManage/taskList";
     import Util from "@/util";
     import {getToken} from "@/utils/auth";
     import {getProdType} from "@/api/prod";
@@ -74,7 +72,7 @@
         name: "app-toolbar",
         components: {
             Layout,
-            NotificationList
+            TaskList
         },
         data: () => ({
             sourceProdList: [],
@@ -83,6 +81,7 @@
             dcSwitch: true,
             searchDc: 'searchDcNone',
             titleName: config.name,
+            taskMenu: false,
             prodClass: "",
             prodListSplit: [],
             items: [
@@ -193,6 +192,9 @@
                         );
                     }
                 });
+            },
+            closeMenu() {
+                this.taskMenu=false;
             }
         }
     };

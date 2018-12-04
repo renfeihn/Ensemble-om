@@ -8,6 +8,18 @@
     v-model="drawer"
     width="260"
     >
+    <v-flex lg4 pl-4 pt-3>
+        <v-card-media src="/static/avatar/per1.jpg">
+      </v-card-media>
+    </v-flex>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-list-tile-title style="margin-left: 6%">admin</v-list-tile-title>
+            <v-list-tile-title style="margin-left: 6%">系统管理员</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
       <v-list dense expand>
         <template v-for="(item, i) in menus">

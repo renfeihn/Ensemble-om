@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="code" select-all light v-model="selected">
+    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="flowManage" select-all light v-model="selected">
         <template slot="items" slot-scope="props">
                                     <tr @click="props.expanded = !props.expanded">
                                   <td>
@@ -17,16 +17,16 @@
                                         <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
                                     </tr>
       </template>
-<template slot="expand" slot-scope="props">
-    <v-card flat>
-        <v-card-text>录入人信息：para</v-card-text>
-    </v-card>
-</template>
+<!--<template slot="expand" slot-scope="props">
+    <task-list></task-list>
+</template>-->
         </v-data-table>
 </template>
 <script>
 import { getFlowList } from "@/api/url/prodInfo";
+
 export default {
+
     props: ["userWorkData"],
     data() {
     let value = "accountingStatus";

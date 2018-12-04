@@ -7,13 +7,6 @@
       <v-tab-item v-for="n in 3" :key="n" class="pb-2">
         <user-work-check-table v-if="n==1" v-bind:userWorkData="userWorkData"></user-work-check-table>
         <user-work-release-table v-if="n==2"></user-work-release-table>
-        <!-- <v-card>release
-          <v-container fluid py-0>
-            <v-card-text>
-
-            </v-card-text>
-          </v-container>
-        </v-card> -->
       </v-tab-item>
     </v-tabs>
   </v-container>

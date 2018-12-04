@@ -21,6 +21,7 @@
         <!-- Go to top -->
         <app-fab></app-fab>
         <!-- theme setting -->
+<!--            <session-list></session-list>-->
         <v-btn small fab dark falt fixed top="top" right="right" class="setting-fab" color="red" @click="openThemeSettings">
           <v-icon>settings</v-icon>
         </v-btn>
@@ -65,6 +66,7 @@ import PageHeader from "@/components/PageHeader";
 import ThemeSettings from "@/components/ThemeSettings";
 import AppEvents from "./event";
 import TagsView from "@/views/layout/components/TagsView";
+import SessionList from "@/views/propertyManage/sessionList"
 export default {
   components: {
     AppDrawer,
@@ -72,6 +74,7 @@ export default {
     AppFab,
     PageHeader,
     ThemeSettings,
+      SessionList,
     TagsView
   },
   data: () => ({
@@ -114,6 +117,7 @@ export default {
   right: 0;
   border-radius: 0;
 }
+
 
 .page-wrapper {
   min-height: calc(100vh - 64px - 50px - 81px);
