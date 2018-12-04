@@ -1,7 +1,7 @@
 <template>
     <div class="elevation-4">
         <v-toolbar color="primary lighten-2" dark>
-            <v-toolbar-title>元数据维护</v-toolbar-title>
+            <v-toolbar-title>元数据管理</v-toolbar-title>
             <v-spacer></v-spacer>
 
             <v-dialog v-model="dialog" max-width="500px">

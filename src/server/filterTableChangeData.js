@@ -29,9 +29,13 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
             keySet[columns[k].dataIndex] = columns[k].dataIndex
         }
     }
+    let arr = Object.keys(keySet)
     var paraOpt = "0"
+    var sameFlag = 0
+
     for(let i=0; i<newData.length; i++){
         paraOpt = "0"
+        sameFlag = 0
         for(let j=0; j<oldData.length; j++){
             let keySem = 0  //0-主键相同匹配到数据  1-存在不相同主键匹配失败
             for(let l in keySet){
@@ -41,14 +45,14 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
                     paraOpt = "1"
                 }
             }
-            let arr = Object.keys(keySet)
+            sameFlag = keySem
             if(keySem === arr.length) {
                 tableDeal(i, j, newData, oldData, backValue, delFlag)
                 break
             }
         }
         //数据组装
-        if(delFlag === "0" && paraOpt === "0"){
+        if(delFlag === "0" && sameFlag != arr.length){
             let temp = {}
             temp["newData"] = newData[i]
             temp["oldData"] = {}
@@ -56,7 +60,7 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
             backValue[backValue.length] = temp
 
         }
-        if(delFlag === "1" && paraOpt === "0"){
+        if(delFlag === "1" && sameFlag != arr.length){
             let temp = {}
             temp["newData"] = {}
             temp["oldData"] = newData[i]

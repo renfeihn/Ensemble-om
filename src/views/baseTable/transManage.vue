@@ -34,6 +34,8 @@
             <v-flex md10 lg10 class="pl-4 pb-4 pr-1">
                 <table-list v-if="action == 'model'"></table-list>
                 <table-column v-if="action == 'json'"></table-column>
+                <system-manage v-if="action == 'system'"></system-manage>
+                <module-manage v-if="action == 'module'"></module-manage>
             </v-flex>
         </v-layout>
     </div>
@@ -41,13 +43,17 @@
 <script>
     import tableColumn from './tables/tableColumnManage'
     import tableList from './tables/tableListManage'
+    import systemManage from './tables/systemManage'
+    import moduleManage from './tables/moduleManage'
     import {getSysTable} from "@/api/url/prodInfo";
     import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         components: {
             tableColumn,
-            tableList
+            tableList,
+            moduleManage,
+            systemManage
         },
         data() {
             return {
@@ -55,8 +61,10 @@
                 titleNum: "",
                 action: 'model',
                 items: [
-                    {title: '交易模块维护',name: 'model', class: '',icon: 'settings',color: "blue"},
-                    {title: '元数据维护',name: 'json', class: '', icon: 'event',color: "blue"}
+                    {title: '交易属性管理',name: 'model', class: '',icon: 'widgets',color: "blue"},
+                    {title: '交易系统管理',name: 'system', class: '',icon: 'settings',color: "blue"},
+                    {title: '交易模块管理',name: 'module', class: '', icon: 'event',color: "blue"},
+                    {title: '元数据管理',name: 'json', class: '', icon: 'menu',color: "blue"}
                 ],
                 window: 0,
                 windowItem: 'windowItem',
@@ -80,6 +88,18 @@
                 if(item.name === "model"){
                     this.title = "交易数量"
                     getSysTable("OM_TABLE_LIST").then(function (response) {
+                        that.titleNum = response.data.data.columnInfo.length
+                    });
+                }
+                if(item.name === "system"){
+                    this.title = "系统数量"
+                    getSysTable("OM_SYSTEM_ORG").then(function (response) {
+                        that.titleNum = response.data.data.columnInfo.length
+                    });
+                }
+                if(item.name === "module"){
+                    this.title = "模块数量"
+                    getSysTable("OM_MODULE_ORG").then(function (response) {
                         that.titleNum = response.data.data.columnInfo.length
                     });
                 }

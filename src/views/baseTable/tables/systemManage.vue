@@ -1,7 +1,7 @@
 <template>
     <div class="elevation-4">
         <v-toolbar color="primary lighten-2" dark>
-            <v-toolbar-title>交易属性管理</v-toolbar-title>
+            <v-toolbar-title>交易系统管理</v-toolbar-title>
             <v-spacer></v-spacer>
 
             <v-dialog v-model="dialog" max-width="500px">
@@ -15,26 +15,17 @@
                     <v-card-text style="margin-top: -10%">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs6 sm6 md6 v-if="disabled=='true'">
-                                    <v-text-field v-model="editedItem.tableName" label="交易ID" disabled></v-text-field>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                    <v-text-field v-model="editedItem.systemId" label="系统ID" disabled></v-text-field>
                                 </v-flex>
-                                <v-flex xs6 sm6 md6 v-if="disabled=='false'">
-                                    <v-text-field v-model="editedItem.tableName" label="交易ID"></v-text-field>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
+                                    <v-text-field v-model="editedItem.systemId" label="系统ID"></v-text-field>
                                 </v-flex>
-                                <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.tableDesc" label="交易名称"></v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="editedItem.systemName" label="系统名称"></v-text-field>
                                 </v-flex>
-                                <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.system" label="所属系统" :items="system" item-text="value" item-value="key"></v-select>
-                                </v-flex>
-                                <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.modelId" label="所属模块" :items="model" item-text="value" item-value="key"></v-select>
-                                </v-flex>
-                                <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.parameter" label="参数类型" :items="paramType" item-text="value" item-value="key"></v-select>
-                                </v-flex>
-                                <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.searchColumn" label="检索条件"></v-text-field>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="editedItem.systemDesc" label="系统描述"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -49,12 +40,9 @@
         </v-toolbar>
         <v-data-table :headers="headers" :items="desserts" class="elevation-1">
             <template slot="items" slot-scope="props">
-                <td>{{ props.item.tableName }}</td>
-                <td>{{ props.item.tableDesc }}</td>
-                <td>{{ props.item.system }}</td>
-                <td>{{ props.item.modelId }}</td>
-                <td>{{ props.item.parameter }}</td>
-                <td>{{ props.item.searchColumn }}</td>
+                <td>{{ props.item.systemId }}</td>
+                <td>{{ props.item.systemName }}</td>
+                <td>{{ props.item.systemDesc }}</td>
                 <td>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
                         <v-btn flat icon="edit" slot="activator">
@@ -80,31 +68,18 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         props: ["title"],
         data: () => ({
             dialog: false,
             disabled: "false",
-            system: [],
-            model: [],
-            paramType: [
-                {
-                    key: "init",
-                    value: "出厂参数"
-                },
-                {
-                    key: "busi",
-                    value: "业务参数"
-                }
-            ],
+            tab: [],
             headers: [
-                { text: '交易ID',sortable: false},
-                { text: '交易名称',sortable: false},
-                { text: '所属系统',sortable: false },
-                { text: '所属模块',sortable: false },
-                { text: '参数类型',sortable: false },
-                { text: '检索条件',sortable: false },
+                { text: '系统ID',sortable: false},
+                { text: '系统名称',sortable: false},
+                { text: '系统描述',sortable: false },
                 { text: 'Action',sortable: false }
             ],
             desserts: [],
@@ -112,33 +87,27 @@
             keySet: [
                 {
                     key: "true",
-                    dataIndex: "tableName"
+                    dataIndex: "systemId"
                 }
             ],
             editedIndex: -1,
             title: "",
             editedItem: {
-                tableName: '',
-                tableDesc: '',
-                system: '',
-                modelId: '',
-                parameter: '',
-                searchColumn: ''
+                systemId: '',
+                systemName: '',
+                systemDesc: ''
             },
             defaultItem: {
-                tableName: '',
-                tableDesc: '',
-                system: '',
-                modelId: '',
-                parameter: '',
-                searchColumn: ''
+                systemId: '',
+                systemName: '',
+                systemDesc: ''
             },
             backValue: {}
         }),
 
         computed: {
             formTitle () {
-                return this.editedIndex === -1 ? '新增交易模块信息' : '修改交易模块信息'
+                return this.editedIndex === -1 ? '新增系统信息' : '修改系统信息'
             }
         },
 
@@ -150,39 +119,14 @@
 
         created () {
             this.initialize()
-            this.initRfData()
         },
 
         methods: {
             initialize () {
                 let that = this
-                getSysTable("OM_TABLE_LIST").then(function (response) {
+                getSysTable("OM_SYSTEM_ORG").then(function (response) {
                     that.desserts = response.data.data.columnInfo;
                     that.sourceData = that.copy(that.desserts,that.sourceData)
-                });
-            },
-            initRfData () {
-                let that = this
-                getSysTable("OM_SYSTEM_ORG").then(function (response) {
-                    let data = []
-                    data = response.data.data.columnInfo
-                    for(let i=0; i<data.length; i++){
-                        let temp={}
-                        temp["key"] = data[i].systemId
-                        temp["value"] = data[i].systemDesc
-                        that.system.push(temp)
-                    }
-                });
-
-                getSysTable("OM_MODULE_ORG").then(function (response) {
-                    let data1 = []
-                    data1 = response.data.data.columnInfo
-                    for(let j=0; j<data1.length; j++){
-                        let temp={}
-                        temp["key"] = data1[j].moduleId
-                        temp["value"] = data1[j].moduleDesc
-                        that.model.push(temp)
-                    }
                 });
             },
             addClick() {
@@ -205,8 +149,8 @@
                 this.dialog = false
                 setTimeout(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
+                this.editedIndex = -1
+            }, 300)
             },
 
             save () {
@@ -218,13 +162,13 @@
                 //保存数据落库
                 this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                 this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_TABLE_LIST"
-                this.backValue.keySet = "TABLE_NAME"
+                this.backValue.tableName = "OM_SYSTEM_ORG"
+                this.backValue.keySet = "SYSTEM_ID"
                 saveSysTable(this.backValue).then(response => {
                     if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
+                    toast.success("提交成功！");
+                }
+            })
                 this.close()
             },
             //对象浅复制
@@ -239,18 +183,6 @@
                     }
                 }
                 return obj;
-            },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_TABLE_LIST"
-                this.backValue.keySet = "TABLE_NAME"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
             }
         }
     }
