@@ -11,7 +11,16 @@
                         required
                         class="mx-5"
                 ></dc-text-field>
-                <dc-multiselect v-if="keyData.columnType == 'select'" :labelDesc="keyData.columnDesc" v-model="keyData.value"
+                <dc-text-field
+                        v-if="keyData.columnType == 'select' && keyData.valueScore.tableName == tableName"
+                        v-model="keyData.value"
+                        :counter="10"
+                        :label="keyData.columnDesc"
+                        :labelDesc="keyData.columnDesc"
+                        required
+                        class="mx-5"
+                ></dc-text-field>
+                <dc-multiselect v-if="keyData.columnType == 'select' && keyData.valueScore.tableName != tableName" :labelDesc="keyData.columnDesc" v-model="keyData.value"
                                 :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                 <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
                            v-model="keyData.value"></dc-switch>
@@ -48,11 +57,13 @@
         components: {DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField},
         props: {
             selected: Object,
-            columns: Object
+            columns: Object,
+            tableName: String
         },
         data() {
             return {
-                editSelected: {}
+                editSelected: {},
+                tableName: ""
             }
         },
         watch: {
@@ -70,6 +81,7 @@
             selectedAction() {
                 const selected=this._props.selected;
                 const columns=this._props.columns;
+                this.tableName = this._props.tableName;
                 let locSelected={}
                 if(columns!= undefined){
                     for(const index in columns){

@@ -653,6 +653,24 @@
     "valueMethod": "YN",
     "columnDesc": "是否允许跨月"
   },
+
+  "IS_INDIVIDUAL": {
+    "columnType": "select",
+    "valueMethod": "VL",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "value": "个体客户",
+        "key": "Y"
+      },
+      {
+        "value": "非个体客户",
+        "key": "N"
+      }
+    ],
+    "columnDesc": "是否个体客户"
+  },
+
   "SG_DEP_MIN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
@@ -661,13 +679,21 @@
   "CLIENT_TYPE": {
     "columnType": "select",
     "valueMethod": "RF",
+    "isMultiSelect": false,
     "valueScore": {
+      "columnCode": "CLIENT_TYPE",
       "columnCode": "CLIENT_TYPE",
       "columnDesc": "CLIENT_TYPE_DESC",
       "tableName": "CIF_CLIENT_TYPE"
     },
-    "columnDesc": "客户类型"
+    "columnDesc": "客户类型代码"
   },
+  "CLIENT_TYPE_DESC": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "客户类型描述"
+  },
+
   "DOC_TYPE": {
     "columnType": "select",
     "valueMethod": "RF",

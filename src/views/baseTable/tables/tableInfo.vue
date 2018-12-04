@@ -33,7 +33,7 @@
                         v-model="dialog"
                         width="500"
                 >
-                    <edit-table-info :selected="selected" :columns="columns"
+                    <edit-table-info :selected="selected" :columns="columns" :tableName="tableName"
                                      v-on:editAction="editAction"></edit-table-info>
                 </v-dialog>
             </v-card>
@@ -104,6 +104,7 @@
                     that.dataInfo = response.data.data.columnInfo;
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
                     that.columns = response.data.data.column;
+                    this.tableName = tableName
                 });
             },
             copy(obj1, obj2) {
