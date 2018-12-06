@@ -8,16 +8,16 @@
                 <v-spacer></v-spacer>
             </v-toolbar>
 
-                <v-toolbar card dense color="transparent">
-                    <v-layout justify-center>
-                        <v-flex xs6 sm6>
-                    <dc-text-field label="产品类型" labelDesc="产品类型" v-model='prodTypeSearch'/>
-                        </v-flex>
-                        <v-flex xs6 sm6>
-                    <dc-multiselect label="产品分类" labelDesc="产品分类" v-model='prodClassSearch' :options="prodClassOption"></dc-multiselect>
-                        </v-flex>
-                    </v-layout>
-                </v-toolbar>
+                <!--<v-toolbar card dense color="transparent">-->
+                    <!--<v-layout justify-center>-->
+                        <!--<v-flex xs6 sm6>-->
+                    <!--<dc-text-field label="产品类型" labelDesc="产品类型" v-model='prodTypeSearch'/>-->
+                        <!--</v-flex>-->
+                        <!--<v-flex xs6 sm6>-->
+                    <!--<dc-multiselect label="产品分类" labelDesc="产品分类" v-model='prodClassSearch' :options="prodClassOption"></dc-multiselect>-->
+                        <!--</v-flex>-->
+                    <!--</v-layout>-->
+                <!--</v-toolbar>-->
                 <v-toolbar card dense color="transparent">
                     <a-button type="primary" @click="onAdd">新增</a-button>
                     <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
@@ -176,12 +176,16 @@
                     let selected = this.selected;
                     if (JSON.stringify(selected) == '{}') {
                         for (const key in editSelected) {
-                            selected[key] = editSelected[key].value
+                            if(selected[key] !== undefined && editSelected[key] !== undefined) {
+                                selected[key] = editSelected[key].value
+                            }
                         }
                         this.dataInfo.splice(0, 0, selected)
                     } else {
-                        for (const key in selected) {
-                            selected[key] = editSelected[key].value
+                        for (const keys in selected) {
+                            if(selected[keys] !== undefined && editSelected[keys] !== undefined) {
+                                selected[keys] = editSelected[keys].value
+                            }
                         }
                     }
                 }

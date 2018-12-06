@@ -144,6 +144,14 @@ export function getDiffList (params) {
         data: params
     });
 }
+export function getDiffTable (params) {
+    return request({
+        url: '/getDiffTable',
+        method: 'post',
+        data: params
+    });
+}
+
 
 export function getCheckFlowList () {
     return request({

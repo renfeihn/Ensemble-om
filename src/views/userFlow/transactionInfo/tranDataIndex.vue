@@ -212,7 +212,7 @@
     <v-card class="elevation-2 radiusDc">
     <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" class="elevation-4 mt-4" flat>
       <v-toolbar-side-icon @click="showClick"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">产品修改差异展示</v-toolbar-title>
+      <v-toolbar-title class="white--text">修改差异展示</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip bottom color="blue">
         <v-btn flat icon="print" slot="activator">
@@ -232,7 +232,7 @@
 
     <v-card md20 lg20 v-show="showFlag==1" ref="print">
       <v-card-text>
-        <v-tabs fixed-tabs>
+        <v-tabs fixed-tabs v-if="isTable == false">
           <v-tab v-for="n in diffList" :key="n" class="diffTitle">{{n}}</v-tab>
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList" :key="i">
@@ -243,6 +243,14 @@
               <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
               <prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>
               <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+        <v-tabs fixed-tabs v-if="isTable == true">
+          <v-tab style="margin-left: 0px">CIF_CLIENT_TYPE--客户类型定义</v-tab>
+          <v-tabs-items>
+            <v-tab-item>
+              <base-table :prodCharge="prodCharge"></base-table>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -258,8 +266,11 @@
   import tranReleaseFlowInfo from './tranReleaseFlowInfo'
 
   import { getDiffList } from "@/api/url/prodInfo";
+  import { getDiffTable } from "@/api/url/prodInfo";
   import {PrintInfo} from '@/utils/print/print'
   import {getColumnDesc_} from '@/utils/columnDesc'
+  import {getColumnDesc} from '@/utils/columnDesc'
+
   import DcTextField from '@/components/widgets/DcTextField'
   import { getProdData } from "@/api/prod";
   import download2 from '@/utils/download2';
@@ -311,6 +322,7 @@ import {
               optValue: '',
               optDesc: '',
               prodData: {},
+              isTable: false,
               prodCharge: {},
               prodDefineData: {},
               prodEventOpen: {},
@@ -363,6 +375,11 @@ import {
                     this.checkInfo.mainSeqNo = val.code
                     this.checkInfo.userId = sessionStorage.getItem("userId")
                     for(let i=0; i<val.flowInfo.length; i++) {
+                        if(val.flowInfo[i].flowManage.tranId === "MB_PROD_TYPE"){
+                            this.isTable = false
+                        }else{
+                            this.isTable = true
+                        }
                         if(val.flowInfo[i].flowManage.mainSeqNo === this.checkInfo.mainSeqNo){
                             this.checkFlowInfo = val.flowInfo[i]
                         }
@@ -372,6 +389,11 @@ import {
                     this.releaseInfo.mainSeqNo = val.code;
                     this.releaseInfo.userId = sessionStorage.getItem("userId")
                     for(let i=0; i<val.flowInfo.length; i++) {
+                        if(val.flowInfo[i].flowManage.tranId === "MB_PROD_TYPE"){
+                            this.isTable = false
+                        }else{
+                            this.isTable = true
+                        }
                         if (val.flowInfo[i].flowManage.mainSeqNo === this.releaseInfo.mainSeqNo) {
                             this.releaseFlowInfo = val.flowInfo[i]
                         }
@@ -436,7 +458,14 @@ import {
             //展开/隐藏差异信息列表
             showClick() {
                 this.showFlag = this.showFlag ===0?1:0
-                this.getDiffProdData();
+                if(!this.isTable) {
+                    //产品差异获取数据处理
+                    this.getDiffProdData();
+                }
+                if(this.isTable){
+                    //单表差异获取数据组装
+                    this.getDiffTableData();
+                }
             },
             setOptKey(val) {
                 if(val === "复核") {
@@ -453,7 +482,57 @@ import {
             printDown () {
                 PrintInfo(this.$refs.print)
             },
+            getDiffTableData() {
+                //通过交易主单号 获取单表差异信息
+                var data={'mainSeqNo': this.code};
+                getDiffTable(data).then(response => {
+                    console.log(response);
+                    let tableDiffInfo = response.data.data.tableInfo
+                    //获取单表列描述
+                    let heards=[];
+                    let assembleColumns=[];
+                    if(tableDiffInfo[0] !== undefined){
+                        let column = tableDiffInfo[0].newData
+                        for(const keys in column){
+                            let head={};
+                            head["text"]=getColumnDesc(keys);
+                            head["value"]=keys;
+                            heards.push(head);
+                        }
+                        //区分数据操作类型
+                        let opt={};
+                        opt["text"]="操作类型";
+                        opt["value"]= tableDiffInfo[0].dmlType
+                        heards.push(opt);
+                    }
+                    //组装差异数据
+                    for(let i in tableDiffInfo){
+                        //新增参数
+                        if(tableDiffInfo[i].dmlType == 'I'){
+                            assembleColumns.push(tableDiffInfo[i].newData)
+                        }else if(tableDiffInfo[i].dmlType == 'D'){
+                            //删除数据
+                            assembleColumns.push(tableDiffInfo[i].oldData)
+                        }else if(tableDiffInfo[i].dmlType == 'U'){
+                            //修改数据
+                            for (let col in tableDiffInfo[i].newData) {
+                                let newCol = tableDiffInfo[i].newData[col]
+                                let oldCol = tableDiffInfo[i].oldData[col]
+                                if(newCol !== oldCol){
+                                    tableDiffInfo[i].newData[col] = oldCol + ">" + newCol
+                                }
+                            }
+                            tableDiffInfo[i].newData["dmlType"] = tableDiffInfo[i].dmlType
+                            assembleColumns.push(tableDiffInfo[i].newData)
+                        }
+                    }
+
+                    const column = {"headers": heards,"column": assembleColumns}
+                    this.prodCharge= column;
+                });
+            },
             getDiffProdData(){
+                //通过交易主单号 获取产品差异信息
                 var data={'mainSeqNo': this.code};
                 getDiffList(data).then(response => {
                     this.prodData=response.data.data;

@@ -229,7 +229,12 @@ const column= {
     'TT_TRAN_FLAG': '转账交易标志',
     'UPD_OD': '透支登记标志',
     'WITHDRAWAL_TYPE': '支取方式',
-    'FIXED_INT': '固定利率值'
+    'FIXED_INT': '固定利率值',
+    'CLIENT_TYPE_DESC': '客户类型描述',
+    'IS_INDIVIDUAL': '是否个体客户',
+    'COMPANY': '所属法人'
+
+
 }
 
 export function getColumnDesc (data) {
