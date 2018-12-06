@@ -45,10 +45,15 @@
                             <td>{{ props.item.system }}</td>
                             <td>{{ props.item.modelId }}</td>
                             <td>{{ props.item.parameter }}</td>
-                            <td>
+                            <td v-if="props.item.icon == 'edit'">
                                 <v-btn depressed outline icon fab dark color="primary lighten-2" small @click="routerTableInfo(props.item)">
-                                    <v-icon>edit</v-icon>
+                                    <v-icon>{{ props.item.icon }}</v-icon>
                                 </v-btn>
+                            </td>
+                            <td v-if="props.item.icon == 'person'">
+                                <v-chip color="primary lighten-2" text-color="white">
+                                    待处理
+                                </v-chip>
                             </td>
                         </template>
                     </v-data-table>
@@ -60,6 +65,8 @@
 <script>
     import TableList from './tables/tableList'
     import {getTableList} from "@/api/url/prodInfo";
+    import { getFlowList } from "@/api/url/prodInfo";
+
 
     export default {
         components: {
@@ -71,6 +78,7 @@
                 titleE: "",
                 titleNum: "",
                 action: 'ensemble',
+                mainFlowInfo: [],
                 items: [
                     {title: '核心系统',name: 'ensemble', class: '',icon: 'settings',color: "blue"},
                     {title: '核算系统',name: 'accounting', class: '',icon: 'settings',color: "blue"},
@@ -94,7 +102,8 @@
                         tableDesc: '',
                         system: '',
                         modelId: '',
-                        parameter: ''
+                        parameter: '',
+                        icon: ''
                     }
                 ],
                 editedIndex: -1,
@@ -114,8 +123,25 @@
             actionTag(item) {
                 this.action = item.name;
                 let that=this;
+                getFlowList().then(response => {
+                    that.mainFlowInfo = response.data.data
+                });
                 getTableList(this.action).then(function (response){
+                    for(let i=0; i<response.data.data.tableList.length; i++){
+                        let isCommit = false
+                        for(let j=0; j<that.mainFlowInfo.length; j++){
+                            if(response.data.data.tableList[i].tableName === that.mainFlowInfo[j].flowManage.tranId){
+                                response.data.data.tableList[i]["icon"] = "person"
+                                isCommit = true
+                                break
+                            }
+                        }
+                        if(!isCommit) {
+                            response.data.data.tableList[i]["icon"] = "edit"
+                        }
+                    }
                     that.desserts=response.data.data.tableList;
+
                     that.titleE = that.action
                     if(that.action === "ensemble") {
                         that.title = "核心系统"
@@ -136,9 +162,30 @@
                     }
                 }
             },
+
             getParaTable() {
                 let that=this;
+                getFlowList().then(response => {
+                    that.mainFlowInfo = response.data.data
+                });
+                /*此处区分交易是否已提交等待复核发布
+                    处理方法：重新查询待处理信息表，检查是否存在待处理单表交易
+                    原因：交易展示界面重新查库加载 多次提交的情况下  前几次提交记录会丢失
+                 */
                 getTableList("ensemble").then(function (response){
+                    for(let i=0; i<response.data.data.tableList.length; i++){
+                        let isCommit = false
+                        for(let j=0; j<that.mainFlowInfo.length; j++){
+                            if(response.data.data.tableList[i].tableName === that.mainFlowInfo[j].flowManage.tranId){
+                                response.data.data.tableList[i]["icon"] = "person"
+                                isCommit = true
+                                break
+                            }
+                        }
+                        if(!isCommit) {
+                            response.data.data.tableList[i]["icon"] = "edit"
+                        }
+                    }
                     that.desserts=response.data.data.tableList;
                     that.titleNum = response.data.data.tableList.length
                     that.title = "核心系统"

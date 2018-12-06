@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="flowManage" select-all light v-model="selected">
+    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="flowManage" light v-model="selected">
         <template slot="items" slot-scope="props">
                                     <tr @click="props.expanded = !props.expanded">
                                   <td>
@@ -50,6 +50,11 @@ export default {
         }
       ],
             headers: [
+                {
+                    text: "选择",
+                    align: "left",
+                    value: "check"
+                },
         {
           text: "任务单号",
           align: "left",
@@ -88,9 +93,7 @@ export default {
       ]
     };
   },
-//  mounted: function() {
-//    this.queryDespositProdData();
-//  },
+
     watch: {
         userWorkData(val) {
             this.queryDespositProdData(val)
@@ -113,7 +116,15 @@ export default {
           }
     },
     getDataInfo(code) {
-      this.$router.push({ name: "tranDataIndex", params: { code: code,optValue: "复核",flowInfo: this.desserts} });
+        //获取当前处理数据
+        let tagInfo = []
+        for(let i=0; i<this.desserts.length; i++){
+            if(code === this.desserts[i].flowManage.mainSeqNo){
+                tagInfo.push(this.desserts[i])
+                break
+            }
+        }
+        this.$router.push({ name: "tranDataIndex", params: { code: code,optValue: "复核",flowInfo: tagInfo} });
     }
   }
 };

@@ -111,19 +111,17 @@ export default {
           }
           });
       },
-//      queryDespositProdData(val) {
-//          this.desserts = []
-//          let length = val.length
-//          for(let j = 0; j<length; j++){
-//              if(val[j].flowManage.status === "3"){
-//                  val[j].flowManage.status = "已复核"
-//                  this.desserts.push(val[j])
-//              }
-//          }
-//      },
 
     getDataInfo(code) {
-      this.$router.push({ name: "tranDataIndex", params: { code: code ,optValue: "发布",flowInfo: this.desserts} });
+        //获取当前处理数据
+        let tagInfo = []
+        for(let i=0; i<this.desserts.length; i++){
+            if(code === this.desserts[i].flowManage.mainSeqNo){
+                tagInfo.push(this.desserts[i])
+                break
+            }
+        }
+        this.$router.push({ name: "tranDataIndex", params: { code: code ,optValue: "发布",flowInfo: tagInfo} });
     }
   }
 };

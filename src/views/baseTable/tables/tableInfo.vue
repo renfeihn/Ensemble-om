@@ -158,7 +158,7 @@
                 this.tbd.style = '';
             },
             onSave() {
-                let test = this.dataInfo
+
                 this.backValue.data = filterTableChangeData(this.columns, this.dataInfo, this.sourceDataInfo)
                 this.backValue.tableName = this.tableName
                 this.backValue.option = "save"
@@ -166,8 +166,9 @@
                 saveTable(this.backValue).then(response => {
                     if (response.status === 200) {
                         toast.success("提交成功！");
+                        this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
                     }
-                })
+                });
 
             },
             editAction(option, editSelected) {

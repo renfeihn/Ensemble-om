@@ -247,7 +247,7 @@
           </v-tabs-items>
         </v-tabs>
         <v-tabs fixed-tabs v-if="isTable == true">
-          <v-tab style="margin-left: 0px">CIF_CLIENT_TYPE--客户类型定义</v-tab>
+          <v-tab style="margin-left: 0px">{{diffTitles}}</v-tab>
           <v-tabs-items>
             <v-tab-item>
               <base-table :prodCharge="prodCharge"></base-table>
@@ -306,6 +306,7 @@ import {
                   optType: '4'//发布
               },
               e11: 2,
+              diffTitles: "",
               checkFlowInfo: [],
               confirmInfo: [],
               checkInfo: {
@@ -405,7 +406,10 @@ import {
                     tranFlowRelease(this.releaseInfo).then(response => {
                             if (response.status === 200) {
                                 toast.success("sql导出成功！");
-                                download2.download(response.data.data.sql, "dlDataUrlText.txt", "text/plain");
+                                let date = new Date();
+                                let fileName = ""
+                                fileName = date.getFullYear().toString()+(date.getMonth()+1).toString()+ date.getDate().toString()+"_"+this.releaseFlowInfo.flowManage.tranId.toString();
+                                download2.download(response.data.data.sql, fileName, "text/plain");
                             }
                         })
             },
@@ -487,6 +491,7 @@ import {
                 var data={'mainSeqNo': this.code};
                 getDiffTable(data).then(response => {
                     console.log(response);
+                    this.diffTitles = response.data.data.mainFlow.tranId+"-"+response.data.data.mainFlow.tranDesc
                     let tableDiffInfo = response.data.data.tableInfo
                     //获取单表列描述
                     let heards=[];
@@ -513,12 +518,22 @@ import {
                     //组装差异数据
                     for(let i in tableDiffInfo){
                         //新增参数
+                        let optTypeDesc = ""
+                        if(tableDiffInfo[i].dmlType === "I"){
+                            optTypeDesc = "新增"
+                        }
+                        if(tableDiffInfo[i].dmlType === "D"){
+                            optTypeDesc = "删除"
+                        }
+                        if(tableDiffInfo[i].dmlType === "U"){
+                            optTypeDesc = "修改"
+                        }
                         if(tableDiffInfo[i].dmlType == 'I'){
-                            tableDiffInfo[i].newData["dmlType"] = tableDiffInfo[i].dmlType
+                            tableDiffInfo[i].newData["dmlType"] = optTypeDesc
                             assembleColumns.push(tableDiffInfo[i].newData)
                         }else if(tableDiffInfo[i].dmlType == 'D'){
                             //删除数据
-                            tableDiffInfo[i].oldData["dmlType"] = tableDiffInfo[i].dmlType
+                            tableDiffInfo[i].oldData["dmlType"] = optTypeDesc
                             assembleColumns.push(tableDiffInfo[i].oldData)
                         }else if(tableDiffInfo[i].dmlType == 'U'){
                             //修改数据
@@ -529,7 +544,7 @@ import {
                                     tableDiffInfo[i].newData[col] = oldCol + ">" + newCol
                                 }
                             }
-                            tableDiffInfo[i].newData["dmlType"] = tableDiffInfo[i].dmlType
+                            tableDiffInfo[i].newData["dmlType"] = optTypeDesc
                             assembleColumns.push(tableDiffInfo[i].newData)
                         }
                     }
