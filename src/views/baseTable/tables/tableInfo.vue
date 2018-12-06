@@ -176,7 +176,7 @@
                     let selected = this.selected;
                     if (JSON.stringify(selected) == '{}') {
                         for (const key in editSelected) {
-                            if(selected[key] !== undefined && editSelected[key] !== undefined) {
+                            if(editSelected[key] !== undefined) {
                                 selected[key] = editSelected[key].value
                             }
                         }

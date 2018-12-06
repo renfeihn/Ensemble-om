@@ -492,7 +492,12 @@ import {
                     let heards=[];
                     let assembleColumns=[];
                     if(tableDiffInfo[0] !== undefined){
-                        let column = tableDiffInfo[0].newData
+                        let column = {}
+                        if(tableDiffInfo[0].dmlType == 'I'){
+                             column = tableDiffInfo[0].newData
+                        }else{
+                             column = tableDiffInfo[0].oldData
+                        }
                         for(const keys in column){
                             let head={};
                             head["text"]=getColumnDesc(keys);
@@ -509,9 +514,11 @@ import {
                     for(let i in tableDiffInfo){
                         //新增参数
                         if(tableDiffInfo[i].dmlType == 'I'){
+                            tableDiffInfo[i].newData["dmlType"] = tableDiffInfo[i].dmlType
                             assembleColumns.push(tableDiffInfo[i].newData)
                         }else if(tableDiffInfo[i].dmlType == 'D'){
                             //删除数据
+                            tableDiffInfo[i].oldData["dmlType"] = tableDiffInfo[i].dmlType
                             assembleColumns.push(tableDiffInfo[i].oldData)
                         }else if(tableDiffInfo[i].dmlType == 'U'){
                             //修改数据
