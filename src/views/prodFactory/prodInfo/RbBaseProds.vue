@@ -286,6 +286,7 @@
             },
             //保存事件
             saveProd() {
+                this.spinning= true
                 this.targetData = filterChangeData(this.prodData, this.sourceProdData,this.showCopy)
                 if(this.showCopy === "Y") {
                     this.targetData.optionType = "I"
@@ -298,6 +299,7 @@
                     if(response.status === 200) {
                         this.pendFlag = 1
                         toast.success("提交成功！");
+                        this.spinning= false
                     }
                 })
             },

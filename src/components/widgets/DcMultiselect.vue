@@ -205,21 +205,26 @@
                     this.disabled= this._props.disablePower;
                 }
                 if(msg !== null && msg !== undefined) {
+
                     let data = msg.split(",");
                     let options = this._props.options;
                     let values = [];
                     for (const num in data) {
                         let value = {};
-                        value.key = data[num];
-                        for (const index in options) {
-                            const option = options[index];
-                            if (option.key == value.key) {
-                                value.value = option.value;
+                        if(data[num] !== null && data[num] !== "") {
+                            value.key = data[num];
+                            for (const index in options) {
+                                const option = options[index];
+                                if (option.key == value.key) {
+                                    value.value = option.value;
+                                }
                             }
+                            values.push(value);
                         }
-                        values.push(value);
                     }
-                    this.value = values;
+                    if(values.length) {
+                        this.value = values;
+                    }
                     //选项赋值
                     if(this._props.msg.optionPermissions!==undefined){
                         this.optionPermissions= this._props.msg.optionPermissions

@@ -52,7 +52,7 @@
     "columnDesc": "服务费标志"
   },
   "PROD_END_DATE": {
-    "columnType": "input",
+    "columnType": "date",
     "valueMethod": "FD",
     "columnDesc": "失效日期"
   },
@@ -2406,7 +2406,7 @@
     "columnDesc": "晚起息最大天数"
   },
   "PROD_START_DATE": {
-    "columnType": "input",
+    "columnType": "date",
     "valueMethod": "FD",
     "columnDesc": "生效日期"
   },
