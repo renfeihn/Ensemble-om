@@ -30,7 +30,7 @@
           fixed
           >
           <theme-settings></theme-settings>
-        </v-navigation-drawer>        
+        </v-navigation-drawer>
       </v-app>
     </template>
     <template v-else>
@@ -48,10 +48,10 @@
       v-model="snackbar.show"
     >
       {{ snackbar.text }}
-      <v-btn dark flat @click.native="snackbar.show = false" icon> 
+      <v-btn dark flat @click.native="snackbar.show = false" icon>
         <v-icon>close</v-icon>
       </v-btn>
-    </v-snackbar>    
+    </v-snackbar>
   </div>
 </template>
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div id="pageDashboard">
-    <v-container grid-list-xl fluid>
+    <v-container grid-list-xl fluid class="pb-5">
       <v-layout row wrap>
         <!-- mini statistic start -->
         <v-flex lg3 sm6 xs12>
@@ -104,11 +104,11 @@
       </v-layout>
 
     </v-container>
-    <v-footer height="auto" class="white pa-3 app--footer elevation-2 dcFooter">
+<!--    <v-footer height="auto" class="white pa-3 app&#45;&#45;footer elevation-2 dcFooter">
       <span class="caption">SmartEnsemble-om &copy; {{ new Date().getFullYear() }}</span>
       <v-spacer></v-spacer>
       <span class="caption mr-1"> ensemble-om </span> <v-icon color="pink" class="mr-2" small>favorite</v-icon>
-    </v-footer>
+    </v-footer>-->
   </div>
 
 </template>
@@ -258,6 +258,7 @@ export default {
 <style lang="stylus" scoped>
   .dcFooter{
     position:absolute
+    bottom 0;
     width: 100%
   }
   </style>

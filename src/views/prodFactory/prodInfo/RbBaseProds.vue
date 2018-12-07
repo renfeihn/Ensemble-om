@@ -547,10 +547,11 @@
         position: fixed;
         top: 63px;
         overflow-y: scroll;
+        height: 100%;
         width: 24%;
     }
     .textProd{
-        min-height: calc(90vh - 14px);
+        min-height: calc(90vh - 24px);
         padding-bottom: 120px;
     }
 </style>

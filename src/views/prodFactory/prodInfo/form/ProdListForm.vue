@@ -65,7 +65,7 @@
     padding-top: 8px;
   }
   .depositTree {
-    height: calc(90vh - 48px);
+    height: calc(90vh - 24px);
     overflow-y: scroll;
   }
   .depositTreeFixed {
