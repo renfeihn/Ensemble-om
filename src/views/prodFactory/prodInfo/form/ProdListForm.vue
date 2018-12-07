@@ -66,6 +66,7 @@
   }
   .depositTree {
     height: calc(90vh - 48px);
+    overflow-y: scroll;
   }
   .depositTreeFixed {
     position: fixed;

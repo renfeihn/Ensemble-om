@@ -102,8 +102,15 @@
         <!-- social/weather card start -->
 
       </v-layout>
+
     </v-container>
+    <v-footer height="auto" class="white pa-3 app--footer elevation-2 dcFooter">
+      <span class="caption">SmartEnsemble-om &copy; {{ new Date().getFullYear() }}</span>
+      <v-spacer></v-spacer>
+      <span class="caption mr-1"> ensemble-om </span> <v-icon color="pink" class="mr-2" small>favorite</v-icon>
+    </v-footer>
   </div>
+
 </template>
 
 <script>
@@ -248,3 +255,9 @@ export default {
   }
 };
 </script>
+<style lang="stylus" scoped>
+  .dcFooter{
+    position:absolute
+    width: 100%
+  }
+  </style>

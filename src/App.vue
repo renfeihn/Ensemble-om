@@ -8,15 +8,11 @@
           <!-- Page Header -->
        <!--   <page-header v-if="$route.meta.breadcrumb"></page-header>-->
           <tags-view></tags-view>
-          <div class="px-4 pb-5">
+          <div class="px-4">
             <router-view></router-view>
           </div>
            <!-- App Footer -->
-          <v-footer height="auto" class="white pa-3 app--footer elevation-2 dcFooter">
-            <span class="caption">SmartEnsemble-om &copy; {{ new Date().getFullYear() }}</span>
-            <v-spacer></v-spacer>
-            <span class="caption mr-1"> ensemble-om </span> <v-icon color="pink" small>favorite</v-icon>
-          </v-footer>
+
         </v-content>
         <!-- Go to top -->
         <app-fab></app-fab>
@@ -122,9 +118,5 @@ export default {
 .page-wrapper {
   min-height: calc(100vh - 64px - 50px - 81px);
 }
-  .dcFooter{
-    position:absolute
-    bottom: 0px
-    width: 100%
-  }
+
 </style>

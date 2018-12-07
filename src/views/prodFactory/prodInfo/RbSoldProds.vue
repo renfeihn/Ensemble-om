@@ -549,6 +549,7 @@
     .depositTreeFixed {
         position: fixed;
         top: 63px;
+        overflow-y: scroll;
         width: 24%;
     }
     .textProd{

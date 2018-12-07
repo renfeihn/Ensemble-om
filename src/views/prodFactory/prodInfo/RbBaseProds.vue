@@ -1,7 +1,6 @@
 <template>
     <a-spin tip="Loading..." size="large" :spinning="spinning">
-    <div class="app-container pt-4">
-        <v-layout row wrap>
+        <v-layout row wrap class="app-container pt-4">
             <v-flex lg9 sm9 class="v-card elevation-2">
                 <v-toolbar color="primary lighten-2" dark tabs>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
@@ -74,7 +73,6 @@
                 </v-window>
             </v-flex>
         </v-layout>
-    </div>
     </a-spin>
 </template>
 
@@ -548,6 +546,7 @@
     .depositTreeFixed {
         position: fixed;
         top: 63px;
+        overflow-y: scroll;
         width: 24%;
     }
     .textProd{
