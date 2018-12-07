@@ -22,7 +22,7 @@
                 </v-card>
             </v-flex>
             <v-flex xs12 class="mt-2 pb-4">
-                <v-card style="height: 200%" class="elevation-4 radiusDc">
+                <v-card style="height: 400px; max-height: 400px;overflow-y: scroll" class="elevation-4 radiusDc">
                     <v-list>
                         <v-list-tile v-for="item in checkedClass" :key="item.title" @click="chipClick(item)" :class="item.class">
                             <v-list-tile-action>

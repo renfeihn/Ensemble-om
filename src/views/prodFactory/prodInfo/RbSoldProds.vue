@@ -104,6 +104,8 @@
     import FormShift from './form/rbModel/FormShift';
     import AccountingInfo from './form/rbModel/AccountingInfo';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
+    import {getParamTable} from "@/api/url/prodInfo";
+
     export default {
         name: 'deposit',
         components: {
@@ -204,12 +206,25 @@
             }, true)
             this.queryProdFlow();
             //组织树形组件备选数据
-            for(let i in columnInfo){
-                if(columnInfo[i].parentCode !== undefined){
-                    columnInfo[i].key = i
-                    this.treeOptions.push(columnInfo[i])
-                }
-            }
+            let that = this
+            getParamTable("MB_ATTR_CLASS").then(function (response) {
+                let attrClass = response.data.data.columnInfo;
+                getParamTable("MB_ATTR_TYPE").then(function (response) {
+                    let attrType = response.data.data.columnInfo;
+                    for (let q = 0; q < attrClass.length; q++) {
+                        for (let w = 0; w < attrType.length; w++) {
+                            if (attrType[w].ATTR_CLASS === attrClass[q].ATTR_CLASS) {
+                                let temp = {}
+                                temp["key"] = attrType[w].ATTR_KEY
+                                temp["columnDesc"] = attrType[w].ATTR_DESC
+                                temp["parentCode"] = attrClass[q].ATTR_CLASS
+                                temp["parentDesc"] = attrClass[q].ATTR_CLASS_DESC
+                                that.treeOptions.push(temp)
+                            }
+                        }
+                    }
+                });
+            });
             //初始化产品信息
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码

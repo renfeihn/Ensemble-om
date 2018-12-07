@@ -12,7 +12,7 @@ depositTree<template>
         </v-toolbar>
         <v-layout>
             <v-flex xs6 md12>
-                <v-card-text>
+                <v-card-text style="height: 400px; max-height: 400px;overflow-y: scroll">
                     <v-treeview slot="header" v-model="tree" activatable :items="items" selected-color="green" open-on-click selectable :options="options" expand-icon="mdi-assignment_turned_in-down" labelDesc="labelDesc">
                     </v-treeview>
                 </v-card-text>
@@ -21,7 +21,7 @@ depositTree<template>
         <v-divider></v-divider>
         <v-layout>
             <v-flex xs6 md12>
-                <v-card-text style="height: 400px">
+                <v-card-text style="max-height: 400px; height: 400px; overflow-y: scroll">
                     <div v-if="selections.length === 0" key="title" class="title font-weight-light grey--text pa-3 text-xs-center">请选择...</div>
                     <v-scroll-x-transition group hide-on-leave>
                         <v-chip v-for="(selection, i) in selections" :key="i" color="green" dark smaller close @input="remove(selection)">
