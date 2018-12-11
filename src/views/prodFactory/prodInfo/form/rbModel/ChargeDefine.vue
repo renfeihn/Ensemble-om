@@ -4,112 +4,53 @@
             <a-button type="primary" @click="onAdd">新增</a-button>
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
             <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
-            <v-dialog
-                    v-model="dialog"
-                    width="500"
-            >
+            <v-dialog v-model="dialog" width="500">
                 <v-card>
+                    <v-card-title style="height: 35px">
+                        <span style="color: #00b0ff;font-size: x-large;margin-left: 3%; margin-top: 3%">{{ titleDesc}}</span>
+                    </v-card-title>
                     <v-card-text>
-                <v-form v-model="valid">
-                    <v-text-field
-                            :disabled="disabledFlag"
-                            v-model="selected.feeType"
-                            :counter="10"
-                            label="批量收费类型"
-                            required
-                            class="mx-5"
-                    ></v-text-field>
-                    <v-text-field
-                            v-model="selected.conDeductTimes"
-                            label="持续扣款次数"
-                            class="mx-5"
-                            required
-                    ></v-text-field>
-                    <v-flex>
-                        <dc-multiselect
-                                :isMultiSelect="false"
-                                v-model="selected.chargePeriodFreq"
-                                :options="chargePeriodFreq1"
-                                labelDesc="  收费频率"
-                        ></dc-multiselect>
-
-                    </v-flex>
-
-                   <!-- <v-text-field
-                            v-model="selected.chargeDealMethod"
-                            label="收费处理方式"
-                            class="mx-5"
-                            required
-                    ></v-text-field>-->
-                    <v-flex>
-                        <dc-multiselect
-                                :isMultiSelect="false"
-                                v-model="selected.chargeDealMethod"
-                                :options="chargeDealMethod1"
-                                labelDesc="  收费处理方式"
-                        ></dc-multiselect>
-
-                    </v-flex>
-                    <!--<v-text-field
-                            v-model="selected.conDeductFlag"
-                            label="持续扣款标识"
-                            class="mx-5"
-                            required
-                    ></v-text-field>-->
-                    <v-flex>
-                        <dc-multiselect
-                                :isMultiSelect="false"
-                                v-model="selected.conDeductFlag"
-                                :options="conDeductFlag1"
-                                labelDesc="  持续扣款标识"
-                        ></dc-multiselect>
-
-                    </v-flex>
-                    <v-flex>
-                        <dc-date v-model="selected.chargeDay" labelDesc="收费日期"></dc-date>
-                    </v-flex>
-                    <!-- <v-text-field
-                             v-model="selected.nextChargeDate"
-                             label="下一收费日期"
-                             class="mx-5"
-                             required
-                     ></v-text-field>-->
-                    <v-flex>
-                        <dc-date v-model="selected.nextChargeDate" labelDesc="下一收费日期"></dc-date>
-                    </v-flex>
-                </v-form>
-<v-spacer></v-spacer>
-                <v-flex mx-5>
-                    <v-btn
-                    color="green darken-1"
-                    flat="flat"
-                    @click="submit"
-                    >
-                    确认
-                    </v-btn>
-                    <v-btn
-                    color="green darken-1"
-                    flat="flat"
-                    @click="dialog = false"
-                    >
-                    取消
-                    </v-btn>
-                </v-flex>
+                        <v-layout wrap>
+                            <v-flex xs12 sm12 m12>
+                                <dc-text-field labelDesc="批量收费类型" v-model="selected.feeType"></dc-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-text-field labelDesc="持续扣款次数" v-model="selected.conDeductTimes"></dc-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargeDealMethod" :options="chargeDealMethod1" labelDesc="  收费处理方式"></dc-multiselect>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.conDeductFlag" :options="conDeductFlag1" labelDesc="  持续扣款标识"></dc-multiselect>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargePeriodFreq" :options="chargePeriodFreq1" labelDesc="  收费频率"></dc-multiselect>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-text-field labelDesc="收费日" v-model="selected.chargeDay"></dc-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-date v-model="selected.nextChargeDate" labelDesc="下一收费日期"></dc-date>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <v-btn color="info" @click="dialog = false" class="bthStyle">取消</v-btn>
+                                <v-btn color="info" @click="submit" class="bthStyle" style="margin-left: 200px">保存</v-btn>
+                            </v-flex>
+                        </v-layout>
                     </v-card-text>
                 </v-card>
             </v-dialog>
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
-            <a-table :customRow="customRow" :columns="columns" :dataSource="chargeDefinesInfo" bordered>
-            </a-table>
-            <v-divider></v-divider>
+            <a-table :customRow="customRow" :columns="columns" :dataSource="chargeDefinesInfo" bordered></a-table>
         </v-card-text>
     </v-card>
 
 </template>
 <script>
 import DcMultiselect from '@/components/widgets/DcMultiselect'
+import DcTextField from "@/components/widgets/DcTextField";
 import {getChargeDefine} from '@/api/table';
 import toast from '@/utils/toast';
 import { getInitData } from "@/mock/init";
@@ -123,7 +64,7 @@ export default {
             return getColumnDesc(key)
         }
     },
-    components: { DcMultiselect,DcDate},
+    components: { DcMultiselect,DcDate,DcTextField},
     props: ["prodData"],
     data () {
         return {
@@ -135,6 +76,7 @@ export default {
             dialog: false,
             refData: getInitData,
             option: '',
+            titleDesc: '',
             selectedRowKeys: [],
             selected: {},
             chargePeriodFreq1: [
@@ -170,7 +112,7 @@ export default {
             columns: [
                 {dataIndex: 'feeType', title: '批量收费类型',scopedSlots: { customRender: 'feeType' }},
                 {dataIndex: 'chargePeriodFreq', title: '收费频率'},
-                {dataIndex: 'chargeDay', title: '收费日期'},
+                {dataIndex: 'chargeDay', title: '收费日'},
                 {dataIndex: 'nextChargeDate', title: '下一收费日'},
                 {dataIndex: 'chargeDealMethod', title: '收费处理方式'},
                 {dataIndex: 'conDeductFlag', title: '持续扣款标识'},
@@ -188,6 +130,42 @@ export default {
     },
 
     methods: {
+        //获取原始数据
+        getChargeDefinesInfo(val) {
+            //初始化产品对应的信息
+            if(val!=undefined&&val.prodType!=undefined){
+                this.chargeDefinesInfo = val.mbProdCharge
+                this.prodType = val.prodType.prodType
+            }
+        },
+        //加载备选数据
+        initRefDate() {
+            this.feeType = this.refData[2].paraDataRb.feeType;
+            this.chargePeriodFreq = this.refData[2].paraDataRb.chargePeriodFreq;
+            this.chargeDealMethod = this.refData[2].paraDataRb.chargeDealMethod;
+            this.conDeductFlag = this.refData[2].paraDataRb.conDeductFlag;
+        },
+        //删除
+        onDelete () {
+            let dataSource=this.chargeDefinesInfo
+            confirm('确认删除该条参数?') && removeByValue(dataSource,this.selected)
+        },
+        //新增
+        onAdd () {
+            this.option='add';
+            this.titleDesc = "新增费用信息";
+            this.selected={};
+            this.dialog=true;
+            this.disabledFlag =false;
+        },
+        //修改
+        onEdit () {
+            this.option='edit';
+            this.dialog=true;
+            this.titleDesc = "修改费用信息";
+            this.disabledFlag = true;
+        },
+        //弹框增加或修改保存事件
         submit () {
             if(this.option == 'add'){
                 let dataSource=this.chargeDefinesInfo
@@ -201,21 +179,7 @@ export default {
                 this.dialog=false;
             }
         },
-        onDelete () {
-            let dataSource=this.chargeDefinesInfo
-            removeByValue(dataSource,this.selected)
-        },
-        onAdd () {
-            this.option='add';
-            this.selected={};
-            this.dialog=true;
-            this.disabledFlag =false;
-        },
-        onEdit () {
-            this.option='edit';
-            this.dialog=true;
-            this.disabledFlag = true;
-        },
+        //点击某行，无效选中数据
         customRow (record) {
             return {
                 on: {
@@ -223,6 +187,7 @@ export default {
                 }
             }
         },
+        //点击某行 选中数据
         clickRow(record,event){
             var tr=event.currentTarget;
             var tbd=tr.parentNode;
@@ -236,23 +201,6 @@ export default {
                 }
             }
             this.selected=record;
-        },
-        getChargeDefinesInfo(val) {
-            //初始化产品对应的信息
-            if(val!=undefined&&val.prodType!=undefined){
-            this.chargeDefinesInfo = val.mbProdCharge
-            this.prodType = val.prodType.prodType
-            }
-        },
-        initRefDate() {
-            this.feeType = this.refData[2].paraDataRb.feeType;
-            this.chargePeriodFreq = this.refData[2].paraDataRb.chargePeriodFreq;
-            this.chargeDealMethod = this.refData[2].paraDataRb.chargeDealMethod;
-            this.conDeductFlag = this.refData[2].paraDataRb.conDeductFlag;
-        },
-        deleteItem (item) {
-            const index = this.projects.indexOf(item)
-            confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
         },
         close () {
             this.dialog = false
@@ -284,14 +232,15 @@ export default {
                     this.close()
                 }
             }
-        },
-        saveClick() {
-            if(this.addFlag){
-                this.save()
-            }else if(this.modFlag){
-                this.editItem()
-            }
         }
     }
 };
 </script>
+
+<style scoped>
+    .bthStyle {
+        color: #00b0ff;
+        width: 120px;
+        margin-top: 30px;
+    }
+</style>
