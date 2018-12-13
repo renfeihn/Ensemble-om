@@ -238,3 +238,25 @@ export function saveSysTable (params) {
         data: params
     })
 }
+
+export function getCommonList (params) {
+    return request({
+        url: '/getCommonList',
+        method: 'post',
+        data: params
+    })
+}
+export function cleanList (params) {
+    return request({
+        url: '/cleanList',
+        method: 'post',
+        data: params
+    })
+}
+export function submitCommon (params) {
+    return request({
+        url: '/submitCommon',
+        method: 'post',
+        data: params
+    })
+}

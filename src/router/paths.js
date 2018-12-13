@@ -807,7 +807,7 @@ export default [
       breadcrumb: true,
       title: '存款基础产品组'
     },
-    name: 'prod/rbBaseProd',
+    name: 'rbBaseProd',
     component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */

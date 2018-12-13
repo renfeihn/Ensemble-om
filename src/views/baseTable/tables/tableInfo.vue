@@ -54,6 +54,7 @@
     import DcMultiselect from "../../../components/widgets/DcMultiselect";
 
     export default {
+        name: 'tableInfo',
         components: {
             DcMultiselect,
             EditTableInfo,
@@ -104,7 +105,7 @@
                     that.dataInfo = response.data.data.columnInfo;
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
                     that.columns = response.data.data.column;
-                    this.tableName = tableName
+                    that.tableName = tableName
                 });
             },
             copy(obj1, obj2) {
@@ -161,12 +162,15 @@
 
                 this.backValue.data = filterTableChangeData(this.columns, this.dataInfo, this.sourceDataInfo)
                 this.backValue.tableName = this.tableName
+                this.backValue.tableDesc= this.$route.params.tableDesc
                 this.backValue.option = "save"
                 this.backValue.userName = sessionStorage.getItem("userId")
                 saveTable(this.backValue).then(response => {
                     if (response.status === 200) {
                         toast.success("提交成功！");
                         this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
+                        let setTaskEvent= new Event("taskList");
+                        window.dispatchEvent(setTaskEvent);
                     }
                 });
 

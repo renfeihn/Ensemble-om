@@ -9,7 +9,9 @@
        <!--   <page-header v-if="$route.meta.breadcrumb"></page-header>-->
           <tags-view></tags-view>
           <div class="px-4">
+            <keep-alive :include='cachedViews'>
             <router-view></router-view>
+            </keep-alive>
           </div>
            <!-- App Footer -->
 
@@ -84,7 +86,11 @@ export default {
       color: ""
     }
   }),
-  computed: {},
+    computed: {
+        cachedViews() {
+            return this.$store.state.tagsView.cachedViews;
+        }
+    },
   created() {
     AppEvents.forEach(item => {
       this.$on(item.name, item.callback);

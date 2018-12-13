@@ -107,7 +107,7 @@
     import {getParamTable} from "@/api/url/prodInfo";
 
     export default {
-        name: 'deposit',
+        name: 'RbSoldProds',
         components: {
             VWidget,
             BaseProd,

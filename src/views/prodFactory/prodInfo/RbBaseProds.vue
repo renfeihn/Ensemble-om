@@ -102,7 +102,7 @@
     import {getParamTable} from "@/api/url/prodInfo";
 
     export default {
-        name: 'deposit',
+        name: 'RbBaseProds',
         components: {
             VWidget,
             BaseProd,
@@ -314,6 +314,8 @@
                         this.pendFlag = 1
                         toast.success("提交成功！");
                         this.spinning= false
+                        let setTaskEvent= new Event("taskList");
+                        window.dispatchEvent(setTaskEvent);
                     }
                 })
             },

@@ -6,7 +6,7 @@
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
-            <v-data-table :headers="complex.headers" :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="value" select-all v-model="complex.selected">
+            <v-data-table :headers="complex.headers" :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="prodType" select-all v-model="complex.selected">
                 <template slot="items" slot-scope="props" >
                     <tr :active="props.selected" @click="props.selected = !props.selected">
                         <td>

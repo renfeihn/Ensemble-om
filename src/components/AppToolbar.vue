@@ -33,11 +33,11 @@
         <v-menu v-model="taskMenu" :close-on-content-click="false" offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
             <v-btn icon flat slot="activator">
                 <v-badge color="red" overlap>
-                    <span slot="badge">4</span>
+                    <span slot="badge">{{taskSize}}</span>
                     <v-icon medium>notifications</v-icon>
                 </v-badge>
             </v-btn>
-           <task-list v-on:closeMenu="closeMenu"></task-list>
+           <task-list :taskMenu="taskMenu" v-on:getTaskList="getTaskList"></task-list>
         </v-menu>
         <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
             <v-btn icon large flat slot="activator">
@@ -81,6 +81,7 @@
             dcSwitch: true,
             searchDc: 'searchDcNone',
             titleName: config.name,
+            taskSize: '0',
             taskMenu: false,
             prodClass: "",
             prodListSplit: [],
@@ -128,7 +129,6 @@
                 return "/static/prod/dcLog1.png";
             },
         },
-
         mounted() {
             if (getToken()) {
                 this.getInitProdList();
@@ -176,6 +176,9 @@
                 this.searchDc='searchDc';
                 document.getElementsByTagName("main")[0].addEventListener("click",this.showSearchNon);
 
+            },
+            getTaskList(size){
+                this.taskSize=size;
             },
             showSearchNon(){
               this.searchDc='searchDcNone';
