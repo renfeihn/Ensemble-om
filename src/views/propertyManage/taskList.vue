@@ -39,7 +39,7 @@
     import {submitCommon} from "@/api/url/prodInfo";
     export default {
         props: {
-            taskMenu :Boolean
+            taskMenu: Boolean
         },
         data: () => ({
             items: [
@@ -52,7 +52,7 @@
             ]
         }),
         watch: {
-            taskMenu : {
+            taskMenu: {
                 handler() {
                     this.getTaskList()
                 }
