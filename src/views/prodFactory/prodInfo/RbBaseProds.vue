@@ -221,17 +221,9 @@
                 });
             });
             //初始化产品信息
-            let mProdType = ""
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码
-                mProdType = this.$route.hash
-            }
-            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
-                //通过产品展示界面跳转 获取产品代码
-                mProdType = this.$route.params.prodType
-            }
-            if(mProdType !== "") {
-                getProdData(mProdType).then(response => {
+                getProdData(this.$route.hash).then(response => {
                     //初始化产品基础参数
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
@@ -248,6 +240,22 @@
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
+            }
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
+                getProdData(this.$route.params.prodType).then(response => {
+                    //初始化产品基础参数
+                    this.prodCode = response.data.data.prodType.prodType
+                    this.prodDesc = response.data.data.prodType.prodDesc
+                    this.$store.dispatch('setProdType',this.prodCode)
+                    this.$store.dispatch('setProdDesc',this.prodDesc)
+                    const reProd  = response.data.data
+                    this.prodData= reProd;
+                    this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                    this.initEventAttr(reProd)
+                    this.prodClass= this.prodData.prodType.prodClass
+                    this.powerByLevel(this.prodClass);
+                    this.spinning= false
+                });
             }
         },
         methods: {
