@@ -25,6 +25,12 @@ const Menu = [
     icon: 'favorite_border',
       menuId: '13'
   },
+    {
+        title: '产品展示',
+        icon: 'widgets',
+        name: 'prodWindow',
+        menuId: '14'
+    },
   { header: '网贷管理端' ,menuId: '2'},
   {
       title: '合作方信息管理',

@@ -240,7 +240,7 @@
                     this.labelText = this._props.labelDesc + ' :';
                 }
                 //根据产品配置信息，初始化分户生效标志
-                if(this._props.msg.perEffect === "true"){
+                if(this._props.msg.perEffect !== undefined && this._props.msg.perEffect === "true"){
                     this.peopleColor = "red"
                     this.peopleDesc = "分户生效"
                 }else{

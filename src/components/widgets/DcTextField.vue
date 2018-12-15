@@ -155,7 +155,7 @@
                     this.value = this._props.msg
                 }
                 //判断是否显示分户生效标识
-                if(this._props.perShow === true){
+                if(this._props.perShow !== undefined && this._props.perShow === true){
                     this.personShow = 1
                 }
                 //分户生效标识回显 如果传入msg为对象 则进入if判断  如果为String 则this._props.msg.perEffect === undefined 不执行以下操作

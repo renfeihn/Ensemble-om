@@ -154,7 +154,7 @@
                     this.personShow = 1
                 }
                 //通过产品配置的分户生效标识，初始化分户生效标志
-                if(this._props.value.perEffect === "true"){
+                if(this._props.value.perEffect !== undefined && this._props.value.perEffect === "true"){
                     this.peopleColor = "red"
                     this.peopleDesc = "分户生效"
                 }else{

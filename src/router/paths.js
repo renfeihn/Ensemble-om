@@ -1137,6 +1137,21 @@ export default [
             /* webpackMode: "lazy-once" */
             require(['@/views/prodFactory/prodFlow/windowsFlow/prodCmbs.vue'],resolve)
 },
+
+    {
+        path: '/prodWindow',
+        meta: {
+            breadcrumb: true,
+            title: '产品展示'
+        },
+        name: 'prodWindow',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodFlow/windowsFlow/prodWindow.vue'],resolve)
+    },
+
+
 {
     path: '/tableInfo',
     meta: {

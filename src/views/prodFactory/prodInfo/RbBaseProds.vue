@@ -221,9 +221,17 @@
                 });
             });
             //初始化产品信息
+            let mProdType = ""
             if(this.$route.hash !== "" && this.$route.hash !== null) {
                 //点击主菜单产品组时 获取产品组代码
-                getProdData(this.$route.hash).then(response => {
+                mProdType = this.$route.hash
+            }
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
+                //通过产品展示界面跳转 获取产品代码
+                mProdType = this.$route.params.prodType
+            }
+            if(mProdType !== "") {
+                getProdData(mProdType).then(response => {
                     //初始化产品基础参数
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
