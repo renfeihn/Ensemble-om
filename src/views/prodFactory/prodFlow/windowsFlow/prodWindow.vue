@@ -316,11 +316,9 @@
                             ret = 2
                             break
                         }
-                    }else{
-                        if (select[key][j] == val) {
-                            ret = 2
-                            break
-                        }
+                    }else if (select[key][j] == val) {
+                        ret = 2
+                        break
                     }
                 }
                 return ret

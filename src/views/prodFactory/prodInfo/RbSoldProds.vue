@@ -246,6 +246,22 @@
                 //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
             }
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
+                getProdData(this.$route.params.prodType).then(response => {
+                    //初始化产品基础参数
+                    this.prodCode = response.data.data.prodType.prodType
+                    this.prodDesc = response.data.data.prodType.prodDesc
+                    this.$store.dispatch('setProdType',this.prodCode)
+                    this.$store.dispatch('setProdDesc',this.prodDesc)
+                    const reProd  = response.data.data
+                    this.prodData= reProd;
+                    this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
+                    this.initEventAttr(reProd)
+                    this.prodClass= this.prodData.prodType.prodClass
+                    this.powerByLevel(this.prodClass);
+                    this.spinning= false
+                });
+            }
         },
         methods: {
             initEventAttr(reProd) {
