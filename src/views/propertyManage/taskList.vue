@@ -17,7 +17,7 @@
               <v-list-tile-sub-title v-html="item.tranName"></v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action class="caption">
-              <v-icon class="material-icons">close</v-icon>
+              <v-icon class="material-icons" @click="deleteTask(item)">close</v-icon>
             </v-list-tile-action>
           </v-list-tile>
         </template>
@@ -36,6 +36,7 @@
 <script>
     import {getCommonList} from "@/api/url/prodInfo";
     import {cleanList} from "@/api/url/prodInfo";
+    import {deleteTask} from "@/api/url/prodInfo";
     import {submitCommon} from "@/api/url/prodInfo";
     export default {
         props: {
@@ -49,7 +50,8 @@
                     icon: '',
                     timeLabel: ''
                 }
-            ]
+            ],
+            seqNo: ''
         }),
         watch: {
             taskMenu: {
@@ -78,9 +80,25 @@
                 })
             },
             clean(){
-                cleanList({"userId": sessionStorage.getItem("userId")}).then(response => {
-                    this.items=[]
+                let that=this
+                cleanList({"seqNo": this.seqNo}).then(response => {
+                    that.items=[]
                     this.$emit('getTaskList','0')
+                })
+            },
+            deleteTask(item){
+                let that=this;
+                deleteTask({"tranId": item.tranId,"seqNo": this.seqNo}).then(response => {
+                    if(that.items.length==1){
+                        that.items=[]
+                    }else{
+                        for (const [i, v] of that.items.entries()) {
+                            if (v === item) {
+                               that.items.splice(i, 1)
+                            }
+                        }
+                    }
+                    that.$emit('getTaskList',that.items.length)
                 })
             },
             showSearchAction() {
@@ -89,6 +107,10 @@
             getTaskList() {
                 getCommonList({"userId": sessionStorage.getItem("userId")}).then(response => {
                     this.items= response.data.data;
+                    if(this.items[0]!=null) {
+                        this.seqNo = this.items[0].mainSeqNo
+                    }
+
                     if(response.data.data!=null&&response.data.data!={}){
                         this.$emit('getTaskList',response.data.data.length)
                     }

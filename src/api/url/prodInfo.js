@@ -260,3 +260,10 @@ export function submitCommon (params) {
         data: params
     })
 }
+export function deleteTask (params) {
+    return request({
+        url: '/deleteTask',
+        method: 'post',
+        data: params
+    })
+}
