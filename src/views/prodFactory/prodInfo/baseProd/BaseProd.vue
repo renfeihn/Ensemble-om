@@ -103,24 +103,24 @@
             ],
             prodClassOption: [
                 {
-                    "key": "RB",
-                    "value": "RB-存款类"
+                    "key": "RBBASE",
+                    "value": "RB-存款基础产品组"
                 },
                 {
                     "key": "RB100",
                     "value": "RB100-个人存款组"
                 },
                 {
-                    "key": "RB200",
-                    "value": "RB200-对公存款组"
+                    "key": "GLBASE",
+                    "value": "GLBASE-核算类基础组"
                 },
                 {
-                    "key": "RB300",
-                    "value": "RB300-同业存款组"
+                    "key": "MMBASE",
+                    "value": "MMBASE-货币类基础组"
                 },
                 {
-                    "key": "RBBASE",
-                    "value": "RBBASE-存款基础产品组"
+                    "key": "CLBASE",
+                    "value": "CLBASE-贷款基础产品组"
                 }
             ],
             prodRangeOption: [

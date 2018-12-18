@@ -218,6 +218,7 @@
                     temp['prodDesc'] = that.prodTypeArr[i].prodDesc
                     temp['prodRange'] = that.prodTypeArr[i].prodRange =='B'?'基础产品':'可售产品'
                     temp['status'] = that.prodTypeArr[i].status == 'A'?'可售':'封存'
+                    temp['prodClass'] = that.prodTypeArr[i].prodClass
                     temp['baseProdType'] = that.prodTypeArr[i].baseProdType
                     for(let j=0; j<that.prodDefineArr.length; j++){
                         if(that.prodDefineArr[j].prodType == that.prodTypeArr[i].prodType && that.prodDefineArr[j].assembleId == "CCY"){
@@ -352,16 +353,24 @@
             editClick(val){
                 //点击查看详情 跳转到产品展示界面
                 let prodType = val.prodType
+                let prodClass= val.prodClass
                 let prodRange = val.prodRange
-                if(prodRange == '基础产品'){
+                if(prodRange == '基础产品' && prodClass.indexOf('RB')>=0 ){
                     //跳转到基础产品界面
                     this.$router.push({ name: "RbBaseProds", params: { prodType: prodType} });
                 }
-                if(prodRange == '可售产品'){
+                if(prodRange == '可售产品'&& prodClass.indexOf('RB')>=0){
                     //跳转到可售产品界面
                     this.$router.push({ name: "RbSoldProds", params: { prodType: prodType} });
                 }
-
+                if(prodRange == '基础产品' && prodClass.indexOf('CL')>=0 ){
+                    //跳转到基础产品界面
+                    this.$router.push({ name: "ClBaseProds", params: { prodType: prodType} });
+                }
+                if(prodRange == '可售产品'&& prodClass.indexOf('CL')>=0){
+                    //跳转到可售产品界面
+                    this.$router.push({ name: "ClSoldProds", params: { prodType: prodType} });
+                }
             },
             getValue(val){
                 let ret = ""

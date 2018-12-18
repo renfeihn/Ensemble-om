@@ -1099,6 +1099,31 @@ export default [
             /* webpackMode: "lazy-once" */
             require(['@/views/prodFactory/prodInfo/RbSoldProds.vue'],resolve)
 },
+    {
+        path: '/ClBaseProds',
+        meta: {
+            breadcrumb: true,
+            title: '贷款基础产品'
+        },
+        name: 'ClBaseProds',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/ClBaseProds.vue'],resolve
+            )
+    },
+    {
+        path: '/ClSoldProds',
+        meta: {
+            breadcrumb: true,
+            title: '贷款可售产品'
+        },
+        name: 'ClSoldProds',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/ClSoldProds.vue'],resolve)
+    },
   {
     path: '/paramManage',
     meta: {

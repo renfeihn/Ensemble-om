@@ -75,8 +75,10 @@
             },
 
             submit(){
+                let that=this
                 submitCommon({"userId": sessionStorage.getItem("userId")}).then(response => {
-                     this.clean()
+                    that.items=[]
+                    this.$emit('getTaskList','0')
                 })
             },
             clean(){
