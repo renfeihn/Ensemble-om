@@ -144,7 +144,6 @@
 </template>
 
 <script>
-    import prodListCmb from '../tableFlow/prodListCmbs';
     import { getAllProdList } from '@/api/url/prodInfo';
     import { getAllDefines } from '@/api/url/prodInfo';
     import { getProdClassList } from '@/api/url/prodInfo';
@@ -153,9 +152,6 @@
         getProdType
     } from '@/api/url/prodInfo'
     export default {
-        components: {
-            prodListCmb,
-        },
         data: () => ({
             perArr: [],
             statusArr: [],

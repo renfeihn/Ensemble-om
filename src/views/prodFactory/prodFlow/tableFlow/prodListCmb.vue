@@ -25,9 +25,6 @@
                         <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
                           <v-icon>edit</v-icon>
                         </v-btn>
-                        <v-btn depressed outline icon fab dark color="pink" small>
-                          <v-icon>chrome_reader_mode</v-icon>
-                        </v-btn>
                       </td>
                     </tr>
                 </template>
@@ -105,16 +102,15 @@
                 })
             },
             handleClick(val) {
-                if(val.prodClass === "RB400") {
-                    this.$router.push({
-                        name: 'prod/rbPrivateProd',
-                        params: {'prodClassCmp': val.prodClass, 'prodType': val.prodType}
-                    })
-                }else if(val.prodClass === "RB100") {
-                    this.$router.push({
-                        name: 'prod/rbPrivateProds',
-                        params: {'prodClassCmp': val.prodClass, 'prodType': val.prodType}
-                    })
+                let prodType = val.prodType
+                let prodRange = val.prodRange
+                if(prodRange == 'B'){
+                    //跳转到基础产品界面
+                    this.$router.push({ name: "RbBaseProds", params: { prodType: prodType} });
+                }
+                if(prodRange == 'S'){
+                    //跳转到可售产品界面
+                    this.$router.push({ name: "RbSoldProds", params: { prodType: prodType} });
                 }
             }
         }
