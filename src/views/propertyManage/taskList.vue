@@ -76,7 +76,7 @@
 
             submit(){
                 submitCommon({"userId": sessionStorage.getItem("userId")}).then(response => {
-
+                     this.clean()
                 })
             },
             clean(){
