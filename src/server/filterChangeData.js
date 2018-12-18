@@ -82,7 +82,7 @@ export function tablesMainDeal(prodData,sourceProdData,backVal,tables){
     let index = 0
     let flagDI = 0
     if(prodData[tables].length < sourceProdData[tables].length){
-        //删除时，交换新旧数据 并记录flagDI=1（删除）flagDI=0（新增）
+        //删除时，交换新旧数据 并记录flagDI=1（删除）flagDI=0（）
         flagDI = 1
         let temp = {}
         temp = copy(prodData,temp)
@@ -328,7 +328,7 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
     }
     //判断编辑信息 E:可编辑 N:不可编辑 V:不可见 D:删除
     let optObjectAttr = {eventType: "",key: "",tableName: "",optPerm: ""}
-    if(prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions){
+    if(dealOpt(prodData,sourceProdData,m,k)){
         if(sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E" && prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "D"){
             //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
             optObjectAttr.eventType = m
@@ -359,7 +359,13 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
         }
     }
 }
-
+export function dealOpt(prodData,sourceProdData,m,k) {
+    if(sourceProdData.mbEventInfos[m].mbEventAttrs[k] !== undefined && prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions){
+        return true
+    }else{
+        return false
+    }
+}
 /*
  * @description 对象浅拷贝
  * @param  obj1 被拷贝对象
