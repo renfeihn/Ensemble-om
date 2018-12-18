@@ -80,6 +80,15 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
 */
 export function tablesMainDeal(prodData,sourceProdData,backVal,tables){
     let index = 0
+    let flagDI = 0
+    if(prodData[tables].length < sourceProdData[tables].length){
+        //删除时，交换新旧数据 并记录flagDI=1（删除）flagDI=0（新增）
+        flagDI = 1
+        let temp = {}
+        temp = copy(prodData,temp)
+        prodData = copy(sourceProdData,prodData)
+        sourceProdData = copy(temp,sourceProdData)
+    }
     for (let s =0; s<prodData[tables].length; s++){
         let flags = 0
         for(let j = 0; j<sourceProdData[tables].length; j++){
@@ -94,10 +103,15 @@ export function tablesMainDeal(prodData,sourceProdData,backVal,tables){
         }
         if(flags === 0){
             //原数据中不存在该条数据（新增）
-            let temp = {newData: {},oldData: {},optType: ''}
-            temp.newData = prodData[tables][s]
-            temp.optType = 'I'
-            backVal.push(temp)
+            let tempTab = {newData: {},oldData: {},optType: ''}
+            if(flagDI){
+                tempTab.optType = 'D'
+                tempTab.oldData = prodData[tables][s]
+            }else {
+                tempTab.optType = 'I'
+                tempTab.newData = prodData[tables][s]
+            }
+            backVal.push(tempTab)
             index++
         }
     }

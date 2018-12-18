@@ -5,7 +5,7 @@
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
             <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
             <v-dialog v-model="dialog" width="500">
-                <v-card>
+                <v-card v-if="dialog">
                     <v-card-title style="height: 35px">
                         <span style="color: #00b0ff;font-size: x-large;margin-left: 3%; margin-top: 3%">{{ titleDesc}}</span>
                     </v-card-title>
@@ -15,15 +15,6 @@
                                 <dc-text-field labelDesc="批量收费类型" v-model="selected.feeType"></dc-text-field>
                             </v-flex>
                             <v-flex xs12 sm12 m12>
-                                <dc-text-field labelDesc="持续扣款次数" v-model="selected.conDeductTimes"></dc-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargeDealMethod" :options="chargeDealMethod1" labelDesc="  收费处理方式"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.conDeductFlag" :options="conDeductFlag1" labelDesc="  持续扣款标识"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
                                 <dc-multiselect :isMultiSelect="false" v-model="selected.chargePeriodFreq" :options="chargePeriodFreq1" labelDesc="  收费频率"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 sm12 m12>
@@ -31,6 +22,16 @@
                             </v-flex>
                             <v-flex xs12 sm12 m12>
                                 <dc-date v-model="selected.nextChargeDate" labelDesc="下一收费日期"></dc-date>
+                            </v-flex>
+
+                            <v-flex xs12 sm12 m12>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargeDealMethod" :options="chargeDealMethod1" labelDesc="  收费处理方式"></dc-multiselect>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.conDeductFlag" :options="conDeductFlag1" labelDesc="  持续扣款标识"></dc-multiselect>
+                            </v-flex>
+                            <v-flex xs12 sm12 m12>
+                                <dc-text-field labelDesc="持续扣款次数" v-model="selected.conDeductTimes"></dc-text-field>
                             </v-flex>
                             <v-flex xs12 sm12 m12>
                                 <v-btn color="info" @click="dialog = false" class="bthStyle">取消</v-btn>
@@ -78,7 +79,15 @@ export default {
             option: '',
             titleDesc: '',
             selectedRowKeys: [],
-            selected: {},
+            selected: {
+                feeType: '',
+                chargePeriodFreq: '',
+                chargeDay: '',
+                nextChargeDate: '',
+                chargeDealMethod: '',
+                conDeductFlag: '',
+                conDeductTimes: ''
+            },
             chargePeriodFreq1: [
                 {
                     "key": "3D",

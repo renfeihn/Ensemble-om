@@ -6,14 +6,6 @@
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <!--<v-bottom-sheet v-if="showAdd">-->
-                    <!--<v-btn flat icon="refresh" slot="activator" @click="addClick" color="orange">-->
-                    <!--<v-icon>add</v-icon>-->
-                    <!--</v-btn>-->
-                    <!--<v-card>-->
-                    <!--<dc-treeAttr v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeAttr>-->
-                    <!--</v-card>-->
-                    <!--</v-bottom-sheet>-->
                     <v-tooltip bottom color="orange">
                         <v-btn flat icon="edit" slot="activator" @click="editClick" :color="editColor">
                             <v-icon>edit</v-icon>
