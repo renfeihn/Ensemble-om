@@ -456,7 +456,7 @@
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleType = "ATTR"
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleId = columnKey
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].attrValue = ""
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleRule = "A"
+                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleRule = ""
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].perEffect = ""
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageCode = addColumnPageCode
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageSeqNo = PageSeqNo

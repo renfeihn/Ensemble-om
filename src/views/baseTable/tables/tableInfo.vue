@@ -33,7 +33,7 @@
                         v-model="dialog"
                         width="500"
                 >
-                    <edit-table-info :selected="selected" :columns="columns" :tableName="tableName"
+                    <edit-table-info v-if="dialog" :selected="selected" :columns="columns" :tableName="tableName"
                                      v-on:editAction="editAction"></edit-table-info>
                 </v-dialog>
             </v-card>
