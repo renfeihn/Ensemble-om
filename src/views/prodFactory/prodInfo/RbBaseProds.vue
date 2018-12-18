@@ -32,8 +32,8 @@
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE" :disablePower="disablePower"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP" :disablePower="disablePower"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CRET'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="CRET" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEBT'&&prodData.prodType.prodRange != 'S'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DEBT" :disablePower="disablePower"></base-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
@@ -139,8 +139,8 @@
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'CYCLE'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
-                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'DEP'},
-                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'WTD'},
+                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
+                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
                     {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
@@ -256,8 +256,8 @@
                 this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
                 this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
                 this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
-                this.depositList = this.dealEventPart(reProd,"DEBT",this.prodCode)
-                this.drawList = this.dealEventPart(reProd,"CRET",this.prodCode)
+                this.depositList = this.dealEventPart(reProd,"CRET",this.prodCode)
+                this.drawList = this.dealEventPart(reProd,"DEBT",this.prodCode)
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
@@ -431,7 +431,7 @@
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
-                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "DEP" || addColumnPageCode === "WTD") {
+                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1

@@ -7,14 +7,6 @@
                     <v-toolbar-side-icon></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <!--<v-bottom-sheet v-if="showAdd">-->
-                    <!--<v-btn flat icon="refresh" slot="activator" @click="addClick" color="orange">-->
-                    <!--<v-icon>add</v-icon>-->
-                    <!--</v-btn>-->
-                    <!--<v-card>-->
-                    <!--<dc-treeAttr v-model="tree" :options="treeOptions" labelDesc="产品参数增加"></dc-treeAttr>-->
-                    <!--</v-card>-->
-                    <!--</v-bottom-sheet>-->
                     <v-tooltip bottom color="orange">
                         <v-btn flat icon="edit" slot="activator" @click="editClick" :color="editColor">
                             <v-icon>edit</v-icon>
@@ -41,8 +33,8 @@
                             <sold-prod v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='DEP'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="DEP" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='WTD'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="WTD" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CRET'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="CRET" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DEBT'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DEBT" :disablePower="disablePower"></sold-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
@@ -152,8 +144,8 @@
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'CYCLE'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
-                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'DEP'},
-                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'WTD'},
+                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
+                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
                     {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
@@ -269,8 +261,8 @@
                 this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
                 this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
                 this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
-                this.depositList = this.dealEventPart(reProd,"DEP",this.prodCode)
-                this.drawList = this.dealEventPart(reProd,"WTD",this.prodCode)
+                this.depositList = this.dealEventPart(reProd,"CRET",this.prodCode)
+                this.drawList = this.dealEventPart(reProd,"DEBT",this.prodCode)
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
@@ -439,7 +431,7 @@
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
-                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "DEP" || addColumnPageCode === "WTD") {
+                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1
@@ -456,7 +448,7 @@
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleType = "ATTR"
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleId = columnKey
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].attrValue = ""
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleRule = "A"
+                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleRule = ""
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].perEffect = ""
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageCode = addColumnPageCode
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageSeqNo = PageSeqNo
