@@ -634,7 +634,7 @@ import {
                         this.prodEventDebt= openEvent
                     }
                 }
-                if(JSON.stringify(prodEvent)=='{}'){
+                if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
                     let diffEvent={"prodType": prodType}
                     diffEvent["diff"]=openDiff
                     this.prodEventOpen=diffEvent;

@@ -35,7 +35,7 @@
                 >
 
                   <v-list-tile-content>
-                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                    <v-list-tile-title v-html="item.title.attrValue"></v-list-tile-title>
                   </v-list-tile-content>
                   <v-tooltip bottom color="orange lighten-1" v-if="prodRange == 'B' && item.isBase == true">
                     <v-btn round color="blue" dark style="height: 100%;font-size: small" slot="activator">
@@ -261,7 +261,9 @@ export default {
        else{
                 for(let index in prodDiff){
                       let desc= index.substring(index.lastIndexOf('.')+1);
-                      columnDesc.push({title: desc});
+                      let temp = {}
+                      temp["attrValue"] = desc
+                      columnDesc.push({title: temp});
                       columnDesc.push({ divider: true, inset: true });
                       columnNew.push({title: prodDiff[index]});
                       columnNew.push({ divider: true, inset: true });
