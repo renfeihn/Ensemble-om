@@ -24,18 +24,11 @@
           <div v-for="(prodList, index1) in prodDiffData" class="diffList">
             <v-list dense>
               <template v-for="(item, index) in prodList.items">
-                <v-divider
-                        v-if="item.divider"
-                        :inset="item.inset"
-                ></v-divider>
-                <v-list-tile
-                        avatar
-                        v-else
-                        :class="{'tbColor':item.diff}"
-                >
+                <v-divider v-if="item.divider" :inset="item.inset"></v-divider>
+                <v-list-tile avatar v-else :class="{'tbColor':item.diff}">
 
                   <v-list-tile-content>
-                    <v-list-tile-title v-html="item.title.attrValue"></v-list-tile-title>
+                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
                   </v-list-tile-content>
                   <v-tooltip bottom color="orange lighten-1" v-if="prodRange == 'B' && item.isBase == true">
                     <v-btn round color="blue" dark style="height: 100%;font-size: small" slot="activator">
@@ -208,66 +201,77 @@ export default {
         let columnOld=[];
       //产品本身下参数固定组
       //产品下属性组合
-       if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}"){
-       for(let index in prodDefines){
-
-           let prodDefine=prodDefines[index];
-           let attrKey=prodDefine.attrKey;
-           let attrValue=prodDefine.attrValue;
-           if(attrKey==undefined){
-               attrKey=index;
-               attrValue=prodDefine.attrValue;
-           }
-           let diff=prodDiff[attrKey];
-           let optPerm = ""
-           if(diff !== undefined){
-               diff = prodDiff[attrKey].attrValue
-               optPerm = prodDiff[attrKey].optionPermissions
-           }
-           if(diff==null||diff==undefined){
-            diff=attrValue;
-           }
-           const keyDesc=getColumnDesc(attrKey);
-           if(diff != attrValue){
-                 columnOld.push({title: attrValue,diff: true});
-                 columnNew.push({title: diff,diff: true});
-                 if(this.prodRange === "B"){
-                     columnDesc.push({title: keyDesc,diff: true,isBase: true});
-                 }else {
-                     columnDesc.push({title: keyDesc, diff: true});
-                 }
-           }else{
-                   columnOld.push({title: attrValue});
-                   columnNew.push({title: diff});
-                   columnDesc.push({title: keyDesc});
-           }
-           //参数状态位处理
-           if(optPerm !== "" && optPerm !== prodDefine.optionPermissions){
-               let oldPerm = optPerm
-               let newPerm = prodDefine.optionPermissions
-               columnNew.push({title: attrValue,diff: true,perm: this.optPerm[oldPerm].icon,color: this.optPerm[oldPerm].color,desc: this.optPerm[oldPerm].desc});
-               columnOld.push({title: diff,diff: true,perm: this.optPerm[newPerm].icon,color: this.optPerm[newPerm].color,desc: this.optPerm[newPerm].desc});
-               if(this.prodRange === "B"){
-                   columnDesc.push({title: keyDesc,diff: true,isBase: true});
-               }else {
-                   columnDesc.push({title: keyDesc,diff: true});
+       if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}") {
+           for (let index in prodDefines) {
+               if (prodDefines[index].assembleType == "ATTR") {
+                   let prodDefine = prodDefines[index];
+                   let attrKey = prodDefine.attrKey;
+                   let attrValue = prodDefine.attrValue;
+                   if (attrKey == undefined) {
+                       attrKey = index;
+                       attrValue = prodDefine.attrValue;
+                   }
+                   let diff = prodDiff[attrKey];
+                   let optPerm = ""
+                   if (diff !== undefined) {
+                       diff = prodDiff[attrKey].attrValue
+                       optPerm = prodDiff[attrKey].optionPermissions
+                   }
+                   if (diff == null || diff == undefined) {
+                       diff = attrValue;
+                   }
+                   const keyDesc = getColumnDesc(attrKey);
+                   if (diff != attrValue) {
+                       columnOld.push({title: attrValue, diff: true});
+                       columnNew.push({title: diff, diff: true});
+                       if (this.prodRange === "B") {
+                           columnDesc.push({title: keyDesc, diff: true, isBase: true});
+                       } else {
+                           columnDesc.push({title: keyDesc, diff: true});
+                       }
+                   } else {
+                       columnOld.push({title: attrValue});
+                       columnNew.push({title: diff});
+                       columnDesc.push({title: keyDesc});
+                   }
+                   //参数状态位处理
+                   if (optPerm !== "" && optPerm !== prodDefine.optionPermissions) {
+                       let oldPerm = optPerm
+                       let newPerm = prodDefine.optionPermissions
+                       columnNew.push({
+                           title: attrValue,
+                           diff: true,
+                           perm: this.optPerm[oldPerm].icon,
+                           color: this.optPerm[oldPerm].color,
+                           desc: this.optPerm[oldPerm].desc
+                       });
+                       columnOld.push({
+                           title: diff,
+                           diff: true,
+                           perm: this.optPerm[newPerm].icon,
+                           color: this.optPerm[newPerm].color,
+                           desc: this.optPerm[newPerm].desc
+                       });
+                       if (this.prodRange === "B") {
+                           columnDesc.push({title: keyDesc, diff: true, isBase: true});
+                       } else {
+                           columnDesc.push({title: keyDesc, diff: true});
+                       }
+                   }
+                   columnDesc.push({divider: true, inset: true});
+                   columnOld.push({divider: true, inset: true});
+                   columnNew.push({divider: true, inset: true});
                }
            }
-           columnDesc.push({ divider: true, inset: true });
-           columnOld.push({ divider: true, inset: true });
-           columnNew.push({ divider: true, inset: true });
-       }
        }
        else{
-                for(let index in prodDiff){
-                      let desc= index.substring(index.lastIndexOf('.')+1);
-                      let temp = {}
-                      temp["attrValue"] = desc
-                      columnDesc.push({title: temp});
-                      columnDesc.push({ divider: true, inset: true });
-                      columnNew.push({title: prodDiff[index]});
-                      columnNew.push({ divider: true, inset: true });
-                }
+           for(let index in prodDiff){
+               let desc= getColumnDesc(index.substring(index.lastIndexOf('.')+1));
+               columnDesc.push({title: desc});
+               columnDesc.push({ divider: true, inset: true });
+               columnNew.push({title: prodDiff[index].attrValue});
+               columnNew.push({ divider: true, inset: true });
+           }
        }
        let diffList=[];
        let columnDescList={prodType: '',items: columnDesc};
@@ -275,8 +279,8 @@ export default {
        let columnOldList={prodType: '',items: columnOld};
        diffList.push(columnDescList);
        diffList.push(columnNewList);
-        diffList.push(columnOldList);
-      this.prodDiffData = diffList;
+       diffList.push(columnOldList);
+       this.prodDiffData = diffList;
     }
   }
 };
