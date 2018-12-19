@@ -28,7 +28,7 @@
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
                            <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CYCLE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></sold-prod>
@@ -405,7 +405,7 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
-                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY") {
+                    if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
                         //获取新增参数SeqNo
@@ -430,7 +430,7 @@
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
-                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
+                    if (addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "DUE" || addColumnPageCode === "DRW" || addColumnPageCode === "REC") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1
