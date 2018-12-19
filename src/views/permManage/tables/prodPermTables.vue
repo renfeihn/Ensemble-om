@@ -204,20 +204,7 @@
 
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                var del=confirm('Are you sure you want to delete this item?');
-                if(del==true) {
-                    this.desserts.splice(index, 1)
-                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                    this.sourceData.splice(index,1)
-                    this.backValue.userName = sessionStorage.getItem("userId")
-                    this.backValue.tableName = "OM_PROD_PERM_DEF"
-                    this.backValue.keySet = "USER_ID,MODEL_TYPE"
-                    saveSysTable(this.backValue).then(response => {
-                        if(response.status === 200){
-                            toast.success("提交成功！");
-                        }
-                    })
-                }
+                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
             },
 
             close () {
@@ -229,40 +216,22 @@
             },
 
             save () {
-                let equals = false;
-                for (let i = 0; i < this.desserts.length; i++) {
-                    if (this.editedItem.userId == this.desserts[i].userId) {
-                        equals = true;
-                    }
+                if (this.editedIndex > -1) {
+                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                } else {
+                    this.desserts.push(this.editedItem)
                 }
-                if(this.editedIndex > -1){
-                    equals=false
+                //保存数据落库
+                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                this.backValue.userName = sessionStorage.getItem("userId")
+                this.backValue.tableName = "OM_PROD_PERM_DEF"
+                this.backValue.keySet = "USER_ID,MODEL_TYPE"
+                saveSysTable(this.backValue).then(response => {
+                    if(response.status === 200){
+                    toast.success("提交成功！");
                 }
-                if(this.editedItem.userId == []){
-                    alert("用户名称不能为空")
-                }else if(this.editedItem.modelType == []){
-                    alert("模块信息不能为空")
-                }else if(equals==true){
-                    alert("用户名称不能与已存在的用户名称相同")
-                }else{
-                    if (this.editedIndex > -1) {
-                        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                    } else {
-                        this.desserts.push(this.editedItem)
-                    }
-                    //保存数据落库
-                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                    this.sourceData=this.copy(this.desserts,this.sourceData)
-                    this.backValue.userName = sessionStorage.getItem("userId")
-                    this.backValue.tableName = "OM_PROD_PERM_DEF"
-                    this.backValue.keySet = "USER_ID,MODEL_TYPE"
-                    saveSysTable(this.backValue).then(response => {
-                        if(response.status === 200){
-                            toast.success("提交成功！");
-                        }
-                    })
-                    this.close()
-                }
+                 })
+                this.close()
             },
             //对象浅复制
             copy(obj1,obj2) {
