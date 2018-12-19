@@ -404,7 +404,7 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
-                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY") {
+                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
                         //获取新增参数SeqNo
@@ -430,7 +430,7 @@
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
-                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
+                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "DUE"|| addColumnPageCode === "DRW" || addColumnPageCode === "REC") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1
@@ -489,10 +489,13 @@
                     }
                 }
                 //获取seqNoArr数组最大数据
-                let maxSeqNo = SeqNoArr[0]
-                for(let j=1; j<SeqNoArr.length; j++){
-                    if(maxSeqNo < SeqNoArr[j]){
-                        maxSeqNo = SeqNoArr[j]
+                let maxSeqNo = 0
+                if(SeqNoArr.length) {
+                    maxSeqNo = SeqNoArr[0]
+                    for (let j = 1; j < SeqNoArr.length; j++) {
+                        if (maxSeqNo < SeqNoArr[j]) {
+                            maxSeqNo = SeqNoArr[j]
+                        }
                     }
                 }
                 return maxSeqNo
@@ -514,10 +517,13 @@
                     }
                 }
                 //获取seqNoArr数组最大数据
-                let maxSeqNo = SeqNoArr[0]
-                for(let y=1; y<SeqNoArr.length; y++){
-                    if(maxSeqNo < SeqNoArr[y]){
-                        maxSeqNo = SeqNoArr[y]
+                let maxSeqNo = 0
+                if(SeqNoArr.length) {
+                    maxSeqNo = SeqNoArr[0]
+                    for (let y = 1; y < SeqNoArr.length; y++) {
+                        if (maxSeqNo < SeqNoArr[y]) {
+                            maxSeqNo = SeqNoArr[y]
+                        }
                     }
                 }
                 return maxSeqNo
