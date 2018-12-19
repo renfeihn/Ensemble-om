@@ -27,17 +27,15 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                           <sold-prod v-if="i.pageCode=='BASE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CONTROL'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='APPLY'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CYCLE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='OPEN'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CLOSE'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CRET'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="CRET" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='DEBT'&&prodData.prodType.prodRange != 'B'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DEBT" :disablePower="disablePower"></sold-prod>
-                            <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
-                            <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                            <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
+                           <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CYCLE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drwList" tags="DRW" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="recList" tags="REC" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="dueList" tags="DUE" :disablePower="disablePower"></sold-prod>
                             <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -139,16 +137,14 @@
                 addColumnInfos: [],
                 prodInfo: [
                     {icon: 'account_balance', text: '基本信息', pageCode: 'BASE'},
-                    {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
+                    {icon: 'filter_vintage', text: '账户信息', pageCode: 'ACCT'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
+                    {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'CYCLE'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
-                    {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
-                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
-                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
-                    {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
-                    {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
-                    {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
+                    {icon: 'filter_vintage', text: '放款定义', pageCode: 'DRW'},
+                    {icon: 'filter_vintage', text: '还款定义', pageCode: 'REC'},
+                    {icon: 'filter_vintage', text: '到期定义', pageCode: 'DUE'},
                     {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
                 ],
                 tagList: [],
@@ -161,8 +157,9 @@
                 folders: [],
                 rateList: {},
                 openList: {},
-                closeList: {},
-                depositList: {},
+                drwList: {},
+                recList: {},
+                dueList: {},
                 drawList: {},
                 prodData: {
                     prodType: ''
@@ -218,7 +215,7 @@
                 });
             });
             //初始化产品信息
-            if(this.$route.hash !== "" && this.$route.hash !== null) {
+            if(this.$route.hash !== "" && this.$route.hash !== undefined) {
                 //点击主菜单产品组时 获取产品组代码
                 getProdData(this.$route.hash).then(response => {
                     //初始化产品基础参数
@@ -234,11 +231,11 @@
                     this.powerByLevel(this.prodClass);
                     this.spinning= false
                 });
-            }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
+            }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== undefined){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
             }
-            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null){
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== undefined){
                 getProdData(this.$route.params.prodType).then(response => {
                     //初始化产品基础参数
                     this.prodCode = response.data.data.prodType.prodType
@@ -260,9 +257,9 @@
                 //初始化事件，指标参数
                 this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
                 this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
-                this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
-                this.depositList = this.dealEventPart(reProd,"CRET",this.prodCode)
-                this.drawList = this.dealEventPart(reProd,"DEBT",this.prodCode)
+                this.drwList = this.dealEventPart(reProd,"DRW",this.prodCode)
+                this.recList = this.dealEventPart(reProd,"REC",this.prodCode)
+                this.dueList = this.dealEventPart(reProd,"DUE",this.prodCode)
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
