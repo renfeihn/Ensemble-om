@@ -165,6 +165,7 @@
             },
             addClick() {
                 this.disabled = "false"
+                this.initialize()
             },
             initParentRef() {
                 let temp = {}
@@ -186,7 +187,20 @@
 
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                var del=confirm('Are you sure you want to delete this item?');
+                if(del==true) {
+                    this.desserts.splice(index, 1)
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_USER"
+                    this.backValue.keySet = "USER_ID"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                }
+                this.initialize()
             },
 
             close () {
@@ -198,22 +212,40 @@
             },
 
             save () {
+                let equals = false;
+                for (let i = 0; i < this.desserts.length; i++) {
+                    if (this.editedItem.userId == this.desserts[i].userId) {
+                        equals = true;
+                    }
+                }
                 if (this.editedIndex > -1) {
                     Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    equals = false;
                 } else {
                     this.desserts.push(this.editedItem)
                 }
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_USER"
-                this.backValue.keySet = "USER_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-                this.close()
+                if(this.editedItem.userId == []){
+                    alert("用户ID不能为空")
+                }else if(this.editedItem.userName == []){
+                    alert("用户名称不能为空")
+                }else if(this.editedItem.userLevel == []){
+                    alert("用户级别不能为空")
+                }else if(equals==true){
+                    alert("角色ID不能与已存在的角色ID相同")
+                }else{
+                    //保存数据落库
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_USER"
+                    this.backValue.keySet = "USER_ID"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                    this.close()
+                }
+                this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {

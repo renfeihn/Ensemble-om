@@ -81,6 +81,7 @@
                         "value": "RB400-存款RB400"
                     }
                 ],
+                addorchange: true,
                 valid: true,
                 dialog: false,
                 tbd: {},
@@ -145,11 +146,13 @@
             onEdit() {
                 this.tbd.style = '';
                 this.dialog = true;
+                this.addorchange = false;
             },
             onAdd() {
                 this.tbd.style = '';
                 this.selected = {};
-                this.dialog = true
+                this.dialog = true;
+                this.addorchange = true;
             },
             onDelete() {
                 this.tbd.style = '';
@@ -159,7 +162,6 @@
                 this.tbd.style = '';
             },
             onSave() {
-
                 this.backValue.data = filterTableChangeData(this.columns, this.dataInfo, this.sourceDataInfo)
                 this.backValue.tableName = this.tableName
                 this.backValue.tableDesc= this.$route.params.tableDesc
@@ -174,24 +176,79 @@
                     }
                 });
 
+                if(this.backValue.data.length==0){
+                    toast.error("未做任何修改,提交失败！");
+                }
+                else{
+                    this.backValue.tableName = this.tableName
+                    this.backValue.option = "save"
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    saveTable(this.backValue).then(response => {
+                        if (response.status === 200) {
+                            toast.success("提交成功！");
+                            this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
+                        }
+                    });
+                }
+            },
+            close (){
+                this.dialog=false
             },
             editAction(option, editSelected) {
-                this.dialog = false;
+                if(option == 'close'){
+                    this.close()
+                }
                 if (option == 'submit') {
                     let selected = this.selected;
-                    if (JSON.stringify(selected) == '{}') {
+                    if (this.addorchange == true) {
                         for (const key in editSelected) {
-                            if(editSelected[key] !== undefined) {
+                            if (editSelected[key] !== undefined) {
                                 selected[key] = editSelected[key].value
                             }
                         }
-                        this.dataInfo.splice(0, 0, selected)
-                    } else {
+                        let equals = false;
+                        for (let i = 0; i < this.dataInfo.length; i++) {
+                            if (selected.CLIENT_TYPE == this.dataInfo[i].CLIENT_TYPE) {
+                                equals = true;
+                            }
+                        }
+                        if (selected.CLIENT_TYPE == []) {
+                            alert("客户类型代码不能为空")
+                        }else if (selected.CLIENT_TYPE_DESC == []) {
+                            alert("客户类型描述不能为空")
+                            this.dialog=true
+                        } else if (selected.IS_INDIVIDUAL == []) {
+                            alert("是否是个体客户不能为空")
+                            this.dialog=true
+                        }else if (selected.COMPANY == []) {
+                            alert("法人代码不能为空")
+                            this.dialog=true
+                        }else if (equals == true) {
+                            alert("客户类型不能与已存在的客户类型相同")
+                        }else {
+                            this.dataInfo.splice(0, 0, selected)
+                            this.close()
+                        }
+                    }
+                    else {
                         for (const keys in selected) {
-                            if(selected[keys] !== undefined && editSelected[keys] !== undefined) {
+                            if (selected.CLIENT_TYPE != editSelected.CLIENT_TYPE.value) {
+                                let equals = false;
+                                for (let i = 0; i < this.dataInfo.length; i++) {
+                                    if (editSelected.CLIENT_TYPE.value == this.dataInfo[i].CLIENT_TYPE) {
+                                        equals = true
+                                    }
+                                }
+                                if (equals == true) {
+                                    alert("客户类型不能与已存在的客户类型相同")
+                                    break
+                                }
+                            }
+                            if (selected[keys] !== undefined && editSelected[keys] !== undefined) {
                                 selected[keys] = editSelected[keys].value
                             }
                         }
+                        this.close()
                     }
                 }
             }

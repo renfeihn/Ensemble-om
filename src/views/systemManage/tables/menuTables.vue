@@ -199,6 +199,7 @@
             },
             addClick() {
                 this.disabled = "false"
+                this.initMenuSeqNo()
             },
             editItem (item) {
                 this.editedIndex = this.desserts.indexOf(item)
@@ -208,11 +209,25 @@
             },
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                var del=confirm('Are you sure you want to delete this item?');
+                if(del==true) {
+                    this.desserts.splice(index, 1)
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_MENU"
+                    this.backValue.keySet = "MENU_SEQ_NO"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                }
+                // this.initialize()
             },
 
             close () {
                 this.dialog = false
+                // this.initialize();
                 setTimeout(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
                     this.editedIndex = -1
@@ -220,22 +235,40 @@
             },
 
             save () {
+                let equals = false;
+                for (let i = 0; i < this.desserts.length; i++) {
+                    if (this.editedItem.menuId == this.desserts[i].menuId) {
+                        equals = true;
+                    }
+                }
                 if (this.editedIndex > -1) {
                     Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    equals=false;
                 } else {
                     this.desserts.push(this.editedItem)
                 }
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_MENU"
-                this.backValue.keySet = "MENU_SEQ_NO"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-                this.close()
+                if(this.editedItem.menuId == []){
+                    alert("菜单ID不能为空")
+                }else if(this.editedItem.menuName == []){
+                    alert("菜单名称不能为空")
+                }else if(this.editedItem.menuLevel == []){
+                    alert("菜单等级不能为空")
+                }else if(equals==true){
+                    alert("角色ID不能与已存在的角色ID相同")
+                }else{
+                    //保存数据落库
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_MENU"
+                    this.backValue.keySet = "MENU_SEQ_NO"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                    this.close()
+                }
+                this.initialize();
             },
             //对象浅复制
             copy(obj1,obj2) {

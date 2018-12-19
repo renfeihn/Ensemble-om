@@ -147,7 +147,20 @@
             },
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                var del=confirm('Are you sure you want to delete this item?');
+                if(del==true) {
+                    this.desserts.splice(index, 1)
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_ROLE"
+                    this.backValue.keySet = "ROLE_ID"
+                    saveSysTable(this.backValue).then(response => {
+                        if (response.status === 200) {
+                            toast.success("提交成功！");
+                        }
+                    })
+                }
+                this.initialize()
             },
 
             close () {
@@ -159,22 +172,38 @@
             },
 
             save () {
+                let equals = false;
+                for (let i = 0; i < this.desserts.length; i++) {
+                    if (this.editedItem.roleId == this.desserts[i].roleId) {
+                        equals = true;
+                    }
+                }
                 if (this.editedIndex > -1) {
                     Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    equals = false;
                 } else {
                     this.desserts.push(this.editedItem)
                 }
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_ROLE"
-                this.backValue.keySet = "ROLE_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-                this.close()
+                if(this.editedItem.roleId == []){
+                    alert("角色ID不能为空")
+                }else if(this.editedItem.roleName == []){
+                    alert("角色名称不能为空")
+                }else if(equals==true){
+                    alert("角色ID不能与已存在的角色ID相同")
+                }else{
+                    //保存数据落库
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_ROLE"
+                    this.backValue.keySet = "ROLE_ID"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                    this.close();
+                }
+                this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {

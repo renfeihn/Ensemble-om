@@ -159,7 +159,20 @@
 
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                var del=confirm('Are you sure you want to delete this item?');
+                if(del==true) {
+                    this.desserts.splice(index, 1)
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_USER_ROLE"
+                    this.backValue.keySet = "USER_ID"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                }
+                this.initialize()
             },
 
             close () {
@@ -176,17 +189,24 @@
                 } else {
                     this.desserts.push(this.editedItem)
                 }
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_USER_ROLE"
-                this.backValue.keySet = "USER_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-                this.close()
+                if(this.editedItem.userId == []){
+                    alert("用户名称不能为空")
+                }else if(this.editedItem.roleId == []){
+                    alert("角色ID不能为空")
+                }else{
+                    //保存数据落库
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_USER_ROLE"
+                    this.backValue.keySet = "USER_ID"
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            toast.success("提交成功！");
+                        }
+                    })
+                    this.close()
+                }
+                this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {
