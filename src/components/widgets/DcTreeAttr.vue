@@ -183,7 +183,11 @@ depositTree<template>
                 //根据v-model绑定数据初始化树形结构
                 this.tree = []
                 if(this._props.msg !== undefined){
+                    if(this._props.msg instanceof Array){
+                        this.tree =this._props.msg
+                    }else{
                     this.tree = this._props.msg.split(",")
+                    }
                 }
             }
         }

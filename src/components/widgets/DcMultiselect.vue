@@ -95,7 +95,9 @@
             },
             options: {
                 handler(newValue){
+                    if(this._props.msg !== "undefined"&&this._props.msg !== undefined){
                     this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg)
+                    }
                 },
                 deep: true
             },

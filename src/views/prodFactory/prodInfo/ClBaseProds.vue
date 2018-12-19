@@ -173,7 +173,9 @@
             //监听参数增加界面返回数据
             tree: {
                 handler(msg) {
+                    if(msg!== undefined){
                     this.useAddClick(msg);
+                    }
                 }
             }
         },
