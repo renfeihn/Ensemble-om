@@ -397,73 +397,75 @@
             //增加参数处理事件
             useAddClick(val) {
                 //获取当前界面key
-                let addColumnPageCode = this.prodInfo[this.activeName].pageCode
-                let addColumnData = this.copy(this.prodData,this.addData)
-                let showFlag = 0
-                for(let i=0; i<val.length; i++){
-                    let columnKey = val[i].split("--")[0]
-                    let columnDesc = val[i].split("--")[1]
-                    //组装向mbProdDefine保存的数据对象
-                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT") {
-                        //获取新增参数pageSeqNo
-                        let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
-                        //获取新增参数SeqNo
-                        let addColumnSeqNo = (parseInt(this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"seqNo"))+i+1)+""
-                        if (this.prodData.prodDefines[columnKey] !== undefined) {
-                            //已经存在该条数据
-                            showFlag = 1
-                            toast.info("产品已存在参数" + columnKey + "【" + columnDesc + "】");
-                        } else {
-                            addColumnData.prodDefines[columnKey] = {}
-                            addColumnData.prodDefines[columnKey].prodType = this.prodCode
-                            addColumnData.prodDefines[columnKey].seqNo = addColumnSeqNo
-                            addColumnData.prodDefines[columnKey].pageCode = addColumnPageCode
-                            addColumnData.prodDefines[columnKey].pageSeqNo = addColumnPageSeqNo
-                            addColumnData.prodDefines[columnKey].attrKey = columnKey
-                            addColumnData.prodDefines[columnKey].attrValue = ""
-                            addColumnData.prodDefines[columnKey].status = "A"
-                            addColumnData.prodDefines[columnKey].assembleType = "ATTR"
-                            addColumnData.prodDefines[columnKey].assembleId = columnKey
-                            addColumnData.prodDefines[columnKey].optionPermissions = "E"
-                            //新增参数标识 newAttr
-                            addColumnData.prodDefines[columnKey].newAttr = true
+//                if(typeof val == "object") {
+                    let addColumnPageCode = this.prodInfo[this.activeName].pageCode
+                    let addColumnData = this.copy(this.prodData, this.addData)
+                    let showFlag = 0
+                    for (let i = 0; i < val.length; i++) {
+                        let columnKey = val[i].split("--")[0]
+                        let columnDesc = val[i].split("--")[1]
+                        //组装向mbProdDefine保存的数据对象
+                        if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT") {
+                            //获取新增参数pageSeqNo
+                            let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData, addColumnPageCode, "pageSeqNo") + i + 1
+                            //获取新增参数SeqNo
+                            let addColumnSeqNo = (parseInt(this.getDefinedMaxSeqNo(this.prodData, addColumnPageCode, "seqNo")) + i + 1) + ""
+                            if (this.prodData.prodDefines[columnKey] !== undefined) {
+                                //已经存在该条数据
+                                showFlag = 1
+                                toast.info("产品已存在参数" + columnKey + "【" + columnDesc + "】");
+                            } else {
+                                addColumnData.prodDefines[columnKey] = {}
+                                addColumnData.prodDefines[columnKey].prodType = this.prodCode
+                                addColumnData.prodDefines[columnKey].seqNo = addColumnSeqNo
+                                addColumnData.prodDefines[columnKey].pageCode = addColumnPageCode
+                                addColumnData.prodDefines[columnKey].pageSeqNo = addColumnPageSeqNo
+                                addColumnData.prodDefines[columnKey].attrKey = columnKey
+                                addColumnData.prodDefines[columnKey].attrValue = ""
+                                addColumnData.prodDefines[columnKey].status = "A"
+                                addColumnData.prodDefines[columnKey].assembleType = "ATTR"
+                                addColumnData.prodDefines[columnKey].assembleId = columnKey
+                                addColumnData.prodDefines[columnKey].optionPermissions = "E"
+                                //新增参数标识 newAttr
+                                addColumnData.prodDefines[columnKey].newAttr = true
+                            }
                         }
-                    }
-                    //组装向mbEventArrt保存的数据对象
-                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "DUE"|| addColumnPageCode === "DRW" || addColumnPageCode === "REC") {
-                        let eventType = addColumnPageCode+"_"+this.prodCode
-                        //获取新增参数pageSeqNo
-                        let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1
-                        //获取新增参数SeqNo
-                        let SeqNo = (parseInt(this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"seqNo",eventType))+i+1)+""
-                        if(this.prodData.mbEventInfos[eventType].mbEventAttrs[columnKey] !== undefined){
-                            //已经存在该条数据
-                            showFlag = 1
-                            toast.info("事件" + eventType +"已存在参数【" + columnDesc + "】");
-                        }else{
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey] = {}
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].eventType = eventType
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].seqNo = SeqNo
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleType = "ATTR"
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleId = columnKey
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].attrValue = ""
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleRule = ""
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].perEffect = ""
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageCode = addColumnPageCode
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageSeqNo = PageSeqNo
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].optionPermissions = "E"
+                        //组装向mbEventArrt保存的数据对象
+                        if (addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "DUE" || addColumnPageCode === "DRW" || addColumnPageCode === "REC") {
+                            let eventType = addColumnPageCode + "_" + this.prodCode
+                            //获取新增参数pageSeqNo
+                            let PageSeqNo = this.getEventMaxSeqNo(this.prodData, addColumnPageCode, "pageSeqNo", eventType) + i + 1
+                            //获取新增参数SeqNo
+                            let SeqNo = (parseInt(this.getEventMaxSeqNo(this.prodData, addColumnPageCode, "seqNo", eventType)) + i + 1) + ""
+                            if (this.prodData.mbEventInfos[eventType].mbEventAttrs[columnKey] !== undefined) {
+                                //已经存在该条数据
+                                showFlag = 1
+                                toast.info("事件" + eventType + "已存在参数【" + columnDesc + "】");
+                            } else {
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey] = {}
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].eventType = eventType
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].seqNo = SeqNo
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleType = "ATTR"
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleId = columnKey
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].attrValue = ""
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].assembleRule = ""
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].perEffect = ""
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageCode = addColumnPageCode
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageSeqNo = PageSeqNo
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].optionPermissions = "E"
 
-                            //新增参数标识 newAttr
-                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].newAttr = true
+                                //新增参数标识 newAttr
+                                addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].newAttr = true
+                            }
                         }
                     }
-                }
-                if(showFlag === 0) {
-                    this.prodData = addColumnData
-                    this.initEventAttr(this.prodData)
-                    toast.success("产品增加参数成功！");
-                    this.dialog = false
-                }
+                    if (showFlag === 0) {
+                        this.prodData = addColumnData
+                        this.initEventAttr(this.prodData)
+                        toast.success("产品增加参数成功！");
+                        this.dialog = false
+                    }
+//                }
             },
 //            editClick() {
 //                const edit=this.showEdit;

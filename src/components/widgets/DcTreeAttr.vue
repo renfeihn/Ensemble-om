@@ -81,13 +81,6 @@ depositTree<template>
                     console.log(msg)
 
                 }
-            },
-            backValue(msg) {
-                let back = msg[0].key
-                for(let i=1; i<msg.length; i++){
-                    back = back+","+msg[i].key
-                }
-                this.$emit("getVue", back);
             }
         },
         mounted() {
@@ -186,7 +179,7 @@ depositTree<template>
                     if(this._props.msg instanceof Array){
                         this.tree =this._props.msg
                     }else{
-                    this.tree = this._props.msg.split(",")
+                        this.tree = this._props.msg.split(",")
                     }
                 }
             }
