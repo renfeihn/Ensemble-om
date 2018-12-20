@@ -2,8 +2,6 @@
   <div class="ml-4">
     <v-layout row wrap>
       <v-flex md8 lg8>
-        <!--<tran-check-flow-info v-if="optKey==3"></tran-check-flow-info>-->
-        <!--<tran-release-flow-info v-if="optKey==4"></tran-release-flow-info>-->
         <!--复核流程信息-->
         <v-card class="mt-4 elevation-4 radiusDc">
           <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
@@ -262,9 +260,6 @@
 <script>
   import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
   import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
-//  import tranCheckFlowInfo from './tranCheckFlowInfo'
-//  import tranReleaseFlowInfo from './tranReleaseFlowInfo'
-
   import { getDiffList } from "@/api/url/prodInfo";
   import { getDiffTable } from "@/api/url/prodInfo";
   import {PrintInfo} from '@/utils/print/print'
@@ -285,8 +280,6 @@ import {
         components: {
             prodDiff,
             baseTable,
-//            tranCheckFlowInfo,
-//            tranReleaseFlowInfo,
             getColumnDesc_,
             DcTextField
         },
