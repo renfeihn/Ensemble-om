@@ -609,26 +609,25 @@ import {
                         debtDiff[key]=prodEventDiff[diffKey];
                     }
                 }
-                for(const key in prodEvent){
-                    const openEvent={"prodDefines": prodEvent[key],"prodType": prodType}
-                    if(key.indexOf('OPEN')>=0){
+                for(const keyD in prodEvent){
+                    const openEvent={"prodDefines": prodEvent[keyD],"prodType": prodType}
+                    if(keyD.indexOf('OPEN')>=0){
                         openEvent["diff"]=openDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventOpen=openEvent;
-                    }else
-                    if(key.indexOf('CLOSE')>=0){
+                    }else if(keyD.indexOf('CLOSE')>=0){
                         openEvent["diff"]=closeDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventClose= openEvent
-                    }else if(key.indexOf('CRET')>=0){
+                    }else if(keyD.indexOf('CRET')>=0){
                         openEvent["diff"]=cretDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventCret= openEvent
-                    }else if(key.indexOf('CYCLE')>=0){
+                    }else if(keyD.indexOf('CYCLE')>=0){
                         openEvent["diff"]=cycleDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventCycle= openEvent
-                    }else if(key.indexOf('DEBT')>=0){
+                    }else if(keyD.indexOf('DEBT')>=0){
                         openEvent["diff"]=debtDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventDebt= openEvent
@@ -636,16 +635,20 @@ import {
                 }
                 if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
                     let diffEvent={"prodType": prodType}
+                    let diffEventClose={"prodType": prodType}
+                    let diffEventCycle={"prodType": prodType}
+                    let diffEventCret={"prodType": prodType}
+                    let diffEventDebt={"prodType": prodType}
                     diffEvent["diff"]=openDiff
                     this.prodEventOpen=diffEvent;
-                    diffEvent["diff"]=closeDiff
-                    this.prodEventClose= diffEvent;
-                    diffEvent["diff"]=cycleDiff
-                    this.prodEventCycle= diffEvent
-                    diffEvent["diff"]=cretDiff
-                    this.prodEventCret= diffEvent
-                    diffEvent["diff"]=debtDiff
-                    this.prodEventDebt= diffEvent
+                    diffEventClose["diff"]=closeDiff
+                    this.prodEventClose= diffEventClose;
+                    diffEventCycle["diff"]=cycleDiff
+                    this.prodEventCycle= diffEventCycle
+                    diffEventCret["diff"]=cretDiff
+                    this.prodEventCret= diffEventCret;
+                    diffEventDebt["diff"]=debtDiff
+                    this.prodEventDebt= diffEventDebt;
                 }
             },
             assembleProdCharge(){

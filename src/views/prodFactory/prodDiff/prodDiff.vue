@@ -203,7 +203,7 @@ export default {
       //产品下属性组合
        if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}") {
            for (let index in prodDefines) {
-               if (prodDefines[index].assembleType == "ATTR") {
+               if (prodDefines[index].assembleType != "EVENT") {
                    let prodDefine = prodDefines[index];
                    let attrKey = prodDefine.attrKey;
                    let attrValue = prodDefine.attrValue;
@@ -263,8 +263,17 @@ export default {
                    columnNew.push({divider: true, inset: true});
                }
            }
-       }
-       else{
+           //源参数不为空时候 增加参数处理
+           for(let newKey in prodDiff){
+               if(prodDefines[newKey] == undefined){
+                   let descNew= getColumnDesc(newKey.substring(newKey.lastIndexOf('.')+1));
+                   columnDesc.push({title: descNew});
+                   columnDesc.push({ divider: true, inset: true });
+                   columnNew.push({title: prodDiff[newKey].attrValue});
+                   columnNew.push({ divider: true, inset: true });
+               }
+           }
+       } else{
            for(let index in prodDiff){
                let desc= getColumnDesc(index.substring(index.lastIndexOf('.')+1));
                columnDesc.push({title: desc});

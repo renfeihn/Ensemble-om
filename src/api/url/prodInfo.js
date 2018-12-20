@@ -194,6 +194,13 @@ export function getParamTable (params) {
         params: { tableName: params}
     })
 }
+export function getModuleByFlowCode (params) {
+    return request({
+        url: '/getModuleByFlowCode',
+        method: 'post',
+        params: { code: params}
+    });
+}
 export function getTableList (params) {
     return request({
         url: '/getTableList',

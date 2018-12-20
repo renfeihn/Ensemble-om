@@ -235,12 +235,12 @@
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList" :key="i">
               <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
-              <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
-              <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
-              <prod-diff v-if="i=='存入定义'" :prodData="prodEventCret"></prod-diff>
-              <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
               <prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>
-              <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
+              <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
+              <prod-diff v-if="i=='放款定义'" :prodData="prodEventDrw"></prod-diff>
+              <prod-diff v-if="i=='还款定义'" :prodData="prodEventRec"></prod-diff>
+              <prod-diff v-if="i=='到期信息'" :prodData="prodEventDue"></prod-diff>
+              <base-table v-if="i=='核算信息'" :prodCharge="prodAccounting"></base-table>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -317,14 +317,15 @@ import {
               optDesc: '',
               prodData: {},
               isTable: false,
-              prodCharge: {},
               prodDefineData: {},
-              prodEventOpen: {},
-              prodEventClose: {},
-              prodEventCret: {},
               prodEventCycle: {},
-              prodEventDebt: {},
-              diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"],
+              prodEventOpen: {},
+              prodEventDrw: {},
+              prodEventRec: {},
+              prodEventDur: {},
+              prodAccounting: {},
+
+              diffList: ["产品属性","利息信息","开户定义","放款定义","还款定义","到期信息","核算定义"],
               prodGroup: [{
                   key: 'Y',
                   value: 'Y-是'
@@ -554,7 +555,7 @@ import {
                     this.assembleProdDefine();
                     this.assembleEvent();
                     //将收费定义的差异组装
-                    this.assembleProdCharge();
+                    this.assembleAccounting();
                     this.prodGroup = this.prodData.mbProdType.prodGroup
                     this.prodClass = this.prodData.mbProdType.prodClass
                     this.prodDesc = this.prodData.mbProdType.prodDesc
@@ -579,27 +580,27 @@ import {
                 const prodType=this.prodData.prodType;
                 const baseEffectProd = this.prodData.baseEffectProd;
                 //区分差异
-                const openDiff={}
-                const closeDiff={}
                 const cycleDiff={}
-                const debtDiff={}
-                const cretDiff={}
+                const openDiff={}
+                const drwDiff={}
+                const recDiff={}
+                const dueDiff={}
                 for(const diffKey in prodEventDiff){
                     const key=diffKey.substring(diffKey.indexOf('.')+1);
-                    if(diffKey.indexOf('OPEN')>=0){
-                        openDiff[key]=prodEventDiff[diffKey];
-                    }
-                    if(diffKey.indexOf('CLOSE')>=0){
-                        closeDiff[key]=prodEventDiff[diffKey];
-                    }
-                    if(diffKey.indexOf('CRET')>=0){
-                        cretDiff[key]=prodEventDiff[diffKey];
-                    }
                     if(diffKey.indexOf('CYCLE')>=0){
                         cycleDiff[key]=prodEventDiff[diffKey];
                     }
-                    if(diffKey.indexOf('DEBT')>=0){
-                        debtDiff[key]=prodEventDiff[diffKey];
+                    if(diffKey.indexOf('OPEN')>=0){
+                        openDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('DRW')>=0){
+                        drwDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('REC')>=0){
+                        recDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('DUE')>=0){
+                        dueDiff[key]=prodEventDiff[diffKey];
                     }
                 }
                 for(const key in prodEvent){
@@ -608,40 +609,43 @@ import {
                         openEvent["diff"]=openDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventOpen=openEvent;
-                    }else
-                    if(key.indexOf('CLOSE')>=0){
-                        openEvent["diff"]=closeDiff
-                        openEvent["baseEffectProd"]=baseEffectProd
-                        this.prodEventClose= openEvent
-                    }else if(key.indexOf('CRET')>=0){
-                        openEvent["diff"]=cretDiff
-                        openEvent["baseEffectProd"]=baseEffectProd
-                        this.prodEventCret= openEvent
                     }else if(key.indexOf('CYCLE')>=0){
                         openEvent["diff"]=cycleDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventCycle= openEvent
-                    }else if(key.indexOf('DEBT')>=0){
-                        openEvent["diff"]=debtDiff
+                    }else if(key.indexOf('DRW')>=0){
+                        openEvent["diff"]=drwDiff
                         openEvent["baseEffectProd"]=baseEffectProd
-                        this.prodEventDebt= openEvent
+                        this.prodEventDrw= openEvent
+                    }else if(key.indexOf('REC')>=0){
+                        openEvent["diff"]=recDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
+                        this.prodEventRec= openEvent
+                    }else if(key.indexOf('DUE')>=0){
+                        openEvent["diff"]=dueDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
+                        this.prodEventDue= openEvent
                     }
                 }
                 if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
                     let diffEvent={"prodType": prodType}
+                    let diffEventCycle={"prodType": prodType}
+                    let diffEventDrw={"prodType": prodType}
+                    let diffEventRec={"prodType": prodType}
+                    let diffEventDue={"prodType": prodType}
                     diffEvent["diff"]=openDiff
                     this.prodEventOpen=diffEvent;
-                    diffEvent["diff"]=closeDiff
-                    this.prodEventClose= diffEvent;
-                    diffEvent["diff"]=cycleDiff
-                    this.prodEventCycle= diffEvent
-                    diffEvent["diff"]=cretDiff
-                    this.prodEventCret= diffEvent
-                    diffEvent["diff"]=debtDiff
-                    this.prodEventDebt= diffEvent
+                    diffEventCycle["diff"]=cycleDiff
+                    this.prodEventCycle= diffEventCycle;
+                    diffEventDrw["diff"]=drwDiff
+                    this.prodEventDrw= diffEventDrw
+                    diffEventRec["diff"]=recDiff
+                    this.prodEventRec= diffEventRec
+                    diffEventDue["diff"]=dueDiff
+                    this.prodEventDue= diffEventDue
                 }
             },
-            assembleProdCharge(){
+            assembleAccounting(){
                 const prodInfo=this.prodData.mbProdCharge;
                 const prodChargeDiff=this.prodData.diff.mbProdCharge;
                 let assembleColumns=[];

@@ -1048,6 +1048,20 @@ export default [
         /* webpackMode: "lazy-once" */
         require(['@/views/userFlow/transactionInfo/tranDataIndex.vue'],resolve)
   },
+
+    {
+        path: '/userFlow/tranDataClIndex',
+        meta: {
+            breadcrumb: true,
+            title: '交易详细信息'
+        },
+        name: 'tranDataClIndex',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/userFlow/transactionInfo/tranDataClIndex.vue'],resolve)
+    },
+
   {
     path: '/publish/publishForm',
     meta: {
