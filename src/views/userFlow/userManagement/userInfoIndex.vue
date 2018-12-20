@@ -9,7 +9,7 @@
                         <v-list style="margin-right: 10%;margin-left: 10%">
                             <v-list-tile>
                                 <v-list-tile-content>
-                                        <v-list-tile-title style="font-size: x-large;margin-left: 4%; margin-right: 50%;color: #42A5F5">Admin|系统管理员</v-list-tile-title>
+                                        <v-list-tile-title style="font-size: x-large;margin-left: 4%; margin-right: 50%;color: #42A5F5">{{ userId }}||{{ name }}</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -40,6 +40,7 @@
 <script>
     import UserInfo from './userInfo'
     import UserPassword from './userPassword'
+    import {getSysInfoByUser} from "@/api/url/prodInfo";
 
     export default {
         components: {
@@ -49,6 +50,9 @@
         data() {
             return {
                 drawer: true,
+                desserts: [],
+                userId: '',
+                name: '',
                 items: [
                     {title: '个人信息管理', name: 'userInfo', icon: 'person', class: '',color: "blue"},
                     {title: '密码管理', name: 'userPassword', icon: 'lock', class: '', color: "red"},
@@ -58,7 +62,24 @@
                 action: 'userInfo'
             }
         },
+        created () {
+            this.initialize()
+        },
         methods: {
+            initialize () {
+                let that = this
+                let userId = sessionStorage.getItem("userId")
+                //获取角色信息
+                getSysInfoByUser(userId).then(function (response) {
+                    that.desserts = response.data.data.userInfo
+                    for(let i=0; i<that.desserts.length; i++){
+                        if(userId==that.desserts[i].userId){
+                            that.userId=that.desserts[i].userId
+                            that.name=that.desserts[i].userName
+                        }
+                    }
+                });
+            },
             actionTag(item) {
                 this.action = item.name;
                 item.class="selected";
@@ -67,6 +88,7 @@
                        this.items[index].class="";
                    }
                 }
+                this.initialize()
             }
         }
     }
