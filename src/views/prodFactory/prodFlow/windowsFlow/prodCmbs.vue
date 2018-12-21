@@ -67,7 +67,7 @@
             prodListDtl: [],
             typeClass: [
                 {
-                    key: "SOURCE_MODULE",
+                    key: "sourceModule",
                     value: "业务模块分类"
                 },
                 {
@@ -87,7 +87,7 @@
                 {
                     icon: 'assignment',
                     iconClass: 'blue white--text',
-                    value: 'SOURCE_MODULE',
+                    value: 'sourceModule',
                     lable: '业务模块分类'
                 },
 
@@ -127,7 +127,7 @@
             this.getAllProdInfo()
         },
         mounted: function() {
-            this.selectValue = "SOURCE_MODULE"
+            this.selectValue = "sourceModule"
         },
         methods: {
             //获取所有prod_type prod_define prod_class产品信息
@@ -163,21 +163,10 @@
                 this.prodTemp = []
                 let key = this.checkedTypeKey
                 //加载产品列表
-                if(key === "baseProdType" || key === "prodRange" || key === "status"){
+                if(key === "baseProdType" || key === "prodRange" || key === "status" || key === "sourceModule"){
                     for(let l=0; l<this.prodTypeList.length; l++){
                         if(this.prodTypeList[l][key] === val.value){
                             this.prodTemp.push(this.prodTypeList[l])
-                        }
-                    }
-                }
-                if(key === "SOURCE_MODULE"){
-                    for(let m=0; m <this.prodDefinesList.length; m++){
-                        if(this.prodDefinesList[m].assembleId === "SOURCE_MODULE" && this.prodDefinesList[m].attrValue === val.value){
-                            for(let n=0; n<this.prodTypeList.length; n++){
-                                if(this.prodTypeList[n].prodType === this.prodDefinesList[m].prodType){
-                                    this.prodTemp.push(this.prodTypeList[n])
-                                }
-                            }
                         }
                     }
                 }
@@ -189,7 +178,7 @@
                 let key = val
                 this.checkedTypeKey = key
                 this.checkedClass = []
-                if(key === "SOURCE_MODULE"){
+                if(key === "sourceModule"){
                     //从prodClass中获取所有一级目录
                     for(let i=0; i<this.prodClassList.length; i++){
                         if(this.prodClassList[i].prodClassLevel === "1") {

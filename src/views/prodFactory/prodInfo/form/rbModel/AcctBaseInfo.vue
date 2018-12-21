@@ -18,7 +18,7 @@
                         <v-text-field class="primary--text mx-1" name="title" v-model="prodData.prodType.prodDesc" disabled single-line hide-details></v-text-field>
                     </v-flex>
                     <v-flex md6 lg6>
-                        <dc-multiselect v-model="prodData.prodDefines.SOURCE_MODULE" :options="sourceModule" :isMultiSelect="false" :perShow="true" labelDesc="所属模块"></dc-multiselect>
+                        <dc-multiselect v-model="prodData.prodType.sourceModule" :options="sourceModule" :isMultiSelect="false" :perShow="true" labelDesc="所属模块"></dc-multiselect>
                     </v-flex>
                     <v-flex md6 lg6>
                         <dc-multiselect v-model="prodData.prodType.prodClass" :options="prodClass" :isMultiSelect="false" labelDesc="产品分类"></dc-multiselect>

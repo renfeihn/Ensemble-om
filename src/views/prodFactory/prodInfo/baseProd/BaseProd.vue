@@ -11,8 +11,8 @@
                             <v-flex md6 lg6>
                                 <dc-text-field labelDesc="产品描述" v-model="prodType.prodDesc"></dc-text-field>
                             </v-flex>
-                            <v-flex md6 lg6 v-if="prodDefines!=undefined &&prodDefines.SOURCE_MODULE!= undefined">
-                                <dc-multiselect :options="sourceModuleOption" :disablePower="disablePower" labelDesc="业务模块" :isMultiSelect="false" v-model="prodDefines.SOURCE_MODULE.attrValue" class="dcMulti"></dc-multiselect>
+                            <v-flex md6 lg6>
+                                <dc-multiselect :options="sourceModuleOption" :disablePower="disablePower" labelDesc="业务模块" :isMultiSelect="false" v-model="prodType.sourceModule" class="dcMulti"></dc-multiselect>
                             </v-flex>
                             <v-flex md6 lg6>
                                 <dc-multiselect :options="prodClassOption" :disablePower="disablePower" labelDesc="产品分类" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>

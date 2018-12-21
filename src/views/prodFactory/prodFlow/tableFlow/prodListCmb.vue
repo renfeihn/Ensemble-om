@@ -18,6 +18,7 @@
                         </td>
                       <td>{{ props.item.prodType }}</td>
                       <td>{{ props.item.prodDesc }}</td>
+                      <td>{{ props.item.sourceModule }}</td>
                       <td>{{ props.item.prodRange === "B"?"基础产品":"可售产品" }}</td>
                       <td>{{ props.item.baseProdType }}</td>
                       <td>{{ props.item.status === "A"?"有效":"封存"}}</td>
@@ -69,6 +70,10 @@
                             value: 'prodDesc'
                         },
                         {
+                            text: '所属模块',
+                            value: 'sourceModule'
+                        },
+                        {
                             text: '产品属性',
                             value: 'prodGroup'
                         },
@@ -104,13 +109,22 @@
             handleClick(val) {
                 let prodType = val.prodType
                 let prodRange = val.prodRange
-                if(prodRange == 'B'){
-                    //跳转到基础产品界面
+                let sourceModule = val.sourceModule
+                if(prodRange == 'B' && sourceModule == "RB"){
+                    //跳转到存款基础产品界面
                     this.$router.push({ name: "RbBaseProds", params: { prodType: prodType} });
                 }
-                if(prodRange == 'S'){
-                    //跳转到可售产品界面
+                if(prodRange == 'S' && sourceModule == "RB"){
+                    //跳转到存款可售产品界面
                     this.$router.push({ name: "RbSoldProds", params: { prodType: prodType} });
+                }
+                if(prodRange == 'B' && sourceModule == "CL"){
+                    //跳转到贷款基础产品界面
+                    this.$router.push({ name: "ClBaseProds", params: { prodType: prodType} });
+                }
+                if(prodRange == 'S' && sourceModule == "CL"){
+                    //跳转到贷款可售产品界面
+                    this.$router.push({ name: "ClSoldProds", params: { prodType: prodType} });
                 }
             }
         }
