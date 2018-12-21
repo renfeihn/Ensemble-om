@@ -100,6 +100,14 @@
                 {
                     "key": "CL",
                     "value": "CL-贷款类"
+                },
+                {
+                    "key": "GL",
+                    "value": "GL-内部账类"
+                },
+                {
+                    "key": "MM",
+                    "value": "MM-货币市场类"
                 }
             ],
             prodRangeOption: [
