@@ -31,7 +31,7 @@
                             <sold-prod v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CYCLE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drwList" tags="DRW" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="recList" tags="REC" :disablePower="disablePower"></sold-prod>
@@ -140,7 +140,7 @@
                     {icon: 'filter_vintage', text: '账户信息', pageCode: 'ACCT'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
-                    {icon: 'filter_vintage', text: '利息信息', pageCode: 'CYCLE'},
+                    {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '放款定义', pageCode: 'DRW'},
                     {icon: 'filter_vintage', text: '还款定义', pageCode: 'REC'},
@@ -257,7 +257,7 @@
         methods: {
             initEventAttr(reProd) {
                 //初始化事件，指标参数
-                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
+//                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
                 this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
                 this.drwList = this.dealEventPart(reProd,"DRW",this.prodCode)
                 this.recList = this.dealEventPart(reProd,"REC",this.prodCode)
@@ -405,7 +405,7 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
-                    if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT") {
+                    if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT" || addColumnPageCode==="INT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
                         //获取新增参数SeqNo
@@ -430,7 +430,7 @@
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
-                    if (addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "DUE" || addColumnPageCode === "DRW" || addColumnPageCode === "REC") {
+                    if (addColumnPageCode === "OPEN" || addColumnPageCode === "DUE" || addColumnPageCode === "DRW" || addColumnPageCode === "REC") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1

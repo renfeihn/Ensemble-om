@@ -241,7 +241,7 @@
               <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
               <prod-diff v-if="i=='存入定义'" :prodData="prodEventCret"></prod-diff>
               <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
-              <prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>
+              <!--<prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>-->
               <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
             </v-tab-item>
           </v-tabs-items>
@@ -331,7 +331,7 @@ import {
               prodEventCret: {},
               prodEventCycle: {},
               prodEventDebt: {},
-              diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","利息信息","收费定义"],
+              diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","收费定义"],
               prodGroup: [{
                   key: 'Y',
                   value: 'Y-是'
@@ -602,9 +602,9 @@ import {
                     if(diffKey.indexOf('CRET')>=0){
                         cretDiff[key]=prodEventDiff[diffKey];
                     }
-                    if(diffKey.indexOf('CYCLE')>=0){
-                        cycleDiff[key]=prodEventDiff[diffKey];
-                    }
+//                    if(diffKey.indexOf('CYCLE')>=0){
+//                        cycleDiff[key]=prodEventDiff[diffKey];
+//                    }
                     if(diffKey.indexOf('DEBT')>=0){
                         debtDiff[key]=prodEventDiff[diffKey];
                     }
@@ -623,11 +623,13 @@ import {
                         openEvent["diff"]=cretDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventCret= openEvent
-                    }else if(keyD.indexOf('CYCLE')>=0){
-                        openEvent["diff"]=cycleDiff
-                        openEvent["baseEffectProd"]=baseEffectProd
-                        this.prodEventCycle= openEvent
-                    }else if(keyD.indexOf('DEBT')>=0){
+                    }
+//                    else if(keyD.indexOf('CYCLE')>=0){
+//                        openEvent["diff"]=cycleDiff
+//                        openEvent["baseEffectProd"]=baseEffectProd
+//                        this.prodEventCycle= openEvent
+//                    }
+                    else if(keyD.indexOf('DEBT')>=0){
                         openEvent["diff"]=debtDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventDebt= openEvent
@@ -636,15 +638,15 @@ import {
                 if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
                     let diffEvent={"prodType": prodType}
                     let diffEventClose={"prodType": prodType}
-                    let diffEventCycle={"prodType": prodType}
+//                    let diffEventCycle={"prodType": prodType}
                     let diffEventCret={"prodType": prodType}
                     let diffEventDebt={"prodType": prodType}
                     diffEvent["diff"]=openDiff
                     this.prodEventOpen=diffEvent;
                     diffEventClose["diff"]=closeDiff
                     this.prodEventClose= diffEventClose;
-                    diffEventCycle["diff"]=cycleDiff
-                    this.prodEventCycle= diffEventCycle
+//                    diffEventCycle["diff"]=cycleDiff
+//                    this.prodEventCycle= diffEventCycle
                     diffEventCret["diff"]=cretDiff
                     this.prodEventCret= diffEventCret;
                     diffEventDebt["diff"]=debtDiff

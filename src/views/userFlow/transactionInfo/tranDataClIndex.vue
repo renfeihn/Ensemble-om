@@ -235,7 +235,7 @@
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList" :key="i">
               <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
-              <prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>
+              <!--<prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>-->
               <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
               <prod-diff v-if="i=='放款定义'" :prodData="prodEventDrw"></prod-diff>
               <prod-diff v-if="i=='还款定义'" :prodData="prodEventRec"></prod-diff>
@@ -325,7 +325,7 @@ import {
               prodEventDur: {},
               prodAccounting: {},
 
-              diffList: ["产品属性","利息信息","开户定义","放款定义","还款定义","到期信息","核算定义"],
+              diffList: ["产品属性","开户定义","放款定义","还款定义","到期信息","核算定义"],
               prodGroup: [{
                   key: 'Y',
                   value: 'Y-是'
@@ -587,9 +587,9 @@ import {
                 const dueDiff={}
                 for(const diffKey in prodEventDiff){
                     const key=diffKey.substring(diffKey.indexOf('.')+1);
-                    if(diffKey.indexOf('CYCLE')>=0){
-                        cycleDiff[key]=prodEventDiff[diffKey];
-                    }
+//                    if(diffKey.indexOf('CYCLE')>=0){
+//                        cycleDiff[key]=prodEventDiff[diffKey];
+//                    }
                     if(diffKey.indexOf('OPEN')>=0){
                         openDiff[key]=prodEventDiff[diffKey];
                     }
@@ -609,11 +609,13 @@ import {
                         openEvent["diff"]=openDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventOpen=openEvent;
-                    }else if(key.indexOf('CYCLE')>=0){
-                        openEvent["diff"]=cycleDiff
-                        openEvent["baseEffectProd"]=baseEffectProd
-                        this.prodEventCycle= openEvent
-                    }else if(key.indexOf('DRW')>=0){
+                    }
+//                    else if(key.indexOf('CYCLE')>=0){
+//                        openEvent["diff"]=cycleDiff
+//                        openEvent["baseEffectProd"]=baseEffectProd
+//                        this.prodEventCycle= openEvent
+//                    }
+                    else if(key.indexOf('DRW')>=0){
                         openEvent["diff"]=drwDiff
                         openEvent["baseEffectProd"]=baseEffectProd
                         this.prodEventDrw= openEvent
@@ -629,14 +631,14 @@ import {
                 }
                 if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
                     let diffEvent={"prodType": prodType}
-                    let diffEventCycle={"prodType": prodType}
+//                    let diffEventCycle={"prodType": prodType}
                     let diffEventDrw={"prodType": prodType}
                     let diffEventRec={"prodType": prodType}
                     let diffEventDue={"prodType": prodType}
                     diffEvent["diff"]=openDiff
                     this.prodEventOpen=diffEvent;
-                    diffEventCycle["diff"]=cycleDiff
-                    this.prodEventCycle= diffEventCycle;
+//                    diffEventCycle["diff"]=cycleDiff
+//                    this.prodEventCycle= diffEventCycle;
                     diffEventDrw["diff"]=drwDiff
                     this.prodEventDrw= diffEventDrw
                     diffEventRec["diff"]=recDiff

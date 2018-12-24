@@ -29,7 +29,7 @@
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" :disablePower="disablePower" tags="BASE"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
-                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='CYCLE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="rateList" tags="CYCLE" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="CRET" :disablePower="disablePower"></base-prod>
@@ -136,7 +136,7 @@
                     {icon: 'account_balance', text: '基本信息', pageCode: 'BASE'},
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
-                    {icon: 'filter_vintage', text: '利息信息', pageCode: 'CYCLE'},
+                    {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
@@ -255,7 +255,7 @@
         methods: {
             initEventAttr(reProd) {
                 //初始化事件，指标参数
-                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
+//                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
                 this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
                 this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
                 this.depositList = this.dealEventPart(reProd,"CRET",this.prodCode)
@@ -408,7 +408,7 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
-                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY") {
+                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
                         //获取新增参数SeqNo
@@ -434,7 +434,7 @@
                         }
                     }
                     //组装向mbEventArrt保存的数据对象
-                    if(addColumnPageCode === "CYCLE" || addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
+                    if(addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo
                         let PageSeqNo = this.getEventMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo",eventType)+i+1
