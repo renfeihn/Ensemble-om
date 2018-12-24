@@ -1,11 +1,11 @@
 <template>
-  <v-card class="elevation-2 mt-4 ml-2">
+  <v-card class="elevation-4 mt-4 ml-4 radiusDc">
     <v-toolbar card dense color="transparent">
       <v-toolbar-title><h4>任务列表</h4></v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
-      <v-list two-line class="pa-0">
+      <v-list two-line class="pa-0 taskListHeight">
         <template v-for="(item, index) in items">
           <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
           <v-divider v-else-if="item.divider" :key="index"></v-divider>
@@ -16,13 +16,14 @@
             <v-list-tile-content>
               <v-list-tile-sub-title v-html="item.tranName"></v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-action class="caption">
-              <v-icon class="material-icons">close</v-icon>
-            </v-list-tile-action>
+
           </v-list-tile>
         </template>
       </v-list>
-      <v-divider></v-divider>
+      <v-divider>
+      </v-divider>
+      <v-btn class="btnClass" color="primary lighten-2" @click="submitTask" dark large>确 认</v-btn>
+      <v-btn class="btnClass" color="primary lighten-2" @click="returnTask" dark large>驳 回</v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -72,7 +73,13 @@
                     that.items=[]
                 })
             },
+            submitTask(){
+                this.$emit('submitTask','Y');
+            },
+            returnTask(){
+                this.$emit('submitTask','N');
 
+            },
             getTaskList() {
                 const parentSeqNo=this._props.seqNo;
                 getTaskListBySeqNo({"seqNo": parentSeqNo}).then(response => {
@@ -83,3 +90,8 @@
 
     };
 </script>
+<style scoped>
+  .taskListHeight {
+    height: 218px;
+  }
+  </style>

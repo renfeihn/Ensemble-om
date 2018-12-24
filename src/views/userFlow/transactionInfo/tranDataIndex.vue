@@ -67,12 +67,7 @@
                   <v-text-field class="primary--text mx-1 textBox" label="" disabled="false" name="title" v-model="checkInfo.date" value="2018/09/07" single-line hide-details>
                   </v-text-field>
                 </v-flex>
-                <v-flex xs12 md2 lg2>
-                  <v-subheader class="descClass">复核状态:</v-subheader>
-                </v-flex>
-                <v-flex md10 lg10>
-                  <v-switch color="success" style="margin-top: 8px" hide-details value="Y" :label="`${checkInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="checkInfo.isApproved"></v-switch>
-                </v-flex>
+
                 <v-flex xs12 md2 lg2>
                   <v-subheader class="descClass">复核意见:</v-subheader>
                 </v-flex>
@@ -143,12 +138,6 @@
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="descClass">复核状态:</v-subheader>
-              </v-flex>
-              <v-flex md10 lg10>
-                <v-switch color="success" style="margin-top: 8px" hide-details value=true disabled="false" v-model="releaseFlowInfo.flowCheckInfo.isApproved" :label="`${releaseFlowInfo.flowCheckInfo.isApproved==='Y'?'通过':'驳回'}`" ></v-switch>
-              </v-flex>
-              <v-flex xs12 md2 lg2>
                 <v-subheader class="descClass">复核意见:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
@@ -174,12 +163,6 @@
                 </v-text-field>
               </v-flex>
               <v-flex xs12 md2 lg2>
-                <v-subheader class="descClass">发布状态:</v-subheader>
-              </v-flex>
-              <v-flex md10 lg10>
-                <v-switch color="success" style="margin-top: 8px " hide-details value="Y" :label="`${releaseInfo.isApproved==='Y'?'通过':'驳回'}`" v-model="releaseInfo.isApproved"></v-switch>
-              </v-flex>
-              <v-flex xs12 md2 lg2>
                 <v-subheader class="descClass">发布意见:</v-subheader>
               </v-flex>
               <v-flex md10 lg10>
@@ -190,10 +173,9 @@
           </v-stepper-content>
         </v-stepper>
         </v-card>
-        <v-btn class="btnClass" color="primary lighten-2" dark large @click='confirmClick'>确 认</v-btn>
      </v-flex>
       <v-flex md4 lg4>
-        <task-list-flex :seqNo="code" v-on:changeTranId="changeTranId">
+        <task-list-flex :seqNo="code" v-on:changeTranId="changeTranId" v-on:submitTask="submitTask">
 
         </task-list-flex>
 <!--        <v-card class="ml-4 mt-4 elevation-4 radiusDc">
@@ -432,14 +414,15 @@ import {
                 this.releaseInfo.date = year+'/'+month+'/'+day;
                 this.checkInfo.date = year+'/'+month+'/'+day;
             },
+            submitTask(isApproved) {
+             this.confirmClick(isApproved)
+            },
             //提交事件
-            confirmClick() {
+            confirmClick(isApproved) {
 
                 if(this.optKey === 3){
                     this.confirmInfo = this.checkInfo;
-                    if(this.confirmInfo.isApproved !== "Y"){
-                        this.confirmInfo.isApproved = "N"
-                    }
+                        this.confirmInfo.isApproved = isApproved
                     tranFlowInfo(this.confirmInfo).then(response => {
                         if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
                             toast.success("复核成功！");
@@ -454,9 +437,7 @@ import {
                 if(this.optKey === 4){
                     this.releaseInfo['downLoad']=true;
                     this.confirmInfo = this.releaseInfo
-                    if(this.confirmInfo.isApproved !== "Y"){
-                        this.confirmInfo.isApproved = "N"
-                    }
+                     this.confirmInfo.isApproved = isApproved
                     tranFlowRelease(this.confirmInfo).then(response => {
                         if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
 
