@@ -274,3 +274,10 @@ export function deleteTask (params) {
         data: params
     })
 }
+export function getTaskListBySeqNo (params) {
+    return request({
+        url: '/getTaskListBySeqNo',
+        method: 'post',
+        data: params
+    })
+}

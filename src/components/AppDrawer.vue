@@ -155,7 +155,7 @@ export default {
   overflow: hidden;
 }
   .drawer-menu--scroll {
-    height: calc(100vh - 48px);
+    height: calc(78vh - 48px);
     overflow: auto;
   }
 

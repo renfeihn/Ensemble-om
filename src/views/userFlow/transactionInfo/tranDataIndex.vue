@@ -190,9 +190,13 @@
           </v-stepper-content>
         </v-stepper>
         </v-card>
+        <v-btn class="btnClass" color="primary lighten-2" dark large @click='confirmClick'>确 认</v-btn>
      </v-flex>
       <v-flex md4 lg4>
-        <v-card class="ml-4 mt-4 elevation-4 radiusDc">
+        <task-list-flex :seqNo="code" v-on:changeTranId="changeTranId">
+
+        </task-list-flex>
+<!--        <v-card class="ml-4 mt-4 elevation-4 radiusDc">
           <v-card-media src="/static/avatar/prod1.jpg" style="margin-left: 29%;margin-right: 30%">
           </v-card-media>
           <v-layout>
@@ -206,7 +210,7 @@
           <v-layout>
             <v-btn class="btnClass" color="primary lighten-2" dark large @click='confirmClick'>确 认</v-btn>
           </v-layout>
-        </v-card>
+        </v-card>-->
       </v-flex>
     </v-layout>
     <v-card class="elevation-2 radiusDc">
@@ -272,6 +276,7 @@
   import {getColumnDesc} from '@/utils/columnDesc'
 
   import DcTextField from '@/components/widgets/DcTextField'
+  import TaskListFlex from '@/views/propertyManage/taskListFlex'
   import { getProdData } from "@/api/prod";
   import download2 from '@/utils/download2';
     import toast from '@/utils/toast';
@@ -285,8 +290,7 @@ import {
         components: {
             prodDiff,
             baseTable,
-//            tranCheckFlowInfo,
-//            tranReleaseFlowInfo,
+            TaskListFlex,
             getColumnDesc_,
             DcTextField
         },
@@ -355,14 +359,14 @@ import {
               prodType: [{
                   key: '',
                   value: ''
-              }]
+              }],
+              tranId: ''
           }
       },
        created() {
            //交易单号
            this.code = this.$route.params.code
            this.setOptKey(this.$route.params.optValue)
-           this.getDiffProdData();
        },
       mounted() {
           //获取当前操作日期
@@ -413,6 +417,13 @@ import {
                             }
                         })
             },
+            changeTranId(tranId,tranType){
+                if(tranType=='0'){
+                this.getDiffProdData(tranId);
+                }else{
+                this.getDiffTableData(tranId);
+                }
+            },
             getDate() {
                 var date = new Date();
                 var year = date.getFullYear();
@@ -461,7 +472,8 @@ import {
             },
             //展开/隐藏差异信息列表
             showClick() {
-                this.showFlag = this.showFlag ===0?1:0
+           this.showFlag = this.showFlag ===0?1:0
+                /*
                 if(!this.isTable) {
                     //产品差异获取数据处理
                     this.getDiffProdData();
@@ -469,7 +481,7 @@ import {
                 if(this.isTable){
                     //单表差异获取数据组装
                     this.getDiffTableData();
-                }
+                }*/
             },
             setOptKey(val) {
                 if(val === "复核") {
@@ -553,9 +565,9 @@ import {
                     this.prodCharge= column;
                 });
             },
-            getDiffProdData(){
+            getDiffProdData(tranId){
                 //通过交易主单号 获取产品差异信息
-                var data={'mainSeqNo': this.code};
+                let data={'mainSeqNo': this.code,'tranId': tranId};
                 getDiffList(data).then(response => {
                     this.prodData=response.data.data;
                     this.assembleProdDefine();
