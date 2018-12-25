@@ -533,12 +533,12 @@
                     for (const index in event.mbEventAttrs) {
                         events[index] = event.mbEventAttrs[index]
                     }
-                    for (const index in event.mbEventParts) {
-                        const part = event.mbEventParts[index]
-                        for (const key in part) {
-                            events[key] = part[key]
-                        }
-                    }
+//                    for (const index in event.mbEventParts) {
+//                        const part = event.mbEventParts[index]
+//                        for (const key in part) {
+//                            events[key] = part[key]
+//                        }
+//                    }
                 }
                 return events
             }
