@@ -175,9 +175,9 @@
         </v-card>
      </v-flex>
       <v-flex md4 lg4>
-        <task-list-flex :seqNo="code" v-on:changeTranId="changeTranId" v-on:submitTask="submitTask">
-
+        <task-list-flex :seqNo="code" v-on:changeTranId="changeTranId" v-on:submitTask="submitTask" >
         </task-list-flex>
+
 <!--        <v-card class="ml-4 mt-4 elevation-4 radiusDc">
           <v-card-media src="/static/avatar/prod1.jpg" style="margin-left: 29%;margin-right: 30%">
           </v-card-media>
@@ -431,6 +431,8 @@ import {
                         if(response.status === 200 && this.confirmInfo.isApproved === "N") {
                             toast.success("驳回成功！");
                             this.$router.push({ name: 'userIndexFlow'});
+                            let setTaskEvent= new Event("taskList");
+                            window.dispatchEvent(setTaskEvent);
                         }
                     })
                 }
@@ -447,6 +449,8 @@ import {
                         if(response.status === 200 && this.confirmInfo.isApproved === "N") {
                             toast.success("驳回成功！");
                             this.$router.push({ name: 'userIndexFlow'});
+                            let setTaskEvent= new Event("taskList");
+                            window.dispatchEvent(setTaskEvent);
                         }
                     })
                 }

@@ -5,18 +5,17 @@
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
-      <v-list two-line class="pa-0 taskListHeight">
-        <template v-for="(item, index) in items">
+      <v-list two-line class="pa-0 taskListHeight" >
+        <template v-for="(item, index) in items" >
           <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
           <v-divider v-else-if="item.divider" :key="index"></v-divider>
-          <v-list-tile avatar v-else :key="item.tranName" @click="handleClick(item)">
+          <v-list-tile avatar v-else :key="item.tranName" :class="item.className" @click="handleClick(item)" v-show="classShow">
             <v-list-tile-avatar color='light-green'>
               <v-icon dark>account_circle</v-icon>
             </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-sub-title v-html="item.tranName"></v-list-tile-sub-title>
+            <v-list-tile-content >
+              <v-list-tile-sub-title >{{ item.tranName }}</v-list-tile-sub-title>
             </v-list-tile-content>
-
           </v-list-tile>
         </template>
       </v-list>
@@ -36,14 +35,14 @@
             seqNo: String
         },
         data: () => ({
+            classShow: true,
+            show: '',
             items: [
                 {
                     tranName: '',
-                    color: '',
-                    icon: '',
-                    timeLabel: ''
+                    className: ''
                 }
-            ]
+            ],
         }),
         watch: {
             seqNo: {
@@ -66,6 +65,13 @@
         methods: {
             handleClick(item) {
                 this.$emit('changeTranId',item.tranId,item.tranType);
+                this.show=true
+                for(let i=0; i<this.items.length; i++){
+                    this.items[i].className=this.items[i].tranName
+                }
+                this.classShow=false
+                item.className="changeColor"
+                this.classShow=true
             },
             submit(){
                 let that=this
@@ -84,14 +90,19 @@
                 const parentSeqNo=this._props.seqNo;
                 getTaskListBySeqNo({"seqNo": parentSeqNo}).then(response => {
                     this.items= response.data.data;
+                    for(let i=0; i<this.items.length; i++){
+                        this.items[i].className=this.items[i].tranName
+                    }
                 });
-            }
-        },
-
+            },
+        }
     };
 </script>
 <style scoped>
   .taskListHeight {
     height: 218px;
+  }
+  .changeColor{
+    background-color:gainsboro!important;
   }
   </style>

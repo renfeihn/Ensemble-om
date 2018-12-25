@@ -1,12 +1,12 @@
 <template>
-  <v-card class="elevation-0">
+  <v-card class="elevation-0" v-show="show">
     <v-toolbar card dense color="transparent">
-      <v-toolbar-title><h4>操作列表</h4></v-toolbar-title>
+      <v-toolbar-title ><h4>操作列表</h4></v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>
-    <v-card-text class="pa-0">
+    <v-card-text class="pa-0" >
       <v-list two-line class="pa-0">
-        <template v-for="(item, index) in items">
+        <template v-for="(item, index) in items" >
           <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
           <v-divider v-else-if="item.divider" :key="index"></v-divider>
           <v-list-tile avatar v-else :key="item.tranName" @click="handleClick">
@@ -43,6 +43,7 @@
             taskMenu: Boolean
         },
         data: () => ({
+            show: '',
             items: [
                 {
                     tranName: '',
@@ -76,6 +77,7 @@
 
             submit(){
                 let that=this
+                that.show=false
                 submitCommon({"userId": sessionStorage.getItem("userId")}).then(response => {
                     that.items=[]
                     this.$emit('getTaskList','0')
@@ -83,6 +85,7 @@
             },
             clean(){
                 let that=this
+                that.show=false
                 cleanList({"seqNo": this.seqNo}).then(response => {
                     that.items=[]
                     this.$emit('getTaskList','0')
@@ -90,6 +93,7 @@
             },
             deleteTask(item){
                 let that=this;
+                that.show=false
                 deleteTask({"tranId": item.tranId,"seqNo": this.seqNo}).then(response => {
                     if(that.items.length==1){
                         that.items=[]
@@ -115,6 +119,11 @@
 
                     if(response.data.data!=null&&response.data.data!={}){
                         this.$emit('getTaskList',response.data.data.length)
+                    }
+
+                    this.show=true
+                    if(this.items.length==0){
+                        this.show=false
                     }
 
                 });
