@@ -433,7 +433,7 @@
                             addColumnData.prodDefines[columnKey].newAttr = true
                         }
                     }
-                    //组装向mbEventArrt保存的数据对象
+                    //组装向mbEventAttr保存的数据对象
                     if(addColumnPageCode === "OPEN" || addColumnPageCode === "CLOSE"|| addColumnPageCode === "CRET" || addColumnPageCode === "DEBT") {
                         let eventType = addColumnPageCode+"_"+this.prodCode
                         //获取新增参数pageSeqNo

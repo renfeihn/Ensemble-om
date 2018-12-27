@@ -248,8 +248,6 @@
 <script>
   import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
   import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
-//  import tranCheckFlowInfo from './tranCheckFlowInfo'
-//  import tranReleaseFlowInfo from './tranReleaseFlowInfo'
 
   import { getDiffList } from "@/api/url/prodInfo";
   import { getDiffTable } from "@/api/url/prodInfo";
