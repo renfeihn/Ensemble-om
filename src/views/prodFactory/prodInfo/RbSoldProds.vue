@@ -311,6 +311,8 @@
                     if(response.status === 200) {
                         this.pendFlag = 1
                         toast.success("提交成功！");
+                        let setTaskEvent= new Event("taskList");
+                        window.dispatchEvent(setTaskEvent);
                     }
                 })
             },

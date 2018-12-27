@@ -37,7 +37,9 @@
                     <v-icon medium>notifications</v-icon>
                 </v-badge>
             </v-btn>
-           <task-list :taskMenu="taskMenu" v-on:getTaskList="getTaskList"></task-list>
+            <div class="tList">
+                <task-list :taskMenu="taskMenu" v-on:getTaskList="getTaskList"></task-list>
+            </div>
         </v-menu>
         <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
             <v-btn icon large flat slot="activator">
@@ -220,4 +222,13 @@
         left 0
         z-index 1
     }
+    .v-menu{
+        width 50px
+    }
+    .tList{
+        margin auto
+        width 450px
+        max-height 500px
+    }
+
     </style>
