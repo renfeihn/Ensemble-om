@@ -93,6 +93,7 @@
                     for(let i=0; i<this.items.length; i++){
                         this.items[i].className=this.items[i].tranName
                     }
+                    this.handleClick(this.items[0])
                 });
             },
         }

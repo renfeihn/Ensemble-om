@@ -149,7 +149,6 @@
         },
         created() {
             let that=this;
-            that.code = this.$route.params.code
             window.addEventListener("taskList", function () {
                 that.getTaskList();
             })
