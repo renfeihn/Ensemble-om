@@ -90,6 +90,7 @@
     import AccountingInfo from './form/rbModel/AccountingInfo';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
+    import {getCommonList} from "@/api/url/prodInfo";
 
     export default {
         name: 'RbBaseProds',
@@ -166,7 +167,15 @@
                 editColor: "write",
                 disablePower: true,
                 editDesc: "编辑模式",
-                powerButton: false
+                powerButton: false,
+                proditem: [
+                    {
+                        tranName: '',
+                        color: '',
+                        icon: '',
+                        timeLabel: ''
+                    }
+                ],
             }
         },
         watch: {
@@ -260,6 +269,15 @@
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
+                getCommonList({"userId": sessionStorage.getItem("userId")}).then(response => {
+                    this.proditem= response.data.data;
+                    for(let i=0; i<this.proditem.length; i++){
+                        if(this.proditem[i].tranId===this.$route.hash){
+                            this.pendFlag = 1
+                            toast.info("存在已保存数据，等待提交!");
+                        }
+                    }
+                });
                 getCheckFlowList().then(response => {
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){

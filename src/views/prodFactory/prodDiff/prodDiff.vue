@@ -11,7 +11,7 @@
             <v-toolbar-title>NEW</v-toolbar-title>
           </v-flex>
           </v-parallax>
-          <v-parallax dark src="/static/bg/13.jpg" style="width: 37%;height: 60px;margin-left: 5px;margin-right: -2%">
+          <v-parallax dark src="/static/bg/13.jpg" style="width: 37%;height: 60px;margin-left: 5px;margin-right: -1.7%">
             <v-flex xs12 md3 lg3>
               <v-toolbar-title>OLD</v-toolbar-title>
             </v-flex>
