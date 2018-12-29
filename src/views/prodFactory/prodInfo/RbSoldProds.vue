@@ -31,10 +31,10 @@
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="closeList" tags="CLOSE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="depositList" tags="CRET" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drawList" tags="DEBT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
@@ -161,10 +161,10 @@
                 }],
                 folders: [],
                 rateList: {},
-                openList: {},
-                closeList: {},
-                depositList: {},
-                drawList: {},
+                OPEN: {},
+                CLOSE: {},
+                CRET: {},
+                DEBT: {},
                 prodData: {
                     prodType: ''
                 },
@@ -269,11 +269,11 @@
         methods: {
             initEventAttr(reProd) {
                 //初始化事件，指标参数
-//                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
-                this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
-                this.closeList = this.dealEventPart(reProd,"CLOSE",this.prodCode)
-                this.depositList = this.dealEventPart(reProd,"CRET",this.prodCode)
-                this.drawList = this.dealEventPart(reProd,"DEBT",this.prodCode)
+                let defineEvent = reProd.mbEventInfos
+                for(let event in defineEvent){
+                    let eventType = event.split("_")[0]
+                    this[eventType] = this.dealEventPart(reProd,eventType,this.prodCode)
+                }
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
@@ -553,12 +553,6 @@
                     for (const index in event.mbEventAttrs) {
                         events[index] = event.mbEventAttrs[index]
                     }
-//                    for (const index in event.mbEventParts) {
-//                        const part = event.mbEventParts[index]
-//                        for (const key in part) {
-//                            events[key] = part[key]
-//                        }
-//                    }
                 }
                 return events
             }

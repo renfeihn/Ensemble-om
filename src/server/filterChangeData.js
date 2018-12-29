@@ -68,9 +68,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backVal = []
     tablesMainDeal(prodData,sourceProdData,backVal,"irlProdInt")
     backData.irlProdInt = backVal
-    backVal = []
-    tablesMainDeal(prodData,sourceProdData,backVal,"mbAcctStats")
-    backData.mbAcctStats = backVal
     return backData
 }
 /*
@@ -132,11 +129,6 @@ export function tablesModDeal(prodData,sourceProdData,s,j,backVal,index,tables) 
     }
     else if(tables === "irlProdInt"){
         if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].eventType === sourceProdData[tables][j].eventType && prodData[tables][s].intClass === sourceProdData[tables][j].intClass){
-            modFlag = "true"
-        }
-    }
-    else if(tables === "mbAcctStats"){
-        if(prodData[tables][s].internalKey === sourceProdData[tables][j].internalKey){
             modFlag = "true"
         }
     }

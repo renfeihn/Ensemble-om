@@ -157,11 +157,10 @@
                 }],
                 folders: [],
                 rateList: {},
-                openList: {},
-                drwList: {},
-                recList: {},
-                dueList: {},
-                drawList: {},
+                OPEN: {},
+                DRW: {},
+                REC: {},
+                DUE: {},
                 prodData: {
                     prodType: ''
                 },
@@ -266,11 +265,11 @@
         methods: {
             initEventAttr(reProd) {
                 //初始化事件，指标参数
-//                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
-                this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
-                this.drwList = this.dealEventPart(reProd,"DRW",this.prodCode)
-                this.recList = this.dealEventPart(reProd,"REC",this.prodCode)
-                this.dueList = this.dealEventPart(reProd,"DUE",this.prodCode)
+                let defineEvent = reProd.mbEventInfos
+                for(let event in defineEvent){
+                    let eventType = event.split("_")[0]
+                    this[eventType] = this.dealEventPart(reProd,eventType,this.prodCode)
+                }
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
@@ -549,12 +548,6 @@
                     for (const index in event.mbEventAttrs) {
                         events[index] = event.mbEventAttrs[index]
                     }
-//                    for (const index in event.mbEventParts) {
-//                        const part = event.mbEventParts[index]
-//                        for (const key in part) {
-//                            events[key] = part[key]
-//                        }
-//                    }
                 }
                 return events
             }

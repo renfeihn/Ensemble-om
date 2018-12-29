@@ -31,10 +31,10 @@
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drwList" tags="DRW" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="recList" tags="REC" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="dueList" tags="DUE" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="DRW" tags="DRW" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="REC" tags="REC" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="DUE" tags="DUE" :disablePower="disablePower"></base-prod>
                         <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -127,6 +127,10 @@
                 prodClass: '',
                 activeName: null,
                 eventList: {},
+                OPEN: {},
+                DRW: {},
+                REC: {},
+                DUE: {},
                 showEdit: false,
                 baseAttr: true,
                 addColumnsRef: [],
@@ -261,11 +265,11 @@
         methods: {
             initEventAttr(reProd) {
                 //初始化事件，指标参数
-//                this.rateList = this.dealEventPart(reProd,"CYCLE",this.prodCode)
-                this.openList = this.dealEventPart(reProd,"OPEN",this.prodCode)
-                this.drwList = this.dealEventPart(reProd,"DRW",this.prodCode)
-                this.recList = this.dealEventPart(reProd,"REC",this.prodCode)
-                this.dueList = this.dealEventPart(reProd,"DUE",this.prodCode)
+                let defineEvent = reProd.mbEventInfos
+                for(let event in defineEvent){
+                    let eventType = event.split("_")[0]
+                    this[eventType] = this.dealEventPart(reProd,eventType,this.prodCode)
+                }
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
@@ -557,12 +561,6 @@
                     for (const index in event.mbEventAttrs) {
                         events[index] = event.mbEventAttrs[index]
                     }
-//                    for (const index in event.mbEventParts) {
-//                        const part = event.mbEventParts[index]
-//                        for (const key in part) {
-//                            events[key] = part[key]
-//                        }
-//                    }
                 }
                 return events
             }
