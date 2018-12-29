@@ -123,7 +123,7 @@ export default {
                   this.$router.push({name: "tranDataIndex", params: {code: code, optValue: "复核", flowInfo: tagInfo}});
               }
               if(sourceModule == "CL") {
-                  this.$router.push({name: "tranDataClIndex", params: {code: code, optValue: "复核", flowInfo: tagInfo}});
+                  this.$router.push({name: "tranDataIndex", params: {code: code, optValue: "复核", flowInfo: tagInfo}});
               }
           });
       }

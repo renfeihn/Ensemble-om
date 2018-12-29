@@ -119,7 +119,7 @@ export default {
                 this.$router.push({ name: "tranDataIndex", params: { code: code ,optValue: "发布",flowInfo: tagInfo} });
             }
             if(sourceModule == "CL"){
-                this.$router.push({ name: "tranDataClIndex", params: { code: code ,optValue: "发布",flowInfo: tagInfo} });
+                this.$router.push({ name: "tranDataIndex", params: { code: code ,optValue: "发布",flowInfo: tagInfo} });
             }
         });
     }

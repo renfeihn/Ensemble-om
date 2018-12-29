@@ -1,7 +1,7 @@
 <template>
   <div class="vCard" v-show="show">
-    <v-layout row justify-center>
-      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-layout v-show="RB" row justify-center>
+      <v-dialog v-model="RB" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card md20 lg20 ref="print">
           <v-toolbar dark color="primary">
             <v-btn icon dark @click="closeDialog">
@@ -25,11 +25,36 @@
                 </v-tab-item>
               </v-tabs-items>
             </v-tabs>
-            <v-tabs fixed-tabs v-if="isTable == true">
-              <v-tab style="margin-left: 0px">{{diffTitles}}</v-tab>
-              <v-tabs-items>
-                <v-tab-item>
-                  <base-table :prodCharge="prodCharge"></base-table>
+          <!--</v-card-text>-->
+          <!--<v-card-text >-->
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+    <v-layout v-show="CL" row justify-center>
+      <v-dialog v-model="CL" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-card md20 lg20 ref="print">
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click="closeDialog">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>修改差异展示</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-card-text>
+            <!--</v-card-text>-->
+            <!--<v-card-text >-->
+            <v-tabs fixed-tabs >
+              <v-tab v-for="m in diffList2" :key="m" class="diffTitle">{{m}}</v-tab>
+              <v-tabs-items v-model="model">
+                <v-tab-item v-for="j in diffList2" :key="j">
+                  <prod-diff v-if="j=='产品属性'" :prodData="prodDefineData"></prod-diff>
+                  <!--<prod-diff v-if="j=='利息信息'" :prodData="prodEventCycle"></prod-diff>-->
+                  <prod-diff v-if="j=='开户定义'" :prodData="prodEventOpen"></prod-diff>
+                  <prod-diff v-if="j=='放款定义'" :prodData="prodEventDrw"></prod-diff>
+                  <prod-diff v-if="j=='还款定义'" :prodData="prodEventRec"></prod-diff>
+                  <prod-diff v-if="j=='到期信息'" :prodData="prodEventDue"></prod-diff>
+                  <base-table v-if="j=='核算信息'" :prodCharge="prodAccounting"></base-table>
                 </v-tab-item>
               </v-tabs-items>
             </v-tabs>
@@ -118,6 +143,8 @@
             taskMenu: Boolean
         },
         data: () => ({
+            RB: false,
+            CL: false,
             show: '',
             items: [
                 {
@@ -138,7 +165,12 @@
             prodEventCret: {},
             prodEventCycle: {},
             prodEventDebt: {},
+            prodEventDrw: {},
+            prodEventRec: {},
+            prodEventDur: {},
+            prodAccounting: {},
             diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","收费定义"],
+            diffList2: ["产品属性","开户定义","放款定义","还款定义","到期信息","核算信息"],
         }),
         watch: {
             taskMenu: {
@@ -162,10 +194,12 @@
             },
 
             closeDialog(){
-                this.dialog=false;
+                this.RB=false
+                this.CL=false
+                this.prodData={}
+                //parent.location.reload();
             },
             different(item){
-                this.dialog=true
                 this.code=item.mainSeqNo
                 if(item.tranType=='0'){
                     this.getDiffProdData(item.tranId);
@@ -245,10 +279,22 @@
                 let data={'mainSeqNo': this.code,'tranId': tranId};
                 getDiffList(data).then(response => {
                     this.prodData=response.data.data;
-                    this.assembleProdDefine();
-                    this.assembleEvent();
-                    //将收费定义的差异组装
-                    this.assembleProdCharge();
+                    if(response.data.data.mbProdType.sourceModule=="RB"){
+                        this.RB=true
+                        this.CL=false
+                        this.assembleProdDefine();
+                        this.assembleEvent();
+                        //将收费定义的差异组装
+                        this.assembleProdCharge();
+                    }
+                    if(response.data.data.mbProdType.sourceModule=="CL"){
+                        this.CL=true
+                        this.RB = false
+                        this.assembleProdDefine();
+                        this.assembleCLEvent();
+                        //将收费定义的差异组装
+                        this.assembleAccounting();
+                    }
                     this.prodGroup = this.prodData.mbProdType.prodGroup
                     this.prodClass = this.prodData.mbProdType.prodClass
                     this.prodDesc = this.prodData.mbProdType.prodDesc
@@ -393,6 +439,134 @@
                 const reColumn = {"headers": heards,"column": assembleColumns}
                 this.prodCharge= reColumn;
             },
+
+            assembleCLEvent(){
+                const prodEvent=this.prodData.prodEvent;
+                const prodEventDiff=this.prodData.diff.mbProdEvent;
+                const prodType=this.prodData.prodType;
+                const baseEffectProd = this.prodData.baseEffectProd;
+                //区分差异
+                const cycleDiff={}
+                const openDiff={}
+                const drwDiff={}
+                const recDiff={}
+                const dueDiff={}
+                for(const diffKey in prodEventDiff){
+                    const key=diffKey.substring(diffKey.indexOf('.')+1);
+//                    if(diffKey.indexOf('CYCLE')>=0){
+//                        cycleDiff[key]=prodEventDiff[diffKey];
+//                    }
+                    if(diffKey.indexOf('OPEN')>=0){
+                        openDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('DRW')>=0){
+                        drwDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('REC')>=0){
+                        recDiff[key]=prodEventDiff[diffKey];
+                    }
+                    if(diffKey.indexOf('DUE')>=0){
+                        dueDiff[key]=prodEventDiff[diffKey];
+                    }
+                }
+                for(const key in prodEvent){
+                    const openEvent={"prodDefines": prodEvent[key],"prodType": prodType}
+                    if(key.indexOf('OPEN')>=0){
+                        openEvent["diff"]=openDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
+                        this.prodEventOpen=openEvent;
+                    }
+//                    else if(key.indexOf('CYCLE')>=0){
+//                        openEvent["diff"]=cycleDiff
+//                        openEvent["baseEffectProd"]=baseEffectProd
+//                        this.prodEventCycle= openEvent
+//                    }
+                    else if(key.indexOf('DRW')>=0){
+                        openEvent["diff"]=drwDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
+                        this.prodEventDrw= openEvent
+                    }else if(key.indexOf('REC')>=0){
+                        openEvent["diff"]=recDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
+                        this.prodEventRec= openEvent
+                    }else if(key.indexOf('DUE')>=0){
+                        openEvent["diff"]=dueDiff
+                        openEvent["baseEffectProd"]=baseEffectProd
+                        this.prodEventDue= openEvent
+                    }
+                }
+                if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
+                    let diffEvent={"prodType": prodType}
+//                    let diffEventCycle={"prodType": prodType}
+                    let diffEventDrw={"prodType": prodType}
+                    let diffEventRec={"prodType": prodType}
+                    let diffEventDue={"prodType": prodType}
+                    diffEvent["diff"]=openDiff
+                    this.prodEventOpen=diffEvent;
+//                    diffEventCycle["diff"]=cycleDiff
+//                    this.prodEventCycle= diffEventCycle;
+                    diffEventDrw["diff"]=drwDiff
+                    this.prodEventDrw= diffEventDrw
+                    diffEventRec["diff"]=recDiff
+                    this.prodEventRec= diffEventRec
+                    diffEventDue["diff"]=dueDiff
+                    this.prodEventDue= diffEventDue
+                }
+            },
+            assembleAccounting(){
+                const prodInfo=this.prodData.mbProdCharge;
+                const prodChargeDiff=this.prodData.diff.mbProdCharge;
+                let assembleColumns=[];
+                let heards=[];
+                for(const key in prodInfo[0]){
+                    let head={};
+                    head["text"]=getColumnDesc_(key);
+                    head["value"]=key;
+                    heards.push(head);
+                }
+                for(const prodCharge in prodInfo){
+                    const chargeColumn= prodInfo[prodCharge];
+                    const keyAndValue="{\"FEE_TYPE\":\""+chargeColumn.feeType+"\",\"PROD_TYPE\":\""+
+                        chargeColumn.prodType+"\"}";
+                    const diff=prodChargeDiff[keyAndValue];
+                    if(diff== undefined){
+                        assembleColumns.push(chargeColumn)
+                    }else{
+                        for(const col in chargeColumn){
+                            let chargeCol=chargeColumn[col];
+                            let diffCol=diff[col];
+                            if(chargeCol!=diffCol){
+                                chargeColumn[col]= chargeCol+'>'+diffCol
+                            }
+                        }
+                        assembleColumns.push(chargeColumn)
+                    }
+                }
+                if(heards.size==0){
+                    for(const key in prodChargeDiff[0]){
+                        let head={};
+                        head["text"]=getColumnDesc_(key);
+                        head["value"]=key;
+                        heards.push(head);
+                    }
+                }
+                for(const index in prodChargeDiff){
+                    const prodCharge= prodChargeDiff[index];
+                    const dmlType=prodCharge.dmlType;
+                    let diffData={}
+                    if(dmlType == 'I'){
+                        const keyAndValue=index;
+                        for(const num in heards){
+                            const value=heards[num].value
+                            diffData[value]=prodCharge[value];
+                        }
+                        assembleColumns.push(diffData)
+                    }
+                }
+                const reColumn = {"headers": heards,"column": assembleColumns}
+                this.prodCharge= reColumn;
+            },
+
             submit(){
                 let that=this
                 that.show=false
