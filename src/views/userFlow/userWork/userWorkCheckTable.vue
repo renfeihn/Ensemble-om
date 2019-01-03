@@ -118,7 +118,10 @@ export default {
           }
           //通过主交易单号  在差异表 获取sourceModule
           getModuleByFlowCode(code).then(response => {
-              let sourceModule = response.data.data.SOURCE_MODULE
+              let sourceModule
+              for(let tId in response.data.data){
+                  sourceModule = response.data.data[tId].SOURCE_MODULE
+              }
               if(sourceModule == "RB"){
                   this.$router.push({name: "tranDataIndex", params: {code: code, optValue: "复核", flowInfo: tagInfo}});
               }

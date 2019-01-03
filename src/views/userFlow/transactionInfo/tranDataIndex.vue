@@ -591,7 +591,11 @@
                 //通过交易主单号 获取产品差异信息
                 let data={'mainSeqNo': this.code,'tranId': tranId};
                 getModuleByFlowCode(this.code).then(response => {
-                    this.sourceModule = response.data.data.SOURCE_MODULE
+                    for(let tId in response.data.data){
+                        if(tranId == tId){
+                            this.sourceModule = response.data.data[tId].SOURCE_MODULE
+                        }
+                    }
                     getDiffList(data).then(response => {
                         this.prodData = response.data.data;
                         if (this.sourceModule == "RB") {
