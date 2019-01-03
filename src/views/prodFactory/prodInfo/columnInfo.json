@@ -508,7 +508,7 @@
   "INT_MAX_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "协议产品最高限额"
+    "columnDesc": "最大起存金额"
   },
   "PB_FLAG": {
     "columnType": "switch",
@@ -682,7 +682,6 @@
     "isMultiSelect": false,
     "valueScore": {
       "columnCode": "CLIENT_TYPE",
-      "columnCode": "CLIENT_TYPE",
       "columnDesc": "CLIENT_TYPE_DESC",
       "tableName": "CIF_CLIENT_TYPE"
     },
@@ -709,19 +708,19 @@
     "valueMethod": "VL",
     "valueScore": [
       {
-        "value": "立即生效",
+        "value": "A-立即生效",
         "key": "A"
       },
       {
-        "value": "固定利率",
+        "value": "N-固定利率",
         "key": "N"
       },
       {
-        "value": "利率变动周期生效",
+        "value": "R-利率变动周期生效",
         "key": "R"
       },
       {
-        "value": "结息日生效",
+        "value": "S-结息日生效",
         "key": "S"
       }
     ],
@@ -1238,7 +1237,8 @@
     "columnType": "select",
     "valueMethod": "RF",
     "valueScore": {
-      "columnCode": "REASON_CODE，REASON_CODE_DESC",
+      "columnCode": "REASON_CODE",
+      "columnDesc": "REASON_CODE_DESC",
       "tableName": "MB_REASON_CODE"
     },
     "columnDesc": "帐户用途"
@@ -3245,6 +3245,158 @@
         "value": "C-无效"
       }
     ]
+  },
+  "EVENT_TYPE": {
+    "valueMethod": "RF",
+    "columnDesc": "事件类型",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "MB_EVENT_CLASS",
+      "columnCode": "EVENT_CLASS",
+      "columnDesc": "EVENT_CLASS_DESC"
+    }
+  },
+  "INT_TYPE": {
+    "valueMethod": "RF",
+    "columnDesc": "利率代码",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "IRL_INT_TYPE",
+      "columnCode": "INT_TAX_TYPE",
+      "columnDesc": "INT_TAX_TYPE_DESC"
+    }
+  },
+  "TAX_TYPE": {
+    "valueMethod": "RF",
+    "columnDesc": "税率类型",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "IRL_INT_TYPE",
+      "columnCode": "INT_TAX_TYPE",
+      "columnDesc": "INT_TAX_TYPE_DESC"
+    }
+  },
+  "INT_CLASS": {
+    "valueMethod": "VL",
+    "columnDesc": "利息分类",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "INT",
+        "value": "INT-利息"
+      },
+      {
+        "key": "ODF",
+        "value": "ODF-透支利息"
+      },
+      {
+        "key": "ODI",
+        "value": "ODI-复利"
+      },
+      {
+        "key": "ODODI",
+        "value": "ODODI-复利的复利"
+      },
+      {
+        "key": "ODODP",
+        "value": "ODODP-罚息的复利"
+      },
+      {
+        "key": "ODP",
+        "value": "ODP-罚息"
+      },
+      {
+        "key": "PDUE",
+        "value": "PDUE-超期利息"
+      },
+      {
+        "key": "WYINT",
+        "value": "WYINT-违约利息"
+      }
+    ]
+  },
+  "INT_CALC_BAL": {
+    "valueMethod": "VL",
+    "columnDesc": "计息方式",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "AB",
+        "value": "AB-积数计息"
+      },
+      {
+        "key": "EB",
+        "value": "EB-分段计息"
+      },
+      {
+        "key": "BS",
+        "value": "BS-差减法计息"
+      }
+    ]
+  },
+  "RATE_AMT_ID": {
+    "valueMethod": "RF",
+    "columnDesc": "利率计算金额编码",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "IRL_AMT_EXPRESSION",
+      "columnCode": "EXPRESSION",
+      "columnDesc": "EXPRESSION_DESC"
+    }
+  },
+  "INT_AMT_ID": {
+    "valueMethod": "RF",
+    "columnDesc": "利息计算金额编码",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "IRL_AMT_EXPRESSION",
+      "columnCode": "EXPRESSION",
+      "columnDesc": "EXPRESSION_DESC"
+    }
+  },
+  "MONTH_BASIS": {
+    "valueMethod": "VL",
+    "columnDesc": "月基准",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "ACT",
+        "value": "ACT-按实际天数"
+      },
+      {
+        "key": "30",
+        "value": "30-按30天"
+      }
+    ]
+  },
+  "INT_DAYS_TYPE": {
+    "valueMethod": "VL",
+    "columnDesc": "靠档天数计算方式",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "A",
+        "value": "A-按存期"
+      },
+      {
+        "key": "B",
+        "value": "B-实际天数"
+      },
+      {
+        "key": "C",
+        "value": "C-计提天数"
+      }
+    ]
   }
+
 
 }
