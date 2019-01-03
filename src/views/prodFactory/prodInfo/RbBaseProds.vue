@@ -85,9 +85,9 @@
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
-    import ChargeDefine from './form/rbModel/ChargeDefine';
+    import ChargeDefine from './table/prodTables/mbProdCharge';
     import ProdListForm from './form/ProdListForm';
-    import RateInfo from './form/rbModel/RateInfo';
+    import RateInfo from './table/prodTables/irlProdInt';
     import FormShift from './form/rbModel/FormShift';
     import AccountingInfo from './form/rbModel/AccountingInfo';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
@@ -145,7 +145,8 @@
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
                     {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
-                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
+                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'},
+                    {icon: 'filter_vintage', text: '产品映射', pageCode: 'MAPPING'}
                 ],
                 tagList: [],
                 files: [{
