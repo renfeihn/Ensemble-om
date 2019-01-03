@@ -1,4 +1,5 @@
 <template>
+  <a-spin tip="Loading..." size="large" :spinning="spinning">
   <div class="ml-4">
     <v-layout row wrap>
       <v-flex md8 lg8>
@@ -268,6 +269,7 @@
     </v-card>
     <!--</v-layout>-->
   </div>
+  </a-spin>
 </template>
 <script>
     import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
@@ -278,7 +280,7 @@
     import {PrintInfo} from '@/utils/print/print'
     import {getColumnDesc_} from '@/utils/columnDesc'
     import {getColumnDesc} from '@/utils/columnDesc'
-
+    import { getModuleByFlowCode } from "@/api/url/prodInfo";
     import DcTextField from '@/components/widgets/DcTextField'
     import TaskListFlex from '@/views/propertyManage/taskListFlex'
     import { getProdData } from "@/api/prod";
@@ -301,6 +303,8 @@
         props: ["prodData"],
         data (){
             return {
+                sourceModule: [],
+                spinning: false,
                 RB: false,
                 CL: false,
                 e1: 3,
@@ -468,6 +472,7 @@
                     })
                 }
                 if(this.optKey === 4){
+                    this.spinning=true
                     this.releaseInfo['downLoad']=true;
                     this.confirmInfo = this.releaseInfo
                     this.confirmInfo.isApproved = isApproved
@@ -475,6 +480,7 @@
                         if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
 
                             toast.success("发布成功！");
+                            this.spinning=false
                             this.$router.push({ name: 'userIndexFlow'});
                         }
                         if(response.status === 200 && this.confirmInfo.isApproved === "N") {
@@ -584,31 +590,34 @@
             getDiffProdData(tranId){
                 //通过交易主单号 获取产品差异信息
                 let data={'mainSeqNo': this.code,'tranId': tranId};
-                getDiffList(data).then(response => {
-                    this.prodData=response.data.data;
-                    if(response.data.data.mbProdType.sourceModule=="RB"){
-                        this.RB=true
-                        this.assembleProdDefine();
-                        this.assembleEvent();
-                        //将收费定义的差异组装
-                        this.assembleProdCharge();
-                    }
-                    if(response.data.data.mbProdType.sourceModule=="CL"){
-                        this.CL=true
-                        this.assembleProdDefine();
-                        this.assembleCLEvent();
-                        //将收费定义的差异组装
-                        this.assembleAccounting();
-                    }
-                    this.prodGroup = this.prodData.mbProdType.prodGroup
-                    this.prodClass = this.prodData.mbProdType.prodClass
-                    this.prodDesc = this.prodData.mbProdType.prodDesc
-                    this.prodType = this.prodData.mbProdType.prodGroup
-                    this.status = this.prodData.mbProdType.status
-                    this.baseProdType = this.prodData.mbProdType.baseProdType
-                    this.prodRange = this.prodData.mbProdType.prodRange
-                    this.prodType = this.prodData.mbProdType.prodType
-                });
+                getModuleByFlowCode(this.code).then(response => {
+                    this.sourceModule = response.data.data.SOURCE_MODULE
+                    getDiffList(data).then(response => {
+                        this.prodData = response.data.data;
+                        if (this.sourceModule == "RB") {
+                            this.RB = true
+                            this.assembleProdDefine();
+                            this.assembleEvent();
+                            //将收费定义的差异组装
+                            this.assembleProdCharge();
+                        }
+                        if (this.sourceModule == "CL") {
+                            this.CL = true
+                            this.assembleProdDefine();
+                            this.assembleCLEvent();
+                            //将收费定义的差异组装
+                            this.assembleAccounting();
+                        }
+                        this.prodGroup = this.prodData.mbProdType.prodGroup
+                        this.prodClass = this.prodData.mbProdType.prodClass
+                        this.prodDesc = this.prodData.mbProdType.prodDesc
+                        this.prodType = this.prodData.mbProdType.prodGroup
+                        this.status = this.prodData.mbProdType.status
+                        this.baseProdType = this.prodData.mbProdType.baseProdType
+                        this.prodRange = this.prodData.mbProdType.prodRange
+                        this.prodType = this.prodData.mbProdType.prodType
+                    });
+                })
             },
             assembleProdDefine() {
                 const prodDefine=this.prodData.prodDefine;

@@ -202,6 +202,7 @@
                 }
 
             }, true)
+            this.queryProdFlow();
             //组织树形组件备选数据
             let that = this
             getParamTable("MB_ATTR_CLASS").then(function (response) {
