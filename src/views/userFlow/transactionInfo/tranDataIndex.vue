@@ -10,7 +10,7 @@
             <v-icon>call_split</v-icon>
             <v-toolbar-title>{{title}}</v-toolbar-title>
           </v-toolbar>
-          <v-stepper v-model="e11" v-if="optKey == 3">
+          <v-stepper v-model="e11" v-if="optKey == 3" style="height: 330px;">
             <v-stepper-header style="font-size: large">
               <v-divider></v-divider>
               <v-stepper-step editable :complete="e11 > 1" step="1">提交信息</v-stepper-step>
@@ -81,7 +81,7 @@
           </v-stepper>
 
           <!--发布流程信息-->
-          <v-stepper v-model="e1" style="color: white" v-if="optKey == 4">
+          <v-stepper v-model="e1" style="color: white;height: 330px;" v-if="optKey == 4" >
             <v-stepper-header style="font-size: large">
               <v-stepper-step editable :complete="e1 > 1" step="1">提交信息</v-stepper-step>
               <v-divider></v-divider>
@@ -894,7 +894,7 @@
     font-size: large;
     font-style: inherit;
     margin-right: 0px;
-    margin-top: 0px;
+    margin-top: 10px;
     margin-left: 10%
   }
   .textBox {

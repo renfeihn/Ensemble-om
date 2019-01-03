@@ -1,7 +1,7 @@
 <template>
   <v-card class="elevation-4 mt-4 ml-4 radiusDc">
-    <v-toolbar card dense color="transparent">
-      <v-toolbar-title><h4>任务列表</h4></v-toolbar-title>
+    <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+      <v-toolbar-title>任务列表</v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
@@ -101,7 +101,9 @@
 </script>
 <style scoped>
   .taskListHeight {
-    height: 218px;
+    height: 272px;
+    overflow-y:auto;
+    overflow-x:hidden;
   }
   .changeColor{
     background-color:gainsboro!important;
