@@ -128,7 +128,7 @@
     import { getModuleByFlowCode } from "@/api/url/prodInfo";
     import DcTextField from '@/components/widgets/DcTextField'
     import TaskListFlex from '@/views/propertyManage/taskListFlex'
-    import TaskListMenu from '@/views/propertyManage/taskListMenu'
+//    import TaskListMenu from '@/views/propertyManage/taskListMenu'
     import {getProdData} from "@/api/prod";
     import download2 from '@/utils/download2';
     import toast from '@/utils/toast';
@@ -144,7 +144,7 @@
             prodDiff,
             baseTable,
             TaskListFlex,
-            TaskListMenu,
+//            TaskListMenu,
         },
         props: {
             taskMenu: Boolean
