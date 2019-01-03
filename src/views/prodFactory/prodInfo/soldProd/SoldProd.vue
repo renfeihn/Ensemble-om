@@ -172,7 +172,7 @@
                 console.log(evt.draggedContext.element.id)
             },
             saveColumn (){
-                saveColumn({column: this.dataSource,prodType: this._props.prodTypeCode}).then(response => {
+                saveColumn({column: this.dataSource,prodType: this._props.prodTypeCode,tags: this._props.tags}).then(response => {
                     if(response.status === 200) {
                         toast.success("顺序编辑完成！");
                     }
@@ -192,11 +192,24 @@
                 //拖动后改变column数组
                 console.log(this.tags)
             },
+            //对象浅复制
+            copy(obj1,obj2) {
+                let obj = obj2||{};
+                for(let name in obj1){
+                    if(typeof obj1[name] === "object" && obj1[name]!== null){
+                        obj[name]= (obj1[name].constructor===Array)?[]:{};
+                        this.copy(obj1[name],obj[name]);
+                    }else{
+                        obj[name]=obj1[name];
+                    }
+                }
+                return obj;
+            },
             init(prodData) {
                 let columnList=[]
                 //通过后台的产品有关信息查数据字典
                 for(const index in prodData) {
-                    const dataSource = columnInfo;
+                    const dataSource = this.copy(columnInfo,{});
                     let column = dataSource[index];
                     if (column != undefined && column != 'undefined' && this._props.tags == prodData[index].pageCode) {
                         column['key'] = index
