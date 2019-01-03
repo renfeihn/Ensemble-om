@@ -173,7 +173,7 @@
                 console.log(evt.draggedContext.element.id)
             },
             saveColumn (){
-                saveColumn({column: this.dataSource,prodType: this._props.prodTypeCode}).then(response => {
+                saveColumn({column: this.dataSource,prodType: this._props.prodTypeCode,tags: this._props.tags}).then(response => {
                     if(response.status === 200) {
                         toast.success("顺序编辑完成！");
                     }
@@ -191,7 +191,6 @@
                 }
                 this.saveColumn();
                 //拖动后改变column数组
-                console.log(this.tags)
             },
             init(prodData) {
                 let columnList=[]
