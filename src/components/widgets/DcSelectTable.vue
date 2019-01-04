@@ -148,10 +148,10 @@
                         value = newValue.key
                     }
                 }
-                if(typeof this._props.msg === "object") {
+                if(typeof this._props.msg === "object" && this._props.msg != null) {
                     this._props.msg.attrValue = value
                 }
-                if(typeof this._props.msg === "string" || typeof this._props.msg === "undefined") {
+                if(typeof this._props.msg === "string" || typeof this._props.msg === "undefined" || this._props.msg === null) {
                     this._props.msg = value
                 }
                 if (value) {

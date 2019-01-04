@@ -148,10 +148,10 @@
                     this.labelText = this._props.labelDesc + ' :';
                 }
                 //初始化数据 msg为对象时获取attrValue属性 否则直接赋值
-                if(typeof this._props.msg === "object"){
+                if(typeof this._props.msg === "object" && this._props.msg != null){
                     this.value = this._props.msg.attrValue
                     this.optionPermissions = this._props.msg.optionPermissions
-                }else if(typeof this._props.msg === "string"){
+                }else if(typeof this._props.msg === "string" || typeof this._props.msg === "undefined" || this._props.msg === null){
                     this.value = this._props.msg
                 }
                 //判断是否显示分户生效标识
