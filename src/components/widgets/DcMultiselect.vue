@@ -233,7 +233,7 @@
                     }
                 }
                 if(this._props.options!==undefined&&!(typeof this._props.options === 'object' && !isNaN(this._props.options.length))){
-                    getPkList(this._props.options,response => {
+                    getPkList(this._props.options,sessionStorage.getItem("mainSeqNo"),response => {
                         this._props.options=response
                     });
                     this._props.options=[];
