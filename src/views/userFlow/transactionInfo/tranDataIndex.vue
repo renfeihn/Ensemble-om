@@ -233,6 +233,9 @@
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
+
+      </v-card-text>
+      <v-card-text v-if="isTable == true">
         <v-tabs fixed-tabs v-if="isTable == true">
           <v-tab style="margin-left: 0px">{{diffTitles}}</v-tab>
           <v-tabs-items>
@@ -257,14 +260,14 @@
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
-        <v-tabs fixed-tabs v-if="isTable == true">
-          <v-tab style="margin-left: 0px">{{diffTitles}}</v-tab>
-          <v-tabs-items>
-            <v-tab-item>
-              <base-table :prodCharge="prodCharge"></base-table>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-tabs>
+        <!--<v-tabs fixed-tabs v-if="isTable == true">-->
+          <!--<v-tab style="margin-left: 0px">{{diffTitles}}</v-tab>-->
+          <!--<v-tabs-items>-->
+            <!--<v-tab-item>-->
+              <!--<base-table :prodCharge="prodCharge"></base-table>-->
+            <!--</v-tab-item>-->
+          <!--</v-tabs-items>-->
+        <!--</v-tabs>-->
       </v-card-text>
     </v-card>
     <!--</v-layout>-->
@@ -395,6 +398,8 @@
                     this.checkInfo.mainSeqNo = val.code
                     this.checkInfo.userId = sessionStorage.getItem("userId")
                     for(let i=0; i<val.flowInfo.length; i++) {
+                        this.tranId = val.flowInfo[i].flowManage.tranId;
+
                         if(val.flowInfo[i].flowManage.tranId === "MB_PROD_TYPE"){
                             this.isTable = false
                         }else{
@@ -409,6 +414,8 @@
                     this.releaseInfo.mainSeqNo = val.code;
                     this.releaseInfo.userId = sessionStorage.getItem("userId")
                     for(let i=0; i<val.flowInfo.length; i++) {
+                        this.tranId = val.flowInfo[i].flowManage.tranId;
+
                         if(val.flowInfo[i].flowManage.tranId === "MB_PROD_TYPE"){
                             this.isTable = false
                         }else{
@@ -495,7 +502,6 @@
             //展开/隐藏差异信息列表
             showClick() {
                 this.showFlag = this.showFlag ===0?1:0
-                /*
                 if(!this.isTable) {
                     //产品差异获取数据处理
                     this.getDiffProdData();
@@ -503,7 +509,7 @@
                 if(this.isTable){
                     //单表差异获取数据组装
                     this.getDiffTableData();
-                }*/
+                }
             },
             setOptKey(val) {
                 if(val === "复核") {
@@ -522,7 +528,7 @@
             },
             getDiffTableData() {
                 //通过交易主单号 获取单表差异信息
-                var data={'mainSeqNo': this.code};
+                var data={'mainSeqNo': this.code,"tranId": this.tranId};
                 getDiffTable(data).then(response => {
                     console.log(response);
                     this.diffTitles = response.data.data.mainFlow.tranId+"-"+response.data.data.mainFlow.tranDesc
