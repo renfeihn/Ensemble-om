@@ -1,9 +1,9 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <a-button type="primary" @click="onAdd">新增</a-button>
+            <!--<a-button type="primary" @click="onAdd">新增</a-button>-->
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
-            <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
+            <!--<a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>-->
             <v-dialog v-model="dialog" width="800">
                 <v-toolbar color="primary lighten-2" style="height: 50px">
                     <v-toolbar-title class="white--text" style="margin-top: -2%">{{ titleDesc}}</v-toolbar-title>

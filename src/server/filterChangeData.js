@@ -218,7 +218,7 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
             //可售产品-可售产品 || 基础产品-基础产品
             prodData.prodDefines[j].group = null
             prodDefines[j] = changeProdType(prodData,prodType,j)
-        }else if(copyFlag === "Y" && prodRange === "S" && prodData.prodDefines[j].optionPermissions === "E"){
+        }else if(tempsDefine(prodData,copyFlag,prodRange,j)){
             //基础产品-可售产品复制
             prodData.prodDefines[j].group = null
             prodDefines[j] = changeProdType(prodData,prodType,j)
@@ -266,6 +266,13 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
         backData.optionPermissions = tempObject
     }
     backData.prodDefines = prodDefines
+}
+export function tempsDefine(prodData,copyFlag,prodRange,j){
+    if(copyFlag === "Y" && prodRange === "S"){
+        if(prodData.prodDefines[j].optionPermissions === "E" || prodData.prodDefines[j].assembleType === "EVENT"){
+            return true;
+        }
+    }
 }
 export function changeProdType(prodData,prodType,j){
     let newMap = {newData: {},oldData: {},optionType: ""}
