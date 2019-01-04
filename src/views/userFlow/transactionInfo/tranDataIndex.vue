@@ -378,7 +378,8 @@
                     key: '',
                     value: ''
                 }],
-                tranId: ''
+                tranId: '',
+                tranType: ''
             }
         },
         created() {
@@ -442,9 +443,14 @@
             changeTranId(tranId,tranType){
                 this.RB=false;
                 this.CL=false;
+                this.showFlag = 0
+                this.tranType = tranType
+                this.tranId = tranId
                 if(tranType=='0'){
+                    this.isTable = false
                     this.getDiffProdData(tranId);
                 }else{
+                    this.isTable = true
                     this.getDiffTableData(tranId);
                 }
             },
@@ -502,13 +508,13 @@
             //展开/隐藏差异信息列表
             showClick() {
                 this.showFlag = this.showFlag ===0?1:0
-                if(!this.isTable) {
+                if(!this.isTable || this.tranType == '0') {
                     //产品差异获取数据处理
-                    this.getDiffProdData();
+                    this.getDiffProdData(this.tranId);
                 }
-                if(this.isTable){
+                if(this.isTable|| this.tranType == '1'){
                     //单表差异获取数据组装
-                    this.getDiffTableData();
+                    this.getDiffTableData(this.tranId);
                 }
             },
             setOptKey(val) {
@@ -531,7 +537,7 @@
                 var data={'mainSeqNo': this.code,"tranId": this.tranId};
                 getDiffTable(data).then(response => {
                     console.log(response);
-                    this.diffTitles = response.data.data.mainFlow.tranId+"-"+response.data.data.mainFlow.tranDesc
+                    this.diffTitles = this.tranId
                     let tableDiffInfo = response.data.data.tableInfo
                     //获取单表列描述
                     let heards=[];
