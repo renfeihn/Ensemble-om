@@ -651,7 +651,9 @@
 
                     if(response.data.data!=null&&response.data.data!={}){
                         this.$emit('getTaskList',response.data.data.length)
+                        if(response.data.data.length!=0){
                         sessionStorage.setItem("mainSeqNo", response.data.data[0].mainSeqNo);
+                        }
                     }
                     this.show = true
                     if (this.items.length == 0) {
