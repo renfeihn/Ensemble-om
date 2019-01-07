@@ -121,7 +121,7 @@
             reback(newValue) {
                 let value = newValue;
                 let reValue=this._props.msg
-                if(typeof reValue === "object") {
+                if(typeof reValue === "object" && reValue != null) {
                     reValue.attrValue = value
                 }else{
                     reValue = value

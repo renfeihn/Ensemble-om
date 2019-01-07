@@ -314,12 +314,12 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
     }
     let newDataMap= {newData: {}, oldData: {},optionType: ""}
     if(copyFlag === "Y" && sourceProdData.mbEventInfos[m].mbEventAttrs[k].group === "SOLD" || copyFlag === "Y" && prodRange === "B"){
-        sourceProdData.mbEventInfos[m].mbEventAttrs[k].group = null
+        prodData.mbEventInfos[m].mbEventAttrs[k].group = null
         newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
         newDataMap.optionType = "I"
         mbEventAttrs[k] = newDataMap
     }else if (copyFlag === "Y" && prodRange === "S" && sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E"){
-        sourceProdData.mbEventInfos[m].mbEventAttrs[k].group = null
+        prodData.mbEventInfos[m].mbEventAttrs[k].group = null
         newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
         newDataMap.optionType = "I"
         mbEventAttrs[k] = newDataMap
@@ -329,6 +329,7 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
         mbEventAttrs[k] = newDataMap
     } else if(prodData.mbEventInfos[m].mbEventAttrs[k].attrValue !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].attrValue || prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions) {
         sourceProdData.mbEventInfos[m].mbEventAttrs[k].group = null
+        prodData.mbEventInfos[m].mbEventAttrs[k].group = null
         newDataMap.newData = prodData.mbEventInfos[m].mbEventAttrs[k]
         newDataMap.oldData = sourceProdData.mbEventInfos[m].mbEventAttrs[k]
         newDataMap.optionType = "U"

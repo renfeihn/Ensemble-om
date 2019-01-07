@@ -62,12 +62,7 @@
             },
             reback(newValue) {
                 let value = newValue;
-                let reValue=this._props.msg
-                if(typeof reValue === "object") {
-                    reValue.attrValue = value
-                }else{
-                    reValue = value
-                }
+                let reValue=value
                 if(reValue != undefined){
                     this.$emit("getVue", reValue);
                 }
