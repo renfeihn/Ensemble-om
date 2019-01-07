@@ -13,8 +13,7 @@ import Truncate from 'lodash.truncate';
 import store from './store';
 import qs from 'qs';
 import globalConfig from "./config.js";
-// import './mock';
-
+import './mock';
 import 'ant-design-vue/dist/antd.css';
 import 'vuetify/dist/vuetify.min.css'
 

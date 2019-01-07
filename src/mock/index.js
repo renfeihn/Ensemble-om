@@ -47,7 +47,7 @@ Mock.mock(/\/table\/accountingInfo/, 'get', rbtableAPI.getAccountingInfo);
 
 // 登录相关
 // Mock.mock(/\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login/, 'post', loginAPI.login)
+Mock.mock(/user\/login\.*/, 'post', loginAPI.login)
 
 Mock.mock(/\/getProdListByClass/, 'post', prodTypeAPI.getProdType)
 
