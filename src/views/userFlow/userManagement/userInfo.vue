@@ -81,6 +81,10 @@
             submit () {
                 if(this.name==''){
                     toast.error("个人信息修改失败")
+                }else if(this.email==''){
+                    toast.error("邮箱不能为空")
+                }else if(this.phone.length!=11){
+                    toast.error("电话号码必须是11位")
                 }else{
                     let userId = sessionStorage.getItem("userId")
                     for(let i=0; i<this.desserts.length; i++){
