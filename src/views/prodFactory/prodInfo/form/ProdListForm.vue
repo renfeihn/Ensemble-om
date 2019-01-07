@@ -71,12 +71,14 @@
         },
         methods: {
             initProdList(val) {
+                if(val!=''&&val!=undefined){
                 getProdType(val).then(response => {
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){
                         this.folders.push(response.data.data[j])
                     }
                 });
+                }
             },
             handleClick(value) {
                 this.prodType = value.prodType
