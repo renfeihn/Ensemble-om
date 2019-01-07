@@ -33,9 +33,9 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
 
         //mbEventParts对象
-        for (let x in prodData.mbEventInfos[m].mbEventParts){
-            mbEventPartDeal(prodData,x,m,copyFlag,mbEventParts,sourceProdData);
-        }
+        // for (let x in prodData.mbEventInfos[m].mbEventParts){
+        //     mbEventPartDeal(prodData,x,m,copyFlag,mbEventParts,sourceProdData);
+        // }
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 

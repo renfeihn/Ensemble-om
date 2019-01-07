@@ -679,7 +679,7 @@
   "CLIENT_TYPE": {
     "columnType": "select",
     "valueMethod": "RF",
-    "isMultiSelect": false,
+    "isMultiSelect": true,
     "valueScore": {
       "columnCode": "CLIENT_TYPE",
       "columnDesc": "CLIENT_TYPE_DESC",
