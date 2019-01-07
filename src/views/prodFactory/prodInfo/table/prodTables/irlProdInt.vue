@@ -285,10 +285,10 @@
                 this.prodType = val.prodType.prodType
             }
         },
-        mounted: function() {
-            //加载利率信息
-            this.getChargeDefinesInfo(this._props.prodData);
-        },
+//        mounted: function() {
+//            //加载利率信息
+//            this.getChargeDefinesInfo(this._props.prodData);
+//        },
         methods: {
             //初始化产品对应的信息
             getChargeDefinesInfo(val) {
