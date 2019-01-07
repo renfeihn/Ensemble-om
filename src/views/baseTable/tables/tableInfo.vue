@@ -167,26 +167,15 @@
                 this.backValue.tableDesc= this.$route.params.tableDesc
                 this.backValue.option = "save"
                 this.backValue.userName = sessionStorage.getItem("userId")
-                saveTable(this.backValue).then(response => {
-                    if (response.status === 200) {
-                        toast.success("提交成功！");
-                        this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
-                        let setTaskEvent= new Event("taskList");
-                        window.dispatchEvent(setTaskEvent);
-                    }
-                });
-
                 if(this.backValue.data.length==0){
                     toast.error("未做任何修改,提交失败！");
-                }
-                else{
-                    this.backValue.tableName = this.tableName
-                    this.backValue.option = "save"
-                    this.backValue.userName = sessionStorage.getItem("userId")
+                }else{
                     saveTable(this.backValue).then(response => {
                         if (response.status === 200) {
                             toast.success("提交成功！");
                             this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
+                            let setTaskEvent= new Event("taskList");
+                            window.dispatchEvent(setTaskEvent);
                         }
                     });
                 }
@@ -214,15 +203,6 @@
                         }
                         if (selected.CLIENT_TYPE == []) {
                             alert("客户类型代码不能为空")
-                        }else if (selected.CLIENT_TYPE_DESC == []) {
-                            alert("客户类型描述不能为空")
-                            this.dialog=true
-                        } else if (selected.IS_INDIVIDUAL == []) {
-                            alert("是否是个体客户不能为空")
-                            this.dialog=true
-                        }else if (selected.COMPANY == []) {
-                            alert("法人代码不能为空")
-                            this.dialog=true
                         }else if (equals == true) {
                             alert("客户类型不能与已存在的客户类型相同")
                         }else {
