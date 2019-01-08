@@ -64,7 +64,7 @@
         },
         methods: {
             handleClick(item) {
-                this.$emit('changeTranId',item.tranId,item.tranType);
+                this.$emit('sendType',item.tranType,item.tranId);
                 this.show=true
                 for(let i=0; i<this.items.length; i++){
                     this.items[i].className=this.items[i].tranName
@@ -84,7 +84,6 @@
             },
             returnTask(){
                 this.$emit('submitTask','N');
-
             },
             getTaskList() {
                 const parentSeqNo=this._props.seqNo;
