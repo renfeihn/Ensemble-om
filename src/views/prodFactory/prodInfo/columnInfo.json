@@ -3396,7 +3396,174 @@
         "value": "C-计提天数"
       }
     ]
+  },
+  "ATTR_KEY": {
+    "valueMethod": "RF",
+    "columnDesc": "参数数据类型",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "MB_ATTR_TYPE",
+      "columnCode": "ATTR_KEY",
+      "columnDesc": "ATTR_DESC"
+    }
+  },
+  "ATTR_DESC": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "参数描述",
+    "valueType": "varchar",
+    "valueLength": "100"
+  },
+  "ATTR_VALUE": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "参数值",
+    "valueType": "varchar",
+    "valueLength": "100"
+  },
+  "REF_TABLE": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "引用表名",
+    "valueType": "varchar",
+    "valueLength": "100"
+  },
+  "REF_CONDITION": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "引用条件",
+    "valueType": "varchar",
+    "valueLength": "100"
+  },
+  "REF_COLUMNS": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "关联表描述列",
+    "valueType": "varchar",
+    "valueLength": "100"
+  },
+  "VALUE_DESC": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "参数值描述",
+    "valueType": "varchar",
+    "valueLength": "100"
+  },
+  "ATTR_CLASS": {
+    "valueMethod": "RF",
+    "columnDesc": "参数数据类型",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": {
+      "tableName": "MB_ATTR_CLASS",
+      "columnCode": "ATTR_CLASS",
+      "columnDesc": "ATTR_CLASS_DESC"
+    }
+  },
+  "ATTR_TYPE": {
+    "valueMethod": "VL",
+    "columnDesc": "使用方式",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "STRING",
+        "value": "字符型"
+      },
+      {
+        "key": "DOUBLE",
+        "value": "数值型"
+      }
+    ]
+  },
+  "USE_METHOD": {
+    "valueMethod": "VL",
+    "columnDesc": "使用方式",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "EVAL",
+        "value": "赋值类"
+      },
+      {
+        "key": "CTR",
+        "value": "控制类"
+      },
+      {
+        "key": "IND",
+        "value": "处理逻辑"
+      },
+      {
+        "key": "DESC",
+        "value": "静态描述"
+      }
+    ]
+  },
+  "VALUE_METHOD": {
+    "valueMethod": "VL",
+    "columnDesc": "取值方式",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "FD",
+        "value": "固定"
+      },
+      {
+        "key": "VL",
+        "value": "取值自MB_ATTR_VALUE"
+      },
+      {
+        "key": "RF",
+        "value": "取值自其它参数表"
+      },
+      {
+        "key": "YN",
+        "value": "取值Y或N"
+      }
+    ]
+  },
+  "SET_VALUE_FLAG": {
+    "valueMethod": "VL",
+    "columnDesc": "参数值设置方式",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "0",
+        "value": "设置单值"
+      },
+      {
+        "key": "1",
+        "value": "可设置多值"
+      }
+    ]
+  },
+  "BUSI_CATEGORY": {
+    "valueMethod": "VL",
+    "columnDesc": "业务分类",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "RB",
+        "value": "存款"
+      },
+      {
+        "key": "CL",
+        "value": "贷款"
+      },
+      {
+        "key": "MM",
+        "value": "货币市场"
+      },
+      {
+        "key": "GL",
+        "value": "总账"
+      }
+    ]
   }
-
 
 }

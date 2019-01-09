@@ -95,39 +95,39 @@
             sourceModuleOption: [
                 {
                     "key": "RB",
-                    "value": "RB-存款类"
+                    "value": "存款类"
                 },
                 {
                     "key": "CL",
-                    "value": "CL-贷款类"
+                    "value": "贷款类"
                 },
                 {
                     "key": "GL",
-                    "value": "GL-内部账类"
+                    "value": "内部账类"
                 },
                 {
                     "key": "MM",
-                    "value": "MM-货币市场类"
+                    "value": "货币市场类"
                 }
             ],
             prodRangeOption: [
                 {
                     "key": "S",
-                    "value": "S-可售产品"
+                    "value": "可售产品"
                 },
                 {
                     "key": "B",
-                    "value": "B-基础产品"
+                    "value": "基础产品"
                 }
             ],
             statusOption: [
                 {
                     "key": "A",
-                    "value": "A-启用"
+                    "value": "启用"
                 },
                 {
                     "key": "C",
-                    "value": "C-废弃"
+                    "value": "废弃"
                 }
             ],
             prodClassOption: [],
@@ -152,7 +152,7 @@
                         if(prodClass[i].PROD_CLASS_LEVEL == '2'){
                             let temp = {}
                             temp["key"] = prodClass[i].PROD_CLASS;
-                            temp["value"] = prodClass[i].PROD_CLASS + '-' + prodClass[i].PROD_CLASS_DESC;
+                            temp["value"] = prodClass[i].PROD_CLASS_DESC;
                             that.prodClassOption.push(temp)
                         }
                     }
@@ -163,7 +163,7 @@
                         if(prodType[i].PROD_RANGE == 'B'){
                             let temp = {}
                             temp["key"] = prodType[i].PROD_TYPE;
-                            temp["value"] = prodType[i].PROD_TYPE + '-' + prodType[i].PROD_DESC;
+                            temp["value"] = prodType[i].PROD_DESC;
                             that.baseProdTypeOption.push(temp)
                         }
                     }

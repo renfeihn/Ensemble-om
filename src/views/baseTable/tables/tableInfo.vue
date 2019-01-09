@@ -195,35 +195,12 @@
                                 selected[key] = editSelected[key].value
                             }
                         }
-                        let equals = false;
-                        for (let i = 0; i < this.dataInfo.length; i++) {
-                            if (selected.CLIENT_TYPE == this.dataInfo[i].CLIENT_TYPE) {
-                                equals = true;
-                            }
-                        }
-                        if (selected.CLIENT_TYPE == []) {
-                            alert("客户类型代码不能为空")
-                        }else if (equals == true) {
-                            alert("客户类型不能与已存在的客户类型相同")
-                        }else {
                             this.dataInfo.splice(0, 0, selected)
                             this.close()
-                        }
                     }
                     else {
                         for (const keys in selected) {
-                            if (selected.CLIENT_TYPE != editSelected.CLIENT_TYPE.value) {
-                                let equals = false;
-                                for (let i = 0; i < this.dataInfo.length; i++) {
-                                    if (editSelected.CLIENT_TYPE.value == this.dataInfo[i].CLIENT_TYPE) {
-                                        equals = true
-                                    }
-                                }
-                                if (equals == true) {
-                                    alert("客户类型不能与已存在的客户类型相同")
-                                    break
-                                }
-                            }
+
                             if (selected[keys] !== undefined && editSelected[keys] !== undefined) {
                                 selected[keys] = editSelected[keys].value
                             }

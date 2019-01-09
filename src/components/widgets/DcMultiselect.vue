@@ -11,8 +11,13 @@
                 </v-flex>
                 <v-flex md6 lg6>
                     <div>
-                        <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background"
-                                     :disabled="disabled" :searchable="false" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                        <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang"
+                                     :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                       <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
+<!--
+                       <template slot="afterList" slot-scope="props"><span @click="toMoreTable">跳转</span></template>
+-->
+                       <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
                         </multiselect>
                     </div>
                 </v-flex>
@@ -159,6 +164,18 @@
             this.initProperty();
         },
         methods: {
+            toMoreTable (){
+                this.$router.push({
+                    name: 'tableInfo',
+                    params: {
+                        'tableName': 'CIF_CLIENT_TYPE',
+                        'tableDesc': '客户类型'
+                    }
+                })
+            },
+            nameWithLang ({ key, value }) {
+                return `${key} — [${value}]`
+            },
             dealNewAttr(val) {
                 //新增参数延迟展示
                 if(val !== undefined && val.newAttr) {
