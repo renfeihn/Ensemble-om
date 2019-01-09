@@ -3418,7 +3418,7 @@
   },
   "ATTR_KEY": {
     "valueMethod": "RF",
-    "columnDesc": "参数数据类型",
+    "columnDesc": "参数KEY",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": {
@@ -3471,7 +3471,7 @@
   },
   "ATTR_CLASS": {
     "valueMethod": "RF",
-    "columnDesc": "参数数据类型",
+    "columnDesc": "参数分类",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": {
@@ -3482,7 +3482,7 @@
   },
   "ATTR_TYPE": {
     "valueMethod": "VL",
-    "columnDesc": "使用方式",
+    "columnDesc": "参数数据类型",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": [
