@@ -89,7 +89,8 @@
                 selectedRowKeys: [],
                 selected: {},
                 columns: [],
-                backValue: {}
+                backValue: {},
+                key: []
             };
         },
         mounted: function () {
@@ -107,7 +108,15 @@
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
                     that.columns = response.data.data.column;
                     that.tableName = tableName
+                    that.getKey()
                 });
+            },
+            getKey(){
+                for(let n=0; n<this.columns.length; n++) {
+                    if(this.columns[n].key == "true"){
+                        this.key.push(this.columns[n])
+                    }
+                }
             },
             copy(obj1, obj2) {
                 var obj = obj2 || {};
@@ -183,7 +192,59 @@
             close (){
                 this.dialog=false
             },
+            limit(editSelected){
+                let keyIsNull = false
+                let keyName = []
+                let keyCoName = []
+                let num = 0
+                for(let i=0; i<this.key.length; i++){
+                        if(editSelected[this.key[i].dataIndex].value == []){
+                            keyIsNull = true
+                            keyName.push(this.key[i].title)
+                        }
+                    }
+                for(let j=0; j<this.dataInfo.length; j++){
+                    if(editSelected[this.key[0].dataIndex].value == this.dataInfo[j][this.key[0].dataIndex]){
+                        if(num == this.key.length){
+                            break
+                        }
+                        num++
+                        keyCoName.push(this.key[0].title)
+                        for(let n=1; n<this.key.length; n++){
+                            if(editSelected[this.key[n].dataIndex].value == this.dataInfo[j][this.key[n].dataIndex]){
+                                num++
+                                keyCoName.push(this.key[n].title)
+                            }else{
+                                num=0
+                                keyCoName = []
+                                break
+                            }
+                        }
+                    }
+                }
+                if (this.addorchange == false){
+                    let numSel = 0
+                    for(let i=0; i<this.key.length; i++){
+                        if(editSelected[this.key[i].dataIndex].value == this.selected[this.key[i].dataIndex]){
+                            numSel++
+                        }
+                        if(numSel == this.key.length){
+                            num = 0
+                        }
+                    }
+                }
+                if(keyIsNull == true){
+                    alert(keyName+"不能为空")
+                    return false
+                }else if(num == this.key.length){
+                    alert(keyCoName+"不能重复")
+                    return false
+                }else{
+                    return true
+                }
+            },
             editAction(option, editSelected) {
+
                 if(option == 'close'){
                     this.close()
                 }
@@ -195,17 +256,23 @@
                                 selected[key] = editSelected[key].value
                             }
                         }
+                        if(this.limit(editSelected)){
                             this.dataInfo.splice(0, 0, selected)
                             this.close()
+                        }
                     }
                     else {
+                        let dataCon = this.limit(editSelected)
                         for (const keys in selected) {
-
-                            if (selected[keys] !== undefined && editSelected[keys] !== undefined) {
-                                selected[keys] = editSelected[keys].value
+                            if(dataCon == false){
+                                break;
+                            }else{
+                                if (selected[keys] !== undefined && editSelected[keys] !== undefined) {
+                                    selected[keys] = editSelected[keys].value
+                                    this.close()
+                                }
                             }
                         }
-                        this.close()
                     }
                 }
             }
