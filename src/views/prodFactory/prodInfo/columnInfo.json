@@ -3564,7 +3564,7 @@
     "valueMethod": "VL",
     "columnDesc": "业务分类",
     "columnType": "select",
-    "isMultiSelect": false,
+    "isMultiSelect": true,
     "valueScore": [
       {
         "key": "RB",
