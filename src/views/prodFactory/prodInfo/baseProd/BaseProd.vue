@@ -43,7 +43,7 @@
                                     <v-flex md12 lg12 v-else>
                                         <dc-text-field :showEdit="showEdit" v-if="keyData.columnType == 'input'"
                                                        class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
-                                                       name="title" :labelDesc="keyData.columnDesc" :disablePower="disablePower" v-model="prodDefines[keyData.key]" single-line
+                                                       name="title" :labelDesc="keyData.columnDesc" :money="keyData.money" :disablePower="disablePower" v-model="prodDefines[keyData.key]" single-line
                                                        hide-details></dc-text-field>
                                         <dc-multiselect :showEdit="showEdit" v-if="keyData.columnType == 'select'" :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
                                                         :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>

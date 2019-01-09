@@ -15,7 +15,7 @@
     </v-layout>
    </v-flex>
    <v-flex md6 lg6>
-    <v-text-field class="primary--text mx-1" :disabled="disabled" name="title" v-model="value" single-line hide-details :perShow="perShow" labelDesc="labelDesc"></v-text-field>
+    <v-text-field class="primary--text mx-1" :disabled="disabled" name="title" v-model="value" @keyup="numberAmount(value)" single-line hide-details :perShow="perShow" labelDesc="labelDesc"></v-text-field>
    </v-flex>
    <v-flex md2 lg2>
     <v-tooltip right :color="peopleColor" v-if="personShow==1">
@@ -44,6 +44,7 @@
             event: "getVue"
         },
         props: {
+            money: String,
             msg: String,
             perShow: String ,
             labelDesc: String ,
@@ -99,6 +100,35 @@
             }
         },
         methods: {
+            numberAmount(num){
+                if(this.money == "true"){
+                    num = num.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+                    num = num + "";
+                    num = num.replace(/[ ]/g, "");
+                    if (num == "") {
+                        return;
+                    }
+                    if (isNaN(num)) {
+                        return num;
+                    }
+                    let index = num.indexOf(".");
+                    if (index == -1) {
+                        let reg = /(-?\d+)(\d{3})/;
+                        while (reg.test(num)) {
+                            num = num.replace(reg, "$1,$2");
+                        }
+                    } else {
+                        let intPart = num.substring(0, index);
+                        let pointPart = num.substring(index + 1, num.length);
+                        let reg = /(-?\d+)(\d{3})/;
+                        while (reg.test(intPart)) {
+                            intPart = intPart.replace(reg, "$1,$2");
+                        }
+                        num = intPart + "." + pointPart;
+                    }
+                    this.value = num;
+                }
+            },
             rebackOption(newValue){
                 if(typeof this._props.msg === "object"){
                     this._props.msg.optionPermissions=newValue

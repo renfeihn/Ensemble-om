@@ -144,7 +144,8 @@
   "KEEP_MAX_BAL": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "留存最大余额"
+    "columnDesc": "留存最大余额",
+    "money": "true"
   },
   "CHECK_ACCT_STATUS": {
     "columnType": "switch",
@@ -508,7 +509,8 @@
   "INT_MAX_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "最大起存金额"
+    "columnDesc": "最大起存金额",
+    "money": "true"
   },
   "PB_FLAG": {
     "columnType": "switch",
@@ -674,7 +676,8 @@
   "SG_DEP_MIN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "单次存入最小金额"
+    "columnDesc": "单次存入最小金额",
+    "money": "true"
   },
   "CLIENT_TYPE": {
     "columnType": "select",
@@ -729,7 +732,8 @@
   "SG_MIN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "单次最小金额"
+    "columnDesc": "单次最小金额",
+    "money": "true"
   },
   "CKECK_BORROWER": {
     "columnType": "select",
@@ -1026,7 +1030,8 @@
   "MODE_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "理财产品取整金额"
+    "columnDesc": "理财产品取整金额",
+    "money": "true"
   },
   "CL_ADVANCE_TYPE": {
     "columnType": "select",
@@ -1202,7 +1207,8 @@
   "SG_ISS_MIN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "单次最小金额"
+    "columnDesc": "单次最小金额",
+    "money": "true"
   },
   "OD_TERM": {
     "columnType": "input",
@@ -1326,7 +1332,8 @@
   "LC_MIN_TRAN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "最低转存金额"
+    "columnDesc": "最低转存金额",
+    "money": "true"
   },
   "PROD_CHANNEL": {
     "columnType": "select",
@@ -1495,7 +1502,8 @@
   "KEEP_MIN_BAL": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "留存最小余额"
+    "columnDesc": "留存最小余额",
+    "money": "true"
   },
   "OD_PRI_PENALTY": {
     "columnType": "switch",
@@ -1610,7 +1618,8 @@
   "PRE_WITHDRAW_MIN": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "提前支取最小金额"
+    "columnDesc": "提前支取最小金额",
+    "money": "true"
   },
   "INT_ROLL_FREQ": {
     "columnType": "input",
@@ -1620,7 +1629,8 @@
   "TRAN_LIMIT_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "限额"
+    "columnDesc": "限额",
+    "money": "true"
   },
   "AUTO_BE_FLAG": {
     "columnType": "switch",
@@ -1878,7 +1888,8 @@
   "INIT_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "起存金额"
+    "columnDesc": "起存金额",
+    "money": "true"
   },
   "INTER_BANK_TYPE": {
     "columnType": "select",
@@ -1977,7 +1988,8 @@
   "INT_MIN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "最小起存金额"
+    "columnDesc": "最小起存金额",
+    "money": "true"
   },
   "INT_PENALTY": {
     "columnType": "switch",
@@ -2055,7 +2067,8 @@
   "MIN_PREC_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "提前还款最低金额"
+    "columnDesc": "提前还款最低金额",
+    "money": "true"
   },
   "CHECK_MISS_NUM": {
     "columnType": "switch",
@@ -2144,7 +2157,8 @@
   "REMAIN_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "理财主产品保底金额"
+    "columnDesc": "理财主产品保底金额",
+    "money": "true"
   },
   "CD_MEDIUM": {
     "columnType": "select",
@@ -2542,12 +2556,14 @@
   "OVER_LIMIT_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "超额额度"
+    "columnDesc": "超额额度",
+    "money": "true"
   },
   "SG_DEP_MAX_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "单次存入最大金额"
+    "columnDesc": "单次存入最大金额",
+    "money": "true"
   },
   "UP_TIME": {
     "columnType": "input",
@@ -2803,17 +2819,20 @@
   "MIN_DRW_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "放款最小额度"
+    "columnDesc": "放款最小额度",
+    "money": "true"
   },
   "SG_MAX_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "单次最大金额"
+    "columnDesc": "单次最大金额",
+    "money": "true"
   },
   "SG_ISS_MAX_AMT": {
     "columnType": "input",
     "valueMethod": "FD",
-    "columnDesc": "单次最大金额"
+    "columnDesc": "单次最大金额",
+    "money": "true"
   },
   "FUTURE_FLOAT_FLAG": {
     "columnType": "switch",
