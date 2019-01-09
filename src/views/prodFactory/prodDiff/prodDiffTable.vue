@@ -156,9 +156,6 @@ export default {
           }
       },
    },
-  created(){
-      this.changeTranId(this.sendTranId,this.sendTranType)
-  },
   methods: {
       printDown () {
           PrintInfo(this.$refs.print)
@@ -174,7 +171,6 @@ export default {
               this.getDiffTableData(tranId);
           }
       },
-
       getDiffTableData(tranId) {
           //通过交易主单号 获取单表差异信息
           var data={'mainSeqNo': this.seqNo,"tranId": tranId};
