@@ -186,17 +186,15 @@ export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
     var newProdMap = {}
     var oldProdMap = {}
     if(copyFlag === "Y"){
+        //基础-可售复制时候 可售产品的基础产品属性为当前可售产品
+        if(prodData.prodType.prodRange == "S" && sourceProdData.prodType.prodRange == "B"){
+            prodData.prodType.baseProdType = sourceProdData.prodType.prodType
+        }
         newProdMap = prodData.prodType
     }else {
         for (let i in prodData.prodType) {
-            // if (prodData.prodType[i] === sourceProdData.prodType[i]) {
-            //     oldProdMap[i] = sourceProdData.prodType[i]
-            //     newProdMap[i] = prodData.prodType[i]
-            //
-            // } else {
-                newProdMap[i] = prodData.prodType[i]
-                oldProdMap[i] = sourceProdData.prodType[i]
-            // }
+            newProdMap[i] = prodData.prodType[i]
+            oldProdMap[i] = sourceProdData.prodType[i]
         }
     }
     prodType.newData = Object.assign(prodType.newData,newProdMap)
