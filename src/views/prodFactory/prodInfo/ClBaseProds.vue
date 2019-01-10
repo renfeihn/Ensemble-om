@@ -57,7 +57,7 @@
                         </v-item-group>
                     </v-card-actions>
                     <v-window-item v-for="n in length" :key="`card-${n}`" class="elevation-2">
-                        <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList"></prod-list-form>
+                        <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList" v-bind:prodRange="prodRange"></prod-list-form>
                         <dc-treeAttr v-if="n == 1 && windowShow != 0" v-model="tree" :options="treeOptions" labelDesc="产品参数"></dc-treeAttr>
                     </v-window-item>
                 </v-window>
@@ -119,6 +119,7 @@
                 spinning: true,
                 length: 2,
                 onboarding: 0,
+                prodRange: '',
                 prodCode: '',
                 windowShow: 0,
                 prodDesc: '',
@@ -234,6 +235,7 @@
                 //点击主菜单产品组时 获取产品组代码
                 getProdData(this.$route.hash).then(response => {
                     //初始化产品基础参数
+                    this.prodRange = response.data.data.prodType.prodRange
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)

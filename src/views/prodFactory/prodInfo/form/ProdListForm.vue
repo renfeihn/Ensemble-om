@@ -7,9 +7,12 @@
       </v-toolbar>
       <v-list two-line subheader :class="depositTree" v-show="searchValue">
         <v-list-tile class="chat-list prodList" avatar v-for="item of list" :key="item.title" @click="handleClick(item)">
-          <v-list-tile-avatar>
-            <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
-          </v-list-tile-avatar>
+          <div v-show="isRB == true" style="width: 20%;height: 60%;padding-left: -20%">
+            <img src="../../../../../static/prod/prodCun.png" height=100% >
+          </div>
+          <div v-show="isCL == true" style="width: 20%;height: 60%;padding-left: -20%">
+            <img src="../../../../../static/prod/prodDai.png" height=100% >
+          </div>
           <v-list-tile-content>
             <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
@@ -19,9 +22,12 @@
       <vue-perfect-scrollbar >
         <v-list two-line subheader :class="depositTree" v-show="!searchValue">
           <v-list-tile class="chat-list prodList" avatar v-for="(item, index ) in folders" :key="item.title" @click="handleClick(item)">
-            <v-list-tile-avatar>
-              <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
-            </v-list-tile-avatar>
+            <div v-show="isRB == true" style="width: 20%;height: 60%;padding-left: -20%">
+              <img src="../../../../../static/prod/prodCun.png" height=100% >
+            </div>
+            <div v-show="isCL == true" style="width: 20%;height: 60%;padding-left: -20%">
+              <img src="../../../../../static/prod/prodDai.png" height=100% >
+            </div>
             <v-list-tile-content>
               <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
               <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
@@ -40,8 +46,10 @@
 
     export default {
 
-        props: ["prodClass"],
+        props: ["prodClass","prodRange"],
         data: () => ({
+            isRB: false,
+            isCL: false,
             folders: [],
             list: [],
             prodType: '',
@@ -75,7 +83,15 @@
                 getProdType(val).then(response => {
                     let length = response.data.data.length
                     for(let j = 0; j<length; j++){
-                        this.folders.push(response.data.data[j])
+                        if(response.data.data[j].prodRange == this._props.prodRange){
+                            this.folders.push(response.data.data[j])
+                        }
+                    }
+                    if(this.folders[0].sourceModule == "RB"){
+                        this.isRB = true
+                    }
+                    if(this.folders[0].sourceModule == "CL"){
+                        this.isCL = true
                     }
                 });
                 }
