@@ -108,7 +108,7 @@
             this.dealNewAttr(this._props.value)
         },
         mounted() {
-            if(this._props.baseAttr === "BASE"){
+            if(this._props.baseAttr === "BASE" || this.$attrs.disabled === true){
                 this.disabled = true
             }else{
                 this.disabled = false

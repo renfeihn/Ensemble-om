@@ -26,9 +26,9 @@
                             <v-flex md6 lg6>
                                 <dc-multiselect :options="statusOption" :disablePower="disablePower" labelDesc="产品状态" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
                             </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="baseProdTypeOption" :disablePower="disablePower" labelDesc="基础产品" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
-                            </v-flex>
+                            <!--<v-flex md6 lg6>-->
+                                <!--<dc-multiselect :options="baseProdTypeOption" :disablePower="disablePower" labelDesc="基础产品" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>-->
+                            <!--</v-flex>-->
                         </v-layout>
                         <draggable v-model="dataSource" :move="getdata" @update="datadragEnd" class="layout row wrap">
                             <v-flex v-for="(keyData ,key ,index) in dataSource" v-bind:key="key" lg6>

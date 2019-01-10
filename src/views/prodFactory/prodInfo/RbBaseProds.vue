@@ -30,13 +30,14 @@
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></base-prod>
+                            <base-prod :showEdit="showEdit" v-if="i.pageCode=='SHIFT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></base-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                            <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
+                            <!--<form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>-->
                             <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -92,7 +93,7 @@
     import ProdListForm from './form/ProdListForm';
     import RateInfo from './table/prodTables/irlProdInt';
     import FormShift from './form/rbModel/FormShift';
-    import AccountingInfo from './form/rbModel/AccountingInfo';
+    import AccountingInfo from './table/prodTables/glProdAccounting';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
@@ -143,13 +144,13 @@
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
+                    {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
                     {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
-                    {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
                     {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'},
                     {icon: 'filter_vintage', text: '产品映射', pageCode: 'MAPPING'}
                 ],
@@ -439,7 +440,7 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
-                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT") {
+                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT" || addColumnPageCode === "SHIFT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
                         //获取新增参数SeqNo

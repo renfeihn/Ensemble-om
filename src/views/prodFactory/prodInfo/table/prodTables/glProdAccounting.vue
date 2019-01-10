@@ -1,259 +1,239 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <a-button type="primary" @click="onAdd">新增</a-button>
-            <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
-            <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
+            <!--<a-button type="primary" class="ml-2" @click="onAdd">新增</a-button>-->
+            <a-button type="primary" class="ml-2" @click="onEdit">修改</a-button>
+            <!--<a-button type="primary" class="ml-2" dark @click="onDelete">删除</a-button>-->
             <v-dialog v-model="dialog" width="500">
-                <v-card v-if="dialog">
-                    <v-card-title style="height: 35px">
-                        <span style="color: #00b0ff;font-size: x-large;margin-left: 3%; margin-top: 3%">{{ titleDesc}}</span>
-                    </v-card-title>
+                <v-card>
                     <v-card-text>
-                        <v-layout wrap>
-                            <v-flex xs12 sm12 m12>
-                                <dc-text-field labelDesc="批量收费类型" v-model="selected.feeType"></dc-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargePeriodFreq" :options="chargePeriodFreq1" labelDesc="  收费频率"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-text-field labelDesc="收费日" v-model="selected.chargeDay"></dc-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-date v-model="selected.nextChargeDate" labelDesc="下一收费日期"></dc-date>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargeDealMethod" :options="chargeDealMethod1" labelDesc="  收费处理方式"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.conDeductFlag" :options="conDeductFlag1" labelDesc="  持续扣款标识"></dc-multiselect>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-text-field labelDesc="持续扣款次数" v-model="selected.conDeductTimes"></dc-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <v-btn color="info" @click="dialog = false" class="bthStyle">取消</v-btn>
-                                <v-btn color="info" @click="submit" class="bthStyle" style="margin-left: 200px">保存</v-btn>
-                            </v-flex>
-                        </v-layout>
+                        <v-form v-model="valid">
+                            <v-text-field :disabled="disabledFlag" v-model="selected.prodType" :counter="10" label="产品类型" required class="mx-5"></v-text-field>
+                            <v-text-field v-model="selected.accountingStatus" :counter="10" label="核算状态" required class="mx-5"></v-text-field>
+                            <v-text-field v-model="selected.businessUnit" :counter="10" label="账套" required class="mx-5"></v-text-field>
+                            <v-text-field v-model="selected.glCodeL" :counter="10" label="负债科目代码" required class="mx-5"></v-text-field>
+                            <v-text-field v-model="selected.glCodeIntE" :counter="10" label="利息支出科目代码" required class="mx-5"></v-text-field>
+                            <v-text-field v-model="selected.glCodeIntPay" :counter="10" label="应付利息科目代码" required class="mx-5"></v-text-field>
+                        </v-form>
+                        <v-btn color="green darken-1" flat="flat" @click="submit">
+                            确认
+                        </v-btn>
+                        <v-btn color="green darken-1" flat="flat" @click="dialog = false">
+                            取消
+                        </v-btn>
                     </v-card-text>
                 </v-card>
             </v-dialog>
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="pa-0">
-                <a-table :customRow="customRow" :columns="columns" :dataSource="chargeDefinesInfo" bordered>
-                </a-table>
+            <a-table :customRow="customRow" :columns="columns" :dataSource="accountingInfos" bordered>
+            </a-table>
+            <v-divider></v-divider>
         </v-card-text>
     </v-card>
-
 </template>
 <script>
-import DcMultiselect from '@/components/widgets/DcMultiselect'
-import DcTextField from "@/components/widgets/DcTextField";
-import {getChargeDefine} from '@/api/table';
-import toast from '@/utils/toast';
-import { getInitData } from "@/mock/init";
-import {getColumnDesc} from '@/utils/columnDesc'
-import {removeByValue} from '@/utils/util'
-import DcDate from '@/components/widgets/DcDate'
+    import {getChargeDefine} from '@/api/table';
+    import {getColumnDesc} from '@/utils/columnDesc'
+    import toast from '@/utils/toast';
+    import { getInitData } from "@/mock/init";
+    import {removeByValue} from '@/utils/util'
 
-export default {
-    filters: {
-        getDescByKey: function (key) {
-            return getColumnDesc(key)
-        }
-    },
-    components: { DcMultiselect,DcDate,DcTextField},
-    props: ["prodData"],
-    data () {
-        return {
-            chargeDefinesInfo: '',
-            disabledFlag: false,
-            prodType: '',
-            open: true,
-            valid: true,
-            dialog: false,
-            refData: getInitData,
-            option: '',
-            titleDesc: '',
-            selectedRowKeys: [],
-            selected: {
-                feeType: '',
-                chargePeriodFreq: '',
-                chargeDay: '',
-                nextChargeDate: '',
-                chargeDealMethod: '',
-                conDeductFlag: '',
-                conDeductTimes: ''
-            },
-            chargePeriodFreq1: [
-                {
-                    "key": "3D",
-                    "value": "3D-3天"
-                },
-                {
-                    "key": "2D",
-                    "value": "2D-2天"
-                }
-            ],
-            chargeDealMethod1: [
-                {
-                    "key": "10",
-                    "value": "10-实时生效"
-                },
-                {
-                    "key": "11",
-                    "value": "11-日终处理"
-                }
-            ],
-            conDeductFlag1: [
-                {
-                    "key": "Y",
-                    "value": "Y-持续扣款"
-                },
-                {
-                    "key": "N",
-                    "value": "N-非持续扣款"
-                }
-            ],
-            columns: [
-                {dataIndex: 'feeType', title: '批量收费类型',scopedSlots: { customRender: 'feeType' }},
-                {dataIndex: 'chargePeriodFreq', title: '收费频率'},
-                {dataIndex: 'icon', title: '详细信息', scopedSlots: { customRender: 'icon' }},
-                {dataIndex: 'chargeDay', title: '收费日'},
-                {dataIndex: 'nextChargeDate', title: '下一收费日'},
-                {dataIndex: 'chargeDealMethod', title: '收费处理方式'},
-                {dataIndex: 'conDeductFlag', title: '持续扣款标识'},
-                {dataIndex: 'conDeductTimes', title: '持续扣款次数'}
-            ]
-        };
-    },
-    watch: {
-        prodData (val) {
-            this.getChargeDefinesInfo(val)
-        }
-    },
-    mounted: function() {
-        this.getChargeDefinesInfo(this._props.prodData)
-    },
-
-    methods: {
-        testClick(val) {
-          alert(val)
-        },
-        //获取原始数据
-        getChargeDefinesInfo(val) {
-            //初始化产品对应的信息
-            if(val!=undefined&&val.prodType!=undefined){
-                this.chargeDefinesInfo = val.mbProdCharge
-                this.prodType = val.prodType.prodType
+    export default {
+        filters: {
+            getDescByKey: function (key) {
+                return getColumnDesc(key)
             }
         },
-        //加载备选数据
-        initRefDate() {
-            this.feeType = this.refData[2].paraDataRb.feeType;
-            this.chargePeriodFreq = this.refData[2].paraDataRb.chargePeriodFreq;
-            this.chargeDealMethod = this.refData[2].paraDataRb.chargeDealMethod;
-            this.conDeductFlag = this.refData[2].paraDataRb.conDeductFlag;
-        },
-        //删除
-        onDelete () {
-            let dataSource=this.chargeDefinesInfo
-            confirm('确认删除该条参数?') && removeByValue(dataSource,this.selected)
-        },
-        //新增
-        onAdd () {
-            this.option='add';
-            this.titleDesc = "新增费用信息";
-            this.selected={};
-            this.dialog=true;
-            this.disabledFlag =false;
-        },
-        //修改
-        onEdit () {
-            this.option='edit';
-            this.dialog=true;
-            this.titleDesc = "修改费用信息";
-            this.disabledFlag = true;
-        },
-        //弹框增加或修改保存事件
-        submit () {
-            if(this.option == 'add'){
-                let dataSource=this.chargeDefinesInfo
-                let selected=this.selected;
-                selected.prodType=this.prodType
-                dataSource.push(selected)
-                this.dialog=false;
-            }
-            if(this.option =='edit')
-            {
-                this.dialog=false;
-            }
-        },
-        //点击某行，无效选中数据
-        customRow (record) {
+        props: ["prodData"],
+        data () {
             return {
-                on: {
-                    click: this.clickRow.bind(this, record)
-                }
+                disabledFlag: false,
+                valid: true,
+                select: {},
+                columns: [
+                    {dataIndex: 'prodType', title: '产品类型',scopedSlots: { customRender: 'prodType' }},
+                    {dataIndex: 'accountingStatus', title: '核算状态'},
+                    {dataIndex: 'businessUnit', title: '账套'},
+                    {dataIndex: 'glCodeL', title: '负债科目编码'},
+                    {dataIndex: 'glCodeIntE', title: '利息支出科目代码'},
+                    {dataIndex: 'glCodeIntPay', title: '应付利息科目代码'},
+                ],
+                dialog: false,
+                accountingInfos: [],
+                selected: {},
+                option: '',
+                addFlag: false,
+                modFlag: false,
+                refData: getInitData,
+                editedItem: {
+                    prodType: '',
+                    accountingStatus: '',
+                    businessUnit: '',
+                    glCodeL: '',
+                    glCodeIntE: '',
+                    glCodeIntPay: ''
+                },
+                defaultItem: {
+                    prodType: '',
+                    accountingStatus: '',
+                    businessUnit: '',
+                    glCodeL: '',
+                    glCodeIntE: '',
+                    glCodeIntPay: ''
+                },
+                projects: [{
+                    prodType: '',
+                    accountingStatus: '',
+                    businessUnit: '',
+                    glCodeL: '',
+                    glCodeIntE: '',
+                    glCodeIntPay: ''
+                }],
+                prodAccountingInfo: {}
+            };
+        },
+        computed: {
+
+        },
+        watch: {
+            prodData (val) {
+                this.getAccountingInfo(val)
             }
         },
-        //点击某行 选中数据
-        clickRow(record,event){
-            var tr=event.currentTarget;
-            var tbd=tr.parentNode;
-            for (const i in tbd.childNodes) {
-                if (!isNaN(i)) {
-                    if (tr == tbd.childNodes[i]) {
-                        tbd.childNodes[i].style = 'background-color: #e6f7ff';
-                    } else {
-                        tbd.childNodes[i].style = '';
+        mounted: function() {
+            this.getAccountingInfo(this._props.prodData)
+        },
+        methods: {
+            submit () {
+                if(this.option == 'add'){
+                    let dataSource=this.accountingInfos
+                    let selected=this.selected;
+                    selected.prodType=this.prodType
+                    dataSource.push(selected)
+                }
+                this.dialog=false;
+            },
+            onDelete () {
+                let dataSource=this.accountingInfos
+                removeByValue(dataSource,this.selected)
+            },
+            onAdd () {
+                this.option='add';
+                this.selected={};
+                this.dialog=true;
+                this.disabledFlag=true
+            },
+            onEdit () {
+                this.option='edit';
+                this.dialog=true;
+                this.disabledFlag = true;
+            },
+            customRow (record) {
+                return {
+                    on: {
+                        click: this.clickRow.bind(this, record)
                     }
                 }
-            }
-            this.selected=record;
-        },
-        close () {
-            this.dialog = false
-            setTimeout(() => {
-            this.editedItem = Object.assign({}, this.defaultItem)
-            this.editedIndex = -1
+            },
+            clickRow(record,event){
+                var tr=event.currentTarget;
+                var tbd=tr.parentNode;
+                for (const i in tbd.childNodes) {
+                    if (!isNaN(i)) {
+                        if (tr == tbd.childNodes[i]) {
+                            tbd.childNodes[i].style = 'background-color: #e6f7ff';
+                        } else {
+                            tbd.childNodes[i].style = '';
+                        }
+                    }
+                }
+                this.selected=record;
+            },
+            getAccountingInfo(val) {
+                //初始化产品对应的信息
+                if(val!=undefined&&val.prodType.prodType!=undefined) {
+                    this.accountingInfos = val.glProdAccounting
+                    this.prodType = val.prodType.prodType
+                }
+            },
+            editItem (item) {
+                this.editedIndex = this.projects.indexOf(item)
+                this.editedItem = Object.assign({}, item)
+                this.dialog = true
+                this.close()
+
+            },
+            initRefDate() {
+                this.accountingStatus = this.refData[2].paraDataRb.accountingStatus;
+                //暂时不区分科目代码
+                this.glCodeL = this.refData[2].paraDataRb.glCode;
+                this.glCodeIntE = this.refData[2].paraDataRb.glCode;
+                this.glCodeIntPay = this.refData[2].paraDataRb.glCode;
+            },
+            deleteItem (item) {
+                const index = this.projects.indexOf(item)
+                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+            },
+            close () {
+                this.dialog = false
+                setTimeout(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedIndex = -1
             }, 300)
-        },
-        save () {
-            if (this.editedIndex > -1) {
-                Object.assign(this.projects[this.editedIndex], this.editedItem)
-            } else {
-                //新增数据，产品类型默认
-                this.editedItem.prodType = this.prodType
-                let flag = 0
-                for(let i = 0; i<this.chargeDefinesInfo.length; i++){
-                    if(this.editedItem.feeType === "" || this.editedItem.feeType === undefined){
-                        toast.info("主键feeType[批量收费类型]不能为空!");
-                        flag = 1
-                        break
-                    }else if(this.chargeDefinesInfo[i].prodType === this.editedItem.prodType && this.chargeDefinesInfo[i].feeType === this.editedItem.feeType){
-                        toast.info("主键feeType[批量收费类型:"+this.editedItem.feeType+"]不能重复!");
-                        flag = 1
-                        break
+            },
+            save () {
+                if (this.editedIndex > -1) {
+                    Object.assign(this.projects[this.editedIndex], this.editedItem)
+                } else {
+                    let flag = 0
+                    for(let i = 0; i<this.prodAccountingInfo.length; i++){
+                        if(this.editedItem.accountingStatus === "" || this.editedItem.accountingStatus === undefined){
+                            toast.info("主键accountingStatus[核算状态]不能为空!");
+                            flag = 1
+                            break
+                        }else if(this.prodAccountingInfo[i].prodType === this.editedItem.prodType && this.prodAccountingInfo[i].accountingStatus === this.editedItem.accountingStatus){
+                            toast.info("主键accountingStatus[核算状态:"+this.editedItem.accountingStatus+"]不能重复!");
+                            flag = 1
+                            break
+                        }
+                    }
+                    if(flag === 0){
+                        this.prodAccountingInfo.push(this.editedItem)
+                        this.close()
                     }
                 }
-                if(flag === 0){
-                    this.chargeDefinesInfo.push(this.editedItem)
-                    this.close()
+            },
+            getSelect(value){
+                this.editedItem = []
+                this.editedItem = value
+            },
+            addClick() {
+                this.initRefDate()
+                this.editedItem = []
+                //新增产品类型默认&&不允许修改
+                this.editedItem.prodType = this.prodType
+                this.modFlag = false
+                this.addFlag = true
+            },
+            modClick() {
+                this.initRefDate()
+                this.addFlag = false
+                this.modFlag = true
+            },
+            saveClick() {
+                if(this.addFlag){
+                    this.save()
+                }else if(this.modFlag){
+                    this.editItem()
                 }
             }
         }
-    }
-};
+    };
 </script>
-
-<style scoped>
-    .bthStyle {
-        color: #00b0ff;
-        width: 120px;
-        margin-top: 30px;
+<style>
+    .chargeSelected {
+        background-color: #e3f2fd;
     }
 </style>

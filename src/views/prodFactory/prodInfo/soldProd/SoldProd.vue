@@ -6,29 +6,29 @@
                     <v-layout row wrap>
                         <v-layout row wrap v-if="prodType!= undefined ">
                             <v-flex md6 lg6>
-                                <dc-text-field labelDesc="产品代码" v-model="prodType.prodType" :disablePower="disablePower"></dc-text-field>
+                                <dc-text-field labelDesc="产品代码" v-model="prodType.prodType" :disabled="true" :disablePower="disablePower"></dc-text-field>
                             </v-flex>
                             <v-flex md6 lg6>
-                                <dc-text-field labelDesc="产品描述" v-model="prodType.prodDesc" :disablePower="disablePower"></dc-text-field>
+                                <dc-text-field labelDesc="产品描述" v-model="prodType.prodDesc" :disabled="true" :disablePower="disablePower"></dc-text-field>
                             </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="sourceModuleOption" labelDesc="业务模块" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.sourceModule" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="prodClassOption" labelDesc="产品分类" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="prodRangeOption" labelDesc="产品属性" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-switch v-model="prodType.prodGroup" labelDesc="组合产品" :disablePower="disablePower"></dc-switch>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="statusOption" labelDesc="产品状态" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="baseProdTypeOption" labelDesc="基础产品" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
-                            </v-flex>
+                                <v-flex md6 lg6>
+                                    <dc-multiselect :options="sourceModuleOption" labelDesc="业务模块" :disabled="true" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.sourceModule" class="dcMulti"></dc-multiselect>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <dc-multiselect :options="prodClassOption" labelDesc="产品分类" :disabled="true" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <dc-multiselect :options="prodRangeOption" labelDesc="产品属性" :disabled="true" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <dc-switch v-model="prodType.prodGroup" labelDesc="组合产品" :disabled="true" :disablePower="disablePower"></dc-switch>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <dc-multiselect :options="statusOption" labelDesc="产品状态" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <dc-multiselect :options="baseProdTypeOption" labelDesc="基础产品" :disabled="true" :disablePower="disablePower" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>
+                                </v-flex>
                         </v-layout>
                         <draggable v-model="dataSource" :move="getdata" @update="datadragEnd" class="layout row wrap">
                             <v-flex v-for="(keyData ,key ,index) in dataSource" v-bind:key="key" lg6>

@@ -31,13 +31,14 @@
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='SHIFT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                            <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
+                            <!--<form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>-->
                             <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -443,7 +444,7 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
-                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT") {
+                    if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT" || addColumnPageCode === "SHIFT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1
                         //获取新增参数SeqNo

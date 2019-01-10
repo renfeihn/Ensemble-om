@@ -3,12 +3,6 @@
   <v-layout row wrap>
    <v-flex md4 lg4>
     <v-layout row wrap right v-if="show">
-     <!--<v-flex md2>-->
-    <!--<i v-if="baseAttr==false" class="material-icons baseIcon small">-->
-     <!--call_merge-->
-    <!--</i>-->
-     <!--</v-flex>-->
-     <!--<v-flex md10>-->
      <v-flex md12>
          <v-subheader class="primary--text subheading pr-1">{{labelText}}</v-subheader>
      </v-flex>
@@ -93,7 +87,7 @@
         },
         mounted() {
             //区别可售产品取自基础产品参数
-            if (this._props.baseAttr === "BASE") {
+            if (this._props.baseAttr === "BASE" || this.$attrs.disabled === true) {
                 this.disabled = true
             } else {
                 this.disabled = false

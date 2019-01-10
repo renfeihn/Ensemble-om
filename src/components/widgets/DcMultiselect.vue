@@ -126,7 +126,7 @@
             },
             baseAttr: {
                 handler(newValue) {
-                    if(newValue === "BASE"){
+                    if(newValue === "BASE" || this.$attrs.disabled === true){
                         this.disabled = true
                     }else{
                         this.disabled = false
@@ -135,7 +135,7 @@
             },
             disablePower: {
                 handler(newValue) {
-                    if(this._props.baseAttr === "BASE"){
+                    if(this._props.baseAttr === "BASE" || this.$attrs.disabled === true){
                         this.disabled = true
                     }else{
                         this.disabled= newValue;
@@ -153,7 +153,7 @@
             }
             this.dealNewAttr(this._props.msg)
             //判断参数取自基础产品||可售产品
-            if(this._props.baseAttr === "BASE"){
+            if(this._props.baseAttr === "BASE" || this.$attrs.disabled === true){
                 this.disabled = true
             }else{
                 this.disabled= this._props.disablePower;
@@ -218,7 +218,7 @@
                 this.oldOptionPermissions=optionPermissions
             },
             init(msg) {
-                if(this._props.baseAttr === "BASE"){
+                if(this._props.baseAttr === "BASE" || this.$attrs.disabled === true){
                     this.disabled = true
                 }else{
                     this.disabled= this._props.disablePower;
