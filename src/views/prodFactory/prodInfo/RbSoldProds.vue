@@ -27,14 +27,14 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                           <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
+                           <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
                             <form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>
@@ -73,6 +73,9 @@
 <script>
     import {
         getProdType
+    } from '@/api/url/prodInfo'
+    import {
+        getAttrInfo
     } from '@/api/url/prodInfo'
     import {
         savaProdInfo
@@ -127,6 +130,7 @@
                 windowShow: 0,
                 prodDesc: '',
                 showAdd: false,
+                attrColumnInfo: [],
                 editShow: false,
                 depositTree: '',
                 pendFlag: 0,
@@ -197,6 +201,7 @@
             }
         },
         mounted: function() {
+            this.initColumnInfo();
             // 监听这个dom的scroll事件
             window.addEventListener('scroll', () => {
                 const height= window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -267,6 +272,11 @@
             }
         },
         methods: {
+            initColumnInfo() {
+                getAttrInfo().then(response => {
+                    this.attrColumnInfo=response.data.data
+                });
+            },
             initEventAttr(reProd) {
                 //初始化事件，指标参数
                 let defineEvent = reProd.mbEventInfos

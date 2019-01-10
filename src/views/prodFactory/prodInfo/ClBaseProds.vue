@@ -26,15 +26,15 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="DRW" tags="DRW" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="REC" tags="REC" :disablePower="disablePower"></base-prod>
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="DUE" tags="DUE" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DRW" tags="DRW" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="REC" tags="REC" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DUE" tags="DUE" :disablePower="disablePower"></base-prod>
                         <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -69,6 +69,9 @@
 <script>
     import {
         getProdType
+    } from '@/api/url/prodInfo'
+    import {
+        getAttrInfo
     } from '@/api/url/prodInfo'
     import {
         savaProdInfo
@@ -121,6 +124,7 @@
                 prodDesc: '',
                 showAdd: false,
                 editShow: false,
+                attrColumnInfo: [],
                 depositTree: '',
                 pendFlag: 0,
                 columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -193,6 +197,7 @@
             }
         },
         mounted: function() {
+            this.initColumnInfo();
             // 监听这个dom的scroll事件
             window.addEventListener('scroll', () => {
                 const height= window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -263,6 +268,11 @@
             }
         },
         methods: {
+            initColumnInfo() {
+                getAttrInfo().then(response => {
+                    this.attrColumnInfo=response.data.data
+                });
+            },
             initEventAttr(reProd) {
                 //初始化事件，指标参数
                 let defineEvent = reProd.mbEventInfos

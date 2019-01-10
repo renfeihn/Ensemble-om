@@ -79,6 +79,7 @@
             prodDefines: String,
             tags: String,
             prodTypeCode: String,
+            attrColumnInfo: Object,
             baseAttr: {
                 type: String,
                 default: false
@@ -209,7 +210,7 @@
                 let columnList=[]
                 //通过后台的产品有关信息查数据字典
                 for(const index in prodData) {
-                    const dataSource = this.copy(columnInfo,{});
+                    const dataSource = this.copy(this._props.attrColumnInfo,{});
                     let column = dataSource[index];
                     if (column != undefined && column != 'undefined' && this._props.tags == prodData[index].pageCode) {
                         column['key'] = index

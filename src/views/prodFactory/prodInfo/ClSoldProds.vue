@@ -27,15 +27,15 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                           <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="drwList" tags="DRW" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="recList" tags="REC" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :prodDefines="dueList" tags="DUE" :disablePower="disablePower"></sold-prod>
+                           <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="openList" tags="OPEN" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="drwList" tags="DRW" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="recList" tags="REC" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="dueList" tags="DUE" :disablePower="disablePower"></sold-prod>
                             <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -71,6 +71,9 @@
 <script>
     import {
         getProdType
+    } from '@/api/url/prodInfo'
+    import {
+        getAttrInfo
     } from '@/api/url/prodInfo'
     import {
         savaProdInfo
@@ -126,6 +129,7 @@
                 prodDesc: '',
                 showAdd: false,
                 editShow: false,
+                attrColumnInfo: [],
                 depositTree: '',
                 pendFlag: 0,
                 columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -193,6 +197,7 @@
             }
         },
         mounted: function() {
+            this.initColumnInfo();
             // 监听这个dom的scroll事件
             window.addEventListener('scroll', () => {
                 const height= window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -263,6 +268,11 @@
             }
         },
         methods: {
+            initColumnInfo() {
+                getAttrInfo().then(response => {
+                    this.attrColumnInfo=response.data.data
+                });
+            },
             initEventAttr(reProd) {
                 //初始化事件，指标参数
                 let defineEvent = reProd.mbEventInfos

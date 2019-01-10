@@ -281,3 +281,9 @@ export function getTaskListBySeqNo (params) {
         data: params
     })
 }
+export function getAttrInfo () {
+    return request({
+        url: '/getAttrInfo',
+        method: 'post'
+    })
+}
