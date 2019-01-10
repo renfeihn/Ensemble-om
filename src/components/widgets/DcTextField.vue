@@ -44,7 +44,7 @@
             event: "getVue"
         },
         props: {
-            money: String,
+            isNumber: String,
             msg: String,
             perShow: String ,
             labelDesc: String ,
@@ -101,7 +101,7 @@
         },
         methods: {
             numberAmount(num){
-                if(this.money == "true"){
+                if(this.isNumber == "DOUBLE"){
                     num = num.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
                     num = num + "";
                     num = num.replace(/[ ]/g, "");
