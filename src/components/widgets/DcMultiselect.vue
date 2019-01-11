@@ -14,9 +14,7 @@
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang"
                                      :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                        <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
-<!--
-                       <template slot="afterList" slot-scope="props"><span @click="toMoreTable">跳转</span></template>
--->
+                       <template slot="afterList" slot-scope="props"><span @click="toMoreTable" v-if="rfTableInfo.isRf">跳转</span></template>
                        <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
                         </multiselect>
                     </div>
@@ -80,6 +78,9 @@
                 baseAttr: "",
                 isOpen: 'fas fa-eye',
                 optionPermissions: '',
+                rfTableInfo: {
+                    isRf: false
+                },
                 disabled: false,
                 oldOptionPermissions: '',
                 dialog: false,
@@ -168,13 +169,12 @@
                 this.$router.push({
                     name: 'tableInfo',
                     params: {
-                        'tableName': 'CIF_CLIENT_TYPE',
-                        'tableDesc': '客户类型'
+                        'tableName': this.rfTableInfo.tableName
                     }
                 })
             },
             nameWithLang ({ key, value }) {
-                return `${key} — [${value}]`
+                return `${key}—[${value}]`
             },
             dealNewAttr(val) {
                 //新增参数延迟展示
@@ -250,10 +250,12 @@
                     }
                 }
                 if(this._props.options!==undefined&&!(typeof this._props.options === 'object' && !isNaN(this._props.options.length))){
-                    getPkList(this._props.options,sessionStorage.getItem("mainSeqNo"),response => {
+                    this.rfTableInfo=this._props.options
+                    this.rfTableInfo['isRf']=true;
+                    this._props.options=[];
+                    getPkList(this.rfTableInfo,sessionStorage.getItem("mainSeqNo"),response => {
                         this._props.options=response
                     });
-                    this._props.options=[];
                 }
                 if(typeof this._props.labelDesc !== "undefined") {
                     this.labelText = this._props.labelDesc + ' :';

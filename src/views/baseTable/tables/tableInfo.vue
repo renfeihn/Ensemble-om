@@ -4,7 +4,7 @@
             <v-card class="radiusDc">
                 <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
                     <v-icon>widgets</v-icon>
-                    <v-toolbar-title>{{title}}</v-toolbar-title>
+                    <v-toolbar-title>{{tableName}}-[{{tableDesc}}]</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
 
@@ -62,7 +62,7 @@
         },
         data() {
             return {
-                title: "",
+                tableDesc: "",
                 tableName: "",
                 dataInfo: [],
                 sourceDataInfo: [],
@@ -94,17 +94,28 @@
             };
         },
         mounted: function () {
-            if (this.$route.params.tableName != undefined) {
-                this.title = this.$route.params.tableName + "-" + this.$route.params.tableDesc
-                this.tableName = this.$route.params.tableName
-                this.getParaTable(this.$route.params.tableName);
-            }
+            this.initTableInfo()
         },
         methods: {
+            initTableInfo() {
+                const tableName=this.$route.params.tableName
+                const tableDesc=this.$route.params.tableDesc
+                if (tableName!= undefined) {
+                    this.tableName = tableName
+                    if (tableDesc!= undefined) {
+                        this.tableDesc = tableDesc
+                    }
+                    this.getParaTable(this.$route.params.tableName);
+                }
+
+            },
             getParaTable(tableName) {
                 let that = this;
                 getParamTable(tableName).then(function (response) {
                     that.dataInfo = response.data.data.columnInfo;
+                    if(that.tableDesc == '') {
+                        that.tableDesc = response.data.data.tableDesc
+                    }
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
                     that.columns = response.data.data.column;
                     that.tableName = tableName

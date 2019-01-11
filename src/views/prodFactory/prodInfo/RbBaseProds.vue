@@ -324,7 +324,6 @@
                         break
                     case '2':
                         this.disablePower=false;
-
                 }
             },
             //保存事件
