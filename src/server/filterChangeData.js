@@ -41,6 +41,11 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
 
         //mbEventType对象
         for (let y in prodData.mbEventInfos[m].mbEventType){
+            if(y == "eventDesc"){
+                let newProdDesc = prodData.prodType.prodDesc;
+                let oldProdDesc = sourceProdData.prodType.prodDesc;
+                prodData.mbEventInfos[m].mbEventType[y] = newProdDesc+prodData.mbEventInfos[m].mbEventType[y].split(oldProdDesc)[1];
+            }
             if(copyFlag === "Y") {
                 newEventTypeData[y] = prodData.mbEventInfos[m].mbEventType[y]
             }else if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){

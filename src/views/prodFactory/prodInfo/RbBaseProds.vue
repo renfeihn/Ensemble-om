@@ -37,7 +37,7 @@
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></base-prod>
                             <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                             <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                            <!--<form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>-->
+                            <prod-mapping v-if="i.pageCode=='MAPPING'" v-bind:prodData="prodData"></prod-mapping>
                             <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -94,6 +94,7 @@
     import RateInfo from './table/prodTables/irlProdInt';
     import FormShift from './form/rbModel/FormShift';
     import AccountingInfo from './table/prodTables/glProdAccounting';
+    import ProdMapping from './table/prodTables/glProdMapping';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
@@ -112,7 +113,8 @@
             RateInfo,
             FormShift,
             AccountingInfo,
-            DcTreeAttr
+            DcTreeAttr,
+            ProdMapping
         },
         data () {
             return {
