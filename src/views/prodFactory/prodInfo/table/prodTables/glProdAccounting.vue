@@ -1,14 +1,11 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <!--<a-button type="primary" class="ml-2" @click="onAdd">新增</a-button>-->
             <a-button type="primary" class="ml-2" @click="onEdit">修改</a-button>
-            <!--<a-button type="primary" class="ml-2" dark @click="onDelete">删除</a-button>-->
             <v-dialog v-model="dialog" width="500">
                 <v-card>
                     <v-card-text>
                         <v-form v-model="valid">
-                            <v-text-field :disabled="disabledFlag" v-model="selected.prodType" :counter="10" label="产品类型" required class="mx-5"></v-text-field>
                             <v-text-field v-model="selected.accountingStatus" :counter="10" label="核算状态" required class="mx-5"></v-text-field>
                             <v-text-field v-model="selected.businessUnit" :counter="10" label="账套" required class="mx-5"></v-text-field>
                             <v-text-field v-model="selected.glCodeL" :counter="10" label="负债科目代码" required class="mx-5"></v-text-field>
@@ -30,6 +27,9 @@
             <a-table :customRow="customRow" :columns="columns" :dataSource="accountingInfos" bordered>
             </a-table>
             <v-divider></v-divider>
+            <h5 style="margin-top: 2%; color: #64b5f6">需要进行总分核对的科目:</h5>
+            <a-table :columns="columnsFixed" :dataSource="accountingFixed" bordered>
+            </a-table>
         </v-card-text>
     </v-card>
 </template>
@@ -53,15 +53,21 @@
                 valid: true,
                 select: {},
                 columns: [
-                    {dataIndex: 'prodType', title: '产品类型',scopedSlots: { customRender: 'prodType' }},
+//                    {dataIndex: 'prodType', title: '产品类型',scopedSlots: { customRender: 'prodType' }},
                     {dataIndex: 'accountingStatus', title: '核算状态'},
                     {dataIndex: 'businessUnit', title: '账套'},
                     {dataIndex: 'glCodeL', title: '负债科目编码'},
                     {dataIndex: 'glCodeIntE', title: '利息支出科目代码'},
                     {dataIndex: 'glCodeIntPay', title: '应付利息科目代码'},
                 ],
+                columnsFixed: [
+                    {dataIndex: 'status', title: '核算状态'},
+                    {dataIndex: 'amtType', title: '金额类型'},
+                    {dataIndex: 'glCodeCol', title: '科目映射'},
+                ],
                 dialog: false,
                 accountingInfos: [],
+                accountingFixed: [],
                 selected: {},
                 option: '',
                 addFlag: false,
@@ -156,6 +162,7 @@
                 if(val!=undefined&&val.prodType.prodType!=undefined) {
                     this.accountingInfos = val.glProdAccounting
                     this.prodType = val.prodType.prodType
+                    this.accountingFixed = val.glProdCodeMappings
                 }
             },
             editItem (item) {

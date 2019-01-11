@@ -2,9 +2,7 @@
     <v-card>
         <!--新增或修改利率信息弹框界面-->
         <v-toolbar card dense color="transparent">
-            <!--<a-button type="primary" @click="onAdd">新增</a-button>-->
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
-            <!--<a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>-->
             <v-flex md12 lg12 class="switchClass">
                 <v-switch v-model="switchValue" :label="switchValue == true?'使用固定利率值':'不使用固定利率值'"></v-switch>
             </v-flex>
