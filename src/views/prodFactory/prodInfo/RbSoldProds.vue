@@ -269,6 +269,7 @@
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                     this.initEventAttr(reProd)
                     this.prodClass= this.prodData.prodType.prodClass
+                    this.prodRange= this.prodData.prodType.prodRange
                     this.powerByLevel(this.prodClass);
                     this.spinning= false
                 });
