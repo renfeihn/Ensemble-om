@@ -11,7 +11,7 @@
                 </v-flex>
                 <v-flex md6 lg6>
                     <div ref="select">
-                        <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang"
+                        <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang" @open="selectRef"
                                      :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                             <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
                             <template slot="afterList" slot-scope="props">
@@ -89,6 +89,7 @@
                 baseAttr: "",
                 isOpen: 'fas fa-eye',
                 optionPermissions: '',
+                isToMoreTable: false,
                 rfTableInfo: {
                     isRf: false
                 },
@@ -204,6 +205,7 @@
         },
         methods: {
             toMoreTable (){
+                this.isToMoreTable= true;
                 this.$router.push({
                     name: 'tableInfo',
                     params: {
@@ -319,6 +321,13 @@
                 //判断是否显示分户生效标识
                 if(this._props.perShow === true){
                     this.personShow = 1
+                }
+            },
+            selectRef(){
+                if(this.isToMoreTable){
+                getPkList(this.rfTableInfo,sessionStorage.getItem("mainSeqNo"),response => {
+                    this._props.options=response
+                });
                 }
             },
             rebackOption(newValue){
