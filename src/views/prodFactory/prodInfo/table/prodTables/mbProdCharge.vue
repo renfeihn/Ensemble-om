@@ -4,21 +4,23 @@
             <!--<a-button type="primary" @click="onAdd">新增</a-button>-->
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
             <!--<a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>-->
-            <v-dialog v-model="dialog" width="800">
+            <v-dialog v-model="dialog" width="900">
                 <v-toolbar color="primary lighten-2" style="height: 50px">
-                    <v-toolbar-title class="white--text" style="margin-top: -2%">{{ titleDesc}}</v-toolbar-title>
-                </v-toolbar>
+                     <v-toolbar-title class="white--text" style="margin-top: -2%">{{ titleDesc}}</v-toolbar-title>
+                     <v-spacer></v-spacer>
+                     <v-icon class="mr-2 closeClass" @click="close()">close</v-icon>
+                 </v-toolbar>
                 <v-card v-if="dialog">
                     <v-card-text>
                         <v-layout wrap>
                             <v-flex xs12 sm6 m6>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargePeriodFreq" :options="chargePeriodFreq1" labelDesc="  收费频率"></dc-multiselect>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargePeriodFreq" :options="chargePeriodFreq1" labelDesc="收费频率"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargeDealMethod" :options="chargeDealMethod1" labelDesc="  收费处理方式"></dc-multiselect>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.chargeDealMethod" :options="chargeDealMethod1" labelDesc="收费处理方式"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
-                                <dc-multiselect :isMultiSelect="false" v-model="selected.conDeductFlag" :options="conDeductFlag1" labelDesc="  持续扣款标识"></dc-multiselect>
+                                <dc-multiselect :isMultiSelect="false" v-model="selected.conDeductFlag" :options="conDeductFlag1" labelDesc="持续扣款标识"></dc-multiselect>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
                                 <dc-date v-model="selected.nextChargeDate" labelDesc="下一收费日期"></dc-date>
@@ -30,15 +32,10 @@
                                 <dc-text-field labelDesc="持续扣款次数" v-model="selected.conDeductTimes"></dc-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
-                                <dc-text-field labelDesc="批量收费类型" v-model="selected.feeType"></dc-text-field>
+                                <v-btn color="info" @click="dialog = false" class="bthStyle" style="margin-left: 20%">取消</v-btn>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6>
-                                <v-btn color="info" @click="dialog = false" class="bthStyle">取消</v-btn>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6>
-                                <v-btn color="info" @click="submit" class="bthStyle" style="margin-left: 50%">保存</v-btn>
+                                <v-btn color="info" @click="submit" class="bthStyle" style="margin-left: 40%">保存</v-btn>
                             </v-flex>
                         </v-layout>
                     </v-card-text>
@@ -54,7 +51,7 @@
 
 </template>
 <script>
-import DcMultiselect from '@/components/widgets/DcMultiselect'
+import DcMultiselect from '@/components/widgets/DcSelectTable'
 import DcTextField from "@/components/widgets/DcTextField";
 import {getChargeDefine} from '@/api/table';
 import toast from '@/utils/toast';
@@ -62,6 +59,7 @@ import { getInitData } from "@/mock/init";
 import {getColumnDesc} from '@/utils/columnDesc'
 import {removeByValue} from '@/utils/util'
 import DcDate from '@/components/widgets/DcDate'
+import {getParamTable} from "@/api/url/prodInfo";
 
 export default {
     filters: {
@@ -73,7 +71,7 @@ export default {
     props: ["prodData"],
     data () {
         return {
-            chargeDefinesInfo: '',
+            chargeDefinesInfo: [],
             disabledFlag: false,
             prodType: '',
             open: true,
@@ -87,21 +85,13 @@ export default {
                 feeType: '',
                 chargePeriodFreq: '',
                 chargeDay: '',
-                nextChargeDate: '',
+                nextChargeDate: '20190101',
                 chargeDealMethod: '',
                 conDeductFlag: '',
                 conDeductTimes: ''
             },
-            chargePeriodFreq1: [
-                {
-                    "key": "3D",
-                    "value": "3D-3天"
-                },
-                {
-                    "key": "2D",
-                    "value": "2D-2天"
-                }
-            ],
+            selectedOld: {},
+            chargePeriodFreq1: [],
             chargeDealMethod1: [
                 {
                     "key": "10",
@@ -153,38 +143,55 @@ export default {
                 this.chargeDefinesInfo = val.mbProdCharge
                 this.prodType = val.prodType.prodType
             }
+            //加载备选数据
+            this.getRfInfo();
         },
         //加载备选数据
-        initRefDate() {
-            this.feeType = this.refData[2].paraDataRb.feeType;
-            this.chargePeriodFreq = this.refData[2].paraDataRb.chargePeriodFreq;
-            this.chargeDealMethod = this.refData[2].paraDataRb.chargeDealMethod;
-            this.conDeductFlag = this.refData[2].paraDataRb.conDeductFlag;
+        getRfInfo() {
+            let that = this
+            getParamTable("FM_PERIOD_FREQ").then(function (response) {
+                let freqArr = response.data.data.columnInfo;
+                for(let i=0; i<freqArr.length; i++){
+                    let temp = {}
+                    temp["key"] = freqArr[i].PERIOD_FREQ;
+                    temp["value"] = freqArr[i].PERIOD_FREQ_DESC;
+                    that.chargePeriodFreq1.push(temp);
+                }
+            });
         },
-        //删除
-        onDelete () {
-            let dataSource=this.chargeDefinesInfo
-            confirm('确认删除该条参数?') && removeByValue(dataSource,this.selected)
-        },
-        //新增
-        onAdd () {
-            this.option='add';
-            this.titleDesc = "新增信息";
-            this.selected={};
-            this.dialog=true;
-            this.disabledFlag =false;
-        },
+//        //删除
+//        onDelete () {
+//            let dataSource=this.chargeDefinesInfo
+//            confirm('确认删除该条参数?') && removeByValue(dataSource,this.selected)
+//        },
+//        //新增
+//        onAdd () {
+//            this.option='add';
+//            this.titleDesc = "新增信息";
+//            this.selected={};
+//            this.dialog=true;
+//            this.disabledFlag =false;
+//        },
         //修改
         onEdit () {
-            this.option='edit';
-            this.dialog=true;
-            this.titleDesc = "修改信息";
-            this.disabledFlag = true;
+            if(this.selected.feeType != '') {
+                for(let key in this.selected){
+                    if(this.selected[key] == null){
+                        this.selected[key] = ""
+                    }
+                }
+                this.option = 'edit';
+                this.dialog = true;
+                this.titleDesc = "修改信息";
+                this.disabledFlag = true;
+            }else{
+                toast.info("请选择需要修改的数据!");
+            }
         },
-        //弹框增加或修改保存事件
+        //弹框修改保存事件
         submit () {
+            let dataSource=this.chargeDefinesInfo
             if(this.option == 'add'){
-                let dataSource=this.chargeDefinesInfo
                 let selected=this.selected;
                 selected.prodType=this.prodType
                 dataSource.push(selected)
@@ -192,6 +199,14 @@ export default {
             }
             if(this.option =='edit')
             {
+                let feeType = this.selected.feeType
+                for(let index=0; index<dataSource.length; index++){
+                    if(dataSource[index].feeType === feeType){
+                        this.removeArr(dataSource,this.selectedOld)
+                        dataSource.push(this.selected)
+                        break;
+                    }
+                }
                 this.dialog=false;
             }
         },
@@ -200,6 +215,25 @@ export default {
             return {
                 on: {
                     click: this.clickRow.bind(this, record)
+                }
+            }
+        },
+        removeArr(_arr, _obj) {
+            let length = _arr.length;
+            for (let i = 0; i < length; i++) {
+                if (_arr[i] == _obj) {
+                    if (i == 0) {
+                        _arr.shift(); //删除并返回数组的第一个元素
+                        return _arr;
+                    }
+                    else if (i == length - 1) {
+                        _arr.pop();  //删除并返回数组的最后一个元素
+                        return _arr;
+                    }
+                    else {
+                        _arr.splice(i, 1); //删除下标为i的元素
+                        return _arr;
+                    }
                 }
             }
         },
@@ -216,7 +250,10 @@ export default {
                     }
                 }
             }
-            this.selected=record;
+            this.selectedOld = {}
+            this.selected = {}
+            this.selectedOld = record
+            this.selected=this.copy(record,this.selected);
         },
         close () {
             this.dialog = false
@@ -225,29 +262,18 @@ export default {
             this.editedIndex = -1
             }, 300)
         },
-        save () {
-            if (this.editedIndex > -1) {
-                Object.assign(this.projects[this.editedIndex], this.editedItem)
-            } else {
-                //新增数据，产品类型默认
-                this.editedItem.prodType = this.prodType
-                let flag = 0
-                for(let i = 0; i<this.chargeDefinesInfo.length; i++){
-                    if(this.editedItem.feeType === "" || this.editedItem.feeType === undefined){
-                        toast.info("主键feeType[批量收费类型]不能为空!");
-                        flag = 1
-                        break
-                    }else if(this.chargeDefinesInfo[i].prodType === this.editedItem.prodType && this.chargeDefinesInfo[i].feeType === this.editedItem.feeType){
-                        toast.info("主键feeType[批量收费类型:"+this.editedItem.feeType+"]不能重复!");
-                        flag = 1
-                        break
-                    }
-                }
-                if(flag === 0){
-                    this.chargeDefinesInfo.push(this.editedItem)
-                    this.close()
+        //对象浅复制
+        copy(obj1,obj2) {
+            var obj = obj2||{};
+            for(let name in obj1){
+                if(typeof obj1[name] === "object" && obj1[name]!== null){
+                    obj[name]= (obj1[name].constructor===Array)?[]:{};
+                    this.copy(obj1[name],obj[name]);
+                }else{
+                    obj[name]=obj1[name];
                 }
             }
+            return obj;
         }
     }
 };
@@ -258,5 +284,18 @@ export default {
         color: #00b0ff;
         width: 120px;
         margin-top: 30px;
+    }
+    .bthStyle {
+        color: #00b0ff;
+        width: 120px;
+        margin-top: 30px;
+    }
+    .switchClass{
+        margin-left: 55%;
+        margin-top: 2%
+    }
+    .closeClass{
+        color: white;
+        margin-top: -2%;
     }
 </style>

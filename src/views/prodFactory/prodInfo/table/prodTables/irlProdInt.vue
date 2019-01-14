@@ -594,7 +594,4 @@
         color: white;
         margin-top: -2%;
     }
-    .dcMulti {
-        margin-top: 10px;
-    }
 </style>

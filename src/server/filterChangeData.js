@@ -65,102 +65,81 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     }
     //处理单表数据
     var backVal = []
-    tablesMainDeal(prodData,sourceProdData,backVal,"mbProdCharge")
+    tablesDeal(prodData,sourceProdData,backVal,"mbProdCharge",copyFlag)
     backData.mbProdCharge = backVal
-    backVal = []
-    tablesMainDeal(prodData,sourceProdData,backVal,"glProdAccounting")
-    backData.glProdAccounting = backVal
-    backVal = []
-    tablesMainDeal(prodData,sourceProdData,backVal,"irlProdInt")
-    backData.irlProdInt = backVal
     return backData
 }
 /*
-* @description 单表处理主流程
-* @param backVal 单表存在数据变动（数据的D,I,U以及单条数据原子的D,I,U）的集合
-* @param tables 表名
-*/
-export function tablesMainDeal(prodData,sourceProdData,backVal,tables){
-    let index = 0
-    let flagDI = 0
-    if(prodData[tables].length < sourceProdData[tables].length){
-        //删除时，交换新旧数据 并记录flagDI=1（删除）flagDI=0（）
-        flagDI = 1
-        let temp = {}
-        temp = copy(prodData,temp)
-        prodData = copy(sourceProdData,prodData)
-        sourceProdData = copy(temp,sourceProdData)
-    }
-    for (let s =0; s<prodData[tables].length; s++){
-        let flags = 0
-        for(let j = 0; j<sourceProdData[tables].length; j++){
-            flags = 0
-            let returnIndex = tablesModDeal(prodData,sourceProdData,s,j,backVal,index,tables)
-            if(index !== returnIndex){
-                //检索到并匹配成功,并且该条数据已被处理
-                index = returnIndex
-                flags = 1
-                break
+ * @description 单表处理主流程（只包含修改操作）
+ * @param backVal 单表存在数据变动（数据的U以及单条数据原子的U）的集合
+ * @param tables 表名
+ * @param copyFlag 复制标识
+ * @param backVal 返回数据集合
+ */
+export function tablesDeal(prodData,sourceProdData,backVal,tables,copyFlag){
+    for (let newIndex = 0; newIndex < prodData[tables].length; newIndex++) {
+        if(copyFlag == "Y"){
+            let prodType = prodData.prodType.prodType;
+            let temp = {newData: {}, oldData: {}, optType: ''}
+            prodData[tables][newIndex].prodType = prodType;
+            temp.newData = prodData[tables][newIndex]
+            temp.optType = 'I'
+            backVal.push(temp)
+        }else {
+            for (let oldIndex = 0; oldIndex < sourceProdData[tables].length; oldIndex++) {
+                //主键匹配
+                let flag = tableDealKey(prodData, sourceProdData, newIndex, oldIndex, tables)
+                if (flag) {
+                    //修改处理
+                    tableDealUpdata(prodData, sourceProdData, newIndex, oldIndex, tables, backVal)
+                    break;
+                }
             }
-        }
-        if(flags === 0){
-            //原数据中不存在该条数据（新增）
-            let tempTab = {newData: {},oldData: {},optType: ''}
-            if(flagDI){
-                tempTab.optType = 'D'
-                tempTab.oldData = prodData[tables][s]
-            }else {
-                tempTab.optType = 'I'
-                tempTab.newData = prodData[tables][s]
-            }
-            backVal.push(tempTab)
-            index++
         }
     }
 }
-//单表处理，获取修改的数据
-export function tablesModDeal(prodData,sourceProdData,s,j,backVal,index,tables) {
-    //新增数据，产品类型默认
-    let modFlag = "false"
+
+/*
+ * @description 匹配单表数据主键
+ * @param backVal 单表存在数据变动（数据的U以及单条数据原子的U）的集合
+ * @param tables 表名
+ * @param newIndex 修改后数据循环下标
+ * @param oldIndex 修改前数据循环下标
+ */
+export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
+    let ret = false;
     if(tables === "mbProdCharge"){
-        if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].feeType === sourceProdData[tables][j].feeType){
-            modFlag = "true"
+        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].feeType === sourceProdData[tables][oldIndex].feeType){
+            ret = "true"
         }
     }
-    else if(tables === "glProdAccounting"){
-        if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].accountingStatus === sourceProdData[tables][j].accountingStatus){
-            modFlag = "true"
-        }
-    }
-    else if(tables === "irlProdInt"){
-        if(prodData[tables][s].prodType === sourceProdData[tables][j].prodType && prodData[tables][s].eventType === sourceProdData[tables][j].eventType && prodData[tables][s].intClass === sourceProdData[tables][j].intClass){
-            modFlag = "true"
-        }
-    }
-    if(modFlag === "true"){
-        //匹配到同一条数据
-        let flag = 0
-        for(let k in prodData[tables][s]){
-            //判断数据字段是否相同（修改）
-            if(prodData[tables][s][k] !== sourceProdData[tables][j][k]){
-                //修改数据
-                let temp = {newData: {},oldData: {},optType: ''}
-                temp.newData = prodData[tables][s]
-                temp.oldData = sourceProdData[tables][j]
-                temp.optType = 'U'
-                backVal.push(temp)
-                index++
-                flag = 1
-                break
-            }
-        }
-        //一条数据遍历完成是  不存在相同数据时处理
-        if(flag === 0){
-            index--
-        }
-    }
-    return index
+    return ret;
 }
+
+/*
+ * @description 单表修改数据处理
+ * @param newIndex 修改后数据循环下标
+ * @param oldIndex 修改前数据循环下标
+ * @param backVal 单表存在数据变动（数据的U以及单条数据原子的U）的集合
+ * @param tables 表名
+ * @param copyFlag 复制标识
+ * @param backVal 返回数据集合
+ */
+export function tableDealUpdata(prodData, sourceProdData, newIndex, oldIndex, tables,backVal) {
+    for (let column in prodData[tables][newIndex]) {
+        if (prodData[tables][newIndex][column] != sourceProdData[tables][oldIndex][column]) {
+            //修改数据
+            let temp = {newData: {}, oldData: {}, optType: ''}
+            temp.newData = prodData[tables][newIndex]
+            temp.oldData = sourceProdData[tables][oldIndex]
+            temp.optType = 'U'
+            backVal.push(temp)
+            break;
+        }
+    }
+}
+
+
 /*
  * @description 处理mbEventPart对象数据
  * @param  m 事件
@@ -185,7 +164,7 @@ export function mbEventPartDeal(prodData,x,m,copyFlag,mbEventParts,sourceProdDat
         }
     }
 }
-//处理prodType对象数据
+//处理mbProdType对象数据
 export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
     var prodType = {newData: {},oldData: {}}
     var newProdMap = {}

@@ -2,22 +2,39 @@
     <v-card>
         <v-toolbar card dense color="transparent">
             <a-button type="primary" class="ml-2" @click="onEdit">修改</a-button>
-            <v-dialog v-model="dialog" width="500">
+            <v-dialog v-model="dialog" width="900">
+                <v-toolbar color="primary lighten-2" style="height: 50px">
+                    <v-toolbar-title class="white--text" style="margin-top: -2%">修改信息</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-icon class="mr-2 closeClass" style="color: white" @click="dialog = false">close</v-icon>
+                </v-toolbar>
                 <v-card>
                     <v-card-text>
-                        <v-form v-model="valid">
-                            <v-text-field v-model="selected.accountingStatus" :counter="10" label="核算状态" required class="mx-5"></v-text-field>
-                            <v-text-field v-model="selected.businessUnit" :counter="10" label="账套" required class="mx-5"></v-text-field>
-                            <v-text-field v-model="selected.glCodeL" :counter="10" label="负债科目代码" required class="mx-5"></v-text-field>
-                            <v-text-field v-model="selected.glCodeIntE" :counter="10" label="利息支出科目代码" required class="mx-5"></v-text-field>
-                            <v-text-field v-model="selected.glCodeIntPay" :counter="10" label="应付利息科目代码" required class="mx-5"></v-text-field>
-                        </v-form>
-                        <v-btn color="green darken-1" flat="flat" @click="submit">
-                            确认
-                        </v-btn>
-                        <v-btn color="green darken-1" flat="flat" @click="dialog = false">
-                            取消
-                        </v-btn>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selected.accountingStatus" :options="ACCOUNTING_STATUS" labelDesc="核算状态"></dc-select>
+                            </v-flex>
+                            <v-flex xs12 sm6 m6>
+                                <dc-text labelDesc="账套" v-model="selected.businessUnit"></dc-text>
+                            </v-flex>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selected.glCodeL" :options="GL_CODE_L" labelDesc="负债科目代码"></dc-select>
+                            </v-flex>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selected.glCodeIntE" :options="GL_CODE_INT_E" labelDesc="利息支出科目代码"></dc-select>
+                            </v-flex>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selected.glCodeIntPay" :options="GL_CODE_INT_PAY" labelDesc="应付利息科目代码"></dc-select>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 m6>
+                                <v-btn color="info" @click="dialog = false" class="bthStyle" style="margin-left: 20%">取消</v-btn>
+                            </v-flex>
+                            <v-flex xs12 sm6 m6>
+                                <v-btn color="info" @click="submit" class="bthStyle" style="margin-left: 40%">保存</v-btn>
+                            </v-flex>
+                        </v-layout>
                     </v-card-text>
                 </v-card>
             </v-dialog>
@@ -39,8 +56,14 @@
     import toast from '@/utils/toast';
     import { getInitData } from "@/mock/init";
     import {removeByValue} from '@/utils/util'
+    import DcSelect from '@/components/widgets/DcMultiselect'
+    import DcDate from '@/components/widgets/DcDateTable'
+    import DcText from '@/components/widgets/DcTextTable'
+    import {getParamTable} from "@/api/url/prodInfo";
+
 
     export default {
+        components: {DcSelect,DcDate,DcText},
         filters: {
             getDescByKey: function (key) {
                 return getColumnDesc(key)
@@ -65,6 +88,11 @@
                     {dataIndex: 'amtType', title: '金额类型'},
                     {dataIndex: 'glCodeCol', title: '科目映射'},
                 ],
+                STATUS: [],
+                GL_CODE_L: [],
+                GL_CODE_INT_E: [],
+                GL_CODE_INT_PAY: [],
+                ACCOUNTING_STATUS: [],
                 dialog: false,
                 accountingInfos: [],
                 accountingFixed: [],
@@ -100,18 +128,56 @@
                 prodAccountingInfo: {}
             };
         },
-        computed: {
-
-        },
         watch: {
             prodData (val) {
                 this.getAccountingInfo(val)
             }
         },
-        mounted: function() {
-            this.getAccountingInfo(this._props.prodData)
-        },
+//        mounted: function() {
+//            this.getAccountingInfo(this._props.prodData)
+//        },
         methods: {
+            getAccountingInfo(val) {
+                //初始化产品对应的信息
+                if(val!=undefined&&val.prodType.prodType!=undefined) {
+                    this.accountingInfos = val.glProdAccounting
+                    this.prodType = val.prodType.prodType
+                    this.accountingFixed = val.glProdCodeMappings
+                }
+                //初始化备选数据信息
+                this.getRfInfo();
+            },
+            getRfInfo() {
+                let that = this
+                getParamTable("AC_SUBJECT").then(function (response) {
+                    let acSubject = response.data.data.columnInfo;
+                    for(let i=0; i<acSubject.length; i++){
+                        let temp = {}
+                        temp["key"] = acSubject[i].SUBJECT_CODE;
+                        temp["value"] = acSubject[i].SUBJECT_DESC;
+                        that.GL_CODE_INT_E.push(temp);
+                        that.GL_CODE_INT_PAY.push(temp);
+                        if(acSubject[i].BSPL_TYPE == "L"){
+                            //负债科目
+                            that.GL_CODE_L.push(temp);
+                        }
+                    }
+                });
+                getParamTable("MB_ACCOUNTING_STATUS").then(function (response) {
+                    let accountingStatus = response.data.data.columnInfo;
+                    for(let i=0; i<accountingStatus.length; i++){
+                        let temp = {}
+                        temp["key"] = accountingStatus[i].ACCOUNTING_STATUS;
+                        temp["value"] = accountingStatus[i].ACCOUNTING_STATUS_DESC;
+                        that.ACCOUNTING_STATUS.push(temp);
+                    }
+                    let all = {}
+                    all["key"] = "ALL";
+                    all["value"] = "全部";
+                    that.ACCOUNTING_STATUS.push(all);
+
+                });
+            },
             submit () {
                 if(this.option == 'add'){
                     let dataSource=this.accountingInfos
@@ -157,14 +223,7 @@
                 }
                 this.selected=record;
             },
-            getAccountingInfo(val) {
-                //初始化产品对应的信息
-                if(val!=undefined&&val.prodType.prodType!=undefined) {
-                    this.accountingInfos = val.glProdAccounting
-                    this.prodType = val.prodType.prodType
-                    this.accountingFixed = val.glProdCodeMappings
-                }
-            },
+
             editItem (item) {
                 this.editedIndex = this.projects.indexOf(item)
                 this.editedItem = Object.assign({}, item)
@@ -240,7 +299,13 @@
     };
 </script>
 <style>
-    .chargeSelected {
-        background-color: #e3f2fd;
+    .bthStyle {
+        color: #00b0ff;
+        width: 120px;
+        margin-top: 30px;
+    }
+    .closeClass{
+        color: white;
+        margin-top: -2%;
     }
 </style>
