@@ -146,26 +146,48 @@
                 for (let i = 0; i < this.sourceProdList.length; i++) {
                     if (this.prodCode === this.sourceProdList[i].prodType) {
                         this.prodClass = this.sourceProdList[i].prodClass
+                        this.sourceModule = this.sourceProdList[i].sourceModule
+                        this.prodRange = this.sourceProdList[i].prodRange
                         break
                     }
                 }
-//                if ("RB100" === this.prodClass) {
-//                    this.$router.push({
-//                        name: "prod/rbPrivateProds",
-//                        params: {
-//                            prodClassCmp: this.prodClass,
-//                            prodType: this.prodCode
-//                        }
-//                    });
-//                } else if ("RB400" === this.prodClass) {
+               if(this.sourceModule == "RB" && this.prodRange == "S"){
+                   this.$router.push({
+                       name: "RbSoldProds",
+                       params: {
+                           prodClassCmp: this.prodClass,
+                           prodType: this.prodCode
+                       }
+                   });
+               }
+               if(this.sourceModule == "RB" && this.prodRange == "B"){
                     this.$router.push({
-                        name: "RbSoldProds",
+                        name: "RbBaseProds",
                         params: {
                             prodClassCmp: this.prodClass,
                             prodType: this.prodCode
                         }
                     });
-//                }
+               }
+               if(this.sourceModule == "CL" && this.prodRange == "S"){
+                    this.$router.push({
+                        name: "ClSoldProds",
+                        params: {
+                            prodClassCmp: this.prodClass,
+                            prodType: this.prodCode
+                        }
+                    });
+               }
+               if(this.sourceModule == "CL" && this.prodRange == "B"){
+                    this.$router.push({
+                        name: "ClBaseProds",
+                        params: {
+                            prodClassCmp: this.prodClass,
+                            prodType: this.prodCode
+                        }
+                    });
+               }
+
             },
             handleFullScreen() {
                 Util.toggleFullScreen();
