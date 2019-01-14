@@ -14,7 +14,7 @@
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang"
                                      :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                        <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
-                       <template slot="afterList" slot-scope="props"><button @click="toMoreTable" class="jump" v-if="rfTableInfo.isRf" :style="'width:'+ jumpWidth + 'px'">跳转</button></template>
+                            <template slot="afterList" slot-scope="props"><div style="text-align: right"><span @click="toMoreTable" v-if="rfTableInfo.isRf" class="jump">>>></span></div></template>
                        <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
                         </multiselect>
                     </div>
@@ -152,7 +152,7 @@
                     this.screenWidth = val
                     this.timer = true
                     if(this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0){
-                        this.jumpWidth = this.$refs.select.clientWidth
+                        this.jumpWidth = this.$refs.select.clientWidth-25
                     }
                     let that = this
                     setTimeout(function(){
@@ -187,6 +187,9 @@
                     window.screenWidth = document.body.clientWidth
                     that.screenWidth = window.screenWidth
                 })()
+            }
+            if(this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0){
+                this.jumpWidth = this.$refs.select.clientWidth-25
             }
         },
         methods: {
@@ -344,9 +347,7 @@
                 if (value) {
                     this.$emit("getVue", this._props.msg);
                 }
-                if(this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0){
-                    this.jumpWidth = this.$refs.select.clientWidth
-                }
+
             },
             addTag(newTag) {
                 const tag = {
@@ -376,15 +377,10 @@
         height: 40px; /* 高度 */
         border-width: 0px; /* 边框宽度 */
         border-radius: 3px; /* 边框半径 */
-        background: #1E90FF; /* 背景颜色 */
         cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
         outline: none; /* 不显示轮廓线 */
         font-family: Microsoft YaHei; /* 设置字体 */
-        color: white; /* 字体颜色 */
-        font-size: 17px; /* 字体大小 */
-    }
-    .jump:hover{
-        background: blue;
+        font-size: 26px; /* 字体大小 */
     }
     .baseIconDis {
         padding-top: 15px;
