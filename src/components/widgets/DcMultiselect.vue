@@ -13,11 +13,21 @@
                     <div ref="select">
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang"
                                      :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
-                       <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
-                            <template slot="afterList" slot-scope="props"><div style="text-align: right"><span @click="toMoreTable" v-if="rfTableInfo.isRf" class="jump">>>></span></div></template>
-                       <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
+                            <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
+                            <template slot="afterList" slot-scope="props">
+                                <div v-if="rfTableInfo.isRf" style="text-align: left">
+                                    <v-tooltip bottom>
+                                        <span slot="activator" @click="toMoreTable" class="jump">
+                                        >>>
+                                    </span>
+                                        <span>跳转到{{rfTableInfo.tableName}}</span>
+                                    </v-tooltip>
+                                </div>
+                            </template>
+                            <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
                         </multiselect>
                     </div>
+
                 </v-flex>
                 <v-flex md2 lg2>
                     <v-tooltip v-if="personShow==1" right :color="peopleColor">
