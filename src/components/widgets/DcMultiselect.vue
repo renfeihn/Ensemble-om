@@ -10,11 +10,11 @@
                     </v-layout>
                 </v-flex>
                 <v-flex md6 lg6>
-                    <div>
+                    <div ref="select">
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang"
                                      :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
                        <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
-                       <template slot="afterList" slot-scope="props"><span @click="toMoreTable" v-if="rfTableInfo.isRf">跳转</span></template>
+                       <template slot="afterList" slot-scope="props"><button @click="toMoreTable" class="jump" v-if="rfTableInfo.isRf" :style="'width:'+ jumpWidth + 'px'">跳转</button></template>
                        <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
                         </multiselect>
                     </div>
@@ -70,6 +70,7 @@
         },
         data() {
             return {
+                jumpWidth: '',
                 value: [],
                 fab: false,
                 personShow: 0,
@@ -88,7 +89,8 @@
                 closeSelect: false,
                 diffProdList: [],
                 peopleColor: "grey lighten-1",
-                peopleDesc: "产品生效"
+                peopleDesc: "产品生效",
+                screenWidth: document.body.clientWidth
             };
         },
         watch: {
@@ -142,6 +144,23 @@
                         this.disabled= newValue;
                     }
                 }
+            },
+            screenWidth(val){
+                // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+                if(!this.timer){
+                    // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+                    this.screenWidth = val
+                    this.timer = true
+                    if(this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0){
+                        this.jumpWidth = this.$refs.select.clientWidth
+                    }
+                    let that = this
+                    setTimeout(function(){
+                        // 打印screenWidth变化的值
+                        console.log(that.screenWidth)
+                        that.timer = false
+                    },400)
+                }
             }
         },
         created() {
@@ -161,8 +180,14 @@
             }
         },
         mounted: function() {
-
-            this.initProperty();
+            const that = this
+            that.initProperty();
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth
+                    that.screenWidth = window.screenWidth
+                })()
+            }
         },
         methods: {
             toMoreTable (){
@@ -319,6 +344,9 @@
                 if (value) {
                     this.$emit("getVue", this._props.msg);
                 }
+                if(this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0){
+                    this.jumpWidth = this.$refs.select.clientWidth
+                }
             },
             addTag(newTag) {
                 const tag = {
@@ -343,6 +371,20 @@
     .baseIcon {
         padding-top: 15px;
         color: #ff110e;
+    }
+    .jump{
+        height: 40px; /* 高度 */
+        border-width: 0px; /* 边框宽度 */
+        border-radius: 3px; /* 边框半径 */
+        background: #1E90FF; /* 背景颜色 */
+        cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+        outline: none; /* 不显示轮廓线 */
+        font-family: Microsoft YaHei; /* 设置字体 */
+        color: white; /* 字体颜色 */
+        font-size: 17px; /* 字体大小 */
+    }
+    .jump:hover{
+        background: blue;
     }
     .baseIconDis {
         padding-top: 15px;
