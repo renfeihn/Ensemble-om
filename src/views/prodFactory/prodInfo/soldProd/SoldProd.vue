@@ -9,6 +9,9 @@
                                 <dc-text-field labelDesc="产品代码" v-model="prodType.prodType" :disabled="true" :disablePower="disablePower"></dc-text-field>
                             </v-flex>
                             <v-flex md6 lg6>
+                                <dc-text-field labelDesc="产品简称" v-model="prodType.prodAbbr" :disabled="true" :disablePower="disablePower"></dc-text-field>
+                            </v-flex>
+                            <v-flex md6 lg6>
                                 <dc-text-field labelDesc="产品描述" v-model="prodType.prodDesc" :disabled="true" :disablePower="disablePower"></dc-text-field>
                             </v-flex>
                                 <v-flex md6 lg6>
