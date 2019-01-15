@@ -12,9 +12,6 @@
                     <v-card-text>
                         <v-layout wrap>
                             <v-flex xs12 sm6 m6>
-                                <dc-select :isMultiSelect="false" v-model="selected.accountingStatus" :options="ACCOUNTING_STATUS" labelDesc="核算状态"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6>
                                 <dc-text labelDesc="账套" v-model="selected.businessUnit"></dc-text>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
@@ -76,7 +73,6 @@
                 valid: true,
                 select: {},
                 columns: [
-//                    {dataIndex: 'prodType', title: '产品类型',scopedSlots: { customRender: 'prodType' }},
                     {dataIndex: 'accountingStatus', title: '核算状态'},
                     {dataIndex: 'businessUnit', title: '账套'},
                     {dataIndex: 'glCodeL', title: '负债科目编码'},
@@ -101,6 +97,7 @@
                 addFlag: false,
                 modFlag: false,
                 refData: getInitData,
+                selectedOld: {},
                 editedItem: {
                     prodType: '',
                     accountingStatus: '',
@@ -133,9 +130,6 @@
                 this.getAccountingInfo(val)
             }
         },
-//        mounted: function() {
-//            this.getAccountingInfo(this._props.prodData)
-//        },
         methods: {
             getAccountingInfo(val) {
                 //初始化产品对应的信息
@@ -179,28 +173,33 @@
                 });
             },
             submit () {
-                if(this.option == 'add'){
-                    let dataSource=this.accountingInfos
-                    let selected=this.selected;
-                    selected.prodType=this.prodType
-                    dataSource.push(selected)
-                }
-                this.dialog=false;
-            },
-            onDelete () {
                 let dataSource=this.accountingInfos
-                removeByValue(dataSource,this.selected)
-            },
-            onAdd () {
-                this.option='add';
-                this.selected={};
-                this.dialog=true;
-                this.disabledFlag=true
+                if(this.option == 'edit'){
+                    let accountingStatus = this.selected.accountingStatus;
+                    for(let index=0; index<dataSource.length; index++){
+                        if(dataSource[index].accountingStatus === accountingStatus){
+                            this.removeArr(dataSource,this.selectedOld)
+                            dataSource.push(this.selected)
+                            break;
+                        }
+                    }
+                    this.dialog=false;
+                }
             },
             onEdit () {
-                this.option='edit';
-                this.dialog=true;
-                this.disabledFlag = true;
+                if(this.selected.accountingStatus != '' && this.selected.accountingStatus != undefined){
+                    for(let key in this.selected){
+                        if(this.selected[key] == null){
+                            this.selected[key] = "";
+                        }
+                    }
+                    this.option='edit';
+                    this.dialog=true;
+                    this.disabledFlag = true;
+                }else{
+                    toast.info("请选择需要修改的数据!");
+                }
+
             },
             customRow (record) {
                 return {
@@ -221,78 +220,49 @@
                         }
                     }
                 }
-                this.selected=record;
-            },
-
-            editItem (item) {
-                this.editedIndex = this.projects.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
-                this.close()
-
-            },
-            initRefDate() {
-                this.accountingStatus = this.refData[2].paraDataRb.accountingStatus;
-                //暂时不区分科目代码
-                this.glCodeL = this.refData[2].paraDataRb.glCode;
-                this.glCodeIntE = this.refData[2].paraDataRb.glCode;
-                this.glCodeIntPay = this.refData[2].paraDataRb.glCode;
-            },
-            deleteItem (item) {
-                const index = this.projects.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                this.selectedOld = {};
+                this.selected = {};
+                this.selectedOld = record;
+                this.selected=this.copy(record,this.selected);
             },
             close () {
                 this.dialog = false
                 setTimeout(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
-            }, 300)
+                }, 300)
             },
-            save () {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.projects[this.editedIndex], this.editedItem)
-                } else {
-                    let flag = 0
-                    for(let i = 0; i<this.prodAccountingInfo.length; i++){
-                        if(this.editedItem.accountingStatus === "" || this.editedItem.accountingStatus === undefined){
-                            toast.info("主键accountingStatus[核算状态]不能为空!");
-                            flag = 1
-                            break
-                        }else if(this.prodAccountingInfo[i].prodType === this.editedItem.prodType && this.prodAccountingInfo[i].accountingStatus === this.editedItem.accountingStatus){
-                            toast.info("主键accountingStatus[核算状态:"+this.editedItem.accountingStatus+"]不能重复!");
-                            flag = 1
-                            break
-                        }
-                    }
-                    if(flag === 0){
-                        this.prodAccountingInfo.push(this.editedItem)
-                        this.close()
+            //对象浅拷贝
+            copy(obj1,obj2) {
+                var obj = obj2||{};
+                for(let name in obj1){
+                    if(typeof obj1[name] === "object" && obj1[name]!== null){
+                        obj[name]= (obj1[name].constructor===Array)?[]:{};
+                        this.copy(obj1[name],obj[name]);
+                    }else{
+                        obj[name]=obj1[name];
                     }
                 }
+                return obj;
             },
-            getSelect(value){
-                this.editedItem = []
-                this.editedItem = value
-            },
-            addClick() {
-                this.initRefDate()
-                this.editedItem = []
-                //新增产品类型默认&&不允许修改
-                this.editedItem.prodType = this.prodType
-                this.modFlag = false
-                this.addFlag = true
-            },
-            modClick() {
-                this.initRefDate()
-                this.addFlag = false
-                this.modFlag = true
-            },
-            saveClick() {
-                if(this.addFlag){
-                    this.save()
-                }else if(this.modFlag){
-                    this.editItem()
+            //删除对象数组中指定对象
+            removeArr(_arr, _obj) {
+                let length = _arr.length;
+                for (let i = 0; i < length; i++) {
+                    if (_arr[i] == _obj) {
+                        if (i == 0) {
+                            _arr.shift(); //删除并返回数组的第一个元素
+                            return _arr;
+                        }
+                        else if (i == length - 1) {
+                            _arr.pop();  //删除并返回数组的最后一个元素
+                            return _arr;
+                        }
+                        else {
+                            _arr.splice(i, 1); //删除下标为i的元素
+                            return _arr;
+                        }
+                    }
                 }
             }
         }

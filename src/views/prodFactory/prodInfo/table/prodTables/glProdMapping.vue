@@ -78,11 +78,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-    .bthStyle {
-        color: #00b0ff;
-        width: 120px;
-        margin-top: 30px;
-    }
-</style>

@@ -283,10 +283,6 @@
                 this.prodType = val.prodType.prodType
             }
         },
-//        mounted: function() {
-//            //加载利率信息
-//            this.getChargeDefinesInfo(this._props.prodData);
-//        },
         methods: {
             //初始化产品对应的信息
             getChargeDefinesInfo(val) {
@@ -470,6 +466,7 @@
                 }
                 return irlIntRateTemp;
             },
+            //数据匹配
             findIn(val,key){
               for(let ind in val){
                   if(val[ind] === "ALL"){
@@ -509,27 +506,6 @@
                     }
                 }
                 this.selected=record;
-            },
-            //删除事件
-            onDelete () {
-                console.log("KK")
-            },
-            //新增事件
-            onAdd () {
-                this.option='add';
-                this.titleDesc = "新增信息";
-                if(!this.switchValue){
-                    this.selected={};
-                    this.dialogs=true;
-                    this.dialogEidt=false;
-                    this.dialogsFiexd = false;
-                }
-                if(this.switchValue){
-                    this.selectedFixed={};
-                    this.dialogs=false;
-                    this.dialogEidt=false;
-                    this.dialogsFiexd = true;
-                }
             },
             //修改事件
             onEdit () {

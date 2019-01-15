@@ -1,9 +1,7 @@
 <template>
     <v-card>
         <v-toolbar card dense color="transparent">
-            <!--<a-button type="primary" @click="onAdd">新增</a-button>-->
             <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
-            <!--<a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>-->
             <v-dialog v-model="dialog" width="900">
                 <v-toolbar color="primary lighten-2" style="height: 50px">
                      <v-toolbar-title class="white--text" style="margin-top: -2%">{{ titleDesc}}</v-toolbar-title>
@@ -159,20 +157,6 @@ export default {
                 }
             });
         },
-//        //删除
-//        onDelete () {
-//            let dataSource=this.chargeDefinesInfo
-//            confirm('确认删除该条参数?') && removeByValue(dataSource,this.selected)
-//        },
-//        //新增
-//        onAdd () {
-//            this.option='add';
-//            this.titleDesc = "新增信息";
-//            this.selected={};
-//            this.dialog=true;
-//            this.disabledFlag =false;
-//        },
-        //修改
         onEdit () {
             if(this.selected.feeType != '') {
                 for(let key in this.selected){
@@ -191,12 +175,6 @@ export default {
         //弹框修改保存事件
         submit () {
             let dataSource=this.chargeDefinesInfo
-            if(this.option == 'add'){
-                let selected=this.selected;
-                selected.prodType=this.prodType
-                dataSource.push(selected)
-                this.dialog=false;
-            }
             if(this.option =='edit')
             {
                 let feeType = this.selected.feeType
@@ -218,6 +196,7 @@ export default {
                 }
             }
         },
+        //删除对象数组指定对象
         removeArr(_arr, _obj) {
             let length = _arr.length;
             for (let i = 0; i < length; i++) {
@@ -289,10 +268,6 @@ export default {
         color: #00b0ff;
         width: 120px;
         margin-top: 30px;
-    }
-    .switchClass{
-        margin-left: 55%;
-        margin-top: 2%
     }
     .closeClass{
         color: white;

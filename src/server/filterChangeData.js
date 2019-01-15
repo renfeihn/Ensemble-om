@@ -220,13 +220,13 @@ export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRa
         //判断编辑信息 E:可编辑 N:不可编辑 V:不可见 D:删除
         let optObject = {key: "",tableName: "",optPerm: ""}
         if(dealFalg(prodData.prodDefines[j],sourceProdData.prodDefines[j])){
-            if(sourceProdData.prodDefines[j].optionPermissions === "E" && prodData.prodDefines[j].optionPermissions === "D"){
-                //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
+            if(prodData.prodDefines[j].optionPermissions === "D"){
+                //E-D N-D V-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
                 optObject.key = j
                 optObject.tableName = "MB_PROD_DEFINE"
                 optObject.optPerm = "DALL"
-            }else if(sourceProdData.prodDefines[j].optionPermissions === "E"){
-                //E-V E-N  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
+            }else if(sourceProdData.prodDefines[j].optionPermissions === "E" && (prodData.prodDefines[j].optionPermissions === "N" || prodData.prodDefines[j].optionPermissions === "V")){
+                //E-N E-V  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
                 optObject.key = j
                 optObject.tableName = "MB_PROD_DEFINE"
                 optObject.optPerm = "D"
@@ -319,28 +319,31 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
     }
     //判断编辑信息 E:可编辑 N:不可编辑 V:不可见 D:删除
     let optObjectAttr = {eventType: "",key: "",tableName: "",optPerm: ""}
-    if(dealOpt(prodData,sourceProdData,m,k)){
-        if(sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E" && prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "D"){
-            //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
-            optObjectAttr.eventType = m
-            optObjectAttr.key = k
-            optObjectAttr.tableName = "MB_EVENT_ATTR"
-            optObjectAttr.optPerm = "DALL"
-        }else if(sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E"){
-            //E-V E-N  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
-            optObjectAttr.eventType = m
-            optObjectAttr.key = k
-            optObjectAttr.tableName = "MB_EVENT_ATTR"
-            optObjectAttr.optPerm = "D"
-        }
-        if(prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E"){
-            //N-E V-E 继承于该基础产品的可售产品增加该条参数 optPerm = "I"
-            optObjectAttr.eventType = m
-            optObjectAttr.key = k
-            optObjectAttr.tableName = "MB_EVENT_ATTR"
-            optObjectAttr.optPerm = "I"
-        }
-    }
+    //处理状态位
+    dealEventOpt(prodData,sourceProdData,m,k,optObjectAttr)
+
+    // if(dealOpt(prodData,sourceProdData,m,k)){
+    //     if(prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "D"){
+    //         //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
+    //         optObjectAttr.eventType = m
+    //         optObjectAttr.key = k
+    //         optObjectAttr.tableName = "MB_EVENT_ATTR"
+    //         optObjectAttr.optPerm = "DALL"
+    //     }else if(sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E" && (prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "N" || prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "V")){
+    //         //E-V E-N  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
+    //         optObjectAttr.eventType = m
+    //         optObjectAttr.key = k
+    //         optObjectAttr.tableName = "MB_EVENT_ATTR"
+    //         optObjectAttr.optPerm = "D"
+    //     }
+    //     if(prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E"){
+    //         //N-E V-E 继承于该基础产品的可售产品增加该条参数 optPerm = "I"
+    //         optObjectAttr.eventType = m
+    //         optObjectAttr.key = k
+    //         optObjectAttr.tableName = "MB_EVENT_ATTR"
+    //         optObjectAttr.optPerm = "I"
+    //     }
+    // }
     if(optObjectAttr.key !== "" && optObjectAttr.eventType !== ""){
         tempObjectAttr[k] = optObjectAttr
         if(backData.optionPermissions !== "") {
@@ -350,11 +353,28 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
         }
     }
 }
-export function dealOpt(prodData,sourceProdData,m,k) {
-    if(sourceProdData.mbEventInfos[m].mbEventAttrs[k] !== undefined && prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions){
-        return true
-    }else{
-        return false
+export function dealEventOpt(prodData,sourceProdData,m,k,optObjectAttr) {
+    if (sourceProdData.mbEventInfos[m].mbEventAttrs[k] !== undefined && prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions) {
+        if (prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "D") {
+            //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
+            optObjectAttr.eventType = m
+            optObjectAttr.key = k
+            optObjectAttr.tableName = "MB_EVENT_ATTR"
+            optObjectAttr.optPerm = "DALL"
+        } else if (sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E" && (prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "N" || prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "V")) {
+            //E-V E-N  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
+            optObjectAttr.eventType = m
+            optObjectAttr.key = k
+            optObjectAttr.tableName = "MB_EVENT_ATTR"
+            optObjectAttr.optPerm = "D"
+        }
+        if (prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E") {
+            //N-E V-E 继承于该基础产品的可售产品增加该条参数 optPerm = "I"
+            optObjectAttr.eventType = m
+            optObjectAttr.key = k
+            optObjectAttr.tableName = "MB_EVENT_ATTR"
+            optObjectAttr.optPerm = "I"
+        }
     }
 }
 /*
