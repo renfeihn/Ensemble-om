@@ -67,6 +67,10 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"mbProdCharge",copyFlag)
     backData.mbProdCharge = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
+    backData.glProdAccounting = backVal
+
     return backData
 }
 /*
@@ -110,6 +114,11 @@ export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
     let ret = false;
     if(tables === "mbProdCharge"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].feeType === sourceProdData[tables][oldIndex].feeType){
+            ret = "true"
+        }
+    }
+    if(tables === "glProdAccounting"){
+        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].accountingStatus === sourceProdData[tables][oldIndex].accountingStatus){
             ret = "true"
         }
     }
@@ -321,29 +330,6 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
     let optObjectAttr = {eventType: "",key: "",tableName: "",optPerm: ""}
     //处理状态位
     dealEventOpt(prodData,sourceProdData,m,k,optObjectAttr)
-
-    // if(dealOpt(prodData,sourceProdData,m,k)){
-    //     if(prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "D"){
-    //         //E-D 删除基础产品和继承于该基础产品的可售产品 的该条参数 optPerm = "DALL"
-    //         optObjectAttr.eventType = m
-    //         optObjectAttr.key = k
-    //         optObjectAttr.tableName = "MB_EVENT_ATTR"
-    //         optObjectAttr.optPerm = "DALL"
-    //     }else if(sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E" && (prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "N" || prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "V")){
-    //         //E-V E-N  删除继承于该基础产品的可售产品 的该条参数 optPerm = "D"
-    //         optObjectAttr.eventType = m
-    //         optObjectAttr.key = k
-    //         optObjectAttr.tableName = "MB_EVENT_ATTR"
-    //         optObjectAttr.optPerm = "D"
-    //     }
-    //     if(prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "E"){
-    //         //N-E V-E 继承于该基础产品的可售产品增加该条参数 optPerm = "I"
-    //         optObjectAttr.eventType = m
-    //         optObjectAttr.key = k
-    //         optObjectAttr.tableName = "MB_EVENT_ATTR"
-    //         optObjectAttr.optPerm = "I"
-    //     }
-    // }
     if(optObjectAttr.key !== "" && optObjectAttr.eventType !== ""){
         tempObjectAttr[k] = optObjectAttr
         if(backData.optionPermissions !== "") {
