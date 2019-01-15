@@ -64,13 +64,21 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         }
     }
     //处理单表数据
+    //费用信息
     var backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"mbProdCharge",copyFlag)
     backData.mbProdCharge = backVal
+    //核算信息
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
     backData.glProdAccounting = backVal
-
+    //产品映射(0115屏蔽对产品映射处理)
+    // backVal = []
+    // tablesDeal(prodData,sourceProdData,backVal,"glProdMappings",copyFlag)
+    // backData.glProdMappings = backVal
+    // backVal = []
+    // tablesDeal(prodData,sourceProdData,backVal,"irlProdType",copyFlag)
+    // backData.irlProdType = backVal
     return backData
 }
 /*
@@ -119,6 +127,16 @@ export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
     }
     if(tables === "glProdAccounting"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].accountingStatus === sourceProdData[tables][oldIndex].accountingStatus){
+            ret = "true"
+        }
+    }
+    if(tables === "glProdMappings"){
+        if(prodData[tables][newIndex].mappingType === sourceProdData[tables][oldIndex].mappingType){
+            ret = "true"
+        }
+    }
+    if(tables === "irlProdType"){
+        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType){
             ret = "true"
         }
     }
