@@ -43,7 +43,7 @@
                 </v-flex>
             </v-layout>
         </transition>
-       <warn-dialog v-model="dialog" :oldOptionPermissions="oldOptionPermissions" v-on:rebackOptionPermissions="rebackOptionPermissions" :diffProdList="diffProdList"></warn-dialog>
+        <warn-dialog v-model="dialog" :oldOptionPermissions="oldOptionPermissions" v-on:rebackOptionPermissions="rebackOptionPermissions" :diffProdList="diffProdList"></warn-dialog>
     </div>
 </template>
 
@@ -113,9 +113,9 @@
                 }
             },
             options: {
-                handler(newValue){
+                handler(newValue,oldValue){
                     if(this._props.msg !== "undefined"&&this._props.msg !== undefined){
-                    this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg)
+                        this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg)
                     }
                 },
                 deep: true
@@ -208,9 +208,7 @@
                 this.isToMoreTable= true;
                 this.$router.push({
                     name: 'tableInfo',
-                    params: {
-                        'tableName': this.rfTableInfo.tableName
-                    }
+                    hash: this.rfTableInfo.tableName
                 })
             },
             nameWithLang ({ key, value }) {
@@ -242,15 +240,15 @@
             },
             findChildProd() {
                 if(this._props.msg!= undefined&& this._props.msg.attrKey!= undefined){
-                const column ={'prodType': this.$store.getters.prodType,'attrType': this._props.msg.attrKey,'attrValue': this._props.msg.attrValue};
-                findChildProd(column).then(response => {
-                    const reList = response.data.data
-                    //如果存在差异弹出差异列表
-                    if(reList!= undefined&&reList.length>0){
-                    this.dialog=true;
-                    this.diffProdList=reList
-                    }
-                });
+                    const column ={'prodType': this.$store.getters.prodType,'attrType': this._props.msg.attrKey,'attrValue': this._props.msg.attrValue};
+                    findChildProd(column).then(response => {
+                        const reList = response.data.data
+                        //如果存在差异弹出差异列表
+                        if(reList!= undefined&&reList.length>0){
+                            this.dialog=true;
+                            this.diffProdList=reList
+                        }
+                    });
                 }
             },
             rebackOptionPermissions (optionPermissions){
@@ -292,7 +290,6 @@
                 if(this._props.options!==undefined&&!(typeof this._props.options === 'object' && !isNaN(this._props.options.length))){
                     this.rfTableInfo=this._props.options
                     this.rfTableInfo['isRf']=true;
-                    this._props.options=[];
                     getPkList(this.rfTableInfo,sessionStorage.getItem("mainSeqNo"),response => {
                         this._props.options=response
                     });
@@ -325,9 +322,9 @@
             },
             selectRef(){
                 if(this.isToMoreTable){
-                getPkList(this.rfTableInfo,sessionStorage.getItem("mainSeqNo"),response => {
-                    this._props.options=response
-                });
+                    getPkList(this.rfTableInfo,sessionStorage.getItem("mainSeqNo"),response => {
+                        this._props.options=response
+                    });
                 }
             },
             rebackOption(newValue){

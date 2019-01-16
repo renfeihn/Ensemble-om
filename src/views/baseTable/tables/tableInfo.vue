@@ -98,16 +98,8 @@
         },
         methods: {
             initTableInfo() {
-                const tableName=this.$route.params.tableName
-                const tableDesc=this.$route.params.tableDesc
-                if (tableName!= undefined) {
-                    this.tableName = tableName
-                    if (tableDesc!= undefined) {
-                        this.tableDesc = tableDesc
-                    }
-                    this.getParaTable(this.$route.params.tableName);
-                }
-
+                    this.tableName = this.$route.hash
+                    this.getParaTable(this.tableName);
             },
             getParaTable(tableName) {
                 let that = this;

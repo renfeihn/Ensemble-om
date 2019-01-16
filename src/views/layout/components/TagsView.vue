@@ -3,7 +3,7 @@
     <scroll-pane class= 'tags-view-wrapper' ref= 'scrollPane'>
       <router-link ref= 'tag' class= 'tags-view-item' :class= "isActive(tag)?'active primary lighten-1':''" v-for= 'tag in Array.from(visitedViews)'
                    :to= 'tag' :key= 'tag.path' @contextmenu.prevent.native= 'openMenu(tag,$event)'>
-        {{generateTitle(tag.title)}}
+        {{titleName(tag)}}
         <v-icon @click.prevent.stop= 'closeSelectedTag(tag)' class="material-icons">close</v-icon>
       </router-link>
     </scroll-pane>
@@ -18,7 +18,7 @@
 <script>
     import ScrollPane from "@/components/ScrollPane";
     import { generateTitle } from "@/utils/i18n";
-
+    import {getTableInfoDesc} from "@/api/url/prodInfo";
     export default {
         components: { ScrollPane },
         data() {
@@ -52,6 +52,16 @@
         },
         methods: {
             generateTitle, // generateTitle by vue-i18n
+            titleName(tag) {
+                const name=tag.name;
+                if(name ==='tableInfo')
+                {
+                    getTableInfoDesc(tag.hash).then(function (response) {
+                        tag.title= response.data.data.tableDesc;
+                    })
+                }
+                return tag.title
+            },
             generateRoute() {
                 if (this.$route.name) {
                     return this.$route;
@@ -59,7 +69,7 @@
                 return false;
             },
             isActive(route) {
-                return route.path === this.$route.path;
+                return (route.path === this.$route.path)&&(route.hash ===this.$route.hash);
             },
             addViewTags() {
                 const route = this.generateRoute();
@@ -72,7 +82,7 @@
                 const tags = this.$refs.tag;
                 this.$nextTick(() => {
                     for (const tag of tags) {
-                        if (tag.to.path === this.$route.path) {
+                        if (tag.to.fullpath === this.$route.fullpath) {
                             this.$refs.scrollPane.moveToTarget(tag.$el);
                             break;
                         }

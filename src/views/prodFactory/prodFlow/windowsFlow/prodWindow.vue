@@ -356,19 +356,19 @@
                 let sourceModule = val.sourceModel
                 if(prodRange == '基础产品' && sourceModule == "存款"){
                     //跳转到存款基础产品界面
-                    this.$router.push({ name: "RbBaseProds", params: { prodType: prodType} });
+                    this.$router.push({ name: "RbBaseProds", hash: prodType});
                 }
                 if(prodRange == '可售产品'&& sourceModule == "存款"){
                     //跳转到存款可售产品界面
-                    this.$router.push({ name: "RbSoldProds", params: { prodType: prodType} });
+                    this.$router.push({ name: "RbSoldProds", hash: prodType});
                 }
                 if(prodRange == '基础产品' && sourceModule == "贷款"){
                     //跳转到贷款基础产品界面
-                    this.$router.push({ name: "ClBaseProds", params: { prodType: prodType} });
+                    this.$router.push({ name: "ClBaseProds",hash: prodType});
                 }
                 if(prodRange == '可售产品'&& sourceModule == "贷款"){
                     //跳转到贷款可售产品界面
-                    this.$router.push({ name: "ClSoldProds", params: { prodType: prodType} });
+                    this.$router.push({ name: "ClSoldProds",hash: prodType});
                 }
             },
             getValue(val){

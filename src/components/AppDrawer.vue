@@ -32,7 +32,7 @@
               </v-list-tile>
               <template v-for="(subItem, i) in item.items">
                 <!--sub group-->
-                <v-list-group v-if="subItem.items" :key="subItem.name" :group="subItem.group" sub-group="sub-group">
+                <v-list-group v-if="subItem.items" :key="subItem.title" :group="subItem.group" sub-group="sub-group">
                   <v-list-tile slot="activator" ripple="ripple">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
@@ -140,10 +140,10 @@ export default {
       if (subItem.component) {
         return {
           name: subItem.component,
-          hash: subItem.name
+          hash: subItem.params
         };
       }
-      return { name: `${item.group}/${subItem.name}` };
+      return { name: `${item.group}/${subItem.params}` };
     }
   }
 };

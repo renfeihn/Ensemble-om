@@ -195,10 +195,7 @@
             routerTableInfo(item) {
                 this.$router.push({
                     name: 'tableInfo',
-                    params: {
-                        'tableName': item.tableName,
-                        'tableDesc': item.tableDesc
-                    }
+                    hash: item.tableName
                 })
             },
             clickItem(index) {

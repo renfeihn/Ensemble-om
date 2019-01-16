@@ -10,7 +10,7 @@
           <tags-view></tags-view>
           <div class="px-4">
             <keep-alive :include='cachedViews'>
-            <router-view></router-view>
+            <router-view :key="key"></router-view>
             </keep-alive>
           </div>
            <!-- App Footer -->
@@ -87,6 +87,9 @@ export default {
     }
   }),
     computed: {
+        key() {
+            return this.$route.fullPath
+        },
         cachedViews() {
             return this.$store.state.tagsView.cachedViews;
         }
