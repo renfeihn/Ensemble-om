@@ -247,6 +247,16 @@
     },
     "columnDesc": "结息周期"
   },
+  "PERIOD_FREQ": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "PERIOD_FREQ",
+      "columnDesc": "PERIOD_FREQ_DESC",
+      "tableName": "FM_PERIOD_FREQ"
+    },
+    "columnDesc": "周期"
+  },
   "LOWER_PROD": {
     "columnType": "select",
     "valueMethod": "RF",

@@ -112,7 +112,6 @@
             ],
             prodTypeList: {},
             prodClassList: {},
-            prodDefinesList: {},
             prodTemp: []
         }),
         watch: {
@@ -138,10 +137,6 @@
                     this.prodListDtl = response.data.data
                     this.title = "产品总数"
                     this.titleSum = response.data.data.length
-                });
-                //获取所有prodDefines
-                getAllDefines().then(response => {
-                    this.prodDefinesList = response.data.data
                 });
                 //获取所有prodClass
                 getProdClassList().then(response => {

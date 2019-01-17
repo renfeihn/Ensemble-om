@@ -193,7 +193,7 @@
                 for(const index in dataSource){
                     dataSource[index].pageSeqNo=parseInt(index)+1;
                     let key = dataSource[index].key;
-                    this._props.prodDefines[key].pageSeqNo = parseInt(index)+1;
+                    this._props.attrColumnInfo[key].pageSeqNo = parseInt(index)+1;
                 }
                 this.saveColumn();
                 //拖动后改变column数组

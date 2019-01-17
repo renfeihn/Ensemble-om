@@ -16,35 +16,11 @@
                 <v-card>
                     <v-card-text>
                         <v-layout wrap>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.eventType" :options="rfInfo.EVENT_TYPE.value" labelDesc="事件类型"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.intClass" :options="rfInfo.INT_CLASS.value" labelDesc="利息分类"></dc-select>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selected.intType" :options="rfInfo.INT_TYPE" labelDesc="利率代码"></dc-select>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
-                                <dc-select :isMultiSelect="false" v-model="selected.intType" :options="rfInfo.INT_TYPE.value" labelDesc="利率代码"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6>
-                                <dc-select :isMultiSelect="false" v-model="selected.intCalcBal" :options="rfInfo.INT_CALC_BAL.value" labelDesc="计息方式"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.rateAmtId" :options="rfInfo.RATE_AMT_ID.value" labelDesc="利率计算金额编码"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.intAmtId" :options="rfInfo.INT_AMT_ID.value" labelDesc="利息计算金额编码"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.monthBasis" :options="rfInfo.MONTH_BASIS.value" labelDesc="月基准"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.intApplType" :options="rfInfo.INT_APPL_TYPE.value" labelDesc="利率启用方式"></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.intDaysType" :options="rfInfo.INT_DAYS_TYPE.value" labelDesc="靠档天数计算方式 "></dc-select>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-select :isMultiSelect="false" v-model="selected.taxType" :options="rfInfo.TAX_TYPE.value" labelDesc="税率类型 "></dc-select>
+                                <dc-select :isMultiSelect="false" v-model="selected.intCalcBal" :options="rfInfo.INT_CALC_BAL" labelDesc="计息方式"></dc-select>
                             </v-flex>
                             <v-flex xs12 sm6 m6>
                                 <dc-text labelDesc="最大利率" v-model="selected.maxRate"></dc-text>
@@ -52,14 +28,8 @@
                             <v-flex xs12 sm6 m6>
                                 <dc-text labelDesc="最小利率" v-model="selected.minRate"></dc-text>
                             </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-text labelDesc="利率变更周期" v-model="selected.rollFreq"></dc-text>
-                            </v-flex>
-                            <v-flex xs12 sm6 m6 v-if="!dialogEidt">
-                                <dc-text labelDesc="利率靠档标志" v-model="selected.intRateInd"></dc-text>
-                            </v-flex>
                             <v-flex xs12 sm6 m6>
-                                <dc-date v-model="selected.rollDay" labelDesc="下一个利率变更日"></dc-date>
+                                <dc-text v-model="selected.rollDay" labelDesc="下一个利率变更日"></dc-text>
                             </v-flex>
                         </v-layout>
                         <v-layout wrap>
@@ -75,7 +45,7 @@
             </v-dialog>
 
             <!--使用固定利率修改界面-->
-            <v-dialog v-model="dialogsFiexd" width="500">
+            <v-dialog v-model="dialogsFiexd" width="850">
                 <v-toolbar color="primary lighten-2" style="height: 50px">
                     <v-toolbar-title class="white--text" style="margin-top: -2%">{{ titleDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
@@ -84,14 +54,14 @@
                 <v-card v-if="dialogsFiexd">
                     <v-card-text>
                         <v-layout wrap>
-                            <v-flex xs12 sm12 m12>
-                                <dc-select :isMultiSelect="false" v-model="selectedFixed.eventType" :options="rfInfo.EVENT_TYPE.value" labelDesc="事件类型"></dc-select>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selectedFixed.periodFreq" :options="rfInfo.PERIOD_FREQ" labelDesc="存期"></dc-select>
                             </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-select :isMultiSelect="false" v-model="selectedFixed.intType" :options="rfInfo.INT_TYPE.value" labelDesc="利率代码"></dc-select>
+                            <v-flex xs12 sm6 m6>
+                                <dc-select :isMultiSelect="false" v-model="selectedFixed.intType" :options="rfInfo.INT_TYPE" labelDesc="利率代码"></dc-select>
                             </v-flex>
-                            <v-flex xs12 sm12 m12>
-                                <dc-text labelDesc="固定利率值" v-model="selectedFixed.fixedInt"></dc-text>
+                            <v-flex xs12 sm6 m6>
+                                <dc-text labelDesc="固定利率值" v-model="selectedFixed.fixedIntValue"></dc-text>
                             </v-flex>
                         </v-layout>
                         <v-layout wrap>
@@ -145,8 +115,8 @@
     import DcSelect from '@/components/widgets/DcSelectTable'
     import DcDate from '@/components/widgets/DcDateTable'
     import DcText from '@/components/widgets/DcTextTable'
-    import {getPkList} from '@/views/prodFactory/prodInfo/pkListColumnInfo'
     import columnInfo from '../../columnInfo'
+    import { getPkListColumnRf } from "@/api/url/prodInfo";
 
     export default {
         components: {columnInfo,DcSwitch,DcSelect,DcDate,DcText},
@@ -194,39 +164,22 @@
                     {dataIndex: 'branch', title: '机构',width: 80}
                 ],
                 fixedColumn: [
+                    {dataIndex: 'periodFreq', title: '存期',width: 100},
                     {dataIndex: 'eventType', title: '事件类型',width: 130},
                     {dataIndex: 'intType', title: '利率代码',width: 130},
                     {dataIndex: 'fixedIntValue', title: '固定利率值',width: 130}
                 ],
                 fixedInfos: [],
                 irlCodeInfo: [],
+                selectedFixedOld: {},
                 selectedFixed: {
+                    periodFreq: '',
                     eventType: '',
                     intType: '',
-                    fixedInt: ''
+                    fixedIntValue: ''
                 },
-                selected: {
-                    prodType: '',
-                    eventType: '',
-                    intClass: '',
-                    intType: '',
-                    intCalcBal: '',
-                    rateAmtId: '',
-                    intAmtId: '',
-                    monthBasis: '',
-                    minRate: '',
-                    maxRate: '',
-                    intApplType: '',
-                    rollFreq: '',
-                    rollDay: '20180909',
-                    intRateInd: '',
-                    intDaysType: '',
-                    taxType: '',
-                    splitId: '',
-                    splitType: 'PA',
-                    ruleid: 'NO',
-                    recalMethod: 'N'
-                },
+                selectedOld: {},
+                selected: {},
                 //利率相关参数集合
                 rateInfos: [],
                 irlPeriSplit: [],
@@ -237,44 +190,23 @@
                 irlBasisRate: [],
                 ccy: [],
                 branch: [],
+                legalPerson: '',
                 rfInfo: {
-                    EVENT_TYPE: {
-                        value: {},
-                    },
-                    INT_CLASS: {
-                        value: {}
-                    },
-                    INT_TYPE: {
-                        value: {}
-                    },
-                    INT_CALC_BAL: {
-                        value: {}
-                    },
-                    RATE_AMT_ID: {
-                        value: {}
-                    },
-                    INT_AMT_ID: {
-                        value: {}
-                    },
-                    MONTH_BASIS: {
-                        value: {}
-                    },
-                    INT_APPL_TYPE: {
-                        value: {}
-                    },
-                    ROLL_FREQ: {
-                        value: {}
-                    },
-                    INT_RATE_IND: {
-                        value: {}
-                    },
-                    INT_DAYS_TYPE: {
-                        value: {}
-                    },
-                    TAX_TYPE: {
-                        value: {}
-                    }
+                    EVENT_TYPE: [],
+                    INT_CLASS: [],
+                    INT_TYPE: [],
+                    INT_CALC_BAL: [],
+                    RATE_AMT_ID: [],
+                    INT_AMT_ID: [],
+                    MONTH_BASIS: [],
+                    INT_APPL_TYPE: [],
+                    ROLL_FREQ: [],
+                    INT_RATE_IND: [],
+                    INT_DAYS_TYPE: [],
+                    TAX_TYPE: [],
+                    PERIOD_FREQ: []
                 }
+
             };
         },
         watch: {
@@ -291,11 +223,14 @@
                 this.irlAmtSplit = val.irlProdIntInfos.irlAmtSplitList;
                 this.irlIntType = val.irlProdIntInfos.irlIntTypeList;
                 this.irlIntRate = val.irlProdIntInfos.irlIntRateList;
-                this.irlBasisRate = val.irlProdIntInfos.irlBasisRateList;
+                this.irlBasisRate = val.irlBasisRateList;
                 this.irlIntMatrix = val.irlIntMatrices;
-                //获取产品适用币种，机构信息
+                //获取产品适用币种，机构信息,法人信息
                 this.ccy = val.prodDefines.CCY.attrValue.split(",");
                 this.branch = val.prodDefines.PROD_BRANCH.attrValue.split(",");
+                if(val.prodDefines.LEGAL_PERSON != undefined && val.prodDefines.LEGAL_PERSON != "" && val.prodDefines.LEGAL_PERSON != null) {
+                    this.legalPerson = val.prodDefines.LEGAL_PERSON.attrValue
+                }
                 //加载事件对应利率 且利率计算模型为F-固定利率模型的利率值
                 this.getFixedIntRate(val);
                 //加载备选数据
@@ -311,11 +246,11 @@
                     let column = source[key];
                     if(column != undefined && column != 'undefined'){
                         if(source[key].valueMethod == 'VL'){
-                            rf[key].value = source[key].valueScore;
+                            rf[key] = source[key].valueScore;
                         }
                         if(source[key].valueMethod == 'RF' && source[key].valueScore != undefined && JSON.stringify(source[key].valueMethod) != '{}'){
-                            getPkList(source[key].valueScore,response => {
-                                rf[key].value=response
+                            getPkListColumnRf(source[key].valueScore).then(response => {
+                                rf[key]=response= response.data.data;
                             });
                         }
                     }
@@ -344,12 +279,23 @@
                 //通过irl_seq_no联合irl_int_martix表，irl_basis_rate表 获取基准利率值
                 for(let irlIndex in irlIntRateFixedArr) {
                     for (let matrixIndex in intMartix) {
-                        if (intMartix[matrixIndex].irlSeqNo === irlIntRateFixedArr[irlIndex].irlSeqNo) {
+                        if (intMartix[matrixIndex].irlSeqNo === irlIntRateFixedArr[irlIndex].irlSeqNo && intMartix[matrixIndex].company === this.legalPerson) {
                             let temp = {}
+                            //组装irl_prod_int信息
+                            temp["intClass"] = prodInt[prodIntIndex].intClass
+                            temp["splitType"] = prodInt[prodIntIndex].splitType
+                            temp["ruleid"] = prodInt[prodIntIndex].ruleid
                             temp["eventType"] = prodInt[prodIntIndex].eventType
                             temp["intType"] = prodInt[prodIntIndex].intType;
-                            //采用基础浮动利率 获取基准利率值
-                            temp["fixedIntValue"] = this.getUpRateValue(intMartix[matrixIndex].intBasis,irlIntRateFixedArr[irlIndex].ccy);
+                            //组装irl_int_martix参数
+                            temp["periodFreq"] = intMartix[matrixIndex].periodFreq
+                            temp["matrixNo"] = intMartix[matrixIndex].matrixNo
+                            //采用基础浮动利率 获取基准利率值,组装irl_base_rate数据
+                            let baseRate = this.getUpRateValue(intMartix[matrixIndex].intBasis,irlIntRateFixedArr[irlIndex].ccy);
+                            temp["fixedIntValue"] = baseRate.intBasisRate;
+                            temp["ccy"] = baseRate.ccy;
+                            temp["effectDate"] = baseRate.effectDate;
+                            temp["intBasis"] = baseRate.intBasis;
                             this.fixedInfos.push(temp);
                         }
                     }
@@ -359,47 +305,47 @@
             phqiClick(val){
                 this.irlCodeInfo = [];
                 let irlIntRateArr = [];
-                let intType = "";
-                let splitType = val.splitType;
-                let splitId = val.splitId;
-                if(splitType === "PA"){
-                    //先周期分段  再金额分段
-                    for(let periIndex in this.irlPeriSplit){
-                        if(this.irlPeriSplit[periIndex].periSplitId === splitId){
-                            let amtSplitId = this.irlPeriSplit[periIndex].amtSplitId
-                            for(let amtIndex in this.irlAmtSplit){
-                                if(this.irlAmtSplit[amtIndex].amtSplitId === amtSplitId){
-                                    intType = this.irlAmtSplit[amtIndex].intType;
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-                if(splitType === "AP"){
-                    //先金额分段 再周期分段
-                    for(let i in this.irlAmtSplit){
-                        if(this.irlAmtSplit[i].amtSplitId === splitId){
-                            let periSplitId = this.irlAmtSplit[i].periSplitId
-                            for(let j in this.irlPeriSplit){
-                                if(this.irlPeriSplit[j].periSplitId === periSplitId){
-                                    intType = this.irlPeriSplit[j].intType;
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
+                let intType = val.intType;
+//                let splitType = val.splitType;
+//                let splitId = val.splitId;
+//                if(splitType === "PA"){
+//                    //先周期分段  再金额分段
+//                    for(let periIndex in this.irlPeriSplit){
+//                        if(this.irlPeriSplit[periIndex].periSplitId === splitId){
+//                            let amtSplitId = this.irlPeriSplit[periIndex].amtSplitId
+//                            for(let amtIndex in this.irlAmtSplit){
+//                                if(this.irlAmtSplit[amtIndex].amtSplitId === amtSplitId){
+//                                    intType = this.irlAmtSplit[amtIndex].intType;
+//                                    break;
+//                                }
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }
+//                if(splitType === "AP"){
+//                    //先金额分段 再周期分段
+//                    for(let i in this.irlAmtSplit){
+//                        if(this.irlAmtSplit[i].amtSplitId === splitId){
+//                            let periSplitId = this.irlAmtSplit[i].periSplitId
+//                            for(let j in this.irlPeriSplit){
+//                                if(this.irlPeriSplit[j].periSplitId === periSplitId){
+//                                    intType = this.irlPeriSplit[j].intType;
+//                                    break;
+//                                }
+//                            }
+//                            break;
+//                        }
+//                    }
+//                }
                 //通过利率类型,产品适用币种，机构获取最新的irlIntRate表利率信息集合
                 irlIntRateArr = this.getIrlIntMatrix(intType);
                 // 通过irlIntRateArr集合，逐条通过irlSeqNo 获取irlIntMatrix利率信息矩阵信息
                 for(let irlIndex in irlIntRateArr) {
                     for (let matrixIndex in this.irlIntMatrix) {
-                        if (this.irlIntMatrix[matrixIndex].irlSeqNo === irlIntRateArr[irlIndex].irlSeqNo) {
+                        if (this.irlIntMatrix[matrixIndex].irlSeqNo === irlIntRateArr[irlIndex].irlSeqNo && irlIntRateArr[irlIndex].company === this.legalPerson) {
                             let temp = {}
-                            temp["depositDate"] = "";
+                            temp["depositDate"] = this.irlIntMatrix[matrixIndex].periodFreq
                             temp["amt"] = this.irlIntMatrix[matrixIndex].matrixAmt;
                             temp["intType"] = intType;
                             let floatPer = this.irlIntMatrix[matrixIndex].spreadPercent;
@@ -410,7 +356,7 @@
                                 temp["prodIntValue"] = this.irlIntMatrix[matrixIndex].actualRate;
                             }else{
                                 //采用基础浮动利率 获取基准利率值
-                                let baseIntValue = this.getUpRateValue(this.irlIntMatrix[matrixIndex].intBasis,irlIntRateArr[irlIndex].ccy);
+                                let baseIntValue = this.getUpRateValue(this.irlIntMatrix[matrixIndex].intBasis,irlIntRateArr[irlIndex].ccy).intBasisRate
                                 temp["baseIntValue"] = baseIntValue;
                                 //计算实际利率 = 基准利率*（1+（浮动/100)）保留小数点后8位
                                 temp["prodIntValue"] = this.calculateActualRate(baseIntValue,floatPer);
@@ -441,7 +387,7 @@
                         }
                     }
                 }
-                return tempBasis[0].intBasisRate;
+                return tempBasis[0];
             },
             //通过利率类型，产品适用币种，产品适用机构，获取最新利率矩阵信息
             getIrlIntMatrix(intType){
@@ -505,7 +451,17 @@
                         }
                     }
                 }
-                this.selected=record;
+                if(this.switchValue){
+                    this.selectedFixedOld = {}
+                    this.selectedFixed = {}
+                    this.selectedFixedOld = record
+                    this.selectedFixed = this.copy(record, this.selectedFixed);
+                }else {
+                    this.selectedOld = {}
+                    this.selected = {}
+                    this.selectedOld = record
+                    this.selected = this.copy(record, this.selected);
+                }
             },
             //修改事件
             onEdit () {
@@ -525,19 +481,25 @@
             },
             //主信息编辑保存事件
             submit() {
-                if(this.option == 'add'){
-                    let dataSource=this.rateInfos;
-                    this.selected.prodType = this.prodType;
-                    this.selected.splitType = 'PA';
-                    this.selected.ruleid = 'NO';
-                    this.selected.recalMethod = 'N';
-                    let selected=this.selected;
-                    dataSource.push(selected);
-                    this.dialogs=false;
-                }
+                let dataSource=this.rateInfos;
                 if(this.option =='edit')
                 {
-                    this.selected = {}
+                    //获取主键
+                    let prodType = this.selectedOld.prodType
+                    let eventType = this.selectedOld.eventType
+                    let intClass = this.selectedOld.intClass
+                    let splitId = this.selectedOld.splitId
+                    let ruleid = this.selectedOld.ruleid
+                    for(let index=0; index<dataSource.length; index++){
+                        if(dataSource[index].prodType === prodType && dataSource[index].eventType === eventType && dataSource[index].intClass === intClass && dataSource[index].splitId === splitId && dataSource[index].ruleid === ruleid){
+                            this.removeArr(dataSource,this.selectedOld)
+                            for(let key in this.selected){
+                                this.selectedOld[key] = this.selected[key]
+                            }
+                            dataSource.push(this.selectedOld)
+                            break;
+                        }
+                    }
                     this.dialogs=false;
                 }
             },
@@ -551,7 +513,78 @@
             },
             //固定利率信息 保存事件
             FixedSubmit(){
+                //如果修改的是利率类型||期限更新irl_prod_int  如果修改的是固定理利率  更新irl_int_matrix
+                let dataSource=this.fixedInfos;
+                 for(let key in this.selectedFixed) {
+                     if (key === "periodFreq" || key === "intType" || key === "fixedIntValue") {
+                         //更新irl_prod_int
+                         let prodType = this.selectedFixedOld.prodType
+                         let eventType = this.selectedFixedOld.eventType
+                         let intClass = this.selectedFixedOld.intClass
+                         let splitId = this.selectedFixedOld.splitId
+                         let ruleid = this.selectedFixedOld.ruleid
+                         for (let index = 0; index < dataSource.length; index++) {
+                             if (dataSource[index].prodType === prodType && dataSource[index].eventType === eventType && dataSource[index].intClass === intClass && dataSource[index].splitId === splitId && dataSource[index].ruleid === ruleid) {
+                                 this.removeArr(dataSource, this.selectedFixedOld)
+                                 this.selectedFixedOld[key] = this.selectedFixed[key]
+                                 dataSource.push(this.selectedFixedOld)
+                                 break;
+                             }
+                         }
+                     }
+//                     if (key === "fixedIntValue") {
+//                         //更新irl_int_base
+//                         let intBasis = this.selectedFixedOld.intBasis
+//                         let ccy = this.selectedFixedOld.ccy
+//                         let effectDate = this.selectedFixedOld.effectDate
+//                         for(let indexB=0; indexB<this.irlBasisRate.length; indexB++){
+//                             if(this.irlBasisRate[indexB].intBasis == intBasis && this.irlBasisRate[indexB].effectDate == effectDate && this.irlBasisRate[indexB].ccy == ccy){
+//                                 let temp = this.irlBasisRate[indexB];
+//                                 //更新irlBasisRate表
+//                                 this.irlBasisRate[indexB].intBasis = this.selectedFixed[key]
+//                                 //更新界面数据
+//                                 this.removeArr(dataSource, this.selectedFixedOld)
+//                                 this.selectedFixedOld[key] = this.selectedFixed[key]
+//                                 dataSource.push(this.selectedFixedOld)
+//                                 break;
+//                             }
+//                         }
+//                     }
+                 }
                 this.dialogsFiexd = false
+            },
+            //对象浅复制
+            copy(obj1,obj2) {
+                var obj = obj2||{};
+                for(let name in obj1){
+                    if(typeof obj1[name] === "object" && obj1[name]!== null){
+                        obj[name]= (obj1[name].constructor===Array)?[]:{};
+                        this.copy(obj1[name],obj[name]);
+                    }else{
+                        obj[name]=obj1[name];
+                    }
+                }
+                return obj;
+            },
+            //删除对象数组指定对象
+            removeArr(_arr, _obj) {
+                let length = _arr.length;
+                for (let i = 0; i < length; i++) {
+                    if (_arr[i] == _obj) {
+                        if (i == 0) {
+                            _arr.shift(); //删除并返回数组的第一个元素
+                            return _arr;
+                        }
+                        else if (i == length - 1) {
+                            _arr.pop();  //删除并返回数组的最后一个元素
+                            return _arr;
+                        }
+                        else {
+                            _arr.splice(i, 1); //删除下标为i的元素
+                            return _arr;
+                        }
+                    }
+                }
             }
         }
     };

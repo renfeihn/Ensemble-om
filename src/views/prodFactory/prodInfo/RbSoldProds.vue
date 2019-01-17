@@ -36,10 +36,10 @@
                             <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
-                            <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
-                            <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                            <!--<form-shift v-if="i.pageCode=='SHIFT'" v-bind:prodData="prodData"></form-shift>-->
-                            <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
+                        <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
+                        <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
+                        <prod-mapping v-if="i.pageCode=='MAPPING'" v-bind:prodData="prodData"></prod-mapping>
+                        <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -94,14 +94,15 @@
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
-    import ChargeDefine from './form/rbModel/ChargeDefine';
+    import ChargeDefine from './table/prodTables/mbProdCharge';
     import ProdListForm from './form/ProdListForm';
-    import RateInfo from './form/rbModel/RateInfo';
+    import RateInfo from './table/prodTables/irlProdInt';
     import FormShift from './form/rbModel/FormShift';
-    import AccountingInfo from './form/rbModel/AccountingInfo';
+    import AccountingInfo from './table/prodTables/glProdAccounting';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
+    import ProdMapping from './table/prodTables/glProdMapping';
 
     export default {
         name: 'RbSoldProds',
@@ -117,7 +118,8 @@
             RateInfo,
             FormShift,
             AccountingInfo,
-            DcTreeAttr
+            DcTreeAttr,
+            ProdMapping
         },
         data () {
             return {
@@ -149,14 +151,15 @@
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
+                    {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
                     {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
-                    {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
-                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
+                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'},
+                    {icon: 'filter_vintage', text: '产品映射', pageCode: 'MAPPING'}
                 ],
                 tagList: [],
                 files: [{

@@ -68,7 +68,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"mbProdCharge",copyFlag)
     backData.mbProdCharge = backVal
-    //核算信息
+    //核算信息q
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
     backData.glProdAccounting = backVal
@@ -79,6 +79,13 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     // backVal = []
     // tablesDeal(prodData,sourceProdData,backVal,"irlProdType",copyFlag)
     // backData.irlProdType = backVal
+    //利率信息处理
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"irlProdInt",copyFlag)
+    backData.irlProdInt = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"irlBasisRateList",copyFlag)
+    backData.irlBasisRateList = backVal
     return backData
 }
 /*
@@ -122,27 +129,44 @@ export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
     let ret = false;
     if(tables === "mbProdCharge"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].feeType === sourceProdData[tables][oldIndex].feeType){
-            ret = "true"
+            ret = true
         }
     }
     if(tables === "glProdAccounting"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].accountingStatus === sourceProdData[tables][oldIndex].accountingStatus){
-            ret = "true"
+            ret = true
         }
     }
     if(tables === "glProdMappings"){
-        if(prodData[tables][newIndex].mappingType === sourceProdData[tables][oldIndex].mappingType){
-            ret = "true"
+        if(prodData[tables][newIndex].mappingType === sourceProdData[tables][oldIndex].mappingType) {
+            ret = true
         }
     }
     if(tables === "irlProdType"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType){
-            ret = "true"
+            ret = true
         }
     }
+
+    ret = tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,tables);
+
     return ret;
 }
 
+export function tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,tables) {
+    if(tables === "irlProdInt"){
+        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].eventType === sourceProdData[tables][oldIndex].eventType && prodData[tables][newIndex].intClass === sourceProdData[tables][oldIndex].intClass){
+            if(prodData[tables][newIndex].splitId === sourceProdData[tables][oldIndex].splitId && prodData[tables][newIndex].ruleid === sourceProdData[tables][oldIndex].ruleid){
+                return true
+            }
+        }
+    }
+    if(tables === "irlBasisRateList"){
+        if(prodData[tables][newIndex].intBase === sourceProdData[tables][oldIndex].intBase && prodData[tables][newIndex].ccy === sourceProdData[tables][oldIndex].ccy && prodData[tables][newIndex].effectDate === sourceProdData[tables][oldIndex].effectDate){
+            return true
+        }
+    }
+}
 /*
  * @description 单表修改数据处理
  * @param newIndex 修改后数据循环下标
