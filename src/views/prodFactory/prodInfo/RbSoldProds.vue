@@ -27,7 +27,8 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                           <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DESC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="DESC"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodMapping="prodMapping" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
@@ -38,7 +39,7 @@
                             <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
                         <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
                         <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                        <prod-mapping v-if="i.pageCode=='MAPPING'" v-bind:prodData="prodData"></prod-mapping>
+                        <!--<prod-mapping v-if="i.pageCode=='MAPPING'" v-bind:prodData="prodData"></prod-mapping>-->
                         <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
                     </v-tab-item>
                 </v-tabs-items>
@@ -147,7 +148,8 @@
                 addColumnsRef: [],
                 addColumnInfos: [],
                 prodInfo: [
-                    {icon: 'account_balance', text: '基本信息', pageCode: 'BASE'},
+                    {icon: 'filter_vintage', text: '基本描述', pageCode: 'DESC'},
+                    {icon: 'account_balance', text: '产品信息', pageCode: 'BASE'},
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
@@ -158,8 +160,8 @@
                     {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
-                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'},
-                    {icon: 'filter_vintage', text: '产品映射', pageCode: 'MAPPING'}
+                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
+//                    {icon: 'filter_vintage', text: '产品映射', pageCode: 'MAPPING'}
                 ],
                 tagList: [],
                 files: [{
@@ -176,6 +178,10 @@
                 DEBT: {},
                 prodData: {
                     prodType: ''
+                },
+                prodMapping: {
+                    irlProdType: '',
+                    glProdMappingType: ''
                 },
                 sourceProdData: {},
                 targetData: {},
@@ -254,7 +260,14 @@
                     this.initEventAttr(reProd)
                     this.prodClass= this.prodData.prodType.prodClass
                     this.powerByLevel(this.prodClass);
-                    this.spinning= false
+                    this.spinning= false;
+                    //组装产品映射信息
+                    if(response.data.data.glProdMappings[0] != undefined) {
+                        this.prodMapping.glProdMappingType = response.data.data.glProdMappings[0].mappingType
+                    }
+                    if(response.data.data.irlProdTypes[0] != undefined) {
+                        this.prodMapping.irlProdType = response.data.data.irlProdTypes[0].prodType
+                    }
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== null){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
@@ -274,7 +287,14 @@
                     this.prodClass= this.prodData.prodType.prodClass
                     this.prodRange= this.prodData.prodType.prodRange
                     this.powerByLevel(this.prodClass);
-                    this.spinning= false
+                    this.spinning= false;
+                    //组装产品映射信息
+                    if(response.data.data.glProdMappings[0] != undefined) {
+                        this.prodMapping.glProdMappingType = response.data.data.glProdMappings[0].mappingType
+                    }
+                    if(response.data.data.irlProdTypes[0] != undefined) {
+                        this.prodMapping.irlProdType = response.data.data.irlProdTypes[0].prodType
+                    }
                 });
             }
         },
@@ -448,6 +468,10 @@
                     let columnKey = val[i].split("--")[0]
                     let columnDesc = val[i].split("--")[1]
                     //组装向mbProdDefine保存的数据对象
+                    if(addColumnPageCode === "DESC"){
+                        showFlag = 1
+                        toast.info("页签【基本描述】不允许增加参数！");
+                    }
                     if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT" || addColumnPageCode === "SHIFT") {
                         //获取新增参数pageSeqNo
                         let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData,addColumnPageCode,"pageSeqNo")+i+1

@@ -73,12 +73,12 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
     backData.glProdAccounting = backVal
     //产品映射(0115屏蔽对产品映射处理)
-    // backVal = []
-    // tablesDeal(prodData,sourceProdData,backVal,"glProdMappings",copyFlag)
-    // backData.glProdMappings = backVal
-    // backVal = []
-    // tablesDeal(prodData,sourceProdData,backVal,"irlProdType",copyFlag)
-    // backData.irlProdType = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"glProdMappings",copyFlag)
+    backData.glProdMappings = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"irlProdTypes",copyFlag)
+    backData.irlProdTypes = backVal
     //利率信息处理
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"irlProdInt",copyFlag)
@@ -99,8 +99,17 @@ export function tablesDeal(prodData,sourceProdData,backVal,tables,copyFlag){
     for (let newIndex = 0; newIndex < prodData[tables].length; newIndex++) {
         if(copyFlag == "Y"){
             let prodType = prodData.prodType.prodType;
+            let prodDesc = prodData.prodType.prodDesc;
             let temp = {newData: {}, oldData: {}, optType: ''}
             prodData[tables][newIndex].prodType = prodType;
+            if(tables === "glProdMappings"){
+                prodData[tables][newIndex].mappingType = prodType;
+                prodData[tables][newIndex].mappingDesc = prodDesc;
+                prodData[tables][newIndex].prodDesc = prodDesc;
+            }
+            if(tables === "irlProdTypes"){
+                prodData[tables][newIndex].prodTypeDesc = prodDesc;
+            }
             temp.newData = prodData[tables][newIndex]
             temp.optType = 'I'
             backVal.push(temp)

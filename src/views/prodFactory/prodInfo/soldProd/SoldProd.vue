@@ -55,6 +55,14 @@
                                 </v-layout>
                             </v-flex>
                         </draggable>
+                        <v-layout row wrap v-if="prodMapping!= undefined ">
+                            <v-flex md6 lg6>
+                                <dc-multiselect :isMultiSelect="false" v-model="prodMapping.irlProdType" :options="baseProdTypeOption" labelDesc="定价工厂映射产品" :disablePower="true"></dc-multiselect>
+                            </v-flex>
+                            <v-flex md6 lg6>
+                                <dc-multiselect :isMultiSelect="false" v-model="prodMapping.glProdMappingType" :options="baseProdTypeOption" labelDesc="核算映射产品" :disablePower="true"></dc-multiselect>
+                            </v-flex>
+                        </v-layout>
                     </v-layout>
                 </v-container>
             </div>
@@ -82,6 +90,7 @@
             prodDefines: String,
             tags: String,
             prodTypeCode: String,
+            prodMapping: String,
             attrColumnInfo: Object,
             baseAttr: {
                 type: String,
