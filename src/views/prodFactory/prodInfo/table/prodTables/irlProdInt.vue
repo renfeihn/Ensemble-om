@@ -493,6 +493,8 @@
                     for(let index=0; index<dataSource.length; index++){
                         if(dataSource[index].prodType === prodType && dataSource[index].eventType === eventType && dataSource[index].intClass === intClass && dataSource[index].splitId === splitId && dataSource[index].ruleid === ruleid){
                             this.removeArr(dataSource,this.selectedOld)
+                            this.selectedOld = this.selected
+
                             for(let key in this.selected){
                                 this.selectedOld[key] = this.selected[key]
                             }
@@ -526,6 +528,8 @@
                          for (let index = 0; index < dataSource.length; index++) {
                              if (dataSource[index].prodType === prodType && dataSource[index].eventType === eventType && dataSource[index].intClass === intClass && dataSource[index].splitId === splitId && dataSource[index].ruleid === ruleid) {
                                  this.removeArr(dataSource, this.selectedFixedOld)
+                                 this.selectedFixedOld = this.selectedFixed
+
                                  this.selectedFixedOld[key] = this.selectedFixed[key]
                                  dataSource.push(this.selectedFixedOld)
                                  break;

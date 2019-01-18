@@ -181,6 +181,7 @@ export default {
                 for(let index=0; index<dataSource.length; index++){
                     if(dataSource[index].feeType === feeType){
                         this.removeArr(dataSource,this.selectedOld)
+                        this.selectedOld = this.selected
                         dataSource.push(this.selected)
                         break;
                     }

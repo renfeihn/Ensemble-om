@@ -179,6 +179,7 @@
                     for(let index=0; index<dataSource.length; index++){
                         if(dataSource[index].accountingStatus === accountingStatus){
                             this.removeArr(dataSource,this.selectedOld)
+                            this.selectedOld = this.selected
                             dataSource.push(this.selected)
                             break;
                         }

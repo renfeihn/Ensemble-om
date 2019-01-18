@@ -26,16 +26,20 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DESC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" tags="DESC" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodMapping="prodMapping" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></base-prod>
+                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DISC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="DISC" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DRW" tags="DRW" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="REC" tags="REC" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DUE" tags="DUE" :disablePower="disablePower"></base-prod>
                         <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
+                        <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
+                        <prod-amend v-if="i.pageCode=='AMEND'" v-bind:prodData="prodData"></prod-amend>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -86,14 +90,13 @@
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
-    import ChargeDefine from './form/rbModel/ChargeDefine';
     import ProdListForm from './form/ProdListForm';
-    import RateInfo from './form/rbModel/RateInfo';
-    import FormShift from './form/rbModel/FormShift';
-    import AccountingInfo from './form/rbModel/AccountingInfo';
+    import AccountingInfo from './table/prodTables/glProdAccounting';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
+    import RateInfo from './table/prodTables/irlProdInt';
+    import ProdAmend from './table/prodTables/mbProdAmendMapping';
 
     export default {
         name: 'RbBaseProds',
@@ -105,11 +108,10 @@
             ProdListForm,
             PendingForm,
             columnInfo,
-            ChargeDefine,
             RateInfo,
-            FormShift,
             AccountingInfo,
-            DcTreeAttr
+            DcTreeAttr,
+            ProdAmend
         },
         data () {
             return {
@@ -138,18 +140,26 @@
                 DUE: {},
                 showEdit: false,
                 baseAttr: true,
+                prodMapping: {
+                    irlProdType: '',
+                    glProdMappingType: ''
+                },
                 addColumnsRef: [],
                 addColumnInfos: [],
                 prodInfo: [
-                    {icon: 'account_balance', text: '基本信息', pageCode: 'BASE'},
+                    {icon: 'filter_vintage', text: '基本描述', pageCode: 'DESC'},
+                    {icon: 'account_balance', text: '产品信息', pageCode: 'BASE'},
                     {icon: 'filter_vintage', text: '账户信息', pageCode: 'ACCT'},
                     {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
                     {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
                     {icon: 'filter_vintage', text: '放款定义', pageCode: 'DRW'},
+                    {icon: 'filter_vintage', text: '贴息定义', pageCode: 'DISC'},
                     {icon: 'filter_vintage', text: '还款定义', pageCode: 'REC'},
                     {icon: 'filter_vintage', text: '到期定义', pageCode: 'DUE'},
+                    {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
+                    {icon: 'filter_vintage', text: '变更信息', pageCode: 'AMEND'},
                     {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
                 ],
                 tagList: [],
@@ -246,7 +256,14 @@
                     this.initEventAttr(reProd)
                     this.prodClass= this.prodData.prodType.prodClass
                     this.powerByLevel(this.prodClass);
-                    this.spinning= false
+                    this.spinning= false;
+                    //组装产品映射信息
+                    if(response.data.data.glProdMappings[0] != undefined) {
+                        this.prodMapping.glProdMappingType = response.data.data.glProdMappings[0].mappingType
+                    }
+                    if(response.data.data.irlProdTypes[0] != undefined) {
+                        this.prodMapping.irlProdType = response.data.data.irlProdTypes[0].prodType
+                    }
                 });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== undefined){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
@@ -266,7 +283,14 @@
                     this.prodClass= this.prodData.prodType.prodClass
                     this.prodRange= this.prodData.prodType.prodRange
                     this.powerByLevel(this.prodClass);
-                    this.spinning= false
+                    this.spinning= false;
+                    //组装产品映射信息
+                    if(response.data.data.glProdMappings[0] != undefined) {
+                        this.prodMapping.glProdMappingType = response.data.data.glProdMappings[0].mappingType
+                    }
+                    if(response.data.data.irlProdTypes[0] != undefined) {
+                        this.prodMapping.irlProdType = response.data.data.irlProdTypes[0].prodType
+                    }
                 });
             }
         },
@@ -440,7 +464,11 @@
                         let columnKey = val[i].split("--")[0]
                         let columnDesc = val[i].split("--")[1]
                         //组装向mbProdDefine保存的数据对象
-                        if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT" || addColumnPageCode === "INT") {
+                        if(addColumnPageCode === "DESC"){
+                            showFlag = 1
+                            toast.info("页签【基本描述】不允许增加参数！");
+                        }
+                        if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT" || addColumnPageCode === "INT" || addColumnPageCode === "DISC") {
                             //获取新增参数pageSeqNo
                             let addColumnPageSeqNo = this.getDefinedMaxSeqNo(this.prodData, addColumnPageCode, "pageSeqNo") + i + 1
                             //获取新增参数SeqNo
