@@ -153,20 +153,24 @@
                         dates = this._props.msg.attrValue
                         this.optionPermissions = this._props.msg.optionPermissions
                     }
-                    dates=dates.toString()
-                    let time = dates.substring(0, 4) + "-" + dates.substring(4, 6) + "-" + dates.substring(6)
-                    this.dateFormatted = time
+                    if(dates != null && dates != "" && dates != undefined) {
+                        dates = dates.toString()
+                        let time = dates.substring(0, 4) + "-" + dates.substring(4, 6) + "-" + dates.substring(6)
+                        this.dateFormatted = time
+                    }
                 }
             },
             reback(newValue){
-                let dateFormatted = "";
-                dateFormatted = newValue.substring(0,4)+newValue.substring(5,7)+newValue.substring(8)
-                if(this._props.msg === undefined){
-                    this._props.msg = dateFormatted
-                }else{
-                    this._props.msg.attrValue = dateFormatted
+                if(newValue != "" && newValue != null && newValue != undefined) {
+                    let dateFormatted = "";
+                    dateFormatted = newValue.substring(0, 4) + newValue.substring(5, 7) + newValue.substring(8)
+                    if (this._props.msg === undefined) {
+                        this._props.msg = dateFormatted
+                    } else {
+                        this._props.msg.attrValue = dateFormatted
+                    }
+                    this.$emit("getVue", this._props.msg);
                 }
-                this.$emit("getVue", this._props.msg);
             }
         }
     }
