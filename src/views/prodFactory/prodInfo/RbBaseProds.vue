@@ -205,7 +205,7 @@
                 }
             }
         },
-        mounted: function() {
+        created (){
             this.initColumnInfo();
             // 监听这个dom的scroll事件
             window.addEventListener('scroll', () => {

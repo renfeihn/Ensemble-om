@@ -12,7 +12,9 @@
                 <v-flex md6 lg6>
                     <div ref="select">
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang" @open="selectRef"
-                                     :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                                     :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow"
+                                     :limit="limitNum" :limit-text="limitTextFaction"
+                        >
                             <template slot="option" slot-scope="props"><span>{{props.option.key}}-{{props.option.value}}</span></template>
                             <template slot="afterList" slot-scope="props">
                                 <div v-if="rfTableInfo.isRf" style="text-align: left">
@@ -23,6 +25,14 @@
                                         <span>跳转到{{rfTableInfo.tableName}}</span>
                                     </v-tooltip>
                                 </div>
+                            </template>
+                            <template slot="limit" slot-scope="props">
+                                <th>
+                                <span>还有{{limitIndex}}个为展示选项</span>
+                                <v-btn flat small icon="people" slot="activator" @click="changeLimitNum">
+                                    <v-icon>reply_all</v-icon>
+                                </v-btn>
+                                </th>
                             </template>
                             <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
                         </multiselect>
@@ -65,6 +75,7 @@
             isMultiSelect: String,
             perShow: String,
             labelDesc: String,
+            limitIndex: 0,
             baseAttr: {
                 type: String,
                 default: "SOLD"
@@ -85,6 +96,7 @@
                 fab: false,
                 personShow: 0,
                 isMulti: true,
+                limitNum: 2,
                 show: false,
                 baseAttr: "",
                 isOpen: 'fas fa-eye',
@@ -204,6 +216,12 @@
             }
         },
         methods: {
+            changeLimitNum () {
+                this.limitNum=9999
+            },
+            limitTextFaction (count) {
+                this.limitIndex=count
+            },
             toMoreTable (){
                 this.isToMoreTable= true;
                 this.$router.push({
