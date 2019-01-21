@@ -142,22 +142,22 @@ export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
     let ret = false;
     if(tables === "mbProdCharge"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].feeType === sourceProdData[tables][oldIndex].feeType){
-            ret = true
+            return true
         }
     }
     if(tables === "glProdAccounting"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].accountingStatus === sourceProdData[tables][oldIndex].accountingStatus){
-            ret = true
+            return true
         }
     }
     if(tables === "glProdMappings"){
         if(prodData[tables][newIndex].mappingType === sourceProdData[tables][oldIndex].mappingType) {
-            ret = true
+            return true
         }
     }
     if(tables === "irlProdType"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType){
-            ret = true
+            return true
         }
     }
 
