@@ -1,0 +1,141 @@
+<template>
+    <v-layout class="pt-1">
+        <v-flex md3 lg3 class="ml-3">
+            <v-card class="pt-1 elevation-1">
+                <v-list>
+                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)">
+                        <v-list-tile-content>
+                            <v-list-tile-title style="font-size: medium">{{ item.key }}-{{ item.lable }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-card>
+            <v-card class="mt-1">
+                <v-list>
+                    <v-list-tile v-for="item in titleListCheck" :key="item.key" @click="chipClickCheck(key)">
+                        <v-list-tile-content>
+                            <v-list-tile-title style="font-size: medium">{{item.desc}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-card>
+        </v-flex>
+        <v-flex md9 lg9 v-show="fixed == false">
+            <base-table :tableData="selectInfo" :keySet="keySet"></base-table>
+        </v-flex>
+        <v-flex md9 lg9 v-show="fixed == true" class="ml-2">
+            <a-table :columns="columnsFixed" :dataSource="accountingFixed" bordered>
+            </a-table>
+        </v-flex>
+    </v-layout>
+</template>
+
+<script>
+    import { getAllProdList } from '@/api/url/prodInfo';
+    import { getAllDefines } from '@/api/url/prodInfo';
+    import { getProdClassList } from '@/api/url/prodInfo';
+    import DcTextField from "@/components/widgets/DcTextField";
+    import {getParamTable} from "@/api/url/prodInfo";
+    import BaseTable from "./baseProdTable"
+    import {
+        getProdType
+    } from '@/api/url/prodInfo'
+    export default {
+        components: {DcTextField,BaseTable},
+        props: ["prodData"],
+        data: () => ({
+            titleList: [],
+            fixed: false,
+            titleListCheck: [
+                {
+                    key: "checkSub",
+                    desc: "需要进行总分核对的科目"
+                }
+            ],
+            prodAccounting: [],
+            mbAccountingStatus: [],
+            selectInfo: {},
+            keySet: {
+                prodType: "prodType",
+                accountingStatus: "accountingStatus"
+            },
+            columnsFixed: [
+                {dataIndex: 'status', title: '核算状态'},
+                {dataIndex: 'amtType', title: '金额类型'},
+                {dataIndex: 'glCodeCol', title: '科目映射'},
+            ],
+            accountingFixed: []
+        }),
+        watch: {
+            prodData (val) {
+                this.getProdAccounting(val)
+                this.initTitle()
+            }
+        },
+        created() {
+            //查询所有产品信息
+            this.initTitle()
+        },
+        mounted: function() {
+            console.log("test")
+        },
+        methods: {
+            getProdAccounting(val) {
+                let that = this
+                //获取基本信息
+                if(val!=undefined&&val.prodType!=undefined){
+                    that.prodAccounting = val.glProdAccounting
+                }
+                this.accountingFixed = val.glProdCodeMappings
+            },
+            initTitle() {
+                //加载列表信息
+                let that = this
+                that.titleList = []
+                //获取费用信息
+                getParamTable("MB_ACCOUNTING_STATUS").then(function (response) {
+                    that.mbAccountingStatus = response.data.data.columnInfo;
+                });
+                for(let index in that.prodAccounting){
+                    let temp = {}
+                    temp["key"] = that.prodAccounting[index].accountingStatus
+                    for(let key in that.mbAccountingStatus){
+                        if(that.prodAccounting[index].accountingStatus == that.mbAccountingStatus[key].ACCOUNTING_STATUS){
+                            temp["lable"] = that.mbAccountingStatus[key].ACCOUNTING_STATUS_DESC
+                            break;
+                        }
+                    }
+                    that.titleList.push(temp)
+                }
+                //初始化第一条参数
+                if(that.prodAccounting.length) {
+                    that.selectInfo = that.prodAccounting[0]
+                }
+            },
+            chipClick(val){
+                this.fixed = false
+                let feeType = val.key
+                this.selectInfo = {}
+                for(let index in this.prodAccounting){
+                    if(this.prodAccounting[index].accountingStatus === feeType){
+                        this.selectInfo = this.prodAccounting[index]
+                        break
+                    }
+                }
+            },
+            chipClickCheck(val){
+                this.fixed = true
+                this.selectInfo = {}
+            }
+        }
+    }
+</script>
+<style scoped>
+    .prodList {
+        color: #00b0ff;
+        margin-left: -10px;
+    }
+    .title {
+        color: white;margin-left: auto;margin-right: auto;margin-top: 1px;margin-bottom: auto
+    }
+</style>

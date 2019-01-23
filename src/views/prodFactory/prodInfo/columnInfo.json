@@ -522,6 +522,11 @@
     "columnDesc": "最大起存金额",
     "money": "true"
   },
+  "INT_BASE_RATE": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "固定利率值"
+  },
   "PB_FLAG": {
     "columnType": "switch",
     "valueMethod": "YN",
@@ -881,15 +886,37 @@
   },
   "FEE_TYPE": {
     "columnType": "select",
-    "valueMethod": "VL",
-    "valueScore": [
-      {
-        "value": "卡年费",
-        "key": "V24"
-      }
-    ],
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "FEE_TYPE",
+      "columnDesc": "FEE_DESC",
+      "tableName": "IRL_FEE_TYPE"
+    },
     "columnDesc": "费用类型"
   },
+
+  "ACCOUNTING_STATUS": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "ACCOUNTING_STATUS",
+      "columnDesc": "ACCOUNTING_STATUS_DESC",
+      "tableName": "MB_ACCOUNTING_STATUS"
+    },
+    "columnDesc": "核算状态"
+  },
+
+  "CHARGE_PERIOD_FREQ": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "PERIOD_FREQ",
+      "columnDesc": "PERIOD_FREQ_DESC",
+      "tableName": "FM_PERIOD_FREQ"
+    },
+    "columnDesc": "收取频率"
+  },
+
   "CHECK_PROD_STATUS": {
     "columnType": "switch",
     "valueMethod": "YN",
@@ -993,6 +1020,11 @@
     "columnType": "input",
     "valueMethod": "FD",
     "columnDesc": "最大放款次数"
+  },
+  "CHARGE_DAY": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "收费日"
   },
   "GUARANTY_STYLE": {
     "columnType": "select",
@@ -1632,6 +1664,11 @@
     "money": "true"
   },
   "INT_ROLL_FREQ": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "利率变更周期"
+  },
+  "ROLL_FREQ": {
     "columnType": "input",
     "valueMethod": "FD",
     "columnDesc": "利率变更周期"
@@ -2429,10 +2466,25 @@
     "valueMethod": "FD",
     "columnDesc": "晚起息最大天数"
   },
+  "CON_DEDUCT_TIMES": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "持续扣款次数"
+  },
+  "ROLL_DAY": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "下一利率变更日"
+  },
   "PROD_START_DATE": {
     "columnType": "date",
     "valueMethod": "FD",
     "columnDesc": "生效日期"
+  },
+  "NEXT_CHARGE_DATE": {
+    "columnType": "date",
+    "valueMethod": "FD",
+    "columnDesc": "下一收费日期"
   },
   "AUTO_HANG_FLAG": {
     "columnType": "switch",
@@ -2459,6 +2511,40 @@
     ],
     "columnDesc": "担保行付款责任"
   },
+  "CHARGE_DEAL_METHOD": {
+    "columnType": "select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "10",
+        "value": "实时生效"
+      },
+      {
+        "key": "11",
+        "value": "日终处理"
+      }
+    ],
+    "columnDesc": "收费处理方式"
+  },
+
+
+  "CON_DEDUCT_FLAG": {
+    "columnType": "select",
+    "valueMethod": "VL",
+    "valueScore": [
+      {
+        "key": "Y",
+        "value": "持续扣款"
+      },
+      {
+        "key": "N",
+        "value": "非持续扣款"
+      }
+    ],
+    "columnDesc": "持续扣款标识"
+  },
+
+
   "DUE_AUTO_UNFREEZE": {
     "columnType": "switch",
     "valueMethod": "YN",
@@ -2605,6 +2691,13 @@
     "valueMethod": "FD",
     "columnDesc": "卡BIN"
   },
+
+  "BUSINESS_UNIT": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "帐套"
+  },
+
   "PROFIT_CENTRE": {
     "columnType": "select",
     "valueMethod": "RF",
@@ -2615,6 +2708,39 @@
     },
     "columnDesc": "利润中心"
   },
+  "GL_CODE_L": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "负债科目"
+  },
+
+  "GL_CODE_INT_E": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "利息支出科目 "
+  },
+
+  "GL_CODE_INT_PAY": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应付利息科目"
+  },
+
   "STRUCTURE_TYPE": {
     "columnType": "input",
     "valueMethod": "FD",
@@ -3147,6 +3273,16 @@
     "valueMethod": "FD",
     "columnDesc": "最大逾期天数"
   },
+  "MIN_RATE": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "最小利率"
+  },
+  "MAX_RATE": {
+    "columnType": "input",
+    "valueMethod": "FD",
+    "columnDesc": "最大利率"
+  },
   "WITHDRAWAL_TYPE": {
     "columnType": "select",
     "valueMethod": "VL",
@@ -3281,9 +3417,9 @@
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": {
-      "tableName": "MB_EVENT_CLASS",
-      "columnCode": "EVENT_CLASS",
-      "columnDesc": "EVENT_CLASS_DESC"
+      "tableName": "MB_EVENT_DEFAULT_TYPE",
+      "columnCode": "EVENT_DEFAULT_TYPE",
+      "columnDesc": "EVENT_DEFAULT_DESC"
     }
   },
   "INT_TYPE": {
@@ -3345,6 +3481,10 @@
       {
         "key": "WYINT",
         "value": "WYINT-违约利息"
+      },
+      {
+        "key": "INTPRE",
+        "value": "INTPRE-前付息"
       }
     ]
   },
@@ -3370,23 +3510,23 @@
   },
   "RATE_AMT_ID": {
     "valueMethod": "RF",
-    "columnDesc": "利率计算金额编码",
+    "columnDesc": "利率计算编码",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": {
       "tableName": "IRL_AMT_EXPRESSION",
-      "columnCode": "EXPRESSION",
+      "columnCode": "EXPRESS_ID",
       "columnDesc": "EXPRESSION_DESC"
     }
   },
   "INT_AMT_ID": {
     "valueMethod": "RF",
-    "columnDesc": "利息计算金额编码",
+    "columnDesc": "利息计算编码",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": {
       "tableName": "IRL_AMT_EXPRESSION",
-      "columnCode": "EXPRESSION",
+      "columnCode": "EXPRESS_ID",
       "columnDesc": "EXPRESSION_DESC"
     }
   },
@@ -3406,9 +3546,28 @@
       }
     ]
   },
+
+  "INT_RATE_IND": {
+    "valueMethod": "VL",
+    "columnDesc": "利率靠档标志",
+    "columnType": "select",
+    "isMultiSelect": false,
+    "valueScore": [
+      {
+        "key": "Y",
+        "value": "Y-靠档"
+      },
+      {
+        "key": "N",
+        "value": "N-不靠档"
+      }
+    ]
+  },
+
+
   "INT_DAYS_TYPE": {
     "valueMethod": "VL",
-    "columnDesc": "靠档天数计算方式",
+    "columnDesc": "靠档天数方式",
     "columnType": "select",
     "isMultiSelect": false,
     "valueScore": [

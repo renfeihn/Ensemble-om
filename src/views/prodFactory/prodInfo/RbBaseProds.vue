@@ -36,9 +36,9 @@
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></base-prod>
-                            <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
-                            <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                            <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
+                            <prod-charge v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></prod-charge>
+                            <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                            <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -91,6 +91,10 @@
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
     import ChargeDefine from './table/prodTables/mbProdCharge';
+    import ProdCharge from './table/prodTables/prodCharge';
+    import ProdAccounting from './table/prodTables/prodAccounting';
+    import ProdInt from './table/prodTables/prodInt';
+
     import ProdListForm from './form/ProdListForm';
     import RateInfo from './table/prodTables/irlProdInt';
     import FormShift from './form/rbModel/FormShift';
@@ -106,6 +110,7 @@
             VWidget,
             BaseProd,
             SoldProd,
+            ProdAccounting,
             downAction,
             ProdListForm,
             PendingForm,
@@ -115,7 +120,9 @@
             FormShift,
             AccountingInfo,
             DcTreeAttr,
-            ProdMapping
+            ProdMapping,
+            ProdCharge,
+            ProdInt
         },
         data () {
             return {
@@ -160,7 +167,6 @@
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
                     {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
-//                    {icon: 'filter_vintage', text: '产品映射', pageCode: 'MAPPING'}
                 ],
                 tagList: [],
                 files: [{
@@ -596,22 +602,6 @@
 </script>
 
 <style scoped>
-    .addClass {
-        color: white;
-        margin-left: 20%;
-        font-size: large;
-    }
-    .addBtn {
-        margin-top: -10px;
-        width: 160px
-    }
-    .depositTreeFixed {
-        position: fixed;
-        top: 63px;
-        overflow-y: scroll;
-        height: 100%;
-        width: 24%;
-    }
     .textProd{
         min-height: calc(90vh - 24px);
         padding-bottom: 120px;

@@ -119,15 +119,23 @@
         watch: {
             msg: {
                 handler(msg) {
-                    if(typeof msg !== "undefined"&&msg!== null) {
-                        this.init(typeof msg === "object" ? msg.attrValue : msg);
+                    if(typeof msg !== "undefined") {
+                        let val = msg
+                        if(typeof msg === "object" && msg !== null){
+                            val = msg.attrValue
+                        }
+                        this.init(val);
                     }
                 }
             },
             options: {
                 handler(newValue,oldValue){
                     if(this._props.msg !== "undefined"&&this._props.msg !== undefined){
-                        this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg)
+                        if(typeof this._props.msg === "object" && this._props.msg !== null){
+                            this.init(this._props.msg.attrValue)
+                        }else{
+                            this.init(this._props.msg)
+                        }
                     }
                 },
                 deep: true
@@ -188,7 +196,11 @@
         },
         created() {
             if(typeof this._props.msg !== "undefined") {
-                this.init(typeof this._props.msg === "object" ? this._props.msg.attrValue : this._props.msg);
+                if(typeof this._props.msg === "object" && this._props.msg !== null){
+                    this.init(this._props.msg.attrValue)
+                }else{
+                    this.init(this._props.msg)
+                }
             }
             //初始化描述
             if(typeof this._props.labelDesc !== "undefined") {
@@ -211,8 +223,10 @@
                     that.screenWidth = window.screenWidth
                 })()
             }
-            if(this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0){
-                this.jumpWidth = this.$refs.select.clientWidth-25
+            if(this.$refs.select != undefined) {
+                if (this.$refs.select.clientWidth != undefined || this.$refs.select.clientWidth != 0) {
+                    this.jumpWidth = this.$refs.select.clientWidth - 25
+                }
             }
         },
         methods: {
@@ -234,7 +248,7 @@
             },
             dealNewAttr(val) {
                 //新增参数延迟展示
-                if(val !== undefined && val.newAttr) {
+                if(val != null && val !== undefined && val.newAttr) {
                     let t;
                     clearTimeout(t)
                     let that = this;
@@ -316,12 +330,14 @@
                     this.labelText = this._props.labelDesc + ' :';
                 }
                 //根据产品配置信息，初始化分户生效标志
-                if(this._props.msg.perEffect !== undefined && this._props.msg.perEffect === "true"){
-                    this.peopleColor = "red"
-                    this.peopleDesc = "分户生效"
-                }else{
-                    this.peopleColor = "grey lighten-1"
-                    this.peopleDesc = "产品生效"
+                if(this._props.msg != null && this._props.msg != undefined) {
+                    if (this._props.msg.perEffect !== undefined && this._props.msg.perEffect === "true") {
+                        this.peopleColor = "red"
+                        this.peopleDesc = "分户生效"
+                    } else {
+                        this.peopleColor = "grey lighten-1"
+                        this.peopleDesc = "产品生效"
+                    }
                 }
             },
             initProperty() {
