@@ -1,67 +1,72 @@
 import request from '@/utils/request';
-
+import {asyncPost} from '@/utils/ajaxNoAsync';
 export function getDepositProdInfo (params) {
-  return request({
-    url: '/getProdInfo',
-    method: 'get',
-    params
-  });
+    return request({
+        url: '/getProdInfo',
+        method: 'get',
+        params
+    });
 }
 export function getDepositProdListTow (params) {
-  return request({
-    url: '/prod/towDeposit',
-    method: 'get',
-    params
-  });
+    return request({
+        url: '/prod/towDeposit',
+        method: 'get',
+        params
+    });
 }
 export function getDepositProdList (params) {
-  return request({
-    url: '/prod/prodList',
-    method: 'get',
-    params
-  });
+    return request({
+        url: '/prod/prodList',
+        method: 'get',
+        params
+    });
 }
 export function getInitData (params) {
-  return request({
-    url: '/init/initRefData',
-    method: 'get',
-    params
-  });
+    return request({
+        url: '/init/initRefData',
+        method: 'get',
+        params
+    });
 }
 export function getDiffProd (params) {
     const data = {
-      params
+        params
     }
-  return request({
-    url: '/prod/getDiffProd',
-    method: 'post',
-      data
-  });
+    return request({
+        url: '/prod/getDiffProd',
+        method: 'post',
+        data
+    });
 }
 
 export function getProdData (prodType) {
-  // const data={
-  //  'body': {
-  //    'prodType': prodType
-  //  }
-  // }
-  return request({
-    url: '/getProdInfo',
-    method: 'post',
-      params: { prodType: prodType}
-  });
+    const data= {prodType: prodType};
+    const reData=asyncPost('/getProdInfo',data);
+return reData;
+}
+export function getProdDataAsync (prodType) {
+    // const data={
+    //  'body': {
+    //    'prodType': prodType
+    //  }
+    // }
+    return request({
+        url: '/getProdInfo',
+        method: 'post',
+        params: { prodType: prodType}
+    });
 }
 export function getProdType (prodClass) {
-  
-  const data={
-    "prodClass": prodClass,
-    "userName": sessionStorage.getItem("userId")
-  }
-  return request({
-    url: '/getProdListByClass',
-    method: 'post',
-    data
-  });
+
+    const data={
+        "prodClass": prodClass,
+        "userName": sessionStorage.getItem("userId")
+    }
+    return request({
+        url: '/getProdListByClass',
+        method: 'post',
+        data
+    });
 }
 
 export function getProdClassList () {
@@ -86,11 +91,11 @@ export function getAllDefines (params) {
 }
 
 export function getDepositDtl (data) {
-  return request({
-    url: '/prod/dtlDeposit',
-    method: 'get',
-    data: data
-  });
+    return request({
+        url: '/prod/dtlDeposit',
+        method: 'get',
+        data: data
+    });
 }
 export function getProdClass (data) {
     return request({
@@ -100,12 +105,12 @@ export function getProdClass (data) {
     });
 }
 export function tranFlowInfo (params) {
- 
-  return request({
-    url: '/tranFlowInfo',
-    method: 'post',
-    data: params
-});
+
+    return request({
+        url: '/tranFlowInfo',
+        method: 'post',
+        data: params
+    });
 }
 export function tranFlowRelease (params) {
 
@@ -132,10 +137,10 @@ export function getUserCollectProds (data) {
     });
 }
 export function getFlowList () {
-  return request({
-    url: '/reviewList',
-    method: 'post'
-});
+    return request({
+        url: '/reviewList',
+        method: 'post'
+    });
 }
 export function getDiffList (params) {
     return request({
@@ -289,8 +294,6 @@ export function getTaskListBySeqNo (params) {
     })
 }
 export function getAttrInfo () {
-    return request({
-        url: '/getAttrInfo',
-        method: 'post'
-    })
+    const reData=asyncPost('/getAttrInfo');
+    return reData;
 }

@@ -85,6 +85,7 @@
     import VWidget from '@/components/VWidget';
     import VuePerfectScrollbar from 'vue-perfect-scrollbar';
     import { getProdData } from "@/api/url/prodInfo";
+    import { getProdDataAsync } from "@/api/url/prodInfo";
     import {filterChangeData} from "@/server/filterChangeData";
     import { getCheckFlowList } from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
@@ -243,14 +244,14 @@
             //初始化产品信息
             if(this.$route.hash !== "" && this.$route.hash !== undefined) {
                 //点击主菜单产品组时 获取产品组代码
-                getProdData(this.$route.hash).then(response => {
+                const response= getProdData(this.$route.hash);
                     //初始化产品基础参数
-                    this.prodRange = response.data.data.prodType.prodRange
-                    this.prodCode = response.data.data.prodType.prodType
-                    this.prodDesc = response.data.data.prodType.prodDesc
+                    this.prodRange = response.prodType.prodRange
+                    this.prodCode = response.prodType.prodType
+                    this.prodDesc = response.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)
                     this.$store.dispatch('setProdDesc',this.prodDesc)
-                    const reProd  = response.data.data
+                    const reProd  = response
                     this.prodData= reProd;
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                     this.initEventAttr(reProd)
@@ -258,25 +259,24 @@
                     this.powerByLevel(this.prodClass);
                     this.spinning= false;
                     //组装产品映射信息
-                    if(response.data.data.glProdMappings[0] != undefined) {
-                        this.prodMapping.glProdMappingType = response.data.data.glProdMappings[0].mappingType
+                    if(response.glProdMappings[0] != undefined) {
+                        this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType
                     }
-                    if(response.data.data.irlProdTypes[0] != undefined) {
-                        this.prodMapping.irlProdType = response.data.data.irlProdTypes[0].prodType
+                    if(response.irlProdTypes[0] != undefined) {
+                        this.prodMapping.irlProdType = response.irlProdTypes[0].prodType
                     }
-                });
             }else if(this.$route.params.prodClassCmp !== "" && this.$route.params.prodClassCmp !== undefined){
                 //通过全局搜索/产品目录  获取目标产品产品组代码
                 this.prodClass = this.$route.params.prodClassCmp
             }
             if(this.$route.params.prodType !== "" && this.$route.params.prodType !== undefined){
-                getProdData(this.$route.params.prodType).then(response => {
+                const response= getProdData(this.$route.params.prodType);
                     //初始化产品基础参数
-                    this.prodCode = response.data.data.prodType.prodType
-                    this.prodDesc = response.data.data.prodType.prodDesc
+                    this.prodCode = response.prodType.prodType
+                    this.prodDesc = response.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)
                     this.$store.dispatch('setProdDesc',this.prodDesc)
-                    const reProd  = response.data.data
+                    const reProd  = response
                     this.prodData= reProd;
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                     this.initEventAttr(reProd)
@@ -285,20 +285,17 @@
                     this.powerByLevel(this.prodClass);
                     this.spinning= false;
                     //组装产品映射信息
-                    if(response.data.data.glProdMappings[0] != undefined) {
-                        this.prodMapping.glProdMappingType = response.data.data.glProdMappings[0].mappingType
+                    if(response.glProdMappings[0] != undefined) {
+                        this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType
                     }
-                    if(response.data.data.irlProdTypes[0] != undefined) {
-                        this.prodMapping.irlProdType = response.data.data.irlProdTypes[0].prodType
+                    if(response.irlProdTypes[0] != undefined) {
+                        this.prodMapping.irlProdType = response.irlProdTypes[0].prodType
                     }
-                });
             }
         },
         methods: {
             initColumnInfo() {
-                getAttrInfo().then(response => {
-                    this.attrColumnInfo=response.data.data
-                });
+                this.attrColumnInfo= getAttrInfo();
             },
             initEventAttr(reProd) {
                 //初始化事件，指标参数
@@ -387,7 +384,7 @@
             listenToProdList(value) {
                 this.prodCode = value.prodType
                 this.prodData = {}
-                getProdData(this.prodCode).then(response => {
+                getProdDataAsync(this.prodCode).then(response => {
                     this.prodData = response.data.data
                     this.prodDesc = response.data.data.prodType.prodDesc
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
@@ -422,7 +419,7 @@
             },
             //刷新按钮事件
             refreshClick() {
-                getProdData(this.prodCode).then(response => {
+                getProdDataAsync(this.prodCode).then(response => {
                     this.prodData = response.data.data
                     this.prodCode = response.data.data.prodType.prodType
                     this.prodDesc = response.data.data.prodType.prodDesc

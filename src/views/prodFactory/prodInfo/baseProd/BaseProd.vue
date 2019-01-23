@@ -148,15 +148,36 @@
         }),
         watch: {
             prodDefines: {
-                handler(prodDefines) {
-                    this.init(prodDefines);
+                handler(newProdDefines,oldProdDefines) {
+                    this.addAttr(newProdDefines,oldProdDefines);
                 },
             },
         },
         mounted() {
             this.initRefData();
+            this.init(this._props.prodDefines);
         },
         methods: {
+            addAttr(newDef,oldDef) {
+                for(const keyNew in newDef) {
+                    let flag = true;
+                    for (const keyOld in oldDef) {
+                        if (keyNew === keyOld) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        const dataSource = this.copy(this._props.attrColumnInfo, {});
+                        let column = dataSource[keyNew];
+                        if (column != undefined && column != 'undefined' && this._props.tags == newDef[keyNew].pageCode) {
+                            column['key'] = keyNew
+                            column['pageSeqNo'] = newDef[keyNew].pageSeqNo
+                            column['pageCode'] = newDef[keyNew].pageCode
+                            this.dataSource.push(column)
+                        }
+                    }
+                }
+            },
             initRefData() {
                 let that = this
                 getParamTable("MB_PROD_CLASS").then(function (response) {

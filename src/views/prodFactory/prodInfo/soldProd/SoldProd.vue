@@ -54,16 +54,15 @@
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
-                            <v-layout row wrap v-if="prodMapping!= undefined ">
-                                <v-flex md6 lg6>
-                                    <dc-multiselect :isMultiSelect="false" v-model="prodMapping.irlProdType" :options="baseProdTypeOption" labelDesc="定价工厂映射产品" :disablePower="true"></dc-multiselect>
-                                </v-flex>
-                                <v-flex md6 lg6>
-                                    <dc-multiselect :isMultiSelect="false" v-model="prodMapping.glProdMappingType" :options="baseProdTypeOption" labelDesc="核算映射产品" :disablePower="true"></dc-multiselect>
-                                </v-flex>
-                            </v-layout>
                         </draggable>
-
+                    </v-layout>
+                    <v-layout row wrap v-if="prodMapping!= undefined ">
+                        <v-flex md6 lg6>
+                            <dc-multiselect :isMultiSelect="false" v-model="prodMapping.irlProdType" :options="baseProdTypeOption" labelDesc="定价工厂映射产品" :disablePower="true"></dc-multiselect>
+                        </v-flex>
+                        <v-flex md6 lg6>
+                            <dc-multiselect :isMultiSelect="false" v-model="prodMapping.glProdMappingType" :options="baseProdTypeOption" labelDesc="核算映射产品" :disablePower="true"></dc-multiselect>
+                        </v-flex>
                     </v-layout>
                 </v-container>
             </div>
@@ -148,15 +147,36 @@
         }),
         watch: {
             prodDefines: {
-                handler(prodDefines) {
-                    this.init(prodDefines);
+                handler(newProdDefines,oldProdDefines) {
+                    this.addAttr(newProdDefines,oldProdDefines);
                 },
             },
         },
         mounted() {
             this.initRefData();
+            this.init(this._props.prodDefines);
         },
         methods: {
+            addAttr(newDef,oldDef) {
+                for(const keyNew in newDef) {
+                    let flag = true;
+                    for (const keyOld in oldDef) {
+                        if (keyNew === keyOld) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        const dataSource = this.copy(this._props.attrColumnInfo, {});
+                        let column = dataSource[keyNew];
+                        if (column != undefined && column != 'undefined' && this._props.tags == newDef[keyNew].pageCode) {
+                            column['key'] = keyNew
+                            column['pageSeqNo'] = newDef[keyNew].pageSeqNo
+                            column['pageCode'] = newDef[keyNew].pageCode
+                            this.dataSource.push(column)
+                        }
+                    }
+                }
+            },
             initRefData() {
                 let that = this
                 getParamTable("MB_PROD_CLASS").then(function (response) {

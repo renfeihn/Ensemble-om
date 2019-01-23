@@ -131,7 +131,7 @@
             },
             dealNewAttr(val) {
                 //新增参数延迟展示
-                if(val !== undefined && val.newAttr) {
+                if(val !== undefined &&val !== null && val.newAttr) {
                     let t;
                     clearTimeout(t)
                     let that = this;
@@ -183,7 +183,7 @@
                     this.personShow = 1
                 }
                 //分户生效标识回显 如果传入msg为对象 则进入if判断  如果为String 则this._props.msg.perEffect === undefined 不执行以下操作
-                if(this._props.msg!== undefined&&typeof this._props.msg === "object"&&this._props.msg.perEffect !== undefined && this._props.msg.perEffect !== null){
+                if(this._props.msg!== undefined&&this._props.msg!== null&&typeof this._props.msg === "object"&&this._props.msg.perEffect !== undefined && this._props.msg.perEffect !== null){
                     if(this._props.msg.perEffect === "true"){
                         this.peopleColor = "red"
                         this.peopleDesc = "分户生效"
