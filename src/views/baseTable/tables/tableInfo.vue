@@ -5,18 +5,18 @@
                 <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
                     <v-icon>widgets</v-icon>
                     <v-toolbar-title>{{tableName}}-[{{tableDesc}}]</v-toolbar-title>
-                <v-spacer></v-spacer>
-            </v-toolbar>
+                    <v-spacer></v-spacer>
+                </v-toolbar>
 
                 <!--<v-toolbar card dense color="transparent">-->
-                    <!--<v-layout justify-center>-->
-                        <!--<v-flex xs6 sm6>-->
-                    <!--<dc-text-field label="产品类型" labelDesc="产品类型" v-model='prodTypeSearch'/>-->
-                        <!--</v-flex>-->
-                        <!--<v-flex xs6 sm6>-->
-                    <!--<dc-multiselect label="产品分类" labelDesc="产品分类" v-model='prodClassSearch' :options="prodClassOption"></dc-multiselect>-->
-                        <!--</v-flex>-->
-                    <!--</v-layout>-->
+                <!--<v-layout justify-center>-->
+                <!--<v-flex xs6 sm6>-->
+                <!--<dc-text-field label="产品类型" labelDesc="产品类型" v-model='prodTypeSearch'/>-->
+                <!--</v-flex>-->
+                <!--<v-flex xs6 sm6>-->
+                <!--<dc-multiselect label="产品分类" labelDesc="产品分类" v-model='prodClassSearch' :options="prodClassOption"></dc-multiselect>-->
+                <!--</v-flex>-->
+                <!--</v-layout>-->
                 <!--</v-toolbar>-->
                 <v-toolbar card dense color="transparent">
                     <a-button type="primary" @click="onAdd">新增</a-button>
@@ -33,8 +33,8 @@
                         v-model="dialog"
                         width="500"
                 >
-                    <edit-table-info v-if="dialog" :selected="selected" :columns="columns" :tableName="tableName"
-                                     v-on:editAction="editAction"></edit-table-info>
+                    <edit-table-info v-if="dialog" :selected="selected" :columns="columns" :tableName="tableName" :childPd="childPd"
+                                     v-on:editAction="editAction" v-on:changeNum="changeNum"></edit-table-info>
                 </v-dialog>
             </v-card>
         </v-flex>
@@ -62,6 +62,9 @@
         },
         data() {
             return {
+                childPd: true,
+                childEditSelected: {},
+                num: "",
                 tableDesc: "",
                 tableName: "",
                 dataInfo: [],
@@ -90,16 +93,30 @@
                 selected: {},
                 columns: [],
                 backValue: {},
-                key: []
+                key: [],
+                isNull: [],
             };
+        },
+        watch: {
+            num: {
+                handler(newValue,oldValue) {
+                    if(newValue!=oldValue) {
+                        this.childPd = this.childLimit(this.childEditSelected)
+                    }
+                }
+            },
         },
         mounted: function () {
             this.initTableInfo()
         },
         methods: {
+            changeNum(num,editSelected){
+                this.num = num
+                this.childEditSelected = editSelected
+            },
             initTableInfo() {
-                    this.tableName = this.$route.hash
-                    this.getParaTable(this.tableName);
+                this.tableName = this.$route.hash
+                this.getParaTable(this.tableName);
             },
             getParaTable(tableName) {
                 let that = this;
@@ -118,6 +135,11 @@
                 for(let n=0; n<this.columns.length; n++) {
                     if(this.columns[n].key == "true"){
                         this.key.push(this.columns[n])
+                    }
+                }
+                for(let n=0; n<this.columns.length; n++){
+                    if(this.columns[n].isNull == "true"){
+                        this.isNull.push(this.columns[n])
                     }
                 }
             },
@@ -195,17 +217,58 @@
             close (){
                 this.dialog=false
             },
+            childLimit(editSelected){
+                this.childPd = true
+                let keyName = []
+                let keyCoName = []
+                let num = 0
+                for(let j=0; j<this.dataInfo.length; j++){
+                    if(editSelected[this.key[0].dataIndex].value == this.dataInfo[j][this.key[0].dataIndex]){
+                        if(num == this.key.length){
+                            break
+                        }
+                        num++
+                        keyCoName.push(this.key[0].title)
+                        for(let n=1; n<this.key.length; n++){
+                            if(editSelected[this.key[n].dataIndex].value == this.dataInfo[j][this.key[n].dataIndex]){
+                                num++
+                                keyCoName.push(this.key[n].title)
+                            }else{
+                                num=0
+                                keyCoName = []
+                                break
+                            }
+                        }
+                    }
+                }
+                if (this.addorchange == false){
+                    let numSel = 0
+                    for(let i=0; i<this.key.length; i++){
+                        if(editSelected[this.key[i].dataIndex].value == this.selected[this.key[i].dataIndex]){
+                            numSel++
+                        }
+                        if(numSel == this.key.length){
+                            num = 0
+                        }
+                    }
+                }
+                if(num == this.key.length){
+                    //alert(keyCoName+"不能重复")
+                    return false
+                }else{
+                    return true
+                }
+            },
             limit(editSelected){
                 let keyIsNull = false
                 let keyName = []
                 let keyCoName = []
                 let num = 0
-                for(let i=0; i<this.key.length; i++){
-                        if(editSelected[this.key[i].dataIndex].value == []){
-                            keyIsNull = true
-                            keyName.push(this.key[i].title)
-                        }
+                for(let i=0; i<this.isNull.length; i++){
+                    if(editSelected[this.isNull[i].dataIndex].value == []){
+                        keyIsNull = true
                     }
+                }
                 for(let j=0; j<this.dataInfo.length; j++){
                     if(editSelected[this.key[0].dataIndex].value == this.dataInfo[j][this.key[0].dataIndex]){
                         if(num == this.key.length){
@@ -237,7 +300,7 @@
                     }
                 }
                 if(keyIsNull == true){
-                    alert(keyName+"不能为空")
+                    alert("带*号的字段不能为空")
                     return false
                 }else if(num == this.key.length){
                     alert(keyCoName+"不能重复")
