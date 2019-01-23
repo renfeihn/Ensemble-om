@@ -72,10 +72,6 @@
                 this.initTitle()
             }
         },
-        created() {
-            //查询所有产品信息
-            this.initTitle()
-        },
         mounted: function() {
             console.log("test")
         },
@@ -95,18 +91,18 @@
                 //获取费用信息
                 getParamTable("MB_ACCOUNTING_STATUS").then(function (response) {
                     that.mbAccountingStatus = response.data.data.columnInfo;
-                });
-                for(let index in that.prodAccounting){
-                    let temp = {}
-                    temp["key"] = that.prodAccounting[index].accountingStatus
-                    for(let key in that.mbAccountingStatus){
-                        if(that.prodAccounting[index].accountingStatus == that.mbAccountingStatus[key].ACCOUNTING_STATUS){
-                            temp["lable"] = that.mbAccountingStatus[key].ACCOUNTING_STATUS_DESC
-                            break;
+                    for(let index in that.prodAccounting){
+                        let temp = {}
+                        temp["key"] = that.prodAccounting[index].accountingStatus
+                        for(let key in response.data.data.columnInfo){
+                            if(that.prodAccounting[index].accountingStatus == response.data.data.columnInfo[key].ACCOUNTING_STATUS){
+                                temp["lable"] = response.data.data.columnInfo[key].ACCOUNTING_STATUS_DESC
+                                break;
+                            }
                         }
+                        that.titleList.push(temp)
                     }
-                    that.titleList.push(temp)
-                }
+                });
                 //初始化第一条参数
                 if(that.prodAccounting.length) {
                     that.selectInfo = that.prodAccounting[0]

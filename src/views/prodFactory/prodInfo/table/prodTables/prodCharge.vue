@@ -46,10 +46,6 @@
                 this.initTitle()
             }
         },
-        created() {
-            //查询所有产品信息
-            this.initTitle()
-        },
         mounted: function() {
             console.log("test")
         },
@@ -68,18 +64,18 @@
                 //获取费用信息
                 getParamTable("IRL_FEE_TYPE").then(function (response) {
                     that.irlFeeType = response.data.data.columnInfo;
-                });
-                for(let index in that.prodChargeInfo){
-                    let temp = {}
-                    temp["key"] = that.prodChargeInfo[index].feeType
-                    for(let key in that.irlFeeType){
-                        if(that.prodChargeInfo[index].feeType == that.irlFeeType[key].FEE_TYPE){
-                            temp["lable"] = that.irlFeeType[key].FEE_DESC
-                            break;
+                    for(let index in that.prodChargeInfo){
+                        let temp = {}
+                        temp["key"] = that.prodChargeInfo[index].feeType
+                        for(let key in response.data.data.columnInfo){
+                            if(that.prodChargeInfo[index].feeType == response.data.data.columnInfo[key].FEE_TYPE){
+                                temp["lable"] = response.data.data.columnInfo[key].FEE_DESC
+                                break;
+                            }
                         }
+                        that.titleList.push(temp)
                     }
-                    that.titleList.push(temp)
-                }
+                });
                 //初始化第一条参数
                 if(that.prodChargeInfo.length) {
                     that.selectInfo = that.prodChargeInfo[0]

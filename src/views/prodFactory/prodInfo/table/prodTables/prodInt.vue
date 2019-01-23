@@ -151,10 +151,6 @@
                 this.switchChange(val)
             }
         },
-        created() {
-            //查询所有产品信息
-            this.initTitle()
-        },
         mounted: function() {
             console.log("test")
         },
@@ -184,6 +180,7 @@
                 let prodInt = val.irlProdInt;
                 let intType = val.irlProdIntInfos.irlIntTypeList;
                 let intMartix = val.irlIntMatrices;
+                this.FixeditleList = []
                 for(let prodIntIndex in prodInt){
                     for(let intTypeIndex in intType){
                         //匹配事件对应利率类型 && 利率税率类型标志为INT-利率 && 利率的利息计算模型为“F-固定利率模型”
@@ -216,18 +213,24 @@
                             this.fixedInfos.push(temp);
                             //组织列表数据  事件类型
                             tempTitle["key"] = prodInt[prodIntIndex].eventType
-                            for(let eventKey in this.eventTypeInfo){
-                                if(prodInt[prodIntIndex].eventType == this.eventTypeInfo[eventKey].EVENT_DEFAULT_TYPE){
-                                    tempTitle["lable"] = this.eventTypeInfo[eventKey].EVENT_DEFAULT_DESC
+                            getParamTable("MB_EVENT_DEFAULT_TYPE").then(function (response) {
+                                for(let eventKey in response.data.data.columnInfo){
+                                    if(prodInt[prodIntIndex].eventType == response.data.data.columnInfo[eventKey].EVENT_DEFAULT_TYPE){
+                                        tempTitle["lable"] = response.data.data.columnInfo[eventKey].EVENT_DEFAULT_DESC
+                                    }
                                 }
-                            }
+                            });
+
                             //组织列表数据 存期
                             tempTitle["key1"] = intMartix[matrixIndex].periodFreq
-                            for(let freqKey in this.periodFreqInfo){
-                                if(intMartix[matrixIndex].periodFreq == this.periodFreqInfo[freqKey].PERIOD_FREQ){
-                                    tempTitle["lable1"] = this.periodFreqInfo[freqKey].PERIOD_FREQ_DESC
+                            //获取存期信息
+                            getParamTable("FM_PERIOD_FREQ").then(function (response) {
+                                for(let freqKey in response.data.data.columnInfo){
+                                    if(intMartix[matrixIndex].periodFreq == response.data.data.columnInfo[freqKey].PERIOD_FREQ){
+                                        tempTitle["lable1"] = response.data.data.columnInfo[freqKey].PERIOD_FREQ_DESC
+                                    }
                                 }
-                            }
+                            });
                             this.FixeditleList.push(tempTitle)
                         }
                     }
@@ -243,30 +246,26 @@
                 //获取事件类型信息
                 getParamTable("MB_EVENT_DEFAULT_TYPE").then(function (response) {
                     that.eventTypeInfo = response.data.data.columnInfo;
-                });
-                //获取存期信息
-                getParamTable("FM_PERIOD_FREQ").then(function (response) {
-                    that.periodFreqInfo = response.data.data.columnInfo;
-                });
-                for(let index in that.prodInt){
-                    let temp ={}
-                    //多主键，事件类型组装
-                    temp["key"] = that.prodInt[index].eventType;
-                    for(let key in that.eventTypeInfo){
-                        if(that.prodInt[index].eventType == that.eventTypeInfo[key].EVENT_DEFAULT_TYPE){
-                            temp["lable"] = that.eventTypeInfo[key].EVENT_DEFAULT_DESC;
-                            break
+                    for(let index in that.prodInt){
+                        let temp ={}
+                        //多主键，事件类型组装
+                        temp["key"] = that.prodInt[index].eventType;
+                        for(let key in response.data.data.columnInfo){
+                            if(that.prodInt[index].eventType == response.data.data.columnInfo[key].EVENT_DEFAULT_TYPE){
+                                temp["lable"] = response.data.data.columnInfo[key].EVENT_DEFAULT_DESC;
+                                break
+                            }
                         }
-                    }
-                    //多主键，利息分类组装
-                    for(let intKey in that.intClass){
-                        if(that.prodInt[index].intClass == that.intClass[intKey].key){
-                            temp["key1"] = that.intClass[intKey].key;
-                            temp["lable1"] = that.intClass[intKey].desc;
+                        //多主键，利息分类组装
+                        for(let intKey in that.intClass){
+                            if(that.prodInt[index].intClass == that.intClass[intKey].key){
+                                temp["key1"] = that.intClass[intKey].key;
+                                temp["lable1"] = that.intClass[intKey].desc;
+                            }
                         }
+                        that.titleList.push(temp)
                     }
-                    that.titleList.push(temp)
-                }
+                });
                 if(that.prodInt.length){
                     that.selectInfo = that.prodInt[0]
                     that.tag = that.prodInt[0].splitId;
