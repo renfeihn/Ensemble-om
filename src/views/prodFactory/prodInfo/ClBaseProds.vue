@@ -37,8 +37,8 @@
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DRW" tags="DRW" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="REC" tags="REC" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DUE" tags="DUE" :disablePower="disablePower"></base-prod>
-                        <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
-                        <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
+                        <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                        <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
                         <prod-amend v-if="i.pageCode=='AMEND'" v-bind:prodData="prodData"></prod-amend>
                     </v-tab-item>
                 </v-tabs-items>
@@ -92,13 +92,12 @@
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
     import ProdListForm from './form/ProdListForm';
-    import AccountingInfo from './table/prodTables/glProdAccounting';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
-    import RateInfo from './table/prodTables/irlProdInt';
     import ProdAmend from './table/prodTables/mbProdAmendMapping';
-
+    import ProdAccounting from './table/prodTables/prodAccounting';
+    import ProdInt from './table/prodTables/prodInt';
     export default {
         name: 'RbBaseProds',
         components: {
@@ -109,10 +108,10 @@
             ProdListForm,
             PendingForm,
             columnInfo,
-            RateInfo,
-            AccountingInfo,
             DcTreeAttr,
-            ProdAmend
+            ProdAmend,
+            ProdInt,
+            ProdAccounting
         },
         data () {
             return {

@@ -38,8 +38,8 @@
                             <sold-prod v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="drwList" tags="DRW" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='REC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="recList" tags="REC" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DUE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="dueList" tags="DUE" :disablePower="disablePower"></sold-prod>
-                            <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
-                            <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
+                            <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                            <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
                             <prod-amend v-if="i.pageCode=='AMEND'" v-bind:prodData="prodData"></prod-amend>
                     </v-tab-item>
                 </v-tabs-items>
@@ -97,13 +97,12 @@
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
     import ProdListForm from './form/ProdListForm';
-    import RateInfo from './table/prodTables/irlProdInt';
     import ProdAmend from './table/prodTables/mbProdAmendMapping';
-    import AccountingInfo from './table/prodTables/glProdAccounting';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
-
+    import ProdAccounting from './table/prodTables/prodAccounting';
+    import ProdInt from './table/prodTables/prodInt';
     export default {
         name: 'RbSoldProds',
         components: {
@@ -114,10 +113,10 @@
             ProdListForm,
             PendingForm,
             columnInfo,
-            RateInfo,
-            AccountingInfo,
             DcTreeAttr,
-            ProdAmend
+            ProdAmend,
+            ProdInt,
+            ProdAccounting
         },
         data () {
             return {

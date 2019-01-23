@@ -90,16 +90,11 @@
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
-    import ChargeDefine from './table/prodTables/mbProdCharge';
     import ProdCharge from './table/prodTables/prodCharge';
     import ProdAccounting from './table/prodTables/prodAccounting';
     import ProdInt from './table/prodTables/prodInt';
 
     import ProdListForm from './form/ProdListForm';
-    import RateInfo from './table/prodTables/irlProdInt';
-    import FormShift from './form/rbModel/FormShift';
-    import AccountingInfo from './table/prodTables/glProdAccounting';
-    import ProdMapping from './table/prodTables/glProdMapping';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
@@ -115,12 +110,7 @@
             ProdListForm,
             PendingForm,
             columnInfo,
-            ChargeDefine,
-            RateInfo,
-            FormShift,
-            AccountingInfo,
             DcTreeAttr,
-            ProdMapping,
             ProdCharge,
             ProdInt
         },

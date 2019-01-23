@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="pt-1">
+    <v-layout class="pt-1" v-show="prodInt.length">
         <v-flex md3 lg3 class="ml-3">
             <v-card style="margin-top: -5%">
                 <v-flex md12 lg12 class="switchClass">
@@ -17,7 +17,7 @@
                 </v-list>
             </v-card>
             <!-- 使用固定利率列表信息-->
-            <v-card class="mt-1" v-show="switchValue">
+            <v-card class="mt-1" v-show="switchValue && irlCodeInfo.length">
                 <v-list>
                     <v-list-tile v-for="item in FixeditleList" :key="item.key" @click="fixedChipClick(item)">
                         <v-list-tile-content>
@@ -167,8 +167,12 @@
                     that.irlBasisRate = val.irlBasisRateList;
                     that.irlIntMatrix = val.irlIntMatrices;
                     //获取产品适用币种，机构信息,法人信息
-                    that.ccy = val.prodDefines.CCY.attrValue.split(",");
-                    that.branch = val.prodDefines.PROD_BRANCH.attrValue.split(",");
+                    if(val.prodDefines.CCY != null && val.prodDefines.CCY != undefined) {
+                        that.ccy = val.prodDefines.CCY.attrValue.split(",");
+                    }
+                    if(val.prodDefines.PROD_BRANCH != null && val.prodDefines.PROD_BRANCH != undefined) {
+                        that.branch = val.prodDefines.PROD_BRANCH.attrValue.split(",");
+                    }
                     if(val.prodDefines.LEGAL_PERSON != undefined && val.prodDefines.LEGAL_PERSON != "" && val.prodDefines.LEGAL_PERSON != null) {
                         that.legalPerson = val.prodDefines.LEGAL_PERSON.attrValue
                     }

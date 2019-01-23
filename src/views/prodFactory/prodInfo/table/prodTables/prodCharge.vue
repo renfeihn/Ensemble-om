@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="pt-1">
+    <v-layout class="pt-1" v-show="prodChargeInfo.length">
         <v-flex md3 lg3 class="ml-3">
             <v-card>
                 <v-list>

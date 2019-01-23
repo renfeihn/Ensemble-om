@@ -37,10 +37,9 @@
                             <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
-                        <charge-define v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></charge-define>
-                        <rate-info v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></rate-info>
-                        <!--<prod-mapping v-if="i.pageCode=='MAPPING'" v-bind:prodData="prodData"></prod-mapping>-->
-                        <accounting-info v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></accounting-info>
+                        <prod-charge v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></prod-charge>
+                        <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                        <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -96,16 +95,13 @@
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
-    import ChargeDefine from './table/prodTables/mbProdCharge';
     import ProdListForm from './form/ProdListForm';
-    import RateInfo from './table/prodTables/irlProdInt';
-    import FormShift from './form/rbModel/FormShift';
-    import AccountingInfo from './table/prodTables/glProdAccounting';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
-    import ProdMapping from './table/prodTables/glProdMapping';
-
+    import ProdCharge from './table/prodTables/prodCharge';
+    import ProdAccounting from './table/prodTables/prodAccounting';
+    import ProdInt from './table/prodTables/prodInt';
     export default {
         name: 'RbSoldProds',
         components: {
@@ -116,12 +112,10 @@
             ProdListForm,
             PendingForm,
             columnInfo,
-            ChargeDefine,
-            RateInfo,
-            FormShift,
-            AccountingInfo,
             DcTreeAttr,
-            ProdMapping
+            ProdCharge,
+            ProdInt,
+            ProdAccounting
         },
         data () {
             return {
