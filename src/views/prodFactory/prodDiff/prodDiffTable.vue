@@ -155,6 +155,16 @@ export default {
               }
           }
       },
+      seqNo: {
+          handler(val,oldVal)
+          {
+              if(val!=oldVal){
+                  this.$nextTick(() => {
+                      this.changeTranId(this.sendTranId,this.sendTranType)
+                  })
+              }
+          }
+      },
    },
   methods: {
       printDown () {
@@ -163,6 +173,7 @@ export default {
       changeTranId(tranId,tranType){
           this.RB = false;
           this.CL = false;
+          this.isTable = false
           if(tranType=='0'){
               this.isTable = false
               this.getDiffProdData(tranId);
