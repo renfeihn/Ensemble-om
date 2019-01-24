@@ -4,35 +4,6 @@
             <div slot="widget-content">
                 <v-container fluid pt-1>
                     <v-layout row wrap>
-                        <v-layout row wrap v-if="prodType!= undefined ">
-                            <v-flex md6 lg6>
-                                <dc-text-field labelDesc="产品代码" v-model="prodType.prodType"></dc-text-field>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-text-field labelDesc="产品简称" v-model="prodType.prodAbbr"></dc-text-field>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-text-field labelDesc="产品描述" v-model="prodType.prodDesc"></dc-text-field>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="sourceModuleOption" :disablePower="disablePower" labelDesc="业务模块" :isMultiSelect="false" v-model="prodType.sourceModule" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="prodClassOption" :disablePower="disablePower" labelDesc="产品分类" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="prodRangeOption" :disablePower="disablePower" labelDesc="产品属性" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-switch v-model="prodType.prodGroup" :disablePower="disablePower" labelDesc="组合产品"></dc-switch>
-                            </v-flex>
-                            <v-flex md6 lg6>
-                                <dc-multiselect :options="statusOption" :disablePower="disablePower" labelDesc="产品状态" :isMultiSelect="false" v-model="prodType.status" class="dcMulti"></dc-multiselect>
-                            </v-flex>
-                            <!--<v-flex md6 lg6>-->
-                                <!--<dc-multiselect :options="baseProdTypeOption" :disablePower="disablePower" labelDesc="基础产品" :isMultiSelect="false" v-model="prodType.baseProdType" class="dcMulti"></dc-multiselect>-->
-                            <!--</v-flex>-->
-                        </v-layout>
                         <draggable v-model="dataSource" :move="getdata" @update="datadragEnd" class="layout row wrap">
                             <v-flex v-for="(keyData ,key ,index) in dataSource" v-bind:key="key" lg6>
                                 <v-layout row wrap>
@@ -45,14 +16,14 @@
                                     </v-flex>
                                     <v-flex md12 lg12 v-else>
                                         <dc-text-field :showEdit="showEdit" v-if="keyData.columnType == 'input'"
-                                                       class="primary&#45;&#45;text mx-1" :label="keyData.columnDesc"
+                                                       class="primary&#45;&#45;text mx-1 dcText" :label="keyData.columnDesc"
                                                        name="title" :labelDesc="keyData.columnDesc" :isNumber="keyData.attrType" :disablePower="disablePower" v-model="prodDefines[keyData.key]" single-line
                                                        hide-details></dc-text-field>
                                         <dc-multiselect :showEdit="showEdit" v-if="keyData.columnType == 'select'" :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"
                                                         :options="keyData.valueScore" class="dcMulti" :isMultiSelect=keyData.isMultiSelect></dc-multiselect>
                                         <dc-switch :showEdit="showEdit" v-if="keyData.columnType == 'switch'" :disablePower="disablePower" :labelDesc="keyData.columnDesc"
                                                    v-model="prodDefines[keyData.key]"></dc-switch>
-                                        <dc-date :showEdit="showEdit" v-if="keyData.columnType == 'date'" :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
+                                        <dc-date class="dcDate" :showEdit="showEdit" v-if="keyData.columnType == 'date'" :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="prodDefines[keyData.key]"></dc-date>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
@@ -264,7 +235,12 @@
     .dcMulti {
         margin-top: 10px;
     }
-
+    .dcDate {
+        margin-bottom: 10px;
+    }
+    .dcText {
+        margin-bottom: 10px;
+    }
     .auto {
         margin-left: auto;
         margin-right: auto;

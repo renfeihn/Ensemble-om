@@ -164,10 +164,12 @@
                 if(newValue != "" && newValue != null && newValue != undefined) {
                     let dateFormatted = "";
                     dateFormatted = newValue.substring(0, 4) + newValue.substring(5, 7) + newValue.substring(8)
-                    if (this._props.msg === undefined) {
-                        this._props.msg = dateFormatted
-                    } else {
-                        this._props.msg.attrValue = dateFormatted
+                    if(this._props.msg != undefined && this._props.msg != null) {
+                        if (this._props.msg.attrValue === undefined) {
+                            this._props.msg = dateFormatted
+                        } else {
+                            this._props.msg.attrValue = dateFormatted
+                        }
                     }
                     this.$emit("getVue", this._props.msg);
                 }

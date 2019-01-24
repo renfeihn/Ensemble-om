@@ -94,10 +94,14 @@
                     for(let index in that.prodAccounting){
                         let temp = {}
                         temp["key"] = that.prodAccounting[index].accountingStatus
-                        for(let key in response.data.data.columnInfo){
-                            if(that.prodAccounting[index].accountingStatus == response.data.data.columnInfo[key].ACCOUNTING_STATUS){
-                                temp["lable"] = response.data.data.columnInfo[key].ACCOUNTING_STATUS_DESC
-                                break;
+                        if(that.prodAccounting[index].accountingStatus === "ALL"){
+                            temp["lable"] = "全部"
+                        }else {
+                            for (let key in response.data.data.columnInfo) {
+                                if (that.prodAccounting[index].accountingStatus == response.data.data.columnInfo[key].ACCOUNTING_STATUS) {
+                                    temp["lable"] = response.data.data.columnInfo[key].ACCOUNTING_STATUS_DESC
+                                    break;
+                                }
                             }
                         }
                         that.titleList.push(temp)

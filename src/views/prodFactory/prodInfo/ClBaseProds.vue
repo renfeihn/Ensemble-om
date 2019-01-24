@@ -26,7 +26,7 @@
                 </v-tabs>
                 <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                     <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                        <base-prod :showEdit="showEdit" v-if="i.pageCode=='DESC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodType="prodData.prodType" tags="DESC" :disablePower="disablePower"></base-prod>
+                        <base-desc :showEdit="showEdit" v-if="i.pageCode=='DESC'" :prodType="prodData.prodType" tags="DESC"></base-desc>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodMapping="prodMapping" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='ACCT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="ACCT" :disablePower="disablePower"></base-prod>
                         <base-prod :showEdit="showEdit" v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></base-prod>
@@ -90,7 +90,7 @@
     import columnInfo from './columnInfo'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
-    import SoldProd from './soldProd/soldProd'
+    import BaseDesc from './baseProd/BaseDesc'
     import ProdListForm from './form/ProdListForm';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
@@ -103,7 +103,6 @@
         components: {
             VWidget,
             BaseProd,
-            SoldProd,
             downAction,
             ProdListForm,
             PendingForm,
@@ -111,7 +110,8 @@
             DcTreeAttr,
             ProdAmend,
             ProdInt,
-            ProdAccounting
+            ProdAccounting,
+            BaseDesc
         },
         data () {
             return {
@@ -460,9 +460,9 @@
                         let columnKey = val[i].split("--")[0]
                         let columnDesc = val[i].split("--")[1]
                         //组装向mbProdDefine保存的数据对象
-                        if(addColumnPageCode === "DESC"){
+                        if(addColumnPageCode === "DESC" || addColumnPageCode === "AMEND" || addColumnPageCode === "RATEINFO" || addColumnPageCode === "ACCOUNTING"){
                             showFlag = 1
-                            toast.info("页签【基本描述】不允许增加参数！");
+                            toast.info("当前页签不允许增加参数！");
                         }
                         if (addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "ACCT" || addColumnPageCode === "INT" || addColumnPageCode === "DISC") {
                             //获取新增参数pageSeqNo
