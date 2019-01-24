@@ -17,7 +17,7 @@
                 </v-list>
             </v-card>
             <!-- 使用固定利率列表信息-->
-            <v-card class="mt-1" v-show="switchValue && irlCodeInfo.length">
+            <v-card class="mt-1" v-show="switchValue && fixedInfos.length">
                 <v-list>
                     <v-list-tile v-for="item in FixeditleList" :key="item.key" @click="fixedChipClick(item)">
                         <v-list-tile-content>
@@ -145,6 +145,7 @@
         watch: {
             prodData (val) {
                 this.getProdIntInfo(val)
+                this.getFixedIntRate(val)
                 this.initTitle()
             },
             switchValue(val){
@@ -176,7 +177,6 @@
                     if(val.prodDefines.LEGAL_PERSON != undefined && val.prodDefines.LEGAL_PERSON != "" && val.prodDefines.LEGAL_PERSON != null) {
                         that.legalPerson = val.prodDefines.LEGAL_PERSON.attrValue
                     }
-                    this.getFixedIntRate(val)
                 }
             },
             //获取事件对应利率 且利率计算模型为F-固定利率模型的利率值
