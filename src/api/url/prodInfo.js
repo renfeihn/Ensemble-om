@@ -293,13 +293,6 @@ export function getTaskListBySeqNo (params) {
         data: params
     })
 }
-export function getTableByTableName (params) {
-    return request({
-        url: '/getTableByTableName',
-        method: 'post',
-        data: params
-    })
-}
 export function getAttrInfo () {
     const reData=asyncPost('/getAttrInfo');
     return reData;

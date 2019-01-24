@@ -29,7 +29,7 @@
 
 <script>
     import {getTaskListBySeqNo} from "@/api/url/prodInfo";
-    import {getTableByTableName} from "@/api/url/prodInfo";
+    import {getTableInfoDesc} from "@/api/url/prodInfo";
     import {submitCommon} from "@/api/url/prodInfo";
     export default {
         props: {
@@ -95,7 +95,7 @@
                     }
                     for(let j=0; j<this.items.length; j++){
                         if(this.items[j].tranName == null){
-                            getTableByTableName({"tableName": this.items[j].tranId}).then(response => {
+                            getTableInfoDesc(this.items[j].tranId).then(response => {
                                 this.items[j].tranName = response.data.data.tableDesc
                             });
                         }
