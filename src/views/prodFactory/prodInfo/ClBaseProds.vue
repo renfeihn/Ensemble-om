@@ -95,9 +95,9 @@
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
-    import ProdAmend from './table/prodTables/mbProdAmendMapping';
     import ProdAccounting from './table/prodTables/prodAccounting';
     import ProdInt from './table/prodTables/prodInt';
+    import ProdAmend from './table/prodTables/prodAmend';
     export default {
         name: 'RbBaseProds',
         components: {

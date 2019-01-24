@@ -3337,6 +3337,19 @@
       "columnDesc": "PROD_DESC"
     }
   },
+
+  "AMEND_PROD_TYPE": {
+    "valueMethod": "RF",
+    "columnDesc": "可变更产品类型",
+    "columnType": "select",
+    "isMultiSelect": true,
+    "valueScore": {
+      "tableName": "MB_PROD_TYPE",
+      "columnCode": "PROD_TYPE",
+      "columnDesc": "PROD_DESC"
+    }
+  },
+
   "PROD_DESC": {
     "columnDesc": "产品类型描述",
     "columnType": "input"

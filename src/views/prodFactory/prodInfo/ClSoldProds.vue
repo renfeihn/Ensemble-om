@@ -97,7 +97,7 @@
     import BaseProd from './baseProd/BaseProd'
     import SoldProd from './soldProd/soldProd'
     import ProdListForm from './form/ProdListForm';
-    import ProdAmend from './table/prodTables/mbProdAmendMapping';
+    import ProdAmend from './table/prodTables/prodAmend';
     import DcTreeAttr from "@/components/widgets/DcTreeAttr";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";

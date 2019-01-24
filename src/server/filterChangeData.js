@@ -72,6 +72,9 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
     backData.glProdAccounting = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"glProdCodeMappings",copyFlag)
+    backData.glProdCodeMappings = backVal
     //产品映射(0115屏蔽对产品映射处理)
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"glProdMappings",copyFlag)
@@ -160,7 +163,11 @@ export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
             return true
         }
     }
-
+    if(tables === "glProdCodeMappings"){
+        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].status === sourceProdData[tables][oldIndex].status && prodData[tables][newIndex].amtType === sourceProdData[tables][oldIndex].amtType){
+            return true
+        }
+    }
     ret = tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,tables);
 
     return ret;
