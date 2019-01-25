@@ -80,11 +80,23 @@
             },
             submit () {
                 if(this.name==''){
-                    toast.error("个人信息修改失败")
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'error',
+                        title: "个人信息修改失败！",
+                    })
                 }else if(this.email==''){
-                    toast.error("邮箱不能为空")
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "邮箱不能为空！",
+                    })
                 }else if(this.phone.length!=11){
-                    toast.error("电话号码必须是11位")
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "电话号码必须是11位！",
+                    })
                 }else{
                     let userId = sessionStorage.getItem("userId")
                     for(let i=0; i<this.desserts.length; i++){
@@ -102,7 +114,11 @@
                     this.backValue.keySet = "USER_ID"
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("个人信息修改成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "个人信息修改成功！",
+                            })
                             this.initialize()
                         }
                     })

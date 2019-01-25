@@ -172,7 +172,11 @@ depositTree<template>
                     }
                 }
                 if(!this.tree.length){
-                    toast.info("请选择要添加的信息!");
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "请选择要添加的信息!",
+                    })
                 }else {
                     this.backValue = []
                     for (let y = 0; y < this.tree.length; y++) {

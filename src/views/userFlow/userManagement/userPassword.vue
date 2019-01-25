@@ -28,7 +28,6 @@
     import {getSysInfoByUser} from "@/api/url/prodInfo";
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
-    import toast from '@/utils/toast';
 
     export default {
 
@@ -75,7 +74,11 @@
             },
             submit () {
                 if(this.password==''||this.newPassword==''||this.newPasswordEnd==''||this.newPasswordEnd!=this.newPassword){
-                    toast.error("密码修改失败！");
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'error',
+                        title: "密码修改失败！",
+                    })
                 }else{
                     for(let i=0; i<this.desserts.length; i++){
                         if(this.userId==this.desserts[i].userId){
@@ -90,7 +93,11 @@
                     this.backValue.keySet = "USER_ID"
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("密码修改成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "密码修改成功！",
+                            })
                             window.location.href='http://localhost:8080/#/'
                         }
                     })

@@ -63,7 +63,6 @@
     import DcTextField from '@/components/widgets/DcTextField'
     import TaskListFlex from '@/views/propertyManage/taskListFlex'
     import download2 from '@/utils/download2';
-    import toast from '@/utils/toast';
     import {
         tranFlowInfo
     } from '@/api/url/prodInfo';
@@ -176,7 +175,11 @@
                         let fileName = ""
                         fileName = date.getFullYear().toString()+(date.getMonth()+1).toString()+ date.getDate().toString()+"_"+this.releaseFlowInfo.flowManage.tranId.toString();
                         download2.download(response.data.data.sql, fileName, "text/plain");
-                        toast.success("sql导出成功！");
+                        this.$swal({
+                            allowOutsideClick: false,
+                            type: 'success',
+                            title: "sql导出成功！",
+                        })
                     }
                 })
             },
@@ -190,11 +193,19 @@
                     this.confirmInfo.isApproved = isApproved
                     tranFlowInfo(this.confirmInfo).then(response => {
                         if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
-                            toast.success("复核成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "复核成功！",
+                            })
                             this.$router.push({ name: 'userIndexFlow'});
                         }
                         if(response.status === 200 && this.confirmInfo.isApproved === "N") {
-                            toast.success("驳回成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "驳回成功！",
+                            })
                             this.$router.push({ name: 'userIndexFlow'});
                             let setTaskEvent= new Event("taskList");
                             window.dispatchEvent(setTaskEvent);
@@ -208,12 +219,20 @@
                     this.confirmInfo.isApproved = isApproved
                     tranFlowRelease(this.confirmInfo).then(response => {
                         if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
-                            toast.success("发布成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "发布成功！",
+                            })
                             this.spinning=false
                             this.$router.push({ name: 'userIndexFlow'});
                         }
                         if(response.status === 200 && this.confirmInfo.isApproved === "N") {
-                            toast.success("驳回成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "驳回成功！",
+                            })
                             this.$router.push({ name: 'userIndexFlow'});
                             let setTaskEvent= new Event("taskList");
                             window.dispatchEvent(setTaskEvent);

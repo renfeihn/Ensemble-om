@@ -38,7 +38,11 @@ service.interceptors.response.use(
 
     const res = response.data
     if (!res) {
-      toast.error("服务已断开,请检查网络!");
+        this.$swal({
+            allowOutsideClick: false,
+            type: 'error',
+            title: "服务已断开,请检查网络！",
+        })
     }
     // if (!res.code) {
     //         toast.error(res.msg || "错误信息未定义!");
