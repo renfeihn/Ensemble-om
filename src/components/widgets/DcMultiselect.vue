@@ -29,7 +29,7 @@
                             <template slot="limit" slot-scope="props">
                                 <th>
                                 <span>还有{{limitIndex}}个为展示选项</span>
-                                <v-btn flat small icon="people" slot="activator" @click="changeLimitNum">
+                                <v-btn flat small icon="people" slot="activator" style="pointer-events:visible" @click="changeLimitNum">
                                     <v-icon>reply_all</v-icon>
                                 </v-btn>
                                 </th>
