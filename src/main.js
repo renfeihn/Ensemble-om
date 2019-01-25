@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import VueSweetalert2 from 'vue-sweetalert2';
 import App from './App';
 import Vuetify from 'vuetify';
 import router from './router';
@@ -17,14 +18,14 @@ import globalConfig from "./config.js";
 import 'ant-design-vue/dist/antd.css';
 import 'vuetify/dist/vuetify.min.css'
 
-// µ¼Èë table ºÍ ·ÖÒ³×é¼þ
+// ï¿½ï¿½ï¿½ï¿½ table ï¿½ï¿½ ï¿½ï¿½Ò³ï¿½ï¿½ï¿½
 import { Spin, Table,Divider,Tag ,Button} from 'ant-design-vue'
 Vue.component(Table.name, Table)
 Vue.component(Divider.name, Divider)
 Vue.component(Tag.name, Tag)
 Vue.component(Button.name, Button)
 Vue.component(Spin.name, Spin)
-// ×¢²áµ½È«¾Ö
+// ×¢ï¿½áµ½È«ï¿½ï¿½
 Vue.prototype.$qs = qs
 //Global Config
 Vue.prototype.globalConfig = globalConfig
@@ -36,6 +37,7 @@ Vue.config.productionTip = false;
 Vue.filter('truncate', Truncate);
 
 Vue.use(VueResource)
+Vue.use(VueSweetalert2)
 Vue.use(VeeValidate, {
   fieldsBagName: 'formFields'
 });

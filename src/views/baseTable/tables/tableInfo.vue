@@ -29,12 +29,16 @@
                     </a-table>
                     <v-divider></v-divider>
                 </v-card-text>
+
                 <v-dialog
                         v-model="dialog"
                         width="500"
+                        persistent
+                        z-index="100"
                 >
                     <edit-table-info v-if="dialog" :selected="selected" :columns="columns" :tableName="tableName" :childPd="childPd"
                                      v-on:editAction="editAction" v-on:changeNum="changeNum"></edit-table-info>
+
                 </v-dialog>
             </v-card>
         </v-flex>
@@ -58,7 +62,7 @@
         components: {
             DcMultiselect,
             EditTableInfo,
-            DcTextField
+            DcTextField,
         },
         data() {
             return {
@@ -110,6 +114,9 @@
             this.initTableInfo()
         },
         methods: {
+            changeWar(war){
+                this.war = war
+            },
             changeNum(num,editSelected){
                 this.num = num
                 this.childEditSelected = editSelected
@@ -202,11 +209,19 @@
                 this.backValue.option = "save"
                 this.backValue.userName = sessionStorage.getItem("userId")
                 if(this.backValue.data.length==0){
-                    toast.error("未做任何修改,提交失败！");
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "未做任何修改,提交失败！",
+                    })
                 }else{
                     saveTable(this.backValue).then(response => {
                         if (response.status === 200) {
-                            toast.success("提交成功！");
+                            this.$swal({
+                                allowOutsideClick: false,
+                                type: 'success',
+                                title: "提交成功！",
+                            })
                             this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
                             let setTaskEvent= new Event("taskList");
                             window.dispatchEvent(setTaskEvent);
@@ -300,10 +315,18 @@
                     }
                 }
                 if(keyIsNull == true){
-                    alert("带*号的字段不能为空")
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'error',
+                        title: '带*号的字段不能为空!',
+                    })
                     return false
                 }else if(num == this.key.length){
-                    alert(keyCoName+"不能重复")
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'error',
+                        title: keyCoName+"不能重复",
+                    })
                     return false
                 }else{
                     return true
