@@ -113,7 +113,11 @@
                     "value": "废弃"
                 }
             ],
-            baseProdTypeOption: [],
+            baseProdTypeOption: {
+                columnCode: "PROD_TYPE",
+                columnDesc: "PROD_DESC",
+                tableName: "MB_PROD_TYPE"
+            },
             prodClassOption: []
         }),
         watch: {
@@ -158,17 +162,6 @@
                             temp["key"] = prodClass[i].PROD_CLASS;
                             temp["value"] =prodClass[i].PROD_CLASS_DESC;
                             that.prodClassOption.push(temp)
-                        }
-                    }
-                });
-                getParamTable("MB_PROD_TYPE").then(function (response) {
-                    let prodType = response.data.data.columnInfo;
-                    for(let i=0; i<prodType.length; i++){
-                        if(prodType[i].PROD_RANGE == 'B'){
-                            let temp = {}
-                            temp["key"] = prodType[i].PROD_TYPE;
-                            temp["value"] = prodType[i].PROD_DESC;
-                            that.baseProdTypeOption.push(temp)
                         }
                     }
                 });

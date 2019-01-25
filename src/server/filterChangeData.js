@@ -89,6 +89,9 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"irlBasisRateList",copyFlag)
     backData.irlBasisRateList = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"irlIntMatrices",copyFlag)
+    backData.irlIntMatrices = backVal
     //处理产品变更信息
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"mbProdAmendMaping",copyFlag)
@@ -182,12 +185,17 @@ export function tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,table
         }
     }
     if(tables === "irlBasisRateList"){
-        if(prodData[tables][newIndex].intBase === sourceProdData[tables][oldIndex].intBase && prodData[tables][newIndex].ccy === sourceProdData[tables][oldIndex].ccy && prodData[tables][newIndex].effectDate === sourceProdData[tables][oldIndex].effectDate){
+        if(prodData[tables][newIndex].intBasis === sourceProdData[tables][oldIndex].intBasis && prodData[tables][newIndex].ccy === sourceProdData[tables][oldIndex].ccy && prodData[tables][newIndex].effectDate === sourceProdData[tables][oldIndex].effectDate){
             return true
         }
     }
     if(tables === "mbProdAmendMaping"){
         if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType){
+            return true
+        }
+    }
+    if(tables === "irlIntMatrices"){
+        if(prodData[tables][newIndex].matrixNo === sourceProdData[tables][oldIndex].matrixNo){
             return true
         }
     }

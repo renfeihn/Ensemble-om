@@ -17,7 +17,7 @@
                 </v-list>
             </v-card>
             <!-- 使用固定利率列表信息-->
-            <v-card class="mt-1" v-show="switchValue && fixedInfos.length">
+            <v-card class="mt-1" v-show="switchValue && fixedInfo.length">
                 <v-list>
                     <v-list-tile v-for="item in FixeditleList" :key="item.key" @click="fixedChipClick(item)">
                         <v-list-tile-content>
@@ -33,7 +33,7 @@
         </v-flex>
         <!-- 使用固定利率界面-->
         <v-flex md9 lg9 v-show="switchValue">
-            <base-table :tableData="fixedSelectInfo" :keySet="fixedKeySet"></base-table>
+            <prod-fixed :fiexInfo="fixedInfo" :fixedIndex="fixedIndex"></prod-fixed>
         </v-flex>
         <!--利率代码详情弹出框-->
         <v-dialog v-model="dialog" width="800">
@@ -59,13 +59,19 @@
     import DcTextField from "@/components/widgets/DcTextField";
     import {getParamTable} from "@/api/url/prodInfo";
     import BaseTable from "./baseProdTable"
+    import ProdFixed from "./prodIntFixed"
+    import DcSelect from '@/components/widgets/DcMultiselect'
+
     import {
         getProdType
     } from '@/api/url/prodInfo'
     export default {
-        components: {DcTextField,BaseTable},
+        components: {DcTextField,BaseTable,ProdFixed,DcSelect},
         props: ["prodData"],
         data: () => ({
+            fixedInfo: [],
+            fixedIndex: 0,
+            intType1: "",
             switchValue: false,
             titleList: [],
             FixeditleList: [],
@@ -141,6 +147,11 @@
             ccy: [],
             branch: [],
             legalPerson: '',
+            intOption: {
+                tableName: "IRL_INT_TYPE",
+                columnCode: "INT_TAX_TYPE",
+                columnDesc: "INT_TAX_TYPE_DESC"
+            }
         }),
         watch: {
             prodData (val) {
@@ -181,10 +192,12 @@
             },
             //获取事件对应利率 且利率计算模型为F-固定利率模型的利率值
             getFixedIntRate(val){
+                this.intType1 = val.irlProdInt[3].intType;
                 let prodInt = val.irlProdInt;
                 let intType = val.irlProdIntInfos.irlIntTypeList;
                 let intMartix = val.irlIntMatrices;
                 this.FixeditleList = []
+                this.fixedInfo = []
                 for(let prodIntIndex in prodInt){
                     for(let intTypeIndex in intType){
                         //匹配事件对应利率类型 && 利率税率类型标志为INT-利率 && 利率的利息计算模型为“F-固定利率模型”
@@ -204,17 +217,19 @@
                 for(let irlIndex in irlIntRateFixedArr) {
                     for (let matrixIndex in intMartix) {
                         if (intMartix[matrixIndex].irlSeqNo === irlIntRateFixedArr[irlIndex].irlSeqNo && intMartix[matrixIndex].company === this.legalPerson) {
-                            let temp = {}
+                            let fixedArr = []
+                            let index = this.fixedInfo.length
                             let tempTitle = {}
-                            //组织界面展示数据   组装irl_prod_int信息
-                            temp["eventType"] = prodInt[prodIntIndex].eventType
-                            temp["intType"] = prodInt[prodIntIndex].intType;
-                            //组装irl_int_martix参数
-                            temp["periodFreq"] = intMartix[matrixIndex].periodFreq
                             //采用基础浮动利率 获取基准利率值,组装irl_base_rate数据
                             let baseRate = this.getUpRateValue(intMartix[matrixIndex].intBasis,irlIntRateFixedArr[irlIndex].ccy);
-                            temp["intBaseRate"] = baseRate.intBasisRate;
-                            this.fixedInfos.push(temp);
+                           //数组组装
+                            fixedArr.push(prodInt[prodIntIndex]);
+                            fixedArr.push(intMartix[matrixIndex]);
+                            fixedArr.push(baseRate);
+                            fixedArr.push(index);
+                            this.fixedInfo.push(fixedArr);
+                            //组织列表数据  事件类型
+                            tempTitle["index"] = index
                             //组织列表数据  事件类型
                             tempTitle["key"] = prodInt[prodIntIndex].eventType
                             getParamTable("MB_EVENT_DEFAULT_TYPE").then(function (response) {
@@ -224,7 +239,6 @@
                                     }
                                 }
                             });
-
                             //组织列表数据 存期
                             tempTitle["key1"] = intMartix[matrixIndex].periodFreq
                             //获取存期信息
@@ -238,9 +252,6 @@
                             this.FixeditleList.push(tempTitle)
                         }
                     }
-                }
-                if(this.fixedInfos.length){
-                    this.fixedSelectInfo = this.fixedInfos[0]
                 }
             },
             initTitle() {
@@ -291,15 +302,7 @@
             },
             fixedChipClick(val){
                 //使用固定利率时候  点击列表事件
-                this.fixedSelectInfo = {}
-                let eventType = val.key;
-                let freq = val.key1;
-                for(let index in this.fixedInfos){
-                    if(this.fixedInfos[index].eventType == eventType && this.fixedInfos[index].periodFreq == freq){
-                        this.fixedSelectInfo = this.fixedInfos[index]
-                        break;
-                    }
-                }
+                this.fixedIndex = val.index
             },
             //查看利率详细信息，弹出框关闭事件
             close() {
@@ -348,6 +351,9 @@
             //通过基准利率类型，产品币种 ，获取最新基准利率
             getUpRateValue(intBasis,ccy){
                 let tempBasis = [];
+                if(this.irlBasisRate.length == 1){
+                    return this.irlBasisRate[0]
+                }
                 for(let basisIndex=0; basisIndex<this.irlBasisRate.length-1; basisIndex++){
                     if(this.irlBasisRate[basisIndex].intBasis == intBasis && this.irlBasisRate[basisIndex].ccy == ccy){
                         if(parseInt(this.irlBasisRate[basisIndex].effectDate)<parseInt(this.irlBasisRate[basisIndex+1].effectDate)){
