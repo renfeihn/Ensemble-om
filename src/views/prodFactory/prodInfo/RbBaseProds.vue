@@ -91,7 +91,7 @@
     import BaseProd from './baseProd/BaseProd'
     import BaseDesc from './baseProd/BaseDesc'
     import ProdCharge from './table/prodTables/prodCharge';
-    import ProdAccounting from './table/prodTables/prodAccounting';
+    import ProdAccounting from './table/prodTables/prodRbAccounting';
     import ProdInt from './table/prodTables/prodInt';
 
     import ProdListForm from './form/ProdListForm';

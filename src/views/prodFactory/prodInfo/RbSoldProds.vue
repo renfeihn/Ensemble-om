@@ -100,7 +100,7 @@
     import {getParamTable} from "@/api/url/prodInfo";
     import {getCommonList} from "@/api/url/prodInfo";
     import ProdCharge from './table/prodTables/prodCharge';
-    import ProdAccounting from './table/prodTables/prodAccounting';
+    import ProdAccounting from './table/prodTables/prodRbAccounting';
     import ProdInt from './table/prodTables/prodInt';
     export default {
         name: 'RbSoldProds',

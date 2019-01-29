@@ -10,22 +10,9 @@
                     </v-list-tile>
                 </v-list>
             </v-card>
-            <v-card class="mt-1">
-                <v-list>
-                    <v-list-tile v-for="item in titleListCheck" :key="item.key" @click="chipClickCheck(key)">
-                        <v-list-tile-content>
-                            <v-list-tile-title style="font-size: medium">{{item.desc}}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-card>
         </v-flex>
-        <v-flex md9 lg9 v-show="fixed == false">
+        <v-flex md9 lg9>
             <base-table :tableData="selectInfo" :keySet="keySet"></base-table>
-        </v-flex>
-        <v-flex md9 lg9 v-show="fixed == true" class="ml-2">
-            <a-table :columns="columnsFixed" :dataSource="accountingFixed" bordered>
-            </a-table>
         </v-flex>
     </v-layout>
 </template>
@@ -45,26 +32,13 @@
         props: ["prodData"],
         data: () => ({
             titleList: [],
-            fixed: false,
-            titleListCheck: [
-                {
-                    key: "checkSub",
-                    desc: "需要进行总分核对的科目"
-                }
-            ],
             prodAccounting: [],
             mbAccountingStatus: [],
             selectInfo: {},
             keySet: {
                 prodType: "prodType",
                 accountingStatus: "accountingStatus"
-            },
-            columnsFixed: [
-                {dataIndex: 'status', title: '核算状态'},
-                {dataIndex: 'amtType', title: '金额类型'},
-                {dataIndex: 'glCodeCol', title: '科目映射'},
-            ],
-            accountingFixed: []
+            }
         }),
         watch: {
             prodData (val) {
@@ -82,7 +56,6 @@
                 if(val!=undefined&&val.prodType!=undefined){
                     that.prodAccounting = val.glProdAccounting
                 }
-                this.accountingFixed = val.glProdCodeMappings
             },
             initTitle() {
                 //加载列表信息
@@ -122,20 +95,7 @@
                         break
                     }
                 }
-            },
-            chipClickCheck(val){
-                this.fixed = true
-                this.selectInfo = {}
             }
         }
     }
 </script>
-<style scoped>
-    .prodList {
-        color: #00b0ff;
-        margin-left: -10px;
-    }
-    .title {
-        color: white;margin-left: auto;margin-right: auto;margin-top: 1px;margin-bottom: auto
-    }
-</style>

@@ -3765,6 +3765,125 @@
         "value": "总账"
       }
     ]
+  },
+  "GL_CODE_INT_I": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "利息收入科目"
+  },
+  "GL_CODE_INT_REC": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应收利息科目"
+  },
+
+  "GL_CODE_INT_ACR": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应计利息科目"
+  },
+
+  "GL_CODE_ODP_I": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "罚息收入科目"
+  },
+
+  "GL_CODE_ODP_REC": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应收罚息科目"
+  },
+
+  "GL_CODE_ODP_ACR": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应计罚息科目"
+  },
+
+  "GL_CODE_ODI_I": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "复利收入科目"
+  },
+
+  "GL_CODE_ODI_REC": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应收利息科目 "
+  },
+
+  "GL_CODE_ODI_ACR": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "应计利息科目 "
+  },
+
+  "GL_CODE_A_LOSS": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "资产损失科目"
+  },
+
+  "GL_CODE_ADJUST": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "调整科目代"
   }
 
 }
