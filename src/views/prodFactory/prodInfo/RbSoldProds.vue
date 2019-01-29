@@ -514,6 +514,7 @@
                             addColumnData.prodDefines[columnKey].status = "A"
                             addColumnData.prodDefines[columnKey].assembleType = "ATTR"
                             addColumnData.prodDefines[columnKey].assembleId = columnKey
+                            addColumnData.prodDefines[columnKey].optionPermissions = "E"
                             //新增参数标识 newAttr
                             addColumnData.prodDefines[columnKey].newAttr = true
                         }
@@ -544,6 +545,7 @@
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].perEffect = ""
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageCode = addColumnPageCode
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].pageSeqNo = PageSeqNo
+                            addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].optionPermissions = "E"
                             //新增参数标识 newAttr
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].newAttr = true
                         }
