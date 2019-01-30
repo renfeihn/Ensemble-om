@@ -107,7 +107,7 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
  */
 export function tablesDeal(prodData,sourceProdData,backVal,tables,copyFlag){
     for (let newIndex = 0; newIndex < prodData[tables].length; newIndex++) {
-        if(copyFlag == "Y"){
+        if(copyFlag == "Y" && tables != "irlBasisRateList" && tables !="irlIntMatrices"){
             let prodType = prodData.prodType.prodType;
             let prodDesc = prodData.prodType.prodDesc;
             let temp = {newData: {}, oldData: {}, optType: ''}
