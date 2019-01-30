@@ -3567,12 +3567,12 @@
     "isMultiSelect": false,
     "valueScore": [
       {
-        "key": "Y",
-        "value": "Y-靠档"
+        "key": "C",
+        "value": "靠上档"
       },
       {
-        "key": "N",
-        "value": "N-不靠档"
+        "key": "F",
+        "value": "靠下档"
       }
     ]
   },
