@@ -33,9 +33,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
         backData.mbEventInfos[m].mbEventAttrs = temp.mbEventAttrs
 
         //mbEventParts对象
-        // for (let x in prodData.mbEventInfos[m].mbEventParts){
-        //     mbEventPartDeal(prodData,x,m,copyFlag,mbEventParts,sourceProdData);
-        // }
         temp.mbEventParts = Object.assign(temp.mbEventParts,mbEventParts)
         backData.mbEventInfos[m].mbEventParts = temp.mbEventParts
 
@@ -48,9 +45,6 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
             }
             if(copyFlag === "Y") {
                 newEventTypeData[y] = prodData.mbEventInfos[m].mbEventType[y]
-            }else if (prodData.mbEventInfos[m].mbEventType[y].attrValue !== sourceProdData.mbEventInfos[m].mbEventType[y].attrValue){
-                newEventTypeData[y] = prodData.mbEventInfos[m].mbEventType[y]
-                oldEventTypeData[y] = sourceProdData.mbEventInfos[m].mbEventType[y]
             }
         }
         mbEventType.newData = Object.assign(mbEventType.newData,newEventTypeData)
