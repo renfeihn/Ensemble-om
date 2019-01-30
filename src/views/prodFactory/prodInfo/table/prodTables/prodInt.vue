@@ -71,7 +71,6 @@
         data: () => ({
             fixedInfo: [],
             fixedIndex: 0,
-            intType1: "",
             switchValue: false,
             titleList: [],
             FixeditleList: [],
@@ -192,7 +191,6 @@
             },
             //获取事件对应利率 且利率计算模型为F-固定利率模型的利率值
             getFixedIntRate(val){
-                this.intType1 = val.irlProdInt[3].intType;
                 let prodInt = val.irlProdInt;
                 let intType = val.irlProdIntInfos.irlIntTypeList;
                 let intMartix = val.irlIntMatrices;
