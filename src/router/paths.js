@@ -1240,4 +1240,16 @@ export default [
             /* webpackMode: "lazy-once" */
             require(['@/views/userFlow/userManagement/userInfoIndex.vue'],resolve)
     },
+    {
+        path: '/upload',
+        meta: {
+            breadcrumb: true,
+            title: '上传测试'
+        },
+        name: 'upload',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/systemManage/upload/upload.vue'],resolve)
+    },
 ];
