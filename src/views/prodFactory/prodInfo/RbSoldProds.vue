@@ -20,8 +20,13 @@
                         <span>刷新</span>
                     </v-tooltip>
                 </v-toolbar>
-                <v-tabs slot="extension" v-model="activeName" grow show-arrows>
+                <v-tabs v-show="isT==false" slot="extension" v-model="activeName" grow show-arrows>
                     <v-tab v-for="n in prodInfo" :key="n.pageCode">
+                        {{ n.text}}
+                    </v-tab>
+                </v-tabs>
+                <v-tabs v-show="isT==true" slot="extension" v-model="activeName" grow show-arrows>
+                    <v-tab v-for="n in prodInfoT" :key="n.pageCode">
                         {{ n.text}}
                     </v-tab>
                 </v-tabs>
@@ -32,12 +37,13 @@
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='SHIFT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='SHIFT' && isT==false" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
-                        <prod-charge v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></prod-charge>
+                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
+
+                        <prod-charge v-if="i.pageCode=='CHARGE' && isT==false" v-bind:prodData="prodData"></prod-charge>
                         <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
                         <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
                     </v-tab-item>
@@ -119,6 +125,7 @@
         },
         data () {
             return {
+                isT: true,
                 listLoading: true,
                 spinning: true,
                 dialog: false,
@@ -150,10 +157,23 @@
                     {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
                     {icon: 'filter_vintage', text: '形态转移', pageCode: 'SHIFT'},
                     {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
-                    {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
                     {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
+                    {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
+                    {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
+                    {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
+                ],
+                prodInfoT: [
+                    {icon: 'account_balance', text: '基本描述', pageCode: 'DESC'},
+                    {icon: 'account_balance', text: '产品信息', pageCode: 'BASE'},
+                    {icon: 'filter_vintage', text: '控制信息', pageCode: 'CONTROL'},
+                    {icon: 'filter_vintage', text: '适用范围',pageCode: 'APPLY'},
+                    {icon: 'filter_vintage', text: '利息信息', pageCode: 'INT'},
+                    {icon: 'filter_vintage', text: '开户定义', pageCode: 'OPEN'},
+                    {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
+                    {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
+                    {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
                     {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
                 ],
@@ -243,7 +263,8 @@
                 //点击主菜单产品组时 获取产品组代码
                 const response= getProdData(this.$route.hash);
                     //初始化产品基础参数
-                    this.prodRange = response.prodType.prodRange
+                    this.prodRange = response.prodType.prodRange;
+                    this.isT = false;
                     this.prodCode = response.prodType.prodType
                     this.prodDesc = response.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)
@@ -255,6 +276,10 @@
                     this.prodClass= this.prodData.prodType.prodClass
                     this.powerByLevel(this.prodClass);
                     this.spinning= false;
+                    //判断是否定期产品
+                    if(this.prodData.prodDefines.ACCT_TYPE!=undefined && this.prodData.prodDefines.ACCT_TYPE != null && this.prodData.prodDefines.ACCT_TYPE.attrValue == "T") {
+                        this.isT = true;
+                    }
                     //组装产品映射信息
                     if(response.glProdMappings[0] != undefined) {
                         this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType
@@ -270,6 +295,7 @@
                 const response= getProdData(this.$route.params.prodType);
                     //初始化产品基础参数
                     this.prodCode = response.prodType.prodType
+                    this.isT = false;
                     this.prodDesc = response.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)
                     this.$store.dispatch('setProdDesc',this.prodDesc)
@@ -281,6 +307,10 @@
                     this.prodRange= this.prodData.prodType.prodRange
                     this.powerByLevel(this.prodClass);
                     this.spinning= false;
+                    //判断是否定期产品
+                    if(this.prodData.prodDefines.ACCT_TYPE!=undefined && this.prodData.prodDefines.ACCT_TYPE != null && this.prodData.prodDefines.ACCT_TYPE.attrValue == "T") {
+                        this.isT = true;
+                    }
                     //组装产品映射信息
                     if(response.glProdMappings[0] != undefined) {
                         this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType

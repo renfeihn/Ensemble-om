@@ -13,6 +13,10 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     var copyFlag = optionType
     // 产品属性 B-基础产品 S-可售产品
     let prodRange = prodData.prodType.prodRange
+    let acctType = "";
+    if(prodData.prodDefines.ACCT_TYPE!=undefined && prodData.prodDefines.ACCT_TYPE != null) {
+        acctType = prodData.prodDefines.ACCT_TYPE.attrValue;
+    }
     // 处理prodType对象数据
     prodTypeDeal(prodData,sourceProdData,backData,copyFlag)
     // 处理prodDefines对象数据
@@ -59,9 +63,12 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     }
     //处理单表数据
     //费用信息
+
     var backVal = []
-    tablesDeal(prodData,sourceProdData,backVal,"mbProdCharge",copyFlag)
-    backData.mbProdCharge = backVal
+    if(acctType != "T") {
+        tablesDeal(prodData, sourceProdData, backVal, "mbProdCharge", copyFlag)
+        backData.mbProdCharge = backVal
+    }
     //核算信息q
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
