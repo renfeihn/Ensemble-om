@@ -1,17 +1,14 @@
 <template>
-    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="code" select-all light v-model="selected">
+    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="code" light>
         <template slot="items" slot-scope="props">
-            <tr @click="props.expanded = !props.expanded">
-                <td>
-                    <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
-                </td>
+
                 <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
                 <td class="text-xs-left">{{ props.item.flowManage.tranDesc }}</td>
                 <td class="text-xs-left">{{ props.item.flowCheckInfo.tranTime }}</td>
                 <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
                 <td class="text-xs-left">{{ props.item.flowCheckInfo.userId }}</td>
                 <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
-            </tr>
+
       </template>
     </v-data-table>
 </template>

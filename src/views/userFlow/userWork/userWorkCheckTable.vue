@@ -1,17 +1,14 @@
 <template>
-    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="flowManage" light v-model="selected">
+    <v-data-table :headers="headers" :items="desserts" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1 px-0 elevation-2" item-key="flowManage" light>
         <template slot="items" slot-scope="props">
-            <tr @click="props.expanded = !props.expanded">
-                <td>
-                    <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
-                </td>
+
                 <td class="text-xs-left">{{ props.item.flowManage.mainSeqNo }}</td>
                  <td class="text-xs-left">{{ props.item.flowManage.tranDesc }}</td>
                  <td class="text-xs-left">{{ props.item.flowCommitInfo.tranTime }}</td>
                  <td class="text-xs-left">{{ props.item.flowManage.status }}</td>
                  <td class="text-xs-left">{{ props.item.flowCommitInfo.userId }}</td>
                  <td class="text-xs-left" @click="getDataInfo(props.item.flowManage.mainSeqNo)">详细信息</td>
-            </tr>
+
       </template>
     </v-data-table>
 </template>
@@ -42,11 +39,6 @@ export default {
         }
       ],
         headers: [
-        {
-            text: "选择",
-            align: "left",
-            value: "check"
-        },
         {
           text: "任务单号",
           align: "left",
