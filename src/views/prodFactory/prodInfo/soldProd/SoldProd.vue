@@ -167,7 +167,11 @@
                 });
             },
             getdata (evt) {
-                console.log(evt.draggedContext.element.id)
+                const oldKey=evt.draggedContext.element.key;
+                const newKey=evt.relatedContext.element.key;
+                if(this.prodDefines[oldKey].group=='BASE'||this.prodDefines[newKey].group=='BASE'){
+                    return false;
+                }
             },
             saveColumn (){
                 saveColumn({column: this.dataSource,prodType: this._props.prodTypeCode,tags: this._props.tags}).then(response => {

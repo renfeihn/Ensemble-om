@@ -6,7 +6,6 @@
     </a-upload>
 </template>
 <script>
-    import {upload} from "@/api/url/prodInfo";
     export default {
         data () {
             return {
@@ -21,18 +20,7 @@
         methods: {
             upload(){
                 return 'http://127.0.0.1:8004/upload'
-       /*         const fr = new FileReader();
-                fr.readAsDataURL(this.file);
-                fr.onload = function (event) {
-                    const data= event.target.result; //此处获得的data是base64格式的数据
-                    upload(data).then(function (response) {
-
-                    })
-                }*/
             },
-         /*   beforeUpload(file, fileList) {
-              this.file=file;
-            },*/
             handleChange(info) {
                 if (info.file.status !== 'uploading') {
                     console.log(info.file, info.fileList);
