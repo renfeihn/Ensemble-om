@@ -20,34 +20,48 @@
                         <span>刷新</span>
                     </v-tooltip>
                 </v-toolbar>
-                <v-tabs v-show="isT==false" slot="extension" v-model="activeName" grow show-arrows>
-                    <v-tab v-for="n in prodInfo" :key="n.pageCode">
-                        {{ n.text}}
-                    </v-tab>
-                </v-tabs>
-                <v-tabs v-show="isT==true" slot="extension" v-model="activeName" grow show-arrows>
+                <v-tabs v-if="isT" slot="extension" v-model="activeName" grow show-arrows>
                     <v-tab v-for="n in prodInfoT" :key="n.pageCode">
                         {{ n.text}}
                     </v-tab>
-                </v-tabs>
-                <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
-                    <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
+                    <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
+                        <v-tab-item v-for="i in prodInfoT" :key="i.pageCode">
                             <sold-desc v-if="i.pageCode=='DESC'" :prodType="prodData.prodType" tags="DESC"></sold-desc>
                             <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodMapping="prodMapping" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
-                            <sold-prod v-if="i.pageCode=='SHIFT' && isT==false" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
-
-                        <prod-charge v-if="i.pageCode=='CHARGE' && isT==false" v-bind:prodData="prodData"></prod-charge>
-                        <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
-                        <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
-                    </v-tab-item>
-                </v-tabs-items>
+                            <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                            <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
+                        </v-tab-item>
+                    </v-tabs-items>
+                </v-tabs>
+                <v-tabs v-else slot="extension" v-model="activeName" grow show-arrows>
+                    <v-tab v-for="n in prodInfo" :key="n.pageCode">
+                        {{ n.text}}
+                    </v-tab>
+                    <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
+                        <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
+                            <sold-desc v-if="i.pageCode=='DESC'" :prodType="prodData.prodType" tags="DESC"></sold-desc>
+                            <sold-prod v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodMapping="prodMapping" :prodDefines="prodData.prodDefines" tags="BASE" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='APPLY'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="APPLY" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='INT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="INT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='SHIFT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='OPEN'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="OPEN" tags="OPEN" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CRET'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CRET" tags="CRET" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></sold-prod>
+                            <sold-prod v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></sold-prod>
+                            <prod-charge v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></prod-charge>
+                            <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                            <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
+                        </v-tab-item>
+                    </v-tabs-items>
+                </v-tabs>
             </v-flex>
             <v-flex lg3 sm3 class="v-card" pl-3>
                 <v-card class="elevation-2">
@@ -125,7 +139,7 @@
         },
         data () {
             return {
-                isT: true,
+                isT: false,
                 listLoading: true,
                 spinning: true,
                 dialog: false,
@@ -225,6 +239,26 @@
                 }
             }
         },
+        created () {
+            //判断是否定期产品   为定期产品时：隐藏形态转移，收费定义页签
+            if(this.$route.hash !== "" && this.$route.hash !== null && this.$route.hash !== undefined) {
+                //点击主菜单产品组时 获取产品组代码
+                const response = getProdData(this.$route.hash);
+                if(response.prodDefines.ACCT_TYPE!=undefined && response.prodDefines.ACCT_TYPE != null && response.prodDefines.ACCT_TYPE.attrValue == "T") {
+                    this.isT = true;
+                }else{
+                    this.isT = false
+                }
+            }
+            if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null && this.$route.params.prodType !== undefined) {
+                const response = getProdData(this.$route.params.prodType);
+                if(response.prodDefines.ACCT_TYPE!=undefined && response.prodDefines.ACCT_TYPE != null && response.prodDefines.ACCT_TYPE.attrValue == "T") {
+                    this.isT = true;
+                }else{
+                    this.isT = false
+                }
+            }
+        },
         mounted: function() {
             this.initColumnInfo();
             // 监听这个dom的scroll事件
@@ -264,7 +298,6 @@
                 const response= getProdData(this.$route.hash);
                     //初始化产品基础参数
                     this.prodRange = response.prodType.prodRange;
-                    this.isT = false;
                     this.prodCode = response.prodType.prodType
                     this.prodDesc = response.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)
@@ -276,10 +309,6 @@
                     this.prodClass= this.prodData.prodType.prodClass
                     this.powerByLevel(this.prodClass);
                     this.spinning= false;
-                    //判断是否定期产品
-                    if(this.prodData.prodDefines.ACCT_TYPE!=undefined && this.prodData.prodDefines.ACCT_TYPE != null && this.prodData.prodDefines.ACCT_TYPE.attrValue == "T") {
-                        this.isT = true;
-                    }
                     //组装产品映射信息
                     if(response.glProdMappings[0] != undefined) {
                         this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType
@@ -295,7 +324,6 @@
                 const response= getProdData(this.$route.params.prodType);
                     //初始化产品基础参数
                     this.prodCode = response.prodType.prodType
-                    this.isT = false;
                     this.prodDesc = response.prodType.prodDesc
                     this.$store.dispatch('setProdType',this.prodCode)
                     this.$store.dispatch('setProdDesc',this.prodDesc)
@@ -307,10 +335,6 @@
                     this.prodRange= this.prodData.prodType.prodRange
                     this.powerByLevel(this.prodClass);
                     this.spinning= false;
-                    //判断是否定期产品
-                    if(this.prodData.prodDefines.ACCT_TYPE!=undefined && this.prodData.prodDefines.ACCT_TYPE != null && this.prodData.prodDefines.ACCT_TYPE.attrValue == "T") {
-                        this.isT = true;
-                    }
                     //组装产品映射信息
                     if(response.glProdMappings[0] != undefined) {
                         this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType
