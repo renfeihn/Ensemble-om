@@ -25,7 +25,7 @@
 
 </template>
 <script>
-    import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import {getSysUserInfoByUser} from "@/api/url/prodInfo";
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
 
@@ -62,7 +62,7 @@
         methods: {
             initialize () {
                 let that = this
-                getSysInfoByUser(that.userId).then(function (response) {
+                getSysUserInfoByUser(that.userId).then(function (response) {
                     that.desserts = response.data.data.userInfo
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                     for(let i=0; i<that.desserts.length; i++){

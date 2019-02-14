@@ -3,7 +3,44 @@
         <v-toolbar color="primary lighten-2" dark>
             <v-toolbar-title>角色管理</v-toolbar-title>
             <v-spacer></v-spacer>
-
+            <v-dialog v-model="dialog2" fullscreen hide-overlay>
+                <v-card>
+                    <v-toolbar dark color="primary">
+                        <v-btn icon dark @click="dialog2 = false">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                        <v-toolbar-title>authorization</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                    </v-toolbar>
+                    <v-layout>
+                        <v-flex >
+                            <h2>菜单列表</h2>
+                            <div style="height: 1px;background-color: grey;width: 100%"></div>
+                            <v-data-table :headers="headers2" :items="menu" class="elevation-1">
+                                <template slot="items" slot-scope="props">
+                                    <td>{{ props.item.menuId }}</td>
+                                    <td>{{ props.item.menuParentId }}</td>
+                                    <td>{{ props.item.menuStatus }}</td>
+                                    <td>{{ props.item.menuTitle }}</td>
+                                </template>
+                            </v-data-table>
+                        </v-flex>
+                        <v-divider vertical></v-divider>
+                        <v-flex xs12 md6>
+                            <h2>已授权的菜单</h2>
+                            <div style="height: 1px;background-color: grey;width: 100%"></div>
+                            <v-data-table :headers="headers2" :items="menu2" class="elevation-1">
+                                <template slot="items" slot-scope="props">
+                                    <td>{{ props.item.menuId }}</td>
+                                    <td>{{ props.item.menuParentId }}</td>
+                                    <td>{{ props.item.menuStatus }}</td>
+                                    <td>{{ props.item.menuTitle }}</td>
+                                </template>
+                            </v-data-table>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-dialog>
             <v-dialog v-model="dialog" max-width="500px">
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
@@ -23,6 +60,9 @@
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.roleName" label="角色名称"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12>
+                                    <v-text-field v-model="editedItem.roleDesc" label="角色描述"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.roleLevel" label="角色等级"></v-text-field>
@@ -51,6 +91,12 @@
                         </v-btn>
                         <span>修改</span>
                     </v-tooltip>
+                    <v-tooltip bottom color="blue" style="margin-left: -20px">
+                        <v-btn flat icon="widgets" slot="activator">
+                            <v-icon small class="mr-2" @click="authorization(props.item)" style="color: #0d47a1">widgets</v-icon>
+                        </v-btn>
+                        <span>授权</span>
+                    </v-tooltip>
                     <v-tooltip bottom color="red" style="margin-left: -20px">
                         <v-btn flat icon="delete" slot="activator">
                             <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
@@ -74,8 +120,10 @@
         props: ["title"],
         data: () => ({
             disabled: "false",
-
+            menuRole: [],
+            copMenuRole: [],
             dialog: false,
+            dialog2: false,
             headers: [
                 { text: '角色ID',sortable: false},
                 { text: '角色名称',sortable: false },
@@ -83,7 +131,15 @@
                 { text: '角色适用等级',sortable: false },
                 { text: 'Action',sortable: false }
             ],
+            headers2: [
+                { text: '菜单id', sortable: false},
+                { text: '父菜单id', sortable: false },
+                { text: '菜单状态', sortable: false },
+                { text: '菜单名称', sortable: false },
+            ],
             desserts: [],
+            menu: [],
+            menu2: [],
             sourceData: [],
             keySet: [
                 {
@@ -105,7 +161,8 @@
                 roleDesc: '',
                 roleLevel: ''
             },
-            backValue: {}
+            backValue: {},
+            backValueRole: {},
         }),
 
         computed: {
@@ -132,7 +189,10 @@
                 //获取角色信息
                 getSysInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.roleInfo;
+                    that.menu = response.data.data.columnInfo;
+                    that.menuRole = response.data.data.menuRoleInfo
                     that.sourceData = that.copy(that.desserts,that.sourceData)
+                    that.copMenuRole = that.copy(that.menuRole,that.copMenuRole)
                 });
             },
             editItem (item) {
@@ -141,6 +201,19 @@
                 this.dialog = true
                 this.disabled = "true";
 
+            },
+            authorization(item){
+                this.menu2 = []
+                this.dialog2 = true
+                for(let i=0; i<this.menuRole.length; i++){
+                    if(this.menuRole[i].roleId == item.roleId){
+                        for(let j=0; j<this.menu.length; j++){
+                            if(this.menu[j].menuId == this.menuRole[i].menuId){
+                                this.menu2.push(this.menu[j])
+                            }
+                        }
+                    }
+                }
             },
             addClick() {
                 this.disabled = "false"
@@ -154,10 +227,24 @@
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_ROLE"
                     this.backValue.keySet = "ROLE_ID"
-                    saveSysTable(this.backValue).then(response => {
-                        if (response.status === 200) {
-                            toast.success("提交成功！");
+
+                    const roleIndex = item.roleId
+                    for(let i=0; i<this.menuRole.length; i++){
+                        if(this.menuRole[i].roleId == roleIndex){
+                            this.menuRole.splice(i, 1)
+                            i=i-1
                         }
+                    }
+                    this.backValueRole.data = filterTableChangeData(this.keySet,this.menuRole,this.copMenuRole)
+                    this.backValueRole.userName = sessionStorage.getItem("userId")
+                    this.backValueRole.tableName = "OM_MENU_ROLE"
+                    this.backValueRole.keySet = "ROLE_ID,MENU_ID"
+                    saveSysTable(this.backValueRole).then(response => {
+                        saveSysTable(this.backValue).then(response => {
+                            if (response.status === 200) {
+                                toast.success("提交成功！");
+                            }
+                        })
                     })
                 }
                 this.initialize()

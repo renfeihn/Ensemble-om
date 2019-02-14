@@ -9,7 +9,7 @@
                         <v-list style="margin-right: 10%;margin-left: 10%">
                             <v-list-tile>
                                 <v-list-tile-content>
-                                        <v-list-tile-title style="font-size: x-large;margin-left: 4%; margin-right: 50%;color: #42A5F5">{{ userId }}||{{ name }}</v-list-tile-title>
+                                        <v-list-tile-title style="font-size: x-large;margin-left: 4%; margin-right: 50%;color: #42A5F5;text-align: center">{{ userId }}||{{ name }}</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -31,8 +31,9 @@
                 </v-flex>
             </v-flex>
             <v-flex md10 lg10 class="pl-4 pb-4">
-                    <user-info v-if="action=='userInfo'"></user-info>
-                    <user-password v-else></user-password>
+                <user-info v-if="action=='userInfo'"></user-info>
+                <user-password v-if="action=='userPassword'"></user-password>
+                <user-role v-if="action=='userRole'"></user-role>
             </v-flex>
         </v-layout>
     </div>
@@ -40,12 +41,14 @@
 <script>
     import UserInfo from './userInfo'
     import UserPassword from './userPassword'
-    import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import UserRole from './userRole'
+    import {getSysUserInfoByUser} from "@/api/url/prodInfo";
 
     export default {
         components: {
             UserInfo,
-            UserPassword
+            UserPassword,
+            UserRole
         },
         data() {
             return {
@@ -56,7 +59,7 @@
                 items: [
                     {title: '个人信息管理', name: 'userInfo', icon: 'person', class: '',color: "blue"},
                     {title: '密码管理', name: 'userPassword', icon: 'lock', class: '', color: "red"},
-                    {title: '扩展页签1', name: 'test1', icon: 'settings', class: '',color: "blue"}
+                    {title: '用户权限', name: 'userRole', icon: 'settings', class: '',color: "blue"}
                     ],
                 right: null,
                 action: 'userInfo'
@@ -70,7 +73,7 @@
                 let that = this
                 let userId = sessionStorage.getItem("userId")
                 //获取角色信息
-                getSysInfoByUser(userId).then(function (response) {
+                getSysUserInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.userInfo
                     for(let i=0; i<that.desserts.length; i++){
                         if(userId==that.desserts[i].userId){

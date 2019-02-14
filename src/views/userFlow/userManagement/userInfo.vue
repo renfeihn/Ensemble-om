@@ -20,7 +20,7 @@
         </v-layout>
 </template>
 <script>
-    import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import {getSysUserInfoByUser} from "@/api/url/prodInfo";
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
@@ -65,7 +65,7 @@
                 let that = this
                 let userId = sessionStorage.getItem("userId")
                 //获取角色信息
-                getSysInfoByUser(userId).then(function (response) {
+                getSysUserInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.userInfo
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                     for(let i=0; i<that.desserts.length; i++){

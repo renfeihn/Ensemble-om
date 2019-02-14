@@ -57,7 +57,7 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.menuSeqNo }}</td>
                 <td>{{ props.item.menuId }}</td>
-                <td>{{ props.item.menuName }}</td>
+                <td>{{ props.item.menuParams }}</td>
                 <td>{{ props.item.menuTitle }}</td>
                 <td>{{ props.item.menuParentId }}</td>
                 <td>{{ props.item.menuLevel }}</td>
@@ -97,10 +97,10 @@
             dialog: false,
             disabled: "false",
             headers: [
-                {text: '菜单序号'},
+                {text: '菜单序号',sortable: false},
                 {text: '菜单ID',sortable: false,size: "medium"},
+                { text: '菜单参数',sortable: false},
                 { text: '菜单名称',sortable: false},
-                { text: '菜单描述',sortable: false},
                 { text: '父级菜单',sortable: false },
                 { text: '菜单等级',sortable: false },
                 { text: '状态',sortable: false },
