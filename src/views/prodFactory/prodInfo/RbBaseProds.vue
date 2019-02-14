@@ -36,6 +36,7 @@
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='DEBT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DEBT" tags="DEBT" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CLOSE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="CLOSE" tags="CLOSE" :disablePower="disablePower"></base-prod>
                             <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
+                            <prod-charge v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></prod-charge>
                             <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
                         </v-tab-item>
                     </v-tabs-items>
@@ -153,7 +154,6 @@
                 editShow: false,
                 depositTree: '',
                 pendFlag: 0,
-                columnArr: [1,2,3,4,5,6,7,8,9,10,11,12],
                 prodClass: '',
                 activeName: null,
                 eventList: {},
@@ -191,6 +191,7 @@
                     {icon: 'filter_vintage', text: '存入定义', pageCode: 'CRET'},
                     {icon: 'filter_vintage', text: '支取定义', pageCode: 'DEBT'},
                     {icon: 'filter_vintage', text: '销户定义', pageCode: 'CLOSE'},
+                    {icon: 'filter_vintage', text: '收费定义', pageCode: 'CHARGE'},
                     {icon: 'filter_vintage', text: '利率信息', pageCode: 'RATEINFO'},
                     {icon: 'filter_vintage', text: '核算信息', pageCode: 'ACCOUNTING'}
                 ],
