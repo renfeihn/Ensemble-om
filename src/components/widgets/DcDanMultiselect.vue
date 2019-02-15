@@ -28,12 +28,12 @@
                             </span>
                         </div>
                         <div v-if="isKey == 'true' && notNull == true && childPd == true " style="align-self: flex-end">
-        <span>
-          <v-icon style="color: green;">done</v-icon>
-        </span>
+                            <span>
+                                <v-icon style="color: green;">done</v-icon>
+                            </span>
                         </div>
                         <div v-if="isKey == 'true' && notNull == true && childPd == false" style="align-self: flex-end;cursor: default;">
-                            <v-tooltip top v-model="trueOrFalse" z-index="10000">
+                            <v-tooltip bottom v-model="trueOrFalse" z-index="10000">
                                 <v-icon slot="activator" color="red">warning</v-icon>
                                 <span>不能重复</span>
                             </v-tooltip>

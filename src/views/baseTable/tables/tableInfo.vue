@@ -25,7 +25,7 @@
                     <a-button type="primary" @click="onSave" class="ml-2">提交</a-button>
                 </v-toolbar>
                 <v-card-text class="pa-0">
-                    <a-table :customRow="customRow" :columns="columns" @change="changeTable" :dataSource="dataInfo">
+                    <a-table :customRow="customRow" :columns="columnsTwo" @change="changeTable" :dataSource="dataInfo">
                     </a-table>
                     <v-divider></v-divider>
                 </v-card-text>
@@ -96,6 +96,7 @@
                 selectedRowKeys: [],
                 selected: {},
                 columns: [],
+                columnsTwo: [],
                 backValue: {},
                 key: [],
                 isNull: [],
@@ -134,6 +135,7 @@
                     }
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
                     that.columns = response.data.data.column;
+                    that.columnsTwo = response.data.data.columnTwo
                     that.tableName = tableName
                     that.getKey()
                 });
@@ -203,7 +205,7 @@
                 this.tbd.style = '';
             },
             onSave() {
-                this.backValue.data = filterTableChangeData(this.columns, this.dataInfo, this.sourceDataInfo)
+                this.backValue.data = filterTableChangeData(this.columnsTwo, this.dataInfo, this.sourceDataInfo)
                 this.backValue.tableName = this.tableName
                 this.backValue.tableDesc= this.$route.params.tableDesc
                 this.backValue.option = "save"
@@ -238,14 +240,14 @@
                 let keyCoName = []
                 let num = 0
                 for(let j=0; j<this.dataInfo.length; j++){
-                    if(editSelected[this.key[0].dataIndex].value == this.dataInfo[j][this.key[0].dataIndex]){
+                    if(editSelected[this.key[0].code].value == this.dataInfo[j][this.key[0].code]){
                         if(num == this.key.length){
                             break
                         }
                         num++
                         keyCoName.push(this.key[0].title)
                         for(let n=1; n<this.key.length; n++){
-                            if(editSelected[this.key[n].dataIndex].value == this.dataInfo[j][this.key[n].dataIndex]){
+                            if(editSelected[this.key[n].code].value == this.dataInfo[j][this.key[n].code]){
                                 num++
                                 keyCoName.push(this.key[n].title)
                             }else{
@@ -259,7 +261,7 @@
                 if (this.addorchange == false){
                     let numSel = 0
                     for(let i=0; i<this.key.length; i++){
-                        if(editSelected[this.key[i].dataIndex].value == this.selected[this.key[i].dataIndex]){
+                        if(editSelected[this.key[i].code].value == this.selected[this.key[i].code]){
                             numSel++
                         }
                         if(numSel == this.key.length){
@@ -280,19 +282,19 @@
                 let keyCoName = []
                 let num = 0
                 for(let i=0; i<this.isNull.length; i++){
-                    if(editSelected[this.isNull[i].dataIndex].value == []){
+                    if(editSelected[this.isNull[i].code].value == []){
                         keyIsNull = true
                     }
                 }
                 for(let j=0; j<this.dataInfo.length; j++){
-                    if(editSelected[this.key[0].dataIndex].value == this.dataInfo[j][this.key[0].dataIndex]){
+                    if(editSelected[this.key[0].code].value == this.dataInfo[j][this.key[0].code]){
                         if(num == this.key.length){
                             break
                         }
                         num++
                         keyCoName.push(this.key[0].title)
                         for(let n=1; n<this.key.length; n++){
-                            if(editSelected[this.key[n].dataIndex].value == this.dataInfo[j][this.key[n].dataIndex]){
+                            if(editSelected[this.key[n].code].value == this.dataInfo[j][this.key[n].code]){
                                 num++
                                 keyCoName.push(this.key[n].title)
                             }else{
@@ -306,7 +308,7 @@
                 if (this.addorchange == false){
                     let numSel = 0
                     for(let i=0; i<this.key.length; i++){
-                        if(editSelected[this.key[i].dataIndex].value == this.selected[this.key[i].dataIndex]){
+                        if(editSelected[this.key[i].code].value == this.selected[this.key[i].code]){
                             numSel++
                         }
                         if(numSel == this.key.length){

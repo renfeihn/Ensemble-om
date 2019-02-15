@@ -425,7 +425,7 @@
                         this.pendFlag = 1
                         this.$swal({
                             allowOutsideClick: false,
-                            type: 'success',
+                            width: '300px',
                             title: "提交成功!",
                         })
                         this.spinning= false

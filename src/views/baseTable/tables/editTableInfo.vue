@@ -9,6 +9,8 @@
                                 v-model="keyData.value"
                                 :counter="10"
                                 :isKey="keyData.key"
+                                :lengths="keyData.lengths"
+                                :dataIndex="keyData.dataIndex"
                                 :childPd="childPd"
                                 :isNotNull="keyData.isNull"
                                 :label="keyData.columnDesc"
@@ -21,6 +23,8 @@
                                 v-model="keyData.value"
                                 :counter="10"
                                 :isKey="keyData.key"
+                                :lengths="keyData.lengths"
+                                :dataIndex="keyData.dataIndex"
                                 :childPd="childPd"
                                 :isNotNull="keyData.isNull"
                                 :label="keyData.columnDesc"
@@ -120,7 +124,7 @@
                 let locSelected={}
                 if(columns!= undefined){
                     for(const index in columns){
-                        const key=columns[index].dataIndex
+                        const key=columns[index].code
                         let value=selected[key]
                         if(value==undefined){
                             value=''
@@ -131,6 +135,8 @@
                             column['value']=value
                             column['key']=columns[index].key
                             column['isNull']=columns[index].isNull
+                            column['lengths']=columns[index].lengths
+                            column['dataIndex']=columns[index].dataIndex
                             locSelected[key]=column;
                         }
                     }

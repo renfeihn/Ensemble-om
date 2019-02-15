@@ -14,20 +14,32 @@
    </v-flex>
    <v-flex md1 lg1>
     <v-layout row wrap end style="height: 100%" >
-     <div v-if="isKey == 'false' && notNull == true && isNotNull == 'true'" style="align-self: flex-end">
+     <div v-if="isKey == 'false' && notNull == true && isNotNull == 'true' && numberToLang == false && dateFalse == false" style="align-self: flex-end">
         <span>
           <v-icon style="color: green;">done</v-icon>
         </span>
      </div>
-     <div v-if="isKey == 'true' && notNull == true && childPd == true " style="align-self: flex-end">
+     <div v-if="isKey == 'true' && notNull == true && childPd == true && numberToLang == false && dateFalse == false" style="align-self: flex-end">
         <span>
           <v-icon style="color: green;">done</v-icon>
         </span>
      </div>
      <div v-if="isKey == 'true' && notNull == true && childPd == false" style="align-self: flex-end;cursor: default;">
-      <v-tooltip top v-model="trueOrFalse" z-index="10000">
-       <v-icon slot="activator" color="red">warning</v-icon>
-       <span>不能重复</span>
+        <v-tooltip bottom v-model="trueOrFalse" z-index="10000">
+           <v-icon slot="activator" color="red">close</v-icon>
+              <span>不能重复</span>
+        </v-tooltip>
+     </div>
+     <div v-if="numberToLang == true" style="align-self: flex-end;cursor: default;">
+        <v-tooltip bottom v-model="trueOrFalse" z-index="10000">
+           <v-icon slot="activator" color="red">close</v-icon>
+              <span>长度超出限制</span>
+        </v-tooltip>
+     </div>
+     <div v-if="dateFalse == true" style="align-self: flex-end;cursor: default;">
+      <v-tooltip bottom v-model="trueOrFalse" z-index="10000">
+       <v-icon slot="activator" color="red">close</v-icon>
+       <span>数据类型不符合,应为{{dataIndex}}类型</span>
       </v-tooltip>
      </div>
     </v-layout>
@@ -47,6 +59,8 @@
             event: "getVue"
         },
         props: {
+            dataIndex: String,
+            lengths: String,
             isKey: String,
             childPd: String,
             isNotNull: String,
@@ -76,7 +90,9 @@
                 disabled: false,
                 personShow: 0,
                 optionPermissions: '',
-                show: false
+                show: false,
+                numberToLang: false,
+                dateFalse: false,
             };
         },
         watch: {
@@ -117,6 +133,39 @@
                 this.$emit('changeNum', this.num)
             },
             animateWidth() {
+                this.numberToLang = false
+                this.dateFalse = false
+
+                if(this.value != ""){
+                    if(this._props.dataIndex == 'Int'){
+                        let p = /(^-?\d*$)/;
+                        if(p.test(this.value) == true){
+                            this.dateFalse = false
+                        }else {
+                            this.dateFalse = true
+                        }
+                    }
+                    if(this._props.dataIndex == 'Double'){
+                        let e=/^[-\+]?\d+(\.\d+)?$/;
+                        if(e.test(this.value)){
+                            this.dateFalse = false
+                        }else {
+                            this.dateFalse = true
+                        }
+                    }
+                    if(this._props.dataIndex == 'Date'){
+                        let r=  /^((?!0000)[0-9]{4}-((0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-8])|(0[13-9]|1[0-2])-(29|30)|(0[13578]|1[02])-31)|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[48]|[2468][048]|[13579][26])00)-02-29)$/;
+                        if(this.value.match(r) == null){
+                            this.dateFalse = true
+                        }else{
+                            this.dateFalse = false
+                        }
+                    }
+                }
+
+                if(this.value.length > parseInt(this._props.lengths)){
+                    this.numberToLang = true
+                }
                 if(this.value == ""){
                     this.notNull = false
                 }else{
