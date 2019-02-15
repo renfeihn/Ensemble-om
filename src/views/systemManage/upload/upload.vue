@@ -8,7 +8,9 @@
 <script>
     export default {
         data () {
+
             return {
+                data: '1',
                 headers: {
                     authorization: 'authorization-text',
                     contentType: 'multipart/form-data'

@@ -123,7 +123,7 @@
             },
             dealNewAttr(val) {
                 //新增参数延迟展示
-                if(val !== undefined && val.newAttr) {
+                if(val !== undefined &&val !==null && val.newAttr) {
                     let t;
                     clearTimeout(t)
                     let that = this;

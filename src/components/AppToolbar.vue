@@ -24,7 +24,7 @@
         <v-icon @click="showSearchAction" class="material-icons">search</v-icon>
 
         <v-card :class="searchDc">
-                <v-autocomplete :rules=null :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text px-5 pt-2"
+                <v-autocomplete :items="prodList" placeholder="请输入要查询的产品类型或描述" class="primary--text px-5 pt-2"
                                 @change="prodListClick" clearable flat solo-inverted></v-autocomplete>
               </v-card>
         <v-btn icon @click="handleFullScreen()">
