@@ -153,6 +153,8 @@
                 submitCommon({"userId": sessionStorage.getItem("userId")}).then(response => {
                     that.items = []
                     this.$emit('getTaskList', '0')
+                    const setTaskEvent= new Event("referenceWork");
+                    window.dispatchEvent(setTaskEvent);
                 })
             },
             clean() {

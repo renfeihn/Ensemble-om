@@ -32,6 +32,10 @@
 
       mounted: function() {
           this.queryDespositProdData();
+          const that=this
+          window.addEventListener("referenceWork", function () {
+              that.queryDespositProdData();
+          })
       },
     methods: {
         queryDespositProdData() {
