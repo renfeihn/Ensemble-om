@@ -66,7 +66,7 @@
 
     import prodDiff from '@/views/prodFactory/prodDiff/prodDiff'
     import baseTable from '@/views/prodFactory/prodInfo/table/baseTable'
-
+    import {getParamTable} from "@/api/url/prodInfo";
     import { getDiffList } from "@/api/url/prodInfo";
     import { getDiffTable } from "@/api/url/prodInfo";
     import {PrintInfo} from '@/utils/print/print'
@@ -201,35 +201,30 @@ export default {
               this.getDiffTableData(tranId);
           }
       },
+      //通过交易主单号 获取单表差异信息
       getDiffTableData(tranId) {
-          //通过交易主单号 获取单表差异信息
+          let heads = []
           var data={'mainSeqNo': this.seqNo,"tranId": tranId};
           getDiffTable(data).then(response => {
               console.log(response);
               this.diffTitles = tranId
+              heads = response.data.data.columnHeard;
               let tableDiffInfo = response.data.data.tableInfo
               //获取单表列描述
               let heards=[];
               let assembleColumns=[];
-              if(tableDiffInfo[0] !== undefined){
-                  let column = {}
-                  if(tableDiffInfo[0].dmlType == 'I'){
-                      column = tableDiffInfo[0].newData
-                  }else{
-                      column = tableDiffInfo[0].oldData
-                  }
-                  for(const keys in column){
-                      let head={};
-                      head["text"]=getColumnDesc(keys);
-                      head["value"]=keys;
-                      heards.push(head);
-                  }
-                  //区分数据操作类型
-                  let opt={};
-                  opt["text"]="操作类型";
-                  opt["value"]= tableDiffInfo[0].dmlType
-                  heards.push(opt);
+              for(let i=0; i<heads.length; i++){
+                  let head={};
+                  head["text"]=heads[i].title
+                  head["value"]=heads[i].code
+                  heards.push(head);
               }
+              //区分数据操作类型
+              let opt={};
+              opt["text"]="操作类型";
+              opt["value"]= "dmlType";
+              heards.push(opt);
+
               //组装差异数据
               for(let i in tableDiffInfo){
                   //新增参数
@@ -263,13 +258,12 @@ export default {
                       assembleColumns.push(tableDiffInfo[i].newData)
                   }
               }
-
               const column = {"headers": heards,"column": assembleColumns}
               this.prodCharge= column;
           });
       },
+      //通过交易主单号 获取产品差异信息
       getDiffProdData(tranId){
-          //通过交易主单号 获取产品差异信息
           let data={'mainSeqNo': this.seqNo,'tranId': tranId};
           getModuleByFlowCode(this.seqNo).then(response => {
               for(let tId in response.data.data){

@@ -9,17 +9,10 @@
 export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
 
     //比较目标数据
-    var newData = dataInfo
+    var newData = sourceDataInfo
     //源数据
-    var oldData = sourceDataInfo
-    var delFlag = "0"
-    //区别新增或者删除  始终保持外层数据最多
-    if(newData.length < oldData.length){
-        //存在删除数据
-        oldData = dataInfo
-        newData = sourceDataInfo
-        delFlag = "1"
-    }
+    var oldData = dataInfo
+    var delFlag = "1"
 
     var backValue = []
     var keySet ={}
@@ -33,6 +26,7 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
     var paraOpt = "0"
     var sameFlag = 0
 
+    //找出删除和修改的数据
     for(let i=0; i<newData.length; i++){
         paraOpt = "0"
         sameFlag = 0
@@ -52,14 +46,6 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
             }
         }
         //数据组装
-        if(delFlag === "0" && sameFlag != arr.length){
-            let temp = {}
-            temp["newData"] = newData[i]
-            temp["oldData"] = {}
-            temp["optType"] = "I"
-            backValue[backValue.length] = temp
-
-        }
         if(delFlag === "1" && sameFlag != arr.length){
             let temp = {}
             temp["newData"] = {}
@@ -68,6 +54,39 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
             backValue[backValue.length] = temp
         }
     }
+
+    //找出增加的数据
+    newData = dataInfo
+    oldData = sourceDataInfo
+    delFlag = "0"
+    for(let m=0; m<newData.length; m++){
+        paraOpt = "0"
+        sameFlag = 0
+        for(let n=0; n<oldData.length; n++){
+            let keySem = 0  //0-主键相同匹配到数据  1-存在不相同主键匹配失败
+            for(let l in keySet){
+                if(newData[m][l] === oldData[n][l]){
+                    //主键相同
+                    keySem = keySem +1
+                    paraOpt = "1"
+                }
+            }
+            sameFlag = keySem
+            if(keySem === arr.length) {
+                break
+            }
+        }
+        //数据组装
+        if(delFlag === "0" && sameFlag != arr.length){
+            let temp = {}
+            temp["newData"] = newData[m]
+            temp["oldData"] = {}
+            temp["optType"] = "I"
+            backValue[backValue.length] = temp
+
+        }
+    }
+
     return backValue
 }
 
@@ -77,14 +96,8 @@ export function tableDeal(i,j,newData,oldData,backValue,delFlag) {
     for (let m in newData[i]) {
         if (newData[i][m] !== oldData[j][m]) {
             let temp = {}
-            if (delFlag === "0") {
-                temp["newData"] = newData[i]
-                temp["oldData"] = oldData[j]
-            }
-            if (delFlag === "1") {
-                temp["newData"] = oldData[i]
-                temp["oldData"] = newData[j]
-            }
+            temp["newData"] = oldData[j]
+            temp["oldData"] = newData[i]
             temp["optType"] = "U"
             backValue[backValue.length] = temp
             break
