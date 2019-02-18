@@ -126,6 +126,14 @@
                     //跳转到贷款可售产品界面
                     this.$router.push({ name: "ClSoldProds", hash: prodType});
                 }
+                if(prodRange == 'B' && sourceModule == "GL"){
+                    //跳转到内部账基础产品界面
+                    this.$router.push({ name: "GlBaseProds", hash: prodType});
+                }
+                if(prodRange == 'S' && sourceModule == "GL"){
+                    //跳转到内部账可售产品界面
+                    this.$router.push({ name: "GlSoldProds", hash: prodType});
+                }
             }
         }
     };

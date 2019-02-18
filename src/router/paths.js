@@ -1101,6 +1101,31 @@ export default [
         require(['@/views/prodFactory/prodInfo/RbBaseProds.vue'],resolve
       )
   },
+
+    {
+        path: 'GlBaseProds',
+        meta: {
+            breadcrumb: true,
+            title: '内部账基础产品'
+        },
+        name: 'GlBaseProds',
+        component: (resolve) =>
+            require(['@/views/prodFactory/prodInfo/GlBaseProds.vue'],resolve
+            )
+    },
+
+    {
+        path: '/GlSoldProds',
+        meta: {
+            breadcrumb: true,
+            title: '内部账可售产品'
+        },
+        name: 'GlSoldProds',
+        component: (resolve) =>
+            require(['@/views/prodFactory/prodInfo/GlSoldProds.vue'],resolve
+            )
+    },
+
 {
     path: '/RbSoldProds',
         meta: {

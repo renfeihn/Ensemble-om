@@ -11,7 +11,6 @@
               <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
               <prod-diff v-if="i=='存入定义'" :prodData="prodEventCret"></prod-diff>
               <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
-              <!--<prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>-->
               <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
             </v-tab-item>
           </v-tabs-items>
@@ -23,7 +22,6 @@
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList2" :key="i">
               <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
-              <!--<prod-diff v-if="i=='利息信息'" :prodData="prodEventCycle"></prod-diff>-->
               <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
               <prod-diff v-if="i=='放款定义'" :prodData="prodEventDrw"></prod-diff>
               <prod-diff v-if="i=='还款定义'" :prodData="prodEventRec"></prod-diff>
@@ -33,6 +31,23 @@
           </v-tabs-items>
         </v-tabs>
       </v-card-text>
+
+      <v-card-text v-show="GL">
+        <v-tabs fixed-tabs v-if="isTable == false">
+          <v-tab v-for="n in diffListGl" :key="n" class="diffTitle">{{n}}</v-tab>
+          <v-tabs-items v-model="model">
+            <v-tab-item v-for="i in diffListGl" :key="i">
+              <prod-diff v-if="i=='产品属性'" :prodData="prodDefineData"></prod-diff>
+              <prod-diff v-if="i=='开户定义'" :prodData="prodEventOpen"></prod-diff>
+              <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
+              <prod-diff v-if="i=='贷记事件'" :prodData="prodEventCret"></prod-diff>
+              <prod-diff v-if="i=='借记事件'" :prodData="prodEventDebt"></prod-diff>
+              <base-table v-if="i=='核算信息'" :prodCharge="prodAccounting"></base-table>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+      </v-card-text>
+
       <v-card-text v-if="isTable == true">
         <v-tabs fixed-tabs v-if="isTable == true">
           <v-tab style="margin-left: 0px">{{diffTitles}}</v-tab>
@@ -85,6 +100,7 @@ export default {
             spinning: false,
             RB: false,
             CL: false,
+            GL: false,
             releaseFlowInfo: [],
             temp: [],
             title: "",
@@ -111,6 +127,8 @@ export default {
             prodEventDur: {},
             prodAccounting: {},
             diffList2: ["产品属性","开户定义","放款定义","还款定义","到期信息","核算定义"],
+            diffListGl: ["产品属性","开户定义","销户定义","借记事件","贷记事件","核算定义"],
+
             prodGroup: [{
                 key: 'Y',
                 value: 'Y-是'
@@ -173,6 +191,7 @@ export default {
       changeTranId(tranId,tranType){
           this.RB = false;
           this.CL = false;
+          this.GL = false;
           this.isTable = false
           if(tranType=='0'){
               this.isTable = false
@@ -274,6 +293,13 @@ export default {
                       //将收费定义的差异组装
                       this.assembleAccounting();
                   }
+                  if (this.sourceModule == "GL") {
+                      this.GL = true
+                      this.assembleProdDefine();
+                      this.assembleEvent();
+                      //将收费定义的差异组装
+                      this.assembleAccounting();
+                  }
                   this.prodGroup = this.prodData.mbProdType.prodGroup
                   this.prodClass = this.prodData.mbProdType.prodClass
                   this.prodDesc = this.prodData.mbProdType.prodDesc
@@ -315,9 +341,6 @@ export default {
               if(diffKey.indexOf('CRET')>=0){
                   cretDiff[key]=prodEventDiff[diffKey];
               }
-//                    if(diffKey.indexOf('CYCLE')>=0){
-//                        cycleDiff[key]=prodEventDiff[diffKey];
-//                    }
               if(diffKey.indexOf('DEBT')>=0){
                   debtDiff[key]=prodEventDiff[diffKey];
               }
@@ -337,11 +360,6 @@ export default {
                   openEvent["baseEffectProd"]=baseEffectProd
                   this.prodEventCret= openEvent
               }
-//                    else if(keyD.indexOf('CYCLE')>=0){
-//                        openEvent["diff"]=cycleDiff
-//                        openEvent["baseEffectProd"]=baseEffectProd
-//                        this.prodEventCycle= openEvent
-//                    }
               else if(keyD.indexOf('DEBT')>=0){
                   openEvent["diff"]=debtDiff
                   openEvent["baseEffectProd"]=baseEffectProd
@@ -351,15 +369,12 @@ export default {
           if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
               let diffEvent={"prodType": prodType}
               let diffEventClose={"prodType": prodType}
-//                    let diffEventCycle={"prodType": prodType}
               let diffEventCret={"prodType": prodType}
               let diffEventDebt={"prodType": prodType}
               diffEvent["diff"]=openDiff
               this.prodEventOpen=diffEvent;
               diffEventClose["diff"]=closeDiff
               this.prodEventClose= diffEventClose;
-//                    diffEventCycle["diff"]=cycleDiff
-//                    this.prodEventCycle= diffEventCycle
               diffEventCret["diff"]=cretDiff
               this.prodEventCret= diffEventCret;
               diffEventDebt["diff"]=debtDiff
@@ -433,9 +448,6 @@ export default {
           const dueDiff={}
           for(const diffKey in prodEventDiff){
               const key=diffKey.substring(diffKey.indexOf('.')+1);
-//                    if(diffKey.indexOf('CYCLE')>=0){
-//                        cycleDiff[key]=prodEventDiff[diffKey];
-//                    }
               if(diffKey.indexOf('OPEN')>=0){
                   openDiff[key]=prodEventDiff[diffKey];
               }
@@ -456,11 +468,6 @@ export default {
                   openEvent["baseEffectProd"]=baseEffectProd
                   this.prodEventOpen=openEvent;
               }
-//                    else if(key.indexOf('CYCLE')>=0){
-//                        openEvent["diff"]=cycleDiff
-//                        openEvent["baseEffectProd"]=baseEffectProd
-//                        this.prodEventCycle= openEvent
-//                    }
               else if(key.indexOf('DRW')>=0){
                   openEvent["diff"]=drwDiff
                   openEvent["baseEffectProd"]=baseEffectProd
@@ -477,14 +484,11 @@ export default {
           }
           if(JSON.stringify(prodEvent)=='{}' || JSON.stringify(prodEvent) == undefined){
               let diffEvent={"prodType": prodType}
-//                    let diffEventCycle={"prodType": prodType}
               let diffEventDrw={"prodType": prodType}
               let diffEventRec={"prodType": prodType}
               let diffEventDue={"prodType": prodType}
               diffEvent["diff"]=openDiff
               this.prodEventOpen=diffEvent;
-//                    diffEventCycle["diff"]=cycleDiff
-//                    this.prodEventCycle= diffEventCycle;
               diffEventDrw["diff"]=drwDiff
               this.prodEventDrw= diffEventDrw
               diffEventRec["diff"]=recDiff
@@ -551,35 +555,6 @@ export default {
 </script>
 <style scoped>
   .diffTitle {
-    font-size: large;
-  }
-  .imgUserIndexFlow {
-    width: 100px;
-    display: inline-block;
-    margin-left: 40%
-  }
-  .showMsg {
-    font-size: x-large;
-    font-style: inherit;
-    margin-left: 5%;
-    margin-top: 4%;
-  }
-  .descClass {
-    color: #64b5f6;
-    font-size: large;
-    font-style: inherit;
-    margin-right: 0px;
-    margin-top: 10px;
-    margin-left: 10%
-  }
-  .textBox {
-    margin-top: 5px;
-  }
-  .btnClass {
-    margin-top: 5%;
-    margin-left: 28%;
-    margin-bottom: 3%;
-    width: 50%;
     font-size: large;
   }
 </style>

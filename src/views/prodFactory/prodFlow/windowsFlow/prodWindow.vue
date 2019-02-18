@@ -370,6 +370,14 @@
                     //跳转到贷款可售产品界面
                     this.$router.push({ name: "ClSoldProds",hash: prodType});
                 }
+                if(prodRange == '基础产品' && sourceModule == "内部账"){
+                    //跳转到内部账基础产品界面
+                    this.$router.push({ name: "GlBaseProds",hash: prodType});
+                }
+                if(prodRange == '可售产品'&& sourceModule == "内部账"){
+                    //跳转到内部账可售产品界面
+                    this.$router.push({ name: "GlSoldProds",hash: prodType});
+                }
             },
             getValue(val){
                 let ret = ""
