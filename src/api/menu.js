@@ -123,6 +123,7 @@ const Menu = [
       { name: 'RB100', title: '连通后台测试', component: 'RbBaseProds' },
       { name: 'RB100', title: '连通后台测试2', component: 'tableParentView' },
         { name: 'prodCmbs', title: '产品目录展示', component: 'prodCmbs' },
+        { name: 'prodCompareTitle', title: '产品对比', component: 'prodCompareTitle' },
 
         { name: 'publishDate2', title: '参数变动记录2', component: 'publishDate2' },
     ]

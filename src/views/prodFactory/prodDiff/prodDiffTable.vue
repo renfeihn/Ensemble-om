@@ -380,28 +380,30 @@ export default {
           const prodChargeDiff=this.prodData.diff.mbProdCharge;
           let assembleColumns=[];
           let heards=[];
-          for(const key in prodInfo[0]){
-              let head={};
-              head["text"]=getColumnDesc_(key);
-              head["value"]=key;
-              heards.push(head);
-          }
-          for(const prodCharge in prodInfo){
-              const chargeColumn= prodInfo[prodCharge];
-              const keyAndValue="{\"FEE_TYPE\":\""+chargeColumn.feeType+"\",\"PROD_TYPE\":\""+
-                  chargeColumn.prodType+"\"}";
-              const diff=prodChargeDiff[keyAndValue];
-              if(diff== undefined){
-                  assembleColumns.push(chargeColumn)
-              }else{
-                  for(const col in chargeColumn){
-                      let chargeCol=chargeColumn[col];
-                      let diffCol=diff[col];
-                      if(chargeCol!=diffCol){
-                          chargeColumn[col]= chargeCol+'>'+diffCol
+          if(prodInfo.length) {
+              for (const key in prodInfo[0]) {
+                  let head = {};
+                  head["text"] = getColumnDesc_(key);
+                  head["value"] = key;
+                  heards.push(head);
+              }
+              for (const prodCharge in prodInfo) {
+                  const chargeColumn = prodInfo[prodCharge];
+                  const keyAndValue = "{\"FEE_TYPE\":\"" + chargeColumn.feeType + "\",\"PROD_TYPE\":\"" +
+                      chargeColumn.prodType + "\"}";
+                  const diff = prodChargeDiff[keyAndValue];
+                  if (diff == undefined) {
+                      assembleColumns.push(chargeColumn)
+                  } else {
+                      for (const col in chargeColumn) {
+                          let chargeCol = chargeColumn[col];
+                          let diffCol = diff[col];
+                          if (chargeCol != diffCol) {
+                              chargeColumn[col] = chargeCol + '>' + diffCol
+                          }
                       }
+                      assembleColumns.push(chargeColumn)
                   }
-                  assembleColumns.push(chargeColumn)
               }
           }
           if(heards.size==0){
@@ -496,28 +498,30 @@ export default {
           const prodChargeDiff=this.prodData.diff.mbProdCharge;
           let assembleColumns=[];
           let heards=[];
-          for(const key in prodInfo[0]){
-              let head={};
-              head["text"]=getColumnDesc_(key);
-              head["value"]=key;
-              heards.push(head);
-          }
-          for(const prodCharge in prodInfo){
-              const chargeColumn= prodInfo[prodCharge];
-              const keyAndValue="{\"FEE_TYPE\":\""+chargeColumn.feeType+"\",\"PROD_TYPE\":\""+
-                  chargeColumn.prodType+"\"}";
-              const diff=prodChargeDiff[keyAndValue];
-              if(diff== undefined){
-                  assembleColumns.push(chargeColumn)
-              }else{
-                  for(const col in chargeColumn){
-                      let chargeCol=chargeColumn[col];
-                      let diffCol=diff[col];
-                      if(chargeCol!=diffCol){
-                          chargeColumn[col]= chargeCol+'>'+diffCol
+          if(prodInfo.length) {
+              for (const key in prodInfo[0]) {
+                  let head = {};
+                  head["text"] = getColumnDesc_(key);
+                  head["value"] = key;
+                  heards.push(head);
+              }
+              for (const prodCharge in prodInfo) {
+                  const chargeColumn = prodInfo[prodCharge];
+                  const keyAndValue = "{\"FEE_TYPE\":\"" + chargeColumn.feeType + "\",\"PROD_TYPE\":\"" +
+                      chargeColumn.prodType + "\"}";
+                  const diff = prodChargeDiff[keyAndValue];
+                  if (diff == undefined) {
+                      assembleColumns.push(chargeColumn)
+                  } else {
+                      for (const col in chargeColumn) {
+                          let chargeCol = chargeColumn[col];
+                          let diffCol = diff[col];
+                          if (chargeCol != diffCol) {
+                              chargeColumn[col] = chargeCol + '>' + diffCol
+                          }
                       }
+                      assembleColumns.push(chargeColumn)
                   }
-                  assembleColumns.push(chargeColumn)
               }
           }
           if(heards.size==0){

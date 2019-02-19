@@ -2,6 +2,7 @@
  * Created by ligan on 2018/9/21.
  */
 const column= {
+    'PROD_CHANNEL': '渠道信息',
     'INT_DAY': '结息日',
     'ACCT_BAL_FLAG': '金额标志',
     'ACCT_REAL_FLAG': '虚实标志',
@@ -232,9 +233,21 @@ const column= {
     'FIXED_INT': '固定利率值',
     'CLIENT_TYPE_DESC': '客户类型描述',
     'IS_INDIVIDUAL': '是否个体客户',
-    'COMPANY': '所属法人'
-
-
+    'COMPANY': '所属法人',
+    'CONVERTED_CCY': '折算币种',
+    'CD_BRAND': '品牌',
+    'CHECK_COMMISSION': '代办人是否本机构员工检查',
+    'prodType': '产品代码',
+    'prodDesc': '产品描述',
+    'prodAbbr': '产品简称',
+    'prodClass': '产品分类',
+    'prodGroup': '是否产品组',
+    'prodRange': '产品作用范围',
+    'baseProdType': '基础产品',
+    'status': '状态',
+    'company': '所属法人',
+    'sourceModule': '所属模块',
+    'AGREEMENT_TYPE': '协议类型'
 }
 
 export function getColumnDesc (data) {

@@ -1201,6 +1201,16 @@ export default [
             /* webpackMode: "lazy-once" */
             require(['@/views/prodFactory/prodFlow/windowsFlow/prodCmbs.vue'],resolve)
 },
+    {
+        path: '/prodCompareTitle',
+        meta: {
+            breadcrumb: true,
+            title: '产品对比'
+        },
+        name: 'prodCompareTitle',
+        component: (resolve) =>
+            require(['@/views/prodFactory/prodDiff/prodCompareTitle.vue'],resolve)
+    },
 
     {
         path: '/prodWindow',

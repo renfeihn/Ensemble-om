@@ -305,10 +305,18 @@ export function getAttrInfo () {
     const reData=asyncPost('/getAttrInfo');
     return reData;
 }
+
 export function upload (params) {
     return request({
         url: '/upload',
         method: 'post',
         data: params
+    })
+}
+export function getProdCompareDiff (params) {
+    return request({
+        url: '/getProdCompareDiff',
+        method: 'post',
+        data: {prodType: params}
     })
 }
