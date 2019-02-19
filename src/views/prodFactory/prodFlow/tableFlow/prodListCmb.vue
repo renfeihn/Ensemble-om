@@ -16,22 +16,22 @@
                                     hide-details
                             ></v-checkbox>
                         </td>
-                      <td>{{ props.item.prodType }}</td>
-                      <td>{{ props.item.prodDesc }}</td>
-                      <td>{{ props.item.sourceModule }}</td>
-                      <td>{{ props.item.prodRange === "B"?"基础产品":"可售产品" }}</td>
-                      <td>{{ props.item.baseProdType }}</td>
-                      <td>{{ props.item.status === "A"?"有效":"封存"}}</td>
-                      <td>
-                        <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
-                          <v-icon>edit</v-icon>
-                        </v-btn>
-                      </td>
+                        <td>{{ props.item.prodType }}</td>
+                        <td>{{ props.item.prodDesc }}</td>
+                        <td>{{ props.item.sourceModule }}</td>
+                        <td>{{ props.item.prodRange === "B"?"基础产品":"可售产品" }}</td>
+                        <td>{{ props.item.baseProdType }}</td>
+                        <td>{{ props.item.status === "A"?"有效":"封存"}}</td>
+                        <td>
+                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
+                                <v-icon>edit</v-icon>
+                            </v-btn>
+                        </td>
                     </tr>
                 </template>
-      </v-data-table>
-    </v-card-text>
-  </v-card>
+            </v-data-table>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -57,10 +57,6 @@
                     selected: [],
                     items: [],
                     headers: [
-                        // {
-                        //     text: 'Avatar',
-                        //     value: 'avatar'
-                        // },
                         {
                             text: '产品代码',
                             value: 'prodType'
@@ -97,14 +93,30 @@
             addCompare() {
                 let selected = [];
                 for (const item in this.complex.selected) {
-                    selected.push(this.complex.selected[item].value)
+                    selected.push(this.complex.selected[item].prodType)
                 }
-                this.$router.push({
-                    name: 'diffList',
-                    params: {
-                        'prodCodeList': selected
-                    }
-                })
+                if(!selected.length){
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "请选择需要进行对比的产品！",
+                    })
+                }
+                if(selected.length > 5 || selected.length == 1){
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "对比产品总数介于[2-5]之间！",
+                    })
+                }
+                if(selected.length && selected.length<=5 && selected.length != 1) {
+                    this.$router.push({
+                        name: 'prodCompareTitle',
+                        params: {
+                            'prodTypeList': selected
+                        }
+                    })
+                }
             },
             handleClick(val) {
                 let prodType = val.prodType
