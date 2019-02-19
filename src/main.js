@@ -17,6 +17,7 @@ import globalConfig from "./config.js";
 /*import './mock';*/
 import 'ant-design-vue/dist/antd.css';
 import 'vuetify/dist/vuetify.min.css'
+import alert from './alert.js'
 
 // ���� table �� ��ҳ���
 import { Spin, Table,Divider,Tag ,Button ,Upload, Icon} from 'ant-design-vue'
@@ -37,7 +38,7 @@ Vue.config.productionTip = false;
 // Helpers
 // Global filters
 Vue.filter('truncate', Truncate);
-
+Vue.use(alert);
 Vue.use(VueResource)
 Vue.use(VueSweetalert2)
 Vue.use(VeeValidate, {

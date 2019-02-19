@@ -211,19 +211,11 @@
                 this.backValue.option = "save"
                 this.backValue.userName = sessionStorage.getItem("userId")
                 if(this.backValue.data.length==0){
-                    this.$swal({
-                        allowOutsideClick: false,
-                        type: 'info',
-                        title: "未做任何修改,提交失败！",
-                    })
+                    this.sweetAlert('info',"未做任何修改,提交失败!")
                 }else{
                     saveTable(this.backValue).then(response => {
                         if (response.status === 200) {
-                            this.$swal({
-                                allowOutsideClick: false,
-                                type: 'success',
-                                title: "提交成功！",
-                            })
+                            this.sweetAlert('success',"提交成功!")
                             this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
                             let setTaskEvent= new Event("taskList");
                             window.dispatchEvent(setTaskEvent);
@@ -317,18 +309,10 @@
                     }
                 }
                 if(keyIsNull == true){
-                    this.$swal({
-                        allowOutsideClick: false,
-                        type: 'error',
-                        title: '带*号的字段不能为空!',
-                    })
+                    this.sweetAlert('error',"带*号的字段不能为空!")
                     return false
                 }else if(num == this.key.length){
-                    this.$swal({
-                        allowOutsideClick: false,
-                        type: 'error',
-                        title: keyCoName+"不能重复",
-                    })
+                    this.sweetAlert('error',keyCoName+"不能重复!")
                     return false
                 }else{
                     return true

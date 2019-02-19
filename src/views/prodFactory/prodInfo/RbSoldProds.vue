@@ -364,11 +364,7 @@
                     for(let i=0; i<this.proditem.length; i++){
                         if(this.proditem[i].tranId===this.$route.hash){
                             this.pendFlag = 1
-                            this.$swal({
-                                allowOutsideClick: false,
-                                type: 'info',
-                                title: "存在已保存数据，等待提交!",
-                            })
+                            this.sweetAlert('info',"存在已保存数据，等待提交!")
                         }
                     }
                 });
@@ -377,20 +373,12 @@
                     for(let j = 0; j<length; j++){
                         if(response.data.data[j].flowManage.status === "2"){
                             this.pendFlag = 1
-                            this.$swal({
-                                allowOutsideClick: false,
-                                type: 'info',
-                                title: "存在已提交数据，等待复核!",
-                            })
+                            this.sweetAlert('info',"存在已提交数据，等待复核!")
                             break
                         }
                         if(response.data.data[j].flowManage.status === "3"){
                             this.pendFlag = 1
-                            this.$swal({
-                                allowOutsideClick: false,
-                                type: 'info',
-                                title: "存在已复核数据，等待发布!",
-                            })
+                            this.sweetAlert('info',"存在已复核数据，等待发布!")
                             break
                         }
                     }
@@ -423,11 +411,7 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         this.pendFlag = 1
-                        this.$swal({
-                            allowOutsideClick: false,
-                            width: '300px',
-                            title: "提交成功!",
-                        })
+                        this.sweetAlert('success',"提交成功!")
                         this.spinning= false
                         let setTaskEvent= new Event("taskList");
                         window.dispatchEvent(setTaskEvent);
@@ -446,11 +430,7 @@
                 this.targetData.userName = sessionStorage.getItem("userId")
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
-                        this.$swal({
-                            allowOutsideClick: false,
-                            type: 'success',
-                            title: "暂存成功!",
-                        })
+                        this.sweetAlert('success',"暂存成功!")
                     }
                 })
             },
@@ -504,11 +484,7 @@
             //编辑事件触发
             editClick() {
                 if(!this.powerButton){
-                    this.$swal({
-                        allowOutsideClick: false,
-                        type: 'error',
-                        title: "用户没有编辑基础产品权限",
-                    })
+                    this.sweetAlert('error',"用户没有编辑基础产品权限!")
                     return
                 }
                 this.editShow = this.editShow === true?false:true
@@ -539,11 +515,7 @@
                     //组装向mbProdDefine保存的数据对象
                     if(addColumnPageCode === "DESC" || addColumnPageCode === "CHARGE" || addColumnPageCode === "RATEINFO" || addColumnPageCode === "ACCOUNTING"){
                         showFlag = 1
-                        this.$swal({
-                            allowOutsideClick: false,
-                            type: 'info',
-                            title: "当前页签不允许增加参数!",
-                        })
+                        this.sweetAlert('info',"当前页签不允许增加参数!")
                     }
                     if(addColumnPageCode === "BASE" || addColumnPageCode === "CONTROL" || addColumnPageCode === "APPLY" || addColumnPageCode === "INT" || addColumnPageCode === "SHIFT") {
                         //获取新增参数pageSeqNo
@@ -553,11 +525,7 @@
                         if (this.prodData.prodDefines[columnKey] !== undefined) {
                             //已经存在该条数据
                             showFlag = 1
-                            this.$swal({
-                                allowOutsideClick: false,
-                                type: 'info',
-                                title: "产品已存在参数" + columnKey + "【" + columnDesc + "】",
-                            })
+                            this.sweetAlert('info',"产品已存在参数" + columnKey + "【" + columnDesc + "】")
                         } else {
                             addColumnData.prodDefines[columnKey] = {}
                             addColumnData.prodDefines[columnKey].prodType = this.prodCode
@@ -584,11 +552,7 @@
                         if(this.prodData.mbEventInfos[eventType].mbEventAttrs[columnKey] !== undefined){
                             //已经存在该条数据
                             showFlag = 1
-                            this.$swal({
-                                allowOutsideClick: false,
-                                type: 'info',
-                                title: "事件" + eventType +"已存在参数【" + columnDesc + "】",
-                            })
+                            this.sweetAlert('info',"事件" + eventType +"已存在参数【" + columnDesc + "】")
                         }else{
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey] = {}
                             addColumnData.mbEventInfos[eventType].mbEventAttrs[columnKey].eventType = eventType
@@ -609,11 +573,7 @@
                 if(showFlag === 0) {
                     this.prodData = addColumnData
                     this.initEventAttr(this.prodData)
-                    this.$swal({
-                        allowOutsideClick: false,
-                        type: 'success',
-                        title: "产品增加参数成功！",
-                    })
+                    this.sweetAlert('success',"产品增加参数成功!")
                     this.dialog = false
                 }
             },
