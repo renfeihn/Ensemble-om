@@ -530,18 +530,19 @@
                 let keys = key
                 for(let i in val.prodDefines){
                     if(keys === "pageSeqNo" && val.prodDefines[i].pageCode === pageCode && val.prodDefines[i][keys] !== null && val.prodDefines[i][keys] !== '') {
-                        SeqNoArr.push(val.prodDefines[i][keys])
+                        SeqNoArr.push(val.prodDefines[i][keys]);
                     }else if(keys === "seqNo" && val.prodDefines[i].prodType === this.prodCode){
-                        SeqNoArr.push(val.prodDefines[i][keys])
+                        let key = parseInt(val.prodDefines[i][keys]);
+                        SeqNoArr.push(key);
                     }
                 }
                 //获取seqNoArr数组最大数据
                 let maxSeqNo = 0
                 if(SeqNoArr.length) {
-                    maxSeqNo = SeqNoArr[0]
+                    maxSeqNo = SeqNoArr[0];
                     for (let j = 1; j < SeqNoArr.length; j++) {
                         if (maxSeqNo < SeqNoArr[j]) {
-                            maxSeqNo = SeqNoArr[j]
+                            maxSeqNo = SeqNoArr[j];
                         }
                     }
                 }

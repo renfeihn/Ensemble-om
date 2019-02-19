@@ -543,7 +543,8 @@
                     if(keys === "pageSeqNo" && val.prodDefines[i].pageCode === pageCode && val.prodDefines[i][keys] !== null && val.prodDefines[i][keys] !== '') {
                         SeqNoArr.push(val.prodDefines[i][keys])
                     }else if(keys === "seqNo" && val.prodDefines[i].prodType === this.prodCode){
-                        SeqNoArr.push(val.prodDefines[i][keys])
+                        let key = parseInt(val.prodDefines[i][keys]);
+                        SeqNoArr.push(key);
                     }
                 }
                 //获取seqNoArr数组最大数据
