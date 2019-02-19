@@ -3,8 +3,8 @@
     <v-card>
       <v-toolbar flat>
         <v-layout style="color: #42A5F5">
-          <v-flex xs12 md2 lg2>
-            <v-switch label="隐藏相同项" color="success" value="Y" hide-details></v-switch>
+          <v-flex xs12 md2 lg2 style="margin-top: 5px">
+            <v-switch v-model="switchValue" label="隐藏相同项" color="success" value="Y" hide-details></v-switch>
           </v-flex>
           <v-flex xs12 md10 lg10>
             <v-layout>
@@ -17,10 +17,10 @@
       </v-toolbar>
       <v-card-text style="margin-top: -20px">
         <v-layout row wrap>
-          <div v-for="(prodList, index1) in prodCompList" :class="diffList">
+          <div v-for="(prodList, index1) in tempArr" :class="diffList">
             <v-list dense>
               <template v-for="(item, index) in prodList.item">
-                <v-divider :inset="item.inset"></v-divider>
+                <v-divider></v-divider>
                 <v-list-tile>
                   <v-list-tile-content>
                     <v-list-tile-title v-html="item.columnDesc">{{item.columnDesc}}</v-list-tile-title>
@@ -45,6 +45,7 @@
         },
         data() {
             return {
+                switchValue: "",
                 diffList: 'diffList2',
                 titleClass: 'titleClass2',
                 tag: '',
@@ -52,7 +53,8 @@
                 prodInfo: [],
                 prodTypeList: [],
                 prodCompList: [],
-                prodDiffList: []
+                prodDiffList: [],
+                tempArr: []
             }
         },
         watch: {
@@ -60,6 +62,10 @@
                 handler(val) {
                     this.init(val);
                 },
+            },
+            switchValue(val){
+                console.log(val);
+                this.switchClick(val);
             }
         },
         mounted: function () {
@@ -71,6 +77,7 @@
                 //初始化产品title
                 this.prodTypeList = val.prodType;
                 this.initCompData(val);
+                this.tempArr = this.prodCompList;
                 let length = val.prodType.length;
                 let classType = "diffList" + length.toString();
                 let titleType = "titleClass"+ length.toString();
@@ -149,7 +156,6 @@
                     }
                 }
                 this.prodCompList.push({item: eventArr});
-
             },
             initAttrData(prodData,columnInfo,attrCode){
                 let arr = [];
@@ -174,8 +180,53 @@
                 }
                 this.prodCompList.push({item: arr});
             },
+            //标记差异数据 获取差异数据集合
             getDiffInfo(val){
                 let compList = val;
+                let column = [];
+                if(compList.length){
+                    column = compList[0];
+                }
+                for (let code in compList) {
+                    if (code != 0) {
+                        let tempArr = [];
+                        let colArr = [];
+                        for(let col in column.item){
+                            if(this.compDiff(compList,column.item[col])) {
+                                tempArr.push(compList[code].item[col]);
+                                colArr.push(column.item[col]);
+                            }
+                        }
+                        if(!this.prodDiffList.length){
+                            this.prodDiffList.push({item: colArr});
+                        }
+                        this.prodDiffList.push({item: tempArr});
+                    }
+                }
+            },
+            switchClick(val){
+                if(val == "Y"){
+                    this.tempArr = this.prodDiffList;
+                }else{
+                    this.tempArr = this.prodCompList;
+                }
+            },
+            //比较相同参数值是否相同
+            compDiff(data,col){
+                let value = "";
+                for(let index in data){
+                    if(index != 0){
+                        for(let key in data[index].item){
+                            if(data[index].item[key].columnCode == col.columnCode && index == 1){
+                                value = data[index].item[key].columnDesc;
+                            }
+                            if(data[index].item[key].columnCode == col.columnCode && index != 1 && value != data[index].item[key].columnDesc){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
             },
             findIn(data,key){
                 for(let index in data){
@@ -226,19 +277,34 @@
     width: 50%;
     margin-left: 20%;
     text-align: center;
+    font-size: medium;
+    margin-top: 1%;
+
   }
   .titleClass3 {
     width: 33%;
     text-align: center;
     margin-left: 10%;
+    font-size: medium;
+    margin-top: 1%;
+
   }
   .titleClass4 {
     width: 25%;
     margin-left: 1%;
     text-align: center;
+    font-size: medium;
+    margin-top: 1%;
+
   }
   .titleClass5 {
     width: 20%;
     text-align: center;
+    font-size: medium;
+    margin-top: 1%;
+
+  }
+  .tbColor {
+    background-color: #e3f2fd;
   }
 </style>
