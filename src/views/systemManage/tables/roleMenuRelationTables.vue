@@ -38,8 +38,8 @@
                 <td>{{ props.item.menuId }}</td>
                 <td>
                     <v-tooltip right color="red" style="margin-left: -20px">
-                        <v-btn flat icon="delete" slot="activator">
-                            <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
+                        <v-btn flat icon="delete" slot="activator" @click="deleteItem(props.item)">
+                            <v-icon small style="color: red">delete</v-icon>
                         </v-btn>
                         <span>删除</span>
                     </v-tooltip>

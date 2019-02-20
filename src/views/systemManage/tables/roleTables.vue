@@ -3,44 +3,6 @@
         <v-toolbar color="primary lighten-2" dark>
             <v-toolbar-title>角色管理</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialog2" fullscreen hide-overlay>
-                <v-card>
-                    <v-toolbar dark color="primary">
-                        <v-btn icon dark @click="dialog2 = false">
-                            <v-icon>close</v-icon>
-                        </v-btn>
-                        <v-toolbar-title>authorization</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                    </v-toolbar>
-                    <v-layout>
-                        <v-flex >
-                            <h2>菜单列表</h2>
-                            <div style="height: 1px;background-color: grey;width: 100%"></div>
-                            <v-data-table :headers="headers2" :items="menu" class="elevation-1">
-                                <template slot="items" slot-scope="props">
-                                    <td>{{ props.item.menuId }}</td>
-                                    <td>{{ props.item.menuParentId }}</td>
-                                    <td>{{ props.item.menuStatus }}</td>
-                                    <td>{{ props.item.menuTitle }}</td>
-                                </template>
-                            </v-data-table>
-                        </v-flex>
-                        <v-divider vertical></v-divider>
-                        <v-flex xs12 md6>
-                            <h2>已授权的菜单</h2>
-                            <div style="height: 1px;background-color: grey;width: 100%"></div>
-                            <v-data-table :headers="headers2" :items="menu2" class="elevation-1">
-                                <template slot="items" slot-scope="props">
-                                    <td>{{ props.item.menuId }}</td>
-                                    <td>{{ props.item.menuParentId }}</td>
-                                    <td>{{ props.item.menuStatus }}</td>
-                                    <td>{{ props.item.menuTitle }}</td>
-                                </template>
-                            </v-data-table>
-                        </v-flex>
-                    </v-layout>
-                </v-card>
-            </v-dialog>
             <v-dialog v-model="dialog" max-width="500px">
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
@@ -86,20 +48,20 @@
                 <td>{{ props.item.roleLevel }}</td>
                 <td>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
-                        <v-btn flat icon="edit" slot="activator">
-                            <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
+                        <v-btn flat icon="edit" slot="activator" @click="editItem(props.item)">
+                            <v-icon small class="mr-2" style="color: #0d47a1">edit</v-icon>
                         </v-btn>
                         <span>修改</span>
                     </v-tooltip>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
-                        <v-btn flat icon="widgets" slot="activator">
-                            <v-icon small class="mr-2" @click="authorization(props.item)" style="color: #0d47a1">widgets</v-icon>
+                        <v-btn flat icon="widgets" slot="activator" @click="authorization(props.item)">
+                            <v-icon small class="mr-2" style="color: #0d47a1">widgets</v-icon>
                         </v-btn>
                         <span>授权</span>
                     </v-tooltip>
                     <v-tooltip bottom color="red" style="margin-left: -20px">
-                        <v-btn flat icon="delete" slot="activator">
-                            <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
+                        <v-btn flat icon="delete" slot="activator" @click="deleteItem(props.item)">
+                            <v-icon small style="color: red">delete</v-icon>
                         </v-btn>
                         <span>删除</span>
                     </v-tooltip>
@@ -123,7 +85,6 @@
             menuRole: [],
             copMenuRole: [],
             dialog: false,
-            dialog2: false,
             headers: [
                 { text: '角色ID',sortable: false},
                 { text: '角色名称',sortable: false },
@@ -203,17 +164,10 @@
 
             },
             authorization(item){
-                this.menu2 = []
-                this.dialog2 = true
-                for(let i=0; i<this.menuRole.length; i++){
-                    if(this.menuRole[i].roleId == item.roleId){
-                        for(let j=0; j<this.menu.length; j++){
-                            if(this.menu[j].menuId == this.menuRole[i].menuId){
-                                this.menu2.push(this.menu[j])
-                            }
-                        }
-                    }
-                }
+                this.$router.push({
+                    name: 'roleMenuAuthorzation',
+                    hash: item
+                })
             },
             addClick() {
                 this.disabled = "false"
