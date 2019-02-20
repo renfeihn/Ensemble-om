@@ -155,7 +155,8 @@
                         }
                     }
                 }
-                  this.prodDefineData = {prodType: this.prodTypeList, column: prodDefineColumn, data: prodData};
+                //数据组装
+                this.prodDefineData = {prodType: this.prodTypeList, column: prodDefineColumn, data: prodData};
                 this.prodEventData = {prodType: this.prodTypeList, column: prodEventColumn, data: prodData};
             },
             //存在性检查

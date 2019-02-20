@@ -21,7 +21,7 @@
             <v-list dense>
               <template v-for="(item, index) in prodList.item">
                 <v-divider></v-divider>
-                <v-list-tile>
+                <v-list-tile :class="{'tbColor':item.diff}">
                   <v-list-tile-content>
                     <v-list-tile-title v-html="item.columnDesc">{{item.columnDesc}}</v-list-tile-title>
                   </v-list-tile-content>
@@ -74,10 +74,13 @@
         methods: {
             init(val){
                 this.prodInfo = val;
-                //初始化产品title
+                //初始化对比产品信息
                 this.prodTypeList = val.prodType;
                 this.initCompData(val);
+                //加载所有对比信息到展示界面
                 this.tempArr = this.prodCompList;
+                //差异数据增加样式
+                this.diffDataAddStyle();
                 let length = val.prodType.length;
                 let classType = "diffList" + length.toString();
                 let titleType = "titleClass"+ length.toString();
@@ -127,9 +130,10 @@
                         this.initEventData(prodData,tempCol,prodCode,tag);
                     }
                 }
-                //标记差异数据样式，重新组装差异数据集合
+                //组装差异数据集合
                 this.getDiffInfo(this.prodCompList);
             },
+            //事件参数差异数据组装
             initEventData(prodData,columnInfo,prodCode,tag){
                 let eventArr = [];
                 for(let column in columnInfo){
@@ -157,6 +161,7 @@
                 }
                 this.prodCompList.push({item: eventArr});
             },
+            //define参数数据组装
             initAttrData(prodData,columnInfo,attrCode){
                 let arr = [];
                 for(let attrKey in columnInfo) {
@@ -180,13 +185,15 @@
                 }
                 this.prodCompList.push({item: arr});
             },
-            //标记差异数据 获取差异数据集合
+            //组装差异数据集合
             getDiffInfo(val){
                 let compList = val;
                 let column = [];
+                //产品参数
                 if(compList.length){
                     column = compList[0];
                 }
+                //产品参数值
                 for (let code in compList) {
                     if (code != 0) {
                         let tempArr = [];
@@ -197,21 +204,26 @@
                                 colArr.push(column.item[col]);
                             }
                         }
+                        //加载一次参数描述列
                         if(!this.prodDiffList.length){
                             this.prodDiffList.push({item: colArr});
                         }
+                        //产品参数值加载
                         this.prodDiffList.push({item: tempArr});
                     }
                 }
             },
+            //隐藏相同项 点击事件
             switchClick(val){
                 if(val == "Y"){
+                    //只显示不同参数
                     this.tempArr = this.prodDiffList;
                 }else{
+                    //参数全展示
                     this.tempArr = this.prodCompList;
                 }
             },
-            //比较相同参数值是否相同
+            //比较相同参数，不同产品对应的参数值是否相同
             compDiff(data,col){
                 let value = "";
                 for(let index in data){
@@ -228,6 +240,23 @@
                 }
                 return false;
             },
+            //差异数据增加样式
+            diffDataAddStyle(){
+              let allProdList = this.prodCompList;
+              let diffProdList = this.prodDiffList;
+              for(let index in diffProdList[0].item){
+                  let key  = diffProdList[0].item[index].columnCode;
+                  for(let index2 in allProdList){
+                      for(let index3 in allProdList[index2].item){
+                          if(allProdList[index2].item[index3].columnCode == key){
+                              allProdList[index2].item[index3]["diff"] = true;
+                              break;
+                          }
+                      }
+                  }
+              }
+            },
+            //判断key 是否存在于data数据集合
             findIn(data,key){
                 for(let index in data){
                     if(data[index].assembleType != "EVENT" && data[index].assembleId == key){
