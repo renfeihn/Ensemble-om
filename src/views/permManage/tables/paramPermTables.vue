@@ -78,6 +78,7 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import {getParamTable} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -93,8 +94,8 @@
                 { text: 'Action',sortable: false }
             ],
             user: [],
-            sys: [{key: "KBS",value: "核心系统"},{key: "GL",value: "核算系统"}],
-            model: [{key: "MB",value: "业务参数"},{key: "FM",value: "系统参数"}],
+            sys: [],
+            model: [],
             desserts: [],
             sourceData: [],
             keySet: [
@@ -166,9 +167,29 @@
                     that.userInfo = response.data.data.userInfo;
                     for(let i=0; i<that.userInfo.length; i++){
                         let temp={}
-                        temp["key"] = that.userInfo[i].userId
-                        temp["value"] = that.userInfo[i].userName
+                        temp["key"] = that.userInfo[i].userId;
+                        temp["value"] = that.userInfo[i].userId + "-" + that.userInfo[i].userName;
                         that.user.push(temp)
+                    }
+                });
+                //获取系统信息
+                getSysTable("OM_SYSTEM_ORG").then(function (response) {
+                    let sysInfo = response.data.data.columnInfo;
+                    for(let index in sysInfo){
+                        let temp = {};
+                        temp["key"] = sysInfo[index].systemId;
+                        temp["value"] = sysInfo[index].systemId + "-" + sysInfo[index].systemDesc;
+                        that.sys.push(temp);
+                    }
+                });
+                //获取模块信息
+                getSysTable("OM_MODULE_ORG").then(function (response) {
+                    let moduleInfo = response.data.data.columnInfo;
+                    for(let index in moduleInfo){
+                        let temps = {};
+                        temps["key"] = moduleInfo[index].moduleId;
+                        temps["value"] = moduleInfo[index].moduleId + "-" + moduleInfo[index].moduleDesc;
+                        that.model.push(temps);
                     }
                 });
             },
