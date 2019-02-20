@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-card md20 lg20 style="margin-top: 1%">
+      <!--存款产品-->
       <v-card-text v-show="module=='RB'">
         <v-tabs fixed-tabs>
           <v-tab v-for="n in diffListRb" :key="n" class="diffTitle">{{n}}</v-tab>
@@ -12,6 +13,39 @@
               <prod-comp v-if="i=='存入定义'" :data ="prodEventData" tag = "CRET"></prod-comp>
               <prod-comp v-if="i=='支取定义'" :data ="prodEventData" tag = "DEBT"></prod-comp>
               <prod-comp v-if="i=='销户定义'" :data ="prodEventData" tag = "CLOSE"></prod-comp>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+      </v-card-text>
+      <!--贷款产品-->
+      <v-card-text v-show="module=='CL'">
+        <v-tabs fixed-tabs>
+          <v-tab v-for="n in diffListCl" :key="n" class="diffTitle">{{n}}</v-tab>
+          <v-tabs-items v-model="model">
+            <v-tab-item v-for="i in diffListCl" :key="i">
+              <prod-comp v-if="i=='基本信息'" :data ="prodTypeData" tag = "TYPE"></prod-comp>
+              <prod-comp v-if="i=='产品属性'" :data ="prodDefineData" tag = "DEFINE"></prod-comp>
+              <prod-comp v-if="i=='开户定义'" :data ="prodEventData" tag = "OPEN"></prod-comp>
+              <prod-comp v-if="i=='放款定义'" :data ="prodEventData" tag = "DRW"></prod-comp>
+              <prod-comp v-if="i=='贴息定义'" :data ="prodEventData" tag = "DISC"></prod-comp>
+              <prod-comp v-if="i=='还款定义'" :data ="prodEventData" tag = "REC"></prod-comp>
+              <prod-comp v-if="i=='到期定义'" :data ="prodEventData" tag = "DUE"></prod-comp>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+      </v-card-text>
+      <!--内部账产品-->
+      <v-card-text v-show="module=='GL'">
+        <v-tabs fixed-tabs>
+          <v-tab v-for="n in diffListGL" :key="n" class="diffTitle">{{n}}</v-tab>
+          <v-tabs-items v-model="model">
+            <v-tab-item v-for="i in diffListGL" :key="i">
+              <prod-comp v-if="i=='基本信息'" :data ="prodTypeData" tag = "TYPE"></prod-comp>
+              <prod-comp v-if="i=='产品属性'" :data ="prodDefineData" tag = "DEFINE"></prod-comp>
+              <prod-comp v-if="i=='开户定义'" :data ="prodEventData" tag = "OPEN"></prod-comp>
+              <prod-comp v-if="i=='销户定义'" :data ="prodEventData" tag = "CLOSE"></prod-comp>
+              <prod-comp v-if="i=='贷记事件'" :data ="prodEventData" tag = "CRET"></prod-comp>
+              <prod-comp v-if="i=='借记事件'" :data ="prodEventData" tag = "DEBT"></prod-comp>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -35,6 +69,7 @@
                 module: 'RB',
                 diffListRb: ["基本信息","产品属性","开户定义","存入定义","支取定义","销户定义"],
                 diffListCl: ["基本信息","产品属性","开户定义","放款定义","贴息定义","还款定义","到期定义"],
+                diffListGL: ["基本信息","产品属性","开户定义","销户定义","贷记事件","借记事件"],
                 prodTypeList: [],
                 prodTypeData: {},
                 prodDefineData: {},
@@ -43,6 +78,7 @@
         },
         created: function () {
             let prodTypeList = this.$route.params.prodTypeList;
+            this.module = this.$route.params.sourceModule;
             this.initData(prodTypeList);
         },
         methods: {

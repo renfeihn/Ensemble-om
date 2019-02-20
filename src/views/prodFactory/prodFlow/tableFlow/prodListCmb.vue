@@ -92,8 +92,12 @@
         methods: {
             addCompare() {
                 let selected = [];
+                let sourceModule = "";
                 for (const item in this.complex.selected) {
                     selected.push(this.complex.selected[item].prodType)
+                }
+                if(this.complex.selected.length){
+                    sourceModule = this.complex.selected[0].sourceModule;
                 }
                 if(!selected.length){
                     this.$swal({
@@ -113,7 +117,8 @@
                     this.$router.push({
                         name: 'prodCompareTitle',
                         params: {
-                            'prodTypeList': selected
+                            'prodTypeList': selected,
+                            'sourceModule': sourceModule
                         }
                     })
                 }
