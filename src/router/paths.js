@@ -829,6 +829,17 @@ export default [
     },
 
     {
+        path: 'GroupBaseProds',
+        meta: {
+            breadcrumb: true,
+            title: '组合基础产品'
+        },
+        name: 'GroupBaseProds',
+        component: (resolve) =>
+            require(['@/views/prodFactory/prodInfo/GroupBaseProds.vue'],resolve
+            )
+    },
+    {
         path: '/GlSoldProds',
         meta: {
             breadcrumb: true,

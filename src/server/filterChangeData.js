@@ -97,6 +97,9 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"mbProdAmendMaping",copyFlag)
     backData.mbProdAmendMaping = backVal
+    backVal = []
+    tablesDeal(prodData,sourceProdData,backVal,"mbProdGroup",copyFlag)
+    backData.mbProdGroup = backVal
     return backData
 }
 /*
@@ -197,6 +200,11 @@ export function tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,table
     }
     if(tables === "irlIntMatrices"){
         if(prodData[tables][newIndex].matrixNo === sourceProdData[tables][oldIndex].matrixNo){
+            return true
+        }
+    }
+    if(tables === "mbProdGroup"){
+        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].prodSubType === sourceProdData[tables][oldIndex].prodSubType){
             return true
         }
     }

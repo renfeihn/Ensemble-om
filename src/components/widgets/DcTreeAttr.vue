@@ -1,4 +1,4 @@
-depositTree<template>
+<template>
     <v-card>
         <v-toolbar card color="blue-grey lighten-5">
             <v-toolbar-title style="font-size: large; color: slategrey">{{labelText}}</v-toolbar-title>
