@@ -63,13 +63,12 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     }
     //处理单表数据
     //费用信息
-
     var backVal = []
     if(acctType != "T") {
         tablesDeal(prodData, sourceProdData, backVal, "mbProdCharge", copyFlag)
         backData.mbProdCharge = backVal
     }
-    //核算信息q
+    //核算信息
     backVal = []
     tablesDeal(prodData,sourceProdData,backVal,"glProdAccounting",copyFlag)
     backData.glProdAccounting = backVal
@@ -102,138 +101,156 @@ export function filterChangeData (prodData,sourceProdData,optionType) {
     backData.mbProdGroup = backVal
     return backData
 }
-/*
- * @description 单表处理主流程（只包含修改操作）
- * @param backVal 单表存在数据变动（数据的U以及单条数据原子的U）的集合
+
+/**
+ * @description 单表处理主流程（包含修改,新增，删除操作）
+ * @param backVal 单表数据变动的集合
  * @param tables 表名
  * @param copyFlag 复制标识
  * @param backVal 返回数据集合
  */
 export function tablesDeal(prodData,sourceProdData,backVal,tables,copyFlag){
-    for (let newIndex = 0; newIndex < prodData[tables].length; newIndex++) {
-        if(copyFlag == "Y" && tables != "irlBasisRateList" && tables !="irlIntMatrices"){
+    //复制处理
+    if(copyFlag == "Y" && tables != "irlBasisRateList" && tables !="irlIntMatrices") {
+        for (let newIndex = 0; newIndex < prodData[tables].length; newIndex++) {
             let prodType = prodData.prodType.prodType;
             let prodDesc = prodData.prodType.prodDesc;
             let temp = {newData: {}, oldData: {}, optType: ''}
             prodData[tables][newIndex].prodType = prodType;
-            if(tables === "glProdMappings"){
+            if (tables === "glProdMappings") {
                 prodData[tables][newIndex].mappingType = prodType;
                 prodData[tables][newIndex].mappingDesc = prodDesc;
                 prodData[tables][newIndex].prodDesc = prodDesc;
             }
-            if(tables === "irlProdTypes"){
+            if (tables === "irlProdTypes") {
                 prodData[tables][newIndex].prodTypeDesc = prodDesc;
             }
             temp.newData = prodData[tables][newIndex]
             temp.optType = 'I'
             backVal.push(temp)
-        }else {
-            for (let oldIndex = 0; oldIndex < sourceProdData[tables].length; oldIndex++) {
-                //主键匹配
-                let flag = tableDealKey(prodData, sourceProdData, newIndex, oldIndex, tables)
-                if (flag) {
-                    //修改处理
-                    tableDealUpdata(prodData, sourceProdData, newIndex, oldIndex, tables, backVal)
-                    break;
+        }
+    }
+    //非复制处理
+    else{
+        tableDealUID(prodData,sourceProdData,backVal,tables);
+    }
+}
+
+/**
+* @description  产品单表非复制操作时数据处理
+*               1，以界面最新数据为外层，原始数据为内层遍历。外层存在内层不包含的数据  该条数据新增数据I
+*               2，以原始数据为外层，界面数据为内层遍历，外层存在内存不包含数据，该条数据为删除数据D
+*               3，遍历过程中采用主键匹配  主键匹配上（单条数据匹配），此时比较该条数据的所有字段是否发生变化，存在变化为更新U
+ *@param prodData 界面最新数据
+ * @param sourceProdData 原始数据
+ * @param bakVal 引用对象 返回
+ * @param tables 表名
+*
+* */
+export function tableDealUID(prodData,sourceProdData,backVal,tables) {
+    //正向遍历（组装修改U，新增I数据）
+    for(let newIndex in prodData[tables]){
+        let ret = findIn(prodData[tables][newIndex],sourceProdData[tables],tables);
+        //存在,判断是否被修改
+        if(ret.flag){
+            let index = ret.index;
+            //比对该条数据各个字段是否被修改
+            let proCol = prodData[tables][newIndex];
+            let souCol = sourceProdData[tables][index];
+            for(let col in proCol){
+                if(proCol[col] != undefined && souCol[col] != undefined && proCol[col] != null && souCol[col] != null && proCol[col] != "" && souCol[col] != ""){
+                    if(proCol[col] != souCol[col]){
+                        //数据被修改
+                        //组装返回数据
+                        let tempU = {newData: {}, oldData: {}, optType: ''};
+                        tempU.newData = proCol;
+                        tempU.oldData = souCol;
+                        tempU.optType = 'U'
+                        backVal.push(tempU);
+                        break;
+                    }
                 }
             }
         }
+        //不存在,即为新增
+        if(!ret.flag){
+            //组装返回数据
+            let tempI = {newData: {}, oldData: {}, optType: ''}
+            tempI.newData = prodData[tables][newIndex]
+            tempI.optType = 'I'
+            backVal.push(tempI);
+        }
     }
+    //反向遍历 （组装删除D 数据）
+    for(let oldIndexB in sourceProdData[tables]){
+        let ret = findIn(sourceProdData[tables][oldIndexB],prodData[tables],tables);
+        //不存在，即为删除
+        if(!ret.flag){
+            //组装返回数据
+            let tempD = {newData: {}, oldData: {}, optType: ''};
+            tempD.oldData = sourceProdData[tables][oldIndexB];
+            tempD.optType = "D";
+            backVal.push(tempD);
+        }
+    }
+
 }
+/**
+ * @description 判断key 是否存在于data集合中
+ * @param key: 表内一条数据
+ * @param data: 表内所有数据
+ * @param tables: 表名
+ * @return ret 返回数据集合：返回ret数据结构---【如果存在： ret: {flag: true,index: 该条数据再sourceProd中下标}     如果不存在：ret: {flag: false,index: null}】
+* */
+export function findIn(col, data,tables) {
+    let keySet = getKeySetByTableName(tables);
+    //记录主键个数
+    let keyLength = keySet.length;
+    //默认返回数据集合
+    let ret = {flag: false,index: null}
+    //遍历全数据集合
+    for(let index in data){
+        if(keySet!=undefined && keySet.length){
+            let flag = 0;
+            for(let keyIndex in keySet){
+                if(col[keySet[keyIndex].key] !=undefined && col[keySet[keyIndex].key] == data[index][keySet[keyIndex].key]){
+                    flag++;
+                }
+            }
+            //一条数据比对完 主键全部匹配
+            if(flag == keyLength){
+                ret.flag = true;
+                ret.index = index;
+                return ret;
+            }
 
-/*
- * @description 匹配单表数据主键
- * @param backVal 单表存在数据变动（数据的U以及单条数据原子的U）的集合
- * @param tables 表名
- * @param newIndex 修改后数据循环下标
- * @param oldIndex 修改前数据循环下标
- */
-export function tableDealKey(prodData,sourceProdData,newIndex,oldIndex,tables) {
-    let ret = false;
-    if(tables === "mbProdCharge"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].feeType === sourceProdData[tables][oldIndex].feeType){
-            return true
         }
     }
-    if(tables === "glProdAccounting"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].accountingStatus === sourceProdData[tables][oldIndex].accountingStatus){
-            return true
-        }
-    }
-    if(tables === "glProdMappings"){
-        if(prodData[tables][newIndex].mappingType === sourceProdData[tables][oldIndex].mappingType) {
-            return true
-        }
-    }
-    if(tables === "irlProdType"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType){
-            return true
-        }
-    }
-    if(tables === "glProdCodeMappings"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].status === sourceProdData[tables][oldIndex].status && prodData[tables][newIndex].amtType === sourceProdData[tables][oldIndex].amtType){
-            return true
-        }
-    }
-    ret = tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,tables);
-
     return ret;
 }
 
-export function tableDealKeyTemp(prodData,sourceProdData,newIndex,oldIndex,tables) {
-    if(tables === "irlProdInt"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].eventType === sourceProdData[tables][oldIndex].eventType && prodData[tables][newIndex].intClass === sourceProdData[tables][oldIndex].intClass){
-            if(prodData[tables][newIndex].splitId === sourceProdData[tables][oldIndex].splitId && prodData[tables][newIndex].ruleid === sourceProdData[tables][oldIndex].ruleid){
-                return true
-            }
-        }
-    }
-    if(tables === "irlBasisRateList"){
-        if(prodData[tables][newIndex].intBasis === sourceProdData[tables][oldIndex].intBasis && prodData[tables][newIndex].ccy === sourceProdData[tables][oldIndex].ccy && prodData[tables][newIndex].effectDate === sourceProdData[tables][oldIndex].effectDate){
-            return true
-        }
-    }
-    if(tables === "mbProdAmendMaping"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType){
-            return true
-        }
-    }
-    if(tables === "irlIntMatrices"){
-        if(prodData[tables][newIndex].matrixNo === sourceProdData[tables][oldIndex].matrixNo){
-            return true
-        }
-    }
-    if(tables === "mbProdGroup"){
-        if(prodData[tables][newIndex].prodType === sourceProdData[tables][oldIndex].prodType && prodData[tables][newIndex].prodSubType === sourceProdData[tables][oldIndex].prodSubType){
-            return true
-        }
-    }
-}
-/*
- * @description 单表修改数据处理
- * @param newIndex 修改后数据循环下标
- * @param oldIndex 修改前数据循环下标
- * @param backVal 单表存在数据变动（数据的U以及单条数据原子的U）的集合
- * @param tables 表名
- * @param copyFlag 复制标识
- * @param backVal 返回数据集合
+
+/**
+ * @description 通过表名获取主键集合
+ * @param tables：表名
+ * @return keys 主键集合（对象数组）
  */
-export function tableDealUpdata(prodData, sourceProdData, newIndex, oldIndex, tables,backVal) {
-    for (let column in prodData[tables][newIndex]) {
-        if (prodData[tables][newIndex][column] != sourceProdData[tables][oldIndex][column]) {
-            //修改数据
-            let temp = {newData: {}, oldData: {}, optType: ''}
-            temp.newData = prodData[tables][newIndex]
-            temp.oldData = sourceProdData[tables][oldIndex]
-            temp.optType = 'U'
-            backVal.push(temp)
-            break;
-        }
-    }
+export function getKeySetByTableName(tables) {
+    let tableName = tables;
+    let keys ={};
+    keys["mbProdGroup"] = [{key: "prodType"},{key: "prodSubType"}];
+    keys["mbProdCharge"] = [{key: "prodType"},{key: "feeType"}];
+    keys["glProdAccounting"] = [{key: "prodType"},{key: "accountingStatus"}];
+    keys["glProdMappings"] = [{key: "mappingType"}];
+    keys["irlProdTypes"] = [{key: "prodType"}];
+    keys["glProdCodeMappings"] = [{key: "prodType"},{key: "status"},{key: "amtType"}];
+    keys["irlProdInt"] = [{key: "prodType"},{key: "eventType"},{key: "intClass"},{key: "splitId"},{key: "ruleid"}];
+    keys["irlBasisRateList"] = [{key: "intBasis"},{key: "ccy"},{key: "effectDate"}];
+    keys["mbProdAmendMaping"] = [{key: "prodType"}];
+    keys["irlIntMatrices"] = [{key: "matrixNo"}];
+    return keys[tableName];
 }
-
-
-/*
+/**
  * @description 处理mbEventPart对象数据
  * @param  m 事件
  * @param x 事件下指标
@@ -257,7 +274,9 @@ export function mbEventPartDeal(prodData,x,m,copyFlag,mbEventParts,sourceProdDat
         }
     }
 }
-//处理mbProdType对象数据
+/**
+ * @description 处理mbProdType对象数据
+* */
 export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
     var prodType = {newData: {},oldData: {}}
     var newProdMap = {}
@@ -278,7 +297,9 @@ export function prodTypeDeal(prodData,sourceProdData,backData,copyFlag) {
     prodType.oldData = Object.assign(prodType.oldData,oldProdMap)
     backData.prodType = prodType
 }
-//处理prodDefines对象数据
+/**
+ * @description 处理prodDefines对象数据
+ * */
 export function prodDefinesDeal(prodData,sourceProdData,backData,copyFlag,prodRange,optionPermissions) {
     var prodDefines = {}
     var tempObject = {}
@@ -349,6 +370,9 @@ export function tempsDefine(prodData,copyFlag,prodRange,j){
         }
     }
 }
+/**
+ * @description 产品复制时 修改所有prodType 复制后产品prodType
+ * */
 export function changeProdType(prodData,prodType,j){
     let newMap = {newData: {},oldData: {},optionType: ""}
     if(prodData.prodDefines[j].assembleType == "EVENT"){
@@ -374,7 +398,7 @@ export function dealFalg(val1,val2){
         return false
     }
 }
-/*
+/**
  * @description 处理mbEventAttr对象数据
  * @param  m 事件
  * @param  k 事件下参数
@@ -423,6 +447,13 @@ export function mbEventAttrsDeal(prodData,sourceProdData,copyFlag,m,k,mbEventAtt
         }
     }
 }
+/**
+ * @description 处理mbEventAttr对象数据的状态位（可编辑，不可编辑，可见，删除）
+ * @param  m 事件
+ * @param  k 事件下参数
+ * @param optObjectAttr 一条待处理的eventAttr数据
+ * @param mbEventAttrs 事件下参数对象集合
+ */
 export function dealEventOpt(prodData,sourceProdData,m,k,optObjectAttr) {
     if (sourceProdData.mbEventInfos[m].mbEventAttrs[k] !== undefined && prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions !== sourceProdData.mbEventInfos[m].mbEventAttrs[k].optionPermissions) {
         if (prodData.mbEventInfos[m].mbEventAttrs[k].optionPermissions === "D") {
@@ -447,7 +478,7 @@ export function dealEventOpt(prodData,sourceProdData,m,k,optObjectAttr) {
         }
     }
 }
-/*
+/**
  * @description 对象浅拷贝
  * @param  obj1 被拷贝对象
  * @param  obj2 拷贝后对象（传入为空）
