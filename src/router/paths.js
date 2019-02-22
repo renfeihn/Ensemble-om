@@ -963,7 +963,21 @@ export default [
     /* webpackMode: "lazy-once" */
     require(['@/views/baseTable/tables/tableInfo.vue'],resolve)
 },
-{
+    {
+        path: '/roleMenuAuthorzation',
+        meta: {
+            breadcrumb: true,
+            title: '授权信息'
+        },
+        name: 'roleMenuAuthorzation',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/systemManage/tables/roleMenuAuthorzation.vue'],resolve)
+    },
+
+
+    {
     path: '/systemManageIndex',
         meta: {
     breadcrumb: true,

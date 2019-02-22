@@ -9,7 +9,8 @@ import i18n from './lang';
 import 'font-awesome/css/font-awesome.css';
 import './theme/default.styl';
 import VeeValidate from 'vee-validate';
-import VueDragTree from 'vue-drag-tree'
+import VueDragTree from 'vue-drag-tree';
+import dragTreeTable from 'drag-tree-table'
 import 'vue-drag-tree/dist/vue-drag-tree.min.css'
 import VueResource from 'vue-resource'
 import Truncate from 'lodash.truncate';
@@ -43,6 +44,7 @@ Vue.filter('truncate', Truncate);
 Vue.use(alert);
 Vue.use(VueDragTree)
 Vue.use(VueResource)
+Vue.use(dragTreeTable)
 Vue.use(VueSweetalert2)
 Vue.use(VeeValidate, {
   fieldsBagName: 'formFields'
