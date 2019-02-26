@@ -117,7 +117,7 @@
     import {getCommonList} from "@/api/url/prodInfo";
 
     export default {
-        name: 'RbBaseProds',
+        name: 'SoldProdForm',
         components: {
             VWidget,
             SoldProd,
