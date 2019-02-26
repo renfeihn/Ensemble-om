@@ -316,21 +316,6 @@
             }
         },
         methods: {
-            tapClick(val){
-                let pageCode = val
-                if(pageCode == "STAGE"){
-                    //弹出跳转到参数平台提示
-                    this.dialogStage = true;
-                }
-            },
-            //跳转到参数工厂，进行期次定义维护
-            goParam(){
-                console.log("dd");
-                this.$router.push({
-                    name: 'tableInfo',
-                    hash: "MB_STAGE_DEFINE"
-                })
-            },
             //通过产品分类不同，加载显示不同产品页签
             routPageByProd(response) {
                 this.initColumnInfo();
@@ -401,6 +386,21 @@
                     return true;
                 }
                 return false;
+            },
+            tapClick(val){
+                let pageCode = val
+                if(pageCode == "STAGE"){
+                    //弹出跳转到参数平台提示
+                    this.dialogStage = true;
+                }
+            },
+            //跳转到参数工厂，进行期次定义维护
+            goParam(){
+                console.log("dd");
+                this.$router.push({
+                    name: 'tableInfo',
+                    hash: "MB_STAGE_DEFINE"
+                })
             },
             initColumnInfo() {
                 this.attrColumnInfo= getAttrInfo();
