@@ -91,7 +91,7 @@
     import tags from './tags'
     import columnInfo from './columnInfo'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
-    import SoldProd from './soldProd/soldProd'
+    import SoldProd from './soldProd/SoldProd'
     import SoldDesc from './soldProd/SoldDesc'
     import ProdListForm from './form/ProdListForm';
     import ProdAmend from './table/prodTables/prodAmend';
