@@ -128,10 +128,10 @@
                 let prodRange = val.prodRange;
                 let sourceModule = val.sourceModule;
                 if(prodRange == "B") {
-                    this.$router.push({name: "RbBaseProds", hash: prodType});
+                    this.$router.push({name: "BaseProdForm", hash: prodType});
                 }
                 if(prodRange == "S"){
-                    this.$router.push({name: "RbSoldProds", hash: prodType});
+                    this.$router.push({name: "SoldProdForm", hash: prodType});
                 }
 
             }

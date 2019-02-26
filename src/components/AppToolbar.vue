@@ -151,36 +151,18 @@
                         break
                     }
                 }
-               if(this.sourceModule == "RB" && this.prodRange == "S"){
+               if(this.prodRange == "S"){
                    this.$router.push({
-                       name: "RbSoldProds",
+                       name: "SoldProdForm",
                        params: {
                            prodClassCmp: this.prodClass,
                            prodType: this.prodCode
                        }
                    });
                }
-               if(this.sourceModule == "RB" && this.prodRange == "B"){
+               if(this.prodRange == "B"){
                     this.$router.push({
-                        name: "RbBaseProds",
-                        params: {
-                            prodClassCmp: this.prodClass,
-                            prodType: this.prodCode
-                        }
-                    });
-               }
-               if(this.sourceModule == "CL" && this.prodRange == "S"){
-                    this.$router.push({
-                        name: "ClSoldProds",
-                        params: {
-                            prodClassCmp: this.prodClass,
-                            prodType: this.prodCode
-                        }
-                    });
-               }
-               if(this.sourceModule == "CL" && this.prodRange == "B"){
-                    this.$router.push({
-                        name: "ClBaseProds",
+                        name: "BaseProdForm",
                         params: {
                             prodClassCmp: this.prodClass,
                             prodType: this.prodCode

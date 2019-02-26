@@ -801,92 +801,29 @@ export default [
             /* webpackMode: "lazy-once" */
             require(['@/views/userFlow/transactionInfo/tranDataClIndex.vue'],resolve)
     },
-
-  {
-    path: '/RbBaseProds',
-    meta: {
-      breadcrumb: true,
-      title: '存款基础产品'
-    },
-    name: 'RbBaseProds',
-    component: (resolve) =>
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        require(['@/views/prodFactory/prodInfo/RbBaseProds.vue'],resolve
-      )
-  },
-
     {
-        path: 'GlBaseProds',
+        path: '/BaseProdForm',
         meta: {
             breadcrumb: true,
-            title: '内部账基础产品'
+            title: '基础产品'
         },
-        name: 'GlBaseProds',
-        component: (resolve) =>
-            require(['@/views/prodFactory/prodInfo/GlBaseProds.vue'],resolve
-            )
-    },
-
-    {
-        path: 'GroupBaseProds',
-        meta: {
-            breadcrumb: true,
-            title: '组合基础产品'
-        },
-        name: 'GroupBaseProds',
-        component: (resolve) =>
-            require(['@/views/prodFactory/prodInfo/GroupBaseProds.vue'],resolve
-            )
-    },
-    {
-        path: '/GlSoldProds',
-        meta: {
-            breadcrumb: true,
-            title: '内部账可售产品'
-        },
-        name: 'GlSoldProds',
-        component: (resolve) =>
-            require(['@/views/prodFactory/prodInfo/GlSoldProds.vue'],resolve
-            )
-    },
-
-{
-    path: '/RbSoldProds',
-        meta: {
-    breadcrumb: true,
-        title: '存款可售产品'
-},
-    name: 'RbSoldProds',
+        name: 'BaseProdForm',
         component: (resolve) =>
             /* webpackChunkName: "routes" */
             /* webpackMode: "lazy-once" */
-            require(['@/views/prodFactory/prodInfo/RbSoldProds.vue'],resolve)
-},
-    {
-        path: '/ClBaseProds',
-        meta: {
-            breadcrumb: true,
-            title: '贷款基础产品'
-        },
-        name: 'ClBaseProds',
-        component: (resolve) =>
-            /* webpackChunkName: "routes" */
-            /* webpackMode: "lazy-once" */
-            require(['@/views/prodFactory/prodInfo/ClBaseProds.vue'],resolve
-            )
+            require(['@/views/prodFactory/prodInfo/BaseProdForm.vue'],resolve)
     },
     {
-        path: '/ClSoldProds',
+        path: '/SoldProdForm',
         meta: {
             breadcrumb: true,
-            title: '贷款可售产品'
+            title: '可售产品'
         },
-        name: 'ClSoldProds',
+        name: 'SoldProdForm',
         component: (resolve) =>
             /* webpackChunkName: "routes" */
             /* webpackMode: "lazy-once" */
-            require(['@/views/prodFactory/prodInfo/ClSoldProds.vue'],resolve)
+            require(['@/views/prodFactory/prodInfo/SoldProdForm.vue'],resolve)
     },
   {
     path: '/paramManage',
