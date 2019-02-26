@@ -19,9 +19,21 @@
                         <span>刷新</span>
                     </v-tooltip>
                 </v-toolbar>
+                <v-dialog v-model="dialogStage" width="450" persistent z-index="100">
+                    <v-card style="height: 200px; width: 450px">
+                        <v-card-text>
+                            <v-icon @click="dialogStage = false" style="margin-left: 95%">close</v-icon>
+                            <h4 style="color: dodgerblue; margin-left: 10%; margin-top: 2%">跳转到【参数工厂--期次定义】界面</h4>
+                            <v-btn color="success" @click="goParam" dark style="margin-left: 28%; margin-top: 10%; width: 180px; height: 40px">
+                                确定
+                            </v-btn>
+                        </v-card-text>
+                    </v-card>
+                 </v-dialog>
+
                 <!--产品展示界面-->
                 <v-tabs slot="extension" v-model="activeName" grow show-arrows>
-                    <v-tab v-for="n in prodInfo" :key="n.pageCode">
+                    <v-tab v-for="n in prodInfo" :key="n.pageCode" @click="tapClick(n.pageCode)">
                         {{ n.text}}
                     </v-tab>
                     <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
@@ -136,6 +148,7 @@
         },
         data () {
             return {
+                dialogStage: false,
                 listLoading: true,
                 dialog: false,
                 showCopy: '',
@@ -303,6 +316,21 @@
             }
         },
         methods: {
+            tapClick(val){
+                let pageCode = val
+                if(pageCode == "STAGE"){
+                    //弹出跳转到参数平台提示
+                    this.dialogStage = true;
+                }
+            },
+            //跳转到参数工厂，进行期次定义维护
+            goParam(){
+                console.log("dd");
+                this.$router.push({
+                    name: 'tableInfo',
+                    hash: "MB_STAGE_DEFINE"
+                })
+            },
             //通过产品分类不同，加载显示不同产品页签
             routPageByProd(response) {
                 this.initColumnInfo();

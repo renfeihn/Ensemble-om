@@ -42,10 +42,13 @@
                                 v-model="keyData.value"
                                 :options="keyData.valueScore"
                                 class="dcMulti"
-                                :isMultiSelect=keyData.isMultiSelect
+                                :isMultiSelect=false
                         ></dc-dan-multiselect>
                         <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
                                    v-model="keyData.value"></dc-switch>
+                        <dc-date class="dcDate" :showEdit="showEdit" v-if="keyData.columnType == 'date'"
+                                 :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="keyData.value"></dc-date>
+
                     </v-flex>
                 </v-layout>
             </v-form>
