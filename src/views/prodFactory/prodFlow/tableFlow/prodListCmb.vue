@@ -127,13 +127,24 @@
                 let prodType = val.prodType;
                 let prodRange = val.prodRange;
                 let sourceModule = val.sourceModule;
-                if(prodRange == "B") {
+                if(prodRange == "B" && sourceModule == "RB") {
                     this.$router.push({name: "BaseProdForm", hash: prodType});
                 }
-                if(prodRange == "S"){
+                if(prodRange == "B" && sourceModule == "CL") {
+                    this.$router.push({name: "BaseProdFormCl", hash: prodType});
+                }
+                if(prodRange == "B" && sourceModule == "GL") {
+                    this.$router.push({name: "BaseProdFormGl", hash: prodType});
+                }
+                if(prodRange == "S" && sourceModule == "RB"){
                     this.$router.push({name: "SoldProdForm", hash: prodType});
                 }
-
+                if(prodRange == "S" && sourceModule == "CL"){
+                    this.$router.push({name: "SoldProdFormCl", hash: prodType});
+                }
+                if(prodRange == "S" && sourceModule == "GL"){
+                    this.$router.push({name: "SoldProdFormGl", hash: prodType});
+                }
             }
         }
     };

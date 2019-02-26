@@ -151,7 +151,7 @@
                         break
                     }
                 }
-               if(this.prodRange == "S"){
+               if(this.prodRange == "S" && this.sourceModule == "RB"){
                    this.$router.push({
                        name: "SoldProdForm",
                        params: {
@@ -160,7 +160,7 @@
                        }
                    });
                }
-               if(this.prodRange == "B"){
+               if(this.prodRange == "B" && this.sourceModule == "RB"){
                     this.$router.push({
                         name: "BaseProdForm",
                         params: {
@@ -170,6 +170,43 @@
                     });
                }
 
+                if(this.prodRange == "S" && this.sourceModule == "CL"){
+                    this.$router.push({
+                        name: "SoldProdFormCl",
+                        params: {
+                            prodClassCmp: this.prodClass,
+                            prodType: this.prodCode
+                        }
+                    });
+                }
+                if(this.prodRange == "B" && this.sourceModule == "CL"){
+                    this.$router.push({
+                        name: "BaseProdFormCl",
+                        params: {
+                            prodClassCmp: this.prodClass,
+                            prodType: this.prodCode
+                        }
+                    });
+                }
+
+                if(this.prodRange == "S" && this.sourceModule == "GL"){
+                    this.$router.push({
+                        name: "SoldProdFormGl",
+                        params: {
+                            prodClassCmp: this.prodClass,
+                            prodType: this.prodCode
+                        }
+                    });
+                }
+                if(this.prodRange == "B" && this.sourceModule == "GL"){
+                    this.$router.push({
+                        name: "BaseProdFormGl",
+                        params: {
+                            prodClassCmp: this.prodClass,
+                            prodType: this.prodCode
+                        }
+                    });
+                }
             },
             handleFullScreen() {
                 Util.toggleFullScreen();

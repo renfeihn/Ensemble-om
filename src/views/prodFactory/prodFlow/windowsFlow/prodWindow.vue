@@ -354,13 +354,23 @@
                 let prodClass= val.prodClass
                 let prodRange = val.prodRange
                 let sourceModule = val.sourceModel
-                if(prodRange == '基础产品'){
-                    //跳转到存款基础产品界面
-                    this.$router.push({ name: "BaseProdForm", hash: prodType});
+                if(prodRange == "基础产品" && sourceModule == "存款") {
+                    this.$router.push({name: "BaseProdForm", hash: prodType});
                 }
-                if(prodRange == '可售产品'){
-                    //跳转到存款可售产品界面
-                    this.$router.push({ name: "SoldProdForm", hash: prodType});
+                if(prodRange == "基础产品" && sourceModule == "贷款") {
+                    this.$router.push({name: "BaseProdFormCl", hash: prodType});
+                }
+                if(prodRange == "基础产品" && sourceModule == "内部账") {
+                    this.$router.push({name: "BaseProdFormGl", hash: prodType});
+                }
+                if(prodRange == "可售产品" && sourceModule == "存款"){
+                    this.$router.push({name: "SoldProdForm", hash: prodType});
+                }
+                if(prodRange == "可售产品" && sourceModule == "贷款"){
+                    this.$router.push({name: "SoldProdFormCl", hash: prodType});
+                }
+                if(prodRange == "可售产品" && sourceModule == "内部账"){
+                    this.$router.push({name: "SoldProdFormGl", hash: prodType});
                 }
             },
             getValue(val){

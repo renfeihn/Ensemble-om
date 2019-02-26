@@ -805,9 +805,33 @@ export default [
         path: '/BaseProdForm',
         meta: {
             breadcrumb: true,
-            title: '基础产品'
+            title: '存款基础产品'
         },
         name: 'BaseProdForm',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/BaseProdForm.vue'],resolve)
+    },
+    {
+        path: '/BaseProdFormCl',
+        meta: {
+            breadcrumb: true,
+            title: '贷款基础产品'
+        },
+        name: 'BaseProdFormCl',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/BaseProdForm.vue'],resolve)
+    },
+    {
+        path: '/BaseProdFormGl',
+        meta: {
+            breadcrumb: true,
+            title: '内部账基础产品'
+        },
+        name: 'BaseProdFormGl',
         component: (resolve) =>
             /* webpackChunkName: "routes" */
             /* webpackMode: "lazy-once" */
@@ -817,9 +841,33 @@ export default [
         path: '/SoldProdForm',
         meta: {
             breadcrumb: true,
-            title: '可售产品'
+            title: '存款可售产品'
         },
         name: 'SoldProdForm',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/SoldProdForm.vue'],resolve)
+    },
+    {
+        path: '/SoldProdFormCl',
+        meta: {
+            breadcrumb: true,
+            title: '贷款可售产品'
+        },
+        name: 'SoldProdFormCl',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/prodFactory/prodInfo/SoldProdForm.vue'],resolve)
+    },
+    {
+        path: '/SoldProdFormGl',
+        meta: {
+            breadcrumb: true,
+            title: '内部账可售产品'
+        },
+        name: 'SoldProdFormGl',
         component: (resolve) =>
             /* webpackChunkName: "routes" */
             /* webpackMode: "lazy-once" */
