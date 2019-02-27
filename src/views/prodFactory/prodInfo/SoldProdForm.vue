@@ -56,6 +56,8 @@
                             <prod-int v-if="i.pageCode=='RATEINFO'" v-bind:prodData="prodData"></prod-int>
                             <prod-charge v-if="i.pageCode=='CHARGE'" v-bind:prodData="prodData"></prod-charge>
                             <prod-accounting v-if="i.pageCode=='ACCOUNTING'" v-bind:prodData="prodData"></prod-accounting>
+                            <prod-cl-accounting v-if="i.pageCode=='CLACCOUNTING'" v-bind:prodData="prodData"></prod-cl-accounting>
+
                             <!--贷款特有事件-->
                             <sold-prod v-if="i.pageCode=='DISC'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="DISC" :disablePower="disablePower"></sold-prod>
                             <sold-prod v-if="i.pageCode=='DRW'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="DRW" tags="DRW" :disablePower="disablePower"></sold-prod>
@@ -119,6 +121,8 @@
     import SoldDesc from './soldProd/SoldDesc'
     import ProdCharge from './table/prodTables/prodCharge';
     import ProdAccounting from './table/prodTables/prodRbAccounting';
+    import ProdClAccounting from './table/prodTables/prodRbAccounting';
+
     import ProdInt from './table/prodTables/prodInt';
     import ProdAmend from './table/prodTables/prodAmend';
 
@@ -134,6 +138,7 @@
             SoldProd,
             ProdAmend,
             ProdAccounting,
+            ProdClAccounting,
             downAction,
             ProdListForm,
             PendingForm,
