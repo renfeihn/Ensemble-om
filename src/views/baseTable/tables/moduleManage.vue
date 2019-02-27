@@ -173,7 +173,23 @@
 
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                let confirms = confirm('Are you sure you want to delete this item?')
+                if(confirms == true){
+                    this.desserts.splice(index, 1)
+                    //保存数据落库
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_MODULE_ORG"
+                    this.backValue.keySet = "MODULE_ID,SYSTEM_ID"
+                    this.sourceData = []
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            this.sweetAlert('success',"删除成功!")
+                        }
+                    })
+                }
+
             },
 
             close () {
@@ -195,9 +211,10 @@
                 this.backValue.userName = sessionStorage.getItem("userId")
                 this.backValue.tableName = "OM_MODULE_ORG"
                 this.backValue.keySet = "MODULE_ID,SYSTEM_ID"
+                this.sourceData = this.copy(this.desserts,this.sourceData)
                 saveSysTable(this.backValue).then(response => {
                     if(response.status === 200){
-                        toast.success("提交成功！");
+                        this.sweetAlert('success',"提交成功!")
                     }
                 })
                 this.close()
