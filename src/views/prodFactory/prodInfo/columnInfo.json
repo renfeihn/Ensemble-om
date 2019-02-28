@@ -2834,7 +2834,7 @@
       "columnDesc": "SUBJECT_DESC",
       "tableName": "AC_SUBJECT"
     },
-    "columnDesc": "负债科目"
+    "columnDesc": "负债科目代码"
   },
 
   "GL_CODE_INT_E": {
@@ -4001,7 +4001,16 @@
       "columnDesc": "SUBJECT_DESC",
       "tableName": "AC_SUBJECT"
     },
-    "columnDesc": "调整科目代"
+    "columnDesc": "调整科目代码"
+  },
+  "GL_CODE_A": {
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "SUBJECT_CODE",
+      "columnDesc": "SUBJECT_DESC",
+      "tableName": "AC_SUBJECT"
+    },
+    "columnDesc": "资产科目代码"
   }
-
 }
