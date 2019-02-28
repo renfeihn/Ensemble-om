@@ -121,7 +121,7 @@
     import SoldDesc from './soldProd/SoldDesc'
     import ProdCharge from './table/prodTables/prodCharge';
     import ProdAccounting from './table/prodTables/prodRbAccounting';
-    import ProdClAccounting from './table/prodTables/prodRbAccounting';
+    import ProdClAccounting from './table/prodTables/prodAccounting';
 
     import ProdInt from './table/prodTables/prodInt';
     import ProdAmend from './table/prodTables/prodAmend';
