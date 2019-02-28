@@ -129,7 +129,7 @@
                 for(let prodCode in prodData){
                     for(let index in prodData[prodCode]){
                         if(index == "prodDefine"){
-                            //参数信息
+                            //参数信息  （去除event定义数据）
                             for(let attr in prodData[prodCode][index]){
                                 if (prodData[prodCode][index][attr].assembleType == "ATTR" && !this.findIn(prodDefineColumn,prodData[prodCode][index][attr].assembleId)) {
                                     let tempAttr = {};
@@ -141,9 +141,9 @@
                             }
                         }
                         if(index != "prodDefine" && index != "prodType"){
-                            //事件参数
+                            //事件参数(去除参数类型为part的参数)
                             for(let eventAttr in prodData[prodCode][index]){
-                                if(!this.findIn(prodEventColumn,prodData[prodCode][index][eventAttr].assembleId)){
+                                if(prodData[prodCode][index][eventAttr].assembleType == "ATTR" && !this.findIn(prodEventColumn,prodData[prodCode][index][eventAttr].assembleId)){
                                     let tempEvent = {};
                                     tempEvent['columnCode'] = prodData[prodCode][index][eventAttr].assembleId;
                                     const attrEventDesc = getColumnDesc(prodData[prodCode][index][eventAttr].assembleId);
