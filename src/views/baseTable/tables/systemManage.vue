@@ -1,7 +1,7 @@
 <template>
     <div class="elevation-4">
         <v-toolbar color="primary lighten-2" dark>
-            <v-toolbar-title>交易系统管理</v-toolbar-title>
+            <v-toolbar-title>系统管理</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-text-field
                     clearable

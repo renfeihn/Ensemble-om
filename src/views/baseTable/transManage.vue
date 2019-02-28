@@ -62,8 +62,8 @@
                 action: 'model',
                 items: [
                     {title: '交易属性管理',name: 'model', class: '',icon: 'widgets',color: "blue"},
-                    {title: '交易系统管理',name: 'system', class: '',icon: 'settings',color: "blue"},
-                    {title: '交易模块管理',name: 'module', class: '', icon: 'event',color: "blue"},
+                    {title: '系统管理',name: 'system', class: '',icon: 'settings',color: "blue"},
+                    {title: '模块管理',name: 'module', class: '', icon: 'event',color: "blue"},
                     {title: '元数据管理',name: 'json', class: '', icon: 'menu',color: "blue"}
                 ],
                 window: 0,
