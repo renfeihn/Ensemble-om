@@ -3,7 +3,14 @@
         <v-toolbar color="primary lighten-2" dark>
             <v-toolbar-title>交易系统管理</v-toolbar-title>
             <v-spacer></v-spacer>
-
+            <v-text-field
+                    clearable
+                    v-model="search"
+                    prepend-icon="search"
+                    label="Search"
+                    single-line
+                    hide-details
+            ></v-text-field>
             <v-dialog v-model="dialog" max-width="500px">
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
@@ -38,7 +45,7 @@
                 </v-card>
             </v-dialog>
         </v-toolbar>
-        <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+        <v-data-table :headers="headers" :items="desserts" :search="search" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.systemId }}</td>
                 <td>{{ props.item.systemName }}</td>
@@ -58,6 +65,9 @@
                     </v-tooltip>
                 </td>
             </template>
+            <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                Your search for "{{ search }}" found no results.
+            </v-alert>
         </v-data-table>
     </div>
 </template>
@@ -77,9 +87,9 @@
             disabled: "false",
             tab: [],
             headers: [
-                { text: '系统ID',sortable: false},
-                { text: '系统名称',sortable: false},
-                { text: '系统描述',sortable: false },
+                { text: '系统ID',sortable: false,value: 'systemId'},
+                { text: '系统名称',sortable: false,value: 'systemName'},
+                { text: '系统描述',sortable: false,value: 'systemDesc' },
                 { text: 'Action',sortable: false }
             ],
             desserts: [],
@@ -102,7 +112,8 @@
                 systemName: '',
                 systemDesc: ''
             },
-            backValue: {}
+            backValue: {},
+            search: ''
         }),
 
         computed: {

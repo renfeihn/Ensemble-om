@@ -3,7 +3,14 @@
         <v-toolbar color="primary lighten-2" dark>
             <v-toolbar-title>元数据管理</v-toolbar-title>
             <v-spacer></v-spacer>
-
+            <v-text-field
+                    clearable
+                    v-model="search"
+                    prepend-icon="search"
+                    label="Search"
+                    single-line
+                    hide-details
+            ></v-text-field>
             <v-dialog v-model="dialog" max-width="500px">
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
@@ -54,7 +61,7 @@
                 </v-card>
             </v-dialog>
         </v-toolbar>
-        <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+        <v-data-table :headers="headers" :items="desserts" :search="search" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.columnId }}</td>
                 <td>{{ props.item.columnDesc }}</td>
@@ -80,6 +87,9 @@
                     </v-tooltip>
                 </td>
             </template>
+            <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                Your search for "{{ search }}" found no results.
+            </v-alert>
         </v-data-table>
     </div>
 </template>
@@ -139,14 +149,14 @@
                 }
             ],
             headers: [
-                { text: '字段ID',sortable: false},
-                { text: '字段名称',sortable: false},
+                { text: '字段ID',sortable: false,value: 'columnId'},
+                { text: '字段名称',sortable: false,value: 'columnDesc'},
 //                { text: '数据类型',sortable: false },
 //                { text: '数据长度',sortable: false },
-                { text: '字段属性',sortable: false },
-                { text: '数据模型',sortable: false },
-                { text: '数据来源表',sortable: false },
-                { text: '数据参数',sortable: false },
+                { text: '字段属性',sortable: false,value: 'columnType' },
+                { text: '数据模型',sortable: false,value: 'valueMethod' },
+                { text: '数据来源表',sortable: false,value: 'valueScore' },
+                { text: '数据参数',sortable: false,value: 'valueScoreColumn' },
                 { text: 'Action',sortable: false }
             ],
             desserts: [],
@@ -180,7 +190,8 @@
                 valueScoreColumn: ''
 
             },
-            backValue: {}
+            backValue: {},
+            search: ''
         }),
 
         computed: {

@@ -37,8 +37,16 @@
                     <v-toolbar color="primary lighten-2" dark>
                         <v-toolbar-title>{{titleE}}</v-toolbar-title>
                         <v-spacer></v-spacer>
+                        <v-text-field
+                                clearable
+                                v-model="search"
+                                prepend-icon="search"
+                                label="Search"
+                                single-line
+                                hide-details
+                        ></v-text-field>
                     </v-toolbar>
-                    <v-data-table :headers="headers" :items="desserts" class="elevation-4">
+                    <v-data-table :headers="headers" :items="desserts" :search="search" class="elevation-4">
                         <template slot="items" slot-scope="props">
                             <td>{{ props.item.tableName }}</td>
                             <td>{{ props.item.tableDesc }}</td>
@@ -56,6 +64,9 @@
                                 </v-chip>
                             </td>
                         </template>
+                        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                            Your search for "{{ search }}" found no results.
+                        </v-alert>
                     </v-data-table>
                 </div>
             </v-flex>
@@ -77,24 +88,24 @@
                 title: "",
                 titleE: "",
                 titleNum: "",
-                action: 'ensemble',
+                action: 'KBS',
                 mainFlowInfo: [],
                 items: [
-                    {title: '核心系统',name: 'ensemble', class: '',icon: 'settings',color: "blue"},
-                    {title: '核算系统',name: 'accounting', class: '',icon: 'settings',color: "blue"},
-                    {title: '利率市场化',name: 'price', class: '',icon: 'settings',color: "blue"}
+                    {title: '核心系统',name: 'KBS', class: '',icon: 'settings',color: "blue"},
+                    {title: '核算系统',name: 'GLR', class: '',icon: 'settings',color: "blue"},
+                    {title: '利率市场化',name: 'UP', class: '',icon: 'settings',color: "blue"}
                 ],
                 window: 0,
                 windowItem: 'windowItem',
                 windowTitle: 'windowTitle',
                 dialog: false,
                 headers: [
-                    { text: '交易ID',sortable: false},
-                    { text: '交易名称',sortable: false},
-                    { text: '所属系统',sortable: false },
-                    { text: '所属模块',sortable: false },
-                    { text: '参数类型',sortable: false },
-                    { text: 'Action',sortable: false }
+                    { text: '交易ID',sortable: false,value: 'tableName'},
+                    { text: '交易名称',sortable: false,value: 'tableDesc'},
+                    { text: '所属系统',sortable: false,value: 'system' },
+                    { text: '所属模块',sortable: false,value: 'modelId' },
+                    { text: '参数类型',sortable: false,value: 'parameter' },
+                    { text: 'Action',sortable: false,value: 'icon' }
                 ],
                 desserts: [
                     {
@@ -113,7 +124,8 @@
                     system: '',
                     modelId: '',
                     parameter: ''
-                }
+                },
+                search: '',
             }
         },
         created () {
@@ -143,13 +155,13 @@
                     that.desserts=response.data.data.tableList;
 
                     that.titleE = that.action
-                    if(that.action === "ensemble") {
+                    if(that.action === "KBS") {
                         that.title = "核心系统"
                     }
-                    if(that.action === "accounting") {
+                    if(that.action === "GLR") {
                         that.title = "核算系统"
                     }
-                    if(that.action === "price") {
+                    if(that.action === "UP") {
                         that.title = "利率市场化"
                     }
                     that.titleNum = response.data.data.tableList.length
@@ -172,7 +184,7 @@
                     处理方法：重新查询待处理信息表，检查是否存在待处理单表交易
                     原因：交易展示界面重新查库加载 多次提交的情况下  前几次提交记录会丢失
                  */
-                getTableList("ensemble").then(function (response){
+                getTableList("KBS").then(function (response){
                     for(let i=0; i<response.data.data.tableList.length; i++){
                         let isCommit = false
                         for(let j=0; j<that.mainFlowInfo.length; j++){
@@ -189,7 +201,7 @@
                     that.desserts=response.data.data.tableList;
                     that.titleNum = response.data.data.tableList.length
                     that.title = "核心系统"
-                    that.titleE = "ensemble"
+                    that.titleE = "KBS"
                 });
             },
             routerTableInfo(item) {
