@@ -1679,13 +1679,23 @@
     "money": "true"
   },
   "INT_ROLL_FREQ": {
-    "columnType": "input",
-    "valueMethod": "FD",
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "PERIOD_FREQ",
+      "columnDesc": "PERIOD_FREQ_DESC",
+      "tableName": "FM_PERIOD_FREQ"
+    },
     "columnDesc": "利率变更周期"
   },
   "ROLL_FREQ": {
-    "columnType": "input",
-    "valueMethod": "FD",
+    "columnType": "select",
+    "valueMethod": "RF",
+    "valueScore": {
+      "columnCode": "PERIOD_FREQ",
+      "columnDesc": "PERIOD_FREQ_DESC",
+      "tableName": "FM_PERIOD_FREQ"
+    },
     "columnDesc": "利率变更周期"
   },
   "TRAN_LIMIT_AMT": {

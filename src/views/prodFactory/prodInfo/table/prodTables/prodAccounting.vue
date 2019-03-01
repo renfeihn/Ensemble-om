@@ -10,9 +10,23 @@
                     </v-list-tile>
                 </v-list>
             </v-card>
+
+            <v-card class="mt-1">
+                <v-list>
+                    <v-list-tile v-for="item in titleListCheck" :key="item.key" @click="chipClickCheck(key)">
+                        <v-list-tile-content>
+                            <v-list-tile-title style="font-size: medium">{{item.desc}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-card>
         </v-flex>
-        <v-flex md9 lg9>
+        <v-flex md9 lg9 v-show="fixed == false">
             <base-table :tableData="selectInfo" :keySet="keySet"></base-table>
+        </v-flex>
+        <v-flex md9 lg9 v-show="fixed == true" class="ml-2">
+            <a-table :columns="columnsFixed" :dataSource="accountingFixed" bordered>
+            </a-table>
         </v-flex>
     </v-layout>
 </template>
@@ -27,17 +41,57 @@
     import {
         getProdType
     } from '@/api/url/prodInfo'
+    import DcMultiselect from '@/components/widgets/DcMultiselect'
     export default {
-        components: {DcTextField,BaseTable},
-        props: ["prodData"],
+        components: {DcTextField,BaseTable,DcMultiselect},
+        props: {
+            prodData: String,
+            disablePower: {
+                type: Boolean,
+                default: true
+            }
+        },
         data: () => ({
             titleList: [],
+            fixed: false,
+            titleListCheck: [
+                {
+                    key: "checkSub",
+                    desc: "需要进行总分核对的科目"
+                }
+            ],
             prodAccounting: [],
             mbAccountingStatus: [],
             selectInfo: {},
             keySet: {
                 prodType: "prodType",
                 accountingStatus: "accountingStatus"
+            },
+            columnsFixed: [
+                {dataIndex: 'status', title: '核算状态'},
+                {dataIndex: 'amtType', title: '金额类型'},
+                {dataIndex: 'glCodeCol', title: '科目映射'},
+            ],
+            accountingFixed: [],
+            eventOption: {
+                tableName: "MB_PROD_TYPE",
+                columnCode: "PROD_TYPE",
+                columnDesc: "PROD_DESC"
+            },
+            statusOption: {
+                columnCode: "ACCOUNTING_STATUS",
+                columnDesc: "ACCOUNTING_STATUS_DESC",
+                tableName: "MB_ACCOUNTING_STATUS"
+            },
+            profitOption: {
+                columnCode: "PROFIT_CENTRE",
+                columnDesc: "PROFIT_CENTRE_DESC",
+                tableName: "FM_PROFIT_CENTRE"
+            },
+            glCodeLOption: {
+                columnCode: "SUBJECT_CODE",
+                columnDesc: "SUBJECT_DESC",
+                tableName: "AC_SUBJECT"
             }
         }),
         watch: {
@@ -56,6 +110,7 @@
                 if(val!=undefined&&val.prodType!=undefined){
                     that.prodAccounting = val.glProdAccounting
                 }
+                this.accountingFixed = val.glProdCodeMappings
             },
             initTitle() {
                 //加载列表信息
@@ -95,7 +150,23 @@
                         break
                     }
                 }
+            },
+            chipClickCheck(val){
+                this.fixed = true
+                this.selectInfo = {}
             }
         }
     }
 </script>
+<style scoped>
+    .prodList {
+        color: #00b0ff;
+        margin-left: -10px;
+    }
+    .title {
+        color: white;margin-left: auto;margin-right: auto;margin-top: 1px;margin-bottom: auto
+    }
+    .dcMulti {
+        margin-top: 10px;
+    }
+</style>
