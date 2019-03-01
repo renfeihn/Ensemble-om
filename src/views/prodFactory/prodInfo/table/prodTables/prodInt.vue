@@ -171,6 +171,11 @@
                 //获取基本信息
                 if(val!=undefined&&val.prodType!=undefined){
                     that.prodInt = val.irlProdInt;
+                    for(let i=0; i<that.prodInt.length; i++){
+                        if(that.prodInt[i].minRate == "0E-8"){
+                            that.prodInt[i].minRate = "0.00000000"
+                        }
+                    }
                     that.irlPeriSplit = val.irlProdIntInfos.irlPeriSplitList;
                     that.irlAmtSplit = val.irlProdIntInfos.irlAmtSplitList;
                     that.irlIntType = val.irlProdIntInfos.irlIntTypeList;

@@ -13,7 +13,13 @@
           <div v-show="isCL == true" style="width: 20%;height: 60%;padding-left: -20%">
             <img src="../../../../../static/prod/prodDai.png" height=100% >
           </div>
-          <v-list-tile-avatar v-show="isRB == false && isCL == false">
+          <div v-show="isGL == true" style="width: 20%;height: 60%;padding-left: -20%">
+            <img src="../../../../../static/prod/prodNei.png" height=100% >
+          </div>
+          <!--<div v-show="isMM == true" style="width: 20%;height: 60%;padding-left: -20%">-->
+            <!--<img src="../../../../../static/prod/prodHuo.png" height=100% >-->
+          <!--</div>-->
+          <v-list-tile-avatar v-show="isRB == false && isCL == false && isGL == false && isMM == false">
             <v-icon :class="['amber white--text']">{{ 'call_to_action'}}</v-icon>
           </v-list-tile-avatar>
           <v-list-tile-content>
@@ -31,6 +37,12 @@
             <div v-show="isCL == true" style="width: 20%;height: 60%;padding-left: -20%">
               <img src="../../../../../static/prod/prodDai.png" height=100% >
             </div>
+            <div v-show="isGL == true" style="width: 20%;height: 60%;padding-left: -20%">
+              <img src="../../../../../static/prod/prodNei.png" height=100% >
+            </div>
+            <!--<div v-show="isMM == true" style="width: 20%;height: 60%;padding-left: -20%">-->
+              <!--<img src="../../../../../static/prod/prodHuo.png" height=100% >-->
+            <!--</div>-->
             <v-list-tile-content>
               <v-list-tile-title>{{ item.prodType }}</v-list-tile-title>
               <v-list-tile-sub-title>{{ item.prodDesc }}</v-list-tile-sub-title>
@@ -53,6 +65,8 @@
         data: () => ({
             isRB: false,
             isCL: false,
+            isGL: false,
+            isMM: false,
             folders: [],
             list: [],
             prodType: '',
@@ -100,6 +114,9 @@
                         if(this.folders[0].sourceModule == "CL"){
 
                             this.isCL = true
+                        }
+                        if(this.folders[0].sourceModule == "GL"){
+                            this.isGL = true
                         }
                     }
                 });
