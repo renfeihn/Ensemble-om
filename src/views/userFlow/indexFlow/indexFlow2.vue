@@ -91,70 +91,98 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-dialog v-model="dialog" width="700">
+        <index-flow-route :tree="tree"></index-flow-route>
+    </v-dialog>
   </div>
 </template>
 <script>
-import userWorkTags from "@/views/userFlow/userWork/userWorkTags";
-import {getPkList} from "@/server/pkList";
+
+    import indexFlowRoute from "./indexFlowRoute"
+    import { Menu } from "@/api/menu";
+    import userWorkTags from "@/views/userFlow/userWork/userWorkTags";
+    import {getPkList} from "@/server/pkList";
+    import {getMenuList} from "@/api/url/prodInfo";
+
 export default {
-  components: {
-    userWorkTags
-  },
-  data() {
-    return {
-      items: [
+    components: {
+        userWorkTags,
+        indexFlowRoute
+    },
+    data() {
+        return {
+            items: [
         {
           icon: true,
-          title: "对私存款产品",
-          value: "rbPrivate",
+          title: "个人人民币活期基础产品",
+          value: "BaseProdForm",
+            hash: "RB101",
           avatar: "/static/prod/prod2.jpg"
         },
         {
           icon: true,
-          title: "对公贷款产品",
-          value: "clPublic",
+          title: "个人贷款基础产品",
+          value: "BaseProdForm",
+            hash: "CL001",
           avatar: "/static/prod/prod2.jpg"
         },
         {
           icon: true,
-          title: "参数管理入口",
-          value: "paramMag",
+          title: "参数管理",
+          value: "paramManage",
           avatar: "/static/prod/prod2.jpg"
         },
         {
           icon: true,
-          title: "产品目录",
-          value: "prodList",
+          title: "交易管理",
+          value: "transManage",
           avatar: "/static/prod/prod2.jpg"
         }
-      ]
-    };
-  },
-  methods: {
-    keyboardClick(item) {
-      var key = item.value;
-      if (key === "rbPrivate") {
-        this.$router.push({
-          name: "prod/rbPrivateProd",
-          params: { prodClassCmp: "RB100", prodCodeCmp: "111001" }
-        });
-      }
-      if (key === "clPublic") {
-        this.$router.push({
-          name: "prod/clPublicProd",
-          params: { prodClassCmp: "CL100", prodCodeCmp: "220001" }
-        });
-      }
-        if(key === 'paramMag'){
-            getPkList(key).then(response => {
-                console.log(response);
-           });
+      ],
+            menus: Menu,
+            dialog: false,
+            search: '',
+            tree: [],
+        };
+    },
+    created() {
+        getMenuList({userId: sessionStorage.getItem("userId")}).then(response => {
+            this.menus=response.data.data;
+            let trees = []
+            this.getMenusItems(this.menus,trees)
+            this.tree = trees
+        })
+    },
+    methods: {
+        getMenusItems(item,trees){
+            for(let i=0; i<item.length; i++){
+                if(item[i].title != undefined && item[i].items == undefined){
+                    let treeNode = {}
+                    treeNode["id"] = parseInt(item[i].menuId)
+                    treeNode["name"] = item[i].title
+                    trees.push(treeNode)
+                }
+                if(item[i].items != undefined){
+                    this.getMenusItems(item[i].items,trees)
+                }
+            }
+        },
+        keyboardClick(item) {
+          this.$router.push({
+            name: item.value,
+            hash: item.hash,
+          });
+        },
+        route() {
+            this.$router.push({
+                name: 'tableInfo',
+            })
+        },
+        add() {
+            this.dialog = true
+
         }
-      if (key === "prodList") {
-        this.$router.push({ name: "prodCmb" });
-      }
     }
-  }
 };
 </script>
 <style scoped>
