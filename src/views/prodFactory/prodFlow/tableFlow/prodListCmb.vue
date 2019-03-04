@@ -23,9 +23,18 @@
                         <td>{{ props.item.baseProdType }}</td>
                         <td>{{ props.item.status === "A"?"有效":"封存"}}</td>
                         <td>
-                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
-                                <v-icon>edit</v-icon>
-                            </v-btn>
+                            <v-layout>
+                                <v-flex md6 lg6>
+                                    <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
+                                        <v-icon>edit</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <v-btn depressed outline icon fab dark color="primary" small @click="changeHistory(props.item)">
+                                        <v-icon>polymer</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
                         </td>
                     </tr>
                 </template>
@@ -145,6 +154,9 @@
                 if(prodRange == "S" && sourceModule == "GL"){
                     this.$router.push({name: "SoldProdFormGl", hash: prodType});
                 }
+            },
+            changeHistory(val){
+                this.$router.push({name: "prodChangeHistory"});
             }
         }
     };

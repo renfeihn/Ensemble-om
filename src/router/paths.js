@@ -921,6 +921,16 @@ export default [
         component: (resolve) =>
             require(['@/views/prodFactory/prodDiff/prodCompareTitle.vue'],resolve)
     },
+    {
+        path: '/prodChangeHistory',
+        meta: {
+            breadcrumb: true,
+            title: '产品操作历史'
+        },
+        name: 'prodChangeHistory',
+        component: (resolve) =>
+            require(['@/views/prodFactory/prodFlow/tableFlow/prodChangeHistory.vue'],resolve)
+    },
 
     {
         path: '/prodWindow',

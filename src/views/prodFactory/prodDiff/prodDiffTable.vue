@@ -12,6 +12,8 @@
               <prod-diff v-if="i=='存入定义'" :prodData="prodEventCret"></prod-diff>
               <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
               <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
+              <base-table v-if="i=='利率定义'" :prodCharge="prodCharge"></base-table>
+              <base-table v-if="i=='核算定义'" :prodCharge="prodCharge"></base-table>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -26,6 +28,8 @@
               <prod-diff v-if="i=='放款定义'" :prodData="prodEventDrw"></prod-diff>
               <prod-diff v-if="i=='还款定义'" :prodData="prodEventRec"></prod-diff>
               <prod-diff v-if="i=='到期信息'" :prodData="prodEventDue"></prod-diff>
+              <base-table v-if="i=='利率信息'" :prodCharge="prodAccounting"></base-table>
+              <base-table v-if="i=='变更信息'" :prodCharge="prodAccounting"></base-table>
               <base-table v-if="i=='核算信息'" :prodCharge="prodAccounting"></base-table>
             </v-tab-item>
           </v-tabs-items>
@@ -121,7 +125,7 @@ export default {
             prodEventCret: {},
             prodEventCycle: {},
             prodEventDebt: {},
-            diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","收费定义"],
+            diffList: ["产品属性","开户定义","销户定义","存入定义","支取定义","收费定义","利率定义","核算定义"],
             prodEventDrw: {},
             prodEventRec: {},
             prodEventDur: {},
@@ -275,23 +279,29 @@ export default {
                   this.prodData = response.data.data;
                   if (this.sourceModule == "RB") {
                       this.RB = true
+                      //产品属性
                       this.assembleProdDefine();
+                      //存款的开户定义，销户定义，存入定义，支取定义
                       this.assembleEvent();
                       //将收费定义的差异组装
                       this.assembleProdCharge();
                   }
                   if (this.sourceModule == "CL") {
                       this.CL = true
+                      //产品属性
                       this.assembleProdDefine();
+                      //贷款的开户定义，放款定义，还款定义，到期信息
                       this.assembleCLEvent();
-                      //将收费定义的差异组装
+                      //将核算定义的差异组装
                       this.assembleAccounting();
                   }
                   if (this.sourceModule == "GL") {
                       this.GL = true
+                      //产品属性
                       this.assembleProdDefine();
+                      //内部账的开户定义,销户定义,借记事件，贷记事件
                       this.assembleEvent();
-                      //将收费定义的差异组装
+                      //将核算定义的差异组装
                       this.assembleAccounting();
                   }
                   this.prodGroup = this.prodData.mbProdType.prodGroup
