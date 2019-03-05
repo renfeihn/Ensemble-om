@@ -14,6 +14,14 @@ export function getDepositProdListTow (params) {
         params
     });
 }
+
+export function flowTest () {
+    return request({
+        url: '/add',
+        method: 'post',
+        params: { tableName: "test"}
+    })
+}
 export function getDepositProdList (params) {
     return request({
         url: '/prod/prodList',
