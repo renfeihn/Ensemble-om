@@ -4,6 +4,7 @@ import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import App from './App';
 import Vuetify from 'vuetify';
+import "babel-polyfill";
 import router from './router';
 import i18n from './lang';
 import 'font-awesome/css/font-awesome.css';

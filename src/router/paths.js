@@ -899,6 +899,20 @@ export default [
 )
 },
 
+    {
+        path: '/paramFlow',
+        meta: {
+            breadcrumb: true,
+            title: '流程引擎管理'
+        },
+        name: 'paramFlow',
+        component: (resolve) =>
+            /* webpackChunkName: "routes" */
+            /* webpackMode: "lazy-once" */
+            require(['@/views/paramFlow/prodFlowForm.vue'],resolve
+            )
+    },
+
 {
     path: '/prodCmbs',
         meta: {

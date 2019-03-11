@@ -1,5 +1,13 @@
 import request from '@/utils/request';
 import {asyncPost} from '@/utils/ajaxNoAsync';
+const sysHead = {
+    // system: {
+        userId: sessionStorage.getItem("userId"),
+        branch: sessionStorage.getItem("branch"),
+        company: sessionStorage.getItem("company"),
+        tranDate: new Date()
+    // }
+}
 export function getDepositProdInfo (params) {
     return request({
         url: '/getProdInfo',
@@ -15,11 +23,21 @@ export function getDepositProdListTow (params) {
     });
 }
 
-export function flowTest () {
+export function flowTest (data) {
     return request({
         url: '/add',
         method: 'post',
-        params: { tableName: "test"}
+        data: {
+            sysHead,
+            data
+        }
+    })
+}
+export function flowList (param) {
+    return request({
+        url: '/processDiagram',
+        method: 'post',
+        params: {processId: param}
     })
 }
 export function getDepositProdList (params) {
