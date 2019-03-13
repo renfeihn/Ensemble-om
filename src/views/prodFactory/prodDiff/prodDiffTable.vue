@@ -2,7 +2,7 @@
   <div>
     <v-card md20 lg20 ref="print">
       <v-card-text v-show="RB">
-        <v-tabs fixed-tabs v-if="isTable == false">
+        <v-tabs fixed-tabs grow show-arrows slot="extension" v-if="isTable == false">
           <v-tab v-for="n in diffList" :key="n" class="diffTitle">{{n}}</v-tab>
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList" :key="i">
@@ -12,14 +12,14 @@
               <prod-diff v-if="i=='存入定义'" :prodData="prodEventCret"></prod-diff>
               <prod-diff v-if="i=='支取定义'" :prodData="prodEventDebt"></prod-diff>
               <base-table v-if="i=='收费定义'" :prodCharge="prodCharge"></base-table>
-              <base-table v-if="i=='利率定义'" :prodCharge="prodCharge"></base-table>
-              <base-table v-if="i=='核算定义'" :prodCharge="prodCharge"></base-table>
+              <base-table v-if="i=='利率定义'" :prodCharge="prodInt"></base-table>
+              <base-table v-if="i=='核算定义'" :prodCharge="prodAccounting"></base-table>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
       </v-card-text>
       <v-card-text v-show="CL">
-        <v-tabs fixed-tabs v-if="isTable == false">
+        <v-tabs fixed-tabs grow show-arrows slot="extension" v-if="isTable == false">
           <v-tab v-for="n in diffList2" :key="n" class="diffTitle">{{n}}</v-tab>
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffList2" :key="i">
@@ -28,8 +28,8 @@
               <prod-diff v-if="i=='放款定义'" :prodData="prodEventDrw"></prod-diff>
               <prod-diff v-if="i=='还款定义'" :prodData="prodEventRec"></prod-diff>
               <prod-diff v-if="i=='到期信息'" :prodData="prodEventDue"></prod-diff>
-              <base-table v-if="i=='利率信息'" :prodCharge="prodAccounting"></base-table>
-              <base-table v-if="i=='变更信息'" :prodCharge="prodAccounting"></base-table>
+              <base-table v-if="i=='利率信息'" :prodCharge="prodInt"></base-table>
+              <base-table v-if="i=='变更信息'" :prodCharge="prodAmend"></base-table>
               <base-table v-if="i=='核算信息'" :prodCharge="prodAccounting"></base-table>
             </v-tab-item>
           </v-tabs-items>
@@ -37,7 +37,7 @@
       </v-card-text>
 
       <v-card-text v-show="GL">
-        <v-tabs fixed-tabs v-if="isTable == false">
+        <v-tabs fixed-tabs grow show-arrows slot="extension" v-if="isTable == false">
           <v-tab v-for="n in diffListGl" :key="n" class="diffTitle">{{n}}</v-tab>
           <v-tabs-items v-model="model">
             <v-tab-item v-for="i in diffListGl" :key="i">
@@ -46,6 +46,7 @@
               <prod-diff v-if="i=='销户定义'" :prodData="prodEventClose"></prod-diff>
               <prod-diff v-if="i=='贷记事件'" :prodData="prodEventCret"></prod-diff>
               <prod-diff v-if="i=='借记事件'" :prodData="prodEventDebt"></prod-diff>
+              <base-table v-if="i=='利率信息'" :prodData="prodInt"></base-table>
               <base-table v-if="i=='核算信息'" :prodCharge="prodAccounting"></base-table>
             </v-tab-item>
           </v-tabs-items>
@@ -119,6 +120,7 @@ export default {
             prodData: {},
             isTable: false,
             prodCharge: {},
+            prodInt: {},
             prodDefineData: {},
             prodEventOpen: {},
             prodEventClose: {},
@@ -130,8 +132,9 @@ export default {
             prodEventRec: {},
             prodEventDur: {},
             prodAccounting: {},
-            diffList2: ["产品属性","开户定义","放款定义","还款定义","到期信息","核算定义"],
-            diffListGl: ["产品属性","开户定义","销户定义","借记事件","贷记事件","核算定义"],
+            prodAmend: {},
+            diffList2: ["产品属性","开户定义","放款定义","还款定义","到期信息","利率信息","变更信息","核算定义"],
+            diffListGl: ["产品属性","开户定义","销户定义","借记事件","贷记事件","利率信息","核算定义"],
 
             prodGroup: [{
                 key: 'Y',
@@ -285,6 +288,10 @@ export default {
                       this.assembleEvent();
                       //将收费定义的差异组装
                       this.assembleProdCharge();
+                      //将利率定义的差异组装
+                      this.assembleProdInt();
+                      //将核算定义的差异组装
+                      this.assembleAccounting();
                   }
                   if (this.sourceModule == "CL") {
                       this.CL = true
@@ -292,6 +299,10 @@ export default {
                       this.assembleProdDefine();
                       //贷款的开户定义，放款定义，还款定义，到期信息
                       this.assembleCLEvent();
+                      //将收费定义的差异组装
+                      this.assembleProdCharge();
+                      //将变更定义的差异组装
+                      this.assembleAmend();
                       //将核算定义的差异组装
                       this.assembleAccounting();
                   }
@@ -315,6 +326,7 @@ export default {
               });
           })
       },
+      //产品属性差异
       assembleProdDefine() {
           const prodDefine=this.prodData.prodDefine;
           const prodDefineDiff=this.prodData.diff.prodDefine;
@@ -385,6 +397,7 @@ export default {
               this.prodEventDebt= diffEventDebt;
           }
       },
+      //收费定义差异组装
       assembleProdCharge(){
           const prodInfo=this.prodData.mbProdCharge;
           const prodChargeDiff=this.prodData.diff.mbProdCharge;
@@ -439,6 +452,176 @@ export default {
           }
           const reColumn = {"headers": heards,"column": assembleColumns}
           this.prodCharge= reColumn;
+      },
+      //利率定义差异组装
+      assembleProdInt(){
+          const prodInfo=this.prodData.irlProdInt;
+          const prodChargeDiff=this.prodData.diff.irlProdInt;
+          let assembleColumns=[];
+          let heards=[];
+          if(prodInfo.length) {
+              for (const key in prodInfo[0]) {
+                  let head = {};
+                  head["text"] = getColumnDesc_(key);
+                  head["value"] = key;
+                  heards.push(head);
+              }
+              for (const prodCharge in prodInfo) {
+                  const chargeColumn = prodInfo[prodCharge];
+                  const keyAndValue = "{\"SPLIT_ID\":\"" + chargeColumn.splitId +
+                      "\",\"INT_CLASS\":\"" + chargeColumn.intClass +
+                      "\",\"EVENT_TYPE\":\"" + chargeColumn.eventType +
+                      "\",\"PROD_TYPE\":\"" + chargeColumn.prodType +
+                      "\",\"RULEID\":\"" + chargeColumn.ruleid + "\"}";
+                  const diff = prodChargeDiff[keyAndValue];
+                  if (diff == undefined) {
+                      assembleColumns.push(chargeColumn)
+                  } else {
+                      for (const col in chargeColumn) {
+                          let chargeCol = chargeColumn[col];
+                          let diffCol = diff[col];
+                          if (chargeCol != diffCol) {
+                              chargeColumn[col] = chargeCol + '>' + diffCol
+                          }
+                      }
+                      assembleColumns.push(chargeColumn)
+                  }
+              }
+          }
+          if(heards.size==0){
+              for(const key in prodChargeDiff[0]){
+                  let head={};
+                  head["text"]=getColumnDesc_(key);
+                  head["value"]=key;
+                  heards.push(head);
+              }
+          }
+          for(const index in prodChargeDiff){
+              const prodCharge= prodChargeDiff[index];
+              const dmlType=prodCharge.dmlType;
+              let diffData={}
+              if(dmlType == 'I'){
+                  const keyAndValue=index;
+                  for(const num in heards){
+                      const value=heards[num].value
+                      diffData[value]=prodCharge[value];
+                  }
+                  assembleColumns.push(diffData)
+              }
+          }
+          const reColumn = {"headers": heards,"column": assembleColumns}
+          this.prodInt= reColumn;
+      },
+      //核算定义的差异组装
+      assembleAccounting(){
+          const prodInfo=this.prodData.glProdAccounting;
+          const prodChargeDiff=this.prodData.diff.glProdAccounting;
+          let assembleColumns=[];
+          let heards=[];
+          if(prodInfo.length) {
+              for (const key in prodInfo[0]) {
+                  let head = {};
+                  head["text"] = getColumnDesc_(key);
+                  head["value"] = key;
+                  heards.push(head);
+              }
+              for (const prodCharge in prodInfo) {
+                  const chargeColumn = prodInfo[prodCharge];
+                  const keyAndValue = "{\"PROD_TYPE\":\"" + chargeColumn.prodType + "\",\"ACCOUNTING_STATUS\":\"" +
+                      chargeColumn.accountingStatus + "\"}";
+                  const diff = prodChargeDiff[keyAndValue];
+                  if (diff == undefined) {
+                      assembleColumns.push(chargeColumn)
+                  } else {
+                      for (const col in chargeColumn) {
+                          let chargeCol = chargeColumn[col];
+                          let diffCol = diff[col];
+                          if (chargeCol != diffCol) {
+                              chargeColumn[col] = chargeCol + '>' + diffCol
+                          }
+                      }
+                      assembleColumns.push(chargeColumn)
+                  }
+              }
+          }
+          if(heards.size==0){
+              for(const key in prodChargeDiff[0]){
+                  let head={};
+                  head["text"]=getColumnDesc_(key);
+                  head["value"]=key;
+                  heards.push(head);
+              }
+          }
+          for(const index in prodChargeDiff){
+              const prodCharge= prodChargeDiff[index];
+              const dmlType=prodCharge.dmlType;
+              let diffData={}
+              if(dmlType == 'I'){
+                  const keyAndValue=index;
+                  for(const num in heards){
+                      const value=heards[num].value
+                      diffData[value]=prodCharge[value];
+                  }
+                  assembleColumns.push(diffData)
+              }
+          }
+          const reColumn = {"headers": heards,"column": assembleColumns}
+          this.prodAccounting= reColumn;
+      },
+      //变更定义的差异组装
+      assembleAmend(){
+          const prodInfo=this.prodData.mbProdAmendMaping;
+          const prodChargeDiff=this.prodData.diff.mbProdAmendMaping;
+          let assembleColumns=[];
+          let heards=[];
+          if(prodInfo.length) {
+              for (const key in prodInfo[0]) {
+                  let head = {};
+                  head["text"] = getColumnDesc_(key);
+                  head["value"] = key;
+                  heards.push(head);
+              }
+              for (const prodCharge in prodInfo) {
+                  const chargeColumn = prodInfo[prodCharge];
+                  const keyAndValue = "{\"PROD_TYPE\":\"" + chargeColumn.prodType + "\"}";
+                  const diff = prodChargeDiff[keyAndValue];
+                  if (diff == undefined) {
+                      assembleColumns.push(chargeColumn)
+                  } else {
+                      for (const col in chargeColumn) {
+                          let chargeCol = chargeColumn[col];
+                          let diffCol = diff[col];
+                          if (chargeCol != diffCol) {
+                              chargeColumn[col] = chargeCol + '>' + diffCol
+                          }
+                      }
+                      assembleColumns.push(chargeColumn)
+                  }
+              }
+          }
+          if(heards.size==0){
+              for(const key in prodChargeDiff[0]){
+                  let head={};
+                  head["text"]=getColumnDesc_(key);
+                  head["value"]=key;
+                  heards.push(head);
+              }
+          }
+          for(const index in prodChargeDiff){
+              const prodCharge= prodChargeDiff[index];
+              const dmlType=prodCharge.dmlType;
+              let diffData={}
+              if(dmlType == 'I'){
+                  const keyAndValue=index;
+                  for(const num in heards){
+                      const value=heards[num].value
+                      diffData[value]=prodCharge[value];
+                  }
+                  assembleColumns.push(diffData)
+              }
+          }
+          const reColumn = {"headers": heards,"column": assembleColumns}
+          this.prodAmend= reColumn;
       },
 
       assembleCLEvent(){
@@ -503,61 +686,7 @@ export default {
               this.prodEventDue= diffEventDue
           }
       },
-      assembleAccounting(){
-          const prodInfo=this.prodData.mbProdCharge;
-          const prodChargeDiff=this.prodData.diff.mbProdCharge;
-          let assembleColumns=[];
-          let heards=[];
-          if(prodInfo.length) {
-              for (const key in prodInfo[0]) {
-                  let head = {};
-                  head["text"] = getColumnDesc_(key);
-                  head["value"] = key;
-                  heards.push(head);
-              }
-              for (const prodCharge in prodInfo) {
-                  const chargeColumn = prodInfo[prodCharge];
-                  const keyAndValue = "{\"FEE_TYPE\":\"" + chargeColumn.feeType + "\",\"PROD_TYPE\":\"" +
-                      chargeColumn.prodType + "\"}";
-                  const diff = prodChargeDiff[keyAndValue];
-                  if (diff == undefined) {
-                      assembleColumns.push(chargeColumn)
-                  } else {
-                      for (const col in chargeColumn) {
-                          let chargeCol = chargeColumn[col];
-                          let diffCol = diff[col];
-                          if (chargeCol != diffCol) {
-                              chargeColumn[col] = chargeCol + '>' + diffCol
-                          }
-                      }
-                      assembleColumns.push(chargeColumn)
-                  }
-              }
-          }
-          if(heards.size==0){
-              for(const key in prodChargeDiff[0]){
-                  let head={};
-                  head["text"]=getColumnDesc_(key);
-                  head["value"]=key;
-                  heards.push(head);
-              }
-          }
-          for(const index in prodChargeDiff){
-              const prodCharge= prodChargeDiff[index];
-              const dmlType=prodCharge.dmlType;
-              let diffData={}
-              if(dmlType == 'I'){
-                  const keyAndValue=index;
-                  for(const num in heards){
-                      const value=heards[num].value
-                      diffData[value]=prodCharge[value];
-                  }
-                  assembleColumns.push(diffData)
-              }
-          }
-          const reColumn = {"headers": heards,"column": assembleColumns}
-          this.prodCharge= reColumn;
-      },
+
   }
 };
 </script>
