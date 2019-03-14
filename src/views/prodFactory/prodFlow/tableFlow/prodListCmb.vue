@@ -156,7 +156,8 @@
                 }
             },
             changeHistory(val){
-                this.$router.push({name: "prodChangeHistory"});
+                let prodType = val.prodType;
+                this.$router.push({name: "prodChangeHistory", hash: prodType});
             }
         }
     };

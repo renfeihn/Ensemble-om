@@ -346,3 +346,10 @@ export function getProdCompareDiff (params) {
         data: {prodType: params}
     })
 }
+export function findProdHistory (params) {
+    return request({
+        url: '/findProdHistory',
+        method: 'post',
+        params: { tranId: params}
+    })
+}

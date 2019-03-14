@@ -312,6 +312,8 @@ export default {
                       this.assembleProdDefine();
                       //内部账的开户定义,销户定义,借记事件，贷记事件
                       this.assembleEvent();
+                      //将利率定义的差异组装
+                      this.assembleProdInt();
                       //将核算定义的差异组装
                       this.assembleAccounting();
                   }
