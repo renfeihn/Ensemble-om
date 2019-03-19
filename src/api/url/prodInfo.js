@@ -353,3 +353,10 @@ export function findProdHistory (params) {
         params: { tranId: params}
     })
 }
+export function findProdHistoryChange(params) {
+    return request({
+        url: '/findProdHistoryChange',
+        method: 'post',
+        params: { mainSeqNo: params}
+    })
+}

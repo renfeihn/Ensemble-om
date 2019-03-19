@@ -247,7 +247,13 @@ const column= {
     'status': '状态',
     'company': '所属法人',
     'sourceModule': '所属模块',
-    'AGREEMENT_TYPE': '协议类型'
+    'AGREEMENT_TYPE': '协议类型',
+    'chargeDay': '收取日',
+    'taxType': '税率类型 ',
+    'rateAmtId': '利率计算金额编码',
+    'glCodeL': '负债科目代码 ',
+    'glCodeIntPay': '应付利息科目代码 ',
+    'intType': '利率类型 ',
 }
 
 export function getColumnDesc (data) {
