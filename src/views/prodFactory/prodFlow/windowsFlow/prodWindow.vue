@@ -78,12 +78,15 @@
             <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
                 <v-icon>menu</v-icon>
                 <v-toolbar-title>产品列表</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-text-field flat placeholder="请输入产品类型" v-model="search" clearable></v-text-field>
+                <v-btn color="info" @click="searchProduct(search)">搜索</v-btn>
             </v-toolbar>
             <v-card-text>
                 <a-spin tip="请稍等..." size="medium" :spinning="spinning">
                 <v-list three-line class="listClass">
                     <template v-for="(item, index) in searchTagProdList">
-                    <v-layout style="margin-top: 10px">
+                    <v-layout style="margin-top: 10px" :id="item.prodType">
                         <v-flex md2 lg2>
                             <v-layout>
                                 <v-card class="radiusDc headClass">
@@ -167,7 +170,8 @@
             showDesc: "展开",
             //通过条件筛选后的产品信息
             searchTagProdList: [],
-            allProdArr: []
+            allProdArr: [],
+            search: ""
         }),
         watch: {
             sourceModelArr: {
@@ -400,6 +404,18 @@
                     ret = '可售产品'
                 }
                 return ret;
+            },
+            searchProduct(val){
+                for(let i=0; i<this.searchTagProdList.length; i++){
+                    if(val == this.searchTagProdList[i].prodType){
+                        if(i == 0){
+                            i++
+                        }
+                        let hash = "#"+this.searchTagProdList[i-1].prodType
+                        window.location.hash = hash
+                        break
+                    }
+                }
             }
         }
     }
