@@ -49,7 +49,7 @@
                 </v-flex>
                 <v-flex xs5>
                     <div style=" overflow-y:auto; height:500px;">
-                        <v-timeline align-top dense>
+                        <v-timeline dense>
                             <v-timeline-item
                                     :color="history.color"
                                     v-for="(history, i) in data"
@@ -58,17 +58,22 @@
                             >
                                 <v-card width="80%" @click="diff(history.mainSeqNo)" style="cursor:pointer;">
                                     <div class="title" :id="history.mainSeqNo">
-                                        <div>
-                                            主单号: {{history.mainSeqNo}}
-                                        </div>
-                                        <br>
-                                        <div>
-                                            操作人:{{history.userId}}
-                                        </div>
-                                        <br>
-                                        <div>
-                                            操作时间:{{history.tranTime}}
-                                        </div>
+                                        <v-card>
+                                            <v-card-title style="background-color: #00BCD4; color: #e3f2fd" class="cyan lighten-1">
+                                                操作人:{{history.userId}}
+                                                <v-icon style="color: white; margin-right: 0%; margin-left: 60%">
+                                                    person
+                                                </v-icon>
+                                            </v-card-title>
+                                            <v-container>
+                                                <v-layout style="margin-top: -4%">
+                                                    <h5>主单号: {{history.mainSeqNo}}</h5>
+                                                </v-layout>
+                                                <v-layout style="margin-top: 3%; margin-bottom: -5%">
+                                                    <h5> 操作时间:{{history.tranTime}}</h5>
+                                                </v-layout>
+                                            </v-container>
+                                        </v-card>
                                     </div>
                                 </v-card>
                             </v-timeline-item>
