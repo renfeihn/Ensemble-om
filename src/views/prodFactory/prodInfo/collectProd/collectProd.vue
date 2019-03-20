@@ -22,7 +22,7 @@
           </v-list>
         </v-card>
       <v-card class="cardClass">
-        <v-toolbar color="cyan" dark>
+        <v-toolbar color="light-blue" dark>
           <v-toolbar-title>贷款产品</v-toolbar-title>
         </v-toolbar>
         <v-list two-line subheader>
@@ -43,7 +43,7 @@
         </v-list>
       </v-card>
       <v-card class="cardClass">
-        <v-toolbar color="cyan" dark>
+        <v-toolbar color="orange lighten-1" dark>
           <v-toolbar-title>内部账产品</v-toolbar-title>
         </v-toolbar>
         <v-list two-line subheader>
