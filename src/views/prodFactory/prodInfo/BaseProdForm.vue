@@ -778,6 +778,7 @@
                 collect["prodType"] = this.prodCode;
                 collect["prodDesc"] = this.prodDesc;
                 collect["sourceModule"] = this.sourceModule;
+                collect["prodRange"] = this.prodRange;
                 saveCollectProd(collect).then(response => {
                     if(response.status === 200) {
                         if(this.collectColor == "red") {
