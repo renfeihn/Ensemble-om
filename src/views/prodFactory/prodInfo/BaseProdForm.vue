@@ -3,7 +3,12 @@
         <v-layout row wrap class="app-container pt-4">
             <v-flex lg9 sm9 class="v-card elevation-2">
                 <v-toolbar color="primary lighten-2" dark tabs>
-                    <v-toolbar-side-icon></v-toolbar-side-icon>
+                    <v-tooltip bottom color="orange">
+                        <v-btn flat icon="edit" slot="activator" @click="collectClick" :color="collectColor">
+                            <v-icon>favorite</v-icon>
+                        </v-btn>
+                        <span>{{collectDesc}}</span>
+                    </v-tooltip>
                     <v-toolbar-title class="white--text">{{prodCode}}-{{prodDesc}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-tooltip bottom color="orange">
@@ -108,10 +113,15 @@
     import {
         savaProdInfo
     } from '@/api/url/prodInfo';
+    import {
+        saveCollectProd
+    } from '@/api/url/prodInfo';
     import GroupProd from './baseProd/GroupProd'
 
     import VWidget from '@/components/VWidget';
     import { getProdData } from "@/api/url/prodInfo";
+    import { getUserCollectByUserId } from "@/api/url/prodInfo";
+
     import { getProdDataAsync } from "@/api/url/prodInfo";
     import {filterChangeData} from "@/server/filterChangeData";
     import { getCheckFlowList } from "@/api/url/prodInfo";
@@ -204,9 +214,12 @@
                 treeOptions: [],
                 tree: [],
                 editColor: "write",
+                collectColor: "write",
+                collectDesc: "收藏",
                 disablePower: true,
                 editDesc: "编辑模式",
                 powerButton: false,
+                sourceModule: "",
                 proditem: [
                     {
                         tranName: '',
@@ -284,6 +297,7 @@
                 this.prodData= reProd;
                 this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 this.initEventAttr(reProd)
+                this.sourceModule = reProd.prodType.sourceModule;
                 this.prodClass= this.prodData.prodType.prodClass;
                 this.powerByLevel(this.prodClass);
                 this.spinning= false;
@@ -307,6 +321,7 @@
                 this.$store.dispatch('setProdDesc',this.prodDesc)
                 const reProd  = response
                 this.prodData= reProd;
+                this.sourceModule = reProd.prodType.sourceModule;
                 this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                 this.initEventAttr(reProd)
                 this.prodClass= this.prodData.prodType.prodClass
@@ -321,6 +336,7 @@
                     this.prodMapping.irlProdType = response.irlProdTypes[0].prodType
                 }
             }
+            this.getCollectInfo();
         },
         methods: {
             //通过产品分类不同，加载显示不同产品页签
@@ -499,10 +515,12 @@
             //产品菜单列表监听
             listenToProdList(value) {
                 this.prodCode = value.prodType
+                this.getCollectInfo();
                 this.prodData = {}
                 getProdDataAsync(this.prodCode).then(response => {
                     this.prodData = response.data.data
-                    this.prodDesc = response.data.data.prodType.prodDesc
+                    this.prodDesc = response.data.data.prodType.prodDesc;
+                    this.sourceModule = response.data.data.prodType.sourceModule;
                     this.sourceProdData = this.copy(this.prodData,this.sourceProdData)
                     this.initEventAttr(this.prodData)
                 });
@@ -718,6 +736,63 @@
                     events[index]=event.mbEventAttrs[index]
                 }
                 return events
+            },
+            getCollectInfo(){
+                //用户维度  检查用户是否收藏该产品
+                let userId = sessionStorage.getItem("userId");
+                let that = this;
+                let prodCode = that.prodCode;
+                getUserCollectByUserId(userId).then(response => {
+                    let data = response.data.data.collectList;
+                    let flag = false;
+                    for(let key in data){
+                        if(data[key].prodType == prodCode){
+                            that.collectColor = "red";
+                            that.collectDesc = "取消收藏";
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(!flag){
+                        that.collectColor = "write";
+                        that.collectDesc = "收藏";
+                    }
+                })
+            },
+            //点击收藏事件
+            collectClick(){
+//                let that = this;
+                let optType = "";
+                if(this.collectColor == "write"){
+                    //收藏
+                    optType = "I";
+
+                }
+                if(this.collectColor == "red"){
+                    //取消收藏
+                    optType = "D";
+                }
+                let collect = {};
+                collect["optType"] = optType;
+                collect["userId"] = sessionStorage.getItem("userId");
+                collect["prodType"] = this.prodCode;
+                collect["prodDesc"] = this.prodDesc;
+                collect["sourceModule"] = this.sourceModule;
+                saveCollectProd(collect).then(response => {
+                    if(response.status === 200) {
+                        if(this.collectColor == "red") {
+                            this.collectColor = "write";
+                            this.collectDesc = "收藏";
+                            this.sweetAlert('success', "取消收藏成功!")
+                        }
+                        if(this.collectColor == "write"){
+                            this.collectColor = "red";
+                            this.collectDesc = "取消收藏";
+                            this.sweetAlert('success', "收藏成功!")
+                        }
+                    }
+                })
+
             }
         }
     }

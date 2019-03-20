@@ -353,7 +353,23 @@ export function findProdHistory (params) {
         params: { tranId: params}
     })
 }
-export function findProdHistoryChange(params) {
+
+export function saveCollectProd (params) {
+
+    return request({
+        url: '/saveCollectProd',
+        method: 'post',
+        data: params
+    });
+}
+
+export function getUserCollectByUserId (params) {
+    return request({
+        url: '/getUserCollectByUserId',
+        method: 'post',
+        params: { userId: params}
+    })
+}export function findProdHistoryChange(params) {
     return request({
         url: '/findProdHistoryChange',
         method: 'post',

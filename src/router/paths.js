@@ -703,11 +703,11 @@ export default [
       breadcrumb: true,
       title: '我收藏的产品'
     },
-    name: 'MyProd',
+    name: 'collectProduct',
     component: (resolve) =>
         /* webpackChunkName: "routes" */
         /* webpackMode: "lazy-once" */
-        require(['@/views/prodFactory/prodFlow/cardFlow/cardPatenProd3.vue'],resolve
+        require(['@/views/prodFactory/prodInfo/collectProd/collectProd.vue'],resolve
       )
   },
 
