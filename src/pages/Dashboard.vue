@@ -9,7 +9,7 @@
                   mark="RB"
                   title="存款产品"
                   class="elevation-2 radiusDc"
-                  sub-title="210"
+                  :sub-title="RB"
                   color="indigo"
           >
           </mini-statistic>
@@ -20,7 +20,7 @@
                   class="elevation-2 radiusDc"
                   mark="CL"
                   title="贷款产品"
-                  sub-title="187"
+                  :sub-title="CL"
                   color="red"
           >
           </mini-statistic>
@@ -31,7 +31,7 @@
                   mark="GL"
                   class="elevation-2 radiusDc"
                   title="内部帐"
-                  sub-title="120"
+                  :sub-title="GL"
                   color="light-blue"
           >
           </mini-statistic>
@@ -42,7 +42,7 @@
                   mark="SF"
                   class="elevation-2 radiusDc"
                   title="特色理财"
-                  sub-title="20"
+                  :sub-title="SF"
                   color="purple"
           >
           </mini-statistic>
@@ -83,7 +83,7 @@
             <div slot="widget-content">
               <e-chart
                       :path-option="[
-                  ['dataset.source', locationData],
+                  ['dataset.source', dataCircle],
                   ['legend.bottom', '0'],
                   ['color', [color.lightBlue.base, color.indigo.base, color.pink.base, color.green.base, color.cyan.base, color.teal.base]],
                   ['xAxis.show', false],
@@ -130,6 +130,9 @@ import BoxChart from "@/components/widgets/chart/BoxChart";
 import ChatWindow from "@/components/chat/ChatWindow";
 import CircleStatistic from "@/components/widgets/statistic/CircleStatistic";
 import LinearStatistic from "@/components/widgets/statistic/LinearStatistic";
+import { getAllProdList } from '@/api/url/prodInfo';
+import { getCheckFlowList } from '@/api/url/prodInfo';
+
 export default {
   components: {
     VWidget,
@@ -148,9 +151,9 @@ export default {
     PlainTableOrder
   },
   data: () => ({
-    color: Material,
-    selectedTab: "tab-1",
-    linearTrending: [
+      color: Material,
+      selectedTab: "tab-1",
+      linearTrending: [
       {
         subheading: "Sales",
         headline: "2,55",
@@ -194,7 +197,7 @@ export default {
         }
       }
     ],
-    trending: [
+      trending: [
       {
         subheading: "Email",
         headline: "15+",
@@ -237,22 +240,86 @@ export default {
           color: "error"
         }
       }
-    ]
+    ],
+      prodType: [],
+      RB: 0,
+      CL: 0,
+      GL: 0,
+      SF: 0,
+      mainProcess: [],
+      dataCircle: [
+      ],
   }),
-  computed: {
-    activity() {
-      return API.getActivity();
+    computed: {
+        activity() {
+            return API.getActivity();
+        },
+        posts() {
+            return API.getPost(3);
+        },
+        siteTrafficData() {
+            return API.getMonthVisit;
+        },
     },
-    posts() {
-      return API.getPost(3);
+    created() {
+        this.getAllData();
     },
-    siteTrafficData() {
-      return API.getMonthVisit;
+    mounted: function () {
+        this.getProdType();
+        this.locationData();
     },
-    locationData() {
-      return API.getLocation;
+    methods: {
+        getAllData(){
+            // this.getProdType()
+            getCheckFlowList().then(response => {
+                this.mainProcess = response.data.data
+            })
+        },
+        //获取产品种类
+        //获取各种产品的数量
+        getProdType() {
+            this.RB = 0
+            this.Cl = 0
+            this.GL = 0
+            this.SF = 0
+            getAllProdList().then(response => {
+                this.prodType = response.data.data
+                for(let i=0; i<this.prodType.length; i++){
+                    if(this.prodType[i].sourceModule == "RB"){
+                        this.RB++
+                    }
+                    if(this.prodType[i].sourceModule == "CL"){
+                        this.CL++
+                    }
+                    if(this.prodType[i].sourceModule == "GL"){
+                        this.GL++
+                    }
+                    if(this.prodType[i].sourceModule == "SF"){
+                        this.SF++
+                    }
+                }
+            })
+        },
+        locationData() {
+            let data = {}
+            this.dataCircle = []
+            data['value'] = this.RB
+            data['name'] = '存款'
+            this.dataCircle.push(data)
+            data = {}
+            data['value'] = this.GL
+            data['name'] = '内部账'
+            this.dataCircle.push(data)
+            data = {}
+            data['value'] = this.CL
+            data['name'] = '贷款'
+            this.dataCircle.push(data)
+            data = {}
+            data['value'] = this.SF
+            data['name'] = '特色理财产品'
+            this.dataCircle.push(data)
+        },
     }
-  }
 };
 </script>
 <style lang="stylus" scoped>
