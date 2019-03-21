@@ -3,47 +3,14 @@
     <v-container grid-list-xl fluid class="pb-5">
       <v-layout row wrap>
         <!-- mini statistic start -->
-        <v-flex lg3 sm6 xs12>
+        <v-flex lg3 sm6 xs12 v-for="type in prodType" :key="type">
           <mini-statistic
                   icon="fa fa-facebook"
-                  mark="RB"
-                  title="存款产品"
+                  :mark="type.prodClass"
+                  :title="type.prodDesc"
                   class="elevation-2 radiusDc"
-                  :sub-title="RB"
-                  color="indigo"
-          >
-          </mini-statistic>
-        </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-                  icon="fa fa-google"
-                  class="elevation-2 radiusDc"
-                  mark="CL"
-                  title="贷款产品"
-                  :sub-title="CL"
-                  color="red"
-          >
-          </mini-statistic>
-        </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-                  icon="fa fa-twitter"
-                  mark="GL"
-                  class="elevation-2 radiusDc"
-                  title="内部帐"
-                  :sub-title="GL"
-                  color="light-blue"
-          >
-          </mini-statistic>
-        </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-                  icon="fa fa-instagram"
-                  mark="SF"
-                  class="elevation-2 radiusDc"
-                  title="特色理财"
-                  :sub-title="SF"
-                  color="purple"
+                  :sub-title="type.num"
+                  :color="type.color"
           >
           </mini-statistic>
         </v-flex>
@@ -132,6 +99,7 @@ import CircleStatistic from "@/components/widgets/statistic/CircleStatistic";
 import LinearStatistic from "@/components/widgets/statistic/LinearStatistic";
 import { getAllProdList } from '@/api/url/prodInfo';
 import { getCheckFlowList } from '@/api/url/prodInfo';
+import {getProdClassList} from '@/api/url/prodInfo';
 
 export default {
   components: {
@@ -242,13 +210,16 @@ export default {
       }
     ],
       prodType: [],
-      RB: 0,
-      CL: 0,
-      GL: 0,
-      SF: 0,
+      prod: [],
       mainProcess: [],
       dataCircle: [
       ],
+      colorInfo: [
+          "indigo",
+          "red",
+          "light-blue",
+          "purple"
+      ]
   }),
     computed: {
         activity() {
@@ -264,40 +235,47 @@ export default {
     created() {
         this.getAllData();
     },
-    mounted: function () {
-        this.getProdType();
-        this.locationData();
-    },
     methods: {
         getAllData(){
-            // this.getProdType()
+            this.getProd()
             getCheckFlowList().then(response => {
                 this.mainProcess = response.data.data
             })
         },
         //获取产品种类
-        //获取各种产品的数量
-        getProdType() {
-            this.RB = 0
-            this.Cl = 0
-            this.GL = 0
-            this.SF = 0
-            getAllProdList().then(response => {
-                this.prodType = response.data.data
-                for(let i=0; i<this.prodType.length; i++){
-                    if(this.prodType[i].sourceModule == "RB"){
-                        this.RB++
-                    }
-                    if(this.prodType[i].sourceModule == "CL"){
-                        this.CL++
-                    }
-                    if(this.prodType[i].sourceModule == "GL"){
-                        this.GL++
-                    }
-                    if(this.prodType[i].sourceModule == "SF"){
-                        this.SF++
+        getProd(){
+            getProdClassList().then(response => {
+                let prodClass = response.data.data
+                for(let i=0; i<prodClass.length; i++){
+                    if(prodClass[i].prodClassLevel == "1"){
+                        let prodC = {}
+                        prodC['prodClass'] = prodClass[i].prodClass
+                        prodC['prodDesc'] = prodClass[i].prodClassDesc
+                        this.prod.push(prodC)
                     }
                 }
+                this.getProdType()
+            })
+        },
+        //获取各种产品的数量
+        getProdType() {
+            getAllProdList().then(response => {
+                let type = response.data.data
+                for(let i=0; i<this.prod.length; i++){
+                    let num = 0
+                    for(let j=0; j<type.length; j++){
+                        if(type[j].sourceModule == this.prod[i].prodClass){
+                            num++
+                        }
+                    }
+                    let data = {}
+                    data['prodClass'] = this.prod[i].prodClass
+                    data['prodDesc'] = this.prod[i].prodDesc
+                    data['num'] = num
+                    data['color'] = this.colorInfo[i%4]
+                    this.prodType.push(data)
+                }
+
             })
         },
         locationData() {
