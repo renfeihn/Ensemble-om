@@ -11,22 +11,6 @@
         <v-flex md4 lg4>
           <task-list-flex :seqNo="code" v-on:sendType="setTranType" v-on:submitTask="submitTask" >
           </task-list-flex>
-
-          <!--        <v-card class="ml-4 mt-4 elevation-4 radiusDc">
-                    <v-card-media src="/static/avatar/prod1.jpg" style="margin-left: 29%;margin-right: 30%">
-                    </v-card-media>
-                    <v-layout>
-                      <v-subheader class="showMsg" style="color: #00b0ff">产品代码:</v-subheader>
-                      <v-subheader class="showMsg" style="color: #00b0ff">{{prodType}}</v-subheader>
-                    </v-layout>
-                    <v-layout>
-                      <v-subheader style="font-size: x-large;font-style: inherit;margin-left: 5%;color: #00b0ff">产品名称:</v-subheader>
-                      <v-subheader style="font-size: x-large;font-style: inherit;margin-left: 0%;color: #00b0ff">{{prodDesc}}</v-subheader>
-                    </v-layout>
-                    <v-layout>
-                      <v-btn class="btnClass" color="primary lighten-2" dark large @click='confirmClick'>确 认</v-btn>
-                    </v-layout>
-                  </v-card>-->
         </v-flex>
       </v-layout>
       <v-card class="elevation-2 radiusDc">

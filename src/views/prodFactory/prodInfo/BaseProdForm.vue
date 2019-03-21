@@ -761,12 +761,10 @@
             },
             //点击收藏事件
             collectClick(){
-//                let that = this;
                 let optType = "";
                 if(this.collectColor == "write"){
                     //收藏
                     optType = "I";
-
                 }
                 if(this.collectColor == "red"){
                     //取消收藏
