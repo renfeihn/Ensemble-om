@@ -98,14 +98,15 @@ export default {
   },
   data() {
     return {
-      titleName: this.globalConfig.name,
-      mini: false,
-      drawer: false,
+        titleName: this.globalConfig.name,
+        mini: false,
+        drawer: false,
         menuSwitch: false,
-      menus: Menu,
-      scrollSettings: {
-        maxScrollbarLength: 160
-      }
+        menus: Menu,
+        scrollSettings: {
+          maxScrollbarLength: 160
+        },
+        userId: ""
     };
   },
   computed: {
@@ -126,10 +127,11 @@ export default {
         }
     },
   created() {
-    window.getApp.$on("APP_DRAWER_TOGGLED", () => {
-    this.drawer = !this.drawer;
-     /* this.mini = !this.mini;*/
-    });
+      this.userId = sessionStorage.getItem("userId")
+      window.getApp.$on("APP_DRAWER_TOGGLED", () => {
+      this.drawer = !this.drawer;
+        /* this.mini = !this.mini;*/
+      });
       getMenuList({userId: sessionStorage.getItem("userId")}).then(response => {
           this.menus=response.data.data;
       })

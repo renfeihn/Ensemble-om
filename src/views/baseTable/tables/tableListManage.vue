@@ -206,17 +206,21 @@
                 let that = this
                 that.editedIndex = this.desserts.indexOf(item)
                 let changeItem = Object.assign({}, item)
+
+                that.editedItem['tableName'] = changeItem.tableName
+                that.editedItem['tableDesc'] = changeItem.tableDesc
+                that.editedItem['system'] = changeItem.system
+                that.editedItem['modelId'] = changeItem.modelId
+                that.editedItem['parameter'] = changeItem.parameter
                 if(changeItem.searchColumn != null){
                     let searchColumns = changeItem.searchColumn.split(",")
-                    that.editedItem['tableName'] = changeItem.tableName
-                    that.editedItem['tableDesc'] = changeItem.tableDesc
-                    that.editedItem['system'] = changeItem.system
-                    that.editedItem['modelId'] = changeItem.modelId
-                    that.editedItem['parameter'] = changeItem.parameter
                     that.editedItem['searchColumn'] = searchColumns
+                }else{
+                    that.editedItem['searchColumn'] = []
                 }
                 getParamTable(that.editedItem.tableName).then(function (response) {
                     let dataInfo = []
+                    that.searchColumn = []
                     dataInfo = response.data.data.column;
                     for(let i=0; i< dataInfo.length; i++){
                         let temp={}
