@@ -8,12 +8,12 @@
         <v-flex lg7 sm7>
           <v-layout>
             <v-flex lg7 sm7 pb-3>
-              <span class="headline text-xs-center">admin,你好,欢迎进入</span>
+              <span class="headline text-xs-center">{{userId}},你好,欢迎进入</span>
             </v-flex>
           </v-layout>
           <v-layout>
             <v-flex lg7 sm7>
-              <span class="title text-xs-center">XXX银行产品工厂 - 系统管理员</span>
+              <span class="title text-xs-center">XXX银行产品工厂 - {{userName}}</span>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -23,21 +23,21 @@
               <div>
                 <span class="title">交易数</span>
                 <br/><br/>
-                <span class="title pl-2">210</span>
+                <span class="title pl-2">{{tableListNum}}</span>
               </div>
             </v-flex>
             <v-flex d-flex>
               <div>
                 <span class="title">我的发布</span>
                 <br/><br/>
-                <span class="title pl-2">45</span>
+                <span class="title pl-2">{{processNum}}</span>
               </div>
             </v-flex>
             <v-flex d-flex>
               <div>
                 <span class="title">我的收藏</span>
                 <br/><br/>
-                <span class="title pl-2">15</span>
+                <span class="title pl-2">{{colleceNum}}</span>
               </div>
             </v-flex>
           </v-layout>
@@ -103,7 +103,10 @@
     import userWorkTags from "@/views/userFlow/userWork/userWorkTags";
     import {getPkList} from "@/server/pkList";
     import {getMenuList} from "@/api/url/prodInfo";
-
+    import {getSysTable} from '@/api/url/prodInfo';
+    import { getCheckFlowList } from '@/api/url/prodInfo';
+    import { getUserCollectByUserId } from '@/api/url/prodInfo';
+    import { getSysUserInfoByUser } from '@/api/url/prodInfo';
 export default {
     components: {
         userWorkTags,
@@ -143,10 +146,20 @@ export default {
             dialog: false,
             search: '',
             tree: [],
+            userId: "",
+            tableListNum: "",
+            processNum: "",
+            colleceNum: "",
+            userName: "",
         };
     },
     created() {
-        getMenuList({userId: sessionStorage.getItem("userId")}).then(response => {
+        this.userId = sessionStorage.getItem("userId")
+        this.getTableList()
+        this.getMainProcess()
+        this.getCollect()
+        this.getUserName()
+        getMenuList({userId: this.userId}).then(response => {
             this.menus=response.data.data;
             let trees = []
             this.getMenusItems(this.menus,trees)
@@ -173,6 +186,41 @@ export default {
             hash: item.hash,
           });
         },
+        //用户名称
+        getUserName() {
+            getSysUserInfoByUser(this.userId).then(response => {
+                this.userName = response.data.data.userInfo[0].userName
+            })
+        },
+        //交易数
+        getTableList() {
+            getSysTable("OM_TABLE_LIST").then(response => {
+                let tableList = response.data.data.columnInfo
+                this.tableListNum = tableList.length
+            })
+        },
+        //我的发布
+        getMainProcess() {
+            getCheckFlowList().then(response => {
+                let main = response.data.data
+                let num = 0
+                for(let i=0; i<main.length; i++){
+                    if(this.userId == main[i].flowManage.userId && main[i].flowManage.status == "4"){
+                        num++
+                    }
+                }
+                this.processNum = num
+            })
+        },
+        //我的收藏
+        getCollect() {
+            getUserCollectByUserId(this.userId).then(response => {
+                let collect = response.data.data.collectList
+                this.colleceNum = collect.length
+            })
+        },
+
+        //快捷导航的跳转
         route() {
             this.$router.push({
                 name: 'tableInfo',

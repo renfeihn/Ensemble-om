@@ -23,7 +23,7 @@
             <div slot="widget-content">
               <e-chart
                       :path-option="[
-                  ['dataset.source', siteTrafficData],
+                  ['dataset.source', dataTable],
                   ['color', [color.lightBlue.base, color.green.lighten1]],
                   ['legend.show', true],
                   ['xAxis.axisLabel.show', true],
@@ -211,8 +211,19 @@ export default {
     ],
       prodType: [],
       prod: [],
-      mainProcess: [],
       dataCircle: [
+      ],
+      dataTable: [
+          {
+              'month': 1,
+              '产品发布': 200,
+              '参数发布': 250,
+          },
+          {
+              'month': 2,
+              '产品发布': 300,
+              '参数发布': 350,
+          }
       ],
       colorInfo: [
           "indigo",
@@ -239,7 +250,41 @@ export default {
         getAllData(){
             this.getProd()
             getCheckFlowList().then(response => {
-                this.mainProcess = response.data.data
+                let main = response.data.data
+                this.dataTable = []
+                for(let n=1; n<13; n++){
+                    let prodNum = 0
+                    let paramNum = 0
+                    for(let i=0; i<main.length; i++){
+                        let time = main[i].flowCheckInfo.tranTime.split("/")
+                        let equals = false
+                        if(n<10){
+                            let str = "0"+n.toString()
+                            if(str == time[1]){
+                                equals = true
+                            }
+                        }else{
+                            if(n.toString() == time[1]){
+                                equals = true
+                            }
+                        }
+                        if(equals){
+                            if(main[i].flowManage.status == "4"){
+                                if(main[i].flowManage.tranId == "MB_PROD_TYPE"){
+                                    prodNum++
+                                }else{
+                                    paramNum++
+                                }
+                            }
+                        }
+                    }
+                    let table = {}
+                    table['month'] = n
+                    table['产品发布'] = prodNum
+                    table['参数发布'] = paramNum
+                    this.dataTable.push(table)
+                }
+                console.log(this.dataTable)
             })
         },
         //获取产品种类
@@ -278,6 +323,7 @@ export default {
 
             })
         },
+        //扇形图
         locationData() {
             let data = {}
             this.dataCircle = []
