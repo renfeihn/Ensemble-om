@@ -315,7 +315,7 @@ export default {
                     }
                     let data = {}
                     data['prodClass'] = this.prod[i].prodClass
-                    data['prodDesc'] = this.prod[i].prodDesc
+                    data['prodDesc'] = this.prod[i].prodDesc.substring(0,3)
                     data['num'] = num
                     data['color'] = this.colorInfo[i%4]
                     this.prodType.push(data)

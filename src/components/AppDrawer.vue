@@ -15,8 +15,8 @@
       <v-list>
         <v-list-tile>
           <v-list-tile-content>
-            <v-list-tile-title style="margin-left: 6%">admin</v-list-tile-title>
-            <v-list-tile-title style="margin-left: 6%">系统管理员</v-list-tile-title>
+            <v-list-tile-title style="margin-left: 6%">{{userId}}</v-list-tile-title>
+            <v-list-tile-title style="margin-left: 6%">{{userName}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -81,6 +81,7 @@
 import { Menu } from "@/api/menu";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import {getMenuList} from "@/api/url/prodInfo";
+import { getSysUserInfoByUser } from '@/api/url/prodInfo';
 export default {
   name: "app-drawer",
   components: {
@@ -106,7 +107,8 @@ export default {
         scrollSettings: {
           maxScrollbarLength: 160
         },
-        userId: ""
+        userId: "",
+        userName: ""
     };
   },
   computed: {
@@ -128,6 +130,7 @@ export default {
     },
   created() {
       this.userId = sessionStorage.getItem("userId")
+      this.getUserName()
       window.getApp.$on("APP_DRAWER_TOGGLED", () => {
       this.drawer = !this.drawer;
         /* this.mini = !this.mini;*/
@@ -137,16 +140,22 @@ export default {
       })
   },
   methods: {
-    genChildTarget(item, subItem) {
-      if (subItem.href) return;
-      if (subItem.component) {
-        return {
-          name: subItem.component,
-          hash: subItem.params
-        };
-      }
-      return { name: `${item.group}/${subItem.params}` };
-    }
+      genChildTarget(item, subItem) {
+          if (subItem.href) return;
+          if (subItem.component) {
+              return {
+                  name: subItem.component,
+                  hash: subItem.params
+              };
+          }
+          return { name: `${item.group}/${subItem.params}` };
+      },
+      //用户名称
+      getUserName() {
+          getSysUserInfoByUser(this.userId).then(response => {
+              this.userName = response.data.data.userInfo[0].userName
+          })
+      },
   }
 };
 </script>

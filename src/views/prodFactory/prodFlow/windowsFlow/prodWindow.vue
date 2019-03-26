@@ -79,8 +79,16 @@
                 <v-icon>menu</v-icon>
                 <v-toolbar-title>产品列表</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-text-field flat placeholder="请输入产品类型" v-model="search" clearable></v-text-field>
-                <v-btn color="info" @click="searchProduct(search)">搜索</v-btn>
+                <v-layout row wrap>
+                    <v-flex xs12 sm4>
+                    </v-flex>
+                    <v-flex xs12 sm6>
+                        <v-text-field prepend-icon="search" flat placeholder="请输入产品类型" v-model="search" clearable ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 sm2>
+                        <v-btn depressed large color="primary lighten-2" @click="searchProduct(search)">搜索</v-btn>
+                    </v-flex>
+                </v-layout>
             </v-toolbar>
             <v-card-text>
                 <a-spin tip="请稍等..." size="medium" :spinning="spinning">
