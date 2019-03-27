@@ -903,7 +903,7 @@ export default [
         path: '/paramFlow',
         meta: {
             breadcrumb: true,
-            title: '流程引擎管理'
+            title: '工具管理'
         },
         name: 'paramFlow',
         component: (resolve) =>

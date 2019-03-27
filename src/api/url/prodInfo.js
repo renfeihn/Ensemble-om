@@ -376,3 +376,12 @@ export function getUserCollectByUserId (params) {
         params: { mainSeqNo: params}
     })
 }
+
+
+export function columnInfoServ (params) {
+    return request({
+        url: '/columnInfo',
+        method: 'post',
+        data: params
+    });
+}

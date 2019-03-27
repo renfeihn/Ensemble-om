@@ -236,15 +236,15 @@
                         value: 100,
                         color: "error"
                     }
-<<<<<<< HEAD
-                    let data = {}
-                    data['prodClass'] = this.prod[i].prodClass
-                    data['prodDesc'] = this.prod[i].prodDesc.substring(0,3)
-                    data['num'] = num
-                    data['color'] = this.colorInfo[i%4]
-                    this.prodType.push(data)
-=======
->>>>>>> 修改最大超时时间
+//<<<<<<< HEAD
+//                    let data = {}
+//                    data['prodClass'] = this.prod[i].prodClass
+//                    data['prodDesc'] = this.prod[i].prodDesc.substring(0,3)
+//                    data['num'] = num
+//                    data['color'] = this.colorInfo[i%4]
+//                    this.prodType.push(data)
+//=======
+//>>>>>>> 修改最大超时时间
                 }
             ]
         }),

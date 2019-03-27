@@ -5,6 +5,9 @@
 
         <v-btn color="success" depressed="" @click="flowListClick"><v-icon >assignment_turned_in</v-icon>流程图响应</v-btn>
 
+        <v-btn color="success" depressed="" @click="columnInfoClick"><v-icon >assignment_turned_in</v-icon>columnInfo落库到MB_ATTR_TYPE</v-btn>
+
+
     </div>
 </template>
 <script>
@@ -14,6 +17,11 @@
     import {
         flowList
     } from '@/api/url/prodInfo'
+    import {
+        columnInfoServ
+    } from '@/api/url/prodInfo'
+    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
+
     export default {
 //        components: {
 //            ParamPerm,
@@ -50,6 +58,13 @@
                 flowList(testInfo).then(response => {
                     if(response.status === 200) {
                         this.retMsg = response.data;
+                    }
+                })
+            },
+            columnInfoClick() {
+                columnInfoServ(columnInfo).then(response => {
+                    if(response.status === 200) {
+                        alert("json落库成功！");
                     }
                 })
             }
