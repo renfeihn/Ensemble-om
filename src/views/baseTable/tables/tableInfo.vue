@@ -7,18 +7,6 @@
                     <v-toolbar-title>{{tableName}}-[{{tableDesc}}]</v-toolbar-title>
                     <v-spacer></v-spacer>
                 </v-toolbar>
-<<<<<<< HEAD
-
-                <!--<v-toolbar card dense color="transparent">-->
-                <!--<v-layout justify-center>-->
-                <!--<v-flex xs6 sm6>-->
-                <!--<dc-text-field label="产品类型" labelDesc="产品类型" v-model='prodTypeSearch'/>-->
-                <!--</v-flex>-->
-                <!--<v-flex xs6 sm6>-->
-                <!--<dc-multiselect label="产品分类" labelDesc="产品分类" v-model='prodClassSearch' :options="prodClassOption"></dc-multiselect>-->
-                <!--</v-flex>-->
-                <!--</v-layout>-->
-                <!--</v-toolbar>-->
                 <v-card-text>
                     <v-layout row wrap>
                         <v-flex xd3 lg3>
@@ -47,24 +35,6 @@
                         </v-flex>
                     </v-layout>
                 </v-card-text>
-=======
-                <v-toolbar card dense color="transparent">
-                    <a-button type="primary" @click="onAdd">新增</a-button>
-                    <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
-                    <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
-                    <a-button type="primary" @click="onSave" class="ml-2">提交</a-button>
-                    <v-spacer></v-spacer>
-                    <div v-for="searchColumn in searchCopy">
-                        <v-select
-                                v-model="searchColumn.model"
-                                :items="searchColumn.value"
-                                :label=searchColumn.searchColumn
-                        ></v-select>
-                    </div>
-                    <a-button type="primary" @click="find" class="ml-2">查找</a-button>
-                    <a-button type="primary" @click="clean" class="ml-2">重置</a-button>
-                </v-toolbar>
->>>>>>> 修改贷款产品配置中问题
                 <v-card-text class="pa-0" v-if="searchData == false">
                     <a-table :customRow="customRow" :columns="columnsTwo" @change="changeTable" :dataSource="dataInfo">
                     </a-table>
