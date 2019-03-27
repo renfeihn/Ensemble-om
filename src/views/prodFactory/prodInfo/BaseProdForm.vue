@@ -43,7 +43,7 @@
                     </v-tab>
                     <v-tabs-items v-model="activeName" class="white elevation-2 textProd">
                         <v-tab-item v-for="i in prodInfo" :key="i.pageCode">
-                            <base-desc :showEdit="showEdit" v-if="i.pageCode=='DESC'" :prodType="prodData.prodType" tags="DESC"></base-desc>
+                            <base-desc :showEdit="showEdit" v-if="i.pageCode=='DESC'" :baseProdRange="baseProdRange" :prodType="prodData.prodType" tags="DESC"></base-desc>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='BASE'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodMapping="prodMapping" :prodDefines="prodData.prodDefines" :disablePower="disablePower" tags="BASE"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='CONTROL'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="CONTROL" :disablePower="disablePower"></base-prod>
                             <base-prod :showEdit="showEdit" v-if="i.pageCode=='SHIFT'" :prodTypeCode="prodData.prodType.prodType" :attrColumnInfo="attrColumnInfo" :prodDefines="prodData.prodDefines" tags="SHIFT" :disablePower="disablePower"></base-prod>
@@ -228,6 +228,7 @@
                         timeLabel: ''
                     }
                 ],
+                baseProdRange: false,
             }
         },
         watch: {
@@ -540,6 +541,7 @@
             },
             //复制事件监听
             listenToCopy(data) {
+                this.baseProdRange = true
                 this.prodCode=data.prodType;
                 this.prodDesc = data.prodDesc;
                 this.prodData.prodType.prodType=data.prodType;

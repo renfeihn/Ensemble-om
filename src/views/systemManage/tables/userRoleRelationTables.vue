@@ -16,13 +16,13 @@
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12 sm12 md12 v-if="disabled=='false'">
-                                    <v-select v-model="editedItem.userId" label="用户" :items="userRf" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.userId" label="用户" :items="userInfo" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-if="disabled=='true'">
-                                    <v-select v-model="editedItem.userId" label="用户" :items="userRf" item-text="value" item-value="key" disabled></v-select>
+                                    <v-select v-model="editedItem.userId" label="用户" :items="userInfo" item-text="value" item-value="key" disabled></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
-                                    <v-select v-model="editedItem.roleId" label="角色" :items="roleRf" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.roleId" label="角色" :items="roleInfo" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -78,7 +78,8 @@
             ],
             userRf: [{key: "",value: ""}],
             roleRf: [{key: "",value: ""}],
-
+            userInfo: [],
+            roleInfo: [],
             desserts: [],
             sourceData: [],
             keySet: [
@@ -125,6 +126,20 @@
                 //获取角色信息
                 getSysInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.userRoleInfo;
+                    let user = response.data.data.userInfo
+                    let role = response.data.data.roleInfo
+                    for(let i=0; i<user.length; i++) {
+                        let info = {}
+                        info['key'] = user[i].userId
+                        info['value'] = user[i].userId
+                        that.userInfo.push(info)
+                    }
+                    for(let j=0; j<role.length; j++) {
+                        let info = {}
+                        info['key'] = role[j].roleId
+                        info['value'] = role[j].roleDesc
+                        that.roleInfo.push(info)
+                    }
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
             },
@@ -168,7 +183,7 @@
                     this.backValue.keySet = "USER_ID"
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success',"提交成功!")
                         }
                     })
                 }
@@ -190,9 +205,9 @@
                     this.desserts.push(this.editedItem)
                 }
                 if(this.editedItem.userId == []){
-                    alert("用户名称不能为空")
+                    this.sweetAlert('info',"用户名称不能为空!")
                 }else if(this.editedItem.roleId == []){
-                    alert("角色ID不能为空")
+                    this.sweetAlert('info',"角色ID不能为空!")
                 }else{
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
@@ -201,7 +216,7 @@
                     this.backValue.keySet = "USER_ID"
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success',"提交成功!")
                         }
                     })
                     this.close()

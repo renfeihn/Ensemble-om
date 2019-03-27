@@ -222,6 +222,7 @@
                     Object.assign(this.desserts[this.editedIndex], this.editedItem)
                     equals = false;
                 } else {
+                    this.editedItem.password = "123456"
                     this.desserts.push(this.editedItem)
                 }
                 if(this.editedItem.userId == []){

@@ -93,6 +93,14 @@
           getCheckFlowList().then(response => {
               let length = response.data.data.length
               for (let j = 0; j < length; j++) {
+                  if (response.data.data[j].flowManage.status === "1") {
+                      this.pandingInfo.tranTime = response.data.data[j].flowCommitInfo.tranTime
+                      this.pandingInfo.userId = response.data.data[j].flowCommitInfo.userId
+                      this.pandingInfo.status = "待提交"
+                      this.pandingInfo.tranDesc = response.data.data[j].flowManage.tranDesc
+                      this.pandingInfo.mainSeqNo = response.data.data[j].flowManage.mainSeqNo
+                      break
+                  }
                   if (response.data.data[j].flowManage.status === "2") {
                       this.pandingInfo.tranTime = response.data.data[j].flowCommitInfo.tranTime
                       this.pandingInfo.userId = response.data.data[j].flowCommitInfo.userId
