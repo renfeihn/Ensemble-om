@@ -405,13 +405,23 @@ export default {
           const prodChargeDiff=this.prodData.diff.mbProdCharge;
           let assembleColumns=[];
           let heards=[];
-          if(prodInfo.length) {
+          let type = "";
+          if(prodInfo == undefined){
+              type = "copy"
+          }else if(prodInfo.length != 0){
+              type = "change"
+          }
+          if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
                   head["text"] = getColumnDesc_(key);
                   head["value"] = key;
                   heards.push(head);
               }
+              let head = {};
+              head["text"] = "操作类型";
+              head["value"] = "dmlType";
+              heards.push(head);
               for (const prodCharge in prodInfo) {
                   const chargeColumn = prodInfo[prodCharge];
                   const keyAndValue = "{\"FEE_TYPE\":\"" + chargeColumn.feeType + "\",\"PROD_TYPE\":\"" +
@@ -427,29 +437,36 @@ export default {
                               chargeColumn[col] = chargeCol + '>' + diffCol
                           }
                       }
+                      chargeColumn["dmlType"] = "修改"
                       assembleColumns.push(chargeColumn)
                   }
               }
           }
-          if(heards.size==0){
-              for(const key in prodChargeDiff[0]){
-                  let head={};
-                  head["text"]=getColumnDesc_(key);
-                  head["value"]=key;
-                  heards.push(head);
-              }
-          }
-          for(const index in prodChargeDiff){
-              const prodCharge= prodChargeDiff[index];
-              const dmlType=prodCharge.dmlType;
-              let diffData={}
-              if(dmlType == 'I'){
-                  const keyAndValue=index;
-                  for(const num in heards){
-                      const value=heards[num].value
-                      diffData[value]=prodCharge[value];
+          if(type != "change"){
+              for(const child in prodChargeDiff){
+                  for(const key in prodChargeDiff[child]){
+                      let head={};
+                      head["text"]=getColumnDesc_(key);
+                      head["value"]=key;
+                      heards.push(head);
                   }
-                  assembleColumns.push(diffData)
+                  break;
+              }
+              for(const index in prodChargeDiff){
+                  const prodCharge= prodChargeDiff[index];
+                  const dmlType=prodCharge.dmlType;
+                  let diffData={}
+                  if(dmlType == 'I'){
+                      for(const num in heards){
+                          const value=heards[num].value
+                          if(value == "dmlType"){
+                              diffData[value] = "新增"
+                              continue
+                          }
+                          diffData[value]= prodCharge[value];
+                      }
+                      assembleColumns.push(diffData)
+                  }
               }
           }
           const reColumn = {"headers": heards,"column": assembleColumns}
@@ -461,13 +478,23 @@ export default {
           const prodChargeDiff=this.prodData.diff.irlProdInt;
           let assembleColumns=[];
           let heards=[];
-          if(prodInfo.length) {
+          let type = "";
+          if(prodInfo == undefined){
+              type = "copy"
+          }else if(prodInfo.length != 0){
+              type = "change"
+          }
+          if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
                   head["text"] = getColumnDesc_(key);
                   head["value"] = key;
                   heards.push(head);
               }
+              let head = {};
+              head["text"] = "操作类型";
+              head["value"] = "dmlType";
+              heards.push(head);
               for (const prodCharge in prodInfo) {
                   const chargeColumn = prodInfo[prodCharge];
                   const keyAndValue = "{\"SPLIT_ID\":\"" + chargeColumn.splitId +
@@ -486,31 +513,39 @@ export default {
                               chargeColumn[col] = chargeCol + '>' + diffCol
                           }
                       }
+                      chargeColumn["dmlType"] = "修改"
                       assembleColumns.push(chargeColumn)
                   }
               }
           }
-          if(heards.size==0){
-              for(const key in prodChargeDiff[0]){
-                  let head={};
-                  head["text"]=getColumnDesc_(key);
-                  head["value"]=key;
-                  heards.push(head);
-              }
-          }
-          for(const index in prodChargeDiff){
-              const prodCharge= prodChargeDiff[index];
-              const dmlType=prodCharge.dmlType;
-              let diffData={}
-              if(dmlType == 'I'){
-                  const keyAndValue=index;
-                  for(const num in heards){
-                      const value=heards[num].value
-                      diffData[value]=prodCharge[value];
+          if(type != "change"){
+              for(const child in prodChargeDiff){
+                  for(const key in prodChargeDiff[child]){
+                      let head={};
+                      head["text"]=getColumnDesc_(key);
+                      head["value"]=key;
+                      heards.push(head);
                   }
-                  assembleColumns.push(diffData)
+                  break;
+              }
+              for(const index in prodChargeDiff){
+                  const prodCharge= prodChargeDiff[index];
+                  const dmlType=prodCharge.dmlType;
+                  let diffData={}
+                  if(dmlType == 'I'){
+                      for(const num in heards){
+                          const value=heards[num].value
+                          if(value == "dmlType"){
+                              diffData[value] = "新增"
+                              continue
+                          }
+                          diffData[value]= prodCharge[value];
+                      }
+                      assembleColumns.push(diffData)
+                  }
               }
           }
+
           const reColumn = {"headers": heards,"column": assembleColumns}
           this.prodInt= reColumn;
       },
@@ -520,13 +555,23 @@ export default {
           const prodChargeDiff=this.prodData.diff.glProdAccounting;
           let assembleColumns=[];
           let heards=[];
-          if(prodInfo.length) {
+          let type = "";
+          if(prodInfo == undefined){
+              type = "copy"
+          }else if(prodInfo.length != 0){
+              type = "change"
+          }
+          if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
                   head["text"] = getColumnDesc_(key);
                   head["value"] = key;
                   heards.push(head);
               }
+              let head = {};
+              head["text"] = "操作类型";
+              head["value"] = "dmlType";
+              heards.push(head);
               for (const prodCharge in prodInfo) {
                   const chargeColumn = prodInfo[prodCharge];
                   const keyAndValue = "{\"PROD_TYPE\":\"" + chargeColumn.prodType + "\",\"ACCOUNTING_STATUS\":\"" +
@@ -542,29 +587,36 @@ export default {
                               chargeColumn[col] = chargeCol + '>' + diffCol
                           }
                       }
+                      chargeColumn["dmlType"] = "修改"
                       assembleColumns.push(chargeColumn)
                   }
               }
           }
-          if(heards.size==0){
-              for(const key in prodChargeDiff[0]){
-                  let head={};
-                  head["text"]=getColumnDesc_(key);
-                  head["value"]=key;
-                  heards.push(head);
-              }
-          }
-          for(const index in prodChargeDiff){
-              const prodCharge= prodChargeDiff[index];
-              const dmlType=prodCharge.dmlType;
-              let diffData={}
-              if(dmlType == 'I'){
-                  const keyAndValue=index;
-                  for(const num in heards){
-                      const value=heards[num].value
-                      diffData[value]=prodCharge[value];
+          if(type != "change"){
+              for(const child in prodChargeDiff){
+                  for(const key in prodChargeDiff[child]){
+                      let head={};
+                      head["text"]=getColumnDesc_(key);
+                      head["value"]=key;
+                      heards.push(head);
                   }
-                  assembleColumns.push(diffData)
+                  break
+              }
+              for(const index in prodChargeDiff){
+                  const prodCharge= prodChargeDiff[index];
+                  const dmlType=prodCharge.dmlType;
+                  let diffData={}
+                  if(dmlType == 'I'){
+                      for(const num in heards){
+                          const value=heards[num].value
+                          if(value == "dmlType"){
+                              diffData[value] = "新增"
+                              continue
+                          }
+                          diffData[value]= prodCharge[value];
+                      }
+                      assembleColumns.push(diffData)
+                  }
               }
           }
           const reColumn = {"headers": heards,"column": assembleColumns}
@@ -576,13 +628,23 @@ export default {
           const prodChargeDiff=this.prodData.diff.mbProdAmendMaping;
           let assembleColumns=[];
           let heards=[];
-          if(prodInfo.length) {
+          let type = "";
+          if(prodInfo == undefined){
+              type = "copy"
+          }else if(prodInfo.length != 0){
+              type = "change"
+          }
+          if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
                   head["text"] = getColumnDesc_(key);
                   head["value"] = key;
                   heards.push(head);
               }
+              let head = {};
+              head["text"] = "操作类型";
+              head["value"] = "dmlType";
+              heards.push(head);
               for (const prodCharge in prodInfo) {
                   const chargeColumn = prodInfo[prodCharge];
                   const keyAndValue = "{\"PROD_TYPE\":\"" + chargeColumn.prodType + "\"}";
@@ -597,29 +659,36 @@ export default {
                               chargeColumn[col] = chargeCol + '>' + diffCol
                           }
                       }
+                      chargeColumn["dmlType"] = "修改"
                       assembleColumns.push(chargeColumn)
                   }
               }
           }
-          if(heards.size==0){
-              for(const key in prodChargeDiff[0]){
-                  let head={};
-                  head["text"]=getColumnDesc_(key);
-                  head["value"]=key;
-                  heards.push(head);
-              }
-          }
-          for(const index in prodChargeDiff){
-              const prodCharge= prodChargeDiff[index];
-              const dmlType=prodCharge.dmlType;
-              let diffData={}
-              if(dmlType == 'I'){
-                  const keyAndValue=index;
-                  for(const num in heards){
-                      const value=heards[num].value
-                      diffData[value]=prodCharge[value];
+          if(type != "change"){
+              for(const child in prodChargeDiff){
+                  for(const key in prodChargeDiff[child]){
+                      let head={};
+                      head["text"]=getColumnDesc_(key);
+                      head["value"]=key;
+                      heards.push(head);
                   }
-                  assembleColumns.push(diffData)
+                  break
+              }
+              for(const index in prodChargeDiff){
+                  const prodCharge= prodChargeDiff[index];
+                  const dmlType=prodCharge.dmlType;
+                  let diffData={}
+                  if(dmlType == 'I'){
+                      for(const num in heards){
+                          const value=heards[num].value
+                          if(value == "dmlType"){
+                              diffData[value] = "新增"
+                              continue
+                          }
+                          diffData[value]=prodCharge[value];
+                      }
+                      assembleColumns.push(diffData)
+                  }
               }
           }
           const reColumn = {"headers": heards,"column": assembleColumns}

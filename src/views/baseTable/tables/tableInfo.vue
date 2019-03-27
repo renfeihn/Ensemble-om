@@ -18,22 +18,34 @@
                 <!--</v-flex>-->
                 <!--</v-layout>-->
                 <!--</v-toolbar>-->
-                <v-toolbar card dense color="transparent">
-                    <a-button type="primary" @click="onAdd">新增</a-button>
-                    <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
-                    <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
-                    <a-button type="primary" @click="onSave" class="ml-2">提交</a-button>
-                    <v-spacer></v-spacer>
-                    <div v-for="searchColumn in searchCopy">
-                        <v-select
-                                v-model="searchColumn.model"
-                                :items="searchColumn.value"
-                                :label=searchColumn.searchColumn
-                        ></v-select>
-                    </div>
-                    <a-button type="primary" @click="find" class="ml-2">查找</a-button>
-                    <a-button type="primary" @click="clean" class="ml-2">重置</a-button>
-                </v-toolbar>
+                <v-card-text>
+                    <v-layout row wrap>
+                        <v-flex xd3 lg3>
+                            <div>
+                                <a-button type="primary" @click="onAdd">新增</a-button>
+                                <a-button type="primary" @click="onEdit" class="ml-2">修改</a-button>
+                                <a-button type="primary" @click="onDelete" class="ml-2">删除</a-button>
+                                <a-button type="primary" @click="onSave" class="ml-2">提交</a-button>
+                            </div>
+                        </v-flex>
+                        <v-flex xd7 lg7>
+                            <div v-for="searchColumn in search" style="width: 49%;float:left;margin-top: -10px">
+                                <dc-multiselect-table
+                                        v-model="searchColumn.model"
+                                        :labelDesc="searchColumn.desc"
+                                        :options="searchColumn.value"
+                                        :isMultiSelect=false
+                                        :search="searchColumn.search"
+                                        :model="searchColumn.model"
+                                ></dc-multiselect-table>
+                            </div>
+                        </v-flex>
+                        <v-flex xd2 lg2>
+                            <a-button type="primary" @click="find" class="ml-2">查找</a-button>
+                            <a-button type="primary" @click="clean" class="ml-2">重置</a-button>
+                        </v-flex>
+                    </v-layout>
+                </v-card-text>
                 <v-card-text class="pa-0" v-if="searchData == false">
                     <a-table :customRow="customRow" :columns="columnsTwo" @change="changeTable" :dataSource="dataInfo">
                     </a-table>
@@ -44,6 +56,7 @@
                     </a-table>
                     <v-divider></v-divider>
                 </v-card-text>
+
 
                 <v-dialog
                         v-model="dialog"
@@ -71,6 +84,9 @@
     import {remove} from '@/utils/util'
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import DcMultiselect from "../../../components/widgets/DcMultiselect";
+    import DcTextFieldTable from "@/components/widgets/DcTextFieldTable";
+    import DcMultiselectTable from '@/components/widgets/DcMultiselectTable'
+    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         name: 'tableInfo',
@@ -78,6 +94,8 @@
             DcMultiselect,
             EditTableInfo,
             DcTextField,
+            DcTextFieldTable,
+            DcMultiselectTable
         },
         data() {
             return {
@@ -117,7 +135,6 @@
                 key: [],
                 isNull: [],
                 search: [],
-                searchCopy: [],
                 searchData: false,
                 searchColumn: []
             };
@@ -175,14 +192,31 @@
                     for(let i=0; i<searchColumns.length; i++){
                         let value = []
                         let temp = {}
+                        //value数据组装
                         for(let j=0; j<this.dataInfo.length; j++){
-                            value.push(this.dataInfo[j][searchColumns[i]])
+                            let val = {}
+                            let num = 0
+                            for(let n=0; n<value.length; n++){
+                                if(this.dataInfo[j][searchColumns[i]] == value[n].value){
+                                    num++
+                                }
+                            }
+                            if(num == 0){
+                                val['value'] = this.dataInfo[j][searchColumns[i]]
+                                val['key'] = this.dataInfo[j][searchColumns[i]]
+                                value.push(val)
+                            }
+                        }
+                        for(let n=0; n<this.columnsTwo.length; n++){
+                            if(searchColumns[i] == this.columnsTwo[n].dataIndex){
+                                temp['desc'] = this.columnsTwo[n].title
+                            }
                         }
                         temp['searchColumn'] = searchColumns[i]
                         temp['value'] = value
                         temp['model'] = ""
+                        temp['search'] = "true"
                         this.search.push(temp)
-                        this.searchCopy = this.search
                     }
                 }
             },
@@ -313,6 +347,7 @@
                 for(let i=0; i<this.search.length; i++){
                     this.search[i].model = ""
                 }
+
                 this.searchData = false
             },
             childLimit(editSelected){

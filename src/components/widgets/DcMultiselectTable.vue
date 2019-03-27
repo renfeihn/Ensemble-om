@@ -10,7 +10,17 @@
                             <v-subheader class="primary--text subheading pr-1" >{{labelText}}</v-subheader>
                     </v-layout>
                 </v-flex>
-                <v-flex md7 lg7>
+                <v-flex md7 lg7 v-if="search == 'true'">
+                    <div ref="select" >
+                        <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithSearch" @open="selectRef"
+                                     :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
+                            <template slot="option" slot-scope="props"><span>{{props.option.value}}</span></template>
+                            <template slot="noResult" slot-scope="props"><span>无返回结果</span></template>
+                        </multiselect>
+                    </div>
+
+                </v-flex>
+                <v-flex md7 lg7 v-if="search != 'true'">
                     <div ref="select" >
                         <multiselect v-model="value" :isMultiSelect="isMultiSelect" name="key" open-direction="bottom" placeholder="请选择..." selectLabel="" :class="background" :custom-label="nameWithLang" @open="selectRef"
                                      :disabled="disabled" labelDesc="labelDesc" :close-on-select="closeSelect" label="value" :hide-selected="true" track-by="value" :options="options" :multiple="isMulti" class="dcMulti" :perShow="perShow">
@@ -59,6 +69,8 @@
             event: "getVue"
         },
         props: {
+            model: String,
+            search: String,
             isKey: String,
             childPd: String,
             isNotNull: String,
@@ -124,6 +136,13 @@
                     }
                 },
                 deep: true
+            },
+            model: {
+                handler(newValue) {
+                    if(newValue == ""){
+                        this.value = newValue
+                    }
+                }
             },
             value: {
                 handler(newValue) {
@@ -226,6 +245,9 @@
                     name: 'tableInfo',
                     hash: this.rfTableInfo.tableName
                 })
+            },
+            nameWithSearch({value}){
+                return `${value}`
             },
             nameWithLang ({ key, value }) {
                 return `${key}—[${value}]`
@@ -366,7 +388,7 @@
                     //默认单选
                     if(newValue[0] !== undefined){
                         value = newValue[0].key
-                    }else {
+                    }else{
                         value = newValue.key
                     }
                 }

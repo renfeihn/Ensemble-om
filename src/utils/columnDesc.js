@@ -254,6 +254,7 @@ const column= {
     'glCodeL': '负债科目代码 ',
     'glCodeIntPay': '应付利息科目代码 ',
     'intType': '利率类型 ',
+    'DML_TYPE': '操作类型',
 }
 
 export function getColumnDesc (data) {
