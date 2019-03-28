@@ -102,6 +102,7 @@
             tree: [],
             types: [],
             selections: [],
+            defProd: ''
         }),
         watch: {
          selections: {
@@ -200,6 +201,9 @@
                    breweries.push(data)
                    locData.push(data)
                    tree.push(prodDataGroup[item].prodSubType)
+                   if(prodDataGroup[item].defaultProd == "Y"){
+                       this.defaultProd = prodDataGroup[item].prodSubType;
+                   }
                }
             }
         }
