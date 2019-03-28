@@ -2,10 +2,10 @@ import request from '@/utils/request';
 import {asyncPost} from '@/utils/ajaxNoAsync';
 const sysHead = {
     // system: {
-        userId: sessionStorage.getItem("userId"),
-        branch: sessionStorage.getItem("branch"),
-        company: sessionStorage.getItem("company"),
-        tranDate: new Date()
+    userId: sessionStorage.getItem("userId"),
+    branch: sessionStorage.getItem("branch"),
+    company: sessionStorage.getItem("company"),
+    tranDate: new Date()
     // }
 }
 export function getDepositProdInfo (params) {
@@ -68,7 +68,7 @@ export function getDiffProd (params) {
 export function getProdData (prodType) {
     const data= {prodType: prodType};
     const reData=asyncPost('/getProdInfo',data);
-return reData;
+    return reData;
 }
 export function getProdDataAsync (prodType) {
     // const data={
@@ -82,11 +82,10 @@ export function getProdDataAsync (prodType) {
         params: { prodType: prodType}
     });
 }
-export function getProdType (map) {
+export function getProdType (prodClass) {
 
     const data={
-        "prodRange": map.prodRange,
-        "sourceModule": map.sourceModule,
+        "prodClass": prodClass,
         "userName": sessionStorage.getItem("userId")
     }
     return request({
