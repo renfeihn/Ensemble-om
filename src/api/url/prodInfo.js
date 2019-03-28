@@ -147,6 +147,15 @@ export function tranFlowRelease (params) {
     });
 }
 
+export function checkProdInFlow (params) {
+
+    return request({
+        url: '/checkProdInFlow',
+        method: 'post',
+        data: params
+    });
+}
+
 export function savaProdInfo (params) {
 
     return request({

@@ -107,6 +107,9 @@
         getProdType
     } from '@/api/url/prodInfo'
     import {
+        checkProdInFlow
+    } from '@/api/url/prodInfo';
+    import {
         getAttrInfo
     } from '@/api/url/prodInfo'
     import {
@@ -240,10 +243,12 @@
         created () {
             //通过产品类型  判断产品分类 路由产品展示页签
             if(this.$route.hash !== "" && this.$route.hash !== null && this.$route.hash !== undefined) {
+                this.prodType = this.$route.hash;
                 const response = getProdData(this.$route.hash);
                 this.routPageByProd(response);
             }
             if(this.$route.params.prodType !== "" && this.$route.params.prodType !== null && this.$route.params.prodType !== undefined) {
+                this.prodType = this.$route.params.prodType;
                 const response = getProdData(this.$route.params.prodType);
                 this.routPageByProd(response);
             }
@@ -369,9 +374,9 @@
                         return;
                     }
                 }
-                this.routPageByProdTemp(sourceModule,response);
+                this.routPageByProdTemp(sourceModule,response,prodGroup);
             },
-            routPageByProdTemp(sourceModule,response){
+            routPageByProdTemp(sourceModule,response,prodGroup){
                 //存款产品
                 if(sourceModule == "RB") {
                     //协议存款（资金转移类）
@@ -443,28 +448,11 @@
             },
             //流程检查是否存在需要处理的数据
             queryProdFlow(){
-                getCommonList({"userId": sessionStorage.getItem("userId")}).then(response => {
-                    this.proditem= response.data.data;
-                    for(let i=0; i<this.proditem.length; i++){
-                        if(this.proditem[i].tranId===this.$route.hash){
-                            this.pendFlag = 1
-                            this.sweetAlert('info',"存在已保存数据，等待提交!")
-                        }
-                    }
-                });
-                getCheckFlowList().then(response => {
-                    let length = response.data.data.length
-                    for(let j = 0; j<length; j++){
-                        if(response.data.data[j].flowManage.tranId === "MB_PROD_TYPE" && response.data.data[j].flowManage.status === "2"){
-                            this.pendFlag = 1
-                            this.sweetAlert('info',"存在已提交数据，等待复核!")
-                            break
-                        }
-                        if(response.data.data[j].flowManage.tranId === "MB_PROD_TYPE" && response.data.data[j].flowManage.status === "3"){
-                            this.pendFlag = 1
-                            this.sweetAlert('info',"存在已复核数据，等待发布!")
-                            break
-                        }
+                checkProdInFlow({"prodType": this.prodType}).then(response => {
+                    let ret = response.data.data.ret;
+                    if(ret){
+                        this.pendFlag = 1
+                        this.sweetAlert('info',"产品已被编辑，请先操作发布或清除！")
                     }
                 });
             },
