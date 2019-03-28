@@ -349,7 +349,7 @@
                 //存款产品
                 if(sourceModule == "RB") {
                     //组合产品（一本通类）
-                    if (response.prodDefines.FIXED_CALL != undefined && response.prodDefines.FIXED_CALL != null && response.prodDefines.FIXED_CALL.attrValue == "B" && prodGroup == "Y") {
+                    if (response.prodDefines.AGREEMENT_TYPE == undefined && prodGroup == "Y") {
                         this.prodInfo = prodPageInfo.rbProdGroup;
                         return;
                     }
@@ -359,12 +359,12 @@
                         return;
                     }
                     //协议产品（YHT一户通）
-                    if (response.prodDefines.AGREEMENT_TYPE != undefined && response.prodDefines.AGREEMENT_TYPE != null && response.prodDefines.AGREEMENT_TYPE.attrValue == "YHT") {
+                    if (response.prodDefines.AGREEMENT_TYPE != undefined && response.prodDefines.AGREEMENT_TYPE != null && response.prodDefines.AGREEMENT_TYPE.attrValue == "YHT" && prodGroup == "Y") {
                         this.prodInfo = prodPageInfo.rbProdYHT;
                         return;
                     }
                     //协议存款（资金池）
-                    if (response.prodDefines.AGREEMENT_TYPE != undefined && response.prodDefines.AGREEMENT_TYPE != null && response.prodDefines.AGREEMENT_TYPE.attrValue == "PCP") {
+                    if (response.prodDefines.AGREEMENT_TYPE != undefined && response.prodDefines.AGREEMENT_TYPE != null && response.prodDefines.AGREEMENT_TYPE.attrValue == "PCP" && prodGroup == "Y") {
                         this.prodInfo = prodPageInfo.rbProdPCP;
                         return;
                     }
@@ -375,7 +375,7 @@
                 //存款产品
                 if(sourceModule == "RB") {
                     //协议存款（资金转移类）
-                    if (response.prodDefines.AGREEMENT_TYPE != undefined && response.prodDefines.AGREEMENT_TYPE != null) {
+                    if (response.prodDefines.AGREEMENT_TYPE != undefined && response.prodDefines.AGREEMENT_TYPE != null && prodGroup == "Y") {
                         let agreeType = response.prodDefines.AGREEMENT_TYPE.attrValue;
                         if (this.checkIs(agreeType)) {
                             this.prodInfo = prodPageInfo.rbProdZJZY;
