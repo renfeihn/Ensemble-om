@@ -15,6 +15,23 @@
     {"icon": "filter_vintage", "text": "变更信息", "pageCode": "AMEND"},
     {"icon": "filter_vintage", "text": "核算信息", "pageCode": "CLACCOUNTING"}
   ],
+  "clGroupProd": [
+    {"icon": "filter_vintage", "text": "基本描述", "pageCode": "DESC"},
+    {"icon": "account_balance", "text": "产品信息", "pageCode": "BASE"},
+    {"icon": "filter_vintage", "text": "账户信息", "pageCode": "ACCT"},
+    {"icon": "filter_vintage", "text": "适用范围", "pageCode": "APPLY"},
+    {"icon": "filter_vintage", "text": "控制信息", "pageCode": "CONTROL"},
+    {"icon": "filter_vintage", "text": "关联产品", "pageCode": "GROUP"},
+    {"icon": "filter_vintage", "text": "利息信息", "pageCode": "INT"},
+    {"icon": "filter_vintage", "text": "开户定义", "pageCode": "OPEN"},
+    {"icon": "filter_vintage", "text": "放款定义", "pageCode": "DRW"},
+    {"icon": "filter_vintage", "text": "贴息定义", "pageCode": "DISC"},
+    {"icon": "filter_vintage", "text": "还款定义", "pageCode": "REC"},
+    {"icon": "filter_vintage", "text": "到期定义", "pageCode": "DUE"},
+    {"icon": "filter_vintage", "text": "利率信息", "pageCode": "RATEINFO"},
+    {"icon": "filter_vintage", "text": "变更信息", "pageCode": "AMEND"},
+    {"icon": "filter_vintage", "text": "核算信息", "pageCode": "CLACCOUNTING"}
+  ],
   "glProdPublish": [
     {"icon": "filter_vintage", "text": "基本描述", "pageCode": "DESC"},
     {"icon": "account_balance", "text": "产品信息", "pageCode": "BASE"},

@@ -392,8 +392,13 @@
                     this.prodInfo = prodPageInfo.rbProdNotT;
                     return;
                 }
-                //贷款产品
-                if(sourceModule == "CL"){
+                //贷款组合产品
+                if(sourceModule == "CL" && response.prodDefines.SYN_TYPE != undefined && response.prodDefines.SYN_TYPE != null){
+                    this.prodInfo = prodPageInfo.clGroupProd;
+                    return;
+                }
+                //贷款非组合产品
+                if(sourceModule == "CL" && response.prodDefines.SYN_TYPE == undefined || response.prodDefines.SYN_TYPE == null){
                     this.prodInfo = prodPageInfo.clProdPublish;
                     return;
                 }
