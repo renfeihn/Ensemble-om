@@ -228,7 +228,7 @@
                         timeLabel: ''
                     }
                 ],
-                baseProdRange: false,
+                baseProdRange: true,
             }
         },
         watch: {
@@ -540,7 +540,7 @@
             },
             //复制事件监听
             listenToCopy(data) {
-                this.baseProdRange = true
+                this.baseProdRange = false
                 this.prodCode=data.prodType;
                 this.prodDesc = data.prodDesc;
                 this.prodData.prodType.prodType=data.prodType;
