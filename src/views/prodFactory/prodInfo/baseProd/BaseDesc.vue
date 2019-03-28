@@ -16,7 +16,7 @@
             <dc-multiselect :options="prodClassOption" :disablePower="disablePower" labelDesc="产品分类" :isMultiSelect="false" v-model="prodType.prodClass" class="dcMulti"></dc-multiselect>
         </v-flex>
         <v-flex md6 lg6>
-            <dc-multiselect :options="prodRangeOption" :disablePower="baseProdRange" labelDesc="产品属性" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
+            <dc-multiselect :options="prodRangeOption" labelDesc="产品属性" :isMultiSelect="false" v-model="prodType.prodRange" class="dcMulti"></dc-multiselect>
         </v-flex>
         <v-flex md6 lg6>
             <dc-switch v-model="prodType.prodGroup" :disablePower="disablePower" labelDesc="组合产品"></dc-switch>

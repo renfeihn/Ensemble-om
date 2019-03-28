@@ -94,7 +94,7 @@
                         </v-item-group>
                     </v-card-actions>
                     <v-window-item v-for="n in length" :key="`card-${n}`" class="elevation-2">
-                        <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:prodClass="prodClass" v-on:listenToProdList="listenToProdList" v-bind:prodRange="prodRange"></prod-list-form>
+                        <prod-list-form v-if="n == 2 || windowShow == 0" v-bind:map="map" v-on:listenToProdList="listenToProdList" v-bind:prodRange="prodRange"></prod-list-form>
                         <dc-treeAttr v-if="n == 1 && windowShow != 0" v-model="tree" :options="treeOptions" labelDesc="产品参数"></dc-treeAttr>
                     </v-window-item>
                 </v-window>
@@ -229,6 +229,7 @@
                     }
                 ],
                 baseProdRange: false,
+                map: {},
             }
         },
         watch: {
@@ -302,6 +303,7 @@
                 this.prodClass= this.prodData.prodType.prodClass;
                 this.powerByLevel(this.prodClass);
                 this.spinning= false;
+                this.map={'prodRange': this.prodRange,"sourceModule": this.sourceModule}
                 //组装产品映射信息
                 if(response.glProdMappings[0] != undefined) {
                     this.prodMapping.glProdMappingType = response.glProdMappings[0].mappingType

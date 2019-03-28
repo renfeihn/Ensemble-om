@@ -61,7 +61,7 @@
 
     export default {
 
-        props: ["prodClass","prodRange"],
+        props: ["map","prodRange"],
         data: () => ({
             isRB: false,
             isCL: false,
@@ -74,11 +74,10 @@
             searchValue: '',
         }),
         watch: {
-            prodClass(val) {
-                this.initProdList(val)
-            },
-            prodRange(val) {
-                this.initProdList(this._props.prodClass)
+            map(val) {
+                if(val != undefined){
+                    this.initProdList(val)
+                }
             },
             searchValue() {
                 if(this.searchValue==''){
@@ -93,9 +92,6 @@
                 }
             }
 
-        },
-        mounted() {
-            this.initProdList(this._props.prodClass)
         },
         methods: {
             initProdList(val) {

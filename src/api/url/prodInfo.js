@@ -82,10 +82,11 @@ export function getProdDataAsync (prodType) {
         params: { prodType: prodType}
     });
 }
-export function getProdType (prodClass) {
+export function getProdType (map) {
 
     const data={
-        "prodClass": prodClass,
+        "prodRange": map.prodRange,
+        "sourceModule": map.sourceModule,
         "userName": sessionStorage.getItem("userId")
     }
     return request({
