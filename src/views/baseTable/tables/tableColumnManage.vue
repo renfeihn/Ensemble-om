@@ -100,7 +100,7 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
-    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
 
     export default {
         props: ["title"],
@@ -226,7 +226,7 @@
             initialize () {
                 let that = this
                 //读取本地json文件
-                const dataSource = columnInfo;
+                const dataSource = getAttrInfo();
                 for(let i in dataSource){
                     let temp = {}
                     temp["columnId"] = i

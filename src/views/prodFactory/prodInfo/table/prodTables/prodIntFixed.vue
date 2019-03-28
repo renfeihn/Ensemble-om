@@ -25,7 +25,6 @@
     import DcText from "@/components/widgets/DcTextField";
     import {getParamTable} from "@/api/url/prodInfo";
     import {getProdType} from '@/api/url/prodInfo';
-    import columnInfo from  '@/views/prodFactory/prodInfo/columnInfo';
 
     export default {
         components: {DcSelect,DcText},

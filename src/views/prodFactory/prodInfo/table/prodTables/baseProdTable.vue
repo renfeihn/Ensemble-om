@@ -45,7 +45,7 @@
     import {
         getProdType
     } from '@/api/url/prodInfo'
-    import columnInfo from  '@/views/prodFactory/prodInfo/columnInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
 
     export default {
         components: {DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField},
@@ -81,7 +81,7 @@
             init(val) {
                 //主键集合 主键在展示时候置灰 不允许修改
                 const keySet = this._props.keySet
-                const columnInfos = columnInfo
+                const columnInfos = getAttrInfo()
                 let columnList = []
                 for(let key in val){
                     //时间戳不在界面进行维护

@@ -75,7 +75,6 @@
     import DcMultiselect from "../../../components/widgets/DcMultiselect";
     import DcTextFieldTable from "@/components/widgets/DcTextFieldTable";
     import DcMultiselectTable from '@/components/widgets/DcMultiselectTable'
-    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         name: 'tableInfo',

@@ -46,7 +46,7 @@
     import systemManage from './tables/systemManage'
     import moduleManage from './tables/moduleManage'
     import {getSysTable} from "@/api/url/prodInfo";
-    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
 
     export default {
         components: {
@@ -106,7 +106,7 @@
                 if(item.name === "json"){
                     that.title = "字段数量"
                     let count = 0
-                    const dataSource = columnInfo;
+                    const dataSource = getAttrInfo();
                     for(let i in dataSource){
                         count++
                     }

@@ -130,7 +130,6 @@
     import { getCheckFlowList } from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import downAction from '@/views/prodFactory/prodInfo/btn/downAction';
-    import columnInfo from './columnInfo'
     import prodPageInfo from './prodPageDefine'
     import PendingForm from '@/views/prodFactory/prodInfo/btn/PendingForm';
     import BaseProd from './baseProd/BaseProd'
@@ -157,7 +156,6 @@
             downAction,
             ProdListForm,
             PendingForm,
-            columnInfo,
             prodPageInfo,
             DcTreeAttr,
             ProdCharge,
@@ -665,8 +663,9 @@
             addClick() {
                 this.addColumnPageDesc = this.prodInfo[this.activeName].text
                 //获取所有参数定义的json文件（columnInfo.json）增加到待选数据集合
-                for(let i in columnInfo){
-                    this.addColumnsRef.push(i+'--'+columnInfo[i].columnDesc)
+                let colInfo = getAttrInfo()
+                for(let i in colInfo){
+                    this.addColumnsRef.push(i+'--'+colInfo[i].columnDesc)
                 }
             },
             //获取mbProdDefine最大seqNo val:目标集合 pageCode：当前所属界面标志

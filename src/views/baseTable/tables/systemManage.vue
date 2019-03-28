@@ -78,7 +78,6 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
-    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
 
     export default {
         props: ["title"],

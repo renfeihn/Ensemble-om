@@ -73,13 +73,13 @@
     </v-card>
 </template>
 <script>
-    import columnInfo from '@/views/prodFactory/prodInfo/columnInfo'
     import {getPkList} from '@/views/prodFactory/prodInfo/pkListColumnInfo'
     import DcMultiselectTable from '@/components/widgets/DcMultiselectTable'
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
     import DcTextFieldTable from "@/components/widgets/DcTextFieldTable";
     import DcDate from '@/components/widgets/DcDate'
+    import {getAttrInfo} from '@/api/url/prodInfo'
     export default {
         components: {DcMultiselectTable, DcSwitch, DcTreeSelect,DcDate,DcTextFieldTable},
         props: {
@@ -132,7 +132,7 @@
                         if(value==undefined){
                             value=''
                         }
-                        const dataSource = columnInfo;
+                        const dataSource = getAttrInfo();
                         let column = dataSource[key];
                         if (column != undefined && column != 'undefined'){
                             column['value']=value

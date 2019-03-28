@@ -43,7 +43,6 @@
     </v-container>
 </template>
 <script>
-    import columnInfo from '../columnInfo'
     import DcMultiselect from '@/components/widgets/DcMultiselect'
     import DcSwitch from "@/components/widgets/DcSwitch";
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
@@ -56,7 +55,7 @@
     import {getParamTable} from "@/api/url/prodInfo";
 
     export default {
-        components: {columnInfo, DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable,DcTreeview},
+        components: { DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField,draggable,DcTreeview},
         props: {
             prodType: String,
             prodDefines: String,
