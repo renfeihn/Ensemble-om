@@ -395,15 +395,17 @@
                     this.prodInfo = prodPageInfo.rbProdNotT;
                     return;
                 }
-                //贷款组合产品
-                if(prodGroup == "Y"){
-                    this.prodInfo = prodPageInfo.clGroupProd;
-                    return;
-                }
-                //贷款非组合产品
-                if(prodGroup != "Y"){
-                    this.prodInfo = prodPageInfo.clProdPublish;
-                    return;
+                if(sourceModule == "CL") {
+                    //贷款组合产品
+                    if (prodGroup == "Y") {
+                        this.prodInfo = prodPageInfo.clGroupProd;
+                        return;
+                    }
+                    //贷款非组合产品
+                    if (prodGroup != "Y") {
+                        this.prodInfo = prodPageInfo.clProdPublish;
+                        return;
+                    }
                 }
                 //内部账产品
                 if(sourceModule == "GL"){
