@@ -396,12 +396,12 @@
                     return;
                 }
                 //贷款组合产品
-                if(sourceModule == "CL" && response.prodDefines.SYN_TYPE != undefined && response.prodDefines.SYN_TYPE != null){
+                if(prodGroup == "Y"){
                     this.prodInfo = prodPageInfo.clGroupProd;
                     return;
                 }
                 //贷款非组合产品
-                if(sourceModule == "CL" && response.prodDefines.SYN_TYPE == undefined || response.prodDefines.SYN_TYPE == null){
+                if(prodGroup != "Y"){
                     this.prodInfo = prodPageInfo.clProdPublish;
                     return;
                 }
