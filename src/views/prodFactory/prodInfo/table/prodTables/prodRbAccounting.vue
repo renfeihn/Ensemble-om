@@ -44,6 +44,15 @@
                     <v-flex md6 lg6>
                         <dc-multiselect :options="glCodeLOption" labelDesc="应付利息科目" :isMultiSelect="false" v-model="selectInfo.glCodeIntPay" class="dcMulti"></dc-multiselect>
                     </v-flex>
+                    <v-flex md6 lg6>
+                        <dc-multiselect :options="glCodeLOption" labelDesc="资产科目" :isMultiSelect="false" v-model="selectInfo.glCodeA" class="dcMulti"></dc-multiselect>
+                    </v-flex>
+                    <v-flex md6 lg6>
+                        <dc-multiselect :options="glCodeLOption" labelDesc="利息收入科目" :isMultiSelect="false" v-model="selectInfo.glCodeIntI" class="dcMulti"></dc-multiselect>
+                    </v-flex>
+                    <v-flex md6 lg6>
+                        <dc-multiselect :options="glCodeLOption" labelDesc="应急利息科目" :isMultiSelect="false" v-model="selectInfo.glCodeIntAcr" class="dcMulti"></dc-multiselect>
+                    </v-flex>
                 </v-layout>
             </v-card>
         </v-flex>

@@ -158,7 +158,7 @@ export function tableDealUID(prodData,sourceProdData,backVal,tables) {
             let proCol = prodData[tables][newIndex];
             let souCol = sourceProdData[tables][index];
             for(let col in proCol){
-                if(proCol[col] != undefined && souCol[col] != undefined && proCol[col] != null && souCol[col] != null && proCol[col] != "" && souCol[col] != ""){
+                // if(proCol[col] != undefined && souCol[col] != undefined && proCol[col] != "" && souCol[col] != ""){
                     if(proCol[col] != souCol[col]){
                         //数据被修改
                         //组装返回数据
@@ -169,7 +169,7 @@ export function tableDealUID(prodData,sourceProdData,backVal,tables) {
                         backVal.push(tempU);
                         break;
                     }
-                }
+                // }
             }
         }
         //不存在,即为新增
