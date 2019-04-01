@@ -79,8 +79,21 @@ export default {
       alert("button click");
     },
       copyOn() {
-          this.showCopy = false
-          this.$emit('listenToCopy',{'prodType': this.prodType,'prodDesc': this.prodDesc,'showCopy': this.showCopy})
+          if(this.prodType == "" || this.prodDesc == ""){
+              this.sweetAlert('info',"请输入产品代码或产品描述！");
+          }
+          else if(this.prodType == null || this.prodType.indexOf(" ") != -1){
+              this.sweetAlert('info',"产品代码不能包含空格！");
+          }else if(this.prodType != null && this.prodType.indexOf(" ") == -1 && this.prodType != "" && this.prodDesc.indexOf(" ") != -1) {
+              this.sweetAlert('info',"产品描述不能包含空格！");
+          }else {
+              this.showCopy = false
+              this.$emit('listenToCopy', {
+                  'prodType': this.prodType,
+                  'prodDesc': this.prodDesc,
+                  'showCopy': this.showCopy
+              })
+          }
       },
       save(){
           this.$emit('saveProd')

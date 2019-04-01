@@ -119,7 +119,7 @@
             rebackOption(newValue){
                 if(typeof this._props.value === "object"){
                     this._props.value.optionPermissions=newValue
-                    this.$emit("input", this._props.value);
+                    this.$emit("getVue", this._props.value);
                 }
             },
             dealNewAttr(val) {
@@ -171,15 +171,21 @@
                     if(this._props.value.attrValue !== undefined) {
                         this._props.value.attrValue = "Y";
                     }
+                    if(this._props.value !== undefined && this._props.value.attrValue == undefined) {
+                        this._props.value = "Y";
+                    }
                     this.desc = this.label.split(",")[0];
                 } else {
                     if(this._props.value.attrValue !== undefined) {
                         this._props.value.attrValue = "N";
                     }
+                    if(this._props.value !== undefined && this._props.value.attrValue == undefined) {
+                        this._props.value = "N";
+                    }
                     this.desc = this.label.split(",")[1];
                 }
                 //在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出（对象）
-                this.$emit("input", this._props.value);
+                this.$emit("getVue", this._props.value);
                 }
             }
         }
