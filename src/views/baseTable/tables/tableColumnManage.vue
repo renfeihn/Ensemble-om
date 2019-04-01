@@ -11,7 +11,7 @@
                     single-line
                     hide-details
             ></v-text-field>
-            <v-dialog v-model="dialog" max-width="500px">
+            <v-dialog v-model="dialog" max-width="600px">
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
                 </v-btn>
@@ -31,24 +31,38 @@
                                 <v-flex xs6 sm6 md6>
                                     <v-text-field v-model="editedItem.columnDesc" label="字段名称"></v-text-field>
                                 </v-flex>
-                                <!--<v-flex xs12 sm12 md12>-->
-                                    <!--<v-text-field v-model="editedItem.valueType" label="数据类型"></v-text-field>-->
-                                <!--</v-flex>-->
-                                <!--<v-flex xs12 sm12 md12>-->
-                                    <!--<v-text-field v-model="editedItem.valueLength" label="数据长度"></v-text-field>-->
-                                <!--</v-flex>-->
                                 <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.columnType" label="字段属性" :items="columnTypeRf" item-text="value" item-value="key"></v-select>
-
+                                    <v-select v-model="editedItem.attrType" label="数据类型" :items="attrType" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.valueMethod" label="数据模型" :items="valueMethodRf" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.columnType" label="字段属性" :items="columnTypeRf" item-text="value" item-value="key"></v-select>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6>
+                                    <v-select v-model="editedItem.columnClass" label="参数分类" :items="mbAttrClass" item-text="value" item-value="key"></v-select>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6>
+                                    <v-text-field v-model="editedItem.useMethod" label="使用方式"></v-text-field>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6>
+                                    <v-select v-model="editedItem.valueMethod" label="数据模型" :items="valueMethodRf" item-text="value" item-value="key" @change="change()"></v-select>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6>
+                                    <v-text-field v-model="editedItem.setValueFlag" label="参数值设置方式"></v-text-field>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6>
+                                    <v-text-field v-model="editedItem.busiCatagory" label="业务分类"></v-text-field>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6>
+                                    <v-select v-model="editedItem.company" label="法人代码" :items="fmCompany" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs6 sm6 md6>
+                                <v-flex xs6 sm6 md6 v-show="show">
                                     <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数"></v-text-field>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6 v-show="!show">
+                                    <v-select v-model="editedItem.valueScoreColumn" label="数据参数" :items="tab"></v-select>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -67,8 +81,14 @@
                 <td>{{ props.item.columnDesc }}</td>
                 <!--<td>{{ props.item.valueType }}</td>-->
                 <!--<td>{{ props.item.valueLength }}</td>-->
+                <td>{{ props.item.attrType }}</td>
                 <td>{{ props.item.columnType }}</td>
+                <td>{{ props.item.columnClass }}</td>
+                <td>{{ props.item.useMethod }}</td>
                 <td>{{ props.item.valueMethod }}</td>
+                <td>{{ props.item.setValueFlag }}</td>
+                <td>{{ props.item.busiCatagory }}</td>
+                <td>{{ props.item.company }}</td>
                 <td>{{ props.item.valueScore }}</td>
                 <td>{{ props.item.valueScoreColumn }}</td>
 
@@ -101,6 +121,8 @@
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
     import {getAttrInfo} from '@/api/url/prodInfo'
+    import {getTableColumnInfo} from '@/api/url/prodInfo'
+    import {saveParam} from '@/api/url/prodInfo'
 
     export default {
         props: ["title"],
@@ -108,6 +130,20 @@
             dialog: false,
             disabled: "false",
             tab: [],
+            attrType: [
+                {
+                    key: "STRING",
+                    value: "STRING"
+                },
+                {
+                    key: "DATE",
+                    value: "DATE"
+                },
+                {
+                    key: "DOUBLE",
+                    value: "DOUBLE"
+                }
+            ],
             valueMethodRf: [
                 {
                     key: "RF",
@@ -153,8 +189,14 @@
                 { text: '字段名称',sortable: false,value: 'columnDesc'},
 //                { text: '数据类型',sortable: false },
 //                { text: '数据长度',sortable: false },
+                { text: '数据类型',sortable: false,value: 'attrType' },
                 { text: '字段属性',sortable: false,value: 'columnType' },
+                { text: '参数分类',sortable: false,value: 'columnClass' },
+                { text: '使用方式',sortable: false,value: 'useMethod' },
                 { text: '数据模型',sortable: false,value: 'valueMethod' },
+                { text: '参数值设置方式',sortable: false,value: 'setValueFlag' },
+                { text: '业务分类',sortable: false,value: 'busiCatagory' },
+                { text: '法人代码',sortable: false,value: 'company' },
                 { text: '数据来源表',sortable: false,value: 'valueScore' },
                 { text: '数据参数',sortable: false,value: 'valueScoreColumn' },
                 { text: 'Action',sortable: false }
@@ -191,7 +233,10 @@
 
             },
             backValue: {},
-            search: ''
+            search: '',
+            fmCompany: [],
+            mbAttrClass: [],
+            show: true,
         }),
 
         computed: {
@@ -209,9 +254,11 @@
         created () {
             this.initialize()
             this.initRf()
+            this.initClassAndFm()
         },
 
         methods: {
+            //数据来源表
             initRf() {
                 let that = this
                 getSysTable("OM_TABLE_LIST").then(function (response) {
@@ -223,21 +270,50 @@
                     }
                 });
             },
+            //法人代码,参数分类
+            initClassAndFm() {
+                let that = this
+                getTableColumnInfo().then(function (response) {
+                    let fm = response.data.data.fmCompany
+                    let cls = response.data.data.mbAttrClass
+                    for(let i=0; i<fm.length; i++){
+                        let temp = {}
+                        temp["key"] = fm[i].company
+                        temp["value"] = fm[i].companyName
+                        that.fmCompany.push(temp)
+                    }
+                    for(let j=0; j<cls.length; j++){
+                        let atr = {}
+                        atr["key"] = cls[j].attrClass
+                        atr["value"] = cls[j].attrClassDesc
+                        that.mbAttrClass.push(atr)
+                    }
+                    let par = {}
+                    par["key"] = "PARAM"
+                    par["value"] = "参数"
+                    that.mbAttrClass.push(par)
+                });
+            },
             initialize () {
                 let that = this
-                //读取本地json文件
+                //读取attr_type和attr_value表
                 const dataSource = getAttrInfo();
                 for(let i in dataSource){
                     let temp = {}
                     temp["columnId"] = i
                     temp["columnDesc"] = dataSource[i].columnDesc
                     temp["columnType"] = dataSource[i].columnType
+                    temp["attrType"] = dataSource[i].attrType
+                    temp["columnClass"] = dataSource[i].columnClass
+                    temp["useMethod"] = dataSource[i].useMethod
+                    temp["setValueFlag"] = dataSource[i].setValueFlag
+                    temp["busiCatagory"] = dataSource[i].busiCatagory
+                    temp["company"] = dataSource[i].company
                     temp["valueMethod"] = dataSource[i].valueMethod
                     temp["valueScore"] = dataSource[i].valueScore === undefined?"":dataSource[i].valueScore.tableName
                     let valueScoreColumn = " "
                     if(dataSource[i].valueMethod === "RF" && dataSource[i].valueScore !== undefined){
-                        valueScoreColumn = dataSource[i].valueScore.columnCode
-                        valueScoreColumn = valueScoreColumn + dataSource[i].valueScore.columnDesc
+                        valueScoreColumn = dataSource[i].valueScore.columnCode + "," +dataSource[i].valueScore.columnDesc
                     }
                     if(dataSource[i].valueMethod == "VL" && dataSource[i].valueScore !== undefined){
                         for(let j=0; j<dataSource[i].valueScore.length; j++){
@@ -259,12 +335,25 @@
                 this.disabled = "true";
 
             },
-
+            //删除数据落库
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                let confirms = confirm('Are you sure you want to delete this item?')
+                if(confirms == true){
+                    this.desserts.splice(index, 1)
+                    let map = {}
+                    map["operate"] = "delete"
+                    map["mbAttrType"] = this.getAttrType(item)
+                    //attrValue中刪除的数据
+                    map["mbAttrValueDelete"] = this.addAttrValue(item)
+                    saveParam(map).then(response => {
+                        if (response.status === 200) {
+                            this.sweetAlert('success', "提交成功!")
+                        }
+                    });
+                }
             },
-
+            //关闭弹框
             close () {
                 this.dialog = false
                 setTimeout(() => {
@@ -272,24 +361,148 @@
                     this.editedIndex = -1
                 }, 300)
             },
-
+            //保存数据落库
             save () {
+                let map = {}
                 if (this.editedIndex > -1) {
+                    //更新
+                    map["operate"] = "update"
+                    map["mbAttrValueUpdate"] = this.updateAttrValue(this.editedItem,this.desserts[this.editedIndex])
                     Object.assign(this.desserts[this.editedIndex], this.editedItem)
                 } else {
+                    //新增
                     this.desserts.push(this.editedItem)
+                    map["operate"] = "add"
+                    //attrValue中增加的数据
+                    map["mbAttrValueAdd"] = this.addAttrValue(this.editedItem)
                 }
-//                //保存数据本地json文件
-//                var fs = require('fs');
-//                fs.writeFile('@/views/prodFactory/prodInfo/columnInfo.json',JSON.stringify(this.desserts),function(err){
-//                    if(err){
-//                        console.error(err);
-//                    }
-//                    console.log('----------新增成功-------------');
-//                })
-////                this.desserts
-                toast.success("提交成功！");
+                //attrType表中的基础数据
+                map["mbAttrType"] = this.getAttrType(this.editedItem)
+                saveParam(map).then(response => {
+                    if (response.status === 200) {
+                        this.sweetAlert('success', "提交成功!")
+                    }
+                });
                 this.close()
+            },
+            //attrType表中的基础数据
+            getAttrType(val) {
+                let mbAttrType = {}
+                mbAttrType["attrKey"] = val.columnId
+                mbAttrType["attrType"] = val.attrType
+                mbAttrType["attrDesc"] = val.columnDesc
+                mbAttrType["attrClass"] = val.columnClass
+                mbAttrType["useMethod"] = val.useMethod
+                mbAttrType["valueMethod"] = val.valueMethod
+                mbAttrType["setValueFlag"] = val.setValueFlag
+                mbAttrType["busiCatagory"] = val.busiCatagory
+                mbAttrType["status"] = "A"
+                mbAttrType["company"] = val.company
+                return mbAttrType
+            },
+            //增加/刪除 attrValue表中数据，按RF(来源他表)和VL（固定备选数据）分类组装数据
+            addAttrValue(val) {
+                let mbValue = {}
+                let mbAttrValueAdd = []
+                //RF
+                if(val.valueMethod == "RF"){
+                    mbValue["attrKey"] = val.columnId
+                    mbValue["attrValue"] = "来源他表"
+                    mbValue["valueDesc"] = val.columnDesc
+                    mbValue["refTable"] = val.valueScore
+                    mbValue["refCondition"] = "1=1"
+                    mbValue["refColumns"] = val.valueScoreColumn
+                    mbAttrValueAdd.push(mbValue)
+                }
+                //VL
+                if(val.valueMethod == "VL"){
+                    let valueScoreColumns = val.valueScoreColumn.split(",")
+                    for(let i=0; i<valueScoreColumns.length; i++){
+                        let mbValue = {}
+                        let valueAndDesc = valueScoreColumns[i].split("-")
+                        mbValue["attrKey"] = val.columnId
+                        mbValue["attrValue"] = valueAndDesc[0]
+                        mbValue["valueDesc"] = valueAndDesc[1]
+                        mbAttrValueAdd.push(mbValue)
+                    }
+                }
+                return mbAttrValueAdd
+            },
+            //更新 attrValue表中数据
+            updateAttrValue(newV,oldV) {
+                let mbAttrValueAdd = []
+                let mbAttrValueUpdate = []
+                let mbAttrValueDelete = []
+                let map = {}
+                //rf的更新数据
+                if(newV.valueMethod == "RF"){
+                    map["attrKey"] = newV.columnId
+                    map["attrValue"] = "来源他表"
+                    map["valueDesc"] = newV.columnDesc
+                    map["refTable"] = newV.valueScore
+                    map["refCondition"] = "1=1"
+                    map["refColumns"] = newV.valueScoreColumn
+                }
+                //vl的更新数据
+                if(newV.valueMethod == "VL"){
+                    //新数据组装
+                    let newValue = []
+                    let valueScoreColumns = newV.valueScoreColumn.split(",");
+                    for(let i=0; i<valueScoreColumns.length; i++){
+                        let mbValue = {}
+                        let valueAndDesc = valueScoreColumns[i].split("-")
+                        mbValue["attrKey"] = newV.columnId
+                        mbValue["attrValue"] = valueAndDesc[0]
+                        mbValue["valueDesc"] = valueAndDesc[1]
+                        newValue.push(mbValue)
+                    }
+                    //老数据组装
+                    let oldValue = []
+                    let valueScoreColumn = oldV.valueScoreColumn.split(",")
+                    for(let i=0; i<valueScoreColumn.length; i++){
+                        let mbValue = {}
+                        let valueAndDesc = valueScoreColumn[i].split("-")
+                        mbValue["attrKey"] = oldV.columnId
+                        mbValue["attrValue"] = valueAndDesc[0]
+                        mbValue["valueDesc"] = valueAndDesc[1]
+                        oldValue.push(mbValue)
+                    }
+                    //新老数据差异对比
+                    for(let i=0; i<newValue.length; i++){
+                        let n = 0
+                        for(let j=0; j<oldValue.length; j++){
+                            //更新
+                            if(newValue[i].attrKey == oldValue[j].attrKey && newValue[i].attrValue == oldValue[j].attrValue){
+                                mbAttrValueUpdate.push(newValue[i])
+                            }else{
+                                n++
+                            }
+                        }
+                        //删除
+                        if(n == oldValue.length){
+                            mbAttrValueAdd.push(newValue[i])
+                        }
+                    }
+                    for(let i=0; i<oldValue.length; i++){
+                        let n = 0
+                        for(let j=0; j<newValue.length; j++){
+                            //更新
+                            if(oldValue[i].attrKey == newValue[j].attrKey && oldValue[i].attrValue == newValue[j].attrValue){
+                                break
+                            }else{
+                                n++
+                            }
+                        }
+                        //新增
+                        if(n == newValue.length){
+                            mbAttrValueDelete.push(oldValue[i])
+                        }
+                    }
+                    map["mbAttrValueUpdate"] = mbAttrValueUpdate
+                    map["mbAttrValueAdd"] = mbAttrValueAdd
+                    map["mbAttrValueDelete"] = mbAttrValueDelete
+                }
+                return map
             },
             //对象浅复制
             copy(obj1,obj2) {
@@ -303,6 +516,15 @@
                     }
                 }
                 return obj;
+            },
+            //数据模型决定数据参数是输入框还是下拉框，RF是下拉框
+            change(){
+                if(this.editedItem.valueMethod == "RF"){
+                    this.show = false
+                }
+                if(this.editedItem.valueMethod != "RF"){
+                    this.show = true
+                }
             }
         }
     }

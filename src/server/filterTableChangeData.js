@@ -9,9 +9,9 @@
 export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
 
     //比较目标数据
-    var newData = sourceDataInfo
+    var oldData = sourceDataInfo
     //源数据
-    var oldData = dataInfo
+    var newData = dataInfo
     var delFlag = "1"
 
     var backValue = []
@@ -27,13 +27,13 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
     var sameFlag = 0
 
     //找出删除和修改的数据
-    for(let i=0; i<newData.length; i++){
+    for(let i=0; i<oldData.length; i++){
         paraOpt = "0"
         sameFlag = 0
-        for(let j=0; j<oldData.length; j++){
+        for(let j=0; j<newData.length; j++){
             let keySem = 0  //0-主键相同匹配到数据  1-存在不相同主键匹配失败
             for(let l in keySet){
-                if(newData[i][l] === oldData[j][l]){
+                if(oldData[i][l] === newData[j][l]){
                     //主键相同
                     keySem = keySem +1
                     paraOpt = "1"
@@ -41,7 +41,7 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
             }
             sameFlag = keySem
             if(keySem === arr.length) {
-                tableDeal(i, j, newData, oldData, backValue, delFlag)
+                tableDeal(i, j, oldData, newData, backValue, delFlag)
                 break
             }
         }
@@ -49,7 +49,7 @@ export function filterTableChangeData (columns,dataInfo,sourceDataInfo) {
         if(delFlag === "1" && sameFlag != arr.length){
             let temp = {}
             temp["newData"] = {}
-            temp["oldData"] = newData[i]
+            temp["oldData"] = oldData[i]
             temp["optType"] = "D"
             backValue[backValue.length] = temp
         }

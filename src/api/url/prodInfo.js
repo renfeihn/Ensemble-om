@@ -241,6 +241,12 @@ export function getTableInfoDesc (params) {
         params: { tableName: params}
     })
 }
+export function getTableColumnInfo () {
+    return request({
+        url: '/getTableColumnInfo',
+        method: 'post',
+    })
+}
 export function getModuleByFlowCode (params) {
     return request({
         url: '/getModuleByFlowCode',
@@ -258,6 +264,13 @@ export function getTableList (params) {
 export function saveTable (params) {
     return request({
         url: '/saveTable',
+        method: 'post',
+        data: params
+    })
+}
+export function saveParam (params) {
+    return request({
+        url: '/saveParam',
         method: 'post',
         data: params
     })
