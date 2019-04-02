@@ -50,7 +50,7 @@
                                     <v-text-field v-model="editedItem.setValueFlag" label="参数值设置方式"></v-text-field>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.busiCatagory" label="业务分类"></v-text-field>
+                                    <v-text-field v-model="editedItem.busiCategory" label="业务分类"></v-text-field>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.company" label="法人代码" :items="fmCompany" item-text="value" item-value="key"></v-select>
@@ -87,7 +87,7 @@
                 <td>{{ props.item.useMethod }}</td>
                 <td>{{ props.item.valueMethod }}</td>
                 <td>{{ props.item.setValueFlag }}</td>
-                <td>{{ props.item.busiCatagory }}</td>
+                <td>{{ props.item.busiCategory }}</td>
                 <td>{{ props.item.company }}</td>
                 <td>{{ props.item.valueScore }}</td>
                 <td>{{ props.item.valueScoreColumn }}</td>
@@ -198,7 +198,7 @@
                 { text: '使用方式',sortable: false,value: 'useMethod' },
                 { text: '数据模型',sortable: false,value: 'valueMethod' },
                 { text: '参数值设置方式',sortable: false,value: 'setValueFlag' },
-                { text: '业务分类',sortable: false,value: 'busiCatagory' },
+                { text: '业务分类',sortable: false,value: 'busiCategory' },
                 { text: '法人代码',sortable: false,value: 'company' },
                 { text: '数据来源表',sortable: false,value: 'valueScore' },
                 { text: '数据参数',sortable: false,value: 'valueScoreColumn' },
@@ -310,7 +310,7 @@
                     temp["columnClass"] = dataSource[i].columnClass
                     temp["useMethod"] = dataSource[i].useMethod
                     temp["setValueFlag"] = dataSource[i].setValueFlag
-                    temp["busiCatagory"] = dataSource[i].busiCatagory
+                    temp["busiCategory"] = dataSource[i].busiCategory
                     temp["company"] = dataSource[i].company
                     temp["valueMethod"] = dataSource[i].valueMethod
                     temp["valueScore"] = dataSource[i].valueScore === undefined?"":dataSource[i].valueScore.tableName
@@ -423,7 +423,7 @@
                 mbAttrType["useMethod"] = val.useMethod
                 mbAttrType["valueMethod"] = val.valueMethod
                 mbAttrType["setValueFlag"] = val.setValueFlag
-                mbAttrType["busiCatagory"] = val.busiCatagory
+                mbAttrType["busiCategory"] = val.busiCategory
                 mbAttrType["status"] = "A"
                 mbAttrType["company"] = val.company
                 return mbAttrType
@@ -559,6 +559,7 @@
                 let that = this
                 getParamTable(this.editedItem.valueScore).then(function (response) {
                     let dataInfo = response.data.data.column;
+                    that.param = []
                     for(let i=0; i<dataInfo.length; i++){
                         let data = {}
                         data["key"] = dataInfo[i].code
