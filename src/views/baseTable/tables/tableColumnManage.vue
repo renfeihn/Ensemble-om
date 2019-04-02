@@ -56,13 +56,13 @@
                                     <v-select v-model="editedItem.company" label="法人代码" :items="fmCompany" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key" @change="changeValue()"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="show">
                                     <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数"></v-text-field>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="!show">
-                                    <v-select v-model="editedItem.valueScoreColumn" label="数据参数" :items="tab"></v-select>
+                                    <v-select v-model="valueScoreColumn" label="数据参数" :items="param" item-text="value" item-value="key" multiple></v-select>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -123,6 +123,7 @@
     import {getAttrInfo} from '@/api/url/prodInfo'
     import {getTableColumnInfo} from '@/api/url/prodInfo'
     import {saveParam} from '@/api/url/prodInfo'
+    import {getParamTable} from "@/api/url/prodInfo";
 
     export default {
         props: ["title"],
@@ -130,6 +131,8 @@
             dialog: false,
             disabled: "false",
             tab: [],
+            param: [],
+            valueScoreColumn: [],
             attrType: [
                 {
                     key: "STRING",
@@ -333,7 +336,17 @@
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
                 this.disabled = "true";
-
+                if(this.editedItem.valueMethod == "RF"){
+                    this.changeValue()
+                    this.valueScoreColumn = []
+                    let value = this.editedItem.valueScoreColumn.split(",")
+                    this.valueScoreColumn.push(value[0])
+                    this.valueScoreColumn.push(value[1])
+                    this.show = false
+                }
+                if(this.editedItem.valueMethod != "RF"){
+                    this.show = true
+                }
             },
             //删除数据落库
             deleteItem (item) {
@@ -366,11 +379,17 @@
                 let map = {}
                 if (this.editedIndex > -1) {
                     //更新
+                    if(this.valueScoreColumn.length != 0){
+                        this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
+                    }
                     map["operate"] = "update"
                     map["mbAttrValueUpdate"] = this.updateAttrValue(this.editedItem,this.desserts[this.editedIndex])
                     Object.assign(this.desserts[this.editedIndex], this.editedItem)
                 } else {
                     //新增
+                    if(this.valueScoreColumn.length != 0){
+                        this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
+                    }
                     this.desserts.push(this.editedItem)
                     map["operate"] = "add"
                     //attrValue中增加的数据
@@ -525,6 +544,19 @@
                 if(this.editedItem.valueMethod != "RF"){
                     this.show = true
                 }
+            },
+            //选择表后获取参数列表
+            changeValue(){
+                let that = this
+                getParamTable(this.editedItem.valueScore).then(function (response) {
+                    let dataInfo = response.data.data.column;
+                    for(let i=0; i<dataInfo.length; i++){
+                        let data = {}
+                        data["key"] = dataInfo[i].code
+                        data["value"] = dataInfo[i].title
+                        that.param.push(data)
+                    }
+                })
             }
         }
     }
