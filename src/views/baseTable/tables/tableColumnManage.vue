@@ -11,7 +11,7 @@
                     single-line
                     hide-details
             ></v-text-field>
-            <v-dialog v-model="dialog" max-width="600px">
+            <v-dialog v-model="dialog" max-width="600px" persistent>
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
                 </v-btn>
@@ -268,7 +268,7 @@
                     for(let i=0; i<response.data.data.columnInfo.length; i++){
                         let temp = {}
                         temp["key"] = response.data.data.columnInfo[i].tableName
-                        temp["value"] = response.data.data.columnInfo[i].tableDesc
+                        temp["value"] = response.data.data.columnInfo[i].tableName +"-"+ response.data.data.columnInfo[i].tableDesc
                         that.tab.push(temp)
                     }
                 });
@@ -336,9 +336,9 @@
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
                 this.disabled = "true";
+                this.valueScoreColumn = []
                 if(this.editedItem.valueMethod == "RF"){
                     this.changeValue()
-                    this.valueScoreColumn = []
                     let value = this.editedItem.valueScoreColumn.split(",")
                     this.valueScoreColumn.push(value[0])
                     this.valueScoreColumn.push(value[1])
@@ -376,33 +376,42 @@
             },
             //保存数据落库
             save () {
-                let map = {}
-                if (this.editedIndex > -1) {
-                    //更新
-                    if(this.valueScoreColumn.length != 0){
-                        this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
+                let num = true
+                if(this.editedItem.valueMethod == "RF"){
+                    if(this.valueScoreColumn.length != 2){
+                        this.sweetAlert('info', "数据参数必须为两个!")
+                        num = false
                     }
-                    map["operate"] = "update"
-                    map["mbAttrValueUpdate"] = this.updateAttrValue(this.editedItem,this.desserts[this.editedIndex])
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                } else {
-                    //新增
-                    if(this.valueScoreColumn.length != 0){
-                        this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
-                    }
-                    this.desserts.push(this.editedItem)
-                    map["operate"] = "add"
-                    //attrValue中增加的数据
-                    map["mbAttrValueAdd"] = this.addAttrValue(this.editedItem)
                 }
-                //attrType表中的基础数据
-                map["mbAttrType"] = this.getAttrType(this.editedItem)
-                saveParam(map).then(response => {
-                    if (response.status === 200) {
-                        this.sweetAlert('success', "提交成功!")
+                if(num == true){
+                    let map = {}
+                    if (this.editedIndex > -1) {
+                        //更新
+                        if(this.valueScoreColumn.length != 0){
+                            this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
+                        }
+                        map["operate"] = "update"
+                        map["mbAttrValueUpdate"] = this.updateAttrValue(this.editedItem,this.desserts[this.editedIndex])
+                        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    } else {
+                        //新增
+                        if(this.valueScoreColumn.length != 0){
+                            this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
+                        }
+                        this.desserts.push(this.editedItem)
+                        map["operate"] = "add"
+                        //attrValue中增加的数据
+                        map["mbAttrValueAdd"] = this.addAttrValue(this.editedItem)
                     }
-                });
-                this.close()
+                    //attrType表中的基础数据
+                    map["mbAttrType"] = this.getAttrType(this.editedItem)
+                    saveParam(map).then(response => {
+                        if (response.status === 200) {
+                            this.sweetAlert('success', "提交成功!")
+                        }
+                    });
+                    this.close()
+                }
             },
             //attrType表中的基础数据
             getAttrType(val) {
@@ -553,7 +562,7 @@
                     for(let i=0; i<dataInfo.length; i++){
                         let data = {}
                         data["key"] = dataInfo[i].code
-                        data["value"] = dataInfo[i].title
+                        data["value"] = dataInfo[i].code + "-" + dataInfo[i].title
                         that.param.push(data)
                     }
                 })
