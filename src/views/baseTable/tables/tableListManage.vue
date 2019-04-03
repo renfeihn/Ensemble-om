@@ -40,8 +40,11 @@
                                 <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.parameter" label="参数类型" :items="paramType" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-                                <v-flex xs6 sm6 md6>
+                                <v-flex xs6 sm6 md6 v-show="show">
                                     <v-select v-model="editedItem.searchColumn" label="检索条件" :items="searchColumn" item-text="value" item-value="key" multiple></v-select>
+                                </v-flex>
+                                <v-flex xs6 sm6 md6 v-show="show">
+                                    <v-select v-model="editedItem.eidtColumns" label="可见参数" :items="eidtColumns" item-text="value" item-value="key" multiple></v-select>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -62,6 +65,7 @@
                 <td>{{ props.item.modelId }}</td>
                 <td>{{ props.item.parameter }}</td>
                 <td>{{ props.item.searchColumn }}</td>
+                <td>{{ props.item.eidtColumns }}</td>
                 <td>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
                         <v-btn flat icon="edit" slot="activator">
@@ -100,6 +104,7 @@
             system: [],
             model: [],
             searchColumn: [],
+            eidtColumns: [],
             paramType: [
                 {
                     key: "init",
@@ -117,6 +122,7 @@
                 { text: '所属模块',sortable: false,value: 'modelId' },
                 { text: '参数类型',sortable: false,value: 'parameter' },
                 { text: '检索条件',sortable: false,value: 'searchColumn' },
+                { text: '可见参数',sortable: false,value: 'eidtColumns' },
                 { text: 'Action',sortable: false, }
             ],
             desserts: [],
@@ -136,7 +142,8 @@
                 system: '',
                 modelId: '',
                 parameter: '',
-                searchColumn: ''
+                searchColumn: '',
+                eidtColumns: ''
             },
             defaultItem: {
                 tableName: '',
@@ -144,10 +151,12 @@
                 system: '',
                 modelId: '',
                 parameter: '',
-                searchColumn: ''
+                searchColumn: '',
+                eidtColumns: ''
             },
             backValue: {},
             search: '',
+            show: true,
         }),
 
         computed: {
@@ -200,10 +209,15 @@
                 });
             },
             addClick() {
+                this.show = false
+                this.editedItem = []
                 this.disabled = "false"
+                this.eidtColumns = []
+                this.searchColumn = []
             },
             editItem (item) {
                 let that = this
+                that.show = true
                 that.editedIndex = this.desserts.indexOf(item)
                 let changeItem = Object.assign({}, item)
 
@@ -218,19 +232,15 @@
                 }else{
                     that.editedItem['searchColumn'] = []
                 }
-                getParamTable(that.editedItem.tableName).then(function (response) {
-                    let dataInfo = []
-                    that.searchColumn = []
-                    dataInfo = response.data.data.column;
-                    for(let i=0; i< dataInfo.length; i++){
-                        let temp={}
-                        temp["key"] = dataInfo[i].code
-                        temp["value"] = dataInfo[i].title
-                        that.searchColumn.push(temp)
-                    }
-                    that.dialog = true
-                    that.disabled = "true";
-                })
+                if(changeItem.eidtColumns != null){
+                    let eidtColumnss = changeItem.eidtColumns.split(",")
+                    that.editedItem['eidtColumns'] = eidtColumnss
+                }else{
+                    that.editedItem['eidtColumns'] = []
+                }
+                that.getSearchColumn()
+                that.dialog = true
+                that.disabled = "true";
             },
 
             deleteItem (item) {
@@ -263,7 +273,18 @@
 
             save () {
                 let changeItem = {}
-                if(this.editedItem.searchColumn != null && Array.isArray(this.editedItem.searchColumn)){
+                if(this.editedItem.eidtColumns != null){
+                    let eidtColumnss = ""
+                    for(let i=0; i<this.editedItem.eidtColumns.length; i++){
+                        if(eidtColumnss == ""){
+                            eidtColumnss = this.editedItem.eidtColumns[i]
+                        }else{
+                            eidtColumnss = eidtColumnss +","+ this.editedItem.eidtColumns[i]
+                        }
+                    }
+                    changeItem['eidtColumns'] = eidtColumnss
+                }
+                if(this.editedItem.searchColumn != null){
                     let searchColumns = ""
                     for(let i=0; i<this.editedItem.searchColumn.length; i++){
                         if(searchColumns == ""){
@@ -273,8 +294,6 @@
                         }
                     }
                     changeItem['searchColumn'] = searchColumns
-                }else{
-                    changeItem['searchColumn'] = this.editedItem.searchColumn
                 }
                 changeItem['tableName'] = this.editedItem.tableName
                 changeItem['tableDesc'] = this.editedItem.tableDesc
@@ -313,6 +332,27 @@
                 }
                 return obj;
             },
+            //获取检索条件的选项
+            getSearchColumn() {
+                let that = this
+                getParamTable(that.editedItem.tableName).then(function (response) {
+                    let dataInfo = []
+                    that.searchColumn = []
+                    that.eidtColumns = []
+                    let temp={}
+                    temp["key"] = "ALL"
+                    temp["value"] = "全部显示"
+                    dataInfo = response.data.data.column;
+                    that.eidtColumns.push(temp)
+                    for(let i=0; i< dataInfo.length; i++){
+                        let temp={}
+                        temp["key"] = dataInfo[i].code
+                        temp["value"] = dataInfo[i].title
+                        that.searchColumn.push(temp)
+                        that.eidtColumns.push(temp)
+                    }
+                })
+            }
         }
     }
 </script>

@@ -36,12 +36,12 @@
                     </v-layout>
                 </v-card-text>
                 <v-card-text class="pa-0" v-if="searchData == false">
-                    <a-table :customRow="customRow" :columns="columnsTwo" @change="changeTable" :dataSource="dataInfo">
+                    <a-table :customRow="customRow" :columns="seeColumnsTable" @change="changeTable" :dataSource="dataInfo">
                     </a-table>
                     <v-divider></v-divider>
                 </v-card-text>
                 <v-card-text class="pa-0" v-if="searchData == true">
-                    <a-table :customRow="customRow" :columns="columnsTwo" @change="changeTable" :dataSource="searchInfo">
+                    <a-table :customRow="customRow" :columns="seeColumnsTable" @change="changeTable" :dataSource="searchInfo">
                     </a-table>
                     <v-divider></v-divider>
                 </v-card-text>
@@ -53,7 +53,7 @@
                         persistent
                         z-index="100"
                 >
-                    <edit-table-info v-if="dialog" :selected="selected" :columns="columns" :tableName="tableName" :childPd="childPd"
+                    <edit-table-info v-if="dialog" :selected="selected" :columns="seeColumns" :tableName="tableName" :childPd="childPd"
                                      v-on:editAction="editAction" v-on:changeNum="changeNum"></edit-table-info>
 
                 </v-dialog>
@@ -124,7 +124,12 @@
                 isNull: [],
                 search: [],
                 searchData: false,
-                searchColumn: []
+                searchColumn: [],
+                eidtColumns: [],
+                seeColumns: [],
+                seeColumnsTable: [],
+                seeValueNotNull: [],
+                unSeeValueNotNull: [],
             };
         },
         watch: {
@@ -165,14 +170,19 @@
                         that.tableDesc = response.data.data.tableDesc
                     }
                     that.sourceDataInfo = that.copy(that.dataInfo, that.sourceDataInfo)
+                    //根据表名获取参数列信息
                     that.columns = response.data.data.column;
+                    //根据表名获取参数列信息,给a-table传参数用的
                     that.columnsTwo = response.data.data.columnTwo
                     that.tableName = tableName
                     that.searchColumn = response.data.data.search.searchColumn
                     that.getSearch(that.searchColumn)
+                    that.getEidtColumns(response.data.data.search.eidtColumns)
+                    that.getData(that.columns,that.columnsTwo)
                     that.getKey()
                 });
             },
+            //组装检索条件
             getSearch(val){
                 this.search = []
                 if(val != null){
@@ -208,18 +218,77 @@
                     }
                 }
             },
+            //组装可见参数
+            getEidtColumns(val){
+                this.eidtColumns = []
+                if(val != null){
+                    if(val == "ALL"){
+                        this.eidtColumns[0] = val
+                    }else {
+                        this.eidtColumns = val.split(",")
+                    }
+                }
+            },
+            //组装columns,columnsTwo
+            getData(column,columnTable){
+                if(this.eidtColumns[0] == "ALL"){
+                    this.seeColumns = column
+                    this.seeColumnsTable = columnTable
+                }else{
+                    for(let i=0; i<this.eidtColumns.length; i++){
+                        for(let j=0; j<column.length; j++){
+                            if(column[j].code == this.eidtColumns[i]){
+                                this.seeColumns.push(column[j])
+                                break
+                            }
+                        }
+                        for(let n=0; n<columnTable.length; n++){
+                            if(columnTable[n].dataIndex == this.eidtColumns[i]){
+                                this.seeColumnsTable.push(columnTable[n])
+                                break
+                            }
+                        }
+                    }
+                }
+            },
+
+            //获取主键和非空
             getKey(){
+                //主键
                 for(let n=0; n<this.columns.length; n++) {
                     if(this.columns[n].key == "true"){
                         this.key.push(this.columns[n])
                     }
                 }
+                //非空
                 for(let n=0; n<this.columns.length; n++){
                     if(this.columns[n].isNull == "true"){
                         this.isNull.push(this.columns[n])
                     }
                 }
+                //可见数据中的非空项
+                for(let i=0; i<this.isNull.length; i++){
+                    for(let j=0; j<this.eidtColumns.length; j++){
+                        if(this.isNull[i].code == this.eidtColumns[j]){
+                            this.seeValueNotNull.push(this.isNull[i].code)
+                        }
+                    }
+                }
+                //不可见数据中的非空项
+                for(let i=0; i<this.isNull.length; i++){
+                    let n = 0
+                    for(let j=0; j<this.seeValueNotNull.length; j++){
+                        if(this.isNull[i].code == this.eidtColumns[j]){
+                            n++
+                            break
+                        }
+                    }
+                    if(n == 0){
+                        this.unSeeValueNotNull.push(this.isNull[i].code)
+                    }
+                }
             },
+            //对象浅复制
             copy(obj1, obj2) {
                 var obj = obj2 || {};
                 for (let name in obj1) {
@@ -232,6 +301,7 @@
                 }
                 return obj;
             },
+
             customRow(record) {
                 return {
                     on: {
@@ -239,6 +309,7 @@
                     }
                 }
             },
+            //点击
             clickRow(record, event) {
                 var tr = event.currentTarget;
                 var tbd = tr.parentNode;
@@ -254,17 +325,20 @@
                 }
                 this.selected = record;
             },
+            //修改
             onEdit() {
                 this.tbd.style = '';
                 this.dialog = true;
                 this.addorchange = false;
             },
+            //新增
             onAdd() {
                 this.tbd.style = '';
                 this.selected = {};
                 this.dialog = true;
                 this.addorchange = true;
             },
+            //删除
             onDelete() {
                 this.tbd.style = '';
                 remove(this.dataInfo, this.selected)
@@ -380,13 +454,14 @@
                     return true
                 }
             },
+            //判断非空是否是空，主键是否重复
             limit(editSelected){
                 let keyIsNull = false
                 let keyName = []
                 let keyCoName = []
                 let num = 0
-                for(let i=0; i<this.isNull.length; i++){
-                    if(editSelected[this.isNull[i].code].value == []){
+                for(let i=0; i<this.seeValueNotNull.length; i++){
+                    if(editSelected[this.seeValueNotNull[i]].value == []){
                         keyIsNull = true
                     }
                 }
@@ -431,7 +506,6 @@
                 }
             },
             editAction(option, editSelected) {
-
                 if(option == 'close'){
                     this.close()
                 }
@@ -442,6 +516,9 @@
                             if (editSelected[key] !== undefined) {
                                 selected[key] = editSelected[key].value
                             }
+                        }
+                        for(let n=0; n<this.unSeeValueNotNull.length; n++){
+                            selected[this.unSeeValueNotNull[n]] = []
                         }
                         if(this.limit(editSelected)){
                             this.dataInfo.splice(0, 0, selected)
