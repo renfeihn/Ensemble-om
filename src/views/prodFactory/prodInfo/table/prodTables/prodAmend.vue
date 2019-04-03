@@ -20,7 +20,7 @@
     import {getChargeDefine} from '@/api/table';
     import toast from '@/utils/toast';
     import { getInitData } from "@/mock/init";
-    import {getColumnDesc} from '@/utils/columnDesc'
+    import { getAttrType} from "@/api/url/prodInfo";
     import {removeByValue} from '@/utils/util'
     import {getParamTable} from "@/api/url/prodInfo";
     import BaseTable from "./baseProdTable"

@@ -75,8 +75,7 @@
     import { getDiffList } from "@/api/url/prodInfo";
     import { getDiffTable } from "@/api/url/prodInfo";
     import {PrintInfo} from '@/utils/print/print'
-    import {getColumnDesc_} from '@/utils/columnDesc'
-    import {getColumnDesc} from '@/utils/columnDesc'
+    import { getAttrType} from "@/api/url/prodInfo";
     import { getModuleByFlowCode } from "@/api/url/prodInfo";
     import DcTextField from '@/components/widgets/DcTextField'
     import TaskListFlex from '@/views/propertyManage/taskListFlex'
@@ -94,7 +93,6 @@ export default {
         prodDiff,
         baseTable,
         TaskListFlex,
-        getColumnDesc_,
         DcTextField
     },
     props: ['prodData','sendTranId','sendTranType','seqNo'],
@@ -414,7 +412,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getColumnDesc_(key);
+                  head["text"] = getAttrType(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -446,7 +444,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getColumnDesc_(key);
+                      head["text"]=getAttrType(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -487,7 +485,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getColumnDesc_(key);
+                  head["text"] = getAttrType(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -522,7 +520,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getColumnDesc_(key);
+                      head["text"]=getAttrType(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -564,7 +562,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getColumnDesc_(key);
+                  head["text"] = getAttrType(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -596,7 +594,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getColumnDesc_(key);
+                      head["text"]=getAttrType(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -637,7 +635,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getColumnDesc_(key);
+                  head["text"] = getAttrType(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -668,7 +666,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getColumnDesc_(key);
+                      head["text"]=getAttrType(key);
                       head["value"]=key;
                       heards.push(head);
                   }

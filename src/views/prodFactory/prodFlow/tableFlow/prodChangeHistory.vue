@@ -89,7 +89,7 @@
     import prodDiffTable from '@/views/prodFactory/prodDiff/prodDiffTable'
     import {findProdHistory} from "@/api/url/prodInfo";
     import {findProdHistoryChange} from "@/api/url/prodInfo";
-    import {getColumnDesc} from "../../../../utils/columnDesc";
+    import { getAttrType} from "@/api/url/prodInfo";
     export default {
         components: {
             prodDiffTable
@@ -249,7 +249,7 @@
                 }
                 //中文描述
                 for(let s=0; s<merges.length; s++){
-                    merges[s].name = getColumnDesc(merges[s].name)
+                    merges[s].name = getAttrType(merges[s].name)
                 }
                 return merges
             },

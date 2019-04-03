@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import {getColumnDesc} from '@/utils/columnDesc'
+    import { getAttrType} from "@/api/url/prodInfo";
     import {getProdCompareDiff} from "@/api/url/prodInfo";
     export default {
         props: {

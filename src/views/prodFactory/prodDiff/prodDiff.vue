@@ -60,8 +60,7 @@
 </template>
 
 <script>
-
-import {getColumnDesc} from '@/utils/columnDesc'
+    import { getAttrType} from "@/api/url/prodInfo";
 import DcSwitch from "@/components/widgets/DcSwitch";
 export default {
     components: { DcSwitch },
@@ -220,7 +219,7 @@ export default {
                    if (diff == null || diff == undefined) {
                        diff = attrValue;
                    }
-                   const keyDesc = getColumnDesc(attrKey);
+                   const keyDesc = getAttrType(attrKey);
                    if (diff != attrValue) {
                        columnOld.push({title: attrValue, diff: true});
                        columnNew.push({title: diff, diff: true});
@@ -266,7 +265,7 @@ export default {
            //源参数不为空时候 增加参数处理
            for(let newKey in prodDiff){
                if(prodDefines[newKey] == undefined){
-                   let descNew= getColumnDesc(newKey.substring(newKey.lastIndexOf('.')+1));
+                   let descNew= getAttrType(newKey.substring(newKey.lastIndexOf('.')+1));
                    columnDesc.push({title: descNew});
                    columnDesc.push({ divider: true, inset: true });
                    columnNew.push({title: prodDiff[newKey].attrValue});
@@ -275,7 +274,7 @@ export default {
            }
        } else{
            for(let index in prodDiff){
-               let desc= getColumnDesc(index.substring(index.lastIndexOf('.')+1));
+               let desc= getAttrType(index.substring(index.lastIndexOf('.')+1));
                columnDesc.push({title: desc});
                columnDesc.push({ divider: true, inset: true });
                columnNew.push({title: prodDiff[index].attrValue});

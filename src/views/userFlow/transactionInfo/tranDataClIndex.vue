@@ -263,9 +263,7 @@
   import { getDiffList } from "@/api/url/prodInfo";
   import { getDiffTable } from "@/api/url/prodInfo";
   import {PrintInfo} from '@/utils/print/print'
-  import {getColumnDesc_} from '@/utils/columnDesc'
-  import {getColumnDesc} from '@/utils/columnDesc'
-
+  import { getAttrType} from "@/api/url/prodInfo";
   import DcTextField from '@/components/widgets/DcTextField'
   import { getProdData } from "@/api/prod";
   import download2 from '@/utils/download2';
@@ -280,7 +278,6 @@ import {
         components: {
             prodDiff,
             baseTable,
-            getColumnDesc_,
             DcTextField
         },
       props: ["prodData"],
@@ -499,7 +496,7 @@ import {
                         }
                         for(const keys in column){
                             let head={};
-                            head["text"]=getColumnDesc(keys);
+                            head["text"]=getAttrType(keys);
                             head["value"]=keys;
                             heards.push(head);
                         }
@@ -654,7 +651,7 @@ import {
                 let heards=[];
                 for(const key in prodInfo[0]){
                     let head={};
-                    head["text"]=getColumnDesc_(key);
+                    head["text"]=getAttrType(key);
                     head["value"]=key;
                     heards.push(head);
                 }
@@ -679,7 +676,7 @@ import {
                 if(heards.size==0){
                     for(const key in prodChargeDiff[0]){
                         let head={};
-                        head["text"]=getColumnDesc_(key);
+                        head["text"]=getAttrType(key);
                         head["value"]=key;
                         heards.push(head);
                     }
