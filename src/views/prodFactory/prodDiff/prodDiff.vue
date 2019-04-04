@@ -95,7 +95,7 @@ export default {
             }
       },
         baseEffectProd: {},
-      prodDiffData: [
+        prodDiffData: [
         {
           prodType: "",
           items: [
@@ -140,7 +140,8 @@ export default {
             }
           ]
         }
-      ]
+      ],
+        attrType: ""
     };
   },
   computed: {
@@ -184,6 +185,7 @@ export default {
         this.assemblingDiff(data);
     },
     assemblingDiff(prodService){
+        this.attrType = getAttrType()
         const prodDefines=prodService.prodDefines;
         let prodDiff=prodService.diff;
         const prodType=prodService.prodType;
@@ -219,7 +221,7 @@ export default {
                    if (diff == null || diff == undefined) {
                        diff = attrValue;
                    }
-                   const keyDesc = getAttrType(attrKey);
+                   const keyDesc = this.getAttrDesc(attrKey);
                    if (diff != attrValue) {
                        columnOld.push({title: attrValue, diff: true});
                        columnNew.push({title: diff, diff: true});
@@ -265,7 +267,7 @@ export default {
            //源参数不为空时候 增加参数处理
            for(let newKey in prodDiff){
                if(prodDefines[newKey] == undefined){
-                   let descNew= getAttrType(newKey.substring(newKey.lastIndexOf('.')+1));
+                   let descNew= this.getAttrDesc(newKey.substring(newKey.lastIndexOf('.')+1));
                    columnDesc.push({title: descNew});
                    columnDesc.push({ divider: true, inset: true });
                    columnNew.push({title: prodDiff[newKey].attrValue});
@@ -274,7 +276,7 @@ export default {
            }
        } else{
            for(let index in prodDiff){
-               let desc= getAttrType(index.substring(index.lastIndexOf('.')+1));
+               let desc= this.getAttrDesc(index.substring(index.lastIndexOf('.')+1));
                columnDesc.push({title: desc});
                columnDesc.push({ divider: true, inset: true });
                columnNew.push({title: prodDiff[index].attrValue});
@@ -289,7 +291,23 @@ export default {
        diffList.push(columnNewList);
        diffList.push(columnOldList);
        this.prodDiffData = diffList;
-    }
+    },
+      getAttrDesc(val){
+          let desc = ""
+          if(/[a-z]/.test(val)){
+              val = val.replace(/([A-Z])/g,"_$1").toUpperCase();
+          }
+          for(let i=0; i<this.attrType.length; i++){
+              if(val == this.attrType[i].attrKey){
+                  desc = this.attrType[i].attrDesc
+                  break
+              }
+          }
+          if(desc == ""){
+              desc = val
+          }
+          return desc
+      }
   }
 };
 </script>

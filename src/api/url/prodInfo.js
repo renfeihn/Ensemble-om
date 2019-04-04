@@ -71,9 +71,8 @@ export function getProdData (prodType) {
     return reData;
 }
 //获取某个的ATTR参数的中文描述
-export function getAttrType (attrKey) {
-    const data= {attrKey: attrKey};
-    const reData=asyncPost('/getAttrType',data);
+export function getAttrType () {
+    const reData=asyncPost('/getAttrType');
     return reData;
 }
 

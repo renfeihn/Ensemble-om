@@ -346,7 +346,8 @@ import {
               prodType: [{
                   key: '',
                   value: ''
-              }]
+              }],
+              attrType: ""
           }
       },
        created() {
@@ -356,6 +357,7 @@ import {
            this.getDiffProdData();
        },
       mounted() {
+          this.attrType = getAttrType()
           //获取当前操作日期
           this.getDate()
           //初始化流程信息
@@ -496,7 +498,7 @@ import {
                         }
                         for(const keys in column){
                             let head={};
-                            head["text"]=getAttrType(keys);
+                            head["text"]=this.getAttrDesc(keys);
                             head["value"]=keys;
                             heards.push(head);
                         }
@@ -651,7 +653,7 @@ import {
                 let heards=[];
                 for(const key in prodInfo[0]){
                     let head={};
-                    head["text"]=getAttrType(key);
+                    head["text"]=this.getAttrDesc(key);
                     head["value"]=key;
                     heards.push(head);
                 }
@@ -676,7 +678,7 @@ import {
                 if(heards.size==0){
                     for(const key in prodChargeDiff[0]){
                         let head={};
-                        head["text"]=getAttrType(key);
+                        head["text"]=this.getAttrDesc(key);
                         head["value"]=key;
                         heards.push(head);
                     }
@@ -697,6 +699,22 @@ import {
                 const reColumn = {"headers": heards,"column": assembleColumns}
                 this.prodCharge= reColumn;
             },
+            getAttrDesc(val){
+                let desc = ""
+                if(/[a-z]/.test(val)){
+                    val = val.replace(/([A-Z])/g,"_$1").toUpperCase();
+                }
+                for(let i=0; i<this.attrType.length; i++){
+                    if(val == this.attrType[i].attrKey){
+                        desc = this.attrType[i].attrDesc
+                        break
+                    }
+                }
+                if(desc == ""){
+                    desc = val
+                }
+                return desc
+            }
         }
     }
 </script>

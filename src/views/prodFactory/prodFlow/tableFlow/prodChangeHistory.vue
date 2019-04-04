@@ -104,10 +104,12 @@
                 data: [],
                 tranType: "0",
                 code: '',
+                attrType: [],
             }
         },
         mounted: function () {
             this.init()
+            this.attrType = getAttrType()
         },
         methods: {
             init(){
@@ -249,7 +251,7 @@
                 }
                 //中文描述
                 for(let s=0; s<merges.length; s++){
-                    merges[s].name = getAttrType(merges[s].name)
+                    merges[s].name = this.getAttrDesc(merges[s].name)
                 }
                 return merges
             },
@@ -263,6 +265,22 @@
                     }
                 }
             },
+            getAttrDesc(val){
+                let desc = ""
+                if(/[a-z]/.test(val)){
+                    val = val.replace(/([A-Z])/g,"_$1").toUpperCase();
+                }
+                for(let i=0; i<this.attrType.length; i++){
+                    if(val == this.attrType[i].attrKey){
+                        desc = this.attrType[i].attrDesc
+                        break
+                    }
+                }
+                if(desc == ""){
+                    desc = val
+                }
+                return desc
+            }
         }
 
     }

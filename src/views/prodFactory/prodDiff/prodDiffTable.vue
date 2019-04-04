@@ -158,7 +158,8 @@ export default {
                 key: '',
                 value: ''
             }],
-            tranId: ''
+            tranId: '',
+            attrType: "",
         }
     },
   computed: {
@@ -208,6 +209,7 @@ export default {
       },
       //通过交易主单号 获取单表差异信息
       getDiffTableData(tranId) {
+          this.attrType = getAttrType()
           let heads = []
           var data={'mainSeqNo': this.seqNo,"tranId": tranId};
           getDiffTable(data).then(response => {
@@ -412,7 +414,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getAttrType(key);
+                  head["text"] = this.getAttrDesc(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -444,7 +446,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getAttrType(key);
+                      head["text"]=this.getAttrDesc(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -485,7 +487,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getAttrType(key);
+                  head["text"] = this.getAttrDesc(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -520,7 +522,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getAttrType(key);
+                      head["text"]=this.getAttrDesc(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -562,7 +564,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getAttrType(key);
+                  head["text"] = this.getAttrDesc(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -594,7 +596,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getAttrType(key);
+                      head["text"]=this.getAttrDesc(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -635,7 +637,7 @@ export default {
           if(type == "change") {
               for (const key in prodInfo[0]) {
                   let head = {};
-                  head["text"] = getAttrType(key);
+                  head["text"] = this.getAttrDesc(key);
                   head["value"] = key;
                   heards.push(head);
               }
@@ -666,7 +668,7 @@ export default {
               for(const child in prodChargeDiff){
                   for(const key in prodChargeDiff[child]){
                       let head={};
-                      head["text"]=getAttrType(key);
+                      head["text"]=this.getAttrDesc(key);
                       head["value"]=key;
                       heards.push(head);
                   }
@@ -755,6 +757,23 @@ export default {
               this.prodEventDue= diffEventDue
           }
       },
+
+      getAttrDesc(val){
+          let desc = ""
+          if(/[a-z]/.test(val)){
+              val = val.replace(/([A-Z])/g,"_$1").toUpperCase();
+          }
+          for(let i=0; i<this.attrType.length; i++){
+              if(val == this.attrType[i].attrKey){
+                  desc = this.attrType[i].attrDesc
+                  break
+              }
+          }
+          if(desc == ""){
+              desc = val
+          }
+          return desc
+      }
 
   }
 };

@@ -73,10 +73,12 @@
                 prodTypeList: [],
                 prodTypeData: {},
                 prodDefineData: {},
-                prodEventData: {}
+                prodEventData: {},
+                attrType: ""
             }
         },
         created: function () {
+            this.attrType = getAttrType()
             let prodTypeList = this.$route.params.prodTypeList;
             this.module = this.$route.params.sourceModule;
             this.initData(prodTypeList);
@@ -108,7 +110,7 @@
                                 if(!this.findIn(prodTypeColumn,key)){
                                     let temp = {};
                                     temp['columnCode'] = key;
-                                    const keyDesc = getAttrType(key);
+                                    const keyDesc = this.getAttrDesc(key);
                                     temp['columnDesc'] = keyDesc;
                                     prodTypeColumn.push(temp);
                                 }
@@ -134,7 +136,7 @@
                                 if (prodData[prodCode][index][attr].assembleType == "ATTR" && !this.findIn(prodDefineColumn,prodData[prodCode][index][attr].assembleId)) {
                                     let tempAttr = {};
                                     tempAttr['columnCode'] = prodData[prodCode][index][attr].assembleId;
-                                    const attrDesc = getAttrType(prodData[prodCode][index][attr].assembleId);
+                                    const attrDesc = this.getAttrDesc(prodData[prodCode][index][attr].assembleId);
                                     tempAttr['columnDesc'] = attrDesc;
                                     prodDefineColumn.push(tempAttr);
                                 }
@@ -146,7 +148,7 @@
                                 if(prodData[prodCode][index][eventAttr].assembleType == "ATTR" && !this.findIn(prodEventColumn,prodData[prodCode][index][eventAttr].assembleId)){
                                     let tempEvent = {};
                                     tempEvent['columnCode'] = prodData[prodCode][index][eventAttr].assembleId;
-                                    const attrEventDesc = getAttrType(prodData[prodCode][index][eventAttr].assembleId);
+                                    const attrEventDesc = this.getAttrDesc(prodData[prodCode][index][eventAttr].assembleId);
                                     tempEvent['columnDesc'] = attrEventDesc;
                                     tempEvent['eventType'] = index.split("_")[0];
                                     prodEventColumn.push(tempEvent);
@@ -170,6 +172,22 @@
                     }
                 }
                 return false;
+            },
+            getAttrDesc(val){
+                let desc = ""
+                if(/[a-z]/.test(val)){
+                    val = val.replace(/([A-Z])/g,"_$1").toUpperCase();
+                }
+                for(let i=0; i<this.attrType.length; i++){
+                    if(val == this.attrType[i].attrKey){
+                        desc = this.attrType[i].attrDesc
+                        break
+                    }
+                }
+                if(desc == ""){
+                    desc = val
+                }
+                return desc
             }
         }
     }
