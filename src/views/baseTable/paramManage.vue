@@ -275,4 +275,7 @@
     .titleItem {
 
     }
+    .selected{
+        background-color:gainsboro!important;
+    }
 </style>

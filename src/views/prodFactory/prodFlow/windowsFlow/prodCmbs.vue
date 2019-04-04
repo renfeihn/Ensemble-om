@@ -167,7 +167,10 @@
                 }
                 this.titleSum = this.prodTemp.length+""
                 this.prodListDtl = this.prodTemp
-
+                for(let i=0; i<this.checkedClass.length; i++){
+                    this.checkedClass[i].class = ""
+                }
+                val.class = "select"
             },
             selectClick(val){
                 let key = val
@@ -241,5 +244,8 @@
     }
     .title {
         color: white;margin-left: auto;margin-right: auto;margin-top: 1px;margin-bottom: auto
+    }
+    .select{
+        background-color:gainsboro!important;
     }
 </style>

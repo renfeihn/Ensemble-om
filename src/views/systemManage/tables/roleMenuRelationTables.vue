@@ -50,6 +50,7 @@
 </template>
 <script>
     import {getSysTable} from "@/api/url/prodInfo";
+    import {getPkListRf} from "@/api/url/prodInfo";
     import {getPkList} from '@/views/prodFactory/prodInfo/pkListColumnInfo'
     import {filterTableChangeData} from "@/server/filterTableChangeData";
     import {saveSysTable} from "@/api/url/prodInfo";
@@ -126,7 +127,7 @@
                 let that = this
                 tempMenu["tableName"] = "OM_MENU";
                 tempMenu["columnCode"] = "MENU_ID";
-                tempMenu["columnDesc"] = "MENU_NAME"
+                tempMenu["columnDesc"] = "MENU_TITLE"
                 getPkList(tempMenu,response => {
                     that.muneRef = response
                 });

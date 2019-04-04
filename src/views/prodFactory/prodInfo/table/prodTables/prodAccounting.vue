@@ -3,7 +3,7 @@
         <v-flex md3 lg3 class="ml-3">
             <v-card class="pt-1 elevation-1">
                 <v-list>
-                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)">
+                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)" :class="item.class">
                         <v-list-tile-content>
                             <v-list-tile-title style="font-size: medium">{{ item.key }}-{{ item.lable }}</v-list-tile-title>
                         </v-list-tile-content>
@@ -13,7 +13,7 @@
 
             <v-card class="mt-1">
                 <v-list>
-                    <v-list-tile v-for="item in titleListCheck" :key="item.key" @click="chipClickCheck(key)">
+                    <v-list-tile v-for="item in titleListCheck" :key="item.key" @click="chipClickCheck(key)" :class="item.class">
                         <v-list-tile-content>
                             <v-list-tile-title style="font-size: medium">{{item.desc}}</v-list-tile-title>
                         </v-list-tile-content>
@@ -57,7 +57,8 @@
             titleListCheck: [
                 {
                     key: "checkSub",
-                    desc: "需要进行总分核对的科目"
+                    desc: "需要进行总分核对的科目",
+                    class: ""
                 }
             ],
             prodAccounting: [],
@@ -132,6 +133,7 @@
                                 }
                             }
                         }
+                        temp["class"] = ""
                         that.titleList.push(temp)
                     }
                 });
@@ -141,6 +143,13 @@
                 }
             },
             chipClick(val){
+                for(let i=0; i<this.titleList.length; i++){
+                    this.titleList[i].class = ""
+                }
+                for(let i=0; i<this.titleListCheck.length; i++){
+                    this.titleListCheck[i].class = ""
+                }
+                val.class = "select"
                 this.fixed = false
                 let feeType = val.key
                 this.selectInfo = {}
@@ -152,6 +161,13 @@
                 }
             },
             chipClickCheck(val){
+                for(let i=0; i<this.titleList.length; i++){
+                    this.titleList[i].class = ""
+                }
+                for(let i=0; i<this.titleListCheck.length; i++){
+                    this.titleListCheck[i].class = ""
+                }
+                //val.class = "select"
                 this.fixed = true
                 this.selectInfo = {}
             }
@@ -168,5 +184,8 @@
     }
     .dcMulti {
         margin-top: 10px;
+    }
+    .select{
+        background-color:gainsboro!important;
     }
 </style>

@@ -3,7 +3,7 @@
         <v-flex md3 lg3 class="ml-3">
             <v-card>
                 <v-list>
-                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)">
+                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)" :class="item.class">
                         <v-list-tile-content>
                             <v-list-tile-title style="font-size: medium">{{ item.key }}-{{ item.lable }}</v-list-tile-title>
                         </v-list-tile-content>
@@ -73,6 +73,7 @@
                                 break;
                             }
                         }
+                        temp["class"] = ""
                         that.titleList.push(temp)
                     }
                 });
@@ -82,6 +83,10 @@
                 }
             },
             chipClick(val){
+                for(let i=0; i<this.titleList.length; i++){
+                    this.titleList[i].class = ""
+                }
+                val.class = "select"
                 let feeType = val.key
                 this.selectInfo = {}
                 for(let index in this.prodChargeInfo){
@@ -101,5 +106,8 @@
     }
     .title {
         color: white;margin-left: auto;margin-right: auto;margin-top: 1px;margin-bottom: auto
+    }
+    .select{
+        background-color:gainsboro!important;
     }
 </style>

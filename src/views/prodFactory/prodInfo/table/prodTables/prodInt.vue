@@ -9,7 +9,7 @@
             <!-- 不使用固定利率列表信息-->
             <v-card class="mt-1" v-show="!switchValue">
                 <v-list>
-                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)">
+                    <v-list-tile v-for="item in titleList" :key="item.key" @click="chipClick(item)" :class="item.class">
                         <v-list-tile-content>
                             <v-list-tile-title style="font-size: medium">{{ item.key }}-{{ item.lable }},{{ item.key1 }}-{{ item.lable1 }}</v-list-tile-title>
                         </v-list-tile-content>
@@ -19,7 +19,7 @@
             <!-- 使用固定利率列表信息-->
             <v-card class="mt-1" v-show="switchValue && fixedInfo.length">
                 <v-list>
-                    <v-list-tile v-for="item in FixeditleList" :key="item.key" @click="fixedChipClick(item)">
+                    <v-list-tile v-for="item in FixeditleList" :key="item.key" @click="fixedChipClick(item)" :class="item.class">
                         <v-list-tile-content>
                             <v-list-tile-title style="font-size: medium">{{ item.key }}-{{ item.lable }},{{ item.key1 }}-{{ item.lable1 }}</v-list-tile-title>
                         </v-list-tile-content>
@@ -247,6 +247,7 @@
                                     }
                                 }
                             });
+                            tempTitle["class"] = ""
                             this.FixeditleList.push(tempTitle)
                         }
                     }
@@ -274,6 +275,7 @@
                             if(that.prodInt[index].intClass == that.intClass[intKey].key){
                                 temp["key1"] = that.intClass[intKey].key;
                                 temp["lable1"] = that.intClass[intKey].desc;
+                                temp["class"] = ""
                             }
                         }
                         that.titleList.push(temp)
@@ -290,6 +292,10 @@
                 this.tag = "";
                 let eventType = val.key
                 let intClass = val.key1
+                for(let i=0; i<this.titleList.length; i++){
+                    this.titleList[i].class = ""
+                }
+                val.class = "select"
                 for(let index in this.prodInt){
                     if(eventType == this.prodInt[index].eventType && intClass == this.prodInt[index].intClass){
                         this.selectInfo = this.prodInt[index]
@@ -300,6 +306,10 @@
             },
             fixedChipClick(val){
                 //使用固定利率时候  点击列表事件
+                for(let i=0; i<this.FixeditleList.length; i++){
+                    this.FixeditleList[i].class = ""
+                }
+                val.class = "select"
                 this.fixedIndex = val.index
             },
             //查看利率详细信息，弹出框关闭事件
@@ -443,5 +453,8 @@
     .closeClass{
         color: white;
         margin-top: -2%;
+    }
+    .select{
+        background-color:gainsboro!important;
     }
 </style>
