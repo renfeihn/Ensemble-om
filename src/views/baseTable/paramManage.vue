@@ -78,6 +78,7 @@
     import {getTableList} from "@/api/url/prodInfo";
     import { getFlowList } from "@/api/url/prodInfo";
 
+    import {getSysTable} from "@/api/url/prodInfo";
 
     export default {
         components: {
@@ -90,11 +91,7 @@
                 titleNum: "",
                 action: 'KBS',
                 mainFlowInfo: [],
-                items: [
-                    {title: '核心系统',name: 'KBS', class: '',icon: 'settings',color: "blue"},
-                    {title: '核算系统',name: 'GLR', class: '',icon: 'settings',color: "blue"},
-                    {title: '利率市场化',name: 'UP', class: '',icon: 'settings',color: "blue"}
-                ],
+                items: [],
                 window: 0,
                 windowItem: 'windowItem',
                 windowTitle: 'windowTitle',
@@ -129,9 +126,26 @@
             }
         },
         created () {
-            this.getParaTable()
+            this.getParaTable();
+            this.getSystem();
         },
         methods: {
+            getSystem() {
+                let that = this;
+                that.items = [];
+                let sysInfo = {};
+                getSysTable("OM_SYSTEM_ORG").then(function (response) {
+                    sysInfo = response.data.data.columnInfo;
+                    for(let index in sysInfo){
+                        let temp = {};
+                        temp["name"] = sysInfo[index].systemId;
+                        temp["title"] = sysInfo[index].systemDesc;
+                        temp["icon"] = "settings";
+                        temp["color"] = "blue";
+                        that.items.push(temp);
+                    }
+                });
+            },
             actionTag(item) {
                 this.action = item.name;
                 let that=this;
