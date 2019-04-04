@@ -272,52 +272,56 @@
             },
 
             save () {
-                let changeItem = {}
-                if(this.editedItem.eidtColumns != null){
-                    let eidtColumnss = ""
-                    for(let i=0; i<this.editedItem.eidtColumns.length; i++){
-                        if(eidtColumnss == ""){
-                            eidtColumnss = this.editedItem.eidtColumns[i]
-                        }else{
-                            eidtColumnss = eidtColumnss +","+ this.editedItem.eidtColumns[i]
+                if(this.editedItem.searchColumn.length > 2){
+                    this.sweetAlert('info', "检索条件不得超过两个!")
+                }else{
+                    let changeItem = {}
+                    if(this.editedItem.eidtColumns != null){
+                        let eidtColumnss = ""
+                        for(let i=0; i<this.editedItem.eidtColumns.length; i++){
+                            if(eidtColumnss == ""){
+                                eidtColumnss = this.editedItem.eidtColumns[i]
+                            }else{
+                                eidtColumnss = eidtColumnss +","+ this.editedItem.eidtColumns[i]
+                            }
                         }
+                        changeItem['eidtColumns'] = eidtColumnss
                     }
-                    changeItem['eidtColumns'] = eidtColumnss
-                }
-                if(this.editedItem.searchColumn != null){
-                    let searchColumns = ""
-                    for(let i=0; i<this.editedItem.searchColumn.length; i++){
-                        if(searchColumns == ""){
-                            searchColumns = this.editedItem.searchColumn[i]
-                        }else{
-                            searchColumns = searchColumns +","+ this.editedItem.searchColumn[i]
+                    if(this.editedItem.searchColumn != null){
+                        let searchColumns = ""
+                        for(let i=0; i<this.editedItem.searchColumn.length; i++){
+                            if(searchColumns == ""){
+                                searchColumns = this.editedItem.searchColumn[i]
+                            }else{
+                                searchColumns = searchColumns +","+ this.editedItem.searchColumn[i]
+                            }
                         }
+                        changeItem['searchColumn'] = searchColumns
                     }
-                    changeItem['searchColumn'] = searchColumns
-                }
-                changeItem['tableName'] = this.editedItem.tableName
-                changeItem['tableDesc'] = this.editedItem.tableDesc
-                changeItem['system'] = this.editedItem.system
-                changeItem['modelId'] = this.editedItem.modelId
-                changeItem['parameter'] = this.editedItem.parameter
+                    changeItem['tableName'] = this.editedItem.tableName
+                    changeItem['tableDesc'] = this.editedItem.tableDesc
+                    changeItem['system'] = this.editedItem.system
+                    changeItem['modelId'] = this.editedItem.modelId
+                    changeItem['parameter'] = this.editedItem.parameter
 
-                if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], changeItem)
-                } else {
-                    this.desserts.push(changeItem)
-                }
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_TABLE_LIST"
-                this.backValue.keySet = "TABLE_NAME"
-                this.sourceData = this.copy(this.desserts,this.sourceData)
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        this.sweetAlert('success',"提交成功!")
+                    if (this.editedIndex > -1) {
+                        Object.assign(this.desserts[this.editedIndex], changeItem)
+                    } else {
+                        this.desserts.push(changeItem)
                     }
-                })
-                this.close()
+                    //保存数据落库
+                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                    this.backValue.userName = sessionStorage.getItem("userId")
+                    this.backValue.tableName = "OM_TABLE_LIST"
+                    this.backValue.keySet = "TABLE_NAME"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
+                    saveSysTable(this.backValue).then(response => {
+                        if(response.status === 200){
+                            this.sweetAlert('success',"提交成功!")
+                        }
+                    })
+                    this.close()
+                }
             },
             //对象浅复制
             copy(obj1,obj2) {
