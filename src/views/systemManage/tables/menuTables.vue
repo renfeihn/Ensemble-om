@@ -25,7 +25,10 @@
                                     <v-text-field v-model="editedItem.menuId" label="菜单ID"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="editedItem.menuName" label="菜单名称"></v-text-field>
+                                    <v-text-field v-model="editedItem.menuParams" label="菜单参数"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md6>
+                                    <v-text-field v-model="editedItem.menuTitle" label="菜单名称"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-select v-model="editedItem.menuParentId" label="父级菜单" :items="parent" item-text="value" item-value="key"></v-select>
@@ -123,7 +126,7 @@
             editedItem: {
                 menuSeqNo: '',
                 menuId: '',
-                menuName: '',
+                menuParams: '',
                 menuTitle: '',
                 menuParentId: '',
                 menuLevel: '',
@@ -134,7 +137,7 @@
             defaultItem: {
                 menuSeqNo: '',
                 menuId: '',
-                menuName: '',
+                menuParams: '',
                 menuTitle: '',
                 menuParentId: '',
                 menuLevel: '',
@@ -173,7 +176,7 @@
                         if(that.desserts[i].menuLevel === userLevel){
                             let temp={}
                             temp["key"] = that.desserts[i].menuId
-                            temp["value"] = that.desserts[i].menuName
+                            temp["value"] = that.desserts[i].menuTitle
                             that.parent.push(temp)
                         }
                     }
@@ -249,7 +252,7 @@
                 }
                 if(this.editedItem.menuId == []){
                     alert("菜单ID不能为空")
-                }else if(this.editedItem.menuName == []){
+                }else if(this.editedItem.menuTitle == []){
                     alert("菜单名称不能为空")
                 }else if(this.editedItem.menuLevel == []){
                     alert("菜单等级不能为空")

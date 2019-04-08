@@ -94,7 +94,8 @@
                 inputIsNull: false,
                 inputNotNull: false,
                 editSelected: {},
-                tableName: ""
+                tableName: "",
+                attr: {}
             }
         },
         watch: {
@@ -121,6 +122,7 @@
                 this.$emit('changeNum',this.num,this.editSelected)
             },
             selectedAction() {
+                this.attr = getAttrInfo()
                 const selected=this._props.selected;
                 const columns=this._props.columns;
                 this.tableName = this._props.tableName;
@@ -132,8 +134,7 @@
                         if(value==undefined){
                             value=''
                         }
-                        const dataSource = getAttrInfo();
-                        let column = dataSource[key];
+                        let column = this.getAttr(key);
                         if (column != undefined && column != 'undefined'){
                             column['value']=value
                             column['key']=columns[index].key
@@ -151,6 +152,13 @@
             },
             close() {
                 this.$emit("editAction",'close')
+            },
+            getAttr(key){
+                for(let n in this.attr){
+                    if(n == key){
+                        return this.attr[key]
+                    }
+                }
             }
         }
     }
