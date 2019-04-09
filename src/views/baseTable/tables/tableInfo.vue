@@ -185,7 +185,7 @@
             //组装检索条件
             getSearch(val){
                 this.search = []
-                if(val != null){
+                if(val != null && val != ""){
                     let searchColumns = val.split(",")
                     for(let i=0; i<searchColumns.length; i++){
                         let value = []

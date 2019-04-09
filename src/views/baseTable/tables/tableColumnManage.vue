@@ -56,7 +56,7 @@
                                     <v-select v-model="editedItem.company" label="法人代码" :items="fmCompany" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key" @change="changeValue()"></v-select>
+                                    <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key" @change="changeValue()" clearable></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="show">
                                     <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数"></v-text-field>

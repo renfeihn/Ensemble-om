@@ -15,11 +15,11 @@
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
                 </v-btn>
+                <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+                    <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+                </v-toolbar>
                 <v-card>
-                    <v-card-title>
-                        <span style="color: #00b0ff;font-size: x-large;margin-left: 5%">{{ formTitle }}</span>
-                    </v-card-title>
-                    <v-card-text style="margin-top: -10%">
+                    <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs6 sm6 md6 v-if="disabled=='true'">
@@ -272,9 +272,8 @@
             },
 
             save () {
-                if(this.editedItem.searchColumn.length > 2){
-                    this.sweetAlert('info', "检索条件不得超过两个!")
-                }else{
+                let error = this.getError()
+                if(error == false){
                     let changeItem = {}
                     if(this.editedItem.eidtColumns != null){
                         let eidtColumnss = ""
@@ -307,6 +306,7 @@
                     if (this.editedIndex > -1) {
                         Object.assign(this.desserts[this.editedIndex], changeItem)
                     } else {
+                        changeItem['eidtColumns'] = "ALL"
                         this.desserts.push(changeItem)
                     }
                     //保存数据落库
@@ -322,6 +322,38 @@
                     })
                     this.close()
                 }
+
+            },
+            getError(){
+                let error = false
+                if(this.editedItem.tableName == "" || this.editedItem.tableName == undefined){
+                    this.sweetAlert('info', "交易ID不能为空!")
+                    error = true
+                } else if(this.editedItem.tableDesc == "" || this.editedItem.tableDesc == undefined){
+                    this.sweetAlert('info', "交易名称不能为空!")
+                    error = true
+                } else if(this.editedItem.system == "" || this.editedItem.system == undefined){
+                    this.sweetAlert('info', "所属系统不能为空!")
+                    error = true
+                } else if(this.editedItem.parameter == "" || this.editedItem.parameter == undefined){
+                    this.sweetAlert('info', "参数类型不能为空!")
+                    error = true
+                } else{
+                    for(let i=0; i<this.desserts.length; i++){
+                        if(this.editedItem.tableName == this.desserts[i].tableName){
+                            this.sweetAlert('info', "交易ID不能重复!")
+                            error = true
+                            break
+                        }
+                    }
+                }
+                if(this.show == true){
+                    if(this.editedItem.searchColumn.length > 2){
+                        this.sweetAlert('info', "检索条件不得超过两个!")
+                        error = true
+                    }
+                }
+                return error
             },
             //对象浅复制
             copy(obj1,obj2) {
