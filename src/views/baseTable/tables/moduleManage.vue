@@ -15,11 +15,11 @@
                 <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
                     <td style="color: white;margin-left: 100px">添加</td>
                 </v-btn>
+                <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+                    <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+                </v-toolbar>
                 <v-card>
-                    <v-card-title>
-                        <span style="color: #00b0ff;font-size: x-large;margin-left: 5%">{{ formTitle }}</span>
-                    </v-card-title>
-                    <v-card-text style="margin-top: -10%">
+                    <v-card-text style="padding-top: 0px">
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12 sm12 md12 v-if="disabled=='true'">
@@ -60,14 +60,14 @@
 
                 <td>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
-                        <v-btn flat icon="edit" slot="activator">
-                            <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
+                        <v-btn flat icon="edit" slot="activator" @click="editItem(props.item)">
+                            <v-icon small class="mr-2" style="color: #0d47a1">edit</v-icon>
                         </v-btn>
                         <span>修改</span>
                     </v-tooltip>
                     <v-tooltip bottom color="red" style="margin-left: -20px">
-                        <v-btn flat icon="delete" slot="activator">
-                            <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
+                        <v-btn flat icon="delete" slot="activator" @click="deleteItem(props.item)">
+                            <v-icon small style="color: red">delete</v-icon>
                         </v-btn>
                         <span>删除</span>
                     </v-tooltip>

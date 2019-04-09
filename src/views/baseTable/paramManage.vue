@@ -144,6 +144,7 @@
                         temp["color"] = "blue";
                         that.items.push(temp);
                     }
+                    that.actionTag(that.items[0])
                 });
             },
             actionTag(item) {

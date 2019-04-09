@@ -19,7 +19,7 @@
                     <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
                 </v-toolbar>
                 <v-card>
-                    <v-card-text>
+                    <v-card-text style="padding-top: 0px">
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs6 sm6 md6 v-if="disabled=='true'">
@@ -68,14 +68,14 @@
                 <td>{{ props.item.eidtColumns }}</td>
                 <td>
                     <v-tooltip bottom color="blue" style="margin-left: -20px">
-                        <v-btn flat icon="edit" slot="activator">
-                            <v-icon small class="mr-2" @click="editItem(props.item)" style="color: #0d47a1">edit</v-icon>
+                        <v-btn flat icon="edit" slot="activator" @click="editItem(props.item)">
+                            <v-icon small class="mr-2" style="color: #0d47a1">edit</v-icon>
                         </v-btn>
                         <span>修改</span>
                     </v-tooltip>
                     <v-tooltip bottom color="red" style="margin-left: -20px">
-                        <v-btn flat icon="delete" slot="activator">
-                            <v-icon small @click="deleteItem(props.item)" style="color: red">delete</v-icon>
+                        <v-btn flat icon="delete" slot="activator" @click="deleteItem(props.item)">
+                            <v-icon small style="color: red">delete</v-icon>
                         </v-btn>
                         <span>删除</span>
                     </v-tooltip>

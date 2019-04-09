@@ -81,6 +81,7 @@
                 getSysTable("OM_TABLE_LIST").then(function (response) {
                     that.titleNum = response.data.data.columnInfo.length
                     that.title = "交易数量"
+                    that.actionTag(that.items[0])
                 });
             },
             actionTag(item) {
