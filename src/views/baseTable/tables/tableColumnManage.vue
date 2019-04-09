@@ -41,16 +41,16 @@
                                     <v-select v-model="editedItem.columnClass" label="参数分类" :items="mbAttrClass" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.useMethod" label="使用方式"></v-text-field>
+                                    <v-select v-model="editedItem.useMethod" label="使用方式" :items="useMethod" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.valueMethod" label="数据模型" :items="valueMethodRf" item-text="value" item-value="key" @change="change()"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.setValueFlag" label="参数值设置方式"></v-text-field>
+                                    <v-text-field v-model="editedItem.setValueFlag" label="是否多选"></v-text-field>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.busiCategory" label="业务分类"></v-text-field>
+                                    <v-select v-model="editBusiCategory" label="业务分类" :items="busiCategory" item-text="value" item-value="key" multiple></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
                                     <v-select v-model="editedItem.company" label="法人代码" :items="fmCompany" item-text="value" item-value="key"></v-select>
@@ -136,55 +136,91 @@
             attrType: [
                 {
                     key: "STRING",
-                    value: "STRING"
+                    value: "STRING-STRING"
                 },
                 {
                     key: "DATE",
-                    value: "DATE"
+                    value: "DATE-DATE"
                 },
                 {
                     key: "DOUBLE",
-                    value: "DOUBLE"
+                    value: "DOUBLE-DOUBLE"
                 }
+            ],
+            useMethod: [
+                {
+                    key: "EVAL",
+                    value: "EVAL-赋值类",
+                },
+                {
+                    key: "CTR",
+                    value: "CTR-控制类",
+                },
+                {
+                    key: "IND",
+                    value: "IND-处理逻辑",
+                },
+                {
+                    key: "DESC",
+                    value: "DESC-静态描述",
+                },
+            ],
+            busiCategory: [
+                {
+                    key: "RB",
+                    value: "RB-存款",
+                },
+                {
+                    key: "CL",
+                    value: "CL-贷款",
+                },
+                {
+                    key: "MM",
+                    value: "MM-货币市场",
+                },
+                {
+                    key: "GL",
+                    value: "GL-总账",
+                },
             ],
             valueMethodRf: [
                 {
                     key: "RF",
-                    value: "数据来源他表"
+                    value: "RF-数据来源他表"
                 },
                 {
                     key: "VL",
-                    value: "固定备选数据"
+                    value: "VL-固定备选数据"
                 },
                 {
                     key: "FD",
-                    value: "手动输入"
+                    value: "FD-手动输入"
                 },
                 {
                     key: "YN",
-                    value: "YN"
+                    value: "YN-YN"
                 }
             ],
             columnTypeRf: [
                 {
                     key: "select",
-                    value: "下拉选择"
+                    value: "select-下拉选择"
                 },
                 {
                     key: "input",
-                    value: "手动输入"
+                    value: "input-手动输入"
                 },
                 {
                     key: "switch",
-                    value: "开关"
+                    value: "switch-开关"
                 },
                 {
                     key: "data",
-                    value: "日期控件"
+                    value: "data-日期控件"
                 },
                 {
                     key: "tree",
-                    value: "树形结构"
+                    value: "tree-树形结构"
                 }
             ],
             headers: [
@@ -217,9 +253,12 @@
             editedItem: {
                 columnId: '',
                 columnDesc: '',
+                attrType: '',
 //                valueType: '',
 //                valueLength: '',
                 columnType: '',
+                columnClass: '',
+                useMethod: '',
                 valueMethod: '',
                 valueScore: '',
                 valueScoreColumn: ''
@@ -240,6 +279,7 @@
             fmCompany: [],
             mbAttrClass: [],
             show: true,
+            editBusiCategory: [],
         }),
 
         computed: {
@@ -288,12 +328,12 @@
                     for(let j=0; j<cls.length; j++){
                         let atr = {}
                         atr["key"] = cls[j].attrClass
-                        atr["value"] = cls[j].attrClassDesc
+                        atr["value"] = cls[j].attrClass+"-"+cls[j].attrClassDesc
                         that.mbAttrClass.push(atr)
                     }
                     let par = {}
                     par["key"] = "PARAM"
-                    par["value"] = "参数"
+                    par["value"] = "PARAM-参数"
                     that.mbAttrClass.push(par)
                 });
             },
@@ -334,9 +374,13 @@
             editItem (item) {
                 this.editedIndex = this.desserts.indexOf(item)
                 this.editedItem = Object.assign({}, item)
+                this.changeValue()
                 this.dialog = true
                 this.disabled = "true";
                 this.valueScoreColumn = []
+                if(this.editedItem.busiCategory != undefined){
+                    this.editBusiCategory = this.editedItem.busiCategory.split(",")
+                }
                 if(this.editedItem.valueMethod == "RF"){
                     this.changeValue()
                     let value = this.editedItem.valueScoreColumn.split(",")
@@ -376,17 +420,22 @@
             },
             //保存数据落库
             save () {
-                let num = true
-                if(this.editedItem.valueMethod == "RF"){
-                    if(this.valueScoreColumn.length != 2){
-                        this.sweetAlert('info', "数据参数必须为两个!")
-                        num = false
-                    }
-                }
+                let num = this.getError()
                 if(num == true){
                     let map = {}
                     if (this.editedIndex > -1) {
                         //更新
+                        //业务分类组装
+                        if(this.editBusiCategory.length != 0){
+                            for(let i=0; i<this.editBusiCategory.length; i++){
+                                if(i == 0){
+                                    this.editedItem.busiCategory = this.editBusiCategory[i]
+                                }
+                                if(i != 0){
+                                    this.editedItem.busiCategory = this.editedItem.busiCategory+","+this.editBusiCategory[i]
+                                }
+                            }
+                        }
                         if(this.valueScoreColumn.length != 0){
                             this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
                         }
@@ -395,6 +444,17 @@
                         Object.assign(this.desserts[this.editedIndex], this.editedItem)
                     } else {
                         //新增
+                        //业务分类组装
+                        if(this.editBusiCategory.length != 0){
+                            for(let i=0; i<this.editBusiCategory.length; i++){
+                                if(i == 0){
+                                    this.editedItem.busiCategory = this.editBusiCategory[i]
+                                }
+                                if(i != 0){
+                                    this.editedItem.busiCategory = this.editedItem.busiCategory+","+this.editBusiCategory[i]
+                                }
+                            }
+                        }
                         if(this.valueScoreColumn.length != 0){
                             this.editedItem.valueScoreColumn = this.valueScoreColumn[0]+","+this.valueScoreColumn[1]
                         }
@@ -412,6 +472,50 @@
                     });
                     this.close()
                 }
+            },
+            //校验
+            getError(){
+                let num = true
+                let key = false
+                const dataSource = getAttrInfo()
+                for(let i in dataSource){
+                    if(i == this.editedItem.columnId){
+                        key = true
+                        break
+                    }
+                }
+                if(this.editedItem.columnId == ""){
+                    this.sweetAlert('info', "字段ID不能为空!")
+                    num = false
+                } else if(key == true){
+                    this.sweetAlert('info', "字段ID不能重复!")
+                    num = false
+                } else if(this.editedItem.columnDesc == ""){
+                    this.sweetAlert('info', "字段名称不能为空!")
+                    num = false
+                } else if(this.editedItem.attrType == ""){
+                    this.sweetAlert('info', "数据类型不能为空!")
+                    num = false
+                }else if(this.editedItem.columnType == ""){
+                    this.sweetAlert('info', "字段属性不能为空!")
+                    num = false
+                }else if(this.editedItem.columnClass == ""){
+                    this.sweetAlert('info', "参数分类不能为空!")
+                    num = false
+                }else if(this.editedItem.useMethod == ""){
+                    this.sweetAlert('info', "使用方式不能为空!")
+                    num = false
+                }else if(this.editedItem.valueMethod == ""){
+                    this.sweetAlert('info', "数据模型不能为空!")
+                    num = false
+                }
+                if(this.editedItem.valueMethod == "RF"){
+                    if(this.valueScoreColumn.length != 2){
+                        this.sweetAlert('info', "数据参数必须为两个!")
+                        num = false
+                    }
+                }
+                return num
             },
             //attrType表中的基础数据
             getAttrType(val) {

@@ -29,7 +29,7 @@
                                 ></dc-multiselect-table>
                             </div>
                         </v-flex>
-                        <v-flex xd2 lg2>
+                        <v-flex xd2 lg2 v-if="search.length != 0">
                             <a-button type="primary" @click="find" class="ml-2">查找</a-button>
                             <a-button type="primary" @click="clean" class="ml-2">重置</a-button>
                         </v-flex>

@@ -1,76 +1,68 @@
 <template>
-    <v-card>
-        <v-card-text>
-            <v-form v-model="valid" v-for="(keyData ,key ,index) in editSelected" v-bind:key="key">
-                <v-layout row wrap>
-                    <v-flex md12 lg12>
-                        <dc-text-field-table
-                                v-if="keyData.columnType=='input'"
-                                v-model="keyData.value"
-                                :counter="10"
-                                :isKey="keyData.key"
-                                :lengths="keyData.lengths"
-                                :dataIndex="keyData.dataIndex"
-                                :childPd="childPd"
-                                :isNotNull="keyData.isNull"
-                                :label="keyData.columnDesc"
-                                :labelDesc="keyData.columnDesc"
-                                required
-                                v-on:changeNum="changeNumChild"
-                        ></dc-text-field-table>
-                        <dc-text-field-table
-                                v-if="keyData.columnType == 'select' && keyData.valueScore.tableName == tableName"
-                                v-model="keyData.value"
-                                :counter="10"
-                                :isKey="keyData.key"
-                                :lengths="keyData.lengths"
-                                :dataIndex="keyData.dataIndex"
-                                :childPd="childPd"
-                                :isNotNull="keyData.isNull"
-                                :label="keyData.columnDesc"
-                                :labelDesc="keyData.columnDesc"
-                                required
-                                v-on:changeNum="changeNumChild"
-                        ></dc-text-field-table>
-                        <dc-multiselect-table
-                                v-if="keyData.columnType == 'select' && keyData.valueScore.tableName != tableName"
-                                v-on:changeNum="changeNumChild"
-                                :isKey="keyData.key"
-                                :childPd="childPd"
-                                :isNotNull="keyData.isNull"
-                                :labelDesc="keyData.columnDesc"
-                                v-model="keyData.value"
-                                :options="keyData.valueScore"
-                                class="dcMulti"
-                                :isMultiSelect=false
-                        ></dc-multiselect-table>
-                        <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
-                                   v-model="keyData.value"></dc-switch>
-                        <dc-date class="dcDate" :showEdit="showEdit" v-if="keyData.columnType == 'date'"
-                                 :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="keyData.value"></dc-date>
-
-                    </v-flex>
-                </v-layout>
-            </v-form>
-            <v-spacer></v-spacer>
-            <v-flex mx-5>
-                <v-btn
-                        color="green darken-1"
-                        flat="flat"
-                        @click="submit"
-                >
-                    确认
-                </v-btn>
-                <v-btn
-                        color="green darken-1"
-                        flat="flat"
-                        @click="close"
-                >
-                    取消
-                </v-btn>
-            </v-flex>
-        </v-card-text>
-    </v-card>
+    <div>
+        <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+            <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+        </v-toolbar>
+        <v-card>
+            <v-card-text style="margin-top: -2%">
+                <v-form v-model="valid" v-for="(keyData ,key ,index) in editSelected" v-bind:key="key">
+                    <v-layout row wrap>
+                        <v-flex md12 lg12>
+                            <dc-text-field-table
+                                    v-if="keyData.columnType=='input'"
+                                    v-model="keyData.value"
+                                    :counter="10"
+                                    :isKey="keyData.key"
+                                    :lengths="keyData.lengths"
+                                    :dataIndex="keyData.dataIndex"
+                                    :childPd="childPd"
+                                    :isNotNull="keyData.isNull"
+                                    :label="keyData.columnDesc"
+                                    :labelDesc="keyData.columnDesc"
+                                    required
+                                    v-on:changeNum="changeNumChild"
+                            ></dc-text-field-table>
+                            <dc-text-field-table
+                                    v-if="keyData.columnType == 'select' && keyData.valueScore.tableName == tableName"
+                                    v-model="keyData.value"
+                                    :counter="10"
+                                    :isKey="keyData.key"
+                                    :lengths="keyData.lengths"
+                                    :dataIndex="keyData.dataIndex"
+                                    :childPd="childPd"
+                                    :isNotNull="keyData.isNull"
+                                    :label="keyData.columnDesc"
+                                    :labelDesc="keyData.columnDesc"
+                                    required
+                                    v-on:changeNum="changeNumChild"
+                            ></dc-text-field-table>
+                            <dc-multiselect-table
+                                    v-if="keyData.columnType == 'select' && keyData.valueScore.tableName != tableName"
+                                    v-on:changeNum="changeNumChild"
+                                    :isKey="keyData.key"
+                                    :childPd="childPd"
+                                    :isNotNull="keyData.isNull"
+                                    :labelDesc="keyData.columnDesc"
+                                    v-model="keyData.value"
+                                    :options="keyData.valueScore"
+                                    class="dcMulti"
+                                    :isMultiSelect=false
+                            ></dc-multiselect-table>
+                            <dc-switch v-if="keyData.columnType == 'switch'" :labelDesc="keyData.columnDesc"
+                                       v-model="keyData.value"></dc-switch>
+                            <dc-date class="dcDate" :showEdit="showEdit" v-if="keyData.columnType == 'date'"
+                                     :disablePower="disablePower" :labelDesc="keyData.columnDesc" v-model="keyData.value"></dc-date>
+                        </v-flex>
+                    </v-layout>
+                </v-form>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn color="info" @click="submit" class="bthStyle" style="margin-left: 6%">保存</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="info" @click="close" class="bthStyle" style="margin-right: 6%">取消</v-btn>
+            </v-card-actions>
+        </v-card>
+    </div>
 </template>
 <script>
     import {getPkList} from '@/views/prodFactory/prodInfo/pkListColumnInfo'
@@ -86,7 +78,7 @@
             childPd: String,
             selected: Object,
             columns: Object,
-            tableName: String
+            tableName: String,
         },
         data() {
             return {
@@ -96,6 +88,11 @@
                 editSelected: {},
                 tableName: "",
                 attr: {}
+            }
+        },
+        computed: {
+            formTitle () {
+                return Object.keys(this.selected).length === 0 ? '新增'+this.tableName+'信息' : '修改'+this.tableName+'信息'
             }
         },
         watch: {
@@ -112,7 +109,6 @@
         },
         mounted: function() {
             this.selectedAction()
-
         },
         methods: {
             changeNumChild(num) {
@@ -163,3 +159,9 @@
         }
     }
 </script>
+<style scoped>
+    .bthStyle {
+        color: #00b0ff;
+        width: 120px;
+    }
+</style>

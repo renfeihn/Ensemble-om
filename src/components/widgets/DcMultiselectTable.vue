@@ -250,6 +250,9 @@
                 return `${value}`
             },
             nameWithLang ({ key, value }) {
+                if(key == "ALL"){
+                    value = "全部"
+                }
                 return `${key}—[${value}]`
             },
             dealNewAttr(val) {
