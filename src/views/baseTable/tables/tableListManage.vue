@@ -226,13 +226,13 @@
                 that.editedItem['system'] = changeItem.system
                 that.editedItem['modelId'] = changeItem.modelId
                 that.editedItem['parameter'] = changeItem.parameter
-                if(changeItem.searchColumn != null){
+                if(changeItem.searchColumn != null && changeItem.searchColumn != ""){
                     let searchColumns = changeItem.searchColumn.split(",")
                     that.editedItem['searchColumn'] = searchColumns
                 }else{
                     that.editedItem['searchColumn'] = []
                 }
-                if(changeItem.eidtColumns != null){
+                if(changeItem.eidtColumns != null && changeItem.eidtColumns != ""){
                     let eidtColumnss = changeItem.eidtColumns.split(",")
                     that.editedItem['eidtColumns'] = eidtColumnss
                 }else{
@@ -335,10 +335,10 @@
                 } else if(this.editedItem.system == "" || this.editedItem.system == undefined){
                     this.sweetAlert('info', "所属系统不能为空!")
                     error = true
-                } else if(this.editedItem.parameter == "" || this.editedItem.parameter == undefined){
-                    this.sweetAlert('info', "参数类型不能为空!")
+                } else if(this.editedItem.modelId == "" || this.editedItem.modelId == undefined){
+                    this.sweetAlert('info', "所属模块不能为空!")
                     error = true
-                } else{
+                } else if(this.show != true){
                     for(let i=0; i<this.desserts.length; i++){
                         if(this.editedItem.tableName == this.desserts[i].tableName){
                             this.sweetAlert('info', "交易ID不能重复!")
