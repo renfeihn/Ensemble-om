@@ -42,6 +42,15 @@
       </v-layout>
       <v-layout row wrap style="margin-top: -10px">
         <v-flex md4 lg4>
+          <v-subheader class="primary--text subheading">处理意见:</v-subheader>
+        </v-flex>
+        <v-flex md8 lg8>
+          <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.remark" single-line hide-details>
+          </v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap style="margin-top: -10px">
+        <v-flex md4 lg4>
           <v-subheader class="primary--text subheading">申请人:</v-subheader>
         </v-flex>
         <v-flex md8 lg8>
@@ -87,7 +96,8 @@
             applicationUser: '',
             applicationTime: '',
             lastOptUser: '',
-            lastOptTime: ''
+            lastOptTime: '',
+            remark: ''
         }
     };
   },
