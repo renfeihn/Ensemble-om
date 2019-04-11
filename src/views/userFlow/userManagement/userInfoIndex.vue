@@ -156,9 +156,9 @@
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
                             this.sweetAlert('success',"密码修改成功!")
-                            window.location.href='http://localhost:8080/#/'
+                            this.$router.push({name: 'Login'});
                         }
-                    })
+                    });
                 }
             },
             copy(obj1,obj2) {
