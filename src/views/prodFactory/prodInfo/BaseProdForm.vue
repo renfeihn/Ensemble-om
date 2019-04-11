@@ -80,7 +80,7 @@
                 <v-card class="elevation-2">
                     <v-card-text>
                         <down-action v-if="pendFlag==0" v-bind:editShow="editShow" v-on:listenToCopy="listenToCopy" v-on:saveProd="saveProd" v-on:tempProd="tempProd"></down-action>
-                        <pending-form v-if="pendFlag==1"></pending-form>
+                        <pending-form v-if="pendFlag==1" v-bind:prodType="prodType" v-bind:mainSeqNo="mainSeqNo"></pending-form>
                     </v-card-text>
                 </v-card>
                 <v-window v-model="onboarding" :class="depositTree" class="pt-2">
@@ -127,7 +127,6 @@
 
     import { getProdDataAsync } from "@/api/url/prodInfo";
     import {filterChangeData} from "@/server/filterChangeData";
-    import { getCheckFlowList } from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import downAction from '@/views/prodFactory/prodInfo/btn/downAction';
     import prodPageInfo from './prodPageDefine'
@@ -230,6 +229,7 @@
                     }
                 ],
                 baseProdRange: true,
+                mainSeqNo: ''
             }
         },
         watch: {
@@ -450,9 +450,24 @@
             queryProdFlow(){
                 checkProdInFlow({"prodType": this.prodType}).then(response => {
                     let ret = response.data.data.ret;
+                    let status = response.data.data.status;
+                    this.mainSeqNo = response.data.data.mainSeqNo;
+                    let desc = "";
+                    if("1" == status){
+                        desc = "产品已被编辑保存，请先操作提交或者清除！";
+                    }
+                    if("2" == status){
+                        desc = "产品已被编辑提交，等待复核！";
+                    }
+                    if("3" == status){
+                        desc = "产品已被复核，等待发布！";
+                    }
+                    if("6" == status){
+                        desc = "产品编辑被驳回，请先操作提交或者清除!";
+                    }
                     if(ret){
                         this.pendFlag = 1
-                        this.sweetAlert('info',"产品已被编辑，请先操作发布或清除！")
+                        this.sweetAlert('info',desc)
                     }
                 });
             },
@@ -482,6 +497,7 @@
                 savaProdInfo(this.targetData).then(response => {
                     if(response.status === 200) {
                         this.pendFlag = 1
+                        this.mainSeqNo = response.data.data.mainSeqNo;
                         this.sweetAlert('success',"提交成功!")
                         this.spinning= false
                         let setTaskEvent= new Event("taskList");

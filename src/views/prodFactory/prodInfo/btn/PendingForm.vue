@@ -4,7 +4,7 @@
         <v-btn color="warning" block @click='showPending=!showPending'>存在待处理的数据</v-btn>
     </v-layout>
     <div v-show="showPending">
-      <v-layout row wrap>
+      <v-layout row wrap style="margin-top: -10px">
         <v-flex md4 lg4>
           <v-subheader class="primary--text subheading">交易单号:</v-subheader>
         </v-flex>
@@ -13,16 +13,7 @@
           </v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row wrap>
-        <v-flex md4 lg4>
-          <v-subheader class="primary--text subheading">交易名称:</v-subheader>
-        </v-flex>
-        <v-flex md8 lg8>
-          <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.tranDesc" single-line hide-details>
-          </v-text-field>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
+      <v-layout row wrap style="margin-top: -10px">
         <v-flex md4 lg4>
           <v-subheader class="primary--text subheading">当前状态:</v-subheader>
         </v-flex>
@@ -31,27 +22,45 @@
           </v-text-field>
         </v-flex>
       </v-layout>
-    <v-layout row wrap>
+      <v-layout row wrap style="margin-top: -10px">
+        <v-flex md4 lg4>
+          <v-subheader class="primary--text subheading">上一操作人:</v-subheader>
+        </v-flex>
+        <v-flex md8 lg8>
+          <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.lastOptUser" single-line hide-details>
+          </v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap style="margin-top: -10px">
+        <v-flex md4 lg4>
+          <v-subheader class="primary--text subheading">上一操作时间:</v-subheader>
+        </v-flex>
+        <v-flex md8 lg8>
+          <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.lastOptTime" single-line hide-details>
+          </v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap style="margin-top: -10px">
+        <v-flex md4 lg4>
+          <v-subheader class="primary--text subheading">申请人:</v-subheader>
+        </v-flex>
+        <v-flex md8 lg8>
+          <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.applicationUser" single-line hide-details>
+          </v-text-field>
+        </v-flex>
+      </v-layout>
+    <v-layout row wrap style="margin-top: -10px">
       <v-flex md4 lg4>
-        <v-subheader class="primary--text subheading">提交人:</v-subheader>
+        <v-subheader class="primary--text subheading">申请时间:</v-subheader>
       </v-flex>
       <v-flex md8 lg8>
-        <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.userId" single-line hide-details>
-        </v-text-field>
-      </v-flex>
-    </v-layout>
-    <v-layout row wrap>
-      <v-flex md4 lg4>
-        <v-subheader class="primary--text subheading">提交时间:</v-subheader>
-      </v-flex>
-      <v-flex md8 lg8>
-        <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.tranTime" single-line hide-details>
+        <v-text-field class="primary--text mx-1" label="" disabled="false" name="title" v-model="pandingInfo.applicationTime" single-line hide-details>
         </v-text-field>
       </v-flex>
     </v-layout>
 
     <div class="text-xs-center">
-    <v-btn color="cyan" @click="dealPending" dark>
+    <v-btn color="primary lighten-2" @click="dealPending" dark style="height: 35px">
       <v-icon>done</v-icon>
       去处理
     </v-btn>
@@ -66,58 +75,55 @@
 </style>
 
 <script>
-    import { getCheckFlowList } from "@/api/url/prodInfo";
+    import { getFlowInfoByMainSeqNo } from "@/api/url/prodInfo";
     export default {
-    props: ["pendInfos"],
+    props: ["prodType","mainSeqNo"],
     data() {
     return {
         showPending: false,
         pandingInfo: {
             mainSeqNo: '',
-            tranDesc: '',
             status: '',
-            userId: '',
-            tranTime: ''
-
+            applicationUser: '',
+            applicationTime: '',
+            lastOptUser: '',
+            lastOptTime: ''
         }
     };
   },
-    mounted() {
-        this.initPendingInfo();
-    },
+  mounted() {
+      this.initPendingInfo();
+  },
   methods: {
       dealPending() {
           this.$router.push({ name: 'userIndexFlow'});
       },
       initPendingInfo() {
-          getCheckFlowList().then(response => {
-              let length = response.data.data.length
-              for (let j = 0; j < length; j++) {
-                  if (response.data.data[j].flowManage.status === "1") {
-                      this.pandingInfo.tranTime = response.data.data[j].flowCommitInfo.tranTime
-                      this.pandingInfo.userId = response.data.data[j].flowCommitInfo.userId
-                      this.pandingInfo.status = "待提交"
-                      this.pandingInfo.tranDesc = response.data.data[j].flowManage.tranDesc
-                      this.pandingInfo.mainSeqNo = response.data.data[j].flowManage.mainSeqNo
-                      break
-                  }
-                  if (response.data.data[j].flowManage.status === "2") {
-                      this.pandingInfo.tranTime = response.data.data[j].flowCommitInfo.tranTime
-                      this.pandingInfo.userId = response.data.data[j].flowCommitInfo.userId
-                      this.pandingInfo.status = "待复核"
-                      this.pandingInfo.tranDesc = response.data.data[j].flowManage.tranDesc
-                      this.pandingInfo.mainSeqNo = response.data.data[j].flowManage.mainSeqNo
-                      break
-                  }
-                  if (response.data.data[j].flowManage.status === "3") {
-                      this.pandingInfo.userId = response.data.data[j].flowCommitInfo.userId
-                      this.pandingInfo.tranTime = response.data.data[j].flowCommitInfo.tranTime
-                      this.pandingInfo.status = "待发布"
-                      this.pandingInfo.tranDesc = response.data.data[j].flowManage.tranDesc
-                      this.pandingInfo.mainSeqNo = response.data.data[j].flowManage.mainSeqNo
-                      break
+          let param = {};
+          let that = this;
+          param["prodType"] = that._props.prodType;
+          param["mainSeqNo"] = that._props.mainSeqNo;
+          //监听主单号变化  实时获取流程信息
+          getFlowInfoByMainSeqNo(param).then(function (response) {
+              console.log(response.data.data)
+              let temp = response.data.data;
+              for(let key in temp){
+                  if(key == "status"){
+                      if(temp[key] == "1"){
+                          temp[key] = "待提交";
+                      }
+                      if(temp[key] == "2"){
+                          temp[key] = "待复核";
+                      }
+                      if(temp[key] == "3"){
+                          temp[key] = "待发布";
+                      }
+                      if(temp[key] == "6"){
+                          temp[key] = "驳回待处理";
+                      }
                   }
               }
+              that.pandingInfo = temp;
           });
       }
   }

@@ -197,6 +197,13 @@ export function getDiffTable (params) {
         data: params
     });
 }
+export function getFlowInfoByMainSeqNo (params) {
+    return request({
+        url: '/getFlowInfoByMainSeqNo',
+        method: 'post',
+        data: params
+    });
+}
 
 
 export function getCheckFlowList () {

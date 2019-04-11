@@ -115,12 +115,7 @@ export default {
             for(let tId in response.data.data){
             sourceModule = response.data.data[tId].SOURCE_MODULE
         }
-//        if(sourceModule == "RB"){
-            this.$router.push({name: "tranDataIndex", params: {code: code, optValue: "发布", flowInfo: tagInfo}});
-//        }
-//        if(sourceModule == "CL") {
-//            this.$router.push({name: "tranDataIndex", params: {code: code, optValue: "发布", flowInfo: tagInfo}});
-//        }
+        this.$router.push({name: "tranDataIndex", params: {code: code, optValue: "发布", flowInfo: tagInfo}});
     });
     }
   }
