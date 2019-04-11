@@ -170,38 +170,48 @@
             confirmClick(isApproved) {
                 if(this.optKey === 3){
                     this.confirmInfo = this.checkInfo;
-                    this.confirmInfo.isApproved = isApproved
-                    tranFlowInfo(this.confirmInfo).then(response => {
-                        if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
-                            this.sweetAlert('success',"复核成功!")
-                            this.$router.push({ name: 'userIndexFlow'});
+                    if("" == this.checkInfo.remark){
+                        this.sweetAlert('info',"请输入复核意见!")
+                    }else {
+                        this.confirmInfo.isApproved = isApproved
+                        tranFlowInfo(this.confirmInfo).then(response => {
+                        if(response.status === 200 && this.confirmInfo.isApproved === "Y"){
+                            this.sweetAlert('success', "复核成功!")
+                            this.$router.push({name: 'userIndexFlow'});
                         }
-                        if(response.status === 200 && this.confirmInfo.isApproved === "N") {
-                            this.sweetAlert('success',"驳回成功!")
-                            this.$router.push({ name: 'userIndexFlow'});
-                            let setTaskEvent= new Event("taskList");
+                        if (response.status === 200 && this.confirmInfo.isApproved === "N") {
+                            this.sweetAlert('success', "驳回成功!")
+                            this.$router.push({name: 'userIndexFlow'});
+                            let setTaskEvent = new Event("taskList");
                             window.dispatchEvent(setTaskEvent);
                         }
-                    })
+                    });
+                    }
                 }
                 if(this.optKey === 4){
                     this.spinning=true
                     this.releaseInfo['downLoad']=true;
-                    this.confirmInfo = this.releaseInfo
-                    this.confirmInfo.isApproved = isApproved
-                    tranFlowRelease(this.confirmInfo).then(response => {
-                        if(response.status === 200 && this.confirmInfo.isApproved === "Y") {
-                            this.sweetAlert('success',"发布成功!")
-                            this.spinning=false
-                            this.$router.push({ name: 'userIndexFlow'});
-                        }
-                        if(response.status === 200 && this.confirmInfo.isApproved === "N") {
-                            this.sweetAlert('success',"驳回成功!")
-                            this.$router.push({ name: 'userIndexFlow'});
-                            let setTaskEvent= new Event("taskList");
-                            window.dispatchEvent(setTaskEvent);
-                        }
-                    })
+                    this.confirmInfo = this.releaseInfo;
+                    if("" == this.releaseInfo.remark){
+                        this.sweetAlert('info',"请输入发布意见!")
+                        this.spinning = false
+
+                    }else{
+                        this.confirmInfo.isApproved = isApproved
+                        tranFlowRelease(this.confirmInfo).then(response => {
+                          if(response.status === 200 && this.confirmInfo.isApproved === "Y"){
+                             this.sweetAlert('success', "发布成功!")
+                             this.spinning = false
+                             this.$router.push({name: 'userIndexFlow'});
+                          }
+                          if (response.status === 200 && this.confirmInfo.isApproved === "N") {
+                             this.sweetAlert('success', "驳回成功!")
+                             this.$router.push({name: 'userIndexFlow'});
+                             let setTaskEvent = new Event("taskList");
+                             window.dispatchEvent(setTaskEvent);
+                          }
+                        });
+                    }
                 }
             },
             setTranType(tranType,tranId){
