@@ -269,7 +269,9 @@
 
                 if(this.eidtColumns[0] == "ALL"){
                     //可见数据中的非空项
-                    this.seeValueNotNull == this.isNull
+                    for(let i=0; i<this.isNull.length; i++){
+                        this.seeValueNotNull.push(this.isNull[i].code)
+                    }
                 }else{
                     //可见数据中的非空项
                     for(let i=0; i<this.isNull.length; i++){
