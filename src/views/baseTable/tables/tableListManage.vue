@@ -244,7 +244,7 @@
             },
 
             deleteItem (item) {
-                const index = this.mafanData.indexOf(item)
+                const index = this.desserts.indexOf(item)
                 let confirms = confirm('Are you sure you want to delete this item?')
                 if(confirms == true){
                     this.desserts.splice(index, 1)

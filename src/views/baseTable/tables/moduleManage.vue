@@ -23,16 +23,16 @@
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12 sm12 md12 v-if="disabled=='true'">
-                                    <v-text-field v-model="editedItem.moduleId" label="模块ID" disabled></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
-                                    <v-text-field v-model="editedItem.moduleId" label="模块ID"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
                                     <v-select v-model="editedItem.systemId" label="所属系统" :items="system" item-text="value" item-value="key" disabled></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 v-if="disabled=='false'">
                                     <v-select v-model="editedItem.systemId" label="所属系统" :items="system" item-text="value" item-value="key"></v-select>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                    <v-text-field v-model="editedItem.moduleId" label="模块ID" disabled></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
+                                    <v-text-field v-model="editedItem.moduleId" label="模块ID"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.moduleName" label="模块名称"></v-text-field>
@@ -53,8 +53,8 @@
         </v-toolbar>
         <v-data-table :headers="headers" :items="desserts" :search="search" class="elevation-1">
             <template slot="items" slot-scope="props">
-                <td>{{ props.item.moduleId }}</td>
                 <td>{{ props.item.systemId }}</td>
+                <td>{{ props.item.moduleId }}</td>
                 <td>{{ props.item.moduleName }}</td>
                 <td>{{ props.item.moduleDesc }}</td>
 
@@ -96,8 +96,8 @@
             system: [],
             module: [],
             headers: [
-                { text: '模块ID',sortable: false,value: 'moduleId'},
                 { text: '系统ID',sortable: false,value: 'systemId'},
+                { text: '模块ID',sortable: false,value: 'moduleId'},
                 { text: '模块名称',sortable: false,value: 'moduleName' },
                 { text: '模块描述',sortable: false,value: 'moduleDesc' },
                 { text: 'Action',sortable: false }
