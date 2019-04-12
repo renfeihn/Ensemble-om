@@ -258,6 +258,9 @@ export default {
                           let newCol = tableDiffInfo[i].newData[col]
                           let oldCol = tableDiffInfo[i].oldData[col]
                           if(newCol !== oldCol){
+                              if(oldCol == ""){
+                                  oldCol = "null"
+                              }
                               tableDiffInfo[i].newData[col] = oldCol + ">" + newCol
                           }
                       }

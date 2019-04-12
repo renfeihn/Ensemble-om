@@ -129,7 +129,7 @@
                 seeColumns: [],
                 seeColumnsTable: [],
                 seeValueNotNull: [],
-                unSeeValueNotNull: [],
+                unSeeValue: [],
             };
         },
         watch: {
@@ -281,17 +281,17 @@
                             }
                         }
                     }
-                    //不可见数据中的非空项
-                    for(let i=0; i<this.isNull.length; i++){
+                    //不可见数据
+                    for(let i=0; i<this.columns.length; i++){
                         let n = 0
                         for(let j=0; j<this.seeValueNotNull.length; j++){
-                            if(this.isNull[i].code == this.eidtColumns[j]){
+                            if(this.columns[i].code == this.seeValueNotNull[j]){
                                 n++
                                 break
                             }
                         }
                         if(n == 0){
-                            this.unSeeValueNotNull.push(this.isNull[i].code)
+                            this.unSeeValue.push(this.columns[i].code)
                         }
                     }
                 }
@@ -525,8 +525,8 @@
                                 selected[key] = editSelected[key].value
                             }
                         }
-                        for(let n=0; n<this.unSeeValueNotNull.length; n++){
-                            selected[this.unSeeValueNotNull[n]] = []
+                        for(let n=0; n<this.unSeeValue.length; n++){
+                            selected[this.unSeeValue[n]] = []
                         }
                         if(this.limit(editSelected)){
                             this.dataInfo.splice(0, 0, selected)
