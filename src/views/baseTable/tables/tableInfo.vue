@@ -358,7 +358,7 @@
                 }else{
                     saveTable(this.backValue).then(response => {
                         if (response.status === 200) {
-                            this.sweetAlert('success',"提交成功!")
+                            this.sweetAlert('success',"保存成功!")
                             this.$router.push({ name: "paramManage", params: { tableName: this.tableName} });
                             let setTaskEvent= new Event("taskList");
                             window.dispatchEvent(setTaskEvent);
