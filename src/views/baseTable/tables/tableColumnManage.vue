@@ -47,7 +47,7 @@
                                     <v-select v-model="editedItem.valueMethod" label="数据模型" :items="valueMethodRf" item-text="value" item-value="key" @change="change()"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
-                                    <v-text-field v-model="editedItem.setValueFlag" label="是否多选"></v-text-field>
+                                    <v-select v-model="editedItem.setValueFlag" label="是否多选" :items="setValueFlag" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6>
                                     <v-select v-model="editBusiCategory" label="业务分类" :items="busiCategory" item-text="value" item-value="key" multiple></v-select>
@@ -126,7 +126,7 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
-    import {getAttrInfoText} from '@/api/url/prodInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
     import {getTableColumnInfo} from '@/api/url/prodInfo'
     import {saveParam} from '@/api/url/prodInfo'
     import {getParamTable} from "@/api/url/prodInfo";
@@ -170,6 +170,16 @@
                     key: "DESC",
                     value: "DESC-静态描述",
                 },
+            ],
+            setValueFlag: [
+                {
+                    key: "M",
+                    value: "M-多选",
+                },
+                {
+                    key: "S",
+                    value: "S-单选",
+                }
             ],
             busiCategory: [
                 {
@@ -286,6 +296,7 @@
             mbAttrClass: [],
             show: true,
             editBusiCategory: [],
+            dataSource: {}
         }),
 
         computed: {
@@ -346,37 +357,38 @@
             initialize () {
                 let that = this
                 //读取attr_type和attr_value表
-                getAttrInfoText().then(function (response) {
-                    const dataSource = response.data.data
-                    for(let i in dataSource){
-                        let temp = {}
-                        temp["columnId"] = i
-                        temp["columnDesc"] = dataSource[i].columnDesc
-                        temp["columnType"] = dataSource[i].columnType
-                        temp["attrType"] = dataSource[i].attrType
-                        temp["columnClass"] = dataSource[i].columnClass
-                        temp["useMethod"] = dataSource[i].useMethod
-                        temp["setValueFlag"] = dataSource[i].setValueFlag
-                        temp["busiCategory"] = dataSource[i].busiCategory
-                        temp["company"] = dataSource[i].company
-                        temp["valueMethod"] = dataSource[i].valueMethod
-                        temp["valueScore"] = dataSource[i].valueScore === undefined?"":dataSource[i].valueScore.tableName
-                        let valueScoreColumn = " "
-                        if(dataSource[i].valueMethod === "RF" && dataSource[i].valueScore !== undefined){
-                            valueScoreColumn = dataSource[i].valueScore.columnCode + "," +dataSource[i].valueScore.columnDesc
-                        }
-                        if(dataSource[i].valueMethod == "VL" && dataSource[i].valueScore !== undefined){
-                            for(let j=0; j<dataSource[i].valueScore.length; j++){
-                                valueScoreColumn =valueScoreColumn + dataSource[i].valueScore[j].key +"-" + dataSource[i].valueScore[j].value +','
-                            }
-                            valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
-                        }
-                        temp["valueScoreColumn"] = valueScoreColumn
-                        that.desserts.push(temp)
+                that.dataSource = getAttrInfo();
+                for(let i in that.dataSource){
+                    let temp = {}
+                    temp["columnId"] = i
+                    temp["columnDesc"] = that.dataSource[i].columnDesc
+                    temp["columnType"] = that.dataSource[i].columnType
+                    temp["attrType"] = that.dataSource[i].attrType
+                    temp["columnClass"] = that.dataSource[i].columnClass
+                    temp["useMethod"] = that.dataSource[i].useMethod
+                    temp["setValueFlag"] = that.dataSource[i].setValueFlag
+                    temp["busiCategory"] = that.dataSource[i].busiCategory
+                    temp["company"] = that.dataSource[i].company
+                    temp["valueMethod"] = that.dataSource[i].valueMethod
+                    temp["valueScore"] = that.dataSource[i].valueScore === undefined?"":that.dataSource[i].valueScore.tableName
+                    let valueScoreColumn = " "
+                    if(that.dataSource[i].valueMethod === "RF" && that.dataSource[i].valueScore !== undefined){
+                        valueScoreColumn = that.dataSource[i].valueScore.columnCode + "," +that.dataSource[i].valueScore.columnDesc
                     }
-                })
+                    if(that.dataSource[i].valueMethod == "VL" && that.dataSource[i].valueScore !== undefined){
+                        for(let j=0; j<that.dataSource[i].valueScore.length; j++){
+                            valueScoreColumn =valueScoreColumn + that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value +','
+                        }
+                        valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
+                    }
+                    temp["valueScoreColumn"] = valueScoreColumn
+                    that.desserts.push(temp)
+                }
             },
             addClick() {
+                this.valueScoreColumn = []
+                this.param = []
+                this.show = true
                 this.disabled = "false"
             },
             editItem (item) {
@@ -485,47 +497,53 @@
             getError(){
                 let num = true
                 let key = false
-                getAttrInfoText().then(function (response) {
-                    const dataSource = response.data.data
-                    for(let i in dataSource){
-                        if(i == this.editedItem.columnId){
-                            key = true
-                            break
-                        }
+                for(let i=0; i<this.desserts.length; i++){
+                    if(this.desserts[i].columnId == this.editedItem.columnId){
+                        key = true
+                        break
                     }
-                    if(this.editedItem.columnId == ""){
-                        this.sweetAlert('info', "字段ID不能为空!")
+                }
+                if(this.editedItem.columnId == ""){
+                    this.sweetAlert('info', "字段ID不能为空!")
+                    num = false
+                } else if(key == true){
+                    this.sweetAlert('info', "字段ID不能重复!")
+                    num = false
+                } else if(this.editedItem.columnDesc == ""){
+                    this.sweetAlert('info', "字段名称不能为空!")
+                    num = false
+                } else if(this.editedItem.attrType == ""){
+                    this.sweetAlert('info', "数据类型不能为空!")
+                    num = false
+                }else if(this.editedItem.columnType == ""){
+                    this.sweetAlert('info', "字段属性不能为空!")
+                    num = false
+                }else if(this.editedItem.columnClass == ""){
+                    this.sweetAlert('info', "参数分类不能为空!")
+                    num = false
+                }else if(this.editedItem.useMethod == ""){
+                    this.sweetAlert('info', "使用方式不能为空!")
+                    num = false
+                }else if(this.editedItem.valueMethod == ""){
+                    this.sweetAlert('info', "数据模型不能为空!")
+                    num = false
+                }
+                if(this.editedItem.valueMethod == "RF"){
+                    if(this.editedItem.valueScore == ""){
+                        this.sweetAlert('info', "数据来源表不能为空!")
                         num = false
-                    } else if(key == true){
-                        this.sweetAlert('info', "字段ID不能重复!")
-                        num = false
-                    } else if(this.editedItem.columnDesc == ""){
-                        this.sweetAlert('info', "字段名称不能为空!")
-                        num = false
-                    } else if(this.editedItem.attrType == ""){
-                        this.sweetAlert('info', "数据类型不能为空!")
-                        num = false
-                    }else if(this.editedItem.columnType == ""){
-                        this.sweetAlert('info', "字段属性不能为空!")
-                        num = false
-                    }else if(this.editedItem.columnClass == ""){
-                        this.sweetAlert('info', "参数分类不能为空!")
-                        num = false
-                    }else if(this.editedItem.useMethod == ""){
-                        this.sweetAlert('info', "使用方式不能为空!")
-                        num = false
-                    }else if(this.editedItem.valueMethod == ""){
-                        this.sweetAlert('info', "数据模型不能为空!")
+                    }else if(this.valueScoreColumn.length != 2){
+                        this.sweetAlert('info', "数据参数必须为两个!")
                         num = false
                     }
-                    if(this.editedItem.valueMethod == "RF"){
-                        if(this.valueScoreColumn.length != 2){
-                            this.sweetAlert('info', "数据参数必须为两个!")
-                            num = false
-                        }
+                }
+                if(this.editedItem.valueMethod == "VL"){
+                    if(this.editedItem.valueScoreColumn == ""){
+                        this.sweetAlert('info', "数据参数不能为空!")
+                        num = false
                     }
-                    return num
-                })
+                }
+                return num
             },
             //attrType表中的基础数据
             getAttrType(val) {
