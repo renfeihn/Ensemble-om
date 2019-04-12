@@ -367,6 +367,13 @@ export function getAttrInfo () {
     return reData;
 }
 
+export function getAttrInfoText () {
+    return request({
+        url: '/getAttrInfo',
+        method: 'post',
+    })
+}
+
 export function upload (params) {
     return request({
         url: '/upload',

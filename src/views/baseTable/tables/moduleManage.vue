@@ -53,8 +53,8 @@
         </v-toolbar>
         <v-data-table :headers="headers" :items="desserts" :search="search" class="elevation-1">
             <template slot="items" slot-scope="props">
-                <td>{{ props.item.moduleId }}</td>
                 <td>{{ props.item.systemId }}</td>
+                <td>{{ props.item.moduleId }}</td>
                 <td>{{ props.item.moduleName }}</td>
                 <td>{{ props.item.moduleDesc }}</td>
 
@@ -96,8 +96,8 @@
             system: [],
             module: [],
             headers: [
-                { text: '模块ID',sortable: false,value: 'moduleId'},
                 { text: '系统ID',sortable: false,value: 'systemId'},
+                { text: '模块ID',sortable: false,value: 'moduleId'},
                 { text: '模块名称',sortable: false,value: 'moduleName' },
                 { text: '模块描述',sortable: false,value: 'moduleDesc' },
                 { text: 'Action',sortable: false }
