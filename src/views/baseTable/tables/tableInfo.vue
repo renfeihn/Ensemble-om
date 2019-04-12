@@ -266,25 +266,31 @@
                         this.isNull.push(this.columns[n])
                     }
                 }
-                //可见数据中的非空项
-                for(let i=0; i<this.isNull.length; i++){
-                    for(let j=0; j<this.eidtColumns.length; j++){
-                        if(this.isNull[i].code == this.eidtColumns[j]){
-                            this.seeValueNotNull.push(this.isNull[i].code)
+
+                if(this.eidtColumns[0] == "ALL"){
+                    //可见数据中的非空项
+                    this.seeValueNotNull == this.isNull
+                }else{
+                    //可见数据中的非空项
+                    for(let i=0; i<this.isNull.length; i++){
+                        for(let j=0; j<this.eidtColumns.length; j++){
+                            if(this.isNull[i].code == this.eidtColumns[j]){
+                                this.seeValueNotNull.push(this.isNull[i].code)
+                            }
                         }
                     }
-                }
-                //不可见数据中的非空项
-                for(let i=0; i<this.isNull.length; i++){
-                    let n = 0
-                    for(let j=0; j<this.seeValueNotNull.length; j++){
-                        if(this.isNull[i].code == this.eidtColumns[j]){
-                            n++
-                            break
+                    //不可见数据中的非空项
+                    for(let i=0; i<this.isNull.length; i++){
+                        let n = 0
+                        for(let j=0; j<this.seeValueNotNull.length; j++){
+                            if(this.isNull[i].code == this.eidtColumns[j]){
+                                n++
+                                break
+                            }
                         }
-                    }
-                    if(n == 0){
-                        this.unSeeValueNotNull.push(this.isNull[i].code)
+                        if(n == 0){
+                            this.unSeeValueNotNull.push(this.isNull[i].code)
+                        }
                     }
                 }
             },
