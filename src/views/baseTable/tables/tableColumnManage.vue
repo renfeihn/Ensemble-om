@@ -59,7 +59,7 @@
                                     <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key" @change="changeValue()" clearable></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="show">
-                                    <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数"></v-text-field>
+                                    <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数" hint="For example: A-B,C-D"></v-text-field>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="!show">
                                     <v-select v-model="valueScoreColumn" label="数据参数" :items="param" item-text="value" item-value="key" multiple></v-select>
@@ -126,7 +126,7 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
-    import {getAttrInfo} from '@/api/url/prodInfo'
+    import {getAttrInfoText} from '@/api/url/prodInfo'
     import {getTableColumnInfo} from '@/api/url/prodInfo'
     import {saveParam} from '@/api/url/prodInfo'
     import {getParamTable} from "@/api/url/prodInfo";
@@ -355,40 +355,43 @@
                 });
             },
             initialize () {
-                let that = this
                 //读取attr_type和attr_value表
-                that.dataSource = getAttrInfo();
-                for(let i in that.dataSource){
-                    let temp = {}
-                    temp["columnId"] = i
-                    temp["columnDesc"] = that.dataSource[i].columnDesc
-                    temp["columnType"] = that.dataSource[i].columnType
-                    temp["attrType"] = that.dataSource[i].attrType
-                    temp["columnClass"] = that.dataSource[i].columnClass
-                    temp["useMethod"] = that.dataSource[i].useMethod
-                    temp["setValueFlag"] = that.dataSource[i].setValueFlag
-                    temp["busiCategory"] = that.dataSource[i].busiCategory
-                    temp["company"] = that.dataSource[i].company
-                    temp["valueMethod"] = that.dataSource[i].valueMethod
-                    temp["valueScore"] = that.dataSource[i].valueScore === undefined?"":that.dataSource[i].valueScore.tableName
-                    let valueScoreColumn = " "
-                    if(that.dataSource[i].valueMethod === "RF" && that.dataSource[i].valueScore !== undefined){
-                        valueScoreColumn = that.dataSource[i].valueScore.columnCode + "," +that.dataSource[i].valueScore.columnDesc
-                    }
-                    if(that.dataSource[i].valueMethod == "VL" && that.dataSource[i].valueScore !== undefined){
-                        for(let j=0; j<that.dataSource[i].valueScore.length; j++){
-                            valueScoreColumn =valueScoreColumn + that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value +','
+                let that = this
+                getAttrInfoText().then(function (response) {
+                    that.dataSource = response.data.data
+                    for(let i in that.dataSource){
+                        let temp = {}
+                        temp["columnId"] = i
+                        temp["columnDesc"] = that.dataSource[i].columnDesc
+                        temp["columnType"] = that.dataSource[i].columnType
+                        temp["attrType"] = that.dataSource[i].attrType
+                        temp["columnClass"] = that.dataSource[i].columnClass
+                        temp["useMethod"] = that.dataSource[i].useMethod
+                        temp["setValueFlag"] = that.dataSource[i].setValueFlag
+                        temp["busiCategory"] = that.dataSource[i].busiCategory
+                        temp["company"] = that.dataSource[i].company
+                        temp["valueMethod"] = that.dataSource[i].valueMethod
+                        temp["valueScore"] = that.dataSource[i].valueScore === undefined?"":that.dataSource[i].valueScore.tableName
+                        let valueScoreColumn = " "
+                        if(that.dataSource[i].valueMethod === "RF" && that.dataSource[i].valueScore !== undefined){
+                            valueScoreColumn = that.dataSource[i].valueScore.columnCode + "," +that.dataSource[i].valueScore.columnDesc
                         }
-                        valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
+                        if(that.dataSource[i].valueMethod == "VL" && that.dataSource[i].valueScore !== undefined){
+                            for(let j=0; j<that.dataSource[i].valueScore.length; j++){
+                                valueScoreColumn =valueScoreColumn + that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value +','
+                            }
+                            valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
+                        }
+                        temp["valueScoreColumn"] = valueScoreColumn
+                        that.desserts.push(temp)
                     }
-                    temp["valueScoreColumn"] = valueScoreColumn
-                    that.desserts.push(temp)
-                }
+                })
             },
             addClick() {
                 this.valueScoreColumn = []
                 this.param = []
                 this.show = true
+                this.editBusiCategory = []
                 this.disabled = "false"
             },
             editItem (item) {
@@ -398,6 +401,8 @@
                 this.dialog = true
                 this.disabled = "true";
                 this.valueScoreColumn = []
+                this.param = []
+                this.editBusiCategory = []
                 if(this.editedItem.busiCategory != undefined){
                     this.editBusiCategory = this.editedItem.busiCategory.split(",")
                 }
@@ -497,10 +502,12 @@
             getError(){
                 let num = true
                 let key = false
-                for(let i=0; i<this.desserts.length; i++){
-                    if(this.desserts[i].columnId == this.editedItem.columnId){
-                        key = true
-                        break
+                if(this.editedIndex == -1){
+                    for(let i=0; i<this.desserts.length; i++){
+                        if(this.desserts[i].columnId == this.editedItem.columnId){
+                            key = true
+                            break
+                        }
                     }
                 }
                 if(this.editedItem.columnId == ""){
@@ -689,16 +696,18 @@
             //选择表后获取参数列表
             changeValue(){
                 let that = this
-                getParamTable(this.editedItem.valueScore).then(function (response) {
-                    let dataInfo = response.data.data.column;
-                    that.param = []
-                    for(let i=0; i<dataInfo.length; i++){
-                        let data = {}
-                        data["key"] = dataInfo[i].code
-                        data["value"] = dataInfo[i].code + "-" + dataInfo[i].title
-                        that.param.push(data)
-                    }
-                })
+                if(that.editedItem.valueScore != ""){
+                    getParamTable(that.editedItem.valueScore).then(function (response) {
+                        let dataInfo = response.data.data.column;
+                        that.param = []
+                        for(let i=0; i<dataInfo.length; i++){
+                            let data = {}
+                            data["key"] = dataInfo[i].code
+                            data["value"] = dataInfo[i].code + "-" + dataInfo[i].title
+                            that.param.push(data)
+                        }
+                    })
+                }
             }
         }
     }

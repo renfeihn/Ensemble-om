@@ -46,7 +46,7 @@
     import systemManage from './tables/systemManage'
     import moduleManage from './tables/moduleManage'
     import {getSysTable} from "@/api/url/prodInfo";
-    import {getAttrInfo} from '@/api/url/prodInfo'
+    import {getAttrInfoText} from '@/api/url/prodInfo'
 
     export default {
         components: {
@@ -69,6 +69,7 @@
                 window: 0,
                 windowItem: 'windowItem',
                 windowTitle: 'windowTitle',
+                dataSource: {},
             }
         },
         created () {
@@ -107,11 +108,13 @@
                 if(item.name === "json"){
                     that.title = "字段数量"
                     let count = 0
-                    const dataSource = getAttrInfo();
-                    for(let i in dataSource){
-                        count++
-                    }
-                    that.titleNum = count+''
+                    getAttrInfoText().then(function (response) {
+                        that.dataSource = response.data.data
+                        for(let i in that.dataSource){
+                            count++
+                        }
+                        that.titleNum = count+''
+                    })
                 }
                 this.action = item.name;
                 item.class="selected";

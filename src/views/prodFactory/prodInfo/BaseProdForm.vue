@@ -108,7 +108,7 @@
         getProdType
     } from '@/api/url/prodInfo'
     import {
-        getAttrInfo
+        getAttrInfoText
     } from '@/api/url/prodInfo'
     import {
         savaProdInfo
@@ -436,7 +436,10 @@
                 })
             },
             initColumnInfo() {
-                this.attrColumnInfo= getAttrInfo();
+                let that = this
+                getAttrInfoText().then(function (response) {
+                    that.attrColumnInfo = response.data.data
+                })
             },
             initEventAttr(reProd) {
                 //初始化事件，指标参数
@@ -681,9 +684,8 @@
             addClick() {
                 this.addColumnPageDesc = this.prodInfo[this.activeName].text
                 //获取所有参数定义的json文件（columnInfo.json）增加到待选数据集合
-                let colInfo = getAttrInfo()
-                for(let i in colInfo){
-                    this.addColumnsRef.push(i+'--'+colInfo[i].columnDesc)
+                for(let i in this.attrColumnInfo){
+                    this.addColumnsRef.push(i+'--'+this.attrColumnInfo[i].columnDesc)
                 }
             },
             //获取mbProdDefine最大seqNo val:目标集合 pageCode：当前所属界面标志
