@@ -45,7 +45,7 @@
     import {
         getProdType
     } from '@/api/url/prodInfo'
-    import {getAttrInfoText} from '@/api/url/prodInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
 
     export default {
         components: {DcMultiselect, DcSwitch, DcTreeSelect,DcDate,DcTextField},
@@ -60,8 +60,7 @@
             disablePower: {
                 type: Boolean,
                 default: false
-            },
-            columnInfos: {},
+            }
         },
         data: () => ({
             titleList: [],
@@ -81,27 +80,24 @@
         methods: {
             init(val) {
                 //主键集合 主键在展示时候置灰 不允许修改
-                let that = this
-                getAttrInfoText().then(function (response) {
-                    that.columnInfos = response.data.data
-                    const keySet = that._props.keySet
-                    let columnList = []
-                    for(let key in val){
-                        //时间戳不在界面进行维护
-                        if(key != "tranTime" && key != "tranTimestamp") {
-                            //格式转换
-                            let keys = key.replace(/([A-Z])/g, "_$1").toUpperCase();
-                            let column = that.columnInfos[keys]
-                            let disable = that.findInKey(key,keySet);
-                            if (column != undefined && column != 'undefined') {
-                                column["key"] = key
-                                column["disable"] = disable
-                                columnList.push(column)
-                            }
+                const keySet = this._props.keySet
+                const columnInfos = getAttrInfo()
+                let columnList = []
+                for(let key in val){
+                    //时间戳不在界面进行维护
+                    if(key != "tranTime" && key != "tranTimestamp") {
+                        //格式转换
+                        let keys = key.replace(/([A-Z])/g, "_$1").toUpperCase();
+                        let column = columnInfos[keys]
+                        let disable = this.findInKey(key,keySet);
+                        if (column != undefined && column != 'undefined') {
+                            column["key"] = key
+                            column["disable"] = disable
+                            columnList.push(column)
                         }
                     }
-                    that.dataSource = columnList
-                })
+                }
+                this.dataSource = columnList
             },
             //主键匹配
             findInKey(key,keySet){

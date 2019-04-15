@@ -126,7 +126,7 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
-    import {getAttrInfoText} from '@/api/url/prodInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
     import {getTableColumnInfo} from '@/api/url/prodInfo'
     import {saveParam} from '@/api/url/prodInfo'
     import {getParamTable} from "@/api/url/prodInfo";
@@ -355,37 +355,35 @@
                 });
             },
             initialize () {
-                //读取attr_type和attr_value表
                 let that = this
-                getAttrInfoText().then(function (response) {
-                    that.dataSource = response.data.data
-                    for(let i in that.dataSource){
-                        let temp = {}
-                        temp["columnId"] = i
-                        temp["columnDesc"] = that.dataSource[i].columnDesc
-                        temp["columnType"] = that.dataSource[i].columnType
-                        temp["attrType"] = that.dataSource[i].attrType
-                        temp["columnClass"] = that.dataSource[i].columnClass
-                        temp["useMethod"] = that.dataSource[i].useMethod
-                        temp["setValueFlag"] = that.dataSource[i].setValueFlag
-                        temp["busiCategory"] = that.dataSource[i].busiCategory
-                        temp["company"] = that.dataSource[i].company
-                        temp["valueMethod"] = that.dataSource[i].valueMethod
-                        temp["valueScore"] = that.dataSource[i].valueScore === undefined?"":that.dataSource[i].valueScore.tableName
-                        let valueScoreColumn = " "
-                        if(that.dataSource[i].valueMethod === "RF" && that.dataSource[i].valueScore !== undefined){
-                            valueScoreColumn = that.dataSource[i].valueScore.columnCode + "," +that.dataSource[i].valueScore.columnDesc
-                        }
-                        if(that.dataSource[i].valueMethod == "VL" && that.dataSource[i].valueScore !== undefined){
-                            for(let j=0; j<that.dataSource[i].valueScore.length; j++){
-                                valueScoreColumn =valueScoreColumn + that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value +','
-                            }
-                            valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
-                        }
-                        temp["valueScoreColumn"] = valueScoreColumn
-                        that.desserts.push(temp)
+                //读取attr_type和attr_value表
+                that.dataSource = getAttrInfo();
+                for(let i in that.dataSource){
+                    let temp = {}
+                    temp["columnId"] = i
+                    temp["columnDesc"] = that.dataSource[i].columnDesc
+                    temp["columnType"] = that.dataSource[i].columnType
+                    temp["attrType"] = that.dataSource[i].attrType
+                    temp["columnClass"] = that.dataSource[i].columnClass
+                    temp["useMethod"] = that.dataSource[i].useMethod
+                    temp["setValueFlag"] = that.dataSource[i].setValueFlag
+                    temp["busiCategory"] = that.dataSource[i].busiCategory
+                    temp["company"] = that.dataSource[i].company
+                    temp["valueMethod"] = that.dataSource[i].valueMethod
+                    temp["valueScore"] = that.dataSource[i].valueScore === undefined?"":that.dataSource[i].valueScore.tableName
+                    let valueScoreColumn = " "
+                    if(that.dataSource[i].valueMethod === "RF" && that.dataSource[i].valueScore !== undefined){
+                        valueScoreColumn = that.dataSource[i].valueScore.columnCode + "," +that.dataSource[i].valueScore.columnDesc
                     }
-                })
+                    if(that.dataSource[i].valueMethod == "VL" && that.dataSource[i].valueScore !== undefined){
+                        for(let j=0; j<that.dataSource[i].valueScore.length; j++){
+                            valueScoreColumn =valueScoreColumn + that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value +','
+                        }
+                        valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
+                    }
+                    temp["valueScoreColumn"] = valueScoreColumn
+                    that.desserts.push(temp)
+                }
             },
             addClick() {
                 this.valueScoreColumn = []

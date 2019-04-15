@@ -108,7 +108,7 @@
         getProdType
     } from '@/api/url/prodInfo'
     import {
-        getAttrInfoText
+        getAttrInfo
     } from '@/api/url/prodInfo'
     import {
         savaProdInfo
@@ -436,10 +436,7 @@
                 })
             },
             initColumnInfo() {
-                let that = this
-                getAttrInfoText().then(function (response) {
-                    that.attrColumnInfo = response.data.data
-                })
+                this.attrColumnInfo= getAttrInfo();
             },
             initEventAttr(reProd) {
                 //初始化事件，指标参数

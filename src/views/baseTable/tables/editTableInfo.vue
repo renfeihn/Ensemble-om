@@ -71,7 +71,7 @@
     import DcTreeSelect from "@/components/widgets/DcTreeSelect";
     import DcTextFieldTable from "@/components/widgets/DcTextFieldTable";
     import DcDate from '@/components/widgets/DcDate'
-    import {getAttrInfoText} from '@/api/url/prodInfo'
+    import {getAttrInfo} from '@/api/url/prodInfo'
     export default {
         components: {DcMultiselectTable, DcSwitch, DcTreeSelect,DcDate,DcTextFieldTable},
         props: {
@@ -118,33 +118,30 @@
                 this.$emit('changeNum',this.num,this.editSelected)
             },
             selectedAction() {
-                let that = this
-                getAttrInfoText().then(function (response) {
-                    that.attr = response.data.data
-                    const selected=that._props.selected;
-                    const columns=that._props.columns;
-                    that.tableName = that._props.tableName;
-                    let locSelected={}
-                    if(columns!= undefined){
-                        for(const index in columns){
-                            const key=columns[index].code
-                            let value=selected[key]
-                            if(value==undefined){
-                                value=''
-                            }
-                            let column = that.getAttr(key);
-                            if (column != undefined && column != 'undefined'){
-                                column['value']=value
-                                column['key']=columns[index].key
-                                column['isNull']=columns[index].isNull
-                                column['lengths']=columns[index].lengths
-                                column['dataIndex']=columns[index].dataIndex
-                                locSelected[key]=column;
-                            }
+                this.attr = getAttrInfo()
+                const selected=this._props.selected;
+                const columns=this._props.columns;
+                this.tableName = this._props.tableName;
+                let locSelected={}
+                if(columns!= undefined){
+                    for(const index in columns){
+                        const key=columns[index].code
+                        let value=selected[key]
+                        if(value==undefined){
+                            value=''
                         }
-                        that.editSelected=locSelected;
+                        let column = this.getAttr(key);
+                        if (column != undefined && column != 'undefined'){
+                            column['value']=value
+                            column['key']=columns[index].key
+                            column['isNull']=columns[index].isNull
+                            column['lengths']=columns[index].lengths
+                            column['dataIndex']=columns[index].dataIndex
+                            locSelected[key]=column;
+                        }
                     }
-                })
+                    this.editSelected=locSelected;
+                }
             },
             submit() {
                 this.$emit("editAction",'submit',this.editSelected)
