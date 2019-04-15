@@ -183,6 +183,14 @@ export function getFlowList () {
         method: 'post'
     });
 }
+
+export function getParaTableInflow () {
+    return request({
+        url: '/getRelationInfoOfUndeal',
+        method: 'post'
+    });
+}
+
 export function getDiffList (params) {
     return request({
         url: '/getProdDiff',

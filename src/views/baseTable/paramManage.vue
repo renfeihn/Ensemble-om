@@ -76,7 +76,7 @@
 <script>
     import TableList from './tables/tableList'
     import {getTableList} from "@/api/url/prodInfo";
-    import { getFlowList } from "@/api/url/prodInfo";
+    import { getParaTableInflow } from "@/api/url/prodInfo";
 
     import {getSysTable} from "@/api/url/prodInfo";
 
@@ -150,14 +150,14 @@
             actionTag(item) {
                 this.action = item.name;
                 let that=this;
-                getFlowList().then(response => {
+                getParaTableInflow().then(response => {
                     that.mainFlowInfo = response.data.data
                 });
                 getTableList(this.action).then(function (response){
                     for(let i=0; i<response.data.data.tableList.length; i++){
                         let isCommit = false
                         for(let j=0; j<that.mainFlowInfo.length; j++){
-                            if(response.data.data.tableList[i].tableName === that.mainFlowInfo[j].flowManage.tranId){
+                            if(response.data.data.tableList[i].tableName === that.mainFlowInfo[j].tranId){
                                 response.data.data.tableList[i]["icon"] = "person"
                                 isCommit = true
                                 break
@@ -192,7 +192,7 @@
 
             getParaTable() {
                 let that=this;
-                getFlowList().then(response => {
+                getParaTableInflow().then(response => {
                     that.mainFlowInfo = response.data.data
                 });
                 /*此处区分交易是否已提交等待复核发布
@@ -203,7 +203,7 @@
                     for(let i=0; i<response.data.data.tableList.length; i++){
                         let isCommit = false
                         for(let j=0; j<that.mainFlowInfo.length; j++){
-                            if(response.data.data.tableList[i].tableName === that.mainFlowInfo[j].flowManage.tranId){
+                            if(response.data.data.tableList[i].tableName === that.mainFlowInfo[j].tranId){
                                 response.data.data.tableList[i]["icon"] = "person"
                                 isCommit = true
                                 break
