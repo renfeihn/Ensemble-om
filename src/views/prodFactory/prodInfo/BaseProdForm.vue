@@ -787,14 +787,15 @@
                 collect["prodDesc"] = this.prodDesc;
                 collect["sourceModule"] = this.sourceModule;
                 collect["prodRange"] = this.prodRange;
+                let color = this.collectColor
                 saveCollectProd(collect).then(response => {
                     if(response.status === 200) {
-                        if(this.collectColor == "red") {
+                        if(color == "red") {
                             this.collectColor = "write";
                             this.collectDesc = "收藏";
                             this.sweetAlert('success', "取消收藏成功!")
                         }
-                        if(this.collectColor == "write"){
+                        if(color == "write"){
                             this.collectColor = "red";
                             this.collectDesc = "取消收藏";
                             this.sweetAlert('success', "收藏成功!")
