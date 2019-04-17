@@ -229,7 +229,7 @@ export default {
               //区分数据操作类型
               let opt={};
               opt["text"]="操作类型";
-              opt["value"]= "dmlType";
+              opt["value"]= "DML_TYPE";
               heards.push(opt);
 
               //组装差异数据
@@ -247,11 +247,11 @@ export default {
                   }
                   if(tableDiffInfo[i].dmlType == 'I'){
                       tableDiffInfo[i].newData["dmlType"] = optTypeDesc
-                      assembleColumns.push(tableDiffInfo[i].newData)
+                      assembleColumns.push(this.changeDesc(tableDiffInfo[i].newData))
                   }else if(tableDiffInfo[i].dmlType == 'D'){
                       //删除数据
                       tableDiffInfo[i].oldData["dmlType"] = optTypeDesc
-                      assembleColumns.push(tableDiffInfo[i].oldData)
+                      assembleColumns.push(this.changeDesc(tableDiffInfo[i].oldData))
                   }else if(tableDiffInfo[i].dmlType == 'U'){
                       //修改数据
                       for (let col in tableDiffInfo[i].newData) {
@@ -265,7 +265,7 @@ export default {
                           }
                       }
                       tableDiffInfo[i].newData["dmlType"] = optTypeDesc
-                      assembleColumns.push(tableDiffInfo[i].newData)
+                      assembleColumns.push(this.changeDesc(tableDiffInfo[i].newData))
                   }
               }
               const column = {"headers": heards,"column": assembleColumns}
@@ -697,7 +697,6 @@ export default {
           const reColumn = {"headers": heards,"column": assembleColumns}
           this.prodAmend= reColumn;
       },
-
       assembleCLEvent(){
           const prodEvent=this.prodData.prodEvent;
           const prodEventDiff=this.prodData.diff.mbProdEvent;
@@ -760,7 +759,7 @@ export default {
               this.prodEventDue= diffEventDue
           }
       },
-
+      //中文描述
       getAttrDesc(val){
           let desc = ""
           if(/[a-z]/.test(val)){
@@ -776,8 +775,21 @@ export default {
               desc = val
           }
           return desc
+      },
+      //单表差异数据变成大写
+      getBigDesc(val){
+          if(/[a-z]/.test(val)){
+              val = val.replace(/([A-Z])/g,"_$1").toUpperCase();
+          }
+          return val
+      },
+      changeDesc(data) {
+          let desc = {}
+          for(let key in data){
+              desc[this.getBigDesc(key)] = data[key]
+          }
+          return desc
       }
-
   }
 };
 </script>

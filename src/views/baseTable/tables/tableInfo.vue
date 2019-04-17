@@ -284,8 +284,8 @@
                     //不可见数据
                     for(let i=0; i<this.columns.length; i++){
                         let n = 0
-                        for(let j=0; j<this.seeValueNotNull.length; j++){
-                            if(this.columns[i].code == this.seeValueNotNull[j]){
+                        for(let j=0; j<this.eidtColumns.length; j++){
+                            if(this.columns[i].code == this.eidtColumns[j]){
                                 n++
                                 break
                             }
@@ -526,7 +526,7 @@
                             }
                         }
                         for(let n=0; n<this.unSeeValue.length; n++){
-                            selected[this.unSeeValue[n]] = []
+                            selected[this.unSeeValue[n]] = ""
                         }
                         if(this.limit(editSelected)){
                             this.dataInfo.splice(0, 0, selected)

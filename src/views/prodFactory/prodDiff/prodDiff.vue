@@ -180,118 +180,119 @@ export default {
       }
   },
   methods: {
-    queryDespositProdData() {
-       let data= this.$props.prodData;
-        this.assemblingDiff(data);
-    },
-    assemblingDiff(prodService){
-        this.attrType = getAttrType()
-        const prodDefines=prodService.prodDefines;
-        let prodDiff=prodService.diff;
-        const prodType=prodService.prodType;
-        const baseEffectProd = prodService.baseEffectProd
-        if(baseEffectProd !== undefined) {
-            this.baseEffectProd = prodService.baseEffectProd
-            this.prodRange = baseEffectProd[prodType].prodRange
-        }
-        if(prodDiff==undefined){
-            prodDiff={};
-        }
-        let columnDesc=[];
-        let columnNew=[];
-        let columnOld=[];
-      //产品本身下参数固定组
-      //产品下属性组合
-       if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}") {
-           for (let index in prodDefines) {
-               if (prodDefines[index].assembleType != "EVENT") {
-                   let prodDefine = prodDefines[index];
-                   let attrKey = prodDefine.attrKey;
-                   let attrValue = prodDefine.attrValue;
-                   if (attrKey == undefined) {
-                       attrKey = index;
-                       attrValue = prodDefine.attrValue;
-                   }
-                   let diff = prodDiff[attrKey];
-                   let optPerm = ""
-                   if (diff !== undefined) {
-                       diff = prodDiff[attrKey].attrValue
-                       optPerm = prodDiff[attrKey].optionPermissions
-                   }
-                   if (diff == null || diff == undefined) {
-                       diff = attrValue;
-                   }
-                   const keyDesc = this.getAttrDesc(attrKey);
-                   if (diff != attrValue) {
-                       columnOld.push({title: attrValue, diff: true});
-                       columnNew.push({title: diff, diff: true});
-                       if (this.prodRange === "B") {
-                           columnDesc.push({title: keyDesc, diff: true, isBase: true});
-                       } else {
-                           columnDesc.push({title: keyDesc, diff: true});
-                       }
-                   } else {
-                       columnOld.push({title: attrValue});
-                       columnNew.push({title: diff});
-                       columnDesc.push({title: keyDesc});
-                   }
-                   //参数状态位处理
-                   if (optPerm !== "" && optPerm !== prodDefine.optionPermissions) {
-                       let oldPerm = optPerm
-                       let newPerm = prodDefine.optionPermissions
-                       columnNew.push({
-                           title: attrValue,
-                           diff: true,
-                           perm: this.optPerm[oldPerm].icon,
-                           color: this.optPerm[oldPerm].color,
-                           desc: this.optPerm[oldPerm].desc
-                       });
-                       columnOld.push({
-                           title: diff,
-                           diff: true,
-                           perm: this.optPerm[newPerm].icon,
-                           color: this.optPerm[newPerm].color,
-                           desc: this.optPerm[newPerm].desc
-                       });
-                       if (this.prodRange === "B") {
-                           columnDesc.push({title: keyDesc, diff: true, isBase: true});
-                       } else {
-                           columnDesc.push({title: keyDesc, diff: true});
-                       }
-                   }
-                   columnDesc.push({divider: true, inset: true});
-                   columnOld.push({divider: true, inset: true});
-                   columnNew.push({divider: true, inset: true});
-               }
-           }
-           //源参数不为空时候 增加参数处理
-           for(let newKey in prodDiff){
-               if(prodDefines[newKey] == undefined){
-                   let descNew= this.getAttrDesc(newKey.substring(newKey.lastIndexOf('.')+1));
-                   columnDesc.push({title: descNew});
-                   columnDesc.push({ divider: true, inset: true });
-                   columnNew.push({title: prodDiff[newKey].attrValue});
-                   columnNew.push({ divider: true, inset: true });
-               }
-           }
-       } else{
-           for(let index in prodDiff){
-               let desc= this.getAttrDesc(index.substring(index.lastIndexOf('.')+1));
-               columnDesc.push({title: desc});
-               columnDesc.push({ divider: true, inset: true });
-               columnNew.push({title: prodDiff[index].attrValue});
-               columnNew.push({ divider: true, inset: true });
-           }
-       }
-       let diffList=[];
-       let columnDescList={prodType: '',items: columnDesc};
-       let columnNewList={prodType: '',items: columnNew};
-       let columnOldList={prodType: '',items: columnOld};
-       diffList.push(columnDescList);
-       diffList.push(columnNewList);
-       diffList.push(columnOldList);
-       this.prodDiffData = diffList;
-    },
+      queryDespositProdData() {
+          let data= this.$props.prodData;
+          this.assemblingDiff(data);
+      },
+      assemblingDiff(prodService){
+          this.attrType = getAttrType()
+          const prodDefines=prodService.prodDefines;
+          let prodDiff=prodService.diff;
+          const prodType=prodService.prodType;
+          const baseEffectProd = prodService.baseEffectProd
+          if(baseEffectProd !== undefined) {
+              this.baseEffectProd = prodService.baseEffectProd
+              this.prodRange = baseEffectProd[prodType].prodRange
+          }
+          if(prodDiff==undefined){
+              prodDiff={};
+          }
+          let columnDesc=[];
+          let columnNew=[];
+          let columnOld=[];
+          //产品本身下参数固定组
+          //产品下属性组合
+          if(prodDefines!=undefined&&JSON.stringify(prodDefines)!="{}") {
+              for (let index in prodDefines) {
+                  if (prodDefines[index].assembleType != "EVENT") {
+                      let prodDefine = prodDefines[index];
+                      let attrKey = prodDefine.attrKey;
+                      let attrValue = prodDefine.attrValue;
+                      if (attrKey == undefined) {
+                          attrKey = index;
+                          attrValue = prodDefine.attrValue;
+                      }
+                      let diff = prodDiff[attrKey];
+                      let optPerm = ""
+                      if (diff !== undefined) {
+                          diff = prodDiff[attrKey].attrValue
+                          optPerm = prodDiff[attrKey].optionPermissions
+                      }
+                      if (diff == null || diff == undefined) {
+                          diff = attrValue;
+                      }
+                      const keyDesc = this.getAttrDesc(attrKey);
+                      if (diff != attrValue) {
+                          columnOld.push({title: attrValue, diff: true});
+                          columnNew.push({title: diff, diff: true});
+                          if (this.prodRange === "B") {
+                              columnDesc.push({title: keyDesc, diff: true, isBase: true});
+                          } else {
+                              columnDesc.push({title: keyDesc, diff: true});
+                          }
+                      } else {
+                          columnOld.push({title: attrValue});
+                          columnNew.push({title: diff});
+                          columnDesc.push({title: keyDesc});
+                      }
+                      //参数状态位处理
+                      if (optPerm !== "" && optPerm !== prodDefine.optionPermissions) {
+                          let oldPerm = optPerm
+                          let newPerm = prodDefine.optionPermissions
+                          columnNew.push({
+                              title: attrValue,
+                              diff: true,
+                              perm: this.optPerm[oldPerm].icon,
+                              color: this.optPerm[oldPerm].color,
+                              desc: this.optPerm[oldPerm].desc
+                          });
+                          columnOld.push({
+                              title: diff,
+                              diff: true,
+                              perm: this.optPerm[newPerm].icon,
+                              color: this.optPerm[newPerm].color,
+                              desc: this.optPerm[newPerm].desc
+                          });
+                          if (this.prodRange === "B") {
+                              columnDesc.push({title: keyDesc, diff: true, isBase: true});
+                          } else {
+                              columnDesc.push({title: keyDesc, diff: true});
+                          }
+                      }
+                      columnDesc.push({divider: true, inset: true});
+                      columnOld.push({divider: true, inset: true});
+                      columnNew.push({divider: true, inset: true});
+                  }
+              }
+              //源参数不为空时候 增加参数处理
+              for(let newKey in prodDiff){
+                  if(prodDefines[newKey] == undefined){
+                      let descNew= this.getAttrDesc(newKey.substring(newKey.lastIndexOf('.')+1));
+                      columnDesc.push({title: descNew});
+                      columnDesc.push({ divider: true, inset: true });
+                      columnNew.push({title: prodDiff[newKey].attrValue});
+                      columnNew.push({ divider: true, inset: true });
+                  }
+              }
+          } else{
+              for(let index in prodDiff){
+                  let desc= this.getAttrDesc(index.substring(index.lastIndexOf('.')+1));
+                  columnDesc.push({title: desc});
+                  columnDesc.push({ divider: true, inset: true });
+                  columnNew.push({title: prodDiff[index].attrValue});
+                  columnNew.push({ divider: true, inset: true });
+              }
+          }
+          let diffList=[];
+          let columnDescList={prodType: '',items: columnDesc};
+          let columnNewList={prodType: '',items: columnNew};
+          let columnOldList={prodType: '',items: columnOld};
+          diffList.push(columnDescList);
+          diffList.push(columnNewList);
+          diffList.push(columnOldList);
+          this.prodDiffData = diffList;
+      },
+      //中文描述
       getAttrDesc(val){
           let desc = ""
           if(/[a-z]/.test(val)){
@@ -308,6 +309,7 @@ export default {
           }
           return desc
       }
+
   }
 };
 </script>
