@@ -130,6 +130,7 @@
                 seeColumnsTable: [],
                 seeValueNotNull: [],
                 unSeeValue: [],
+                dataType: [],
             };
         },
         watch: {
@@ -151,12 +152,11 @@
             this.initTableInfo()
         },
         methods: {
-            changeWar(war){
-                this.war = war
-            },
-            changeNum(num,editSelected){
+            changeNum(num,editSelected,dataType){
                 this.num = num
                 this.childEditSelected = editSelected
+                this.dataType = dataType
+
             },
             initTableInfo() {
                 this.tableName = this.$route.hash
@@ -420,6 +420,7 @@
 
                 this.searchData = false
             },
+            //子组件上（选择框，输入框等）输入的主键是否重复
             childLimit(editSelected){
                 this.childPd = true
                 let keyName = []
@@ -509,6 +510,18 @@
                 }else if(num == this.key.length){
                     this.sweetAlert('error',keyCoName+"不能重复!")
                     return false
+                }else if(this.dataType.length != 0){
+                    for(let l=0; l<this.dataType.length; l++){
+                        if(this.dataType[l].numberToLang == true){
+                            this.sweetAlert('error',this.dataType[l].desc+"长度超出限制!")
+                            return false
+                        }
+                        if(this.dataType[l].dateFalse == true){
+                            this.sweetAlert('error',this.dataType[l].desc+"数据类型不符!")
+                            return false
+                        }
+                    }
+                    return true
                 }else{
                     return true
                 }

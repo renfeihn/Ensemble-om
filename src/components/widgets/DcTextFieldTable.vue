@@ -130,12 +130,11 @@
         },
         methods: {
             changeNum(){
-                this.$emit('changeNum', this.num)
+                this.$emit('changeNum', this.num, this.numberToLang, this.dateFalse, this._props.labelDesc)
             },
             animateWidth() {
                 this.numberToLang = false
                 this.dateFalse = false
-
                 if(this.value != ""){
                     if(this._props.dataIndex == 'Int'){
                         let p = /(^-?\d*$)/;

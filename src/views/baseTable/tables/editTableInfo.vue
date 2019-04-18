@@ -87,7 +87,8 @@
                 inputNotNull: false,
                 editSelected: {},
                 tableName: "",
-                attr: {}
+                attr: {},
+                dataType: [],
             }
         },
         computed: {
@@ -111,11 +112,31 @@
             this.selectedAction()
         },
         methods: {
-            changeNumChild(num) {
+            changeNumChild(num, numberToLang, dateFalse, labelDesc) {
+                let text = {}
+                text['desc'] = labelDesc
+                text['numberToLang'] = numberToLang
+                text['dateFalse'] = dateFalse
+                if(this.dataType.length == 0){
+                    this.dataType.push(text)
+                }else{
+                    let n = 0
+                    for(let i=0; i<this.dataType.length; i++){
+                        if(labelDesc == this.dataType[i].desc){
+                            this.dataType[i].numberToLang = numberToLang
+                            this.dataType[i].dateFalse = dateFalse
+                        }else{
+                            n++
+                        }
+                    }
+                    if(n == this.dataType.length){
+                        this.dataType.push(text)
+                    }
+                }
                 this.num = num
             },
             changeNumFather(){
-                this.$emit('changeNum',this.num,this.editSelected)
+                this.$emit('changeNum',this.num,this.editSelected,this.dataType)
             },
             selectedAction() {
                 this.attr = getAttrInfo()
