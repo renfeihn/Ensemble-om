@@ -193,15 +193,17 @@
                     this.backValueRole.userName = sessionStorage.getItem("userId")
                     this.backValueRole.tableName = "OM_MENU_ROLE"
                     this.backValueRole.keySet = "ROLE_ID,MENU_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
+                    this.copMenuRole = this.copy(this.menuRole,this.copMenuRole)
                     saveSysTable(this.backValueRole).then(response => {
                         saveSysTable(this.backValue).then(response => {
                             if (response.status === 200) {
-                                toast.success("提交成功！");
+                                this.sweetAlert('success', "提交成功!")
                             }
                         })
                     })
                 }
-                this.initialize()
+                //this.initialize()
             },
 
             close () {
@@ -219,32 +221,33 @@
                         equals = true;
                     }
                 }
-                if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                    equals = false;
-                } else {
-                    this.desserts.push(this.editedItem)
-                }
                 if(this.editedItem.roleId == []){
-                    alert("角色ID不能为空")
+                    this.sweetAlert('error', "角色ID不能为空!")
                 }else if(this.editedItem.roleName == []){
-                    alert("角色名称不能为空")
+                    this.sweetAlert('error', "角色名称不能为空!")
                 }else if(equals==true){
-                    alert("角色ID不能与已存在的角色ID相同")
+                    this.sweetAlert('error', "角色ID不能与已存在的角色ID相同!")
                 }else{
+                    if (this.editedIndex > -1) {
+                        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                        equals = false;
+                    } else {
+                        this.desserts.push(this.editedItem)
+                    }
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_ROLE"
                     this.backValue.keySet = "ROLE_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                     this.close();
                 }
-                this.initialize()
+                //this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {
@@ -259,18 +262,6 @@
                 }
                 return obj;
             },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_ROLE"
-                this.backValue.keySet = "ROLE_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-            }
         }
     }
 </script>

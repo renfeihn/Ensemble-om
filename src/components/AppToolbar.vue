@@ -46,7 +46,7 @@
                 <v-icon>more_vert</v-icon>
             </v-btn>
             <v-list class="pa-0">
-                <v-list-tile v-for="(item,index) in items" :to="!item.href ? { name: item.name } : null"
+                <v-list-tile v-for="(item,index) in itemRole" :to="!item.href ? { name: item.name } : null"
                              :href="item.href" @click="item.click" ripple="ripple" :disabled="item.disabled"
                              :target="item.target" rel="noopener" :key="index">
                     <v-list-tile-action v-if="item.icon">
@@ -120,7 +120,26 @@
                         window.getApp.$emit("APP_LOGOUT");
                     }
                 }
-            ]
+            ],
+            smallItems: [
+                {
+                    icon: "account_circle",
+                    href: "#",
+                    title: "个人设置",
+                    click: e => {
+                        window.getApp.$emit("APP_USER_INFO_MANAGEMENT");
+                    }
+                },
+                {
+                    icon: "fullscreen_exit",
+                    href: "#",
+                    title: "登出",
+                    click: e => {
+                        window.getApp.$emit("APP_LOGOUT");
+                    }
+                }
+            ],
+            itemRole: []
         }),
 
         computed: {
@@ -132,11 +151,20 @@
             },
         },
         mounted() {
+            this.userRole()
             if (getToken()) {
                 this.getInitProdList();
             }
         },
         methods: {
+            userRole(){
+                let userLevel = sessionStorage.getItem("userLevel")
+                if(parseInt(userLevel) > 2){
+                    this.itemRole = this.smallItems
+                }else{
+                    this.itemRole = this.items
+                }
+            },
             handleDrawerToggle() {
                 window.getApp.$emit("APP_DRAWER_TOGGLED");
             },

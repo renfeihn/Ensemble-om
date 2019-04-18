@@ -37,13 +37,10 @@
                                     <v-text-field v-model="editedItem.menuLevel" label="菜单等级"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="editedItem.menuStatus" label="状态"></v-text-field>
+                                    <v-select v-model="editedItem.menuStatus" label="状态" :items="status" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="editedItem.menuIcon" label="菜单标识"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="editedItem.menuComponent" label="菜单URL"></v-text-field>
+                                    <v-text-field v-model="editedItem.menuComponent" label="菜单URL" hint="菜单的前端vue文件名"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -120,6 +117,16 @@
                     key: "true",
                     dataIndex: "menuSeqNo"
                 }
+            ],
+            status: [
+                {
+                    key: "A",
+                    value: "A-可用"
+                },
+                {
+                    key: "C",
+                    value: "C-不可用"
+                },
             ],
             editedIndex: -1,
             title: "",
@@ -219,9 +226,10 @@
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_MENU"
                     this.backValue.keySet = "MENU_SEQ_NO"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                 }
@@ -239,39 +247,45 @@
 
             save () {
                 let equals = false;
+                if(this.editedItem.menuLevel == 1){
+                    this.editedItem.menuIcon == ""
+                }else{
+                    this.editedItem.menuIcon == "account_balance"
+                }
                 for (let i = 0; i < this.desserts.length; i++) {
                     if (this.editedItem.menuId == this.desserts[i].menuId) {
                         equals = true;
                     }
                 }
-                if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                    equals=false;
-                } else {
-                    this.desserts.push(this.editedItem)
-                }
                 if(this.editedItem.menuId == []){
-                    alert("菜单ID不能为空")
+                    this.sweetAlert('error', "菜单ID不能为空!")
                 }else if(this.editedItem.menuTitle == []){
-                    alert("菜单名称不能为空")
+                    this.sweetAlert('error', "菜单名称不能为空!")
                 }else if(this.editedItem.menuLevel == []){
-                    alert("菜单等级不能为空")
+                    this.sweetAlert('error', "菜单等级不能为空!")
                 }else if(equals==true){
-                    alert("角色ID不能与已存在的角色ID相同")
+                    this.sweetAlert('error', "菜单ID不能与已存在的菜单ID相同!")
                 }else{
+                    if (this.editedIndex > -1) {
+                        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                        equals=false;
+                    } else {
+                        this.desserts.push(this.editedItem)
+                    }
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_MENU"
                     this.backValue.keySet = "MENU_SEQ_NO"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                     this.close()
                 }
-                this.initialize();
+                //this.initialize();
             },
             //对象浅复制
             copy(obj1,obj2) {
@@ -286,18 +300,6 @@
                 }
                 return obj;
             },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_MENU"
-                this.backValue.keySet = "MENU_SEQ_NO"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-            }
         }
     }
 </script>

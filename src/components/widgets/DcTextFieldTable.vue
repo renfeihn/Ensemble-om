@@ -243,7 +243,7 @@
                 if(typeof this._props.msg === "object" && this._props.msg != null){
                     this.value = this._props.msg.attrValue
                     this.optionPermissions = this._props.msg.optionPermissions
-                }else if(typeof this._props.msg === "string" || typeof this._props.msg === "undefined" || this._props.msg === null){
+                }else if(typeof this._props.msg === "string" || typeof this._props.msg === "number" || typeof this._props.msg === "undefined" || this._props.msg === null){
                     this.value = this._props.msg
                 }
                 //判断是否显示分户生效标识

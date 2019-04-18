@@ -35,9 +35,8 @@
                                     <v-text-field v-model="editedItem.branch" label="所属部门"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
-                                    <v-text-field v-model="editedItem.company" label="所属法人"></v-text-field>
+                                    <v-select v-model="editedItem.company" label="法人代码" :items="fmCompany" item-text="value" item-value="key"></v-select>
                                 </v-flex>
-
                             </v-layout>
                         </v-container>
                     </v-card-text>
@@ -82,6 +81,7 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import {getTableColumnInfo} from '@/api/url/prodInfo';
 
 
     export default {
@@ -89,7 +89,7 @@
         data: () => ({
             dialog: false,
             disabled: "false",
-
+            fmCompany: [],
             headers: [
                 {text: '用户ID',sortable: false},
                 { text: '用户名称',sortable: false},
@@ -148,6 +148,7 @@
         created () {
             this.initialize()
             this.initParentRef()
+            this.initClassAndFm()
         },
 
         methods: {
@@ -161,6 +162,19 @@
                 getSysInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.userInfo;
                     that.sourceData = that.copy(that.desserts,that.sourceData)
+                });
+            },
+            //法人代码,参数分类
+            initClassAndFm() {
+                let that = this
+                getTableColumnInfo().then(function (response) {
+                    let fm = response.data.data.fmCompany
+                    for(let i=0; i<fm.length; i++){
+                        let temp = {}
+                        temp["key"] = fm[i].company
+                        temp["value"] = fm[i].companyName
+                        that.fmCompany.push(temp)
+                    }
                 });
             },
             addClick() {
@@ -182,7 +196,6 @@
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
                 this.disabled = "true";
-
             },
 
             deleteItem (item) {
@@ -194,13 +207,14 @@
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_USER"
                     this.backValue.keySet = "USER_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                 }
-                this.initialize()
+                //this.initialize()
             },
 
             close () {
@@ -226,27 +240,28 @@
                     this.desserts.push(this.editedItem)
                 }
                 if(this.editedItem.userId == []){
-                    alert("用户ID不能为空")
+                    this.sweetAlert('error', "用户ID不能为空!")
                 }else if(this.editedItem.userName == []){
-                    alert("用户名称不能为空")
+                    this.sweetAlert('error', "用户名称不能为空!")
                 }else if(this.editedItem.userLevel == []){
-                    alert("用户级别不能为空")
+                    this.sweetAlert('error', "用户级别不能为空!")
                 }else if(equals==true){
-                    alert("角色ID不能与已存在的角色ID相同")
+                    this.sweetAlert('error', "角色ID不能与已存在的角色ID相同!")
                 }else{
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_USER"
                     this.backValue.keySet = "USER_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                     this.close()
                 }
-                this.initialize()
+                //this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {
@@ -261,18 +276,6 @@
                 }
                 return obj;
             },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_USER"
-                this.backValue.keySet = "USER_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-            }
         }
     }
 </script>

@@ -16,10 +16,10 @@
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12 sm12 md12>
-                                    <v-select v-model="editedItem.roleId" label="角色ID" :items="roleRef" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.roleId" label="角色名称" :items="roleRef" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm12 md12 >
-                                    <v-select v-model="editedItem.menuId" label="菜单ID" :items="muneRef" item-text="value" item-value="key"></v-select>
+                                    <v-select v-model="editedItem.menuId" label="菜单名称" :items="muneRef" item-text="value" item-value="key"></v-select>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -66,8 +66,8 @@
                 {text: '菜单ID',sortable: false,size: "medium"},
                 { text: 'Action',sortable: false }
             ],
-            muneRef: [{key: "",value: ""}],
-            roleRef: [{key: "",value: ""}],
+            muneRef: [],
+            roleRef: [],
             desserts: [],
             sourceData: [],
             keySet: [
@@ -128,16 +128,22 @@
                 tempMenu["tableName"] = "OM_MENU";
                 tempMenu["columnCode"] = "MENU_ID";
                 tempMenu["columnDesc"] = "MENU_TITLE"
-                getPkList(tempMenu,response => {
-                    that.muneRef = response
+                getPkListRf(tempMenu).then(response => {
+                    that.muneRef = response.data.data
+                    for(let i=0; i<that.muneRef.length; i++){
+                        that.muneRef[i].value = that.muneRef[i].key+"-"+that.muneRef[i].value
+                    }
                 });
                 //装载角色列表
                 let tempRole = {}
                 tempRole["tableName"] = "OM_ROLE";
                 tempRole["columnCode"] = "ROLE_ID";
                 tempRole["columnDesc"] = "ROLE_NAME"
-                getPkList(tempRole,response => {
-                    that.roleRef = response
+                getPkListRf(tempRole).then(response => {
+                    that.roleRef = response.data.data
+                    for(let i=0; i<that.roleRef.length; i++){
+                        that.roleRef[i].value = that.roleRef[i].key+"-"+that.roleRef[i].value
+                    }
                 });
             },
             deleteItem (item) {
@@ -149,13 +155,14 @@
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_MENU_ROLE"
                     this.backValue.keySet = "ROLE_ID,MENU_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                 }
-                this.initialize()
+                //this.initialize()
             },
 
             close () {
@@ -173,31 +180,32 @@
                         equals = true;
                     }
                 }
-                if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                } else {
-                    this.desserts.push(this.editedItem)
-                }
                 if(this.editedItem.roleId==[]){
-                    alert("角色ID不能为空")
+                    this.sweetAlert('error', "角色ID不能为空!")
                 }else if(this.editedItem.menuId==[]){
-                    alert("菜单ID不能为空")
+                    this.sweetAlert('error', "菜单ID不能为空!")
                 }else if(equals==true){
-                    alert("该权限已存在")
+                    this.sweetAlert('error', "该权限已存在!")
                 }else{
+                    if (this.editedIndex > -1) {
+                        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    } else {
+                        this.desserts.push(this.editedItem)
+                    }
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_MENU_ROLE"
                     this.backValue.keySet = "ROLE_ID,MENU_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
-                            toast.success("提交成功！");
+                            this.sweetAlert('success', "提交成功!")
                         }
                     })
                     this.close()
                 }
-                this.initialize()
+                //this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {
@@ -212,18 +220,6 @@
                 }
                 return obj;
             },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_MENU_ROLE"
-                this.backValue.keySet = "ROLE_ID,MENU_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-            }
         }
     }
 </script>

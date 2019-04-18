@@ -76,8 +76,6 @@
                 { text: '角色ID',sortable: false },
                 { text: 'Action',sortable: false }
             ],
-            userRf: [{key: "",value: ""}],
-            roleRf: [{key: "",value: ""}],
             userInfo: [],
             roleInfo: [],
             desserts: [],
@@ -137,7 +135,7 @@
                     for(let j=0; j<role.length; j++) {
                         let info = {}
                         info['key'] = role[j].roleId
-                        info['value'] = role[j].roleDesc
+                        info['value'] = role[j].roleId+"-"+role[j].roleDesc
                         that.roleInfo.push(info)
                     }
                     that.sourceData = that.copy(that.desserts,that.sourceData)
@@ -145,24 +143,6 @@
             },
             addClick() {
                 this.disabled = "false"
-            },
-            initParentRef() {
-                let tempUser = {}
-                let that = this
-                tempUser["tableName"] = "OM_USER";
-                tempUser["columnCode"] = "USER_ID";
-                tempUser["columnDesc"] = "USER_NAME"
-                getPkList(tempUser,response => {
-                    that.userRf = response
-                });
-
-                let tempRole = {}
-                tempRole["tableName"] = "OM_ROLE";
-                tempRole["columnCode"] = "ROLE_ID";
-                tempRole["columnDesc"] = "ROLE_NAME"
-                getPkList(tempRole,response => {
-                    that.roleRf = response
-                });
             },
             editItem (item) {
                 this.editedIndex = this.desserts.indexOf(item)
@@ -181,13 +161,14 @@
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_USER_ROLE"
                     this.backValue.keySet = "USER_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
                             this.sweetAlert('success',"提交成功!")
                         }
                     })
                 }
-                this.initialize()
+                //this.initialize()
             },
 
             close () {
@@ -205,15 +186,16 @@
                     this.desserts.push(this.editedItem)
                 }
                 if(this.editedItem.userId == []){
-                    this.sweetAlert('info',"用户名称不能为空!")
+                    this.sweetAlert('error',"用户名称不能为空!")
                 }else if(this.editedItem.roleId == []){
-                    this.sweetAlert('info',"角色ID不能为空!")
+                    this.sweetAlert('error',"角色ID不能为空!")
                 }else{
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                     this.backValue.userName = sessionStorage.getItem("userId")
                     this.backValue.tableName = "OM_USER_ROLE"
                     this.backValue.keySet = "USER_ID"
+                    this.sourceData = this.copy(this.desserts,this.sourceData)
                     saveSysTable(this.backValue).then(response => {
                         if(response.status === 200){
                             this.sweetAlert('success',"提交成功!")
@@ -221,7 +203,7 @@
                     })
                     this.close()
                 }
-                this.initialize()
+                //this.initialize()
             },
             //对象浅复制
             copy(obj1,obj2) {
@@ -236,18 +218,6 @@
                 }
                 return obj;
             },
-            saveClick() {
-                //保存数据落库
-                this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                this.backValue.userName = sessionStorage.getItem("userId")
-                this.backValue.tableName = "OM_USER_ROLE"
-                this.backValue.keySet = "USER_ID"
-                saveSysTable(this.backValue).then(response => {
-                    if(response.status === 200){
-                        toast.success("提交成功！");
-                    }
-                })
-            }
         }
     }
 </script>
