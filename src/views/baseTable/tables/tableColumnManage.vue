@@ -421,20 +421,28 @@
             //删除数据落库
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                let confirms = confirm('Are you sure you want to delete this item?')
-                if(confirms == true){
-                    this.desserts.splice(index, 1)
-                    let map = {}
-                    map["operate"] = "delete"
-                    map["mbAttrType"] = this.getAttrType(item)
-                    //attrValue中刪除的数据
-                    map["mbAttrValueDelete"] = this.addAttrValue(item)
-                    saveParam(map).then(response => {
-                        if (response.status === 200) {
-                            this.sweetAlert('success', "提交成功!")
-                        }
-                    });
-                }
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to delete this item?",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.desserts.splice(index, 1)
+                        let map = {}
+                        map["operate"] = "delete"
+                        map["mbAttrType"] = this.getAttrType(item)
+                        //attrValue中刪除的数据
+                        map["mbAttrValueDelete"] = this.addAttrValue(item)
+                        saveParam(map).then(response => {
+                            if (response.status === 200) {
+                                this.sweetAlert('success', "提交成功!")
+                            }
+                        });
+                    }
+                })
             },
             //关闭弹框
             close () {

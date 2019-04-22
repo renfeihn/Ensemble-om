@@ -251,22 +251,30 @@
 
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                let confirms = confirm('Are you sure you want to delete this item?')
-                if(confirms == true){
-                    this.desserts.splice(index, 1)
-                    //保存数据落库
-                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                    this.backValue.userName = sessionStorage.getItem("userId")
-                    this.backValue.tableName = "OM_TABLE_LIST"
-                    this.backValue.keySet = "TABLE_NAME"
-                    this.sourceData = []
-                    this.sourceData = this.copy(this.desserts,this.sourceData)
-                    saveSysTable(this.backValue).then(response => {
-                        if(response.status === 200){
-                            this.sweetAlert('success',"删除成功!")
-                        }
-                    })
-                }
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to delete this item?",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.desserts.splice(index, 1)
+                        //保存数据落库
+                        this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                        this.backValue.userName = sessionStorage.getItem("userId")
+                        this.backValue.tableName = "OM_TABLE_LIST"
+                        this.backValue.keySet = "TABLE_NAME"
+                        this.sourceData = []
+                        this.sourceData = this.copy(this.desserts,this.sourceData)
+                        saveSysTable(this.backValue).then(response => {
+                            if(response.status === 200){
+                                this.sweetAlert('success',"删除成功!")
+                            }
+                        })
+                    }
+                })
             },
 
             close () {
