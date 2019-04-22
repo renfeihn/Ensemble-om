@@ -59,7 +59,7 @@
                                     <v-select v-model="editedItem.valueScore" label="数据来源表" :items="tab" item-text="value" item-value="key" @change="changeValue()" clearable></v-select>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="show">
-                                    <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数" hint="For example: A-B,C-D"></v-text-field>
+                                    <v-text-field v-model="editedItem.valueScoreColumn" label="数据参数" hint="For example: A-B/C-D  每组数据用'/'隔开"></v-text-field>
                                 </v-flex>
                                 <v-flex xs6 sm6 md6 v-show="!show">
                                     <v-select v-model="valueScoreColumn" label="数据参数" :items="param" item-text="value" item-value="key" multiple></v-select>
@@ -376,10 +376,13 @@
                         valueScoreColumn = that.dataSource[i].valueScore.columnCode + "," +that.dataSource[i].valueScore.columnDesc
                     }
                     if(that.dataSource[i].valueMethod == "VL" && that.dataSource[i].valueScore !== undefined){
-                        for(let j=0; j<that.dataSource[i].valueScore.length; j++){
-                            valueScoreColumn =valueScoreColumn + that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value +','
+                        valueScoreColumn = that.dataSource[i].valueScore[0].key +"-" + that.dataSource[i].valueScore[0].value
+                        if(that.dataSource[i].valueScore.length > 1){
+                            for(let j=1; j<that.dataSource[i].valueScore.length; j++){
+                                valueScoreColumn =valueScoreColumn +'/'+ that.dataSource[i].valueScore[j].key +"-" + that.dataSource[i].valueScore[j].value
+                            }
                         }
-                        valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
+                        //valueScoreColumn = valueScoreColumn.substr(0, valueScoreColumn.length - 1);
                     }
                     temp["valueScoreColumn"] = valueScoreColumn
                     that.desserts.push(temp)
@@ -547,6 +550,15 @@
                         this.sweetAlert('info', "数据参数不能为空!")
                         num = false
                     }
+                    let valueScoreColumns = this.editedItem.valueScoreColumn.split("/")
+                    for(let i=0; i<valueScoreColumns.length; i++){
+                        let valueAndDesc = valueScoreColumns[i].split("-")
+                        if(valueAndDesc.length == 1){
+                            this.sweetAlert('info', "数据应该为A-B的形式,且B中不含'/'!")
+                            num = false
+                            break
+                        }
+                    }
                 }
                 return num
             },
@@ -581,7 +593,7 @@
                 }
                 //VL
                 if(val.valueMethod == "VL"){
-                    let valueScoreColumns = val.valueScoreColumn.split(",")
+                    let valueScoreColumns = val.valueScoreColumn.split("/")
                     for(let i=0; i<valueScoreColumns.length; i++){
                         let mbValue = {}
                         let valueAndDesc = valueScoreColumns[i].split("-")
@@ -612,7 +624,7 @@
                 if(newV.valueMethod == "VL"){
                     //新数据组装
                     let newValue = []
-                    let valueScoreColumns = newV.valueScoreColumn.split(",");
+                    let valueScoreColumns = newV.valueScoreColumn.split("/");
                     for(let i=0; i<valueScoreColumns.length; i++){
                         let mbValue = {}
                         let valueAndDesc = valueScoreColumns[i].split("-")
@@ -623,13 +635,11 @@
                     }
                     //老数据组装
                     let oldValue = []
-                    let valueScoreColumn = oldV.valueScoreColumn.split(",")
-                    for(let i=0; i<valueScoreColumn.length; i++){
+                    for(let i=0; i<this.dataSource[oldV.columnId].valueScore.length; i++){
                         let mbValue = {}
-                        let valueAndDesc = valueScoreColumn[i].split("-")
                         mbValue["attrKey"] = oldV.columnId
-                        mbValue["attrValue"] = valueAndDesc[0]
-                        mbValue["valueDesc"] = valueAndDesc[1]
+                        mbValue["attrValue"] = this.dataSource[oldV.columnId].valueScore[i].key
+                        mbValue["valueDesc"] = this.dataSource[oldV.columnId].valueScore[i].value
                         oldValue.push(mbValue)
                     }
                     //新老数据差异对比
@@ -643,7 +653,7 @@
                                 n++
                             }
                         }
-                        //删除
+                        //新增
                         if(n == oldValue.length){
                             mbAttrValueAdd.push(newValue[i])
                         }
@@ -658,7 +668,7 @@
                                 n++
                             }
                         }
-                        //新增
+                        //删除
                         if(n == newValue.length){
                             mbAttrValueDelete.push(oldValue[i])
                         }

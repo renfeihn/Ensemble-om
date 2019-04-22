@@ -283,6 +283,9 @@
                         equals = true;
                     }
                 }
+                if (this.editedIndex > -1) {
+                    equals=false;
+                }
                 if(this.editedItem.menuId == []){
                     this.sweetAlert('error', "菜单ID不能为空!")
                 }else if(this.editedItem.menuTitle == []){

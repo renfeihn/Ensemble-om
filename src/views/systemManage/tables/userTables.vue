@@ -128,9 +128,9 @@
                 branch: '',
                 company: '',
                 password: ''
-
             },
-            backValue: {}
+            backValue: {},
+            index: '',
         }),
 
         computed: {
@@ -179,7 +179,6 @@
             },
             addClick() {
                 this.disabled = "false"
-                this.initialize()
             },
             initParentRef() {
                 let temp = {}
@@ -199,22 +198,29 @@
             },
 
             deleteItem (item) {
-                const index = this.desserts.indexOf(item)
-                var del=confirm('Are you sure you want to delete this item?');
-                if(del==true) {
-                    this.desserts.splice(index, 1)
-                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                    this.backValue.userName = sessionStorage.getItem("userId")
-                    this.backValue.tableName = "OM_USER"
-                    this.backValue.keySet = "USER_ID"
-                    this.sourceData = this.copy(this.desserts,this.sourceData)
-                    saveSysTable(this.backValue).then(response => {
-                        if(response.status === 200){
-                            this.sweetAlert('success', "提交成功!")
-                        }
-                    })
-                }
-                //this.initialize()
+                this.index = this.desserts.indexOf(item)
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to delete this item?",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.desserts.splice(this.index, 1)
+                        this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                        this.backValue.userName = sessionStorage.getItem("userId")
+                        this.backValue.tableName = "OM_USER"
+                        this.backValue.keySet = "USER_ID"
+                        this.sourceData = this.copy(this.desserts,this.sourceData)
+                        saveSysTable(this.backValue).then(response => {
+                            if(response.status === 200){
+                                this.sweetAlert('success', "提交成功!")
+                            }
+                        })
+                    }
+                })
             },
 
             close () {
@@ -227,17 +233,13 @@
 
             save () {
                 let equals = false;
-                for (let i = 0; i < this.desserts.length; i++) {
-                    if (this.editedItem.userId == this.desserts[i].userId) {
+                for (let i = 0; i < this.sourceData.length; i++) {
+                    if (this.editedItem.userId == this.sourceData[i].userId) {
                         equals = true;
                     }
                 }
                 if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
                     equals = false;
-                } else {
-                    this.editedItem.password = "123456"
-                    this.desserts.push(this.editedItem)
                 }
                 if(this.editedItem.userId == []){
                     this.sweetAlert('error', "用户ID不能为空!")
@@ -248,6 +250,12 @@
                 }else if(equals==true){
                     this.sweetAlert('error', "角色ID不能与已存在的角色ID相同!")
                 }else{
+                    if (this.editedIndex > -1) {
+                        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    } else {
+                        this.editedItem.password = "123456"
+                        this.desserts.push(this.editedItem)
+                    }
                     //保存数据落库
                     this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
                     this.backValue.userName = sessionStorage.getItem("userId")

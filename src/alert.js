@@ -15,7 +15,7 @@ exports.install = function (Vue, options) {
             text: title,
         })
     };
-    Vue.prototype.sweetAlertChoose = function (title,val){
+    Vue.prototype.sweetAlertChoose = function (title){
         this.$swal({
             text: title,
             showCancelButton: true,
@@ -29,7 +29,6 @@ exports.install = function (Vue, options) {
                     'Your file has been deleted.',
                     'success'
                 )
-                val = 2
             }else{
                 return false
             }

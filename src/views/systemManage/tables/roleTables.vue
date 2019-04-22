@@ -174,35 +174,43 @@
             },
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                var del=confirm('Are you sure you want to delete this item?');
-                if(del==true) {
-                    this.desserts.splice(index, 1)
-                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                    this.backValue.userName = sessionStorage.getItem("userId")
-                    this.backValue.tableName = "OM_ROLE"
-                    this.backValue.keySet = "ROLE_ID"
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to delete this item?",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.desserts.splice(index, 1)
+                        this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                        this.backValue.userName = sessionStorage.getItem("userId")
+                        this.backValue.tableName = "OM_ROLE"
+                        this.backValue.keySet = "ROLE_ID"
 
-                    const roleIndex = item.roleId
-                    for(let i=0; i<this.menuRole.length; i++){
-                        if(this.menuRole[i].roleId == roleIndex){
-                            this.menuRole.splice(i, 1)
-                            i=i-1
-                        }
-                    }
-                    this.backValueRole.data = filterTableChangeData(this.keySet,this.menuRole,this.copMenuRole)
-                    this.backValueRole.userName = sessionStorage.getItem("userId")
-                    this.backValueRole.tableName = "OM_MENU_ROLE"
-                    this.backValueRole.keySet = "ROLE_ID,MENU_ID"
-                    this.sourceData = this.copy(this.desserts,this.sourceData)
-                    this.copMenuRole = this.copy(this.menuRole,this.copMenuRole)
-                    saveSysTable(this.backValueRole).then(response => {
-                        saveSysTable(this.backValue).then(response => {
-                            if (response.status === 200) {
-                                this.sweetAlert('success', "提交成功!")
+                        const roleIndex = item.roleId
+                        for(let i=0; i<this.menuRole.length; i++){
+                            if(this.menuRole[i].roleId == roleIndex){
+                                this.menuRole.splice(i, 1)
+                                i=i-1
                             }
+                        }
+                        this.backValueRole.data = filterTableChangeData(this.keySet,this.menuRole,this.copMenuRole)
+                        this.backValueRole.userName = sessionStorage.getItem("userId")
+                        this.backValueRole.tableName = "OM_MENU_ROLE"
+                        this.backValueRole.keySet = "ROLE_ID,MENU_ID"
+                        this.sourceData = this.copy(this.desserts,this.sourceData)
+                        this.copMenuRole = this.copy(this.menuRole,this.copMenuRole)
+                        saveSysTable(this.backValueRole).then(response => {
+                            saveSysTable(this.backValue).then(response => {
+                                if (response.status === 200) {
+                                    this.sweetAlert('success', "提交成功!")
+                                }
+                            })
                         })
-                    })
-                }
+                    }
+                })
                 //this.initialize()
             },
 
@@ -220,6 +228,9 @@
                     if (this.editedItem.roleId == this.desserts[i].roleId) {
                         equals = true;
                     }
+                }
+                if (this.editedIndex > -1) {
+                    equals = false;
                 }
                 if(this.editedItem.roleId == []){
                     this.sweetAlert('error', "角色ID不能为空!")
