@@ -164,6 +164,9 @@
         watch: {
             dialog (val) {
                 val || this.close()
+            },
+            desserts(val){
+                this.getParent(val)
             }
         },
 
@@ -179,16 +182,31 @@
                 getSysInfoByUser(userId).then(function (response) {
                     that.desserts = response.data.data.columnInfo;
                     //初始化 新增时候  父级菜单信息
-                    for(let i=0; i<that.desserts.length; i++){
-                        if(that.desserts[i].menuLevel === userLevel){
-                            let temp={}
-                            temp["key"] = that.desserts[i].menuId
-                            temp["value"] = that.desserts[i].menuTitle
-                            that.parent.push(temp)
-                        }
-                    }
+                    that.getParent(that.desserts)
                     that.sourceData = that.copy(that.desserts,that.sourceData)
                 });
+            },
+            //初始化 新增时候  父级菜单信息
+            getParent(dessert){
+                this.parent = []
+                let userLevel = sessionStorage.getItem("userLevel")
+                if(userLevel == 1){
+                    for(let i=0; i<dessert.length; i++){
+                        let temp={}
+                        temp["key"] = dessert[i].menuId
+                        temp["value"] = dessert[i].menuTitle
+                        this.parent.push(temp)
+                    }
+                }else{
+                    for(let i=0; i<dessert.length; i++){
+                        if(dessert[i].menuLevel === userLevel){
+                            let temp={}
+                            temp["key"] = dessert[i].menuId
+                            temp["value"] = dessert[i].menuTitle
+                            this.parent.push(temp)
+                        }
+                    }
+                }
             },
             initMenuSeqNo() {
                 //新增菜单时候  菜单序号默认顺延
@@ -219,20 +237,28 @@
             },
             deleteItem (item) {
                 const index = this.desserts.indexOf(item)
-                var del=confirm('Are you sure you want to delete this item?');
-                if(del==true) {
-                    this.desserts.splice(index, 1)
-                    this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
-                    this.backValue.userName = sessionStorage.getItem("userId")
-                    this.backValue.tableName = "OM_MENU"
-                    this.backValue.keySet = "MENU_SEQ_NO"
-                    this.sourceData = this.copy(this.desserts,this.sourceData)
-                    saveSysTable(this.backValue).then(response => {
-                        if(response.status === 200){
-                            this.sweetAlert('success', "提交成功!")
-                        }
-                    })
-                }
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to delete this item?",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.desserts.splice(index, 1)
+                        this.backValue.data = filterTableChangeData(this.keySet,this.desserts,this.sourceData)
+                        this.backValue.userName = sessionStorage.getItem("userId")
+                        this.backValue.tableName = "OM_MENU"
+                        this.backValue.keySet = "MENU_SEQ_NO"
+                        this.sourceData = this.copy(this.desserts,this.sourceData)
+                        saveSysTable(this.backValue).then(response => {
+                            if(response.status === 200){
+                                this.sweetAlert('success', "提交成功!")
+                            }
+                        })
+                    }
+                })
                 // this.initialize()
             },
 

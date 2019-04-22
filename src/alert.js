@@ -15,4 +15,24 @@ exports.install = function (Vue, options) {
             text: title,
         })
     };
+    Vue.prototype.sweetAlertChoose = function (title,val){
+        this.$swal({
+            text: title,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                this.$swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                val = 2
+            }else{
+                return false
+            }
+        })
+    };
 };

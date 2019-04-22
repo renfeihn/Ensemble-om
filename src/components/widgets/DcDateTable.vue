@@ -102,13 +102,11 @@
                 if(msg !== null && msg !== undefined &&msg.msg!=undefined) {
                     let dates = this._props.msg
                     dates=dates.toString()
-                    let time = dates.substring(0, 4) + "-" + dates.substring(4, 6) + "-" + dates.substring(6)
-                    this.dateFormatted = time
+                    this.dateFormatted = dates
                 }
             },
             reback(newValue){
-                let dateFormatted = newValue.substring(0,4)+newValue.substring(5,7)+newValue.substring(8);
-                this._props.msg = dateFormatted
+                this._props.msg = newValue
                 this.$emit("getVue", this._props.msg);
             }
         }
