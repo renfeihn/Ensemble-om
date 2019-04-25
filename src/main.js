@@ -10,9 +10,9 @@ import i18n from './lang';
 import 'font-awesome/css/font-awesome.css';
 import './theme/default.styl';
 import VeeValidate from 'vee-validate';
-import VueDragTree from 'vue-drag-tree';
+//import VueDragTree from 'vue-drag-tree';
+//import 'vue-drag-tree/dist/vue-drag-tree.min.css'
 import dragTreeTable from 'drag-tree-table'
-import 'vue-drag-tree/dist/vue-drag-tree.min.css'
 import VueResource from 'vue-resource'
 import Truncate from 'lodash.truncate';
 import store from './store';
@@ -43,7 +43,7 @@ Vue.config.productionTip = false;
 // Global filters
 Vue.filter('truncate', Truncate);
 Vue.use(alert);
-Vue.use(VueDragTree)
+//Vue.use(VueDragTree)
 Vue.use(VueResource)
 Vue.use(dragTreeTable)
 Vue.use(VueSweetalert2)

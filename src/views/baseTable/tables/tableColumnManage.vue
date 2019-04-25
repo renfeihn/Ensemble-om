@@ -712,10 +712,10 @@
             //选择表后获取参数列表
             changeValue(){
                 let that = this
+                that.param = []
                 if(that.editedItem.valueScore != ""){
                     getParamTable(that.editedItem.valueScore).then(function (response) {
                         let dataInfo = response.data.data.column;
-                        that.param = []
                         for(let i=0; i<dataInfo.length; i++){
                             let data = {}
                             data["key"] = dataInfo[i].code
