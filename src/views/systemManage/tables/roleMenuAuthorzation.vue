@@ -1,6 +1,10 @@
 <template>
     <div>
-        <br>
+        <v-toolbar color="primary lighten-2" dark>
+            <v-btn depressed large color="primary lighten-2" @click="reback">返回</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn depressed large color="primary lighten-2" @click="save">保存</v-btn>
+        </v-toolbar>
         <v-layout row warp>
             <v-flex xs5 style="overflow-y: scroll">
                 <v-card style="height: 400px;">
@@ -19,14 +23,7 @@
             <v-flex xs6 style="overflow-y: scroll">
                 <v-card style="height: 400px;">
                     <v-card-title>
-                        <v-flex xs6>
-                            <div class="headline">角色菜单授权</div>
-                        </v-flex>
-                        <v-flex xs3>
-                        </v-flex>
-                        <v-flex xs3>
-                            <v-btn depressed color="primary" @click="save">保存</v-btn>
-                        </v-flex>
+                        <div class="headline">角色菜单授权</div>
                     </v-card-title>
                     <div style="padding-right: 5px;padding-left: 5px">
                         <vue-drag-tree :data='menuRoleTree' disableDBClick :allowDrag='allowDrag' :allowDrop='allowDrop' @current-node-clicked='curNodeClicked' @drag="dragHandler" @drag-enter="dragEnterHandler" @drag-leave="dragLeaveHandler" @drag-over="dragOverHandler" @drag-end="dragEndHandler" @drop="dropHandler">
@@ -49,6 +46,7 @@
             Dialog,
             vueDragTree,
         },
+        props: ["sendItem"],
         data(){
             return{
                 roleTree: [{
@@ -88,13 +86,12 @@
                 let that = this
                 getSysTable("OM_MENU").then(function (response) {
                     that.menuInfo = response.data.data.columnInfo;
-                    that.menuTree = that.getTree(that.menuInfo)
                 });
             },
             //menuRole的数据
             getMenuRole(){
                 let that = this
-                that.roleId = that.$route.hash.roleId
+                that.roleId = this._props.sendItem.roleId
                 that.menuRole = []
                 let userId = sessionStorage.getItem("userId")
                 getSysInfoByUser(userId).then(function (response) {
@@ -110,7 +107,52 @@
                     }else{
                         that.makeDate(that.menuRole)
                     }
+                    that.getMenuTree()
                 });
+            },
+            //menu中数据去除menuRole中数据
+            getMenuTree(){
+                let menu = []
+                //menu剔出menuRole中数据
+                for(let n=0; n<this.menuInfo.length; n++){
+                    let equals = false
+                    for(let m=0; m<this.menuRole.length; m++){
+                        if(this.menuInfo[n].menuId == this.menuRole[m].menuId){
+                            equals = true
+                            break
+                        }
+                    }
+                    if(equals == false){
+                        menu.push(this.menuInfo[n])
+                    }
+                }
+                //menu剩余数据加载父节点
+                this.getParent(menu)
+                if(menu.length == 0){
+                    this.menuTree = this.roleTree
+                }else{
+                    this.menuTree = this.getTree(menu)
+                }
+            },
+            //将menu剩余数据加载父节点
+            getParent(menu){
+                for(let i=0; i<menu.length; i++){
+                    let exit = false
+                    for(let j=0; j<menu.length; j++){
+                        if(menu[i].menuParentId == menu[j].menuId){
+                            exit = true
+                            break
+                        }
+                    }
+                    if(exit == false){
+                        for(let n=0; n<this.menuInfo.length; n++){
+                            if(menu[i].menuParentId == this.menuInfo[n].menuId){
+                                menu.push(this.menuInfo[n])
+                                break
+                            }
+                        }
+                    }
+                }
             },
             //组装数据
             makeDate(menuRole){
@@ -173,29 +215,51 @@
                             role.menuId = that.menuRoleTree[i].id.toString()
                             role.menuParentId = ""
                             that.menuRoleData.push(role)
-                            that.getChildrenData(that.menuRoleTree[i].children,parseInt(that.menuRoleTree[i].id))
+                            that.getChildrenData(that.menuRoleTree[i].children,parseInt(that.menuRoleTree[i].id),that.menuRoleData)
                         }
                         let map = {}
                         map["add"] = that.menuRoleData
                         map["delete"] = that.menuRoleCopy
                         saveRoleMenuTable(map).then(response => {
                             if (response.status === 200) {
-                                this.$router.push({ name: "systemManageIndex"});
+                                that.menuRoleCopy = that.copy(that.menuRoleData,that.menuRoleCopy)
                                 this.sweetAlert('success', "提交成功!")
                             }
                         });
                     }
                 })
             },
-            //树的孩子节点转换数据
-            getChildrenData(child,n){
+            //返回方法
+            reback(){
+                let back = false
+                this.$emit('reback',back)
+            },
+            //树的孩子节点转换数据（保存的时候用的）
+            getChildrenData(child,n,menu){
                 for(let i=0; i<child.length; i++) {
                     let role = {}
                     role.roleId = this.roleId
                     role.menuId = child[i].id.toString()
                     role.menuParentId = n.toString()
-                    this.menuRoleData.push(role)
-                    this.getChildrenData(child[i].children,parseInt(child[i].id))
+                    menu.push(role)
+                    this.getChildrenData(child[i].children,parseInt(child[i].id),menu)
+                }
+            },
+
+            //拖拽完成后组装数据用的
+            changeChildrenData(child,menu){
+                for(let i=0; i<child.length; i++) {
+                    let role = {}
+                    role.roleId = this.roleId
+                    role.menuId = child[i].id.toString()
+                    role.menuTitle = child[i].name
+                    for(let n=0; n<this.menuInfo.length; n++){
+                        if(child[i].id.toString() == this.menuInfo[n].menuId){
+                            role.menuParentId = this.menuInfo[n].menuParentId
+                        }
+                    }
+                    menu.push(role)
+                    this.changeChildrenData(child[i].children,menu)
                 }
             },
 
@@ -222,7 +286,24 @@
             dragOverHandler(model, component, e) {
                 //console.log('dragOverHandler: ', model, component, e);
             },
+            //拖放事件在拖放操作结束时触发
             dragEndHandler(model, component, e) {
+                let menu = []
+                for(let i=0; i<this.menuTree.length; i++){
+                    let role = {}
+                    role.roleId = this.roleId
+                    role.menuId = this.menuTree[i].id.toString()
+                    role.menuTitle = this.menuTree[i].name
+                    role.menuParentId = ""
+                    menu.push(role)
+                    this.changeChildrenData(this.menuTree[i].children,menu)
+                }
+                this.getParent(menu)
+                if(menu.length == 0){
+                    this.menuTree = this.roleTree
+                }else{
+                    this.menuTree = this.getTree(menu)
+                }
                 //console.log('dragEndHandler: ', model, component, e);
             },
             dropHandler(model, component, e) {

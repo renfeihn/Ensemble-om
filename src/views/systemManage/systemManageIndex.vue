@@ -27,7 +27,6 @@
                 <menu-tables v-if="action=='menu'"></menu-tables>
                 <role-tables v-if="action=='role'"></role-tables>
                 <user-tables v-if="action=='user'"></user-tables>
-                <role-menu v-if="action=='roleMenu'"></role-menu>
                 <user-role v-if="action=='userRole'"></user-role>
             </v-flex>
         </v-layout>
@@ -54,7 +53,6 @@
                 items: [
                     {title: '菜单管理',name: 'menu', class: '',icon: 'menu',color: "blue"},
                     {title: '角色管理',name: 'role', class: '', icon: 'event',color: "blue"},
-                    {title: '角色菜单授权',name: 'roleMenu', class: '', icon: 'widgets',color: "blue"},
                     {title: '用户管理',name: 'user', class: '', icon: 'person',color: "blue"},
                     {title: '用户角色管理',name: 'userRole', class: '',icon: 'widgets',color: "blue"}
                 ],

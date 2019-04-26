@@ -1,73 +1,76 @@
 <template>
     <div class="elevation-4">
-        <v-toolbar color="primary lighten-2" dark>
-            <v-toolbar-title>角色管理</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="500px">
-                <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
-                    <td style="color: white;margin-left: 100px">添加</td>
-                </v-btn>
-                <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
-                    <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
-                </v-toolbar>
-                <v-card>
-                    <v-card-text style="padding-top: 0px">
-                        <v-container grid-list-md>
-                            <v-layout wrap>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='false'">
-                                    <v-text-field v-model="editedItem.roleId" label="角色ID"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12 v-if="disabled=='true'">
-                                    <v-text-field v-model="editedItem.roleId" label="角色ID" disabled></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.roleName" label="角色名称"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.roleDesc" label="角色描述"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm12 md12>
-                                    <v-text-field v-model="editedItem.roleLevel" label="角色等级"></v-text-field>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions style="margin-top: -7%">
-                        <v-btn color="info" @click="close" class="bthStyle" style="margin-left: 6%">取消</v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn color="info" @click="save" class="bthStyle" style="margin-right: 6%">保存</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </v-toolbar>
-        <v-data-table :headers="headers" :items="desserts" class="elevation-1">
-            <template slot="items" slot-scope="props">
-                <td>{{ props.item.roleId }}</td>
-                <td>{{ props.item.roleName }}</td>
-                <td>{{ props.item.roleDesc }}</td>
-                <td>{{ props.item.roleLevel }}</td>
-                <td>
-                    <v-tooltip bottom color="blue" style="margin-left: -20px">
-                        <v-btn flat icon="edit" slot="activator" @click="editItem(props.item)">
-                            <v-icon small class="mr-2" style="color: #0d47a1">edit</v-icon>
-                        </v-btn>
-                        <span>修改</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="blue" style="margin-left: -20px">
-                        <v-btn flat icon="widgets" slot="activator" @click="authorization(props.item)">
-                            <v-icon small class="mr-2" style="color: #0d47a1">widgets</v-icon>
-                        </v-btn>
-                        <span>授权</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="red" style="margin-left: -20px">
-                        <v-btn flat icon="delete" slot="activator" @click="deleteItem(props.item)">
-                            <v-icon small style="color: red">delete</v-icon>
-                        </v-btn>
-                        <span>删除</span>
-                    </v-tooltip>
-                </td>
-            </template>
-        </v-data-table>
+        <role-menu-authorzation v-if="roleMenu" :sendItem="sendItem" v-on:reback="reback"></role-menu-authorzation>
+        <div v-if="!roleMenu">
+            <v-toolbar color="primary lighten-2" dark>
+                <v-toolbar-title>角色管理</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-dialog v-model="dialog" max-width="500px">
+                    <v-btn slot="activator" flat color="primary lighten-2" @click="addClick">
+                        <td style="color: white;margin-left: 100px">添加</td>
+                    </v-btn>
+                    <v-toolbar color="primary lighten-2" dark scroll-off-screen scroll-target="#scrolling-techniques" flat>
+                        <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card>
+                        <v-card-text style="padding-top: 0px">
+                            <v-container grid-list-md>
+                                <v-layout wrap>
+                                    <v-flex xs12 sm12 md12 v-if="disabled=='false'">
+                                        <v-text-field v-model="editedItem.roleId" label="角色ID"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm12 md12 v-if="disabled=='true'">
+                                        <v-text-field v-model="editedItem.roleId" label="角色ID" disabled></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm12 md12>
+                                        <v-text-field v-model="editedItem.roleName" label="角色名称"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm12 md12>
+                                        <v-text-field v-model="editedItem.roleDesc" label="角色描述"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm12 md12>
+                                        <v-text-field v-model="editedItem.roleLevel" label="角色等级"></v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions style="margin-top: -7%">
+                            <v-btn color="info" @click="close" class="bthStyle" style="margin-left: 6%">取消</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="info" @click="save" class="bthStyle" style="margin-right: 6%">保存</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-toolbar>
+            <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+                <template slot="items" slot-scope="props">
+                    <td>{{ props.item.roleId }}</td>
+                    <td>{{ props.item.roleName }}</td>
+                    <td>{{ props.item.roleDesc }}</td>
+                    <td>{{ props.item.roleLevel }}</td>
+                    <td>
+                        <v-tooltip bottom color="blue" style="margin-left: -20px">
+                            <v-btn flat icon="edit" slot="activator" @click="editItem(props.item)">
+                                <v-icon small class="mr-2" style="color: #0d47a1">edit</v-icon>
+                            </v-btn>
+                            <span>修改</span>
+                        </v-tooltip>
+                        <v-tooltip bottom color="blue" style="margin-left: -20px">
+                            <v-btn flat icon="widgets" slot="activator" @click="authorization(props.item)">
+                                <v-icon small class="mr-2" style="color: #0d47a1">widgets</v-icon>
+                            </v-btn>
+                            <span>授权</span>
+                        </v-tooltip>
+                        <v-tooltip bottom color="red" style="margin-left: -20px">
+                            <v-btn flat icon="delete" slot="activator" @click="deleteItem(props.item)">
+                                <v-icon small style="color: red">delete</v-icon>
+                            </v-btn>
+                            <span>删除</span>
+                        </v-tooltip>
+                    </td>
+                </template>
+            </v-data-table>
+        </div>
     </div>
 </template>
 <script>
@@ -77,8 +80,10 @@
     import {saveSysTable} from "@/api/url/prodInfo";
     import toast from '@/utils/toast';
     import {getSysInfoByUser} from "@/api/url/prodInfo";
+    import RoleMenuAuthorzation from "./roleMenuAuthorzation";
 
     export default {
+        components: {RoleMenuAuthorzation},
         props: ["title"],
         data: () => ({
             disabled: "false",
@@ -124,6 +129,8 @@
             },
             backValue: {},
             backValueRole: {},
+            sendItem: {},
+            roleMenu: false,
         }),
 
         computed: {
@@ -164,10 +171,8 @@
 
             },
             authorization(item){
-                this.$router.push({
-                    name: 'roleMenuAuthorzation',
-                    hash: item
-                })
+                this.sendItem = item
+                this.roleMenu = true
             },
             addClick() {
                 this.disabled = "false"
@@ -221,7 +226,9 @@
                 this.editedIndex = -1
             }, 300)
             },
-
+            reback(reback){
+                this.roleMenu = reback
+            },
             save () {
                 let equals = false;
                 for (let i = 0; i < this.desserts.length; i++) {
