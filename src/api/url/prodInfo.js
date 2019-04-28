@@ -311,6 +311,12 @@ export function getSysTable (params) {
     })
 }
 
+export function getProdPageDefine (params) {
+    const data= {pageClass: params};
+    const reData=asyncPost('/getProdPageDefine',data);
+    return reData;
+}
+
 export function getSysInfoByUser (params) {
     return request({
         url: '/getSysInfoByUser',
