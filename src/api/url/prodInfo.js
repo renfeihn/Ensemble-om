@@ -220,6 +220,14 @@ export function getCheckFlowList () {
         method: 'post'
     });
 }
+
+export function getFinishFlowInfo () {
+    return request({
+        url: '/getFinishFlowInfo',
+        method: 'post'
+    });
+}
+
 export function getPkListRf (params) {
     return request({
         url: '/getPkList',
