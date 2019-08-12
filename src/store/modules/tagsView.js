@@ -5,7 +5,9 @@ const tagsView = {
   },
   mutations: {
     ADD_VISITED_VIEWS: (state, view) => {
-      if (state.visitedViews.some(v => v.path === view.path)) return
+        if (state.visitedViews.some(v => v.path === view.path&&v.hash === view.hash)) {
+            return
+        }
       state.visitedViews.push(Object.assign({}, view, {
         title: view.meta.title || 'no-name'
       }))
@@ -20,9 +22,9 @@ const tagsView = {
           break
         }
       }
-      for (const i of state.cachedViews) {
-        if (i === view.name) {
-          const index = state.cachedViews.indexOf(i)
+      for (let i in state.cachedViews) {
+        if (state.cachedViews[i] === view.name) {
+          const index = state.cachedViews.indexOf(state.cachedViews[i])
           state.cachedViews.splice(index, 1)
           break
         }

@@ -1,121 +1,121 @@
 {
   "busimodel":[
     {
-      "prodCode": "RB",
-      "prodDesc": "RB - 存款"
+      "value": "RB",
+      "label": "RB - 存款"
     }],
-  "prodprepice":[
+  "prodRange":[
     {
-      "prodCode": "S",
-      "prodDesc": "S - 可售产品"
+      "value": "S",
+      "label": "S - 可售产品"
     }, {
-      "prodCode": "B",
-      "prodDesc": "B - 基础产品"
+      "value": "B",
+      "label": "B - 基础产品"
     }],
-  "prodmuti":[
+  "prodGroup":[
     {
-      "prodCode": "Y",
-      "prodDesc": "Y - 是"
+      "value": "Y",
+      "label": "Y - 是"
     }, {
-      "prodCode": "N",
-      "prodDesc": "N - 否"
+      "value": "N",
+      "label": "N - 否"
     }],
-  "prodstatus":[
+  "status":[
     {
-      "prodCode": "A",
-      "prodDesc": "A - 启用"
+      "value": "A",
+      "label": "A - 启用"
     }, {
-      "prodCode": "C",
-      "prodDesc": "C - 停用"
+      "value": "C",
+      "label": "C - 停用"
     }],
-  "accttype":[
+  "acctType":[
     {
-      "prodCode": "S",
-      "prodDesc": "S - 储蓄账户"
+      "value": "C",
+      "label": "C - 储蓄账户"
     }, {
-      "prodCode": "C",
-      "prodDesc": "C - 结算账户"
+      "value": "T",
+      "label": "T - 结算账户"
     }],
-  "virtualflag":[
+  "acctRealFlag":[
     {
-      "prodCode": "00",
-      "prodDesc": "00 - 虚账户"
+      "value": "00",
+      "label": "00 - 虚账户"
     }, {
-      "prodCode": "01",
-      "prodDesc": "01 - 子实账户"
+      "value": "01",
+      "label": "01 - 子实账户"
     }, {
-      "prodCode": "10",
-      "prodDesc": "10 - 主实账户"
+      "value": "10",
+      "label": "10 - 主实账户"
     }, {
-      "prodCode": "11",
-      "prodDesc": "11 - 实账户"
+      "value": "11",
+      "label": "11 - 实账户"
     }],
-  "acctintflag":[
+  "acctIntFlag":[
     {
-      "prodCode": "00",
-      "prodDesc": "00 - 不计息"
+      "value": "00",
+      "label": "00 - 不计息"
     }, {
-      "prodCode": "01",
-      "prodDesc": "01 - 子账户计息"
+      "value": "01",
+      "label": "01 - 子账户计息"
     }, {
-      "prodCode": "10",
-      "prodDesc": "10 - 主账户计息"
+      "value": "10",
+      "label": "10 - 主账户计息"
     }, {
-      "prodCode": "11",
-      "prodDesc": "11 - 主子账户都不计息"
+      "value": "11",
+      "label": "11 - 主子账户都不计息"
     }],
-  "amtflag":[
+  "acctBalFlag":[
     {
-      "prodCode": "00",
-      "prodDesc": "00 - 不记录余额"
+      "value": "00",
+      "label": "00 - 不记录余额"
     }, {
-      "prodCode": "01",
-      "prodDesc": "01 - 子账户记录余额"
+      "value": "01",
+      "label": "01 - 子账户记录余额"
     }, {
-      "prodCode": "10",
-      "prodDesc": "10 - 主账户记录余额"
+      "value": "10",
+      "label": "10 - 主账户记录余额"
     }, {
-      "prodCode": "11",
-      "prodDesc": "11 - 主子都记录余额"
+      "value": "11",
+      "label": "11 - 主子都记录余额"
     }],
   "acctattr":[
     {
-      "prodCode": "1",
-      "prodDesc": "1 - 个人结算户"
+      "value": "1",
+      "label": "1 - 个人结算户"
     }, {
-      "prodCode": "2",
-      "prodDesc": "2 - 个人储蓄户"
+      "value": "2",
+      "label": "2 - 个人储蓄户"
     }],
   "acctClasses":[
     {
-      "prodCode": "1",
-      "prodDesc": "1 - I类账户"
+      "value": "1",
+      "label": "1 - I类账户"
     }, {
-      "prodCode": "2",
-      "prodDesc": "2 - II类账户"
+      "value": "2",
+      "label": "2 - II类账户"
     }, {
-      "prodCode": "3",
-      "prodDesc": "3 - III类账户"
+      "value": "3",
+      "label": "3 - III类账户"
     }],
   "muticcyflag":[
     {
-      "prodCode": "Y",
-      "prodDesc": "Y - 是"
+      "value": "Y",
+      "label": "Y - 是"
     }, {
-      "prodCode": "N",
-      "prodDesc": "N - 否"
+      "value": "N",
+      "label": "N - 否"
     }],
   "amttype":[
     {
-      "prodCode": "BAL",
-      "prodDesc": "BAL - 余额"
+      "value": "BAL",
+      "label": "BAL - 余额"
     }],
   "baltype":[
     {
-      "prodCode": "CA",
-      "prodDesc": "CA - 钞余额"
+      "value": "CA",
+      "label": "CA - 钞余额"
     }, {
-      "prodCode": "TT",
-      "prodDesc": "TT - 汇余额"
+      "value": "TT",
+      "label": "TT - 汇余额"
     }]
 }

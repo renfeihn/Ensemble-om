@@ -23,7 +23,19 @@ export function getUserInfo(token) {
   return request({
     url: '/user/info',
     method: 'get',
-    params: { token }
+    params: {
+      token
+    }
   })
 }
 
+export function login(userId, password) {
+  return request({
+    url: 'user/login',
+    method: 'post',
+    params: {
+      userId,
+      password
+    }
+  })
+}

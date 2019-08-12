@@ -429,6 +429,7 @@ h5
     -webkit-box-ordinal-group: 3;
     order: 2;
     width: 96px;
+    width: 96px;
     padding-bottom: 30px;
     text-align: center
 
@@ -529,7 +530,7 @@ h5
       & &-block:nth-child(odd) &-content 
         -webkit-box-ordinal-group: 2;
         order: 1
-    &&-content-left &-block &-detail
+    &&-content-left &-block &-detailfafafa
     -webkit-box-ordinal-group: 4;
     order: 3;
     text-align: left
@@ -604,7 +605,7 @@ h5
 */
 .v-subheader.primary--text.subheading {
   // padding-top: 16px !important;
-  padding: 16px 0px 0 16px;
+  padding: 16px 0px 0 0px;
   justify-content: center;
 }
 
@@ -626,3 +627,86 @@ table.v-table tbody td {
   font-weight: 400;
   font-size: 14px;
 }
+
+/*------------------------------------------------------------------
+[Components / components/widgets/DcMultiselect]
+*/ 
+
+.multiselect__option--highlight {
+  background: #4caf50;
+  outline: none;
+  color: white;
+}
+
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #4caf50;
+  color: white;
+}
+
+.multiselect__tag {
+    background: #4caf50 !important;
+    margin-bottom: 0px;
+}
+
+.multiselect__spinner:after {
+  border-color: #4caf50 transparent transparent;
+}
+a {
+  &:focus {
+    text-decoration: none!important;
+    text-decoration-skip: ink;
+  }
+
+}
+//����ɫ
+.backPower{
+  background: #eee!important;
+  color: rgba(0,0,0,0.87)
+}
+//��ӰЧ��
+.elevationDc{
+  box-shadow 0 1px 4px 0 rgba(0,0,0,.14)!important
+}
+  .radiusDc {
+    border-radius: 6px!important
+  }
+   .text-sm-center{
+     border-radius: 6px
+   }
+     //*action��tabs�����⴦��
+.v-tabs__item:hover {
+  font-weight: bold
+  color: #000000 !important
+}
+  .v-tabs__wrapper{
+    height: 70px
+    padding-top: 10px
+  }
+    .v-tabs__item--active{
+      color #fff!important
+      background-color: #5e69d1;
+      font-weight: bold
+      height: 55px!important;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4);
+      transform: translate3d(-8px, 0px, 0px);
+      transition: all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1) 0s;
+    }
+      .v-tabs__container{
+        background: #f4f4f4!important;
+        padding-left: 10px!important;
+
+      }
+        .v-tabs__slider-wrapper{
+
+          width 0px!important
+        }
+.v-list--three-line .v-list__tile{
+  margin 0
+}
+    .confirmButton-class{
+      height: 40px!important;
+      text-align center!important;
+    }
+          //end

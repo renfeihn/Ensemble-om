@@ -1,45 +1,46 @@
 <template>
   <div>
-        <v-layout row wrap>
-                <v-flex md4 lg4>
-    <v-btn color="success" depressed=""><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
-                </v-flex>
-                        <v-flex md4 lg4>
-    <v-btn color="success" depressed="" @click='showCopy=!showCopy'><v-icon >history</v-icon>复制</v-btn>
-                        </v-flex>
-                                <v-flex md4 lg4>
-    <v-btn color="success" depressed=""><v-icon >history</v-icon>保存</v-btn>
-                                </v-flex>
-        </v-layout>
+    <v-layout row wrap v-if="edit == 'false'">
+      <v-flex md4 lg4>
+          <v-btn color="success" depressed="" @click="temp"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+      </v-flex>
+      <v-flex md4 lg4>
+          <v-btn color="success" depressed="" @click='showCopy=!showCopy'><v-icon >history</v-icon>复制</v-btn>
+      </v-flex>
+      <v-flex md4 lg4>
+          <v-btn color="success" depressed="" @click="save"><v-icon >history</v-icon>保存</v-btn>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap v-if="edit == 'true'">
+      <v-flex md6 lg6>
+        <v-btn color="success" depressed="" @click="temp" class="downClass"><v-icon >assignment_turned_in</v-icon>暂存</v-btn>
+      </v-flex>
+      <v-flex md6 lg6>
+        <v-btn color="success" depressed="" @click="save" class="downClass"><v-icon >history</v-icon>保存</v-btn>
+      </v-flex>
+    </v-layout>
     <div v-show="showCopy">
-    <v-layout row wrap>
+    <v-layout row wrap v-if="edit == 'false'">
       <v-flex md4 lg4>
         <v-subheader class="primary--text pt-3 subheading">产品类型</v-subheader>
       </v-flex>
       <v-flex md8 lg8>
-        <!-- <span class="primary--text mx-3 pt-4 subheading">产品类型*</span> -->
         <v-text-field class="primary--text" label="产品类型" name="title" v-model="prodType" single-line hide-details>
         </v-text-field>
       </v-flex>
-    </v-layout>
-    <v-layout row wrap>
       <v-flex md4 lg4>
         <v-subheader class="primary--text pt-3 subheading">产品描述</v-subheader>
       </v-flex>
       <v-flex md8 lg8>
-        <!-- <span class="primary--text mx-3 pt-4 subheading">产品描述</span> -->
         <v-text-field class="primary--text" label="产品描述" name="title" v-model="prodDesc" single-line hide-details/>
       </v-flex>
     </v-layout>
-      <div class="text-xs-center">
-    <v-btn
-      color="cyan"
-      @click="copyOn"
-      dark
-    >
-      <v-icon>done</v-icon>
-      确认
-    </v-btn>
+
+      <div class="text-xs-center" v-if="edit == 'false'">
+          <v-btn color="cyan" @click="copyOn" dark>
+              <v-icon>done</v-icon>
+            确认
+          </v-btn>
       </div>
     </div>
   </div>
@@ -52,20 +53,60 @@
 
 <script>
 export default {
-  data() {
+    props: ["editShow"],
+    data() {
     return {
       showCopy: false,
         prodType: '',
-        prodDesc: ''
+        prodDesc: '',
+        edit: "false"
     };
   },
+    watch: {
+        editShow (val) {
+            this.editShowDeal(val)
+        }
+    },
   methods: {
+      editShowDeal(val) {
+         if(val){
+             this.edit = "true"
+         }else{
+             this.edit = "false"
+         }
+      },
     handleClick() {
       alert("button click");
     },
       copyOn() {
-          this.$emit('listenToCopy',{'prodType': this.prodType,'prodDesc': this.prodDesc})
+          if(this.prodType == "" || this.prodDesc == ""){
+              this.sweetAlert('info',"请输入产品代码或产品描述！");
+          }
+          else if(this.prodType == null || this.prodType.indexOf(" ") != -1){
+              this.sweetAlert('info',"产品代码不能包含空格！");
+          }else if(this.prodType != null && this.prodType.indexOf(" ") == -1 && this.prodType != "" && this.prodDesc.indexOf(" ") != -1) {
+              this.sweetAlert('info',"产品描述不能包含空格！");
+          }else {
+              this.showCopy = false
+              this.$emit('listenToCopy', {
+                  'prodType': this.prodType,
+                  'prodDesc': this.prodDesc,
+                  'showCopy': this.showCopy
+              })
+          }
+      },
+      save(){
+          this.$emit('saveProd')
+      },
+      temp(){
+          this.$emit('tempProd')
       }
   }
 };
 </script>
+<style scoped>
+  .downClass {
+    width: 80%;
+    margin-left: 10%
+  }
+</style>

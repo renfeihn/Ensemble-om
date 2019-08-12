@@ -22,11 +22,11 @@
         <h4>热点产品</h4>
       </v-flex>
       <v-flex lg3 sm12 v-for="(item,index) in users" :key=" 'bottom-nav' + index">
-        <name-card
-                bottom-nav
-                v-bind="item"
-        >
-        </name-card>
+        <!--<name-card-->
+                <!--bottom-nav-->
+                <!--v-bind="item"-->
+        <!--&gt;-->
+        <!--</name-card>-->
       </v-flex>
       </v-layout>
       </v-container>
@@ -76,11 +76,11 @@
         getDepositProdInfo
     } from '@/api/prod';
     import prodListCmb from '../tableFlow/prodListCmb'
-    import NameCard from '@/components/widgets/card/NameCard';
+//    import NameCard from '@/components/widgets/card/NameCard';
     export default {
         components: {
-            prodListCmb,
-            NameCard
+            prodListCmb
+//            NameCard
         },
         data: () => ({
             items: [],

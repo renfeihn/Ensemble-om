@@ -2,37 +2,52 @@
   <v-container fluid grid-list-md py-0 px-0>
     <v-tabs v-model="active" slider-color="red">
       <v-tab v-for="n in userWork" :key="n" ripple>
-        <v-chip label outline color="red">
-          <v-avatar text-color="red">5</v-avatar>{{n}}</v-chip>
+        <span class="itemDc">{{n}}</span>
       </v-tab>
-      <v-tab-item v-for="n in 3" :key="n">
-        <user-work-table></user-work-table>
-        <!-- <v-card>
-          <v-container fluid py-0>
-            <v-card-text>
-              
-            </v-card-text>
-          </v-container>
-        </v-card> -->
+      <v-tab-item v-for="n in 3" :key="n" class="pb-2">
+        <user-work-check-table v-if="n==1" v-bind:userWorkData="userWorkData"></user-work-check-table>
+        <user-work-release-table v-if="n==2"></user-work-release-table>
       </v-tab-item>
     </v-tabs>
   </v-container>
 </template>
 
 <script>
-  import userWorkTable from './userWorkTable'
+  import userWorkCheckTable from './userWorkCheckTable'
+  import userWorkReleaseTable from './userWorkReleaseTable'
+  import { getFlowList } from "@/api/url/prodInfo";
   export default {
       components: {
-          userWorkTable
+          userWorkCheckTable,
+          userWorkReleaseTable
       },
     data() {
       return {
+          userWorkData: [],
         active: null,
         text: '.',
         userWork: ['待复核', '待发布']
       }
     },
 
-    methods: {}
+      mounted: function() {
+          this.queryDespositProdData();
+          const that=this
+          window.addEventListener("referenceWork", function () {
+              that.queryDespositProdData();
+          })
+      },
+    methods: {
+        queryDespositProdData() {
+            getFlowList().then(response => {
+               this.userWorkData = response.data.data
+            });
+        }
+    }
   }
 </script>
+<style scoped>
+ .itemDc{
+   width: 300px;
+ }
+</style>

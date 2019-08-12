@@ -16,6 +16,24 @@ export default [
       this.$router.replace({ path: '/login' });
     }
   },
+    {
+        name: 'APP_SYSTEM_MANAGEMENT',
+        callback: function (e) {
+            this.$router.replace({ path: '/systemManageIndex' });
+        }
+    },
+    {
+        name: 'APP_PERM_PERMISSIONS',
+        callback: function (e) {
+            this.$router.replace({ path: '/permManageIndex' });
+        }
+    },
+    {
+        name: 'APP_USER_INFO_MANAGEMENT',
+        callback: function (e) {
+            this.$router.replace({ path: '/userInfoIndex' });
+        }
+    },
   {
     name: 'APP_PAGE_LOADED',
     callback: function (e) {

@@ -1,65 +1,60 @@
 <template>
- <v-stepper v-model="e1">
-    <v-stepper-header>
-      <v-stepper-step :complete="e1 == 1" step="1"><span @click="e1 = 1">2017年12月22日-pm7：00</span></v-stepper-step>
+  <v-layout align-center>
+    <v-item-group
+            v-model="window"
+            class="shrink mr-4"
+            mandatory
+            tag="v-flex"
+    >
+      <v-item
+              v-for="n in length"
+              :key="n"
+      >
+        <div slot-scope="{ active, toggle }">
+          <v-btn
+                  :input-value="active"
+                  icon
+                  @click="toggle"
+          >
+            <v-icon color="orange">home</v-icon>
+          </v-btn>
+        </div>
+      </v-item>
+    </v-item-group>
 
-      <v-divider></v-divider>
-
-      <v-stepper-step :complete="e1 == 2" step="2"><span @click="e1 = 2">2018年1月22日-pm7：00</span></v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step :complete="e1 == 3" step="3"><span @click="e1 = 3">2018年3月22日-pm7：00</span></v-stepper-step>
-    </v-stepper-header>
-
-    <v-stepper-items>
-      <v-stepper-content step="1">
-        <publish-iterator></publish-iterator>
-      </v-stepper-content>
-      <v-stepper-content step="2">
-        <v-card
-          class="mb-5"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 3"
+    <v-flex>
+      <v-window
+              v-model="window"
+              class="elevation-1"
+              vertical
+      >
+        <v-window-item
+                v-for="n in length"
+                :key="n"
         >
-          Continue
-        </v-btn>
+          <v-card flat>
+            <v-card-text>
+              <v-layout align-center mb-3>
+                <v-avatar color="grey" class="mr-3"></v-avatar>
+                <strong class="title">Title {{ n }}</strong>
+                <v-spacer></v-spacer>
+                <v-btn icon>
+                  <v-icon>mdi-account</v-icon>
+                </v-btn>
+              </v-layout>
 
-        <v-btn flat>Cancel</v-btn>
-      </v-stepper-content>
-
-      <v-stepper-content step="3">
-        <v-card
-          class="mb-5"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 1"
-        >
-          Continue
-        </v-btn>
-
-        <v-btn flat>Cancel</v-btn>
-      </v-stepper-content>
-    </v-stepper-items>
-  </v-stepper>
+            </v-card-text>
+          </v-card>
+        </v-window-item>
+      </v-window>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
-import publishIterator from "./publishIterator";
-export default {
-  components: {
-    publishIterator
-  },
-  data() {
-    return { e1: 1 };
-  }
-};
+    export default {
+        data: () => ({
+            length: 3,
+            window: 0
+        })
+    }
 </script>

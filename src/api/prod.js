@@ -21,13 +21,13 @@ export function getDepositProdList (params) {
     params
   });
 }
-export function getInitData (params) {
-  return request({
-    url: '/init/initRefData',
-    method: 'get',
-    params
-  });
-}
+// export function getInitData (params) {
+//   return request({
+//     url: 'initRefData',
+//     method: 'get',
+//     params
+//   });
+// }
 export function getDiffProd (params) {
     const data = {
       params
@@ -40,7 +40,7 @@ export function getDiffProd (params) {
 }
 export function getDiffList (params) {
   return request({
-    url: '/prod/getDiffList',
+    url: '/getProdDiff',
     method: 'get',
     params
   });
@@ -60,11 +60,14 @@ export function getProdData (params) {
     params
   });
 }
-export function getProdType (params) {
+export function getProdType (prodClass) {
+    const data = {
+        prodClass
+    }
   return request({
-    url: '/prod/getProdType',
-    method: 'get',
-    params
+    url: '/getProdListByClass',
+    method: 'post',
+    data
   });
 }
 export function getDepositDtl (data) {
@@ -84,6 +87,13 @@ export function getProdClass (data) {
 export function getUserCollectProds (data) {
     return request({
         url: '/prod/userCollect',
+        method: 'get',
+        data: data
+    });
+}
+export function userLoginCheck (data) {
+    return request({
+        url: '/login/userLoginCheck',
         method: 'get',
         data: data
     });

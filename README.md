@@ -31,3 +31,12 @@
 
 ## Mock
 - 样例：http://mockjs.com/examples.html
+
+## URL 加密
+- https://my.oschina.net/Lady/blog/1814825
+
+
+办公网： 10.7.94.150  wet	123| root root 数据库root root123
+
+nohup java -jar ensemble-om-.jar
+forever restart www

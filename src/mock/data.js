@@ -1,95 +1,143 @@
 export default {
-  getProdData: () => ({
-    prodFrom: {
-      proddesc: '活期存款',
-      busimodel: 'RB',
-      prodclass: 'RB100',
-      prodprepice: 'S',
-      prodmuti: 'Y',
-      prodstatus: 'A',
-      baseprod: '100001',
-      accttype: 'S',
-      acctsontype: '1',
-      acctstruct: '1',
-      virtualflag: '00',
-      acctintflag: '00',
-      amtflag: '10',
-      profitcenter: '99',
-      effectdate: '2018-06-05',
-      failuredate: '2018-06-08'
-    },
-    acctFrom: {
-      attr: '1',
-      class: '2',
-      muticcyflag: 'Y',
-      ccytype: ['CNY', 'USD'],
-      amttype: 'BAL',
-      baltype: 'CA',
-      reducedccy: 'USD',
-      acctusefor: '100',
-      mediumtype: 'A'
-    }
-  }),
-  getProdData1: () => ({
-    prodFrom: {
-      proddesc: '活期存款',
-      busimodel: 'RB',
-      prodclass: 'RB200',
-      prodprepice: 'B',
-      prodmuti: 'N',
-      prodstatus: 'C',
-      baseprod: '100002',
-      accttype: 'C',
-      acctsontype: '2',
-      acctstruct: '2',
-      virtualflag: '11',
-      acctintflag: '11',
-      amtflag: '11',
-      profitcenter: '99',
-      effectdate: '2018-11-11',
-      failuredate: '2018-12-11'
-    },
-    acctFrom: {
-      attr: '2',
-      class: '3',
-      muticcyflag: 'N',
-      ccytype: 'USD',
-      amttype: 'BAL',
-      baltype: 'TT',
-      reducedccy: 'CNY',
-      acctusefor: '200',
-      mediumtype: 'B'
-    }
-  }),
-  getProdDataNull: () => ({
-    prodFrom: {
-      proddesc: '',
-      busimodel: '',
-      prodclass: '',
-      prodprepice: '',
-      prodmuti: '',
-      prodstatus: '',
-      baseprod: '',
-      accttype: '',
-      acctsontype: '',
-      acctstruct: '',
-      virtualflag: '',
-      acctintflag: '',
-      amtflag: '',
-      profitcenter: '',
-      effectdate: '',
-      failuredate: ''
-    },
-    acctFrom: {
-      attr: '',
-      class: '',
-      muticcyflag: '',
-      ccytype: '',
-      amttype: '',
-      baltype: '',
-      reducedccy: '',
-      acctusefor: '',
-      mediumtype: ''
+    getProdInfo: (val) => ({
+        prodType: {
+            prodDesc: '活期存款',
+            prodClass: 'RB100',
+            prodRange: 'S',
+            prodGroup: 'Y',
+            status: 'A',
+            prodType: '111001',
+        },
+        prodDefines: {
+            ACCT_STRUCT_FLAG: {
+                attrValue: '1'
+            },
+            ACCT_TYPE: {
+                attrValue: 'C'
+            },
+            ACCT_REAL_FLAG: {
+                attrValue: '10'
+            },
+            ACCT_INT_FLAG: {
+                attrValue: '10'
+            },
+            ACCT_BAL_FLAG: {
+                attrValue: '10'
+            },
+            PROFIT_CENTRE: {
+                attrValue: '99'
+            },
+            PROD_START_DATE: {
+                attrValue: '20180101'
+            },
+            PROD_END_DATE: {
+                attrValue: '20190101'
+            }
+        },
+        mbEventInfos: {
+             CLOSE_RB101: {
+                 mbEventAttrs: {
+                     CHECK_AGENT: {
+                         attrValue: 'Y'
+                     }
+                 }
+             }
+         },
+        productObject: {
+            clientType: '10',
+            inlandOffshore: 'I',
+            clientSubType: '101',
+            clientLevel: 'N',
+            ageBetween: 'between',
+            occupation: '0',
+            channelChoose: 'MT',
+            applyBranch: '0',
+            branchChoice: '9999',
+            applyArea: '1',
+            areaChoose: '1'
+        },
+        intDetail: {
+            cycleFreq: '2M',
+            cycleSelfFlag: 'Y'
+        },
+        openAcct: {
+            structureType: 'CD2',
+            checkWdrawnType: 'Y',
+            restraintFlag: 'Y',
+            withdrawTypeHandeling: 'Y',
+            daiBanFlag: 'Y',
+            clientAmtCheckFlag: 'Y',
+            startDepositAmt: 'Y'
+        },
+        closeAcct: {
+            systemControlApproach: 'N',
+            permitCommersionFlag: 'N',
+            cashResouce: 'C',
+            acctReatraintCheck: 'N',
+            resignCheck: 'Y',
+            ownCheck: 'N',
+            huiTuiFlag: 'N',
+        },
+        deposit: {
+          depositControlApproach: 'Y',
+          permitCommersionFlag: 'N',
+          cashResource: 'C',
+          acctReatraintCheck: 'N',
+          weiYueType: 'S',
+          dealingWay: 'D',
+          startAmtCheck: 'N',
+          danciDepositCheck: 'N'
+        },
+        drawInfo: {
+            drawControlWay: 'Y',
+            daiBanFlag: 'N',
+            cashResource: 'C',
+            attrReatraintCheck: 'N',
+            withDrawlCheck: 'N',
+            voucherTypeCheck: 'N',
+            weiYueType: 'D',
+            dealingWay: 'D',
+            danciYueCheck: 'Y',
+            acctBalanceCheck: 'N'
+        },
+        acctBaseInfo: {
+            prodcode: '111001',
+            proddesc: '个人活期产品',
+            sourceModule: 'RB',
+            prodClass: 'RB',
+            prodAttr: 'S',
+            isGroup: 'Y',
+            prodStatus: 'A',
+            baseprodtype: 'RBA01',
+            acctType: 'A',
+            subAcctType: 'A',
+            isMultiCcy: 'N',
+            ccy: 'CNY',
+            acctIntFlag: '00',
+            profitCentre: '99',
+            effectdate: '2018-09-09',
+            failuredate: '2022-02-02',
+            isMutiVoucher: 'N',
+            voucherType: '001',
+            acctSubType: 'D',
+            acctNature: '1',
+            ownershipType: 'SG',
+            acctClass: 'I',
+            balType: 'CA',
+            withdrawalType: 'B',
+            discountCcy: 'USD',
+            defaultCcy: 'CNY',
+        },
+    controlInfo: {
+        draRange: '0',
+        depRange: '0',
+        tDepFlag: '0',
+        cashDepFlag: '0',
+        clientFlag: 'Y',
+        channelFlag: 'Y',
+        branchControlFlag: 'Y',
+        chargeFlag: 'Y',
+        moveFlag: 'Y',
     }
   })
 }

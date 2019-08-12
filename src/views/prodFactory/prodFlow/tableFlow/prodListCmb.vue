@@ -1,36 +1,46 @@
 <template>
-    <v-card>
+    <v-card class="radiusDc">
         <v-toolbar card color="white">
             <v-text-field flat solo prepend-icon="search" placeholder="请输入产品名称或描述" v-model="search" clearable hide-details class="hidden-sm-and-down"></v-text-field>
             <v-btn color="info" @click="addCompare">加入对比</v-btn>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-card-text class="pa-0"><!--  -->
-            <v-data-table :headers="complex.headers" :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="value" select-all v-model="complex.selected">
+        <v-card-text class="pa-0">
+            <v-data-table :headers="complex.headers" :search="search" :items="items" :rows-per-page-items="[10,25,50,{text:'All','value':-1}]" class="elevation-1" item-key="prodType" select-all v-model="complex.selected">
                 <template slot="items" slot-scope="props" >
-                                                          <td>
-                                                            <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
-                                                          </td>
-                                                          <!-- <td>
-                                                            <v-avatar size="32">
-                                                              <img :src="props.item.avatar" alt="">
-                                                            </v-avatar>
-                                                          </td> -->
-                                                          <td>{{ props.item.value }}</td>
-                                                          <td>{{ props.item.label }}</td>
-                                                          <td>{{ props.item.status }}</td>
-                                                          <td>
-                                                            <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item.value)">
-                                                              <v-icon>edit</v-icon>
-                                                            </v-btn>
-                                                            <v-btn depressed outline icon fab dark color="pink" small>
-                                                              <v-icon>chrome_reader_mode</v-icon>
-                                                            </v-btn>
-                                                          </td> 
+                    <tr :active="props.selected" @click="props.selected = !props.selected">
+                        <td>
+                            <v-checkbox
+                                    :input-value="props.selected"
+                                    primary
+                                    hide-details
+                            ></v-checkbox>
+                        </td>
+                        <td>{{ props.item.prodType }}</td>
+                        <td>{{ props.item.prodDesc }}</td>
+                        <td>{{ props.item.sourceModule }}</td>
+                        <td>{{ props.item.prodRange === "B"?"基础产品":"可售产品" }}</td>
+                        <td>{{ props.item.baseProdType }}</td>
+                        <td>{{ props.item.status === "A"?"有效":"封存"}}</td>
+                        <td>
+                            <v-layout>
+                                <v-flex md6 lg6>
+                                    <v-btn depressed outline icon fab dark color="primary" small @click="handleClick(props.item)">
+                                        <v-icon>edit</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                                <v-flex md6 lg6>
+                                    <v-btn depressed outline icon fab dark color="primary" small @click="changeHistory(props.item)">
+                                        <v-icon>polymer</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
+                        </td>
+                    </tr>
                 </template>
-      </v-data-table>
-    </v-card-text>
-  </v-card>
+            </v-data-table>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -56,17 +66,25 @@
                     selected: [],
                     items: [],
                     headers: [
-                        // {
-                        //     text: 'Avatar',
-                        //     value: 'avatar'
-                        // },
                         {
                             text: '产品代码',
-                            value: 'value'
+                            value: 'prodType'
                         },
                         {
-                            text: '产品类型',
-                            value: 'label'
+                            text: '产品描述',
+                            value: 'prodDesc'
+                        },
+                        {
+                            text: '所属模块',
+                            value: 'sourceModule'
+                        },
+                        {
+                            text: '产品属性',
+                            value: 'prodGroup'
+                        },
+                        {
+                            text: '基础产品',
+                            value: 'baseProdType'
                         },
                         {
                             text: '产品状态',
@@ -83,28 +101,63 @@
         methods: {
             addCompare() {
                 let selected = [];
+                let sourceModule = "";
                 for (const item in this.complex.selected) {
-                    selected.push(this.complex.selected[item].value)
+                    selected.push(this.complex.selected[item].prodType)
                 }
-                this.$router.push({
-                    name: 'diffList',
-                    params: {
-                        'prodCodeList': selected
-                    }
-                })
+                if(this.complex.selected.length){
+                    sourceModule = this.complex.selected[0].sourceModule;
+                }
+                if(!selected.length){
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "请选择需要进行对比的产品！",
+                    })
+                }
+                if(selected.length > 5 || selected.length == 1){
+                    this.$swal({
+                        allowOutsideClick: false,
+                        type: 'info',
+                        title: "对比产品总数介于[2-5]之间！",
+                    })
+                }
+                if(selected.length && selected.length<=5 && selected.length != 1) {
+                    this.$router.push({
+                        name: 'prodCompareTitle',
+                        params: {
+                            'prodTypeList': selected,
+                            'sourceModule': sourceModule
+                        }
+                    })
+                }
             },
-            handleClick(prodCode) {
-                getProdType(prodCode).then(response => {
-                    let length = response.data.prodTypeForm.length
-                    for (let i = 0; i < length; i++) {
-                       if(prodCode === response.data.prodTypeForm[i].value){
-                           this.prodclass = response.data.prodTypeForm[i].prodClass
-                       }
-                    }
-                    if('RB100' == this.prodclass){
-                        this.$router.push({ name: 'prod/rbPrivateProd', params: {'prodClassCmp': this.prodclass,'prodCodeCmp': prodCode}})
-                    }
-                })
+            handleClick(val) {
+                let prodType = val.prodType;
+                let prodRange = val.prodRange;
+                let sourceModule = val.sourceModule;
+                if(prodRange == "B" && sourceModule == "RB") {
+                    this.$router.push({name: "BaseProdForm", hash: prodType});
+                }
+                if(prodRange == "B" && sourceModule == "CL") {
+                    this.$router.push({name: "BaseProdFormCl", hash: prodType});
+                }
+                if(prodRange == "B" && sourceModule == "GL") {
+                    this.$router.push({name: "BaseProdFormGl", hash: prodType});
+                }
+                if(prodRange == "S" && sourceModule == "RB"){
+                    this.$router.push({name: "SoldProdForm", hash: prodType});
+                }
+                if(prodRange == "S" && sourceModule == "CL"){
+                    this.$router.push({name: "SoldProdFormCl", hash: prodType});
+                }
+                if(prodRange == "S" && sourceModule == "GL"){
+                    this.$router.push({name: "SoldProdFormGl", hash: prodType});
+                }
+            },
+            changeHistory(val){
+                let prodType = val.prodType;
+                this.$router.push({name: "prodChangeHistory", hash: prodType});
             }
         }
     };

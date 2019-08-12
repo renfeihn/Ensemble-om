@@ -45,11 +45,9 @@
         getProdType
     } from '@/api/prod';
     import prodListCmb from '../tableFlow/prodListCmb'
-    import NameCard from '@/components/widgets/card/NameCard';
     export default {
         components: {
-            prodListCmb,
-            NameCard
+            prodListCmb
         },
         data: () => ({
             items: [],

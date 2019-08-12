@@ -1,19 +1,25 @@
 <template>
   <v-navigation-drawer
     id="appDrawer"
-    :mini-variant.sync="mini"
     fixed
     :dark="$vuetify.dark"
+    :temporary="!menuSwitch"
     app
     v-model="drawer"
     width="260"
     >
-    <v-toolbar color="primary darken-1" dark>
-      <img v-bind:src="computeLogo" height="36" alt="产品工厂">
-      <v-toolbar-title class="ml-0 pl-1">
-        <span class="hidden-sm-and-down">XXX银行产品工厂</span>
-      </v-toolbar-title>
-    </v-toolbar>
+    <v-flex lg4 pl-4 pt-3>
+        <v-card-media src="/static/avatar/per1.jpg">
+      </v-card-media>
+    </v-flex>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-list-tile-title style="margin-left: 6%">{{userId}}</v-list-tile-title>
+            <v-list-tile-title style="margin-left: 6%">{{userName}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
       <v-list dense expand>
         <template v-for="(item, i) in menus">
@@ -26,7 +32,7 @@
               </v-list-tile>
               <template v-for="(subItem, i) in item.items">
                 <!--sub group-->
-                <v-list-group v-if="subItem.items" :key="subItem.name" :group="subItem.group" sub-group="sub-group">
+                <v-list-group v-if="subItem.items" :key="subItem.title" :group="subItem.group" sub-group="sub-group">
                   <v-list-tile slot="activator" ripple="ripple">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
@@ -72,68 +78,96 @@
   </v-navigation-drawer>
 </template>
 <script>
-import {Menu} from '@/api/menu';
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import { Menu } from "@/api/menu";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import {getMenuList} from "@/api/url/prodInfo";
+import { getSysUserInfoByUser } from '@/api/url/prodInfo';
 export default {
-  name: 'app-drawer',
+  name: "app-drawer",
   components: {
-    VuePerfectScrollbar,
+    VuePerfectScrollbar
   },
   props: {
     expanded: {
       type: Boolean,
       default: true
     },
-  },
-  data: () => ({
-    mini: false,
-    drawer: true,
-    menus: Menu,
-    scrollSettings: {
-      maxScrollbarLength: 160
+    showMenuLog: {
+        type: Boolean,
+        default: false
     }
-  }),
+  },
+  data() {
+    return {
+        titleName: this.globalConfig.name,
+        mini: false,
+        drawer: false,
+        menuSwitch: false,
+        menus: Menu,
+        scrollSettings: {
+          maxScrollbarLength: 160
+        },
+        userId: "",
+        userName: ""
+    };
+  },
   computed: {
-    computeGroupActive () {
+    computeGroupActive() {
       return true;
     },
-    computeLogo () {
-      return '/static/prod/dcLog1.png';
+    computeLogo() {
+      return "/static/prod/dcLog1.png";
     },
 
-    sideToolbarColor () {
+    sideToolbarColor() {
       return this.$vuetify.options.extra.sideNav;
     }
   },
-  created () {
-    window.getApp.$on('APP_DRAWER_TOGGLED', () => {
-      this.drawer = (!this.drawer);
-    });
-  },
-
-
-  methods: {
-    genChildTarget (item, subItem) {
-        if (subItem.href) return;
-        if (subItem.component) {
-            return {
-                name: subItem.component,hash: subItem.name
-            };
+    watch: {
+        showMenuLog (val) {
+            this.menuSwitch=val
         }
-        return { name: `${item.group}/${(subItem.name)}`};
     },
+  created() {
+      this.userId = sessionStorage.getItem("userId")
+      this.getUserName()
+      window.getApp.$on("APP_DRAWER_TOGGLED", () => {
+      this.drawer = !this.drawer;
+        /* this.mini = !this.mini;*/
+      });
+      getMenuList({userId: sessionStorage.getItem("userId")}).then(response => {
+          this.menus=response.data.data;
+      })
+  },
+  methods: {
+      genChildTarget(item, subItem) {
+          if (subItem.href) return;
+          if (subItem.component) {
+              return {
+                  name: subItem.component,
+                  hash: subItem.params
+              };
+          }
+          return { name: `${item.group}/${subItem.params}` };
+      },
+      //用户名称
+      getUserName() {
+          getSysUserInfoByUser(this.userId).then(response => {
+              this.userName = response.data.data.userInfo[0].userName
+          })
+      },
   }
 };
 </script>
 
 
-<style lang="stylus">
-// @import '../../node_modules/vuetify/src/stylus/settings/_elevations.styl';
-
-#appDrawer
-  overflow: hidden
-  .drawer-menu--scroll
-    height: calc(100vh - 48px)
-    overflow: auto
+<style lang="stylus" scoped>
+#appDrawer {
+  overflow: hidden;
+}
+  .drawer-menu--scroll {
+    height: calc(78vh - 48px);
+    overflow: auto;
+  }
 
 </style>
